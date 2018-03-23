@@ -13,11 +13,13 @@ import getCurrentPosition from './utils/getCurrentPosition';
 import pm25ToCigarettes from './utils/pm25ToCigarettes';
 
 import About from '../About';
+import Map from '../Map';
 
 export default class Home extends Component {
   state = {
     api: null,
     isAboutVisible: false,
+    isMapVisible: false,
     loadingApi: false,
     loadingGps: false
   };
@@ -47,13 +49,22 @@ export default class Home extends Component {
 
   handleAboutShow = () => this.setState({ isAboutVisible: true });
 
+  handleMapHide = () => this.setState({ isMapVisible: false });
+
+  handleMapShow = () => this.setState({ isMapVisible: true });
+
   render() {
-    const { api, isAboutVisible } = this.state;
+    const { api, isAboutVisible, isMapVisible } = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>
-          {api ? api.city.name : this.renderLoadingText()}
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            {api ? api.city.name : this.renderLoadingText()}
+          </Text>
+          <TouchableOpacity onPress={this.handleMapShow}>
+            <Text style={styles.locationPin}>&#9660;</Text>
+          </TouchableOpacity>
+        </View>
 
         {api ? (
           <View>
@@ -78,6 +89,7 @@ export default class Home extends Component {
         </TouchableOpacity>
 
         <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
+        <Map onRequestClose={this.handleMapHide} visible={isMapVisible} />
       </View>
     );
   }
@@ -110,6 +122,13 @@ const styles = StyleSheet.create({
   footer: {
     fontSize: 10,
     textAlign: 'center'
+  },
+  header: {
+    flexDirection: 'row'
+  },
+  locationPin: {
+    fontSize: 24,
+    marginHorizontal: 5
   },
   ohShit: {
     fontSize: 48

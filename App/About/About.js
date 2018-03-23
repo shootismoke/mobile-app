@@ -78,9 +78,6 @@ export default class About extends Component {
 }
 
 const styles = StyleSheet.create({
-  cigarettesCount: {
-    fontSize: 72
-  },
   container: {
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
