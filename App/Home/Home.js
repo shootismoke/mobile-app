@@ -17,9 +17,9 @@ import About from '../About';
 export default class Home extends Component {
   state = {
     api: null,
+    isAboutVisible: false,
     loadingApi: false,
-    loadingGps: false,
-    isModalVisible: false
+    loadingGps: false
   };
 
   componentWillMount() {
@@ -43,12 +43,12 @@ export default class Home extends Component {
     }
   }
 
-  handleModalShow = () => this.setState({ isModalVisible: true });
+  handleAboutHide = () => this.setState({ isAboutVisible: false });
 
-  handleModalHide = () => this.setState({ isModalVisible: false });
+  handleAboutShow = () => this.setState({ isAboutVisible: true });
 
   render() {
-    const { api, isModalVisible } = this.state;
+    const { api, isAboutVisible } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
@@ -69,7 +69,7 @@ export default class Home extends Component {
           <ActivityIndicator />
         )}
 
-        <TouchableOpacity onPress={this.handleModalShow}>
+        <TouchableOpacity onPress={this.handleAboutShow}>
           <Text style={styles.footer}>
             &#9432; The equivalence between air pollution and cigarettes has
             been established by two physicists from Berkeley Group. Click to
@@ -77,7 +77,7 @@ export default class Home extends Component {
           </Text>
         </TouchableOpacity>
 
-        <About onRequestClose={this.handleModalHide} visible={isModalVisible} />
+        <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
       </View>
     );
   }
@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   footer: {
-    fontSize: 10
+    fontSize: 10,
+    textAlign: 'center'
   },
   ohShit: {
     fontSize: 48
