@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import axios from 'axios';
 import config from '../config.json';
 import getCurrentPosition from './utils/getCurrentPosition';
 import pm25ToCigarettes from './utils/pm25ToCigarettes';
 
+import About from '../About';
+
 export default class Home extends Component {
   state = {
     api: null,
     loadingApi: false,
-    loadingGps: false
+    loadingGps: false,
+    isModalVisible: false
   };
 
   componentWillMount() {
@@ -33,8 +43,12 @@ export default class Home extends Component {
     }
   }
 
+  handleModalShow = () => this.setState({ isModalVisible: true });
+
+  handleModalHide = () => this.setState({ isModalVisible: false });
+
   render() {
-    const { api } = this.state;
+    const { api, isModalVisible } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
@@ -55,11 +69,15 @@ export default class Home extends Component {
           <ActivityIndicator />
         )}
 
-        <Text style={styles.footer}>
-          &#9432; The equivalence between air pollution and cigarettes smoked
-          has been established by two physicists from the Berkeley Group
-          foundation. Click to read more.
-        </Text>
+        <TouchableOpacity onPress={this.handleModalShow}>
+          <Text style={styles.footer}>
+            &#9432; The equivalence between air pollution and cigarettes has
+            been established by two physicists from Berkeley Group. Click to
+            read more.
+          </Text>
+        </TouchableOpacity>
+
+        <About onRequestClose={this.handleModalHide} visible={isModalVisible} />
       </View>
     );
   }
@@ -81,7 +99,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
