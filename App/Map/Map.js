@@ -1,14 +1,41 @@
 import React, { Component } from 'react';
+import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 
 export default class Map extends Component {
+  handleRef = ref => {
+    this.marker = ref;
+  };
+
+  handleShowCallout = () => {
+    this.marker && this.marker.showCallout && this.marker.showCallout();
+  };
+
   render() {
-    const { ...rest } = this.props;
+    const {
+      station: { description, latitude, longitude, title },
+      ...rest
+    } = this.props;
 
     return (
       <Modal animationType="fade" transparent={true} {...rest}>
         <View style={styles.container}>
-          <Text>Map goes here</Text>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude,
+              longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+            onMapReady={this.handleShowCallout}
+          >
+            <MapView.Marker
+              coordinate={{ latitude, longitude }}
+              ref={this.handleRef}
+              title={title}
+            />
+          </MapView>
         </View>
       </Modal>
     );
@@ -17,10 +44,9 @@ export default class Map extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    backgroundColor: 'white',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center'
+    flex: 1
+  },
+  map: {
+    flex: 1
   }
 });

@@ -61,9 +61,11 @@ export default class Home extends Component {
           <Text style={styles.title}>
             {api ? api.city.name : this.renderLoadingText()}
           </Text>
-          <TouchableOpacity onPress={this.handleMapShow}>
-            <Text style={styles.locationPin}>&#9660;</Text>
-          </TouchableOpacity>
+          {api && (
+            <TouchableOpacity onPress={this.handleMapShow}>
+              <Text style={styles.locationPin}>&#9660;</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         {api ? (
@@ -75,6 +77,18 @@ export default class Home extends Component {
               </Text>{' '}
               cigarettes today.
             </Text>
+            <Map
+              station={{
+                description: api.attributions.length
+                  ? api.attributions[0].name
+                  : null,
+                latitude: api.city.geo[1],
+                longitude: api.city.geo[0],
+                title: api.city.name
+              }}
+              onRequestClose={this.handleMapHide}
+              visible={isMapVisible}
+            />
           </View>
         ) : (
           <ActivityIndicator />
@@ -89,7 +103,6 @@ export default class Home extends Component {
         </TouchableOpacity>
 
         <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
-        <Map onRequestClose={this.handleMapHide} visible={isMapVisible} />
       </View>
     );
   }
