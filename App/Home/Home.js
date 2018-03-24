@@ -18,6 +18,7 @@ import Map from '../Map';
 export default class Home extends Component {
   state = {
     api: null,
+    gps: null,
     isAboutVisible: false,
     isMapVisible: false,
     loadingApi: false,
@@ -31,7 +32,7 @@ export default class Home extends Component {
   async fetchData() {
     this.setState({ api: null, loadingGps: true });
     const { coords } = await getCurrentPosition();
-    this.setState({ loadingApi: true, loadingGps: false });
+    this.setState({ gps: coords, loadingApi: true, loadingGps: false });
     const { data: response } = await axios.get(
       `http://api.waqi.info/feed/geo:${coords.latitude};${
         coords.longitude
@@ -54,7 +55,7 @@ export default class Home extends Component {
   handleMapShow = () => this.setState({ isMapVisible: true });
 
   render() {
-    const { api, isAboutVisible, isMapVisible } = this.state;
+    const { api, gps, isAboutVisible, isMapVisible } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -78,6 +79,7 @@ export default class Home extends Component {
               cigarettes today.
             </Text>
             <Map
+              gps={gps}
               station={{
                 description: api.attributions.length
                   ? api.attributions[0].name
@@ -137,7 +139,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   header: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'baseline'
   },
   locationPin: {
     fontSize: 24,
@@ -147,6 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 48
   },
   title: {
-    fontSize: 24
+    fontSize: 24,
+    textAlign: 'center'
   }
 });

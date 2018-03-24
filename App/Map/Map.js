@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 
+import getCorrectLatLng from './utils/getCorrectLatLng';
+
 export default class Map extends Component {
   handleRef = ref => {
     this.marker = ref;
@@ -12,10 +14,9 @@ export default class Map extends Component {
   };
 
   render() {
-    const {
-      station: { description, latitude, longitude, title },
-      ...rest
-    } = this.props;
+    const { gps, station, ...rest } = this.props;
+
+    const { latitude, longitude } = getCorrectLatLng(gps, station);
 
     return (
       <Modal animationType="fade" transparent={true} {...rest}>
@@ -33,7 +34,7 @@ export default class Map extends Component {
             <MapView.Marker
               coordinate={{ latitude, longitude }}
               ref={this.handleRef}
-              title={title}
+              title={station.title}
             />
           </MapView>
         </View>
