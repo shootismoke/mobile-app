@@ -11,7 +11,8 @@ export default class App extends Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      'gotham-black': require('../assets/fonts/Gotham-Black.ttf')
+      'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
+      'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
     });
 
     this.setState({ fontLoaded: true });

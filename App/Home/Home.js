@@ -88,10 +88,14 @@ export default class Home extends Component {
 
         {api ? (
           <View>
-            <Text style={styles.ohShit}>
+            <Text style={styles.shit}>
               Shit! You'll smoke{' '}
               <Text style={styles.cigarettesCount}>
-                {pm25ToCigarettes(api.iaqi.pm25.v)} cigarettes
+                {pm25ToCigarettes(api.iaqi.pm25.v)} cigarette{pm25ToCigarettes(
+                  api.iaqi.pm25.v
+                ) === 1
+                  ? ''
+                  : 's'}
               </Text>{' '}
               today.
             </Text>
@@ -115,7 +119,7 @@ export default class Home extends Component {
 
         <TouchableOpacity onPress={this.handleAboutShow}>
           <Text style={styles.footer}>
-            Click here to understand how we did the math.
+            Click to understand how we did the math.
           </Text>
         </TouchableOpacity>
 
@@ -138,8 +142,9 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   cigarettesCount: {
+    color: theme.primaryColor,
     fontFamily: 'gotham-black',
-    fontSize: 64
+    fontSize: 50
   },
   container: {
     backgroundColor: 'white',
@@ -151,10 +156,10 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   footer: {
-    color: theme.primaryColor,
+    color: theme.secondaryTextColor,
+    fontFamily: 'gotham-book',
     fontSize: 11,
-    marginBottom: 21,
-    textDecorationLine: 'underline'
+    marginBottom: 22
   },
   header: {
     flexDirection: 'row'
@@ -163,16 +168,22 @@ const styles = StyleSheet.create({
     marginLeft: 11,
     marginTop: 3
   },
-  ohShit: {
+  shit: {
+    color: theme.textColor,
     fontFamily: 'gotham-black',
-    fontSize: 48
+    fontSize: 50
   },
   subtitle: {
+    color: theme.secondaryTextColor,
+    fontFamily: 'gotham-book',
+    fontSize: 10,
+    letterSpacing: 0.77,
     marginTop: 11
   },
   title: {
     color: theme.textColor,
-    fontSize: 18,
+    fontSize: 12,
+    fontFamily: 'gotham-black',
     letterSpacing: 3.14
   }
 });
