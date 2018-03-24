@@ -10,7 +10,8 @@ export default class App extends Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      'gotham-black': require('../assets/fonts/Gotham-Black.ttf')
+      'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
+      'helvetica-regular': require('../assets/fonts/Helvetica-Regular.ttf')
     });
 
     this.setState({ fontLoaded: true });
