@@ -3,6 +3,8 @@ import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import getCorrectLatLng from './utils/getCorrectLatLng';
+import Header from '../Header';
+import * as theme from '../utils/theme';
 
 export default class Map extends Component {
   handleRef = ref => {
@@ -14,7 +16,7 @@ export default class Map extends Component {
   };
 
   render() {
-    const { gps, onRequestClose, station, ...rest } = this.props;
+    const { api, gps, onRequestClose, station, ...rest } = this.props;
 
     const { latitude, longitude } = getCorrectLatLng(gps, station);
 
@@ -26,6 +28,7 @@ export default class Map extends Component {
         {...rest}
       >
         <View style={styles.container}>
+          <Header api={api} onLocationClick={onRequestClose} />
           <MapView
             style={styles.map}
             initialRegion={{
@@ -42,9 +45,6 @@ export default class Map extends Component {
               title={station.title}
             />
           </MapView>
-          <TouchableOpacity onPress={onRequestClose}>
-            <Text>BACK</Text>
-          </TouchableOpacity>
         </View>
       </Modal>
     );
@@ -53,7 +53,7 @@ export default class Map extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    ...theme.fullScreen
   },
   map: {
     flex: 1

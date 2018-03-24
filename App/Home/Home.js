@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Alert,
   ActivityIndicator,
-  Image,
   Modal,
   StyleSheet,
   Text,
@@ -14,7 +13,7 @@ import axios from 'axios';
 import About from '../About';
 import config from '../config.json';
 import getCurrentPosition from './utils/getCurrentPosition';
-import location from '../../assets/images/location.png';
+import Header from '../Header';
 import Map from '../Map';
 import pm25ToCigarettes from './utils/pm25ToCigarettes';
 import * as theme from '../utils/theme';
@@ -64,30 +63,10 @@ export default class Home extends Component {
     const { api, gps, isAboutVisible, isMapVisible } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={this.handleMapShow}>
-            <Image source={location} />
-          </TouchableOpacity>
-          <View style={styles.headerTitleGroup}>
-            <Text style={styles.title}>
-              {api
-                ? api.city.name.toUpperCase()
-                : this.renderLoadingText().toUpperCase()}
-            </Text>
-            {api && (
-              <View>
-                <Text style={styles.subtitle}>
-                  {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
-                  {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
-                  {api.time.s.split(' ')[0].replace(/-/g, '/')} &bull; PM
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
+        <Header api={api} onLocationClick={this.handleMapShow} />
 
         {api ? (
-          <View>
+          <View style={styles.main}>
             <Text style={styles.shit}>
               Shit! You'll smoke{' '}
               <Text style={styles.cigarettesCount}>
@@ -100,6 +79,7 @@ export default class Home extends Component {
               today.
             </Text>
             <Map
+              api={api}
               gps={gps}
               station={{
                 description: api.attributions.length
@@ -147,43 +127,23 @@ const styles = StyleSheet.create({
     fontSize: 50
   },
   container: {
-    backgroundColor: 'white',
-    flex: 1,
+    ...theme.fullScreen,
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    paddingBottom: 10,
-    paddingHorizontal: 17,
-    paddingTop: 50
+    justifyContent: 'space-between'
   },
   footer: {
+    ...theme.withPadding,
     color: theme.secondaryTextColor,
     fontFamily: 'gotham-book',
     fontSize: 11,
     marginBottom: 22
   },
-  header: {
-    flexDirection: 'row'
-  },
-  headerTitleGroup: {
-    marginLeft: 11,
-    marginTop: 3
+  main: {
+    ...theme.withPadding
   },
   shit: {
     color: theme.textColor,
     fontFamily: 'gotham-black',
     fontSize: 50
-  },
-  subtitle: {
-    color: theme.secondaryTextColor,
-    fontFamily: 'gotham-book',
-    fontSize: 10,
-    letterSpacing: 0.77,
-    marginTop: 11
-  },
-  title: {
-    color: theme.textColor,
-    fontSize: 12,
-    fontFamily: 'gotham-black',
-    letterSpacing: 3.14
   }
 });
