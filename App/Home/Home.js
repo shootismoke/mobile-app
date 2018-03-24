@@ -60,15 +60,27 @@ export default class Home extends Component {
   handleMapShow = () => this.setState({ isMapVisible: true });
 
   render() {
-    const { api, gps, isAboutVisible, isMapVisible } = this.state;
+    const {
+      api,
+      gps,
+      isAboutVisible,
+      isMapVisible,
+      loadingApi,
+      loadingGps
+    } = this.state;
     return (
       <View style={styles.container}>
-        <Header api={api} onLocationClick={this.handleMapShow} />
+        <Header
+          api={api}
+          loadingApi={loadingApi}
+          loadingGps={loadingGps}
+          onLocationClick={this.handleMapShow}
+        />
 
         {api ? (
           <View style={styles.main}>
             <Text style={styles.shit}>
-              Shit! You'll smoke{' '}
+              {this.renderShit()}! You'll smoke{' '}
               <Text style={styles.cigarettesCount}>
                 {pm25ToCigarettes(api.iaqi.pm25.v)} cigarette{pm25ToCigarettes(
                   api.iaqi.pm25.v
@@ -108,15 +120,14 @@ export default class Home extends Component {
     );
   }
 
-  renderLoadingText = () => {
-    const { loadingApi, loadingGps } = this.state;
-    if (loadingGps) {
-      return 'Getting GPS coordinates...';
-    }
-    if (loadingApi) {
-      return 'Fetching air data...';
-    }
-    return '';
+  renderShit = () => {
+    const { api } = this.state;
+    const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
+
+    if (cigarettes <= 1) return 'Oh';
+    if (cigarettes < 5) return 'Shit';
+    if (cigarettes < 15) return 'Fuck';
+    return 'WTF';
   };
 }
 
@@ -133,9 +144,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     ...theme.withPadding,
-    color: theme.secondaryTextColor,
-    fontFamily: 'gotham-book',
-    fontSize: 11,
+    ...theme.text,
+    ...theme.link,
     marginBottom: 22
   },
   main: {

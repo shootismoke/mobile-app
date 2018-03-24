@@ -5229,6 +5229,12 @@ react-devtools-core@3.0.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-action-button@^2.8.4:
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/react-native-action-button/-/react-native-action-button-2.8.4.tgz#6c5ef988f6dc129a1e2d65e964dc38373a653b4f"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"

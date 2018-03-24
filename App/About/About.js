@@ -1,85 +1,91 @@
 import React, { Component } from 'react';
 import {
+  Image,
   Linking,
   Modal,
-  ScrollView,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
 
+import back from '../../assets/images/back.png';
+import cigarette from '../../assets/images/cigarette.png';
+import * as theme from '../utils/theme';
+
 export default class About extends Component {
-  handleOpenGithub = () => Linking.openURL('http://github.com');
+  handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
+
+  handleOpenGithub = () =>
+    Linking.openURL('https://github.com/amaurymartiny/ohshitismoke');
+
+  handleOpenMarcelo = () =>
+    Linking.openURL('https://www.behance.net/marceloscoelho');
 
   render() {
     const { onRequestClose, ...rest } = this.props;
 
     return (
-      <Modal
-        animationType="slide"
-        onRequestClose={onRequestClose}
-        transparent={true}
-        {...rest}
-      >
+      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
-          <ScrollView style={styles.text}>
-            <Text style={styles.title}>How is the equivalence calculated?</Text>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              pellentesque odio eu elit rhoncus, et malesuada quam gravida.
-              Pellentesque vehicula eros ac velit vestibulum, id facilisis
-              tellus aliquam. Donec sit amet viverra lectus. Nam quis velit
-              gravida ante ornare consequat nec id dolor. Phasellus et lectus ac
-              dolor semper dictum ac nec lectus. Nullam est lectus, lobortis at
-              mattis placerat, interdum ac dui. Etiam at finibus mi. Fusce
-              consectetur molestie leo sit amet consectetur. Phasellus ut massa
-              orci. Ut quis commodo nunc. Duis egestas tempor eros. Donec
-              tristique condimentum dolor id sodales. Curabitur fermentum rutrum
-              imperdiet. Cras vitae est eget ex ultrices suscipit. Donec
-              bibendum nec justo eu convallis. Nunc pellentesque aliquet
-              interdum. Nullam non nisl gravida, placerat diam a, finibus
-              tellus. Vivamus et faucibus arcu. Etiam dui felis, ultricies
-              mattis tristique quis, varius sed libero. Pellentesque iaculis est
-              sed lectus tristique dapibus. Etiam neque risus, scelerisque sed
-              maximus a, blandit nec urna. Suspendisse vitae neque ut risus
-              blandit interdum in quis sem. Duis fermentum mauris ac ante
-              imperdiet suscipit. Curabitur eu nunc commodo lectus imperdiet
-              rhoncus. Donec viverra, tellus in aliquet porttitor, erat ipsum
-              molestie massa, vitae pretium arcu metus id arcu. Fusce
-              condimentum ipsum ac fringilla lobortis. Quisque a velit tempus,
-              tincidunt nibh in, vestibulum neque. Nunc suscipit luctus metus id
-              semper. Duis fermentum est bibendum dictum tincidunt. Integer
-              vestibulum porta ante vel tincidunt. Integer luctus eget risus eu
-              egestas. In dictum gravida est non gravida. In cursus id magna
-              tempus cursus. Aenean et ultricies ipsum, aliquet gravida velit.
-              Pellentesque ornare vitae ante a pulvinar. Praesent dui diam,
-              condimentum sed eros vitae, bibendum semper leo. Vivamus
-              ullamcorper ornare rutrum. Integer hendrerit metus ligula, non
-              vehicula lorem euismod vitae. Nulla gravida maximus eleifend.
-              Phasellus vel lobortis ligula. Pellentesque habitant morbi
-              tristique senectus et netus et malesuada fames ac turpis egestas.
-              Vestibulum blandit ultricies eros, a feugiat risus sodales et.
-              Etiam semper luctus magna dapibus ullamcorper. Praesent congue
-              urna in arcu tristique, a laoreet risus mollis. Cras ut velit ac
-              orci volutpat interdum. Curabitur congue consectetur ultricies.
-              Maecenas ipsum ex, porta sed nisi vel, sodales vestibulum urna.
-              Duis eget dapibus leo. Aenean lobortis commodo magna id interdum.
-              Mauris ut commodo nunc. Praesent tristique diam in placerat
-              ultrices. Mauris vitae sapien ac nunc maximus vehicula.
-            </Text>
-            <Text style={styles.title}>Credits</Text>
-            <Text>Design by Marcelo S. Coelho.</Text>
-            <Text>Development by Amaury Martiny.</Text>
-            <Text>
-              Get in touch with us on{' '}
-              <Text onPress={this.handleOpenGithub}>Github</Text> or at
-              mail@gmail.com.
-            </Text>
-            <TouchableOpacity onPress={onRequestClose}>
-              <Text>BACK</Text>
+          <View stlye={styles.header}>
+            <TouchableOpacity
+              onPress={onRequestClose}
+              style={styles.backButton}
+            >
+              <Image source={back} />
+              <Text style={styles.backText}>Back</Text>
             </TouchableOpacity>
-          </ScrollView>
+          </View>
+          <View style={styles.about}>
+            <Text style={styles.aboutTitle}>About</Text>
+            <Text style={styles.aboutDescription}>
+              This app was inspired by Berkeley Earth’s findings about the
+              equivalence between air pollution and cigarette smoking. The rule
+              of thumb is simple: one cigarette per day is the rough equivalent
+              of a PM2.5 level of 22 <Text style={styles.micro}>&micro;</Text>g/m3
+              [1].
+            </Text>
+            <View style={styles.box}>
+              <View style={styles.equivalence}>
+                <View style={styles.statistics}>
+                  <Image source={cigarette} style={styles.cigarette} />
+                  <Text style={styles.value}> </Text>
+                  <Text style={styles.label}>per day</Text>
+                </View>
+                <Text style={styles.equal}>=</Text>
+                <View style={styles.statistics}>
+                  <Text style={styles.value}>22</Text>
+                  <Text style={styles.label}>
+                    <Text style={styles.micro}>&micro;</Text>g/m3 PM2.5
+                  </Text>
+                </View>
+              </View>
+              <Text style={styles.boxDescription}>
+                Atmospheric particulate matter (PM) that have a diameter of less
+                than 2.5 micrometers, with increased chances of inhalation by
+                living beings.
+              </Text>
+            </View>
+          </View>
+          <View style={styles.credits}>
+            <Text style={styles.creditsTitle}>Credits</Text>
+            <Text style={styles.creditsDescription}>
+              Concept &amp; Development by{' '}
+              <Text onPress={this.handleOpenAmaury} style={theme.link}>
+                Amaury Martiny
+              </Text>.{'\n'}
+              Design &amp; Copy by{' '}
+              <Text onPress={this.handleOpenMarcelo} style={theme.link}>
+                Marcelo S. Coelho
+              </Text>.{'\n'}
+              {'\n'}
+              <Text onPress={this.handleOpenGithub} style={theme.link}>
+                Available on Github
+              </Text>.
+            </Text>
+          </View>
         </View>
       </Modal>
     );
@@ -87,20 +93,99 @@ export default class About extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  about: {},
+  aboutDescription: {
+    ...theme.text
+  },
+  aboutTitle: {
+    ...theme.title,
+    fontSize: 36,
+    marginBottom: 12
+  },
+  backButton: {
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    paddingBottom: 10
+    flexDirection: 'row'
   },
-  text: {
+  backText: {
+    color: theme.secondaryTextColor,
+    fontFamily: 'gotham-book',
+    fontSize: 14,
+    marginLeft: 9
+  },
+  box: {
+    alignItems: 'center',
+    borderColor: '#EAEAEA',
+    borderRadius: 8,
+    borderWidth: 1,
     backgroundColor: 'white',
-    paddingHorizontal: 10
+    marginTop: 20,
+    marginBottom: 10,
+    padding: 10
   },
-  title: {
+  boxDescription: {
+    ...theme.text,
+    fontSize: 9,
+    marginTop: 15
+  },
+  cigarette: {
+    left: -24,
+    position: 'absolute'
+  },
+  container: {
+    ...theme.fullScreen,
+    ...theme.withPadding,
+    backgroundColor: '#FAFAFC',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  credits: {
+    marginBottom: 38
+  },
+  creditsDescription: {
+    ...theme.text
+  },
+  creditsTitle: {
+    ...theme.title,
     fontSize: 20,
-    fontWeight: 'bold'
+    marginBottom: 12
+  },
+  equal: {
+    ...theme.text,
+    color: theme.secondaryTextColor,
+    fontSize: 44,
+    lineHeight: 44,
+    marginHorizontal: 18
+  },
+  equivalence: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  header: {
+    marginTop: 23
+  },
+  label: {
+    ...theme.title,
+    color: theme.secondaryTextColor,
+    fontSize: 12,
+    fontWeight: '900'
+  },
+  micro: {
+    ...Platform.select({
+      ios: {
+        fontFamily: 'Georgia'
+      },
+      android: {
+        fontFamily: 'normal'
+      }
+    })
+  },
+  statistics: {
+    alignItems: 'center'
+  },
+  value: {
+    ...theme.text,
+    color: theme.secondaryTextColor,
+    fontSize: 44,
+    lineHeight: 44
   }
 });

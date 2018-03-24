@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ActionButton from 'react-native-action-button';
 import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -21,30 +22,35 @@ export default class Map extends Component {
     const { latitude, longitude } = getCorrectLatLng(gps, station);
 
     return (
-      <Modal
-        animationType="fade"
-        onRequestClose={onRequestClose}
-        transparent={true}
-        {...rest}
-      >
+      <Modal animationType="fade" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
           <Header api={api} onLocationClick={onRequestClose} />
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude,
-              longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
-            onMapReady={this.handleShowCallout}
-          >
-            <MapView.Marker
-              coordinate={{ latitude, longitude }}
-              ref={this.handleRef}
-              title={station.title}
-            />
-          </MapView>
+          <View style={styles.mapContainer}>
+            <MapView
+              initialRegion={{
+                latitude,
+                longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421
+              }}
+              onMapReady={this.handleShowCallout}
+              style={styles.map}
+            >
+              <MapView.Marker
+                color={theme.primaryColor}
+                coordinate={{ latitude, longitude }}
+                ref={this.handleRef}
+                title={station.title}
+                description={station.description}
+              />
+            </MapView>
+          </View>
+          <ActionButton
+            buttonColor={theme.primaryColor}
+            buttonText="&times;"
+            onPress={onRequestClose}
+            position="center"
+          />
         </View>
       </Modal>
     );
@@ -57,5 +63,12 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1
+  },
+  mapContainer: {
+    flex: 1,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.26,
+    shadowRadius: 1
   }
 });

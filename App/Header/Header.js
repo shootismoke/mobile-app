@@ -24,7 +24,7 @@ export default class Header extends Component {
     const { api, onLocationClick } = this.props;
     return (
       <View style={styles.header}>
-        <TouchableOpacity onPress={onLocationClick}>
+        <TouchableOpacity disabled={!api} onPress={onLocationClick}>
           <Image source={location} />
         </TouchableOpacity>
         <View style={styles.headerTitleGroup}>
@@ -38,7 +38,7 @@ export default class Header extends Component {
               <Text style={styles.subtitle}>
                 {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
                 {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
-                {api.time.s.split(' ')[0].replace(/-/g, '/')} &bull; PM
+                {api.time.s.split(' ')[0].replace(/-/g, '/')}
               </Text>
             </View>
           )}
@@ -48,7 +48,7 @@ export default class Header extends Component {
   }
 
   renderLoadingText = () => {
-    const { loadingApi, loadingGps } = this.state;
+    const { loadingApi, loadingGps } = this.props;
     if (loadingGps) {
       return 'Getting GPS coordinates...';
     }
@@ -72,16 +72,13 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    color: theme.secondaryTextColor,
-    fontFamily: 'gotham-book',
+    ...theme.text,
     fontSize: 10,
-    letterSpacing: 0.77,
     marginTop: 11
   },
   title: {
-    color: theme.textColor,
+    ...theme.title,
     fontSize: 12,
-    fontFamily: 'gotham-black',
     letterSpacing: 3.14
   }
 });
