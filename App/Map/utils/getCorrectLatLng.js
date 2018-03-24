@@ -11,7 +11,7 @@ const getCorrectLatLng = (gps, station) => {
     Math.abs(gps.latitude - station.longitude) +
     Math.abs(gps.longitude - station.latitude);
 
-  if (d1 < d1) return station;
+  if (d1 < d2) return station;
   return {
     ...station,
     latitude: station.longitude,

@@ -44,7 +44,6 @@ export default class Home extends Component {
     );
     this.setState({ loadingApi: false });
     if (response.status === 'ok') {
-      console.log(response.data.time.s);
       this.setState({ api: response.data });
     } else {
       // TODO do something
@@ -64,23 +63,23 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
+          <TouchableOpacity onPress={this.handleMapShow}>
+            <Image source={location} />
+          </TouchableOpacity>
           <View style={styles.headerTitleGroup}>
-            <TouchableOpacity onPress={this.handleMapShow}>
-              <Image source={location} />
-            </TouchableOpacity>
             <Text style={styles.title}>
               {api
                 ? api.city.name.toUpperCase()
                 : this.renderLoadingText().toUpperCase()}
             </Text>
+            {api && (
+              <View>
+                <Text style={styles.subtitle}>
+                  {format(new Date(api.time.s), 'h:mma')}
+                </Text>
+              </View>
+            )}
           </View>
-          {api && (
-            <View>
-              <Text style={styles.subtitle}>
-                {format(new Date(api.time.s), 'h:mma')}
-              </Text>
-            </View>
-          )}
         </View>
 
         {api ? (
@@ -153,24 +152,24 @@ const styles = StyleSheet.create({
     marginBottom: 21,
     textDecorationLine: 'underline'
   },
+  header: {
+    flexDirection: 'row'
+  },
   headerTitleGroup: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginLeft: 11
+    marginLeft: 11,
+    marginTop: 5
   },
   ohShit: {
     fontFamily: 'gotham-black',
     fontSize: 48
   },
   subtitle: {
-    marginLeft: 50,
     marginTop: 11
   },
   title: {
     color: theme.textColor,
     fontFamily: 'helvetica-regular',
     fontSize: 18,
-    marginLeft: 11,
     letterSpacing: 3.14
   }
 });

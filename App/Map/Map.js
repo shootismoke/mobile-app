@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import getCorrectLatLng from './utils/getCorrectLatLng';
 
@@ -14,12 +14,17 @@ export default class Map extends Component {
   };
 
   render() {
-    const { gps, station, ...rest } = this.props;
+    const { gps, onRequestClose, station, ...rest } = this.props;
 
     const { latitude, longitude } = getCorrectLatLng(gps, station);
 
     return (
-      <Modal animationType="fade" transparent={true} {...rest}>
+      <Modal
+        animationType="fade"
+        onRequestClose={onRequestClose}
+        transparent={true}
+        {...rest}
+      >
         <View style={styles.container}>
           <MapView
             style={styles.map}
@@ -37,6 +42,9 @@ export default class Map extends Component {
               title={station.title}
             />
           </MapView>
+          <TouchableOpacity onPress={onRequestClose}>
+            <Text>BACK</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     );
