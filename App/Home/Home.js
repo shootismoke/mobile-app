@@ -8,12 +8,12 @@ import {
   View
 } from 'react-native';
 import axios from 'axios';
-import config from '../config.json';
-import getCurrentPosition from './utils/getCurrentPosition';
-import pm25ToCigarettes from './utils/pm25ToCigarettes';
 
 import About from '../About';
+import config from '../config.json';
+import getCurrentPosition from './utils/getCurrentPosition';
 import Map from '../Map';
+import pm25ToCigarettes from './utils/pm25ToCigarettes';
 
 export default class Home extends Component {
   state = {
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 48
   },
   title: {
+    fontFamily: 'gotham-black',
     fontSize: 24,
     textAlign: 'center'
   }
