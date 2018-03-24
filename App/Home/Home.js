@@ -82,8 +82,8 @@ export default class Home extends Component {
                 description: api.attributions.length
                   ? api.attributions[0].name
                   : null,
-                latitude: api.city.geo[1],
-                longitude: api.city.geo[0],
+                latitude: api.city.geo[0],
+                longitude: api.city.geo[1],
                 title: api.city.name
               }}
               onRequestClose={this.handleMapHide}
@@ -97,8 +97,8 @@ export default class Home extends Component {
         <TouchableOpacity onPress={this.handleAboutShow}>
           <Text style={styles.footer}>
             &#9432; The equivalence between air pollution and cigarettes has
-            been established by two physicists from Berkeley Group. Click to
-            read more.
+            been established by two physicists from Berkeley. Click to read
+            more.
           </Text>
         </TouchableOpacity>
 

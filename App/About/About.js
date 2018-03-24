@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -12,10 +13,15 @@ export default class About extends Component {
   handleOpenGithub = () => Linking.openURL('http://github.com');
 
   render() {
-    const { ...rest } = this.props;
+    const { onRequestClose, ...rest } = this.props;
 
     return (
-      <Modal animationType="slide" transparent={true} {...rest}>
+      <Modal
+        animationType="slide"
+        onRequestClose={onRequestClose}
+        transparent={true}
+        {...rest}
+      >
         <View style={styles.container}>
           <ScrollView style={styles.text}>
             <Text style={styles.title}>How is the equivalence calculated?</Text>
@@ -70,6 +76,9 @@ export default class About extends Component {
               <Text onPress={this.handleOpenGithub}>Github</Text> or at
               mail@gmail.com.
             </Text>
+            <TouchableOpacity onPress={onRequestClose}>
+              <Text>BACK</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </Modal>
