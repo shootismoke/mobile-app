@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   ActivityIndicator,
   Image,
   Modal,
@@ -9,7 +10,6 @@ import {
   View
 } from 'react-native';
 import axios from 'axios';
-import format from 'date-fns/format';
 
 import About from '../About';
 import config from '../config.json';
@@ -34,20 +34,22 @@ export default class Home extends Component {
   }
 
   async fetchData() {
-    this.setState({ api: null, loadingGps: true });
-    const { coords } = await getCurrentPosition();
-    this.setState({ gps: coords, loadingApi: true, loadingGps: false });
-    const { data: response } = await axios.get(
-      `http://api.waqi.info/feed/geo:${coords.latitude};${
-        coords.longitude
-      }/?token=${config.waqiToken}`
-    );
-    this.setState({ loadingApi: false });
-    if (response.status === 'ok') {
-      this.setState({ api: response.data });
-    } else {
-      // TODO do something
-    }
+    try {
+      this.setState({ api: null, loadingGps: true });
+      const { coords } = await getCurrentPosition();
+      this.setState({ gps: coords, loadingApi: true, loadingGps: false });
+      const { data: response } = await axios.get(
+        `http://api.waqi.info/feed/geo:${coords.latitude};${
+          coords.longitude
+        }/?token=${config.waqiToken}`
+      );
+      this.setState({ loadingApi: false });
+      if (response.status === 'ok') {
+        this.setState({ api: response.data });
+      } else {
+        throw new Error(response.data);
+      }
+    } catch (err) {}
   }
 
   handleAboutHide = () => this.setState({ isAboutVisible: false });
@@ -75,7 +77,9 @@ export default class Home extends Component {
             {api && (
               <View>
                 <Text style={styles.subtitle}>
-                  {format(new Date(api.time.s), 'h:mma')}
+                  {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
+                  {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
+                  {api.time.s.split(' ')[0].replace(/-/g, '/')} &bull; PM
                 </Text>
               </View>
             )}
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
   },
   headerTitleGroup: {
     marginLeft: 11,
-    marginTop: 5
+    marginTop: 3
   },
   ohShit: {
     fontFamily: 'gotham-black',
@@ -168,7 +172,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.textColor,
-    fontFamily: 'helvetica-regular',
     fontSize: 18,
     letterSpacing: 3.14
   }
