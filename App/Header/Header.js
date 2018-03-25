@@ -20,14 +20,15 @@ export default class Header extends Component {
     const { api, hidden, onLocationClick } = this.props;
     return (
       <View style={[styles.header, hidden ? styles.hidden : null]}>
-        <View style={styles.titleGroup}>
-          <TouchableOpacity disabled={!api} onPress={onLocationClick}>
+        <TouchableOpacity disabled={!api} onPress={onLocationClick}>
+          <View style={styles.titleGroup}>
             <Image source={location} />
-          </TouchableOpacity>
-          <Text style={styles.title}>
-            {api ? api.city.name.toUpperCase() : 'Loading...'}
-          </Text>
-        </View>
+
+            <Text style={styles.title}>
+              {api ? api.city.name.toUpperCase() : 'Loading...'}
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.subtitleGroup}>
           {api ? (
             <Text style={styles.subtitle}>
