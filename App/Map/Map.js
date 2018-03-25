@@ -59,7 +59,8 @@ export default class Map extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    ...theme.fullScreen
+    ...theme.fullScreen,
+    ...theme.modal
   },
   map: {
     flex: 1

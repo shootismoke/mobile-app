@@ -1,4 +1,5 @@
 import { Constants } from 'expo';
+import { Platform } from 'react-native';
 
 export const primaryColor = '#F2A972';
 
@@ -17,6 +18,12 @@ export const link = {
   fontFamily: 'gotham-book',
   textDecorationLine: 'underline'
 };
+
+export const modal = Platform.select({
+  android: {
+    marginTop: -Constants.statusBarHeight // On Android the modal only goes up until the status bar
+  }
+});
 
 export const text = {
   color: secondaryTextColor,
