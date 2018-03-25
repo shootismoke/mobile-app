@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-  ActivityIndicator,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
 
 import About from '../About';
@@ -23,9 +15,7 @@ export default class Home extends Component {
     api: null,
     gps: null,
     isAboutVisible: false,
-    isMapVisible: false,
-    loadingApi: false,
-    loadingGps: false
+    isMapVisible: false
   };
 
   componentWillMount() {
@@ -36,13 +26,12 @@ export default class Home extends Component {
     try {
       this.setState({ api: null, loadingGps: true });
       const { coords } = await getCurrentPosition();
-      this.setState({ gps: coords, loadingApi: true, loadingGps: false });
+      this.setState({ gps: coords });
       const { data: response } = await axios.get(
         `http://api.waqi.info/feed/geo:${coords.latitude};${
           coords.longitude
         }/?token=${config.waqiToken}`
       );
-      this.setState({ loadingApi: false });
       if (response.status === 'ok') {
         this.setState({ api: response.data });
       } else {
@@ -60,62 +49,36 @@ export default class Home extends Component {
   handleMapShow = () => this.setState({ isMapVisible: true });
 
   render() {
-    const {
-      api,
-      gps,
-      isAboutVisible,
-      isMapVisible,
-      loadingApi,
-      loadingGps
-    } = this.state;
+    const { api, gps, isAboutVisible, isMapVisible } = this.state;
     return (
       <View style={styles.container}>
-        <Header
-          api={api}
-          loadingApi={loadingApi}
-          loadingGps={loadingGps}
-          onLocationClick={this.handleMapShow}
-        />
+        <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
 
-        {api ? (
-          <View style={styles.main}>
-            <Text style={styles.shit}>
-              {this.renderShit()}! {this.renderPresentPast()}{' '}
-              <Text style={styles.cigarettesCount}>
-                {pm25ToCigarettes(api.iaqi.pm25.v)} cigarette{pm25ToCigarettes(
-                  api.iaqi.pm25.v
-                ) === 1
-                  ? ''
-                  : 's'}
-              </Text>{' '}
-              today.
-            </Text>
-            <Map
-              api={api}
-              gps={gps}
-              station={{
-                description: api.attributions.length
-                  ? api.attributions[0].name
-                  : null,
-                latitude: api.city.geo[0],
-                longitude: api.city.geo[1],
-                title: api.city.name
-              }}
-              onRequestClose={this.handleMapHide}
-              visible={isMapVisible}
-            />
-          </View>
-        ) : (
-          <ActivityIndicator />
-        )}
+        <View style={styles.main}>{this.renderText()}</View>
 
         <TouchableOpacity onPress={this.handleAboutShow}>
-          <Text style={styles.footer}>
+          <Text style={[styles.footer, api ? null : styles.hidden]}>
             Click to understand how we did the math.
           </Text>
         </TouchableOpacity>
 
         <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
+        {api && (
+          <Map
+            api={api}
+            gps={gps}
+            station={{
+              description: api.attributions.length
+                ? api.attributions[0].name
+                : null,
+              latitude: api.city.geo[0],
+              longitude: api.city.geo[1],
+              title: api.city.name
+            }}
+            onRequestClose={this.handleMapHide}
+            visible={isMapVisible}
+          />
+        )}
       </View>
     );
   }
@@ -137,6 +100,38 @@ export default class Home extends Component {
     if (cigarettes < 15) return 'Fuck';
     return 'WTF';
   };
+
+  renderText = () => {
+    const { api, gps } = this.state;
+
+    if (!gps)
+      return (
+        <Text style={styles.shit}>
+          Fetching GPS coordinates<Text style={styles.dots}>{'\n'}...</Text>
+        </Text>
+      );
+
+    if (!api)
+      return (
+        <Text style={styles.shit}>
+          Retrieving air data<Text style={styles.dots}>{'\n'}...</Text>
+        </Text>
+      );
+
+    return (
+      <Text style={styles.shit}>
+        {this.renderShit()}! {this.renderPresentPast()}{' '}
+        <Text style={styles.cigarettesCount}>
+          {pm25ToCigarettes(api.iaqi.pm25.v)} cigarette{pm25ToCigarettes(
+            api.iaqi.pm25.v
+          ) === 1
+            ? ''
+            : 's'}
+        </Text>{' '}
+        today.
+      </Text>
+    );
+  };
 }
 
 const styles = StyleSheet.create({
@@ -150,11 +145,17 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
+  dots: {
+    color: theme.primaryColor
+  },
   footer: {
     ...theme.withPadding,
     ...theme.text,
     ...theme.link,
     marginBottom: 22
+  },
+  hidden: {
+    opacity: 0
   },
   main: {
     ...theme.withPadding

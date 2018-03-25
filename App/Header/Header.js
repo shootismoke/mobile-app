@@ -16,47 +16,32 @@ import Map from '../Map';
 import * as theme from '../utils/theme';
 
 export default class Header extends Component {
-  state = {
-    api: null
-  };
-
   render() {
-    const { api, onLocationClick } = this.props;
+    const { api, hidden, onLocationClick } = this.props;
     return (
-      <View style={styles.header}>
+      <View style={[styles.header, hidden ? styles.hidden : null]}>
         <View style={styles.titleGroup}>
           <TouchableOpacity disabled={!api} onPress={onLocationClick}>
             <Image source={location} />
           </TouchableOpacity>
           <Text style={styles.title}>
-            {api
-              ? api.city.name.toUpperCase()
-              : this.renderLoadingText().toUpperCase()}
+            {api ? api.city.name.toUpperCase() : 'Loading...'}
           </Text>
         </View>
-        {api && (
-          <View style={styles.subtitleGroup}>
+        <View style={styles.subtitleGroup}>
+          {api ? (
             <Text style={styles.subtitle}>
               {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
               {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
               {api.time.s.split(' ')[0].replace(/-/g, '/')}
             </Text>
-          </View>
-        )}
+          ) : (
+            <Text style={styles.subtitle}>Loading...</Text>
+          )}
+        </View>
       </View>
     );
   }
-
-  renderLoadingText = () => {
-    const { loadingApi, loadingGps } = this.props;
-    if (loadingGps) {
-      return 'Getting GPS coordinates...';
-    }
-    if (loadingApi) {
-      return 'Fetching air data...';
-    }
-    return '';
-  };
 }
 
 const styles = StyleSheet.create({
@@ -64,6 +49,9 @@ const styles = StyleSheet.create({
     marginTop: 23,
     marginBottom: 25,
     paddingHorizontal: 17
+  },
+  hidden: {
+    opacity: 0
   },
   titleGroup: {
     alignItems: 'center',
