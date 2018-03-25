@@ -24,25 +24,25 @@ export default class Header extends Component {
     const { api, onLocationClick } = this.props;
     return (
       <View style={styles.header}>
-        <TouchableOpacity disabled={!api} onPress={onLocationClick}>
-          <Image source={location} />
-        </TouchableOpacity>
-        <View style={styles.headerTitleGroup}>
+        <View style={styles.titleGroup}>
+          <TouchableOpacity disabled={!api} onPress={onLocationClick}>
+            <Image source={location} />
+          </TouchableOpacity>
           <Text style={styles.title}>
             {api
               ? api.city.name.toUpperCase()
               : this.renderLoadingText().toUpperCase()}
           </Text>
-          {api && (
-            <View>
-              <Text style={styles.subtitle}>
-                {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
-                {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
-                {api.time.s.split(' ')[0].replace(/-/g, '/')}
-              </Text>
-            </View>
-          )}
         </View>
+        {api && (
+          <View style={styles.subtitleGroup}>
+            <Text style={styles.subtitle}>
+              {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
+              {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
+              {api.time.s.split(' ')[0].replace(/-/g, '/')}
+            </Text>
+          </View>
+        )}
       </View>
     );
   }
@@ -61,24 +61,25 @@ export default class Header extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
     marginTop: 23,
     marginBottom: 25,
     paddingHorizontal: 17
   },
-  headerTitleGroup: {
-    marginLeft: 11,
+  titleGroup: {
+    alignItems: 'center',
+    flexDirection: 'row',
     marginTop: 3
   },
-
   subtitle: {
     ...theme.text,
     fontSize: 10,
+    marginLeft: 33, // Picutre width (22) + marginleft (11)
     marginTop: 11
   },
   title: {
     ...theme.title,
     fontSize: 12,
-    letterSpacing: 3.14
+    letterSpacing: 3.14,
+    marginLeft: 11
   }
 });
