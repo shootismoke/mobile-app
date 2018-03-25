@@ -80,7 +80,7 @@ export default class Home extends Component {
         {api ? (
           <View style={styles.main}>
             <Text style={styles.shit}>
-              {this.renderShit()}! You'll smoke{' '}
+              {this.renderShit()}! {this.renderPresentPast()}{' '}
               <Text style={styles.cigarettesCount}>
                 {pm25ToCigarettes(api.iaqi.pm25.v)} cigarette{pm25ToCigarettes(
                   api.iaqi.pm25.v
@@ -119,6 +119,14 @@ export default class Home extends Component {
       </View>
     );
   }
+
+  renderPresentPast = () => {
+    const { api } = this.state;
+    const time = api.time.s.split(':')[0];
+
+    if (time < 15) return "You'll smoke";
+    return 'You smoked';
+  };
 
   renderShit = () => {
     const { api } = this.state;
