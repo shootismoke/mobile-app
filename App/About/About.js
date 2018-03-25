@@ -17,6 +17,11 @@ import * as theme from '../utils/theme';
 export default class About extends Component {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
 
+  handleOpenArticle = () =>
+    Linking.openURL(
+      'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
+    );
+
   handleOpenGithub = () =>
     Linking.openURL('https://github.com/amaurymartiny/ohshitismoke');
 
@@ -29,7 +34,7 @@ export default class About extends Component {
     return (
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
-          <View stlye={styles.header}>
+          <View style={styles.header}>
             <TouchableOpacity
               onPress={onRequestClose}
               style={styles.backButton}
@@ -41,11 +46,13 @@ export default class About extends Component {
           <View style={styles.about}>
             <Text style={styles.aboutTitle}>About</Text>
             <Text style={styles.aboutDescription}>
-              This app was inspired by Berkeley Earth’s findings about the
-              equivalence between air pollution and cigarette smoking. The rule
-              of thumb is simple: one cigarette per day is the rough equivalent
-              of a PM2.5 level of 22 <Text style={styles.micro}>&micro;</Text>g/m3
-              [1].
+              This app was inspired by Berkeley Earth’s findings about the{' '}
+              <Text onPress={this.handleOpenArticle} style={theme.link}>
+                equivalence between air pollution and cigarette smoking
+              </Text>. The rule of thumb is simple: one cigarette per day is the
+              rough equivalent of a PM2.5 level of 22{' '}
+              <Text style={styles.micro}>&micro;</Text>g/m&sup3;
+              {' \u207D'}&sup1;{'\u207E'}.
             </Text>
             <View style={styles.box}>
               <View style={styles.equivalence}>
@@ -58,16 +65,22 @@ export default class About extends Component {
                 <View style={styles.statistics}>
                   <Text style={styles.value}>22</Text>
                   <Text style={styles.label}>
-                    <Text style={styles.micro}>&micro;</Text>g/m3 PM2.5
+                    <Text style={styles.micro}>&micro;</Text>g/m&sup3; PM2.5*
                   </Text>
                 </View>
               </View>
               <Text style={styles.boxDescription}>
-                Atmospheric particulate matter (PM) that have a diameter of less
-                than 2.5 micrometers, with increased chances of inhalation by
-                living beings.
+                *Atmospheric particulate matter (PM) that have a diameter of
+                less than 2.5 micrometers, with increased chances of inhalation
+                by living beings.
               </Text>
             </View>
+            <Text style={styles.articleLink}>
+              (1){' '}
+              <Text onPress={this.handleOpenArticle} style={theme.link}>
+                http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
+              </Text>
+            </Text>
           </View>
           <View style={styles.credits}>
             <Text style={styles.creditsTitle}>Credits</Text>
@@ -101,6 +114,10 @@ const styles = StyleSheet.create({
     ...theme.title,
     fontSize: 36,
     marginBottom: 12
+  },
+  articleLink: {
+    ...theme.text,
+    fontSize: 8
   },
   backButton: {
     alignItems: 'center',
