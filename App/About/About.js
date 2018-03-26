@@ -36,6 +36,7 @@ export default class About extends Component {
         <View style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity
+              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
               onPress={onRequestClose}
               style={styles.backButton}
             >

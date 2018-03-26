@@ -19,7 +19,6 @@ export default class Cigarette extends Component {
       case 'big':
         return {
           height: this.getMaxWidth() / ratio,
-          marginHorizontal: 5,
           width: this.getMaxWidth()
         };
       case 'medium':
@@ -80,26 +79,44 @@ export default class Cigarette extends Component {
     return (
       <View
         style={[
-          styles.container,
-          vertical
+          diagonal
             ? {
-                height: minWidth + length * (maxWidth - minWidth)
+                justifyContent: 'center',
+                height:
+                  (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
+                width:
+                  (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
               }
-            : {
-                width: minWidth + length * (maxWidth - minWidth)
-              },
-          diagonal ? styles.diagonal : null,
-          style
+            : null
         ]}
       >
-        <Image
-          source={vertical ? buttVertical : butt}
-          style={this.getButtStyle()}
-        />
-        <Image
-          source={vertical ? headVertical : head}
-          style={[styles.head, this.getHeadStyle()]}
-        />
+        <View
+          style={[
+            styles.container,
+            diagonal
+              ? {
+                  width: minWidth + length * (maxWidth - minWidth)
+                }
+              : vertical
+                ? {
+                    height: minWidth + length * (maxWidth - minWidth)
+                  }
+                : {
+                    width: minWidth + length * (maxWidth - minWidth)
+                  },
+            diagonal ? styles.diagonal : null,
+            style
+          ]}
+        >
+          <Image
+            source={vertical ? buttVertical : butt}
+            style={this.getButtStyle()}
+          />
+          <Image
+            source={vertical ? headVertical : head}
+            style={[styles.head, this.getHeadStyle()]}
+          />
+        </View>
       </View>
     );
   }
@@ -112,10 +129,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   diagonal: {
-    // Very empiric values
-    left: -40,
-    marginTop: 80,
-    top: -80,
     transform: [{ rotate: '45deg' }, { scale: 1 }]
   },
   head: {

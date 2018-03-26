@@ -30,7 +30,7 @@ export const text = {
   fontFamily: 'gotham-book',
   fontSize: 12,
   letterSpacing: 0.22,
-  lineHeight: 16,
+  lineHeight: 20,
   textAlign: 'justify'
 };
 
