@@ -57,13 +57,13 @@ export default class About extends Component {
             </Text>
             <View style={styles.box}>
               <View style={styles.equivalence}>
-                <View style={styles.statistics}>
+                <View style={styles.statisticsLeft}>
                   <Image source={cigarette} style={styles.cigarette} />
                   <Text style={styles.value}> </Text>
                   <Text style={styles.label}>per day</Text>
                 </View>
                 <Text style={styles.equal}>=</Text>
-                <View style={styles.statistics}>
+                <View style={styles.statisticsRight}>
                   <Text style={styles.value}>22</Text>
                   <Text style={styles.label}>
                     <Text style={styles.micro}>&micro;</Text>g/m&sup3; PM2.5*
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   cigarette: {
-    left: -24,
+    left: 16,
     position: 'absolute'
   },
   container: {
@@ -177,7 +177,8 @@ const styles = StyleSheet.create({
   },
   equivalence: {
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   header: {
     marginTop: 23
@@ -198,8 +199,14 @@ const styles = StyleSheet.create({
       }
     })
   },
-  statistics: {
-    alignItems: 'center'
+  statisticsLeft: {
+    alignItems: 'flex-end',
+    paddingRight: 10,
+    width: 90
+  },
+  statisticsRight: {
+    alignItems: 'center',
+    width: 90
   },
   value: {
     ...theme.text,
