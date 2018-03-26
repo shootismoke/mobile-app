@@ -151,13 +151,15 @@ const styles = StyleSheet.create({
     ...theme.withPadding,
     ...theme.text,
     ...theme.link,
+    fontSize: 14,
     marginBottom: 22
   },
   hidden: {
     opacity: 0
   },
   main: {
-    ...theme.withPadding
+    ...theme.withPadding,
+    height: 220 // Empiric
   },
   shit: {
     color: theme.textColor,

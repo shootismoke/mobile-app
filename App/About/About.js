@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
   boxDescription: {
     ...theme.text,
     fontSize: 9,
+    lineHeight: 16,
     marginTop: 15
   },
   cigarette: {

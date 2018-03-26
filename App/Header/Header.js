@@ -51,14 +51,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     ...theme.text,
-    fontSize: 10,
+    fontSize: 12,
     marginLeft: 33, // Picutre width (22) + marginleft (11)
     marginTop: 11
   },
   title: {
     ...theme.title,
-    fontSize: 12,
-    letterSpacing: 3.14,
+    fontSize: 15,
     marginLeft: 11
   }
 });

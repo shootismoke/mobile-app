@@ -50,6 +50,7 @@ export default class Map extends Component {
             buttonText="&times;"
             onPress={onRequestClose}
             position="center"
+            style={styles.button}
           />
         </View>
       </Modal>
@@ -58,6 +59,9 @@ export default class Map extends Component {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    elevation: 3
+  },
   container: {
     ...theme.fullScreen,
     ...theme.modal
