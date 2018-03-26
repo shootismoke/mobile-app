@@ -7,9 +7,9 @@ import * as theme from '../utils/theme';
 
 export default class Header extends Component {
   render() {
-    const { api, hidden, onLocationClick } = this.props;
+    const { api, hidden, onLocationClick, style } = this.props;
     return (
-      <View style={[styles.header, hidden ? styles.hidden : null]}>
+      <View style={[styles.header, hidden ? styles.hidden : null, style]}>
         <TouchableOpacity disabled={!api} onPress={onLocationClick}>
           <View style={styles.titleGroup}>
             <Image source={location} />
@@ -37,9 +37,10 @@ export default class Header extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    marginBottom: 15,
-    marginTop: 23,
-    paddingHorizontal: 17
+    backgroundColor: 'white',
+    paddingBottom: 15,
+    paddingHorizontal: 17,
+    paddingTop: 23
   },
   hidden: {
     opacity: 0

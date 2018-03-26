@@ -24,7 +24,11 @@ export default class Map extends Component {
     return (
       <Modal animationType="fade" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
-          <Header api={api} onLocationClick={onRequestClose} />
+          <Header
+            api={api}
+            onLocationClick={onRequestClose}
+            style={styles.header}
+          />
           <View style={styles.mapContainer}>
             <MapView
               initialRegion={{
@@ -50,7 +54,6 @@ export default class Map extends Component {
             buttonText="&times;"
             onPress={onRequestClose}
             position="center"
-            style={styles.button}
           />
         </View>
       </Modal>
@@ -59,12 +62,12 @@ export default class Map extends Component {
 }
 
 const styles = StyleSheet.create({
-  button: {
-    elevation: 3
-  },
   container: {
     ...theme.fullScreen,
     ...theme.modal
+  },
+  header: {
+    elevation: 2
   },
   map: {
     flex: 1
