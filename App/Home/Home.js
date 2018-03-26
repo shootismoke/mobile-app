@@ -3,6 +3,7 @@ import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
 
 import About from '../About';
+import Cigarettes from '../Cigarettes';
 import config from '../config.json';
 import getCurrentPosition from './utils/getCurrentPosition';
 import Header from '../Header';
@@ -54,7 +55,10 @@ export default class Home extends Component {
       <View style={styles.container}>
         <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
 
-        <View style={styles.main}>{this.renderText()}</View>
+        <View>
+          <Cigarettes api={api} style={theme.withPadding} />
+          <View style={styles.main}>{this.renderText()}</View>
+        </View>
 
         <TouchableOpacity onPress={this.handleAboutShow}>
           <Text style={[styles.footer, api ? null : styles.hidden]}>
@@ -118,15 +122,13 @@ export default class Home extends Component {
         </Text>
       );
 
+    const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
+
     return (
       <Text style={styles.shit}>
         {this.renderShit()}! {this.renderPresentPast()}{' '}
         <Text style={styles.cigarettesCount}>
-          {pm25ToCigarettes(api.iaqi.pm25.v)} cigarette{pm25ToCigarettes(
-            api.iaqi.pm25.v
-          ) === 1
-            ? ''
-            : 's'}
+          {cigarettes} cigarette{cigarettes === 1 ? '' : 's'}
         </Text>{' '}
         today.
       </Text>
@@ -136,13 +138,10 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   cigarettesCount: {
-    color: theme.primaryColor,
-    fontFamily: 'gotham-black',
-    fontSize: 50
+    color: theme.primaryColor
   },
   container: {
     ...theme.fullScreen,
-    flexDirection: 'column',
     justifyContent: 'space-between'
   },
   dots: {
@@ -163,6 +162,7 @@ const styles = StyleSheet.create({
   shit: {
     color: theme.textColor,
     fontFamily: 'gotham-black',
-    fontSize: 50
+    fontSize: 50,
+    marginTop: 23
   }
 });
