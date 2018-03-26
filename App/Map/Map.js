@@ -52,6 +52,7 @@ export default class Map extends Component {
           <ActionButton
             buttonColor={theme.primaryColor}
             buttonText="&times;"
+            elevation={3}
             onPress={onRequestClose}
             position="center"
           />
@@ -73,10 +74,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   mapContainer: {
-    flex: 1,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.26,
-    shadowRadius: 1
+    flex: 1
   }
 });
