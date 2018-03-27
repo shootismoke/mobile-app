@@ -37,7 +37,7 @@ export default class Header extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'white',
+    backgroundColor: theme.backgroundColor,
     paddingBottom: 15,
     paddingHorizontal: 17,
     paddingTop: 23

@@ -4,14 +4,6 @@
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
-      "splash": {
-        "ldpi": "assets/logos/android/mipmap-ldpi/ic-launcher.png",
-        "mdpi": "assets/logos/android/mipmap-mdpi/ic-launcher.png",
-        "hdpi": "assets/logos/android/mipmap-hdpi/ic-launcher.png",
-        "xhdpi": "assets/logos/android/mipmap-xhdpi/ic-launcher.png",
-        "xxhdpi": "assets/logos/android/mipmap-xxhdpi/ic-launcher.png",
-        "xxxhdpi": "assets/logos/android/mipmap-xxxhdpi/ic-launcher.png"
-      },
       "versionCode": 1
     },
     "assetBundlePatterns": ["assets/fonts/*", "assets/images/*"],
@@ -20,15 +12,16 @@
     "ios": {
       "buildNumber": "1.0.0",
       "bundleIdentifier": "com.shitismoke.app",
-      "icon": "assets/logos/ios/iTunesArtwork@3x.png",
-      "splash": {
-        "image": "assets/logos/ios/iTunesArtwork@3x.png"
-      }
+      "icon": "assets/logos/ios/iTunesArtwork@3x.png"
     },
     "name": "Sh*t! I Smoke",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "slug": "shit-i-smoke",
+    "splash": {
+      "backgroundColor": "#ebe7dd",
+      "image": "assets/logos/splash.png"
+    },
     "version": "1.0.0"
   }
 }

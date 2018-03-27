@@ -1,6 +1,8 @@
 import { Constants } from 'expo';
 import { Platform } from 'react-native';
 
+export const backgroundColor = '#FAFAFC';
+
 export const primaryColor = '#F2A972';
 
 export const textColor = '#414248';
@@ -8,7 +10,7 @@ export const textColor = '#414248';
 export const secondaryTextColor = '#7B7D88';
 
 export const fullScreen = {
-  backgroundColor: 'white',
+  backgroundColor,
   flex: 1,
   paddingTop: Constants.statusBarHeight
 };

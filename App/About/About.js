@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
     ...theme.fullScreen,
     ...theme.withPadding,
     ...theme.modal,
-    backgroundColor: '#FAFAFC',
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
