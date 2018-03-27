@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
+import { Constants } from 'expo';
 
 import About from '../About';
 import Cigarettes from '../Cigarettes';
-import config from '../config.json';
 import getCurrentPosition from './utils/getCurrentPosition';
 import Header from '../Header';
 import Map from '../Map';
@@ -31,7 +31,7 @@ export default class Home extends Component {
       const { data: response } = await axios.get(
         `http://api.waqi.info/feed/geo:${coords.latitude};${
           coords.longitude
-        }/?token=${config.waqiToken}`,
+        }/?token=${Constants.manifest.extra.waqiToken}`,
         { timeout: 6000 }
       );
       if (response.status === 'ok') {

@@ -1,17 +1,27 @@
 {
   "expo": {
     "android": {
+      "config": {
+        "googleMaps": { "apiKey": "YOUR_API_KEY" }
+      },
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
       "versionCode": 1
     },
     "assetBundlePatterns": ["assets/fonts/*"],
+    "extra": {
+      "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
+      "waqiToken": "YOUR_API_KEY"
+    },
     "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
       "buildNumber": "1.0.0",
       "bundleIdentifier": "com.shitismoke.app",
+      "config": {
+        "googleMapsApiKey": "YOUR_API_KEY"
+      },
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
       "loadJSInBackgroundExperimental": true
     },

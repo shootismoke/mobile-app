@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Constants } from 'expo';
 import {
   Image,
   Linking,
@@ -10,7 +11,6 @@ import {
   View
 } from 'react-native';
 
-import appJson from '../../app.json';
 import back from '../../assets/images/back.png';
 import cigarette from '../../assets/images/cigarette.png';
 import * as theme from '../utils/theme';
@@ -23,7 +23,7 @@ export default class About extends Component {
       'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
     );
 
-  handleOpenGithub = () => Linking.openURL(appJson.expo.githubUrl);
+  handleOpenGithub = () => Linking.openURL(Constants.manifest.extra.githubUrl);
 
   handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');

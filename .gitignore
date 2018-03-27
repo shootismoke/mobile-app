@@ -20,4 +20,4 @@ yarn-error.log*
 .DS_Store
 
 # secrets
-config.json
+app.json
