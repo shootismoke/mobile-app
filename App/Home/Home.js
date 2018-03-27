@@ -31,7 +31,8 @@ export default class Home extends Component {
       const { data: response } = await axios.get(
         `http://api.waqi.info/feed/geo:${coords.latitude};${
           coords.longitude
-        }/?token=${config.waqiToken}`
+        }/?token=${config.waqiToken}`,
+        { timeout: 6000 }
       );
       if (response.status === 'ok') {
         this.setState({ api: response.data });
