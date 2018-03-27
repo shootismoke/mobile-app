@@ -25,7 +25,7 @@ export default class Home extends Component {
 
   async fetchData() {
     try {
-      this.setState({ api: null, loadingGps: true });
+      this.setState({ api: null, gps: null });
       const { coords } = await getCurrentPosition();
       this.setState({ gps: coords });
       const { data: response } = await axios.get(
@@ -38,7 +38,11 @@ export default class Home extends Component {
       } else {
         throw new Error(response.data);
       }
-    } catch (err) {}
+    } catch (err) {
+      Alert.alert('Shit, an error!', `The error message is: ${err.message}`, [
+        { text: 'Retry', onPress: () => this.fetchData() }
+      ]);
+    }
   }
 
   handleAboutHide = () => this.setState({ isAboutVisible: false });
