@@ -6,7 +6,7 @@
       "permissions": ["ACCESS_FINE_LOCATION"],
       "versionCode": 1
     },
-    "assetBundlePatterns": ["assets/fonts/*", "assets/images/*"],
+    "assetBundlePatterns": ["assets/fonts/*"],
     "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
