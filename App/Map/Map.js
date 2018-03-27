@@ -68,7 +68,12 @@ const styles = StyleSheet.create({
     ...theme.modal
   },
   header: {
-    elevation: 2
+    elevation: 2,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    zIndex: 10
   },
   map: {
     flex: 1
