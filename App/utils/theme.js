@@ -35,6 +35,7 @@ export const text = {
 };
 
 export const title = {
+  letterSpacing: 2,
   color: textColor,
   fontFamily: 'gotham-black'
 };

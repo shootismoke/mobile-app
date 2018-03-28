@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import axios from 'axios';
 import { Constants } from 'expo';
 
@@ -55,6 +62,8 @@ export default class Home extends Component {
 
   handleMapShow = () => this.setState({ isMapVisible: true });
 
+  handleShare = () => Share.share({ title: 'HELLO', message: 'BYEBYE' });
+
   render() {
     const { api, gps, isAboutVisible, isMapVisible } = this.state;
 
@@ -66,9 +75,14 @@ export default class Home extends Component {
       <View style={styles.container}>
         <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
 
-        <View>
-          <Cigarettes api={api} style={theme.withPadding} />
+        <View style={theme.withPadding}>
+          <Cigarettes api={api} />
           <View style={styles.main}>{this.renderText()}</View>
+          <TouchableOpacity onPress={this.handleShare}>
+            <View style={styles.share}>
+              <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity onPress={this.handleAboutShow}>
@@ -152,13 +166,25 @@ const styles = StyleSheet.create({
     opacity: 0
   },
   main: {
-    ...theme.withPadding,
     height: 220 // Empiric
+  },
+  share: {
+    alignItems: 'center',
+    backgroundColor: theme.primaryColor,
+    borderRadius: 21,
+    height: 42,
+    justifyContent: 'center',
+    width: '90%'
+  },
+  shareText: {
+    ...theme.title,
+    color: 'white',
+    fontSize: 12
   },
   shit: {
     color: theme.textColor,
     fontFamily: 'gotham-black',
-    fontSize: 50,
+    fontSize: 48,
     marginTop: 23
   }
 });
