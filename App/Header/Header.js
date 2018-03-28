@@ -23,7 +23,6 @@ export default class Header extends Component {
           {api ? (
             <Text style={styles.subtitle}>
               {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
-              {api.time.s.split(' ')[1].slice(0, -3)} &bull;{' '}
               {api.time.s.split(' ')[0].replace(/-/g, '/')}
             </Text>
           ) : (

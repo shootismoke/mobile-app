@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Font } from 'expo';
 
 import Home from './Home';
+import LoadingBackground from './Loading/Background';
 
 export default class App extends Component {
   state = {
@@ -18,6 +19,6 @@ export default class App extends Component {
   }
 
   render() {
-    return this.state.fontLoaded ? <Home /> : null;
+    return this.state.fontLoaded ? <Home /> : <LoadingBackground />;
   }
 }

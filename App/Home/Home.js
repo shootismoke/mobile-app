@@ -7,6 +7,7 @@ import About from '../About';
 import Cigarettes from '../Cigarettes';
 import getCurrentPosition from './utils/getCurrentPosition';
 import Header from '../Header';
+import Loading from '../Loading';
 import Map from '../Map';
 import pm25ToCigarettes from './utils/pm25ToCigarettes';
 import * as theme from '../utils/theme';
@@ -56,6 +57,11 @@ export default class Home extends Component {
 
   render() {
     const { api, gps, isAboutVisible, isMapVisible } = this.state;
+
+    if (!api) {
+      return <Loading api={api} gps={gps} />;
+    }
+
     return (
       <View style={styles.container}>
         <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
@@ -72,22 +78,20 @@ export default class Home extends Component {
         </TouchableOpacity>
 
         <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
-        {api && (
-          <Map
-            api={api}
-            gps={gps}
-            station={{
-              description: api.attributions.length
-                ? api.attributions[0].name
-                : null,
-              latitude: api.city.geo[0],
-              longitude: api.city.geo[1],
-              title: api.city.name
-            }}
-            onRequestClose={this.handleMapHide}
-            visible={isMapVisible}
-          />
-        )}
+        <Map
+          api={api}
+          gps={gps}
+          station={{
+            description: api.attributions.length
+              ? api.attributions[0].name
+              : null,
+            latitude: api.city.geo[0],
+            longitude: api.city.geo[1],
+            title: api.city.name
+          }}
+          onRequestClose={this.handleMapHide}
+          visible={isMapVisible}
+        />
       </View>
     );
   }
@@ -111,22 +115,7 @@ export default class Home extends Component {
   };
 
   renderText = () => {
-    const { api, gps } = this.state;
-
-    if (!gps)
-      return (
-        <Text style={styles.shit}>
-          Fetching GPS coordinates<Text style={styles.dots}>{'\n'}...</Text>
-        </Text>
-      );
-
-    if (!api)
-      return (
-        <Text style={styles.shit}>
-          Retrieving air data<Text style={styles.dots}>{'\n'}...</Text>
-        </Text>
-      );
-
+    const { api } = this.state;
     const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
 
     return (
