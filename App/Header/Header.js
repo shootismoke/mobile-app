@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.backgroundColor,
     paddingBottom: 15,
     paddingHorizontal: 17,
-    paddingTop: 23
+    paddingTop: 22
   },
   hidden: {
     opacity: 0

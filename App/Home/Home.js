@@ -63,7 +63,13 @@ export default class Home extends Component {
 
   handleMapShow = () => this.setState({ isMapVisible: true });
 
-  handleShare = () => Share.share({ title: 'HELLO', message: 'BYEBYE' });
+  handleShare = () =>
+    Share.share({
+      title:
+        'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
+      message:
+        'Sh*t! I Smoke is an application that tells you how many cigarettes you smoke based on the pollution levels of your city. Download it for free here! SHITISMOKE.FIREBASEAPP.COM'
+    });
 
   render() {
     const { api, gps, isAboutVisible, isMapVisible } = this.state;
@@ -76,7 +82,7 @@ export default class Home extends Component {
       <View style={styles.container}>
         <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
 
-        <ScrollView style={theme.withPadding}>
+        <View style={theme.withPadding}>
           <Cigarettes api={api} />
           <View style={styles.main}>{this.renderText()}</View>
           <TouchableOpacity onPress={this.handleShare}>
@@ -84,12 +90,13 @@ export default class Home extends Component {
               <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleAboutShow}>
-            <Text style={[styles.footer, api ? null : styles.hidden]}>
-              Click to understand how we did the math.
-            </Text>
-          </TouchableOpacity>
-        </ScrollView>
+        </View>
+
+        <TouchableOpacity onPress={this.handleAboutShow}>
+          <Text style={[styles.footer, api ? null : styles.hidden]}>
+            Click to understand how we did the math.
+          </Text>
+        </TouchableOpacity>
 
         <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
         <Map
@@ -150,6 +157,7 @@ const styles = StyleSheet.create({
   },
   container: {
     ...theme.fullScreen,
+    flexDirection: 'column',
     justifyContent: 'space-between'
   },
   dots: {
@@ -158,7 +166,8 @@ const styles = StyleSheet.create({
   footer: {
     ...theme.text,
     ...theme.link,
-    fontSize: 14,
+    ...theme.withPadding,
+    fontSize: 13,
     marginBottom: 22,
     marginTop: 22
   },

@@ -45,7 +45,10 @@ export default class About extends Component {
               <Text style={styles.backText}>Back</Text>
             </TouchableOpacity>
           </View>
-          <ScrollView style={theme.withPadding}>
+          <ScrollView
+            style={theme.withPadding}
+            contentContainerStyle={styles.scrollView}
+          >
             <View style={styles.about}>
               <Text style={styles.aboutTitle}>About</Text>
               <Text style={styles.aboutDescription}>
@@ -185,8 +188,8 @@ const styles = StyleSheet.create({
   },
   header: {
     ...theme.withPadding,
-    marginTop: 23,
-    marginBottom: 23
+    marginTop: 22,
+    marginBottom: 22
   },
   label: {
     ...theme.title,
@@ -204,6 +207,10 @@ const styles = StyleSheet.create({
         fontFamily: 'normal'
       }
     })
+  },
+  scrollView: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start'
   },
   statisticsLeft: {
     alignItems: 'flex-end',

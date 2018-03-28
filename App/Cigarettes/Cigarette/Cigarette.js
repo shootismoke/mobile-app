@@ -58,7 +58,8 @@ export default class Cigarette extends Component {
   };
 
   getMaxWidth = () => {
-    const { size } = this.props;
+    const { diagonal, size } = this.props;
+    if (diagonal) return 200;
     switch (size) {
       case 'big':
         return 280;
