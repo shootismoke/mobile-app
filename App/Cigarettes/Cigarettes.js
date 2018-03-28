@@ -25,7 +25,7 @@ export default class Cigarettes extends Component {
     return (
       <View style={style}>
         <View style={styles.container}>
-          {count > 1
+          {cigarettes > 1 && count >= 1
             ? Array.from(Array(count)).map((_, i) => (
                 <View key={i}>
                   <Cigarette
