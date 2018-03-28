@@ -191,7 +191,8 @@ const styles = StyleSheet.create({
     ...theme.title,
     color: theme.secondaryTextColor,
     fontSize: 12,
-    fontWeight: '900'
+    fontWeight: '900',
+    letterSpacing: 0.5
   },
   micro: {
     ...Platform.select({
