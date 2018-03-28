@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Alert,
   Platform,
-  ScrollView,
   Share,
   StyleSheet,
   Text,

@@ -18,17 +18,20 @@ export default class Cigarette extends Component {
     switch (size) {
       case 'big':
         return {
+          overflow: 'hidden',
           height: this.getMaxWidth() / ratio,
           width: this.getMaxWidth()
         };
       case 'medium':
         return {
+          overflow: 'hidden',
           height: this.getMaxWidth(),
           marginHorizontal: 4,
           width: this.getMaxWidth() / ratio
         };
       default:
         return {
+          overflow: 'hidden',
           height: this.getMaxWidth(),
           marginHorizontal: 2,
           width: this.getMaxWidth() / ratio
@@ -92,6 +95,7 @@ export default class Cigarette extends Component {
         ]}
       >
         <View
+          removeClippedSubviews={true}
           style={[
             styles.container,
             diagonal
