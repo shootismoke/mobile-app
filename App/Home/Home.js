@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Alert,
+  ScrollView,
   Share,
   StyleSheet,
   Text,
@@ -75,7 +76,7 @@ export default class Home extends Component {
       <View style={styles.container}>
         <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
 
-        <View style={theme.withPadding}>
+        <ScrollView style={theme.withPadding}>
           <Cigarettes api={api} />
           <View style={styles.main}>{this.renderText()}</View>
           <TouchableOpacity onPress={this.handleShare}>
@@ -83,13 +84,12 @@ export default class Home extends Component {
               <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
             </View>
           </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity onPress={this.handleAboutShow}>
-          <Text style={[styles.footer, api ? null : styles.hidden]}>
-            Click to understand how we did the math.
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleAboutShow}>
+            <Text style={[styles.footer, api ? null : styles.hidden]}>
+              Click to understand how we did the math.
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
 
         <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
         <Map
@@ -156,11 +156,11 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   footer: {
-    ...theme.withPadding,
     ...theme.text,
     ...theme.link,
     fontSize: 14,
-    marginBottom: 22
+    marginBottom: 22,
+    marginTop: 22
   },
   hidden: {
     opacity: 0

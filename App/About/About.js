@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   credits: {
-    marginBottom: 38
+    marginBottom: 22,
+    marginTop: 22
   },
   creditsDescription: {
     ...theme.text
