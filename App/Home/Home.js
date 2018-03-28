@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Alert,
   Platform,
+  ScrollView,
   Share,
   StyleSheet,
   Text,
@@ -79,7 +80,10 @@ export default class Home extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={[theme.fullScreen, styles.container]}
+      >
         <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
 
         <View style={theme.withPadding}>
@@ -113,7 +117,7 @@ export default class Home extends Component {
           onRequestClose={this.handleMapHide}
           visible={isMapVisible}
         />
-      </View>
+      </ScrollView>
     );
   }
 
@@ -156,7 +160,6 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   container: {
-    ...theme.fullScreen,
     flexDirection: 'column',
     justifyContent: 'space-between'
   },

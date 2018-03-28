@@ -9,7 +9,7 @@ export const secondaryTextColor = '#7B7D88';
 
 export const fullScreen = {
   backgroundColor,
-  flex: 1,
+  flexGrow: 1,
   paddingTop: Constants.statusBarHeight
 };
 
