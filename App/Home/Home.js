@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Alert,
+  Platform,
   ScrollView,
   Share,
   StyleSheet,
@@ -188,7 +189,14 @@ const styles = StyleSheet.create({
   shareText: {
     ...theme.title,
     color: 'white',
-    fontSize: 12
+    ...Platform.select({
+      android: {
+        fontSize: 15
+      },
+      ios: {
+        fontSize: 12
+      }
+    })
   },
   shit: {
     color: theme.textColor,

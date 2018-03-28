@@ -115,7 +115,15 @@ export default class About extends Component {
 const styles = StyleSheet.create({
   about: {},
   aboutDescription: {
-    ...theme.text
+    ...theme.text,
+    ...Platform.select({
+      android: {
+        lineHeight: 28
+      },
+      ios: {
+        lineHeight: 20
+      }
+    })
   },
   aboutTitle: {
     ...theme.title,
@@ -171,6 +179,14 @@ const styles = StyleSheet.create({
   },
   creditsTitle: {
     ...theme.title,
+    ...Platform.select({
+      android: {
+        lineHeight: 28
+      },
+      ios: {
+        lineHeight: 20
+      }
+    }),
     fontSize: 20,
     marginBottom: 12
   },
