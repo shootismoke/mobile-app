@@ -25,12 +25,20 @@ export const modal = Platform.select({
   }
 });
 
+export const paragraph = Platform.select({
+  android: {
+    lineHeight: 28
+  },
+  ios: {
+    lineHeight: 20
+  }
+});
+
 export const text = {
   color: secondaryTextColor,
   fontFamily: 'gotham-book',
   fontSize: 12,
   letterSpacing: 0.22,
-  lineHeight: 20,
   textAlign: 'justify'
 };
 

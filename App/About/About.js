@@ -51,7 +51,7 @@ export default class About extends Component {
           >
             <View style={styles.about}>
               <Text style={styles.aboutTitle}>About</Text>
-              <Text style={styles.aboutDescription}>
+              <Text style={[theme.text, theme.paragraph]}>
                 This app was inspired by Berkeley Earth’s findings about the{' '}
                 <Text onPress={this.handleOpenArticle} style={theme.link}>
                   equivalence between air pollution and cigarette smoking
@@ -90,7 +90,7 @@ export default class About extends Component {
             </View>
             <View style={styles.credits}>
               <Text style={styles.creditsTitle}>Credits</Text>
-              <Text style={styles.creditsDescription}>
+              <Text style={[theme.text, theme.paragraph]}>
                 Concept &amp; Development by{' '}
                 <Text onPress={this.handleOpenAmaury} style={theme.link}>
                   Amaury Martiny
@@ -114,17 +114,6 @@ export default class About extends Component {
 
 const styles = StyleSheet.create({
   about: {},
-  aboutDescription: {
-    ...theme.text,
-    ...Platform.select({
-      android: {
-        lineHeight: 28
-      },
-      ios: {
-        lineHeight: 20
-      }
-    })
-  },
   aboutTitle: {
     ...theme.title,
     fontSize: 36,
@@ -174,19 +163,8 @@ const styles = StyleSheet.create({
     marginBottom: 22,
     marginTop: 22
   },
-  creditsDescription: {
-    ...theme.text
-  },
   creditsTitle: {
     ...theme.title,
-    ...Platform.select({
-      android: {
-        lineHeight: 28
-      },
-      ios: {
-        lineHeight: 20
-      }
-    }),
     fontSize: 20,
     marginBottom: 12
   },
