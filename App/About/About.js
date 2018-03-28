@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
   container: {
     ...theme.fullScreen,
     ...theme.modal,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
