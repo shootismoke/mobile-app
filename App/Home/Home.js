@@ -69,7 +69,7 @@ export default class Home extends Component {
       title:
         'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
       message:
-        'Sh*t! I Smoke is an application that tells you how many cigarettes you smoke based on the pollution levels of your city. Download it for free here! SHITISMOKE.FIREBASEAPP.COM'
+        'Sh*t! I Smoke is an application that tells you how many cigarettes you smoke based on the pollution levels of your city. Download it for free here! shitismoke.github.io'
     });
 
   render() {
