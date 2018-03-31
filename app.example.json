@@ -23,6 +23,10 @@
         "googleMapsApiKey": "YOUR_API_KEY"
       },
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription":
+          "This app uses your location to find the air pollution level near you."
+      },
       "loadJSInBackgroundExperimental": true
     },
     "name": "Sh*t! I Smoke",
