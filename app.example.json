@@ -30,6 +30,7 @@
       "loadJSInBackgroundExperimental": true
     },
     "name": "Sh*t! I Smoke",
+    "primaryColor": "#EBE7DD",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "slug": "shit-i-smoke",
