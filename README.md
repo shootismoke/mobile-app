@@ -24,6 +24,12 @@ If you would like to help coding please read the Getting Started guide.
 git clone https://github.com/amaurymartiny/shit-i-smoke
 cd shit-i-smoke
 yarn install
+
+# Get your Air Quality Database token from https://aqicn.org/json-api/doc/
+# and put it into app.json
+# Note: Google Maps api keys are not necessary while developing
+cp app.example.json app.json
+
 yarn start
 ```
 
