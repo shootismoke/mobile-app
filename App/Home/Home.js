@@ -50,7 +50,7 @@ export default class Home extends Component {
         throw new Error(response.data);
       }
     } catch (err) {
-      Alert.alert('Shit, an error!', `The error message is: ${err.message}`, [
+      Alert.alert('Sh*t, an error!', `The error message is: ${err.message}`, [
         { text: 'Retry', onPress: () => this.fetchData() }
       ]);
     }
@@ -123,7 +123,7 @@ export default class Home extends Component {
 
   renderPresentPast = () => {
     const { api } = this.state;
-    const time = api.time.s.split(' ')[1].split(':')[0];
+    const time = new Date().getHours();
 
     if (time < 15) return "You'll smoke";
     return 'You smoked';
@@ -131,17 +131,17 @@ export default class Home extends Component {
 
   renderShit = () => {
     const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
+    const cigarettes = pm25ToCigarettes(api);
 
     if (cigarettes <= 1) return 'Oh';
-    if (cigarettes < 5) return 'Shit';
-    if (cigarettes < 15) return 'Fuck';
+    if (cigarettes < 5) return 'Sh*t';
+    if (cigarettes < 15) return 'F*ck';
     return 'WTF';
   };
 
   renderText = () => {
     const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
+    const cigarettes = pm25ToCigarettes(api);
 
     return (
       <Text style={styles.shit}>

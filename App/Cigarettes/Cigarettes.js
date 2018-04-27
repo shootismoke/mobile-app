@@ -14,7 +14,7 @@ export default class Cigarettes extends Component {
 
   render() {
     const { api, style } = this.props;
-    const cigarettes = api ? Math.min(pm25ToCigarette(api.iaqi.pm25.v), 63) : 1;
+    const cigarettes = api ? Math.min(pm25ToCigarette(api), 63) : 1;
     // const cigarettes = api ? 4.9 : 1; // Can change values here for testing
     const count = Math.floor(cigarettes);
     const decimal = cigarettes - count;
