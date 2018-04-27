@@ -19,6 +19,8 @@ import * as theme from '../utils/theme';
 export default class About extends Component {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
 
+  handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
+
   handleOpenArticle = () =>
     Linking.openURL(
       'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
@@ -98,6 +100,10 @@ export default class About extends Component {
                 Design &amp; Copy by{' '}
                 <Text onPress={this.handleOpenMarcelo} style={theme.link}>
                   Marcelo S. Coelho
+                </Text>.{'\n'}
+                Air pollution data from{' '}
+                <Text onPress={this.handleOpenAqi} style={theme.link}>
+                  the WAQI project
                 </Text>.{'\n'}
                 {'\n'}
                 <Text onPress={this.handleOpenGithub} style={theme.link}>
