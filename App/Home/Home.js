@@ -123,7 +123,7 @@ export default class Home extends Component {
 
   renderPresentPast = () => {
     const { api } = this.state;
-    const time = api.time.s.split(' ')[1].split(':')[0];
+    const time = new Date().getHours();
 
     if (time < 15) return "You'll smoke";
     return 'You smoked';
