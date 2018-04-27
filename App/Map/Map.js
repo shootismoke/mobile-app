@@ -3,7 +3,7 @@ import ActionButton from 'react-native-action-button';
 import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import getCorrectLatLng from './utils/getCorrectLatLng';
+import getCorrectLatLng from '../utils/getCorrectLatLng';
 import Header from '../Header';
 import * as theme from '../utils/theme';
 
@@ -26,6 +26,7 @@ export default class Map extends Component {
         <View style={styles.container}>
           <Header
             api={api}
+            gps={gps}
             onLocationClick={onRequestClose}
             style={styles.header}
           />

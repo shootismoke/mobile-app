@@ -1,7 +1,7 @@
 /**
  * Convert pm25 level to number of cigarettes
  * @see http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
- * @param {float} pm25
+ * @param {Float} api - The api object returned by the WAQI api.
  */
 const pm25ToCigarettes = api => {
   const pm25 =

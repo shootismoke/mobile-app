@@ -14,11 +14,11 @@ import { Constants } from 'expo';
 
 import About from '../About';
 import Cigarettes from '../Cigarettes';
-import getCurrentPosition from './utils/getCurrentPosition';
+import getCurrentPosition from '../utils/getCurrentPosition';
 import Header from '../Header';
 import Loading from '../Loading';
 import Map from '../Map';
-import pm25ToCigarettes from './utils/pm25ToCigarettes';
+import pm25ToCigarettes from '../utils/pm25ToCigarettes';
 import * as theme from '../utils/theme';
 
 export default class Home extends Component {
@@ -84,7 +84,12 @@ export default class Home extends Component {
         bounces={false}
         contentContainerStyle={[theme.fullScreen, styles.container]}
       >
-        <Header api={api} hidden={!api} onLocationClick={this.handleMapShow} />
+        <Header
+          api={api}
+          gps={gps}
+          hidden={!api}
+          onLocationClick={this.handleMapShow}
+        />
 
         <View style={theme.withPadding}>
           <Cigarettes api={api} />
