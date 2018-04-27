@@ -131,7 +131,7 @@ export default class Home extends Component {
 
   renderShit = () => {
     const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
+    const cigarettes = pm25ToCigarettes(api);
 
     if (cigarettes <= 1) return 'Oh';
     if (cigarettes < 5) return 'Shit';
@@ -141,7 +141,7 @@ export default class Home extends Component {
 
   renderText = () => {
     const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api.iaqi.pm25.v);
+    const cigarettes = pm25ToCigarettes(api);
 
     return (
       <Text style={styles.shit}>
