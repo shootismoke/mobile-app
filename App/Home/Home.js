@@ -50,7 +50,7 @@ export default class Home extends Component {
         throw new Error(response.data);
       }
     } catch (err) {
-      Alert.alert('Shit, an error!', `The error message is: ${err.message}`, [
+      Alert.alert('Sh*t, an error!', `The error message is: ${err.message}`, [
         { text: 'Retry', onPress: () => this.fetchData() }
       ]);
     }
@@ -134,8 +134,8 @@ export default class Home extends Component {
     const cigarettes = pm25ToCigarettes(api);
 
     if (cigarettes <= 1) return 'Oh';
-    if (cigarettes < 5) return 'Shit';
-    if (cigarettes < 15) return 'Fuck';
+    if (cigarettes < 5) return 'Sh*t';
+    if (cigarettes < 15) return 'F*ck';
     return 'WTF';
   };
 
