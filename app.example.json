@@ -17,15 +17,20 @@
     "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.2",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_API_KEY"
       },
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription":
+          "This app uses your location to find the air pollution level near you."
+      },
       "loadJSInBackgroundExperimental": true
     },
     "name": "Sh*t! I Smoke",
+    "primaryColor": "#EBE7DD",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "slug": "shit-i-smoke",
@@ -33,6 +38,6 @@
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.0.0"
+    "version": "1.0.2"
   }
 }
