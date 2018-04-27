@@ -2907,6 +2907,10 @@ hasbin@^1.2.3:
   dependencies:
     async "~1.5"
 
+haversine@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/haversine/-/haversine-1.1.0.tgz#0b2380cb6d9c10e9f1224fc2b513cc61018d5ff7"
+
 hawk@3.1.3, hawk@~3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/hawk/-/hawk-3.1.3.tgz#078444bd7c1640b0fe540d2c9b73d59678e8e1c4"

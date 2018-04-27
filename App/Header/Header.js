@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import location from '../../assets/images/location.png';
@@ -6,28 +7,43 @@ import Map from '../Map';
 import * as theme from '../utils/theme';
 
 export default class Header extends Component {
+  static defaultProps = {
+    showChangeLocation: true
+  };
+
   render() {
-    const { api, hidden, onLocationClick, style } = this.props;
+    const {
+      api,
+      gps,
+      hidden,
+      onLocationClick,
+      showChangeLocation,
+      style
+    } = this.props;
+    const distance = Math.round(
+      haversine(gps, {
+        latitude: api.city.geo[0],
+        longitude: api.city.geo[1]
+      })
+    );
     return (
       <View style={[styles.header, hidden ? styles.hidden : null, style]}>
         <TouchableOpacity disabled={!api} onPress={onLocationClick}>
           <View style={styles.titleGroup}>
             <Image source={location} />
 
-            <Text style={styles.title}>
-              {api ? api.city.name.toUpperCase() : 'Loading...'}
-            </Text>
+            <Text style={styles.title}>{api.city.name.toUpperCase()}</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.subtitleGroup}>
-          {api ? (
-            <Text style={styles.subtitle}>
-              {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
-              {api.time.s.split(' ')[0].replace(/-/g, '/')}
-            </Text>
-          ) : (
-            <Text style={styles.subtitle}>Loading...</Text>
-          )}
+          <Text style={styles.subtitle}>
+            {distance}km from you{showChangeLocation && (
+              <Text>
+                {' '}
+                &bull; <Text style={theme.link}>Change your location</Text>
+              </Text>
+            )}
+          </Text>
         </View>
       </View>
     );
@@ -51,7 +67,6 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     ...theme.text,
-    fontSize: 12,
     marginLeft: 33, // Picutre width (22) + marginleft (11)
     marginTop: 11
   },
