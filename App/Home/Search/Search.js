@@ -10,6 +10,7 @@ import {
   View
 } from 'react-native';
 
+import BackButton from '../../BackButton';
 import pinIcon from '../../../assets/images/location.png';
 import searchIcon from '../../../assets/images/search.png';
 import * as theme from '../../utils/theme';
@@ -22,12 +23,13 @@ export default class Search extends Component {
   handleChangeSearch = search => this.setState({ search });
 
   render() {
-    const { ...rest } = this.props;
+    const { onRequestClose, ...rest } = this.props;
     const { search } = this.state;
 
     return (
-      <Modal animationType="fade" {...rest}>
+      <Modal animationType="fade" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
+          <BackButton onClick={onRequestClose} />
           <View style={styles.header}>
             <TextInput
               autoFocus

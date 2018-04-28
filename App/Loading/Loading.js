@@ -21,7 +21,7 @@ export default class Loading extends Component {
     if (!this.props.gps && gps) {
       this.longWaitingTimeout = setTimeout(
         () => this.setState({ longWaiting: true }),
-        3000
+        2000 // Set longWaiting after 2s of waiting
       );
     }
   }

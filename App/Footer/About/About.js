@@ -15,6 +15,7 @@ import {
 import back from '../../../assets/images/back.png';
 import cigarette from '../../../assets/images/cigarette.png';
 import * as theme from '../../utils/theme';
+import BackButton from '../../BackButton';
 
 export default class About extends Component {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
@@ -37,16 +38,7 @@ export default class About extends Component {
     return (
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity
-              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-              onPress={onRequestClose}
-              style={styles.backButton}
-            >
-              <Image source={back} />
-              <Text style={styles.backText}>Back</Text>
-            </TouchableOpacity>
-          </View>
+          <BackButton onClick={onRequestClose} style={styles.backButton} />
           <ScrollView
             style={theme.withPadding}
             contentContainerStyle={styles.scrollView}
@@ -121,7 +113,6 @@ export default class About extends Component {
 }
 
 const styles = StyleSheet.create({
-  about: {},
   aboutTitle: {
     ...theme.title,
     fontSize: 36,
@@ -132,14 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 8
   },
   backButton: {
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
-  backText: {
-    color: theme.secondaryTextColor,
-    fontFamily: 'gotham-book',
-    fontSize: 14,
-    marginLeft: 9
+    marginBottom: 22
   },
   box: {
     alignItems: 'center',
@@ -188,11 +172,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center'
-  },
-  header: {
-    ...theme.withPadding,
-    marginTop: 22,
-    marginBottom: 22
   },
   label: {
     ...theme.title,

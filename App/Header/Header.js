@@ -13,8 +13,8 @@ export default class Header extends Component {
   render() {
     const {
       api,
+      elevated,
       gps,
-      hidden,
       onChangeLocationClick,
       onLocationClick,
       showChangeLocation,
@@ -27,7 +27,7 @@ export default class Header extends Component {
       })
     );
     return (
-      <View style={[styles.header, hidden ? styles.hidden : null, style]}>
+      <View style={[styles.header, elevated ? styles.elevated : null, style]}>
         <TouchableOpacity disabled={!api} onPress={onLocationClick}>
           <View style={styles.titleGroup}>
             <Image source={location} />
@@ -53,14 +53,18 @@ export default class Header extends Component {
 }
 
 const styles = StyleSheet.create({
+  elevated: {
+    elevation: 2,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    zIndex: 10
+  },
   header: {
-    backgroundColor: theme.backgroundColor,
     paddingBottom: 15,
     paddingHorizontal: 17,
     paddingTop: 22
-  },
-  hidden: {
-    opacity: 0
   },
   titleGroup: {
     alignItems: 'center',

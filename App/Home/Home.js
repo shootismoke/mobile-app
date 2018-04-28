@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Constants } from 'expo';
-import promiseRetry from 'promise-retry';
+import retry from 'async-retry';
 
 import Cigarettes from './Cigarettes';
-import Error from '../Error';
+import ErrorScreen from './ErrorScreen';
 import Footer from '../Footer';
 import getCurrentPosition from '../utils/getCurrentPosition';
 import Header from '../Header';
@@ -26,6 +26,7 @@ import * as theme from '../utils/theme';
 
 // We manage navigation ourselves for this simple app
 const PAGES = {
+  ERROR: 'ERROR', // The error page
   HOME: 'HOME', // The homepage with the cigarettes
   MAP: 'MAP' // The map page with the station pin
   // SEARCH: 'SEARCH' // The search page is a modal, so does not go here
@@ -39,6 +40,10 @@ export default class Home extends Component {
     page: PAGES.HOME
   };
 
+  componentDidCatch() {
+    this.setState({ page: ERROR });
+  }
+
   componentWillMount() {
     this.fetchData();
   }
@@ -48,23 +53,23 @@ export default class Home extends Component {
       this.setState({ api: null, gps: null });
       const { coords } = await getCurrentPosition();
       this.setState({ gps: coords });
-      const { data: response } = await promiseRetry(
-        retry =>
-          axios
-            .get(
-              `http://api.waqi.info/feed/geo:${coords.latitude};${
-                coords.longitude
-              }/?token=${Constants.manifest.extra.waqiToken}`,
-              { timeout: 6000 }
-            )
-            .catch(retry),
+      await retry(
+        async () => {
+          const { data: response } = await axios.get(
+            `http://api.waqi.info/feed/geo:${coords.latitude};${
+              coords.longitude
+            }/?token=${Constants.manifest.extra.waqiToken}`,
+            { timeout: 6000 }
+          );
+
+          if (response.status === 'ok') {
+            this.setState({ api: response.data });
+          } else {
+            throw new Error(response.data);
+          }
+        },
         { retries: 2 }
       );
-      if (response.status === 'ok') {
-        this.setState({ api: response.data });
-      } else {
-        throw new Error(response.data);
-      }
     } catch (err) {
       Alert.alert('Sh*t, an error!', `The error message is: ${err.message}`, [
         { text: 'Retry', onPress: () => this.fetchData() }
@@ -76,7 +81,7 @@ export default class Home extends Component {
 
   goToMap = () => this.setState({ page: PAGES.MAP });
 
-  handleSearchHide = () => this.setState({ isSearchVisible: hide });
+  handleSearchHide = () => this.setState({ isSearchVisible: false });
 
   handleSearchShow = () => this.setState({ isSearchVisible: true });
 
@@ -91,8 +96,30 @@ export default class Home extends Component {
   render() {
     const { api, gps, isSearchVisible, page } = this.state;
 
+    if (page === PAGES.ERROR) {
+      return <ErrorScreen />;
+    }
+
     if (!api) {
       return <Loading api={api} gps={gps} />;
+    }
+
+    if (page === PAGES.MAP) {
+      return (
+        <Map
+          api={api}
+          gps={gps}
+          onClose={this.goToHome}
+          station={{
+            description: api.attributions.length
+              ? api.attributions[0].name
+              : null,
+            latitude: api.city.geo[0],
+            longitude: api.city.geo[1],
+            title: api.city.name
+          }}
+        />
+      );
     }
 
     return (
@@ -103,39 +130,22 @@ export default class Home extends Component {
         <Header
           api={api}
           gps={gps}
-          hidden={!api}
           onLocationClick={this.goToMap}
           onChangeLocationClick={this.handleSearchShow}
           showChangeLocation
         />
 
-        {page === PAGES.HOME ? (
-          <View style={theme.withPadding}>
-            <Cigarettes api={api} />
-            <View style={styles.main}>{this.renderText()}</View>
-            <TouchableOpacity onPress={this.handleShare}>
-              <View style={styles.share}>
-                <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Map
-            api={api}
-            gps={gps}
-            onClose={this.goToHome}
-            station={{
-              description: api.attributions.length
-                ? api.attributions[0].name
-                : null,
-              latitude: api.city.geo[0],
-              longitude: api.city.geo[1],
-              title: api.city.name
-            }}
-          />
-        )}
+        <View style={theme.withPadding}>
+          <Cigarettes api={api} />
+          <View style={styles.main}>{this.renderText()}</View>
+          <TouchableOpacity onPress={this.handleShare}>
+            <View style={styles.share}>
+              <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-        {page === PAGES.HOME && <Footer style={styles.footer} />}
+        <Footer style={styles.footer} />
 
         <Search
           onRequestClose={this.handleSearchHide}

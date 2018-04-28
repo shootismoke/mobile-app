@@ -3,6 +3,7 @@ import ActionButton from 'react-native-action-button';
 import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import BackButton from '../../BackButton';
 import getCorrectLatLng from '../../utils/getCorrectLatLng';
 import Header from '../../Header';
 import * as theme from '../../utils/theme';
@@ -22,7 +23,14 @@ export default class Map extends Component {
     const { latitude, longitude } = getCorrectLatLng(gps, station);
 
     return (
-      <View style={styles.mapContainer}>
+      <View style={styles.container}>
+        <BackButton onClick={onClose} />
+        <Header
+          api={api}
+          gps={gps}
+          showChangeLocation={false}
+          style={styles.header}
+        />
         <View style={styles.mapContainer}>
           <MapView
             initialRegion={{
@@ -56,18 +64,13 @@ export default class Map extends Component {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    elevation: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    zIndex: 10
+  container: {
+    flexGrow: 1
   },
   map: {
     flex: 1
   },
   mapContainer: {
-    flex: 1
+    flexGrow: 1
   }
 });
