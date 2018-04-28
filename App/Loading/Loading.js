@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -5,6 +6,32 @@ import Background from './Background';
 import * as theme from '../utils/theme';
 
 export default class Loading extends Component {
+  static propTypes = {
+    api: PropTypes.object,
+    gps: PropTypes.object
+  };
+
+  state = {
+    longWaiting: false // If api is taking a long time
+  };
+
+  longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
+
+  componentWillReceiveProps({ gps }) {
+    if (!this.props.gps && gps) {
+      this.longWaitingTimeout = setTimeout(
+        () => this.setState({ longWaiting: true }),
+        3000
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.longWaitingTimeout) {
+      clearTimeout(this.longWaitingTimeout);
+    }
+  }
+
   render() {
     return (
       <Background style={styles.container}>
@@ -13,28 +40,28 @@ export default class Loading extends Component {
     );
   }
 
+  renderCough = index => (
+    <Text key={index}>
+      Cough<Text style={styles.dots}>...</Text>
+    </Text>
+  );
+
   renderText = () => {
-    const { api, gps, ...rest } = this.props;
-    if (!gps)
-      return (
-        <Text>
-          Cough<Text style={styles.dots}>...</Text> Loading<Text
-            style={styles.dots}
-          >
-            ...
-          </Text>{' '}
-          Cough<Text style={styles.dots}>...</Text>
-        </Text>
-      );
+    const { api, gps } = this.props;
+    const { longWaiting } = this.state;
+    let coughs = 0; // Number of times to show "Cough..."
+    if (gps) ++coughs;
+    if (longWaiting) ++coughs;
 
-    if (!api)
-      return (
-        <Text>
-          Escaping from the smoking area<Text style={styles.dots}>...</Text>
-        </Text>
-      );
-
-    return '';
+    return (
+      <Text>
+        Loading<Text style={styles.dots}>...</Text>
+        {Array.from({ length: coughs }, (_, index) => index + 1).map(
+          // Create array 1..N and rendering Cough...
+          this.renderCough
+        )}
+      </Text>
+    );
   };
 }
 
