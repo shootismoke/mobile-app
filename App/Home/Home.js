@@ -13,13 +13,13 @@ import axios from 'axios';
 import { Constants } from 'expo';
 import promiseRetry from 'promise-retry';
 
-import Cigarettes from '../Cigarettes';
+import Cigarettes from './Cigarettes';
 import Error from '../Error';
 import Footer from '../Footer';
 import getCurrentPosition from '../utils/getCurrentPosition';
 import Header from '../Header';
 import Loading from '../Loading';
-import Map from '../Map';
+import Map from './Map';
 import pm25ToCigarettes from '../utils/pm25ToCigarettes';
 import * as theme from '../utils/theme';
 

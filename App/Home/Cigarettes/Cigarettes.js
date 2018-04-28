@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Cigarette from './Cigarette';
-import pm25ToCigarette from '../utils/pm25ToCigarettes';
+import pm25ToCigarette from '../../utils/pm25ToCigarettes';
 
 export default class Cigarettes extends Component {
   getSize = cigarettes => {

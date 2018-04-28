@@ -3,7 +3,6 @@ import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import location from '../../assets/images/location.png';
-import Map from '../Map';
 import * as theme from '../utils/theme';
 
 export default class Header extends Component {

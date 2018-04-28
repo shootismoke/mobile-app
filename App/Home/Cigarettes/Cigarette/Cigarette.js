@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import butt from '../../../assets/images/butt.png';
-import buttVertical from '../../../assets/images/butt-vertical.png';
-import head from '../../../assets/images/head.png';
-import headVertical from '../../../assets/images/head-vertical.png';
+import butt from '../../../../assets/images/butt.png';
+import buttVertical from '../../../../assets/images/butt-vertical.png';
+import head from '../../../../assets/images/head.png';
+import headVertical from '../../../../assets/images/head-vertical.png';
 
 export default class Cigarette extends Component {
   static defaultProps = {

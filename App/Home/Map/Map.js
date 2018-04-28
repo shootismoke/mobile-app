@@ -3,9 +3,9 @@ import ActionButton from 'react-native-action-button';
 import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import getCorrectLatLng from '../utils/getCorrectLatLng';
-import Header from '../Header';
-import * as theme from '../utils/theme';
+import getCorrectLatLng from '../../utils/getCorrectLatLng';
+import Header from '../../Header';
+import * as theme from '../../utils/theme';
 
 export default class Map extends Component {
   handleRef = ref => {
