@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {
   FlatList,
   Image,
@@ -17,14 +18,40 @@ import * as theme from '../../utils/theme';
 
 export default class Search extends Component {
   state = {
+    hits: [],
     search: ''
   };
 
-  handleChangeSearch = search => this.setState({ search });
+  handleChangeSearch = async search => {
+    const { gps } = this.props;
+    this.setState({ search });
+    try {
+      const {
+        data: { hits }
+      } = await axios.post(
+        'https://places-dsn.algolia.net/1/places/query',
+        {
+          aroundLatLng: `${gps.latitude},${gps.longitude}`,
+          hitsPerPage: 10,
+          language: 'en',
+          query: search
+        },
+        {
+          headers: {
+            // 'X-Algolia-Application-Id': '',
+            // 'X-Algolia-API-Key': ''
+          }
+        }
+      );
+      this.setState({ hits });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   render() {
     const { onRequestClose, ...rest } = this.props;
-    const { search } = this.state;
+    const { hits, search } = this.state;
 
     return (
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
@@ -40,12 +67,9 @@ export default class Search extends Component {
             <Image source={searchIcon} />
           </View>
           <FlatList
-            data={[
-              { description: 'deg', key: 'abc', title: 'abc' },
-              { description: 'deg', key: 'etds', title: 'etds' },
-              { description: 'deg', key: 'erw', title: 'erw' }
-            ]}
+            data={hits}
             ItemSeparatorComponent={this.renderSeparator}
+            keyExtractor={({ objectID }) => objectID}
             renderItem={this.renderItem}
           />
         </View>
@@ -53,12 +77,14 @@ export default class Search extends Component {
     );
   }
 
-  renderItem = ({ item: { description, title } }) => (
+  renderItem = ({ item: { city, country, county, locale_names } }) => (
     <TouchableOpacity style={styles.itemContainer}>
       <Image source={pinIcon} />
       <View style={styles.itemResult}>
-        <Text style={styles.itemTitle}>{title}</Text>
-        <Text style={styles.itemDescription}>{description}</Text>
+        <Text style={styles.itemTitle}>{locale_names[0]}</Text>
+        <Text style={styles.itemDescription}>
+          {[city, ...(county || []), country].filter(_ => _).join(', ')}
+        </Text>
       </View>
     </TouchableOpacity>
   );

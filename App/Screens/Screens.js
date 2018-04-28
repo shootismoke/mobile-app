@@ -105,6 +105,7 @@ export default class Screens extends Component {
           }}
         />
         <Search
+          gps={gps}
           onRequestClose={this.handleSearchHide}
           visible={isSearchVisible}
         />
