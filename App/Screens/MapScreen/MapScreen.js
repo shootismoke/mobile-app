@@ -13,6 +13,7 @@ export default class MapScreen extends Component {
       return (
         <Header
           {...props.screenProps}
+          elevated
           onBackClick={props.navigation.pop}
           showBackButton
         />

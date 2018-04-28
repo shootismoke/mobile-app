@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Constants } from 'expo';
 import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.backgroundColor,
     paddingBottom: 15,
     paddingHorizontal: 17,
-    paddingTop: Constants.statusBarHeight + 22
+    paddingTop: 22
   },
   elevated: {
     elevation: 2,

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Constants } from 'expo';
 import retry from 'async-retry';
 import { StackNavigator } from 'react-navigation';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
@@ -95,6 +95,20 @@ export default class Screens extends Component {
       return <Loading api={api} gps={gps} />;
     }
 
-    return <RootStack screenProps={{ api, gps }} />;
+    return (
+      <View style={theme.fullScreen}>
+        <RootStack
+          screenProps={{
+            api,
+            gps,
+            onChangeLocationClick: this.handleSearchShow
+          }}
+        />
+        <Search
+          onRequestClose={this.handleSearchHide}
+          visible={isSearchVisible}
+        />
+      </View>
+    );
   }
 }

@@ -27,9 +27,9 @@ export default class Search extends Component {
     const { search } = this.state;
 
     return (
-      <Modal animationType="fade" onRequestClose={onRequestClose} {...rest}>
+      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
-          <BackButton onClick={onRequestClose} />
+          <BackButton onClick={onRequestClose} style={styles.backButton} />
           <View style={styles.header}>
             <TextInput
               autoFocus
@@ -67,6 +67,10 @@ export default class Search extends Component {
 }
 
 const styles = StyleSheet.create({
+  backButton: {
+    ...theme.withPadding,
+    marginVertical: 18
+  },
   container: {
     ...theme.fullScreen,
     ...theme.modal
