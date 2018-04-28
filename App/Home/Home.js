@@ -21,6 +21,7 @@ import Header from '../Header';
 import Loading from '../Loading';
 import Map from './Map';
 import pm25ToCigarettes from '../utils/pm25ToCigarettes';
+import Search from './Search';
 import * as theme from '../utils/theme';
 
 // We manage navigation ourselves for this simple app
@@ -34,6 +35,7 @@ export default class Home extends Component {
   state = {
     api: null,
     gps: null,
+    isSearchVisible: false,
     page: PAGES.HOME
   };
 
@@ -74,6 +76,10 @@ export default class Home extends Component {
 
   goToMap = () => this.setState({ page: PAGES.MAP });
 
+  handleSearchHide = () => this.setState({ isSearchVisible: hide });
+
+  handleSearchShow = () => this.setState({ isSearchVisible: true });
+
   handleShare = () =>
     Share.share({
       title:
@@ -83,7 +89,7 @@ export default class Home extends Component {
     });
 
   render() {
-    const { api, gps, page } = this.state;
+    const { api, gps, isSearchVisible, page } = this.state;
 
     if (!api) {
       return <Loading api={api} gps={gps} />;
@@ -99,6 +105,8 @@ export default class Home extends Component {
           gps={gps}
           hidden={!api}
           onLocationClick={this.goToMap}
+          onChangeLocationClick={this.handleSearchShow}
+          showChangeLocation
         />
 
         {page === PAGES.HOME ? (
@@ -128,6 +136,11 @@ export default class Home extends Component {
         )}
 
         {page === PAGES.HOME && <Footer style={styles.footer} />}
+
+        <Search
+          onRequestClose={this.handleSearchHide}
+          visible={isSearchVisible}
+        />
       </ScrollView>
     );
   }

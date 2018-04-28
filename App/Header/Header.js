@@ -15,6 +15,7 @@ export default class Header extends Component {
       api,
       gps,
       hidden,
+      onChangeLocationClick,
       onLocationClick,
       showChangeLocation,
       style
@@ -35,14 +36,16 @@ export default class Header extends Component {
           </View>
         </TouchableOpacity>
         <View style={styles.subtitleGroup}>
-          <Text style={styles.subtitle}>
-            {distance}km from you{showChangeLocation && (
-              <Text>
-                {' '}
-                &bull; <Text style={theme.link}>Change your location</Text>
-              </Text>
-            )}
-          </Text>
+          <TouchableOpacity onPress={onChangeLocationClick}>
+            <Text style={styles.subtitle}>
+              {distance}km from you{showChangeLocation && (
+                <Text>
+                  {' '}
+                  &bull; <Text style={theme.link}>Change your location</Text>
+                </Text>
+              )}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
