@@ -21,6 +21,8 @@ import pm25ToCigarettes from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
 export default class Home extends Component {
+  goToMap = () => this.props.navigation.navigate('Map');
+
   handleShare = () =>
     Share.share({
       title:
@@ -30,7 +32,9 @@ export default class Home extends Component {
     });
 
   render() {
-    const { api, gps } = this.props;
+    const {
+      screenProps: { api, gps }
+    } = this.props;
     return (
       <ScrollView bounces={false} contentContainerStyle={styles.container}>
         <Header
@@ -57,7 +61,9 @@ export default class Home extends Component {
   }
 
   renderPresentPast = () => {
-    const { api } = this.props;
+    const {
+      screenProps: { api }
+    } = this.props;
     const time = new Date().getHours();
 
     if (time < 15) return "You'll smoke";
@@ -65,7 +71,9 @@ export default class Home extends Component {
   };
 
   renderShit = () => {
-    const { api } = this.props;
+    const {
+      screenProps: { api }
+    } = this.props;
     const cigarettes = pm25ToCigarettes(api);
 
     if (cigarettes <= 1) return 'Oh';
@@ -75,7 +83,9 @@ export default class Home extends Component {
   };
 
   renderText = () => {
-    const { api } = this.props;
+    const {
+      screenProps: { api }
+    } = this.props;
     const cigarettes = pm25ToCigarettes(api);
 
     return (

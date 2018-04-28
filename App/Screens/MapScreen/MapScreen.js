@@ -8,7 +8,7 @@ import getCorrectLatLng from '../../utils/getCorrectLatLng';
 import Header from '../../Header';
 import * as theme from '../../utils/theme';
 
-export default class Map extends Component {
+export default class MapScreen extends Component {
   handleRef = ref => {
     this.marker = ref;
   };
@@ -18,8 +18,18 @@ export default class Map extends Component {
   };
 
   render() {
-    const { api, gps, onClose, station, ...rest } = this.props;
+    const {
+      onClose,
+      screenProps: { api, gps },
+      ...rest
+    } = this.props;
 
+    const station = {
+      description: api.attributions.length ? api.attributions[0].name : null,
+      latitude: api.city.geo[0],
+      longitude: api.city.geo[1],
+      title: api.city.name
+    };
     const { latitude, longitude } = getCorrectLatLng(gps, station);
 
     return (
