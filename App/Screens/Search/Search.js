@@ -10,11 +10,20 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import retry from 'async-retry';
 
 import BackButton from '../../BackButton';
 import pinIcon from '../../../assets/images/location.png';
 import searchIcon from '../../../assets/images/search.png';
 import * as theme from '../../utils/theme';
+
+// As per https://community.algolia.com/places/rest.html
+const algoliaUrls = [
+  'https://places-dsn.algolia.net',
+  'https://places-1.algolianet.com',
+  'https://places-2.algolianet.com',
+  'https://places-3.algolianet.com'
+];
 
 export default class Search extends Component {
   state = {
@@ -23,27 +32,38 @@ export default class Search extends Component {
   };
 
   handleChangeSearch = async search => {
-    const { gps } = this.props;
     this.setState({ search });
+    if (!search) {
+      return;
+    }
+
+    const { gps } = this.props;
     try {
-      const {
-        data: { hits }
-      } = await axios.post(
-        'https://places-dsn.algolia.net/1/places/query',
-        {
-          aroundLatLng: `${gps.latitude},${gps.longitude}`,
-          hitsPerPage: 10,
-          language: 'en',
-          query: search
+      await retry(
+        async (_, attempt) => {
+          const {
+            data: { hits }
+          } = await axios.post(
+            `${algoliaUrls[attempt + 1]}/1/places/query`,
+            {
+              aroundLatLng: `${gps.latitude},${gps.longitude}`,
+              hitsPerPage: 10,
+              language: 'en',
+              query: search
+            },
+            {
+              headers: {
+                // 'X-Algolia-Application-Id': '',
+                // 'X-Algolia-API-Key': ''
+              }
+            }
+          );
+          this.setState({ hits });
         },
         {
-          headers: {
-            // 'X-Algolia-Application-Id': '',
-            // 'X-Algolia-API-Key': ''
-          }
+          retries: 4
         }
       );
-      this.setState({ hits });
     } catch (error) {
       console.log(error);
     }
