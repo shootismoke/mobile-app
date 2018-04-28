@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Constants } from 'expo';
+import promiseRetry from 'promise-retry';
 
 import About from '../About';
 import Cigarettes from '../Cigarettes';
@@ -38,11 +39,17 @@ export default class Home extends Component {
       this.setState({ api: null, gps: null });
       const { coords } = await getCurrentPosition();
       this.setState({ gps: coords });
-      const { data: response } = await axios.get(
-        `http://api.waqi.info/feed/geo:${coords.latitude};${
-          coords.longitude
-        }/?token=${Constants.manifest.extra.waqiToken}`,
-        { timeout: 6000 }
+      const { data: response } = await promiseRetry(
+        retry =>
+          axios
+            .get(
+              `http://api.waqi.info/feed/geo:${coords.latitude};${
+                coords.longitude
+              }/?token=${Constants.manifest.extra.waqiToken}`,
+              { timeout: 6000 }
+            )
+            .catch(retry),
+        { retries: 2 }
       );
       if (response.status === 'ok') {
         this.setState({ api: response.data });
