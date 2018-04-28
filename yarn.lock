@@ -5253,12 +5253,6 @@ react-lifecycles-compat@^1.0.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-1.1.4.tgz#fc005c72849b7ed364de20a0f64ff58ebdc2009a"
 
-react-native-action-button@2.7.x:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-action-button/-/react-native-action-button-2.7.2.tgz#06f1188e8fe1d18d03fc9060d4b604c9b81bb6ca"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"

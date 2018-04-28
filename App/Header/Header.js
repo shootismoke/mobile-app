@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Constants } from 'expo';
 import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import BackButton from '../BackButton';
 import location from '../../assets/images/location.png';
 import * as theme from '../utils/theme';
 
@@ -15,8 +17,10 @@ export default class Header extends Component {
       api,
       elevated,
       gps,
+      onBackClick,
       onChangeLocationClick,
-      onLocationClick,
+      onClick,
+      showBackButton,
       showChangeLocation,
       style
     } = this.props;
@@ -26,9 +30,15 @@ export default class Header extends Component {
         longitude: api.city.geo[1]
       })
     );
+
     return (
-      <View style={[styles.header, elevated ? styles.elevated : null, style]}>
-        <TouchableOpacity disabled={!api} onPress={onLocationClick}>
+      <View
+        style={[styles.container, elevated ? styles.elevated : null, style]}
+      >
+        {showBackButton && (
+          <BackButton onClick={onBackClick} style={styles.backButton} />
+        )}
+        <TouchableOpacity disabled={!onClick} onPress={onClick}>
           <View style={styles.titleGroup}>
             <Image source={location} />
 
@@ -53,6 +63,15 @@ export default class Header extends Component {
 }
 
 const styles = StyleSheet.create({
+  backButton: {
+    marginBottom: 22
+  },
+  container: {
+    backgroundColor: theme.backgroundColor,
+    paddingBottom: 15,
+    paddingHorizontal: 17,
+    paddingTop: Constants.statusBarHeight + 22
+  },
   elevated: {
     elevation: 2,
     shadowColor: 'black',
@@ -60,11 +79,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
     zIndex: 10
-  },
-  header: {
-    paddingBottom: 15,
-    paddingHorizontal: 17,
-    paddingTop: 22
   },
   titleGroup: {
     alignItems: 'center',

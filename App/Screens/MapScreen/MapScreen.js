@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ActionButton from 'react-native-action-button';
 import { MapView } from 'expo';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -9,6 +8,33 @@ import Header from '../../Header';
 import * as theme from '../../utils/theme';
 
 export default class MapScreen extends Component {
+  static navigationOptions = {
+    header: props => {
+      return (
+        <Header
+          {...props.screenProps}
+          onBackClick={props.navigation.pop}
+          showBackButton
+        />
+      );
+    }
+  };
+
+  state = {
+    showMap: false
+  };
+
+  showMapTimeout = null;
+
+  componentWillMount() {
+    // Show map after 200ms for smoother screen transition
+    setTimeout(() => this.setState({ showMap: true }), 500);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.showMapTimeout);
+  }
+
   handleRef = ref => {
     this.marker = ref;
   };
@@ -19,10 +45,10 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      onClose,
       screenProps: { api, gps },
       ...rest
     } = this.props;
+    const { showMap } = this.state;
 
     const station = {
       description: api.attributions.length ? api.attributions[0].name : null,
@@ -34,40 +60,28 @@ export default class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <BackButton onClick={onClose} />
-        <Header
-          api={api}
-          gps={gps}
-          showChangeLocation={false}
-          style={styles.header}
-        />
         <View style={styles.mapContainer}>
-          <MapView
-            initialRegion={{
-              latitude,
-              longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
-            onMapReady={this.handleShowCallout}
-            style={styles.map}
-          >
-            <MapView.Marker
-              color={theme.primaryColor}
-              coordinate={{ latitude, longitude }}
-              ref={this.handleRef}
-              title={station.title}
-              description={station.description}
-            />
-          </MapView>
+          {showMap && (
+            <MapView
+              initialRegion={{
+                latitude,
+                longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421
+              }}
+              onMapReady={this.handleShowCallout}
+              style={styles.map}
+            >
+              <MapView.Marker
+                color={theme.primaryColor}
+                coordinate={{ latitude, longitude }}
+                ref={this.handleRef}
+                title={station.title}
+                description={station.description}
+              />
+            </MapView>
+          )}
         </View>
-        <ActionButton
-          buttonColor={theme.primaryColor}
-          buttonText="&times;"
-          elevation={3}
-          onPress={onClose}
-          position="center"
-        />
       </View>
     );
   }
@@ -75,6 +89,7 @@ export default class MapScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flexGrow: 1
   },
   map: {

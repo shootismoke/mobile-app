@@ -123,7 +123,9 @@ const styles = StyleSheet.create({
     fontSize: 8
   },
   backButton: {
-    marginBottom: 22
+    ...theme.withPadding,
+    marginBottom: 22,
+    marginTop: 22
   },
   box: {
     alignItems: 'center',

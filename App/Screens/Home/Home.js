@@ -15,12 +15,23 @@ import retry from 'async-retry';
 
 import Cigarettes from './Cigarettes';
 import Footer from '../../Footer';
-import getCurrentPosition from '../../utils/getCurrentPosition';
 import Header from '../../Header';
+import getCurrentPosition from '../../utils/getCurrentPosition';
 import pm25ToCigarettes from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
 export default class Home extends Component {
+  static navigationOptions = {
+    header: props => {
+      return (
+        <Header
+          {...props.screenProps}
+          onClick={() => props.navigation.navigate('Map')}
+        />
+      );
+    }
+  };
+
   goToMap = () => this.props.navigation.navigate('Map');
 
   handleShare = () =>
@@ -37,14 +48,6 @@ export default class Home extends Component {
     } = this.props;
     return (
       <ScrollView bounces={false} contentContainerStyle={styles.container}>
-        <Header
-          api={api}
-          gps={gps}
-          onLocationClick={this.goToMap}
-          onChangeLocationClick={this.handleSearchShow}
-          showChangeLocation
-        />
-
         <View style={theme.withPadding}>
           <Cigarettes api={api} />
           <View style={styles.main}>{this.renderText()}</View>
@@ -140,6 +143,6 @@ const styles = StyleSheet.create({
   },
   shit: {
     ...theme.shitText,
-    marginTop: 23
+    marginTop: 22
   }
 });

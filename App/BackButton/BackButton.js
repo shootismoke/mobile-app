@@ -6,13 +6,16 @@ import backIcon from '../../assets/images/back.png';
 import * as theme from '../utils/theme';
 
 export default class BackButton extends Component {
+  onClick = () => this.props.onClick();
+
   render() {
-    const { onClick, style } = this.props;
+    const { style } = this.props;
+
     return (
-      <View style={[styles.container, style]}>
+      <View style={style}>
         <TouchableOpacity
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={onClick}
+          onPress={this.onClick}
           style={styles.backButton}
         >
           <Image source={backIcon} />
@@ -33,9 +36,5 @@ const styles = StyleSheet.create({
     fontFamily: 'gotham-book',
     fontSize: 14,
     marginLeft: 9
-  },
-  container: {
-    ...theme.withPadding,
-    marginTop: 22
   }
 });

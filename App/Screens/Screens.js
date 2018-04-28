@@ -3,9 +3,11 @@ import axios from 'axios';
 import { Constants } from 'expo';
 import retry from 'async-retry';
 import { StackNavigator } from 'react-navigation';
+import { StyleSheet } from 'react-native';
 
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
+import Header from '../Header';
 import Home from './Home';
 import Loading from './Loading';
 import MapScreen from './MapScreen';
@@ -25,8 +27,20 @@ const RootStack = StackNavigator(
     }
   },
   {
-    headerMode: 'none',
-    initialRouteName: 'Home'
+    initialRouteName: 'Home',
+    navigationOptions: {
+      gesturesEnabled: false,
+      headerStyle: {
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        right: 0
+      },
+      headerTintColor: 'white',
+      headerTransparent: true
+    }
   }
 );
 
