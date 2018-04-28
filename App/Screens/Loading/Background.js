@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import * as theme from '../utils/theme';
+import * as theme from '../../utils/theme';
 
 export default class Background extends Component {
   render() {

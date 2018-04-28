@@ -13,12 +13,10 @@ import axios from 'axios';
 import { Constants } from 'expo';
 import retry from 'async-retry';
 
-import Cigarettes from './Cigarettes';
 import ErrorScreen from './ErrorScreen';
-import Footer from '../Footer';
 import getCurrentPosition from '../utils/getCurrentPosition';
-import Header from '../Header';
-import Loading from '../Loading';
+import Home from './Home';
+import Loading from './Loading';
 import Map from './Map';
 import pm25ToCigarettes from '../utils/pm25ToCigarettes';
 import Search from './Search';
@@ -32,7 +30,7 @@ const PAGES = {
   // SEARCH: 'SEARCH' // The search page is a modal, so does not go here
 };
 
-export default class Home extends Component {
+export default class Screens extends Component {
   state = {
     api: null,
     gps: null,
@@ -85,108 +83,36 @@ export default class Home extends Component {
 
   handleSearchShow = () => this.setState({ isSearchVisible: true });
 
-  handleShare = () =>
-    Share.share({
-      title:
-        'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
-      message:
-        'Sh*t! I Smoke is an application that tells you how many cigarettes you smoke based on the pollution levels of your city. Download it for free here! shitismoke.github.io'
-    });
-
   render() {
     const { api, gps, isSearchVisible, page } = this.state;
-
-    if (page === PAGES.ERROR) {
-      return <ErrorScreen />;
-    }
 
     if (!api) {
       return <Loading api={api} gps={gps} />;
     }
 
-    if (page === PAGES.MAP) {
-      return (
-        <Map
-          api={api}
-          gps={gps}
-          onClose={this.goToHome}
-          station={{
-            description: api.attributions.length
-              ? api.attributions[0].name
-              : null,
-            latitude: api.city.geo[0],
-            longitude: api.city.geo[1],
-            title: api.city.name
-          }}
-        />
-      );
+    switch (page) {
+      case PAGES.HOME:
+        return <Home api={api} gps={gps} />;
+      case PAGES.MAP:
+        return (
+          <Map
+            api={api}
+            gps={gps}
+            onClose={this.goToHome}
+            station={{
+              description: api.attributions.length
+                ? api.attributions[0].name
+                : null,
+              latitude: api.city.geo[0],
+              longitude: api.city.geo[1],
+              title: api.city.name
+            }}
+          />
+        );
+      default:
+        return <ErrorScreen />;
     }
-
-    return (
-      <ScrollView
-        bounces={false}
-        contentContainerStyle={[theme.fullScreen, styles.container]}
-      >
-        <Header
-          api={api}
-          gps={gps}
-          onLocationClick={this.goToMap}
-          onChangeLocationClick={this.handleSearchShow}
-          showChangeLocation
-        />
-
-        <View style={theme.withPadding}>
-          <Cigarettes api={api} />
-          <View style={styles.main}>{this.renderText()}</View>
-          <TouchableOpacity onPress={this.handleShare}>
-            <View style={styles.share}>
-              <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <Footer style={styles.footer} />
-
-        <Search
-          onRequestClose={this.handleSearchHide}
-          visible={isSearchVisible}
-        />
-      </ScrollView>
-    );
   }
-
-  renderPresentPast = () => {
-    const { api } = this.state;
-    const time = new Date().getHours();
-
-    if (time < 15) return "You'll smoke";
-    return 'You smoked';
-  };
-
-  renderShit = () => {
-    const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api);
-
-    if (cigarettes <= 1) return 'Oh';
-    if (cigarettes < 5) return 'Sh*t';
-    if (cigarettes < 15) return 'F*ck';
-    return 'WTF';
-  };
-
-  renderText = () => {
-    const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api);
-
-    return (
-      <Text style={styles.shit}>
-        {this.renderShit()}! {this.renderPresentPast()}{' '}
-        <Text style={styles.cigarettesCount}>
-          {cigarettes} cigarette{cigarettes === 1 ? '' : 's'}
-        </Text>{' '}
-        today.
-      </Text>
-    );
-  };
 }
 
 const styles = StyleSheet.create({
@@ -199,9 +125,6 @@ const styles = StyleSheet.create({
   },
   dots: {
     color: theme.primaryColor
-  },
-  footer: {
-    ...theme.withPadding
   },
   main: {
     height: 220 // Empiric
