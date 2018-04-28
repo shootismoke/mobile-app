@@ -101,13 +101,15 @@ export default class About extends Component {
                 <Text onPress={this.handleOpenMarcelo} style={theme.link}>
                   Marcelo S. Coelho
                 </Text>.{'\n'}
-                Air pollution data from{' '}
-                <Text onPress={this.handleOpenAqi} style={theme.link}>
-                  the WAQI project
-                </Text>.{'\n'}
                 {'\n'}
+                Air quality data from{' '}
+                <Text onPress={this.handleOpenAqi} style={theme.link}>
+                  WAQI
+                </Text>.
+                {'\n'}
+                Source code{' '}
                 <Text onPress={this.handleOpenGithub} style={theme.link}>
-                  Available on Github
+                  available on Github
                 </Text>.
               </Text>
             </View>
