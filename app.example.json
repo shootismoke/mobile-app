@@ -11,6 +11,7 @@
     },
     "assetBundlePatterns": ["assets/fonts/*"],
     "extra": {
+      "geonamesUsername": "YOUR_USERNAME",
       "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
       "waqiToken": "YOUR_API_KEY"
     },

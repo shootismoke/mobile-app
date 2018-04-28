@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { Constants } from 'expo';
 import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -10,6 +12,36 @@ export default class Header extends Component {
   static defaultProps = {
     showChangeLocation: true
   };
+
+  state = {
+    locationName: 'FETCHING...'
+  };
+
+  async componentWillMount() {
+    const { api, gps } = this.props;
+    try {
+      const { data } = await axios.get(
+        `http://api.geonames.org/findNearbyJSON?lat=${gps.latitude}&lng=${
+          gps.longitude
+        }&username=${Constants.manifest.extra.geonamesUsername}`
+      );
+
+      // If we got data from the Geonames service, then we use that one
+      if (!data || !data.geonames || !data.geonames.length) {
+        throw new Error();
+      }
+
+      const geoname = data.geonames[0];
+      this.setState({
+        locationName: [geoname.name, geoname.adminName1, geoname.countryName]
+          .filter(_ => _) // Don't show if undefined
+          .join(', ')
+          .toUpperCase()
+      });
+    } catch (error) {
+      this.setState({ locationName: api.city.name.toUpperCase() });
+    }
+  }
 
   render() {
     const {
@@ -23,6 +55,7 @@ export default class Header extends Component {
       showChangeLocation,
       style
     } = this.props;
+    const { locationName } = this.state;
     const distance = Math.round(
       haversine(gps, {
         latitude: api.city.geo[0],
@@ -41,7 +74,7 @@ export default class Header extends Component {
           <View style={styles.titleGroup}>
             <Image source={location} />
 
-            <Text style={styles.title}>{api.city.name.toUpperCase()}</Text>
+            <Text style={styles.title}>{locationName}</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.subtitleGroup}>
