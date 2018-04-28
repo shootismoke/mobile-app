@@ -13,8 +13,9 @@ import axios from 'axios';
 import { Constants } from 'expo';
 import promiseRetry from 'promise-retry';
 
-import About from '../About';
 import Cigarettes from '../Cigarettes';
+import Error from '../Error';
+import Footer from '../Footer';
 import getCurrentPosition from '../utils/getCurrentPosition';
 import Header from '../Header';
 import Loading from '../Loading';
@@ -26,7 +27,6 @@ export default class Home extends Component {
   state = {
     api: null,
     gps: null,
-    isAboutVisible: false,
     isMapVisible: false
   };
 
@@ -63,10 +63,6 @@ export default class Home extends Component {
     }
   }
 
-  handleAboutHide = () => this.setState({ isAboutVisible: false });
-
-  handleAboutShow = () => this.setState({ isAboutVisible: true });
-
   handleMapHide = () => this.setState({ isMapVisible: false });
 
   handleMapShow = () => this.setState({ isMapVisible: true });
@@ -80,7 +76,7 @@ export default class Home extends Component {
     });
 
   render() {
-    const { api, gps, isAboutVisible, isMapVisible } = this.state;
+    const { api, gps, isMapVisible } = this.state;
 
     if (!api) {
       return <Loading api={api} gps={gps} />;
@@ -108,13 +104,8 @@ export default class Home extends Component {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={this.handleAboutShow}>
-          <Text style={[styles.footer, api ? null : styles.hidden]}>
-            Click to understand how we did the math.
-          </Text>
-        </TouchableOpacity>
+        <Footer style={styles.footer} />
 
-        <About onRequestClose={this.handleAboutHide} visible={isAboutVisible} />
         <Map
           api={api}
           gps={gps}
@@ -179,15 +170,7 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   footer: {
-    ...theme.text,
-    ...theme.link,
-    ...theme.withPadding,
-    fontSize: 13,
-    marginBottom: 22,
-    marginTop: 22
-  },
-  hidden: {
-    opacity: 0
+    ...theme.withPadding
   },
   main: {
     height: 220 // Empiric
@@ -213,9 +196,7 @@ const styles = StyleSheet.create({
     })
   },
   shit: {
-    color: theme.textColor,
-    fontFamily: 'gotham-black',
-    fontSize: 48,
+    ...theme.shitText,
     marginTop: 23
   }
 });

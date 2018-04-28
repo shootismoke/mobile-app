@@ -34,6 +34,18 @@ export const paragraph = Platform.select({
   }
 });
 
+/**
+ * Big text with "Sh*t! I smoked...""
+ */
+export const shitText = {
+  color: textColor,
+  fontFamily: 'gotham-black',
+  fontSize: 48
+};
+
+/**
+ * Normal text
+ */
 export const text = {
   color: secondaryTextColor,
   fontFamily: 'gotham-book',

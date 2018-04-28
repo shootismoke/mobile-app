@@ -12,9 +12,9 @@ import {
   View
 } from 'react-native';
 
-import back from '../../assets/images/back.png';
-import cigarette from '../../assets/images/cigarette.png';
-import * as theme from '../utils/theme';
+import back from '../../../assets/images/back.png';
+import cigarette from '../../../assets/images/cigarette.png';
+import * as theme from '../../utils/theme';
 
 export default class About extends Component {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
