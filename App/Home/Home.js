@@ -23,11 +23,18 @@ import Map from './Map';
 import pm25ToCigarettes from '../utils/pm25ToCigarettes';
 import * as theme from '../utils/theme';
 
+// We manage navigation ourselves for this simple app
+const PAGES = {
+  HOME: 'HOME', // The homepage with the cigarettes
+  MAP: 'MAP' // The map page with the station pin
+  // SEARCH: 'SEARCH' // The search page is a modal, so does not go here
+};
+
 export default class Home extends Component {
   state = {
     api: null,
     gps: null,
-    isMapVisible: false
+    page: PAGES.HOME
   };
 
   componentWillMount() {
@@ -63,9 +70,9 @@ export default class Home extends Component {
     }
   }
 
-  handleMapHide = () => this.setState({ isMapVisible: false });
+  goToHome = () => this.setState({ page: PAGES.HOME });
 
-  handleMapShow = () => this.setState({ isMapVisible: true });
+  goToMap = () => this.setState({ page: PAGES.MAP });
 
   handleShare = () =>
     Share.share({
@@ -76,7 +83,7 @@ export default class Home extends Component {
     });
 
   render() {
-    const { api, gps, isMapVisible } = this.state;
+    const { api, gps, page } = this.state;
 
     if (!api) {
       return <Loading api={api} gps={gps} />;
@@ -91,35 +98,36 @@ export default class Home extends Component {
           api={api}
           gps={gps}
           hidden={!api}
-          onLocationClick={this.handleMapShow}
+          onLocationClick={this.goToMap}
         />
 
-        <View style={theme.withPadding}>
-          <Cigarettes api={api} />
-          <View style={styles.main}>{this.renderText()}</View>
-          <TouchableOpacity onPress={this.handleShare}>
-            <View style={styles.share}>
-              <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        {page === PAGES.HOME ? (
+          <View style={theme.withPadding}>
+            <Cigarettes api={api} />
+            <View style={styles.main}>{this.renderText()}</View>
+            <TouchableOpacity onPress={this.handleShare}>
+              <View style={styles.share}>
+                <Text style={styles.shareText}>SHARE WITH YOUR FRIENDS</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Map
+            api={api}
+            gps={gps}
+            onClose={this.goToHome}
+            station={{
+              description: api.attributions.length
+                ? api.attributions[0].name
+                : null,
+              latitude: api.city.geo[0],
+              longitude: api.city.geo[1],
+              title: api.city.name
+            }}
+          />
+        )}
 
-        <Footer style={styles.footer} />
-
-        <Map
-          api={api}
-          gps={gps}
-          station={{
-            description: api.attributions.length
-              ? api.attributions[0].name
-              : null,
-            latitude: api.city.geo[0],
-            longitude: api.city.geo[1],
-            title: api.city.name
-          }}
-          onRequestClose={this.handleMapHide}
-          visible={isMapVisible}
-        />
+        {page === PAGES.HOME && <Footer style={styles.footer} />}
       </ScrollView>
     );
   }

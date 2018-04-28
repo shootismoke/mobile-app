@@ -17,57 +17,45 @@ export default class Map extends Component {
   };
 
   render() {
-    const { api, gps, onRequestClose, station, ...rest } = this.props;
+    const { api, gps, onClose, station, ...rest } = this.props;
 
     const { latitude, longitude } = getCorrectLatLng(gps, station);
 
     return (
-      <Modal animationType="fade" onRequestClose={onRequestClose} {...rest}>
-        <View style={styles.container}>
-          <Header
-            api={api}
-            gps={gps}
-            onLocationClick={onRequestClose}
-            style={styles.header}
-          />
-          <View style={styles.mapContainer}>
-            <MapView
-              initialRegion={{
-                latitude,
-                longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-              }}
-              onMapReady={this.handleShowCallout}
-              style={styles.map}
-            >
-              <MapView.Marker
-                color={theme.primaryColor}
-                coordinate={{ latitude, longitude }}
-                ref={this.handleRef}
-                title={station.title}
-                description={station.description}
-              />
-            </MapView>
-          </View>
-          <ActionButton
-            buttonColor={theme.primaryColor}
-            buttonText="&times;"
-            elevation={3}
-            onPress={onRequestClose}
-            position="center"
-          />
+      <View style={styles.mapContainer}>
+        <View style={styles.mapContainer}>
+          <MapView
+            initialRegion={{
+              latitude,
+              longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+            onMapReady={this.handleShowCallout}
+            style={styles.map}
+          >
+            <MapView.Marker
+              color={theme.primaryColor}
+              coordinate={{ latitude, longitude }}
+              ref={this.handleRef}
+              title={station.title}
+              description={station.description}
+            />
+          </MapView>
         </View>
-      </Modal>
+        <ActionButton
+          buttonColor={theme.primaryColor}
+          buttonText="&times;"
+          elevation={3}
+          onPress={onClose}
+          position="center"
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.fullScreen,
-    ...theme.modal
-  },
   header: {
     elevation: 2,
     shadowColor: 'black',
