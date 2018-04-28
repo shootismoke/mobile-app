@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
-import { Image, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
+import pinIcon from '../../../assets/images/location.png';
 import searchIcon from '../../../assets/images/search.png';
 import * as theme from '../../utils/theme';
 
@@ -27,10 +37,31 @@ export default class Search extends Component {
             />
             <Image source={searchIcon} />
           </View>
+          <FlatList
+            data={[
+              { description: 'deg', key: 'abc', title: 'abc' },
+              { description: 'deg', key: 'etds', title: 'etds' },
+              { description: 'deg', key: 'erw', title: 'erw' }
+            ]}
+            ItemSeparatorComponent={this.renderSeparator}
+            renderItem={this.renderItem}
+          />
         </View>
       </Modal>
     );
   }
+
+  renderItem = ({ item: { description, title } }) => (
+    <TouchableOpacity style={styles.itemContainer}>
+      <Image source={pinIcon} />
+      <View style={styles.itemResult}>
+        <Text style={styles.itemTitle}>{title}</Text>
+        <Text style={styles.itemDescription}>{description}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  renderSeparator = () => <View style={styles.separator} />;
 }
 
 const styles = StyleSheet.create({
@@ -50,5 +81,26 @@ const styles = StyleSheet.create({
     color: 'white',
     flexGrow: 1,
     fontSize: 16
+  },
+  itemContainer: {
+    ...theme.withPadding,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingVertical: 17
+  },
+  itemDescription: {
+    ...theme.text,
+    marginTop: 4
+  },
+  itemResult: {
+    marginLeft: 17
+  },
+  itemTitle: {
+    ...theme.title
+  },
+  separator: {
+    backgroundColor: '#D2D2D2',
+    height: 1,
+    marginLeft: 17 + 22 + 17 // Margin + imgWidth + margin
   }
 });
