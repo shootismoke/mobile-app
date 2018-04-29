@@ -104,6 +104,7 @@ export default class Search extends Component {
               <Text style={styles.noResults}>{this.renderInfoText()}</Text>
             }
             renderItem={this.renderItem}
+            style={styles.list}
           />
         </View>
       </Modal>
@@ -133,6 +134,9 @@ const styles = StyleSheet.create({
   container: {
     ...theme.fullScreen,
     ...theme.modal
+  },
+  list: {
+    flex: 1
   },
   noResults: {
     ...theme.text,

@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   map: {
-    flex: 1
+    flexGrow: 1
   },
   mapContainer: {
     flexGrow: 1
