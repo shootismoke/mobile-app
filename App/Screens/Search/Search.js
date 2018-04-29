@@ -71,6 +71,7 @@ export default class Search extends Component {
           <BackButton onClick={onRequestClose} style={styles.backButton} />
           <SearchHeader
             autoFocus
+            elevated
             onChangeSearch={this.handleChangeSearch}
             search={search}
           />

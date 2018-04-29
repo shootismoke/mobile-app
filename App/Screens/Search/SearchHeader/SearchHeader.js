@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 
@@ -41,22 +41,28 @@ export default class SearchHeader extends Component {
       style,
       ...rest
     } = this.props;
-    const Wrapper = asTouchable ? TouchableOpacity : View;
+    const Wrapper = asTouchable ? TouchableWithoutFeedback : View;
 
     return (
-      <Wrapper
-        onPress={asTouchable ? onClick : undefined}
-        style={[styles.container, elevated ? styles.elevated : null, style]}
-      >
-        <TextInput
-          onChangeText={onChangeSearch}
-          placeholder="Search for a city or address"
-          placeholderTextColor="rgba(255, 255, 255, 0.6)"
-          style={styles.input}
-          value={search}
-          {...rest}
-        />
-        <Image source={searchIcon} />
+      <Wrapper onPress={asTouchable ? onClick : undefined}>
+        <View
+          style={[
+            styles.container,
+            elevated === true ? theme.elevatedLevel1 : null,
+            elevated === 'very' ? theme.elevatedLevel2 : null,
+            style
+          ]}
+        >
+          <TextInput
+            onChangeText={onChangeSearch}
+            placeholder="Search for a city or address"
+            placeholderTextColor="rgba(255, 255, 255, 0.6)"
+            style={styles.input}
+            value={search}
+            {...rest}
+          />
+          <Image source={searchIcon} />
+        </View>
       </Wrapper>
     );
   }
@@ -70,18 +76,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 48
   },
-  elevated: {
-    elevation: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.4,
-    shadowRadius: 9,
-    zIndex: 10
-  },
   input: {
     ...theme.text,
     color: 'white',
     flexGrow: 1,
-    fontSize: 16
+    fontSize: 13
   }
 });

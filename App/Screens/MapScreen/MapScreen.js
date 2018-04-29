@@ -72,7 +72,7 @@ export default class MapScreen extends Component {
         <SearchHeader
           asTouchable
           editable={false}
-          elevated
+          elevated="very"
           onClick={onChangeLocationClick}
           onPress={onChangeLocationClick}
           search=""

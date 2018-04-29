@@ -78,7 +78,11 @@ export default class Header extends Component {
 
     return (
       <View
-        style={[styles.container, elevated ? styles.elevated : null, style]}
+        style={[
+          styles.container,
+          elevated ? theme.elevatedLevel1 : null,
+          style
+        ]}
       >
         {showBackButton && (
           <BackButton onClick={onBackClick} style={styles.backButton} />
@@ -109,14 +113,6 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingHorizontal: 17,
     paddingTop: 22
-  },
-  elevated: {
-    elevation: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    zIndex: 10
   },
   titleGroup: {
     alignItems: 'center',
