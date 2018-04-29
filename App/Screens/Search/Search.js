@@ -99,6 +99,7 @@ export default class Search extends Component {
           <FlatList
             data={hits}
             ItemSeparatorComponent={this.renderSeparator}
+            keyboardShouldPersistTaps="always"
             keyExtractor={({ objectID }) => objectID}
             ListEmptyComponent={
               <Text style={styles.noResults}>{this.renderInfoText()}</Text>

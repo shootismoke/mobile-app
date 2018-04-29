@@ -56,6 +56,7 @@ export default class SearchHeader extends Component {
           style={[styles.container, style]}
         >
           <TextInput
+            underlineColorAndroid="transparent"
             editable={!asTouchable}
             onChangeText={onChangeSearch}
             placeholder="Search for a city or address"

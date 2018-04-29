@@ -38,11 +38,12 @@ export default class About extends Component {
     return (
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
-          <BackButton onClick={onRequestClose} style={styles.backButton} />
           <ScrollView
             style={theme.withPadding}
             contentContainerStyle={styles.scrollView}
           >
+            <BackButton onClick={onRequestClose} style={styles.backButton} />
+
             <View style={styles.about}>
               <Text style={styles.aboutTitle}>About</Text>
               <Text style={[theme.text, theme.paragraph]}>
@@ -123,7 +124,6 @@ const styles = StyleSheet.create({
     fontSize: 8
   },
   backButton: {
-    ...theme.withPadding,
     marginBottom: 22,
     marginTop: 22
   },
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   container: {
     ...theme.fullScreen,
     ...theme.modal,
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
