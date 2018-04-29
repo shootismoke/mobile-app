@@ -80,3 +80,25 @@ export const title = {
 export const withPadding = {
   paddingHorizontal: 17
 };
+
+export const bigButton = {
+  alignItems: 'center',
+  backgroundColor: primaryColor,
+  borderRadius: 21,
+  height: 42,
+  justifyContent: 'center',
+  width: '90%'
+};
+
+export const bigButtonText = {
+  ...title,
+  color: 'white',
+  ...Platform.select({
+    android: {
+      fontSize: 15
+    },
+    ios: {
+      fontSize: 12
+    }
+  })
+};

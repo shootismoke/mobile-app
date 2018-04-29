@@ -48,6 +48,7 @@ export default class Screens extends Component {
   state = {
     api: null,
     currentLocation: null, // Initialized to GPS, but can be changed by user
+    error: null, // Error here or in children component tree
     gps: null,
     isSearchVisible: false
   };
@@ -56,10 +57,14 @@ export default class Screens extends Component {
     this.fetchData();
   }
 
+  componentDidCatch(error) {
+    this.setState({ error });
+  }
+
   async fetchData() {
     const { currentLocation } = this.state;
     try {
-      this.setState({ api: null });
+      this.setState({ api: null, error: null });
 
       // If the currentLocation has been set by the user, then we don't refetch
       // the user's GPS
@@ -89,14 +94,12 @@ export default class Screens extends Component {
         },
         { retries: 3 }
       );
-    } catch (err) {
-      Alert.alert('Sh*t, an error!', `The error message is: ${err.message}`, [
-        { text: 'Retry', onPress: () => this.fetchData() }
-      ]);
+    } catch (error) {
+      this.setState({ error });
     }
   }
 
-  handleChangeLocation = currentLocation => {
+  handleLocationChanged = currentLocation => {
     this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
   };
 
@@ -105,29 +108,43 @@ export default class Screens extends Component {
   handleSearchShow = () => this.setState({ isSearchVisible: true });
 
   render() {
-    const { api, currentLocation, gps, isSearchVisible } = this.state;
-
-    if (!api || !currentLocation) {
-      return <Loading gps={gps} />;
-    }
+    const { gps, isSearchVisible } = this.state;
 
     return (
       <View style={theme.fullScreen}>
-        <RootStack
-          screenProps={{
-            api,
-            currentLocation,
-            gps,
-            onChangeLocationClick: this.handleSearchShow
-          }}
-        />
+        {this.renderScreen()}
         <Search
           gps={gps}
-          onChangeLocation={this.handleChangeLocation}
+          onLocationChanged={this.handleLocationChanged}
           onRequestClose={this.handleSearchHide}
           visible={isSearchVisible}
         />
       </View>
     );
   }
+
+  renderScreen = () => {
+    const { api, currentLocation, error, gps, isSearchVisible } = this.state;
+
+    if (error) {
+      return (
+        <ErrorScreen gps={gps} onChangeLocationClick={this.handleSearchShow} />
+      );
+    }
+
+    if (!api || !currentLocation) {
+      return <Loading gps={gps} />;
+    }
+
+    return (
+      <RootStack
+        screenProps={{
+          api,
+          currentLocation,
+          gps,
+          onChangeLocationClick: this.handleSearchShow
+        }}
+      />
+    );
+  };
 }

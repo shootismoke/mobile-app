@@ -38,7 +38,9 @@ export default class Search extends Component {
           } = await axios.post(
             `${algoliaUrls[attempt + 1]}/1/places/query`,
             {
-              aroundLatLng: `${gps.latitude},${gps.longitude}`,
+              aroundLatLng: gps
+                ? `${gps.latitude},${gps.longitude}`
+                : undefined,
               hitsPerPage: 10,
               language: 'en',
               query: search
@@ -47,7 +49,9 @@ export default class Search extends Component {
               headers: {
                 // 'X-Algolia-Application-Id': '',
                 // 'X-Algolia-API-Key': ''
-              }
+              },
+
+              timeout: 3000
             }
           );
           this.setState({ hits });
@@ -94,7 +98,7 @@ export default class Search extends Component {
   }
 
   renderItem = ({ item }) => (
-    <Item item={item} onClick={this.props.onChangeLocation} />
+    <Item item={item} onClick={this.props.onLocationChanged} />
   );
 
   renderSeparator = () => <View style={styles.separator} />;
