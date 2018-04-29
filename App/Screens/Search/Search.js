@@ -82,6 +82,11 @@ export default class Search extends Component {
     this.typingTimeout = setTimeout(() => this.fetchResults(search), 500);
   };
 
+  handleItemClick = item => {
+    this.setState({ search: '' });
+    this.props.onLocationChanged(item);
+  };
+
   render() {
     const { onRequestClose, ...rest } = this.props;
     const { hits, search } = this.state;
@@ -113,7 +118,7 @@ export default class Search extends Component {
   }
 
   renderItem = ({ item }) => (
-    <Item item={item} onClick={this.props.onLocationChanged} />
+    <Item item={item} onClick={this.handleItemClick} />
   );
 
   renderSeparator = () => <View style={styles.separator} />;
@@ -134,7 +139,8 @@ const styles = StyleSheet.create({
   },
   container: {
     ...theme.fullScreen,
-    ...theme.modal
+    ...theme.modal,
+    backgroundColor: 'white'
   },
   list: {
     flex: 1
