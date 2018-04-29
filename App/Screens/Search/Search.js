@@ -27,6 +27,7 @@ const algoliaUrls = [
 
 export default class Search extends Component {
   state = {
+    hasErrors: false, // Error from algolia
     hits: [],
     search: ''
   };
@@ -65,13 +66,13 @@ export default class Search extends Component {
         }
       );
     } catch (error) {
-      console.log(error);
+      this.setState({ hasErrors: true });
     }
   };
 
   render() {
     const { onRequestClose, ...rest } = this.props;
-    const { hits, search } = this.state;
+    const { hasErrors, hits, search } = this.state;
 
     return (
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
@@ -81,6 +82,8 @@ export default class Search extends Component {
             <TextInput
               autoFocus
               onChangeText={this.handleChangeSearch}
+              placeholder="Search for a city or address"
+              placeholderTextColor="rgba(255, 255, 255, 0.6)"
               style={styles.input}
               value={search}
             />
@@ -90,6 +93,13 @@ export default class Search extends Component {
             data={hits}
             ItemSeparatorComponent={this.renderSeparator}
             keyExtractor={({ objectID }) => objectID}
+            ListEmptyComponent={
+              <Text style={styles.noResults}>
+                {hasErrors
+                  ? 'Error fetching locations. Please try again later.'
+                  : 'Waiting for results.'}
+              </Text>
+            }
             renderItem={this.renderItem}
           />
         </View>
@@ -125,6 +135,11 @@ const styles = StyleSheet.create({
     color: 'white',
     flexGrow: 1,
     fontSize: 16
+  },
+  noResults: {
+    ...theme.text,
+    ...theme.withPadding,
+    marginTop: 22
   },
   separator: {
     backgroundColor: '#D2D2D2',
