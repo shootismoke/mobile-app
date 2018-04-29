@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  FlatList,
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
 import retry from 'async-retry';
 
 import BackButton from '../../BackButton';
+import SearchHeader from './SearchHeader';
 import Item from './Item';
-import searchIcon from '../../../assets/images/search.png';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html
@@ -78,17 +69,10 @@ export default class Search extends Component {
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
           <BackButton onClick={onRequestClose} style={styles.backButton} />
-          <View style={styles.header}>
-            <TextInput
-              autoFocus
-              onChangeText={this.handleChangeSearch}
-              placeholder="Search for a city or address"
-              placeholderTextColor="rgba(255, 255, 255, 0.6)"
-              style={styles.input}
-              value={search}
-            />
-            <Image source={searchIcon} />
-          </View>
+          <SearchHeader
+            onChangeSearch={this.handleChangeSearch}
+            search={search}
+          />
           <FlatList
             data={hits}
             ItemSeparatorComponent={this.renderSeparator}
@@ -122,19 +106,6 @@ const styles = StyleSheet.create({
   container: {
     ...theme.fullScreen,
     ...theme.modal
-  },
-  header: {
-    ...theme.withPadding,
-    alignItems: 'center',
-    backgroundColor: theme.primaryColor,
-    flexDirection: 'row',
-    height: 48
-  },
-  input: {
-    ...theme.text,
-    color: 'white',
-    flexGrow: 1,
-    fontSize: 16
   },
   noResults: {
     ...theme.text,

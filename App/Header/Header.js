@@ -5,6 +5,7 @@ import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import BackButton from '../BackButton';
+import getCorrectLatLng from '../utils/getCorrectLatLng';
 import location from '../../assets/images/location.png';
 import * as theme from '../utils/theme';
 
@@ -67,10 +68,13 @@ export default class Header extends Component {
     } = this.props;
     const { locationName } = this.state;
     const distance = Math.round(
-      haversine(currentLocation, {
-        latitude: api.city.geo[0],
-        longitude: api.city.geo[1]
-      })
+      haversine(
+        currentLocation,
+        getCorrectLatLng(currentLocation, {
+          latitude: api.city.geo[0],
+          longitude: api.city.geo[1]
+        })
+      )
     );
 
     return (
