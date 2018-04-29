@@ -22,7 +22,7 @@ export default class Header extends Component {
     const { api, currentLocation } = this.props;
 
     // If our currentLocation already has a name (from algolia), then we don't
-    // need Geonames for the name
+    // need Google Geocoding for the name
     if (currentLocation.name) {
       this.setState({ locationName: currentLocation.name.toUpperCase() });
       return;
@@ -30,24 +30,25 @@ export default class Header extends Component {
 
     try {
       const { data } = await axios.get(
-        `http://api.geonames.org/findNearbyJSON?lat=${
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
           currentLocation.latitude
-        }&lng=${currentLocation.longitude}&username=${
-          Constants.manifest.extra.geonamesUsername
+        },${currentLocation.longitude}&key=${
+          Constants.manifest.extra.googleGeocodingApiKey
         }`
       );
 
-      // If we got data from the Geonames service, then we use that one
-      if (!data || !data.geonames || !data.geonames.length) {
+      // If we got data from the Google Geocoding service, then we use that one
+      if (!data || !data.results || !data.results.length) {
         throw new Error();
       }
 
-      const geoname = data.geonames[0];
+      const geoname = data.results[0];
+      if (!geoname.formatted_address) {
+        throw new Error();
+      }
+
       this.setState({
-        locationName: [geoname.name, geoname.adminName1, geoname.countryName]
-          .filter(_ => _) // Don't show if undefined
-          .join(', ')
-          .toUpperCase()
+        locationName: geoname.formatted_address.toUpperCase()
       });
     } catch (error) {
       this.setState({ locationName: api.city.name.toUpperCase() });

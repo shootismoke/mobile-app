@@ -78,11 +78,15 @@ export default class Screens extends Component {
       if (!currentLocation) {
         const response = await getCurrentPosition();
         coords = response.coords;
+
+        // Un comment to get random data stations
+        // coords = {
+        //   latitude: Math.random() * 90,
+        //   longitude: Math.random() * 90
+        // };
+
         this.setState({ currentLocation: coords, gps: coords });
       }
-
-      // Un comment to get random data stations
-      // coords = { latitude: Math.random() * 90, longitude: Math.random() * 90 };
 
       await retry(
         async () => {
