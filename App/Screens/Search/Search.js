@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Constants } from 'expo';
+import debounce from 'lodash/debounce';
 import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
 import retry from 'async-retry';
 
@@ -25,12 +26,13 @@ export default class Search extends Component {
     search: ''
   };
 
-  handleChangeSearch = async search => {
-    this.setState({ search });
-    if (!search) {
-      return;
-    }
+  typingTimeout = null; // Timeout to detect when user stops typing
 
+  componentWillUnmount() {
+    clearTimeout(this.typingTimeout);
+  }
+
+  fetchResults = async search => {
     const { gps } = this.props;
     try {
       this.setState({ loading: true });
@@ -68,6 +70,16 @@ export default class Search extends Component {
     } catch (error) {
       this.setState({ hasErrors: true, loading: false });
     }
+  };
+
+  handleChangeSearch = search => {
+    this.setState({ search });
+    if (!search) {
+      return;
+    }
+
+    clearTimeout(this.typingTimeout);
+    this.typingTimeout = setTimeout(() => this.fetchResults(search), 500);
   };
 
   render() {
