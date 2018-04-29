@@ -16,12 +16,12 @@ export const elevatedLevel1 = {
 };
 
 export const elevatedLevel2 = {
-  elevation: 2,
+  elevation: 6,
   shadowColor: 'black',
-  shadowOffset: { width: 0, height: 8 },
+  shadowOffset: { width: 0, height: 9 },
   shadowOpacity: 0.4,
   shadowRadius: 9,
-  zIndex: 9999999
+  zIndex: 100
 };
 
 export const fullScreen = {

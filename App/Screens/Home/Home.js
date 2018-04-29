@@ -26,7 +26,7 @@ export default class Home extends Component {
       return (
         <Header
           {...props.screenProps}
-          onClick={() => props.navigation.navigate('Map')}
+          onClick={() => props.navigation.navigate('Map')} // TODO Possible not to create a new function every time?
         />
       );
     }
@@ -48,7 +48,7 @@ export default class Home extends Component {
     } = this.props;
     return (
       <ScrollView bounces={false} contentContainerStyle={styles.container}>
-        <View style={theme.withPadding}>
+        <View style={styles.content}>
           <Cigarettes api={api} />
           <View style={styles.main}>{this.renderText()}</View>
           <TouchableOpacity onPress={this.handleShare}>
@@ -108,9 +108,15 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   container: {
-    ...theme.fullScreen,
     flexDirection: 'column',
+    flexGrow: 1,
     justifyContent: 'space-between'
+  },
+  content: {
+    ...theme.withPadding,
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'center'
   },
   dots: {
     color: theme.primaryColor

@@ -15,9 +15,9 @@ export default class Background extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    ...theme.fullScreen,
     alignItems: 'center',
     backgroundColor: theme.iconBackgroundColor,
+    flexGrow: 1,
     justifyContent: 'center'
   }
 });

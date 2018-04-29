@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Constants } from 'expo';
+import { Constants, Video } from 'expo';
 import retry from 'async-retry';
 import { StackNavigator } from 'react-navigation';
 import { Alert, StyleSheet, View } from 'react-native';
@@ -12,6 +12,7 @@ import Home from './Home';
 import Loading from './Loading';
 import MapScreen from './MapScreen';
 import Search from './Search';
+import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
 const RootStack = StackNavigator(
@@ -27,20 +28,25 @@ const RootStack = StackNavigator(
     }
   },
   {
+    cardStyle: {
+      backgroundColor: 'transparent',
+      elevation: 0,
+      shadowOpacity: 0
+    },
     initialRouteName: 'Home',
     navigationOptions: {
       gesturesEnabled: false,
       headerStyle: {
-        position: 'absolute',
-        backgroundColor: 'transparent',
-        zIndex: 100,
-        top: 0,
-        left: 0,
-        right: 0
+        elevation: 0,
+        shadowOpacity: 0
       },
-      headerTintColor: 'white',
       headerTransparent: true
-    }
+    },
+    transitionConfig: () => ({
+      containerStyle: {
+        backgroundColor: 'transparent'
+      }
+    })
   }
 );
 
@@ -74,6 +80,9 @@ export default class Screens extends Component {
         coords = response.coords;
         this.setState({ currentLocation: coords, gps: coords });
       }
+
+      // Un comment to get random data stations
+      // coords = { latitude: Math.random() * 90, longitude: Math.random() * 90 };
 
       await retry(
         async () => {
@@ -109,9 +118,8 @@ export default class Screens extends Component {
 
   render() {
     const { gps, isSearchVisible } = this.state;
-
     return (
-      <View style={theme.fullScreen}>
+      <View style={styles.container}>
         {this.renderScreen()}
         <Search
           gps={gps}
@@ -124,7 +132,7 @@ export default class Screens extends Component {
   }
 
   renderScreen = () => {
-    const { api, currentLocation, error, gps, isSearchVisible } = this.state;
+    const { api, currentLocation, error, gps } = this.state;
 
     if (error) {
       return (
@@ -137,14 +145,35 @@ export default class Screens extends Component {
     }
 
     return (
-      <RootStack
-        screenProps={{
-          api,
-          currentLocation,
-          gps,
-          onChangeLocationClick: this.handleSearchShow
-        }}
-      />
+      <View style={theme.fullScreen}>
+        <RootStack
+          screenProps={{
+            api,
+            currentLocation,
+            gps,
+            onChangeLocationClick: this.handleSearchShow
+          }}
+        />
+        {/* <Video
+      resizeMode="cover"
+      shouldPlay
+      source={smokeVideo}
+      style={{
+        bottom: 0,
+        left: 0,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        zIndex: -1
+      }}
+    /> */}
+      </View>
     );
   };
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1
+  }
+});

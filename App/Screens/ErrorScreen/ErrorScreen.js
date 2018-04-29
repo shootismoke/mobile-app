@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     marginTop: 22
   },
   container: {
+    ...theme.fullScreen,
     ...theme.withPadding,
     flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
   errorDescription: {
-    ...theme.text,
-    marginTop: 31
+    ...theme.text
   },
   errorText: {
     ...theme.shitText,
