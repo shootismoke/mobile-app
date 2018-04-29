@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Constants, Video } from 'expo';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import retry from 'async-retry';
 import { StackNavigator } from 'react-navigation';
-import { Alert, StyleSheet, View } from 'react-native';
 
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
@@ -11,8 +11,9 @@ import Header from '../Header';
 import Home from './Home';
 import Loading from './Loading';
 import MapScreen from './MapScreen';
+// import pm25ToCigarettes from '../utils/pm25ToCigarettes';
 import Search from './Search';
-import smokeVideo from '../../assets/video/smoke.mp4';
+// import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
 const RootStack = StackNavigator(
@@ -112,6 +113,16 @@ export default class Screens extends Component {
     }
   }
 
+  // getVideoStyle = () => {
+  //   const { api } = this.state;
+  //   const cigarettes = pm25ToCigarettes(api);
+
+  //   if (cigarettes <= 1) return { right: -60, opacity: 0.2 };
+  //   if (cigarettes < 5) return { right: 100, opacity: 0.5 };
+  //   if (cigarettes < 15) return { right: -60, opacity: 0.7 };
+  //   return { right: -30, opacity: 1 };
+  // };
+
   handleLocationChanged = currentLocation => {
     this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
   };
@@ -159,18 +170,11 @@ export default class Screens extends Component {
           }}
         />
         {/* <Video
-      resizeMode="cover"
-      shouldPlay
-      source={smokeVideo}
-      style={{
-        bottom: 0,
-        left: 0,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        zIndex: -1
-      }}
-    /> */}
+          resizeMode="cover"
+          shouldPlay
+          source={smokeVideo}
+          style={[styles.video, this.getVideoStyle()]}
+        /> */}
       </View>
     );
   };
@@ -179,5 +183,13 @@ export default class Screens extends Component {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1
+  },
+  video: {
+    bottom: 0,
+    height: Dimensions.get('screen').height,
+    position: 'absolute',
+    right: 0,
+    width: Dimensions.get('screen').width,
+    zIndex: -1
   }
 });

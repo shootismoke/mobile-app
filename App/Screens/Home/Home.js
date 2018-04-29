@@ -10,7 +10,6 @@ import {
   View
 } from 'react-native';
 import axios from 'axios';
-import { Constants } from 'expo';
 import retry from 'async-retry';
 
 import Cigarettes from './Cigarettes';
