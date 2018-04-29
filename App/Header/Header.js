@@ -50,15 +50,15 @@ export default class Header extends Component {
       // We format the formatted_address to remove postal code and street number for privacy reasons
       const postalCode = geoname.address_components.find(component =>
         component.types.includes('postal_code')
-      ).long_name;
+      );
       const streetNumber = geoname.address_components.find(component =>
         component.types.includes('street_number')
-      ).long_name;
+      );
 
       this.setState({
         locationName: geoname.formatted_address
-          .replace(postalCode, '')
-          .replace(streetNumber, '')
+          .replace(postalCode && postalCode.long_name, '')
+          .replace(streetNumber && streetNumber.long_name, '')
           .replace(', ,', ',') // Remove unnecessary commas
           .replace(/ +/g, ' ') // Remove double spaces
           .trim()
