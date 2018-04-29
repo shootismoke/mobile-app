@@ -18,6 +18,7 @@ export default class MapScreen extends Component {
           elevated
           onBackClick={props.navigation.pop}
           showBackButton
+          style={styles.header}
         />
       );
     }
@@ -110,6 +111,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flexGrow: 1
+  },
+  header: {
+    backgroundColor: theme.backgroundColor
   },
   map: {
     flexGrow: 1
