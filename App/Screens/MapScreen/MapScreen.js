@@ -7,6 +7,7 @@ import getCorrectLatLng from '../../utils/getCorrectLatLng';
 import Header from '../../Header';
 import SearchHeader from '../Search/SearchHeader';
 import * as theme from '../../utils/theme';
+import truncate from 'truncate';
 
 export default class MapScreen extends Component {
   static navigationOptions = {
@@ -93,8 +94,8 @@ export default class MapScreen extends Component {
                 color={theme.primaryColor}
                 coordinate={station}
                 ref={this.handleMarkerRef}
-                title={station.title}
-                description={station.description}
+                title={truncate(station.title, 15)}
+                description={truncate(station.description, 40)}
               />
               <MapView.Marker color="blue" coordinate={currentLocation} />
             </MapView>
