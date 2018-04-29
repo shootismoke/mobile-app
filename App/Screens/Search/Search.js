@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Constants } from 'expo';
 import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
 import retry from 'async-retry';
 
@@ -36,7 +37,7 @@ export default class Search extends Component {
           const {
             data: { hits }
           } = await axios.post(
-            `${algoliaUrls[attempt + 1]}/1/places/query`,
+            `${algoliaUrls[attempt - 1]}/1/places/query`,
             {
               aroundLatLng: gps
                 ? `${gps.latitude},${gps.longitude}`
@@ -47,8 +48,9 @@ export default class Search extends Component {
             },
             {
               headers: {
-                // 'X-Algolia-Application-Id': '',
-                // 'X-Algolia-API-Key': ''
+                // 'X-Algolia-Application-Id':
+                //   Constants.manifest.extra.algoliaApplicationId,
+                // 'X-Algolia-API-Key': Constants.manifest.extra.algoliaApiKey
               },
 
               timeout: 3000

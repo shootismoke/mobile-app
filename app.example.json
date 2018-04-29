@@ -11,6 +11,8 @@
     },
     "assetBundlePatterns": ["assets/fonts/*"],
     "extra": {
+      "algoliaApiKey": "YOUR_API_KEY",
+      "algoliaApplicationId": "YOUR_APPLICATION_ID",
       "geonamesUsername": "YOUR_USERNAME",
       "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
       "waqiToken": "YOUR_API_KEY"
