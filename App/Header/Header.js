@@ -60,7 +60,6 @@ export default class Header extends Component {
       currentLocation,
       elevated,
       onBackClick,
-      onChangeLocationClick,
       onClick,
       showBackButton,
       showChangeLocation,
@@ -92,16 +91,9 @@ export default class Header extends Component {
           </View>
         </TouchableOpacity>
         <View style={styles.subtitleGroup}>
-          <TouchableOpacity onPress={onChangeLocationClick}>
-            <Text style={styles.subtitle}>
-              {distance}km from you{showChangeLocation && (
-                <Text>
-                  {' '}
-                  &bull; <Text style={theme.link}>Change your location</Text>
-                </Text>
-              )}
-            </Text>
-          </TouchableOpacity>
+          <Text style={styles.subtitle}>
+            Nearest air quality station {distance}km from you
+          </Text>
         </View>
       </View>
     );
