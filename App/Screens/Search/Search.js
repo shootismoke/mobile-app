@@ -20,7 +20,8 @@ const algoliaUrls = [
 export default class Search extends Component {
   state = {
     hasErrors: false, // Error from algolia
-    hits: [],
+    hits: null,
+    loading: false,
     search: ''
   };
 
@@ -32,6 +33,7 @@ export default class Search extends Component {
 
     const { gps } = this.props;
     try {
+      this.setState({ loading: true });
       await retry(
         async (_, attempt) => {
           const {
@@ -62,14 +64,15 @@ export default class Search extends Component {
           retries: 4
         }
       );
+      this.setState({ loading: false });
     } catch (error) {
-      this.setState({ hasErrors: true });
+      this.setState({ hasErrors: true, loading: false });
     }
   };
 
   render() {
     const { onRequestClose, ...rest } = this.props;
-    const { hasErrors, hits, search } = this.state;
+    const { hits, search } = this.state;
 
     return (
       <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
@@ -86,11 +89,7 @@ export default class Search extends Component {
             ItemSeparatorComponent={this.renderSeparator}
             keyExtractor={({ objectID }) => objectID}
             ListEmptyComponent={
-              <Text style={styles.noResults}>
-                {hasErrors
-                  ? 'Error fetching locations. Please try again later.'
-                  : 'Waiting for results.'}
-              </Text>
+              <Text style={styles.noResults}>{this.renderInfoText()}</Text>
             }
             renderItem={this.renderItem}
           />
@@ -104,6 +103,14 @@ export default class Search extends Component {
   );
 
   renderSeparator = () => <View style={styles.separator} />;
+
+  renderInfoText = () => {
+    const { hasErrors, hits } = this.state;
+
+    if (hasErrors) return 'Error fetching locations. Please try again later.';
+    if (hits && hits.length === 0) return 'No results.';
+    return 'Waiting for results.';
+  };
 }
 
 const styles = StyleSheet.create({
