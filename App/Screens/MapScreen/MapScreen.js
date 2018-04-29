@@ -36,7 +36,13 @@ export default class MapScreen extends Component {
     clearTimeout(this.showMapTimeout);
   }
 
-  handleRef = ref => {
+  handleFitMarkers = () => this.map.fitToElements(false);
+
+  handleMapRef = ref => {
+    this.map = ref;
+  };
+
+  handleMarkerRef = ref => {
     this.marker = ref;
   };
 
@@ -53,11 +59,12 @@ export default class MapScreen extends Component {
 
     const station = {
       description: api.attributions.length ? api.attributions[0].name : null,
-      latitude: api.city.geo[0],
-      longitude: api.city.geo[1],
-      title: api.city.name
+      title: api.city.name,
+      ...getCorrectLatLng(currentLocation, {
+        latitude: api.city.geo[0],
+        longitude: api.city.geo[1]
+      })
     };
-    const { latitude, longitude } = getCorrectLatLng(currentLocation, station);
 
     return (
       <View style={styles.container}>
@@ -65,21 +72,23 @@ export default class MapScreen extends Component {
           {showMap && (
             <MapView
               initialRegion={{
-                latitude,
-                longitude,
                 latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
+                longitudeDelta: 0.0421,
+                ...currentLocation
               }}
+              onLayout={this.handleFitMarkers}
               onMapReady={this.handleShowCallout}
+              ref={this.handleMapRef}
               style={styles.map}
             >
               <MapView.Marker
                 color={theme.primaryColor}
-                coordinate={{ latitude, longitude }}
-                ref={this.handleRef}
+                coordinate={station}
+                ref={this.handleMarkerRef}
                 title={station.title}
                 description={station.description}
               />
+              <MapView.Marker color="blue" coordinate={currentLocation} />
             </MapView>
           )}
         </View>
