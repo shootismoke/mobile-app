@@ -12,8 +12,7 @@ export const elevatedLevel1 = {
   shadowColor: 'black',
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.2,
-  shadowRadius: 2,
-  zIndex: 10
+  shadowRadius: 2
 };
 
 export const elevatedLevel2 = {
@@ -22,7 +21,7 @@ export const elevatedLevel2 = {
   shadowOffset: { width: 0, height: 8 },
   shadowOpacity: 0.4,
   shadowRadius: 9,
-  zIndex: 10
+  zIndex: 9999999
 };
 
 export const fullScreen = {

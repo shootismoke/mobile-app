@@ -44,15 +44,16 @@ export default class SearchHeader extends Component {
     const Wrapper = asTouchable ? TouchableHighlight : View;
 
     return (
-      <Wrapper onPress={asTouchable ? onClick : undefined}>
+      <Wrapper
+        onPress={asTouchable ? onClick : undefined}
+        style={[
+          elevated === true ? theme.elevatedLevel1 : null,
+          elevated === 'very' ? theme.elevatedLevel2 : null
+        ]}
+      >
         <View
           pointerEvents={asTouchable ? 'none' : 'auto'}
-          style={[
-            styles.container,
-            elevated === true ? theme.elevatedLevel1 : null,
-            elevated === 'very' ? theme.elevatedLevel2 : null,
-            style
-          ]}
+          style={[styles.container, style]}
         >
           <TextInput
             editable={!asTouchable}

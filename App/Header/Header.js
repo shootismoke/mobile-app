@@ -93,12 +93,12 @@ export default class Header extends Component {
 
             <Text style={styles.title}>{locationName}</Text>
           </View>
+          <View style={styles.subtitleGroup}>
+            <Text style={styles.subtitle}>
+              Nearest air quality station {distance}km from you
+            </Text>
+          </View>
         </TouchableOpacity>
-        <View style={styles.subtitleGroup}>
-          <Text style={styles.subtitle}>
-            Nearest air quality station {distance}km from you
-          </Text>
-        </View>
       </View>
     );
   }
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.backgroundColor,
     paddingBottom: 15,
     paddingHorizontal: 17,
-    paddingTop: 22
+    paddingTop: 18
   },
   titleGroup: {
     alignItems: 'center',

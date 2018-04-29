@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   backText: {
     color: theme.secondaryTextColor,
     fontFamily: 'gotham-book',
-    fontSize: 14,
+    fontSize: 13,
     marginLeft: 9
   }
 });
