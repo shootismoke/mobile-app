@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
@@ -25,33 +32,51 @@ export default class SearchHeader extends Component {
   };
 
   render() {
-    const { onChangeSearch, search, ...rest } = this.props;
+    const {
+      asTouchable,
+      elevated,
+      onChangeSearch,
+      onClick,
+      search,
+      style,
+      ...rest
+    } = this.props;
+    const Wrapper = asTouchable ? TouchableOpacity : View;
+
     return (
-      <View onPress={this.handleClick} style={styles.container}>
-        <View style={styles.header}>
-          <TextInput
-            autoFocus
-            onChangeText={onChangeSearch}
-            placeholder="Search for a city or address"
-            placeholderTextColor="rgba(255, 255, 255, 0.6)"
-            style={styles.input}
-            value={search}
-            {...rest}
-          />
-          <Image source={searchIcon} />
-        </View>
-      </View>
+      <Wrapper
+        onPress={asTouchable ? onClick : undefined}
+        style={[styles.container, elevated ? styles.elevated : null, style]}
+      >
+        <TextInput
+          onChangeText={onChangeSearch}
+          placeholder="Search for a city or address"
+          placeholderTextColor="rgba(255, 255, 255, 0.6)"
+          style={styles.input}
+          value={search}
+          {...rest}
+        />
+        <Image source={searchIcon} />
+      </Wrapper>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header: {
+  container: {
     ...theme.withPadding,
     alignItems: 'center',
     backgroundColor: theme.primaryColor,
     flexDirection: 'row',
     height: 48
+  },
+  elevated: {
+    elevation: 2,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.4,
+    shadowRadius: 9,
+    zIndex: 10
   },
   input: {
     ...theme.text,

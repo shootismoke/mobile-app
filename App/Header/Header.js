@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
   elevated: {
     elevation: 2,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
     zIndex: 10
   },
   titleGroup: {

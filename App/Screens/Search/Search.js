@@ -70,6 +70,7 @@ export default class Search extends Component {
         <View style={styles.container}>
           <BackButton onClick={onRequestClose} style={styles.backButton} />
           <SearchHeader
+            autoFocus
             onChangeSearch={this.handleChangeSearch}
             search={search}
           />

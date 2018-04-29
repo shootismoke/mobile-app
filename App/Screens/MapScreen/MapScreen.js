@@ -5,6 +5,7 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BackButton from '../../BackButton';
 import getCorrectLatLng from '../../utils/getCorrectLatLng';
 import Header from '../../Header';
+import SearchHeader from '../Search/SearchHeader';
 import * as theme from '../../utils/theme';
 
 export default class MapScreen extends Component {
@@ -52,7 +53,7 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      screenProps: { api, currentLocation },
+      screenProps: { api, currentLocation, onChangeLocationClick },
       ...rest
     } = this.props;
     const { showMap } = this.state;
@@ -68,6 +69,14 @@ export default class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
+        <SearchHeader
+          asTouchable
+          editable={false}
+          elevated
+          onClick={onChangeLocationClick}
+          onPress={onChangeLocationClick}
+          search=""
+        />
         <View style={styles.mapContainer}>
           {showMap && (
             <MapView
