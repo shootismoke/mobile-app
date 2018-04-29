@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
+  TouchableHighlight,
   View
 } from 'react-native';
 
@@ -41,11 +41,12 @@ export default class SearchHeader extends Component {
       style,
       ...rest
     } = this.props;
-    const Wrapper = asTouchable ? TouchableWithoutFeedback : View;
+    const Wrapper = asTouchable ? TouchableHighlight : View;
 
     return (
       <Wrapper onPress={asTouchable ? onClick : undefined}>
         <View
+          pointerEvents={asTouchable ? 'none' : 'auto'}
           style={[
             styles.container,
             elevated === true ? theme.elevatedLevel1 : null,
@@ -54,6 +55,7 @@ export default class SearchHeader extends Component {
           ]}
         >
           <TextInput
+            editable={!asTouchable}
             onChangeText={onChangeSearch}
             placeholder="Search for a city or address"
             placeholderTextColor="rgba(255, 255, 255, 0.6)"
