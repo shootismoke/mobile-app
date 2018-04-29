@@ -16,7 +16,7 @@ export const elevatedLevel1 = {
 };
 
 export const elevatedLevel2 = {
-  elevation: 6,
+  elevation: 10,
   shadowColor: 'black',
   shadowOffset: { width: 0, height: 9 },
   shadowOpacity: 0.4,

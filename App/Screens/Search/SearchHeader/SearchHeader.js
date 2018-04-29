@@ -47,13 +47,15 @@ export default class SearchHeader extends Component {
       <Wrapper
         onPress={asTouchable ? onClick : undefined}
         style={[
+          styles.container,
           elevated === true ? theme.elevatedLevel1 : null,
           elevated === 'very' ? theme.elevatedLevel2 : null
         ]}
+        underlayColor={asTouchable ? theme.primaryColor : undefined} // https://github.com/facebook/react-native/issues/11834
       >
         <View
           pointerEvents={asTouchable ? 'none' : 'auto'}
-          style={[styles.container, style]}
+          style={[styles.content, style]}
         >
           <TextInput
             underlineColorAndroid="transparent"
@@ -74,9 +76,11 @@ export default class SearchHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: theme.primaryColor
+  },
+  content: {
     ...theme.withPadding,
     alignItems: 'center',
-    backgroundColor: theme.primaryColor,
     flexDirection: 'row',
     height: 48
   },
