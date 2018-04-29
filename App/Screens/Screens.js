@@ -72,7 +72,6 @@ export default class Screens extends Component {
 
       await retry(
         async () => {
-          console.log(currentLocation);
           const { data: response } = await axios.get(
             `http://api.waqi.info/feed/geo:${
               (currentLocation || coords).latitude

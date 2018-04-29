@@ -7,10 +7,21 @@ import * as theme from '../../../utils/theme';
 export default class Item extends Component {
   handleClick = () => {
     const {
-      item: { _geoloc },
+      item: { city, country, county, _geoloc, locale_names },
       onClick
     } = this.props;
-    onClick({ latitude: _geoloc.lat, longitude: _geoloc.lng });
+    onClick({
+      latitude: _geoloc.lat,
+      longitude: _geoloc.lng,
+      name: [
+        locale_names[0],
+        city,
+        county && county.length ? county[0] : null,
+        country
+      ]
+        .filter(_ => _)
+        .join(', ')
+    });
   };
 
   render() {
@@ -23,7 +34,7 @@ export default class Item extends Component {
         <View style={styles.result}>
           <Text style={styles.title}>{locale_names[0]}</Text>
           <Text style={styles.description}>
-            {[city, ...(county || []), ...(administrative || []), country]
+            {[city, county && county.length ? county[0] : null, country]
               .filter(_ => _)
               .join(', ')}
           </Text>

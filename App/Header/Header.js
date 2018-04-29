@@ -17,8 +17,16 @@ export default class Header extends Component {
     locationName: 'FETCHING...'
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { api, currentLocation } = this.props;
+
+    // If our currentLocation already has a name (from algolia), then we don't
+    // need Geonames for the name
+    if (currentLocation.name) {
+      this.setState({ locationName: currentLocation.name.toUpperCase() });
+      return;
+    }
+
     try {
       const { data } = await axios.get(
         `http://api.geonames.org/findNearbyJSON?lat=${
