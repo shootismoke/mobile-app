@@ -46,7 +46,7 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      screenProps: { api, gps },
+      screenProps: { api, currentLocation },
       ...rest
     } = this.props;
     const { showMap } = this.state;
@@ -57,7 +57,7 @@ export default class MapScreen extends Component {
       longitude: api.city.geo[1],
       title: api.city.name
     };
-    const { latitude, longitude } = getCorrectLatLng(gps, station);
+    const { latitude, longitude } = getCorrectLatLng(currentLocation, station);
 
     return (
       <View style={styles.container}>

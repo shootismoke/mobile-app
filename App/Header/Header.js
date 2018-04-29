@@ -18,12 +18,14 @@ export default class Header extends Component {
   };
 
   async componentWillMount() {
-    const { api, gps } = this.props;
+    const { api, currentLocation } = this.props;
     try {
       const { data } = await axios.get(
-        `http://api.geonames.org/findNearbyJSON?lat=${gps.latitude}&lng=${
-          gps.longitude
-        }&username=${Constants.manifest.extra.geonamesUsername}`
+        `http://api.geonames.org/findNearbyJSON?lat=${
+          currentLocation.latitude
+        }&lng=${currentLocation.longitude}&username=${
+          Constants.manifest.extra.geonamesUsername
+        }`
       );
 
       // If we got data from the Geonames service, then we use that one
@@ -46,8 +48,8 @@ export default class Header extends Component {
   render() {
     const {
       api,
+      currentLocation,
       elevated,
-      gps,
       onBackClick,
       onChangeLocationClick,
       onClick,
@@ -57,7 +59,7 @@ export default class Header extends Component {
     } = this.props;
     const { locationName } = this.state;
     const distance = Math.round(
-      haversine(gps, {
+      haversine(currentLocation, {
         latitude: api.city.geo[0],
         longitude: api.city.geo[1]
       })

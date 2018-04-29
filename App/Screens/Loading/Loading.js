@@ -7,7 +7,6 @@ import * as theme from '../../utils/theme';
 
 export default class Loading extends Component {
   static propTypes = {
-    api: PropTypes.object,
     gps: PropTypes.object
   };
 
@@ -47,7 +46,7 @@ export default class Loading extends Component {
   );
 
   renderText = () => {
-    const { api, gps } = this.props;
+    const { gps } = this.props;
     const { longWaiting } = this.state;
     let coughs = 0; // Number of times to show "Cough..."
     if (gps) ++coughs;

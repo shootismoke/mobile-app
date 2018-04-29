@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Constants } from 'expo';
 import retry from 'async-retry';
 import { StackNavigator } from 'react-navigation';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
@@ -47,6 +47,7 @@ const RootStack = StackNavigator(
 export default class Screens extends Component {
   state = {
     api: null,
+    currentLocation: null, // Initialized to GPS, but can be changed by user
     gps: null,
     isSearchVisible: false
   };
@@ -56,16 +57,28 @@ export default class Screens extends Component {
   }
 
   async fetchData() {
+    const { currentLocation } = this.state;
     try {
-      this.setState({ api: null, gps: null });
-      const { coords } = await getCurrentPosition();
-      this.setState({ gps: coords });
+      this.setState({ api: null });
+
+      // If the currentLocation has been set by the user, then we don't refetch
+      // the user's GPS
+      let coords;
+      if (!currentLocation) {
+        const response = await getCurrentPosition();
+        coords = response.coords;
+        this.setState({ currentLocation: coords, gps: coords });
+      }
+
       await retry(
         async () => {
+          console.log(currentLocation);
           const { data: response } = await axios.get(
-            `http://api.waqi.info/feed/geo:${coords.latitude};${
-              coords.longitude
-            }/?token=${Constants.manifest.extra.waqiToken}`,
+            `http://api.waqi.info/feed/geo:${
+              (currentLocation || coords).latitude
+            };${(currentLocation || coords).longitude}/?token=${
+              Constants.manifest.extra.waqiToken
+            }`,
             { timeout: 6000 }
           );
 
@@ -75,7 +88,7 @@ export default class Screens extends Component {
             throw new Error(response.data);
           }
         },
-        { retries: 2 }
+        { retries: 3 }
       );
     } catch (err) {
       Alert.alert('Sh*t, an error!', `The error message is: ${err.message}`, [
@@ -84,15 +97,19 @@ export default class Screens extends Component {
     }
   }
 
+  handleChangeLocation = currentLocation => {
+    this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
+  };
+
   handleSearchHide = () => this.setState({ isSearchVisible: false });
 
   handleSearchShow = () => this.setState({ isSearchVisible: true });
 
   render() {
-    const { api, gps, isSearchVisible } = this.state;
+    const { api, currentLocation, gps, isSearchVisible } = this.state;
 
-    if (!api) {
-      return <Loading api={api} gps={gps} />;
+    if (!api || !currentLocation) {
+      return <Loading gps={gps} />;
     }
 
     return (
@@ -100,12 +117,14 @@ export default class Screens extends Component {
         <RootStack
           screenProps={{
             api,
+            currentLocation,
             gps,
             onChangeLocationClick: this.handleSearchShow
           }}
         />
         <Search
           gps={gps}
+          onChangeLocation={this.handleChangeLocation}
           onRequestClose={this.handleSearchHide}
           visible={isSearchVisible}
         />

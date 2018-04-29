@@ -44,7 +44,7 @@ export default class Home extends Component {
 
   render() {
     const {
-      screenProps: { api, gps }
+      screenProps: { api }
     } = this.props;
     return (
       <ScrollView bounces={false} contentContainerStyle={styles.container}>

@@ -13,7 +13,7 @@ import {
 import retry from 'async-retry';
 
 import BackButton from '../../BackButton';
-import pinIcon from '../../../assets/images/location.png';
+import Item from './Item';
 import searchIcon from '../../../assets/images/search.png';
 import * as theme from '../../utils/theme';
 
@@ -97,16 +97,8 @@ export default class Search extends Component {
     );
   }
 
-  renderItem = ({ item: { city, country, county, locale_names } }) => (
-    <TouchableOpacity style={styles.itemContainer}>
-      <Image source={pinIcon} />
-      <View style={styles.itemResult}>
-        <Text style={styles.itemTitle}>{locale_names[0]}</Text>
-        <Text style={styles.itemDescription}>
-          {[city, ...(county || []), country].filter(_ => _).join(', ')}
-        </Text>
-      </View>
-    </TouchableOpacity>
+  renderItem = ({ item }) => (
+    <Item item={item} onClick={this.props.onChangeLocation} />
   );
 
   renderSeparator = () => <View style={styles.separator} />;
@@ -133,22 +125,6 @@ const styles = StyleSheet.create({
     color: 'white',
     flexGrow: 1,
     fontSize: 16
-  },
-  itemContainer: {
-    ...theme.withPadding,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: 17
-  },
-  itemDescription: {
-    ...theme.text,
-    marginTop: 4
-  },
-  itemResult: {
-    marginLeft: 17
-  },
-  itemTitle: {
-    ...theme.title
   },
   separator: {
     backgroundColor: '#D2D2D2',
