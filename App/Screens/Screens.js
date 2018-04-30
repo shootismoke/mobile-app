@@ -11,9 +11,9 @@ import Header from '../Header';
 import Home from './Home';
 import Loading from './Loading';
 import MapScreen from './MapScreen';
-// import pm25ToCigarettes from '../utils/pm25ToCigarettes';
+import pm25ToCigarettes from '../utils/pm25ToCigarettes';
 import Search from './Search';
-// import smokeVideo from '../../assets/video/smoke.mp4';
+import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
 const RootStack = StackNavigator(
@@ -113,15 +113,15 @@ export default class Screens extends Component {
     }
   }
 
-  // getVideoStyle = () => {
-  //   const { api } = this.state;
-  //   const cigarettes = pm25ToCigarettes(api);
+  getVideoStyle = () => {
+    const { api } = this.state;
+    const cigarettes = pm25ToCigarettes(api);
 
-  //   if (cigarettes <= 1) return { right: -60, opacity: 0.2 };
-  //   if (cigarettes < 5) return { right: 100, opacity: 0.5 };
-  //   if (cigarettes < 15) return { right: -60, opacity: 0.7 };
-  //   return { right: -30, opacity: 1 };
-  // };
+    if (cigarettes <= 1) return { opacity: 0.2 };
+    if (cigarettes < 5) return { opacity: 0.5 };
+    if (cigarettes < 15) return { opacity: 0.7 };
+    return { opacity: 1 };
+  };
 
   handleLocationChanged = currentLocation => {
     this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
@@ -169,12 +169,12 @@ export default class Screens extends Component {
             onChangeLocationClick: this.handleSearchShow
           }}
         />
-        {/* <Video
+        <Video
           resizeMode="cover"
           shouldPlay
           source={smokeVideo}
           style={[styles.video, this.getVideoStyle()]}
-        /> */}
+        />
       </View>
     );
   };
