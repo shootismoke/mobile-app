@@ -5,7 +5,9 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BackButton from '../../BackButton';
 import getCorrectLatLng from '../../utils/getCorrectLatLng';
 import Header from '../../Header';
+import homeIcon from '../../../assets/images/home.png';
 import SearchHeader from '../Search/SearchHeader';
+import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
 import truncate from 'truncate';
 
@@ -39,18 +41,18 @@ export default class MapScreen extends Component {
     clearTimeout(this.showMapTimeout);
   }
 
-  handleFitMarkers = () => this.map.fitToElements(false);
-
-  handleMapRef = ref => {
-    this.map = ref;
+  handleMapReady = () => {
+    this.handleShowCallout();
   };
 
-  handleMarkerRef = ref => {
-    this.marker = ref;
+  handleStationRef = ref => {
+    this.stationMarker = ref;
   };
 
   handleShowCallout = () => {
-    this.marker && this.marker.showCallout && this.marker.showCallout();
+    this.stationMarker &&
+      this.stationMarker.showCallout &&
+      this.stationMarker.showCallout();
   };
 
   render() {
@@ -82,23 +84,30 @@ export default class MapScreen extends Component {
           {showMap && (
             <MapView
               initialRegion={{
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-                ...currentLocation
+                latitude: (currentLocation.latitude + station.latitude) / 2,
+                latitudeDelta:
+                  Math.abs(currentLocation.latitude - station.latitude) * 2,
+                longitude: (currentLocation.longitude + station.longitude) / 2,
+                longitudeDelta:
+                  Math.abs(currentLocation.longitude - station.longitude) * 2
               }}
-              onLayout={this.handleFitMarkers}
-              onMapReady={this.handleShowCallout}
-              ref={this.handleMapRef}
+              onLayout={this.handleMapReady}
               style={styles.map}
             >
               <MapView.Marker
                 color={theme.primaryColor}
                 coordinate={station}
-                ref={this.handleMarkerRef}
-                title={truncate(station.title, 15)}
+                image={stationIcon}
+                ref={this.handleStationRef}
+                title={'Air Quality Station'}
                 description={truncate(station.description, 40)}
               />
-              <MapView.Marker color="blue" coordinate={currentLocation} />
+              <MapView.Marker
+                color="blue"
+                coordinate={currentLocation}
+                image={homeIcon}
+                title="Your position"
+              />
             </MapView>
           )}
         </View>
