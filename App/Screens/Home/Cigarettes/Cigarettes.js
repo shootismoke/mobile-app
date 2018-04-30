@@ -14,8 +14,8 @@ export default class Cigarettes extends Component {
 
   render() {
     const { api, style } = this.props;
-    const cigarettes = api ? Math.min(pm25ToCigarette(api), 63) : 1;
-    // const cigarettes = api ? 4.9 : 1; // Can change values here for testing
+    // const cigarettes =  Math.min(pm25ToCigarette(api), 63); // We don't show more than 63
+    const cigarettes = 0.9; // Can change values here for testing
     const count = Math.floor(cigarettes);
     const decimal = cigarettes - count;
 
@@ -40,6 +40,7 @@ export default class Cigarettes extends Component {
               diagonal={diagonal}
               length={decimal || 1}
               size={this.getSize(cigarettes)}
+              style={cigarettes <= 1 ? styles.single : undefined}
               vertical={vertical}
             />
           ) : null}
@@ -54,5 +55,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row',
     flexWrap: 'wrap'
-  }
+  },
+  single: { marginLeft: -20 } // Empiric
 });
