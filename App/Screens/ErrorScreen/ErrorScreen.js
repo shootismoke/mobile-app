@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   errorDescription: {
-    ...theme.text
+    ...theme.text,
+    ...theme.paragraph
   },
   errorText: {
     ...theme.shitText,
