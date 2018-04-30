@@ -57,7 +57,8 @@ export default class Screens extends Component {
     currentLocation: null, // Initialized to GPS, but can be changed by user
     error: null, // Error here or in children component tree
     gps: null,
-    isSearchVisible: false
+    isSearchVisible: false,
+    showVideo: true
   };
 
   componentWillMount() {
@@ -131,6 +132,12 @@ export default class Screens extends Component {
 
   handleSearchShow = () => this.setState({ isSearchVisible: true });
 
+  handleVideoStatus = ({ didJustFinish }) => {
+    if (didJustFinish && this.state.showVideo) {
+      this.setState({ showVideo: false });
+    }
+  };
+
   render() {
     const { gps, isSearchVisible } = this.state;
     return (
@@ -147,7 +154,7 @@ export default class Screens extends Component {
   }
 
   renderScreen = () => {
-    const { api, currentLocation, error, gps } = this.state;
+    const { api, currentLocation, error, gps, showVideo } = this.state;
 
     if (error) {
       return (
@@ -169,12 +176,15 @@ export default class Screens extends Component {
             onChangeLocationClick: this.handleSearchShow
           }}
         />
-        <Video
-          resizeMode="cover"
-          shouldPlay
-          source={smokeVideo}
-          style={[styles.video, this.getVideoStyle()]}
-        />
+        {showVideo && (
+          <Video
+            onPlaybackStatusUpdate={this.handleVideoStatus}
+            resizeMode="cover"
+            shouldPlay
+            source={smokeVideo}
+            style={[styles.video, this.getVideoStyle()]}
+          />
+        )}
       </View>
     );
   };
