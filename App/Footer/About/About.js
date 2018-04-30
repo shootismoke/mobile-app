@@ -90,7 +90,7 @@ export default class About extends Component {
                 <Text onPress={this.handleOpenAmaury} style={theme.link}>
                   Amaury Martiny
                 </Text>.{'\n'}
-                Design &amp; Copy by{' '}
+                Design &amp; Copywriting by{' '}
                 <Text onPress={this.handleOpenMarcelo} style={theme.link}>
                   Marcelo S. Coelho
                 </Text>.{'\n'}
