@@ -52,9 +52,9 @@ export default class Search extends Component {
             },
             {
               headers: {
-                // 'X-Algolia-Application-Id':
-                //   Constants.manifest.extra.algoliaApplicationId,
-                // 'X-Algolia-API-Key': Constants.manifest.extra.algoliaApiKey
+                'X-Algolia-Application-Id':
+                  Constants.manifest.extra.algoliaApplicationId,
+                'X-Algolia-API-Key': Constants.manifest.extra.algoliaApiKey
               },
 
               timeout: 3000
@@ -63,7 +63,7 @@ export default class Search extends Component {
           this.setState({ hits });
         },
         {
-          retries: 4
+          retries: 3
         }
       );
       this.setState({ loading: false });
