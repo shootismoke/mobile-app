@@ -42,17 +42,13 @@ export default class MapScreen extends Component {
   }
 
   handleMapReady = () => {
-    this.handleShowCallout();
+    this.stationMarker &&
+      this.stationMarker.showCallout &&
+      this.stationMarker.showCallout();
   };
 
   handleStationRef = ref => {
     this.stationMarker = ref;
-  };
-
-  handleShowCallout = () => {
-    this.stationMarker &&
-      this.stationMarker.showCallout &&
-      this.stationMarker.showCallout();
   };
 
   render() {
@@ -91,7 +87,7 @@ export default class MapScreen extends Component {
                 longitudeDelta:
                   Math.abs(currentLocation.longitude - station.longitude) * 2
               }}
-              onLayout={this.handleMapReady}
+              onMapReady={this.handleMapReady}
               style={styles.map}
             >
               <MapView.Marker
