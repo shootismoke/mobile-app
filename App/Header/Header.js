@@ -5,13 +5,13 @@ import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import BackButton from '../BackButton';
+import changeLocation from '../../assets/images/changeLocation.png';
 import getCorrectLatLng from '../utils/getCorrectLatLng';
-import location from '../../assets/images/location.png';
 import * as theme from '../utils/theme';
 
 export default class Header extends Component {
   static defaultProps = {
-    showChangeLocation: true
+    showChangeLocation: false
   };
 
   state = {
@@ -75,6 +75,7 @@ export default class Header extends Component {
       currentLocation,
       elevated,
       onBackClick,
+      onChangeLocationClick,
       onClick,
       showBackButton,
       showChangeLocation,
@@ -102,18 +103,24 @@ export default class Header extends Component {
         {showBackButton && (
           <BackButton onClick={onBackClick} style={styles.backButton} />
         )}
-        <TouchableOpacity disabled={!onClick} onPress={onClick}>
-          <View style={styles.titleGroup}>
-            <Image source={location} />
 
+        <View style={styles.content}>
+          <TouchableOpacity
+            disabled={!onClick}
+            onPress={onClick}
+            style={showChangeLocation ? { maxWidth: '80%' } : undefined}
+          >
             <Text style={styles.title}>{locationName}</Text>
-          </View>
-          <View style={styles.subtitleGroup}>
             <Text style={styles.subtitle}>
-              Nearest air quality station {distance}km from you
+              Distance to Air Quality Station: {distance}km
             </Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          {showChangeLocation && (
+            <TouchableOpacity onPress={onChangeLocationClick}>
+              <Image source={changeLocation} style={styles.changeLocation} />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     );
   }
@@ -123,24 +130,25 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 22
   },
+  changeLocation: {
+    marginRight: 5
+  },
   container: {
     paddingBottom: 15,
     paddingHorizontal: 17,
     paddingTop: 18
   },
-  titleGroup: {
+  content: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 3
+    justifyContent: 'space-between'
   },
   subtitle: {
     ...theme.text,
-    marginLeft: 33, // Picutre width (22) + marginleft (11)
     marginTop: 11
   },
   title: {
     ...theme.title,
-    fontSize: 15,
-    marginLeft: 11
+    fontSize: 15
   }
 });

@@ -26,6 +26,7 @@ export default class Home extends Component {
         <Header
           {...props.screenProps}
           onClick={() => props.navigation.navigate('Map')} // TODO Possible not to create a new function every time?
+          showChangeLocation
         />
       );
     }
