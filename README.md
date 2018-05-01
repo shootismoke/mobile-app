@@ -1,4 +1,4 @@
-# Sh*t! I Smoke
+# Sh\*t! I Smoke
 
 Know how many cigarettes you smoke based on the pollution of your location.
 
@@ -10,7 +10,12 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 ## Try it on Expo
 
-This app is bootstrapped with [Expo](https://expo.io). The app can be found at the following address in Expo: `https://exp.host/@amaurymartiny/shit-i-smoke`.
+This app is bootstrapped with [Expo](https://expo.io). We have 2 release channels.
+
+| Release Channel | Description                                                                 | Url                                                                       |
+| --------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Production      | Same version as the one on the App Store and Play Store.                    | `https://exp.host/@amaurymartiny/shit-i-smoke?release-channel=production` |
+| Staging         | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shit-i-smoke`                            |
 
 ## Contribute
 
@@ -20,23 +25,34 @@ If you would like to help coding please read the Getting Started guide.
 
 ### Getting Started
 
+Before developing the app, you need to fetch your own API tokens for the following services:
+
+| Service                 | URL                                                                                 | Comments                                                |
+| ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| World Air Quality Index | http://aqicn.org/api/                                                               | Required.                                               |
+| Google Geocoding        | https://developers.google.com/maps/documentation/geocoding/intro                    | Optional, but recommended for showing precise location. |
+| Algolia Places          | https://community.algolia.com/places/rest.html (`Get Started` button on the bottom) | Optional, lower API rates if not provided.              |
+| Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                                |
+| Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                                |
+
+Then run the following commands:
+
 ```bash
 git clone https://github.com/amaurymartiny/shit-i-smoke
 cd shit-i-smoke
 yarn install
 
-# Get your Air Quality Database token from https://aqicn.org/json-api/doc/
-# and put it into app.json
-# Note: Google Maps api keys are not necessary while developing
 cp app.example.json app.json
+# Replaces the API keys placeholders with your own tokens in app.json
 
 yarn start
 ```
 
 This app is created with Expo, using React Native. When you run `yarn start`, the packager will show, and you can either:
-- install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
-- press `a` to open the Android simulator.
-- press `i` to open the iOS simulator.
+
+* install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
+* press `a` to open the Android simulator.
+* press `i` to open the iOS simulator.
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 
