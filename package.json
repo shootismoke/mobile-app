@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "jest-expo": "25.0.0",
-    "react-native-scripts": "1.11.1",
-    "react-test-renderer": "16.2.0"
+    "jest-expo": "27.0.1",
+    "react-native-scripts": "1.14.0",
+    "react-test-renderer": "16.3.2"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -19,10 +19,13 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "async-retry": "^1.2.1",
     "axios": "^0.18.0",
-    "expo": "^25.0.0",
-    "react": "16.2.0",
-    "react-native": "0.52.0",
-    "react-native-action-button": "2.7.x"
+    "expo": "^27.0.1",
+    "haversine": "^1.1.0",
+    "react": "16.3.2",
+    "react-native": "0.55.3",
+    "react-navigation": "^1.5.11",
+    "truncate": "^2.0.1"
   }
 }

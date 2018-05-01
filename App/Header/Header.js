@@ -1,32 +1,124 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { Constants } from 'expo';
+import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import location from '../../assets/images/location.png';
-import Map from '../Map';
+import BackButton from '../BackButton';
+import changeLocation from '../../assets/images/changeLocation.png';
+import getCorrectLatLng from '../utils/getCorrectLatLng';
 import * as theme from '../utils/theme';
 
 export default class Header extends Component {
-  render() {
-    const { api, hidden, onLocationClick, style } = this.props;
-    return (
-      <View style={[styles.header, hidden ? styles.hidden : null, style]}>
-        <TouchableOpacity disabled={!api} onPress={onLocationClick}>
-          <View style={styles.titleGroup}>
-            <Image source={location} />
+  static defaultProps = {
+    showChangeLocation: false
+  };
 
-            <Text style={styles.title}>
-              {api ? api.city.name.toUpperCase() : 'Loading...'}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.subtitleGroup}>
-          {api ? (
+  state = {
+    locationName: 'FETCHING...'
+  };
+
+  async componentDidMount() {
+    const { api, currentLocation } = this.props;
+
+    // If our currentLocation already has a name (from algolia), then we don't
+    // need Google Geocoding for the name
+    if (currentLocation.name) {
+      this.setState({ locationName: currentLocation.name.toUpperCase() });
+      return;
+    }
+
+    try {
+      const { data } = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+          currentLocation.latitude
+        },${currentLocation.longitude}&key=${
+          Constants.manifest.extra.googleGeocodingApiKey
+        }&language=en`
+      );
+
+      // If we got data from the Google Geocoding service, then we use that one
+      if (!data || !data.results || !data.results.length) {
+        throw new Error();
+      }
+
+      const geoname = data.results[0];
+      if (!geoname.formatted_address) {
+        throw new Error();
+      }
+
+      // We format the formatted_address to remove postal code and street number for privacy reasons
+      const postalCode = geoname.address_components.find(component =>
+        component.types.includes('postal_code')
+      );
+      const streetNumber = geoname.address_components.find(component =>
+        component.types.includes('street_number')
+      );
+
+      this.setState({
+        locationName: geoname.formatted_address
+          .replace(postalCode && postalCode.long_name, '')
+          .replace(streetNumber && streetNumber.long_name, '')
+          .replace(', ,', ',') // Remove unnecessary commas
+          .replace(/ +/g, ' ') // Remove double spaces
+          .trim()
+          .toUpperCase()
+      });
+    } catch (error) {
+      this.setState({ locationName: api.city.name.toUpperCase() });
+    }
+  }
+
+  render() {
+    const {
+      api,
+      currentLocation,
+      elevated,
+      onBackClick,
+      onChangeLocationClick,
+      onClick,
+      showBackButton,
+      showChangeLocation,
+      style
+    } = this.props;
+    const { locationName } = this.state;
+    const distance = Math.round(
+      haversine(
+        currentLocation,
+        getCorrectLatLng(currentLocation, {
+          latitude: api.city.geo[0],
+          longitude: api.city.geo[1]
+        })
+      )
+    );
+
+    return (
+      <View
+        style={[
+          styles.container,
+          elevated ? theme.elevatedLevel1 : null,
+          style
+        ]}
+      >
+        {showBackButton && (
+          <BackButton onClick={onBackClick} style={styles.backButton} />
+        )}
+
+        <View style={styles.content}>
+          <TouchableOpacity
+            disabled={!onClick}
+            onPress={onClick}
+            style={showChangeLocation ? { maxWidth: '80%' } : undefined}
+          >
+            <Text style={styles.title}>{locationName}</Text>
             <Text style={styles.subtitle}>
-              {/* new Date() not working in expo https://github.com/expo/expo/issues/782 */}
-              {api.time.s.split(' ')[0].replace(/-/g, '/')}
+              Distance to Air Quality Station: {distance}km
             </Text>
-          ) : (
-            <Text style={styles.subtitle}>Loading...</Text>
+          </TouchableOpacity>
+          {showChangeLocation && (
+            <TouchableOpacity onPress={onChangeLocationClick}>
+              <Image source={changeLocation} style={styles.changeLocation} />
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -35,29 +127,28 @@ export default class Header extends Component {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: theme.backgroundColor,
+  backButton: {
+    marginBottom: 22
+  },
+  changeLocation: {
+    marginRight: 5
+  },
+  container: {
     paddingBottom: 15,
     paddingHorizontal: 17,
-    paddingTop: 22
+    paddingTop: 18
   },
-  hidden: {
-    opacity: 0
-  },
-  titleGroup: {
+  content: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 3
+    justifyContent: 'space-between'
   },
   subtitle: {
     ...theme.text,
-    fontSize: 12,
-    marginLeft: 33, // Picutre width (22) + marginleft (11)
     marginTop: 11
   },
   title: {
     ...theme.title,
-    fontSize: 15,
-    marginLeft: 11
+    fontSize: 15
   }
 });

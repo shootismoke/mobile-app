@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Font } from 'expo';
 
-import Home from './Home';
-import LoadingBackground from './Loading/Background';
+import Screens from './Screens';
+import LoadingBackground from './Screens/Loading/Background';
 
 export default class App extends Component {
   state = {
@@ -19,6 +19,8 @@ export default class App extends Component {
   }
 
   render() {
-    return this.state.fontLoaded ? <Home /> : <LoadingBackground />;
+    const { fontLoaded } = this.state;
+
+    return this.state.fontLoaded ? <Screens /> : <LoadingBackground />;
   }
 }

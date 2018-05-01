@@ -7,17 +7,20 @@
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
-      "versionCode": 1
+      "versionCode": 2
     },
     "assetBundlePatterns": ["assets/fonts/*"],
     "extra": {
+      "algoliaApiKey": "YOUR_API_KEY",
+      "algoliaApplicationId": "YOUR_APPLICATION_ID",
       "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
+      "googleGeocodingApiKey": "YOU_API_KEY",
       "waqiToken": "YOUR_API_KEY"
     },
     "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.1.0",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_API_KEY"
@@ -25,19 +28,19 @@
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription":
-          "This app uses your location to find the air pollution level near you."
+          "This app uses your location to find the air quality level near you."
       },
       "loadJSInBackgroundExperimental": true
     },
     "name": "Sh*t! I Smoke",
     "primaryColor": "#EBE7DD",
     "privacy": "public",
-    "sdkVersion": "25.0.0",
+    "sdkVersion": "27.0.0",
     "slug": "shit-i-smoke",
     "splash": {
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.0.2"
+    "version": "1.1.0"
   }
 }
