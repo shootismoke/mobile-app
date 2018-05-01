@@ -10,7 +10,7 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 ## Try it on Expo
 
-This app is bootstrapped with [Expo](https://expo.io). We have 2 release channels.
+This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
 | Release Channel | Description                                                                 | Url                                                                       |
 | --------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -27,7 +27,7 @@ If you would like to help coding please read the Getting Started guide.
 
 Before developing the app, you need to fetch your own API tokens for the following services:
 
-| Service                 | URL                                                                                 | Comments                                                |
+| Service                 | Url                                                                                 | Comments                                                |
 | ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------- |
 | World Air Quality Index | http://aqicn.org/api/                                                               | Required.                                               |
 | Google Geocoding        | https://developers.google.com/maps/documentation/geocoding/intro                    | Optional, but recommended for showing precise location. |
