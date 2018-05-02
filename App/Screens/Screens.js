@@ -105,6 +105,11 @@ export default class Screens extends Component {
           );
 
           if (response.status === 'ok') {
+            // ComponentDidCatch not working https://github.com/facebook/react-native/issues/18491
+            // So we handle errors manually
+            if (!response.data || !response.data.aqi) {
+              throw new Error('AQI not defined in response.');
+            }
             this.setState({ api: response.data });
           } else {
             throw new Error(response.data);
