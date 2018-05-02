@@ -42,8 +42,7 @@ git clone https://github.com/amaurymartiny/shit-i-smoke
 cd shit-i-smoke
 yarn install
 
-cp app.example.json app.json
-# Replaces the API keys placeholders with your own tokens in app.json
+cp app.example.json app.json # Replace the API keys placeholders with your own tokens in app.json
 
 yarn start
 ```
@@ -55,6 +54,10 @@ This app is created with Expo, using React Native. When you run `yarn start`, th
 * press `i` to open the iOS simulator.
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
+
+## License
+
+GPL-3.0. See LICENSE file for more information.
 
 ## Credits
 
