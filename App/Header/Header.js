@@ -64,6 +64,7 @@ export default class Header extends Component {
           .replace(streetNumber && streetNumber.long_name, '')
           .replace(', ,', ',') // Remove unnecessary commas
           .replace(/ +/g, ' ') // Remove double spaces
+          .replace(' ,', ',') // Self-explanatory
           .trim()
           .toUpperCase()
       });
