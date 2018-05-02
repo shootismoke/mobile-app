@@ -56,6 +56,10 @@ This app is created with Expo, using React Native. When you run `yarn start`, th
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 
+## License
+
+GPL-3.0. See LICENSE file for more information.
+
 ## Credits
 
 Created with ❤ by [Marcelo](www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
