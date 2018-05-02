@@ -61,4 +61,4 @@ GPL-3.0. See LICENSE file for more information.
 
 ## Credits
 
-Created with ❤ by [Marcelo](www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
+Created with ❤ by [Marcelo](https://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
