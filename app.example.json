@@ -20,7 +20,7 @@
     "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.1.0",
+      "buildNumber": "1.1.1",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_API_KEY"
@@ -41,6 +41,6 @@
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.1.0"
+    "version": "1.1.1"
   }
 }
