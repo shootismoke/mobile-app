@@ -42,8 +42,7 @@ git clone https://github.com/amaurymartiny/shit-i-smoke
 cd shit-i-smoke
 yarn install
 
-cp app.example.json app.json
-# Replaces the API keys placeholders with your own tokens in app.json
+cp app.example.json app.json # Replace the API keys placeholders with your own tokens in app.json
 
 yarn start
 ```
