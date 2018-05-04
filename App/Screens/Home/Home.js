@@ -1,4 +1,4 @@
-// Copyright (c) 2018, Amaury Martiny and the Sh*t! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
@@ -39,10 +39,11 @@ export default class Home extends Component {
 
   handleShare = () =>
     Share.share({
-      title:
-        'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
+      title: `Shoot! I 'smoked' ${pm25ToCigarettes(
+        this.props.screenProps.api
+      )} cigarettes today by breathing urban air. How much did you smoke? shootismoke.github.io`,
       message:
-        'Sh*t! I Smoke is an application that tells you how many cigarettes you smoke based on the pollution levels of your city. Download it for free here! shitismoke.github.io'
+        'Shoot! I Smoke is an application that tells you how many cigarettes you smoke based on the pollution levels of your city. Download it for free here! shootismoke.github.io'
     });
 
   render() {

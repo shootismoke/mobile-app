@@ -2,7 +2,7 @@
 
 Know how many cigarettes you smoke based on the pollution of your location.
 
-[![app-store](https://shitismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shitismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
+[![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
 
 ## Screenshots
 
@@ -12,10 +12,10 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
-| Release Channel | Description                                                                 | Url                                                                       |
-| --------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Production      | Same version as Sh\*t! I Smoke on the App Store and Play Store.             | `https://exp.host/@amaurymartiny/shit-i-smoke?release-channel=production` |
-| Staging         | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shit-i-smoke`                            |
+| Release Channel | Description                                                                 | Url                                                                        |
+| --------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Production      | Same version as Sh\*t! I Smoke on the App Store and Play Store.             | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
+| Staging         | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
 ## Contribute
 
@@ -38,8 +38,8 @@ Before developing the app, you need to fetch your own API tokens for the followi
 Then run the following commands:
 
 ```bash
-git clone https://github.com/amaurymartiny/shit-i-smoke
-cd shit-i-smoke
+git clone https://github.com/amaurymartiny/shoot-i-smoke
+cd shoot-i-smoke
 yarn install
 
 cp app.example.json app.json # Replace the API keys placeholders with your own tokens in app.json
