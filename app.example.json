@@ -7,20 +7,20 @@
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
-      "versionCode": 2
+      "versionCode": 4
     },
     "assetBundlePatterns": ["assets/fonts/*"],
     "extra": {
       "algoliaApiKey": "YOUR_API_KEY",
       "algoliaApplicationId": "YOUR_APPLICATION_ID",
-      "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
+      "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
       "googleGeocodingApiKey": "YOU_API_KEY",
       "waqiToken": "YOUR_API_KEY"
     },
-    "githubUrl": "https://github.com/amaurymartiny/shit-i-smoke",
+    "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.1.1",
+      "buildNumber": "1.1.2",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_API_KEY"
@@ -32,15 +32,15 @@
       },
       "loadJSInBackgroundExperimental": true
     },
-    "name": "Sh*t! I Smoke",
+    "name": "Shoot! I Smoke",
     "primaryColor": "#EBE7DD",
     "privacy": "public",
     "sdkVersion": "27.0.0",
-    "slug": "shit-i-smoke",
+    "slug": "shoot-i-smoke",
     "splash": {
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.1.1"
+    "version": "1.1.2"
   }
 }

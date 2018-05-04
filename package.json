@@ -1,6 +1,6 @@
 {
-  "name": "shit-i-smoke",
-  "version": "0.1.1",
+  "name": "shoot-i-smoke",
+  "version": "1.1.2",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "dependencies": {
