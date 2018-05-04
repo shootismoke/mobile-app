@@ -1,4 +1,4 @@
-# Sh\*t! I Smoke
+# Shoot! I Smoke
 
 Know how many cigarettes you smoke based on the pollution of your location.
 
