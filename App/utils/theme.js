@@ -87,8 +87,8 @@ export const withPadding = {
 export const bigButton = {
   backgroundColor: primaryColor,
   borderRadius: 22,
-  maxWidth: '90%',
   padding: 11
+  // TODO Width as small as possible
 };
 
 export const bigButtonText = {
