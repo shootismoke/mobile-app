@@ -55,7 +55,10 @@ export default class Home extends Component {
         <View style={styles.content}>
           <Cigarettes api={api} />
           <View style={styles.main}>{this.renderText()}</View>
-          <TouchableOpacity onPress={this.handleShare}>
+          <TouchableOpacity
+            onPress={this.handleShare}
+            style={styles.shareButton}
+          >
             <View style={theme.bigButton}>
               <Text style={theme.bigButtonText}>SHARE WITH YOUR FRIENDS</Text>
             </View>
@@ -112,7 +115,6 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   container: {
-    flexDirection: 'column',
     flexGrow: 1,
     justifyContent: 'space-between'
   },
@@ -130,6 +132,9 @@ const styles = StyleSheet.create({
   },
   main: {
     marginBottom: 22
+  },
+  shareButton: {
+    alignItems: 'flex-start'
   },
   shit: {
     ...theme.shitText,

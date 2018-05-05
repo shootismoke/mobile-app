@@ -87,8 +87,8 @@ export const withPadding = {
 export const bigButton = {
   backgroundColor: primaryColor,
   borderRadius: 22,
-  padding: 11
-  // TODO Width as small as possible
+  paddingHorizontal: 22,
+  paddingVertical: 11
 };
 
 export const bigButtonText = {
@@ -99,7 +99,7 @@ export const bigButtonText = {
       fontSize: 15
     },
     ios: {
-      fontSize: 12
+      fontSize: 14
     }
   }),
   textAlign: 'center'
