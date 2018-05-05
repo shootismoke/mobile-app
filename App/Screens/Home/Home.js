@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   content: {
     ...theme.withPadding,
     flexDirection: 'column',
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center'
   },
   dots: {
