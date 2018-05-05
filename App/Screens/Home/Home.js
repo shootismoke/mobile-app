@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     ...theme.withPadding
   },
   main: {
-    height: 220 // Empiric
+    marginBottom: 22
   },
   shit: {
     ...theme.shitText,

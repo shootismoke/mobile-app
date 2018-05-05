@@ -81,16 +81,14 @@ export const title = {
 };
 
 export const withPadding = {
-  paddingHorizontal: 17
+  paddingHorizontal: 19
 };
 
 export const bigButton = {
-  alignItems: 'center',
   backgroundColor: primaryColor,
-  borderRadius: 21,
-  height: 42,
-  justifyContent: 'center',
-  width: '90%'
+  borderRadius: 22,
+  maxWidth: '90%',
+  padding: 11
 };
 
 export const bigButtonText = {
@@ -103,5 +101,6 @@ export const bigButtonText = {
     ios: {
       fontSize: 12
     }
-  })
+  }),
+  textAlign: 'center'
 };
