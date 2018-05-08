@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Constants, Video } from 'expo';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import retry from 'async-retry';
 import { StackNavigator } from 'react-navigation';
 
+import * as dataSources from '../utils/dataSources';
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
 import Header from '../Header';
@@ -93,30 +93,18 @@ export default class Screens extends Component {
         this.setState({ currentLocation: coords, gps: coords });
       }
 
-      await retry(
-        async () => {
-          const { data: response } = await axios.get(
-            `http://api.waqi.info/feed/geo:${
-              (currentLocation || coords).latitude
-            };${(currentLocation || coords).longitude}/?token=${
-              Constants.manifest.extra.waqiToken
-            }`,
-            { timeout: 6000 }
-          );
+      // We currently have 2 sources, aqicn, and windWaqi
+      // We put them in an array
+      const sources = [dataSources.aqicn, dataSources.windWaqi];
 
-          if (response.status === 'ok') {
-            // ComponentDidCatch not working https://github.com/facebook/react-native/issues/18491
-            // So we handle errors manually
-            if (!response.data || !response.data.aqi) {
-              throw new Error('AQI not defined in response.');
-            }
-            this.setState({ api: response.data });
-          } else {
-            throw new Error(response.data);
-          }
+      const api = await retry(
+        async (_, attempt) => {
+          const result = await sources[attempt % 2](currentLocation || coords);
+          return result;
         },
-        { retries: 3 }
+        { retries: 3 } // 2 attemps per source
       );
+      this.setState({ api });
     } catch (error) {
       this.setState({ error });
     }

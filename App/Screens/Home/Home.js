@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import axios from 'axios';
 import retry from 'async-retry';
 
 import Cigarettes from './Cigarettes';
