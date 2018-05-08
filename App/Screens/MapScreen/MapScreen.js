@@ -62,7 +62,10 @@ export default class MapScreen extends Component {
     const { showMap } = this.state;
 
     const station = {
-      description: api.attributions.length ? api.attributions[0].name : null,
+      description:
+        api.attributions && api.attributions.length
+          ? api.attributions[0].name
+          : null,
       title: api.city.name,
       ...getCorrectLatLng(currentLocation, {
         latitude: api.city.geo[0],
@@ -98,7 +101,7 @@ export default class MapScreen extends Component {
                 coordinate={station}
                 image={stationIcon}
                 ref={this.handleStationRef}
-                title={'Air Quality Station'}
+                title="Air Quality Station"
                 description={truncate(station.description, 40)}
               />
               <MapView.Marker
