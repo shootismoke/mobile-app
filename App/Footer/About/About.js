@@ -106,7 +106,9 @@ export default class About extends Component {
                 Source code{' '}
                 <Text onPress={this.handleOpenGithub} style={theme.link}>
                   available on Github
-                </Text>.
+                </Text>.{'\n'}
+                {'\n'}
+                Shoot! I Smoke v{Constants.manifest.version}.
               </Text>
             </View>
           </ScrollView>
