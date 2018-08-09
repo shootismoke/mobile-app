@@ -1,16 +1,15 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import error from '../../../assets/images/error.png';
-import Footer from '../../Footer';
+import Footer from '../../components/Footer';
 import * as theme from '../../utils/theme';
 
 export default class ErrorScreen extends Component {
-  render() {
+  render () {
     const { onChangeLocationClick } = this.props;
     return (
       <View style={styles.container}>
@@ -20,7 +19,10 @@ export default class ErrorScreen extends Component {
           <View>
             <Text style={styles.errorText}>
               <Text style={styles.sorry}>Sorry!</Text>
-              {'\n'}We cannot{'\n'}load your cigarettes.
+              {'\n'}
+              We cannot
+              {'\n'}
+              load your cigarettes.
             </Text>
           </View>
           <TouchableOpacity onPress={onChangeLocationClick}>
@@ -34,7 +36,7 @@ export default class ErrorScreen extends Component {
             There's either a problem with our databases, or you don't have any
             Air Monitoring Stations near you. Try again later!
           </Text>
-          <Footer text="Click to know how the app works." />
+          <Footer text='Click to know how the app works.' />
         </View>
       </View>
     );

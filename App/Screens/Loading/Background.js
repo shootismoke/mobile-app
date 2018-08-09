@@ -7,7 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import * as theme from '../../utils/theme';
 
 export default class Background extends Component {
-  render() {
+  render () {
     return (
       <View style={[styles.container, this.props.style]}>
         {this.props.children}

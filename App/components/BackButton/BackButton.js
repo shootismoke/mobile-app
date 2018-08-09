@@ -1,17 +1,16 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import backIcon from '../../assets/images/back.png';
-import * as theme from '../utils/theme';
+import backIcon from '../../../assets/images/back.png';
+import * as theme from '../../utils/theme';
 
 export default class BackButton extends Component {
   onClick = () => this.props.onClick();
 
-  render() {
+  render () {
     const { style } = this.props;
 
     return (

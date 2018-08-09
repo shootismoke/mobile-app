@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import { Constants, Video } from 'expo';
+import { Video } from 'expo';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import retry from 'async-retry';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import * as dataSources from '../utils/dataSources';
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
-import Header from '../Header';
 import Home from './Home';
 import Loading from './Loading';
 import MapScreen from './MapScreen';
@@ -19,7 +18,7 @@ import Search from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
-const RootStack = StackNavigator(
+const RootStack = createStackNavigator(
   {
     Error: {
       screen: ErrorScreen
@@ -64,15 +63,15 @@ export default class Screens extends Component {
     showVideo: true
   };
 
-  componentWillMount() {
+  componentWillMount () {
     this.fetchData();
   }
 
-  componentDidCatch(error) {
+  componentDidCatch (error) {
     this.setState({ error });
   }
 
-  async fetchData() {
+  async fetchData () {
     const { currentLocation } = this.state;
     try {
       this.setState({ api: null, error: null });
@@ -134,7 +133,7 @@ export default class Screens extends Component {
     }
   };
 
-  render() {
+  render () {
     const { gps, isSearchVisible } = this.state;
     return (
       <View style={styles.container}>
@@ -175,7 +174,7 @@ export default class Screens extends Component {
         {showVideo && (
           <Video
             onPlaybackStatusUpdate={this.handleVideoStatus}
-            resizeMode="cover"
+            resizeMode='cover'
             shouldPlay
             source={smokeVideo}
             style={[styles.video, this.getVideoStyle()]}

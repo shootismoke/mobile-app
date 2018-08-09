@@ -8,9 +8,9 @@ import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import BackButton from '../BackButton';
-import changeLocation from '../../assets/images/changeLocation.png';
-import getCorrectLatLng from '../utils/getCorrectLatLng';
-import * as theme from '../utils/theme';
+import changeLocation from '../../../assets/images/changeLocation.png';
+import getCorrectLatLng from '../../utils/getCorrectLatLng';
+import * as theme from '../../utils/theme';
 
 export default class Header extends Component {
   static defaultProps = {
@@ -21,7 +21,7 @@ export default class Header extends Component {
     locationName: 'FETCHING...'
   };
 
-  async componentDidMount() {
+  async componentDidMount () {
     const { api, currentLocation } = this.props;
 
     // If our currentLocation already has a name (from algolia), then we don't
@@ -73,7 +73,7 @@ export default class Header extends Component {
     }
   }
 
-  render() {
+  render () {
     const {
       api,
       currentLocation,
@@ -116,7 +116,8 @@ export default class Header extends Component {
           >
             <Text style={styles.title}>{locationName}</Text>
             <Text style={styles.subtitle}>
-              Distance to Air Quality Station: {distance}km
+              Distance to Air Quality Station: {distance}
+              km
             </Text>
           </TouchableOpacity>
           {showChangeLocation && (
