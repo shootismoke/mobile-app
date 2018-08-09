@@ -2,6 +2,8 @@
 
 Know how many cigarettes you smoke based on the pollution of your location.
 
+[![Travis (.org)](https://img.shields.io/travis/amaurymartiny/shoot-i-smoke.svg)](https://travis-ci.org/amaurymartiny/shoot-i-smoke)
+
 [![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
 
 ## Screenshots
@@ -49,9 +51,9 @@ yarn start
 
 This app is created with Expo, using React Native. When you run `yarn start`, the packager will show, and you can either:
 
-* install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
-* press `a` to open the Android simulator.
-* press `i` to open the iOS simulator.
+- install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
+- press `a` to open the Android simulator.
+- press `i` to open the iOS simulator.
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 
