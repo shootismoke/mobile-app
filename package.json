@@ -3,6 +3,11 @@
   "version": "1.1.2",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
+  "scripts": {
+    "lint": "semistandard 'App/**/*.js'",
+    "start": "exp start",
+    "test": "echo Skipped for now."
+  },
   "dependencies": {
     "async-retry": "^1.2.1",
     "axios": "^0.18.0",
@@ -12,5 +17,8 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
     "react-navigation": "^2.11.2",
     "truncate": "^2.0.1"
+  },
+  "devDependencies": {
+    "semistandard": "^12.0.1"
   }
 }
