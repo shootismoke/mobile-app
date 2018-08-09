@@ -98,7 +98,10 @@ export default class Screens extends Component {
 
       const api = await retry(
         async (_, attempt) => {
-          const result = await sources[attempt % 2](currentLocation || coords);
+          // Attempt starts at 1
+          const result = await sources[(attempt - 1) % 2](
+            currentLocation || coords
+          );
           return result;
         },
         { retries: 3 } // 2 attemps per source
@@ -110,8 +113,10 @@ export default class Screens extends Component {
   }
 
   getVideoStyle = () => {
-    const { api } = this.state;
-    const cigarettes = pm25ToCigarettes(api);
+    const {
+      api: { pm25 }
+    } = this.state;
+    const cigarettes = pm25ToCigarettes(pm25);
 
     if (cigarettes <= 1) return { opacity: 0.2 };
     if (cigarettes < 5) return { opacity: 0.5 };

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Cigarette from './Cigarette';
-import pm25ToCigarette from '../../../utils/pm25ToCigarettes';
+import pm25ToCigarettes from '../../../utils/pm25ToCigarettes';
 
 export default class Cigarettes extends Component {
   getSize = cigarettes => {
@@ -16,9 +16,10 @@ export default class Cigarettes extends Component {
   };
 
   render () {
-    const { api, style } = this.props;
-    const cigarettes = Math.min(pm25ToCigarette(api), 63); // We don't show more than 63
+    const { pm25, style } = this.props;
+    const cigarettes = Math.min(pm25ToCigarettes(pm25), 63); // We don't show more than 63
     // const cigarettes = 0.9; // Can change values here for testing
+
     const count = Math.floor(cigarettes);
     const decimal = cigarettes - count;
 
