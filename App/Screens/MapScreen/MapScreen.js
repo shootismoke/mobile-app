@@ -6,7 +6,7 @@ import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
 
 import getCorrectLatLng from '../../utils/getCorrectLatLng';
-import Header from '../../Header';
+import Header from '../../components/Header';
 import homeIcon from '../../../assets/images/home.png';
 import SearchHeader from '../Search/SearchHeader';
 import stationIcon from '../../../assets/images/station.png';

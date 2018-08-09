@@ -7,7 +7,7 @@ import { Constants } from 'expo';
 import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
 import retry from 'async-retry';
 
-import BackButton from '../../BackButton';
+import BackButton from '../../components/BackButton';
 import SearchHeader from './SearchHeader';
 import Item from './Item';
 import * as theme from '../../utils/theme';

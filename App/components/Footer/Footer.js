@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import About from './About';
-import * as theme from '../utils/theme';
+import * as theme from '../../utils/theme';
 
 export default class Error extends Component {
   static defaultProps = {

@@ -14,8 +14,8 @@ import {
   View
 } from 'react-native';
 
-import cigarette from '../../../assets/images/cigarette.png';
-import * as theme from '../../utils/theme';
+import cigarette from '../../../../assets/images/cigarette.png';
+import * as theme from '../../../utils/theme';
 import BackButton from '../../BackButton';
 
 export default class About extends Component {
