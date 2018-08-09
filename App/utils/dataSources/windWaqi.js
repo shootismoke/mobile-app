@@ -5,7 +5,6 @@ import axios from 'axios';
 
 /**
  * Fetch the PM2.5 level from https://wind.waqi.info.
- * @return {number} - The PM2.5 level.
  */
 const windWaqi = async ({ latitude, longitude }) => {
   const { data: response } = await axios.get(

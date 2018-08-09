@@ -98,7 +98,10 @@ export default class Screens extends Component {
 
       const api = await retry(
         async (_, attempt) => {
-          const result = await sources[attempt % 2](currentLocation || coords);
+          // Attempt starts at 1
+          const result = await sources[(attempt - 1) % 2](
+            currentLocation || coords
+          );
           return result;
         },
         { retries: 3 } // 2 attemps per source
