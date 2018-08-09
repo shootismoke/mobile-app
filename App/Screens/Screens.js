@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import { Constants, Video } from 'expo';
+import { Video } from 'expo';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import retry from 'async-retry';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import * as dataSources from '../utils/dataSources';
 import ErrorScreen from './ErrorScreen';
 import getCurrentPosition from '../utils/getCurrentPosition';
-import Header from '../Header';
 import Home from './Home';
 import Loading from './Loading';
 import MapScreen from './MapScreen';
@@ -19,7 +18,7 @@ import Search from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
-const RootStack = StackNavigator(
+const RootStack = createStackNavigator(
   {
     Error: {
       screen: ErrorScreen
