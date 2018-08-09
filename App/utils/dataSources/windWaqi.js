@@ -36,6 +36,11 @@ const windWaqi = async ({ latitude, longitude }) => {
 
   if (response.d && response.d.length) {
     const data = response.d[0];
+
+    if (data.pol !== 'pm25') {
+      throw new Error('PM2.5 not defined in response.');
+    }
+
     return { pm25: data.v, city: { geo: data.geo, name: data.nlo } };
   } else {
     throw new Error(response);
