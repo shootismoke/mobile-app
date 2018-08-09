@@ -4,10 +4,9 @@
 /**
  * Get GPS location as a Promise
  */
-const getCurrentPosition = (options = { timeout: 10000 }) => {
-  return new Promise((resolve, reject) => {
+const getCurrentPosition = (options = { timeout: 10000 }) =>
+  new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   });
-};
 
 export default getCurrentPosition;
