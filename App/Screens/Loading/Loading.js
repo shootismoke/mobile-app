@@ -3,7 +3,7 @@
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import Background from './Background';
 import * as theme from '../../utils/theme';
@@ -19,7 +19,7 @@ export default class Loading extends Component {
 
   longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
 
-  componentWillReceiveProps({ gps }) {
+  componentWillReceiveProps ({ gps }) {
     if (!this.props.gps && gps) {
       this.longWaitingTimeout = setTimeout(
         () => this.setState({ longWaiting: true }),
@@ -28,13 +28,13 @@ export default class Loading extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (this.longWaitingTimeout) {
       clearTimeout(this.longWaitingTimeout);
     }
   }
 
-  render() {
+  render () {
     return (
       <Background style={styles.container}>
         <Text style={styles.text}>{this.renderText()}</Text>
@@ -44,7 +44,8 @@ export default class Loading extends Component {
 
   renderCough = index => (
     <Text key={index}>
-      Cough<Text style={styles.dots}>...</Text>
+      Cough
+      <Text style={styles.dots}>...</Text>
     </Text>
   );
 
@@ -57,7 +58,8 @@ export default class Loading extends Component {
 
     return (
       <Text>
-        Loading<Text style={styles.dots}>...</Text>
+        Loading
+        <Text style={styles.dots}>...</Text>
         {Array.from({ length: coughs }, (_, index) => index + 1).map(
           // Create array 1..N and rendering Cough...
           this.renderCough

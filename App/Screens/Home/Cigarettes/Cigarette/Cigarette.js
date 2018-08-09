@@ -16,7 +16,7 @@ export default class Cigarette extends Component {
 
   getButtStyle = () => {
     const ratio = 280 / 21; // Ratio of our image
-    const { length, size } = this.props;
+    const { size } = this.props;
 
     switch (size) {
       case 'big':
@@ -76,8 +76,8 @@ export default class Cigarette extends Component {
     }
   };
 
-  render() {
-    const { diagonal, length, size, style, vertical } = this.props;
+  render () {
+    const { diagonal, length, style, vertical } = this.props;
 
     // Max and min lengths of a cigarette
     const maxWidth = this.getMaxWidth();
@@ -88,30 +88,30 @@ export default class Cigarette extends Component {
         style={[
           diagonal
             ? {
-                justifyContent: 'center',
-                height:
+              justifyContent: 'center',
+              height:
                   (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
-                width:
+              width:
                   (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
-              }
+            }
             : null
         ]}
       >
         <View
-          removeClippedSubviews={true}
+          removeClippedSubviews
           style={[
             styles.container,
             diagonal
               ? {
-                  width: minWidth + length * (maxWidth - minWidth)
-                }
+                width: minWidth + length * (maxWidth - minWidth)
+              }
               : vertical
                 ? {
-                    height: minWidth + length * (maxWidth - minWidth)
-                  }
+                  height: minWidth + length * (maxWidth - minWidth)
+                }
                 : {
-                    width: minWidth + length * (maxWidth - minWidth)
-                  },
+                  width: minWidth + length * (maxWidth - minWidth)
+                },
             diagonal ? styles.diagonal : null,
             style
           ]}

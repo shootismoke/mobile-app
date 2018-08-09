@@ -1,7 +1,6 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -21,7 +20,7 @@ export default class Error extends Component {
 
   handleAboutShow = () => this.setState({ isAboutVisible: true });
 
-  render() {
+  render () {
     const { style, text } = this.props;
     const { isAboutVisible } = this.state;
     return (

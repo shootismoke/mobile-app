@@ -21,7 +21,7 @@ export default class Header extends Component {
     locationName: 'FETCHING...'
   };
 
-  async componentDidMount() {
+  async componentDidMount () {
     const { api, currentLocation } = this.props;
 
     // If our currentLocation already has a name (from algolia), then we don't
@@ -73,7 +73,7 @@ export default class Header extends Component {
     }
   }
 
-  render() {
+  render () {
     const {
       api,
       currentLocation,

@@ -12,7 +12,7 @@ export default class App extends Component {
     fontLoaded: false
   };
 
-  async componentDidMount() {
+  async componentDidMount () {
     await Font.loadAsync({
       'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
       'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
@@ -21,9 +21,9 @@ export default class App extends Component {
     this.setState({ fontLoaded: true });
   }
 
-  render() {
+  render () {
     const { fontLoaded } = this.state;
 
-    return this.state.fontLoaded ? <Screens /> : <LoadingBackground />;
+    return fontLoaded ? <Screens /> : <LoadingBackground />;
   }
 }

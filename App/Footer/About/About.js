@@ -11,11 +11,9 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View
 } from 'react-native';
 
-import back from '../../../assets/images/back.png';
 import cigarette from '../../../assets/images/cigarette.png';
 import * as theme from '../../utils/theme';
 import BackButton from '../../BackButton';
@@ -35,11 +33,11 @@ export default class About extends Component {
   handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');
 
-  render() {
+  render () {
     const { onRequestClose, ...rest } = this.props;
 
     return (
-      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
+      <Modal animationType='slide' onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
           <ScrollView
             style={theme.withPadding}
@@ -53,23 +51,28 @@ export default class About extends Component {
                 This app was inspired by Berkeley Earth’s findings about the{' '}
                 <Text onPress={this.handleOpenArticle} style={theme.link}>
                   equivalence between air pollution and cigarette smoking
-                </Text>. The rule of thumb is simple: one cigarette per day is
-                the rough equivalent of a PM2.5 level of 22{' '}
-                <Text style={styles.micro}>&micro;</Text>g/m&sup3;
-                {' \u207D'}&sup1;{'\u207E'}.
+                </Text>
+                . The rule of thumb is simple: one cigarette per day is the
+                rough equivalent of a PM2.5 level of 22{' '}
+                <Text style={styles.micro}>&micro;</Text>
+                g/m&sup3;
+                {' \u207D'}
+                &sup1;
+                {'\u207E'}.
               </Text>
               <View style={styles.box}>
                 <View style={styles.equivalence}>
                   <View style={styles.statisticsLeft}>
                     <Image source={cigarette} style={styles.cigarette} />
-                    <Text style={styles.value}> </Text>
+                    <Text style={styles.value} />
                     <Text style={styles.label}>per day</Text>
                   </View>
                   <Text style={styles.equal}>=</Text>
                   <View style={styles.statisticsRight}>
                     <Text style={styles.value}>22</Text>
                     <Text style={styles.label}>
-                      <Text style={styles.micro}>&micro;</Text>g/m&sup3; PM2.5*
+                      <Text style={styles.micro}>&micro;</Text>
+                      g/m&sup3; PM2.5*
                     </Text>
                   </View>
                 </View>
@@ -92,21 +95,24 @@ export default class About extends Component {
                 Concept &amp; Development by{' '}
                 <Text onPress={this.handleOpenAmaury} style={theme.link}>
                   Amaury Martiny
-                </Text>.{'\n'}
+                </Text>
+                .{'\n'}
                 Design &amp; Copywriting by{' '}
                 <Text onPress={this.handleOpenMarcelo} style={theme.link}>
                   Marcelo S. Coelho
-                </Text>.{'\n'}
+                </Text>
+                .{'\n'}
                 {'\n'}
                 Air quality data from{' '}
                 <Text onPress={this.handleOpenAqi} style={theme.link}>
                   WAQI
-                </Text>.
-                {'\n'}
+                </Text>
+                .{'\n'}
                 Source code{' '}
                 <Text onPress={this.handleOpenGithub} style={theme.link}>
                   available on Github
-                </Text>.{'\n'}
+                </Text>
+                .{'\n'}
                 {'\n'}
                 Shoot! I Smoke v{Constants.manifest.version}.
               </Text>

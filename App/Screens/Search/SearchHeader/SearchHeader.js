@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import {
   Image,
   StyleSheet,
-  Text,
   TextInput,
   TouchableHighlight,
   View
@@ -17,14 +16,14 @@ import * as theme from '../../../utils/theme';
 export default class SearchHeader extends Component {
   handleClick = () => {
     const {
-      item: { city, country, county, _geoloc, locale_names },
+      item: { city, country, county, _geoloc, locale_names: localeNames },
       onClick
     } = this.props;
     onClick({
       latitude: _geoloc.lat,
       longitude: _geoloc.lng,
       name: [
-        locale_names[0],
+        localeNames[0],
         city,
         county && county.length ? county[0] : null,
         country
@@ -34,7 +33,7 @@ export default class SearchHeader extends Component {
     });
   };
 
-  render() {
+  render () {
     const {
       asTouchable,
       elevated,
@@ -61,11 +60,11 @@ export default class SearchHeader extends Component {
           style={[styles.content, style]}
         >
           <TextInput
-            underlineColorAndroid="transparent"
+            underlineColorAndroid='transparent'
             editable={!asTouchable}
             onChangeText={onChangeSearch}
-            placeholder="Search for a city or address"
-            placeholderTextColor="rgba(255, 255, 255, 0.6)"
+            placeholder='Search for a city or address'
+            placeholderTextColor='rgba(255, 255, 255, 0.6)'
             style={styles.input}
             value={search}
             {...rest}

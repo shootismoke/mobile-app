@@ -63,15 +63,15 @@ export default class Screens extends Component {
     showVideo: true
   };
 
-  componentWillMount() {
+  componentWillMount () {
     this.fetchData();
   }
 
-  componentDidCatch(error) {
+  componentDidCatch (error) {
     this.setState({ error });
   }
 
-  async fetchData() {
+  async fetchData () {
     const { currentLocation } = this.state;
     try {
       this.setState({ api: null, error: null });
@@ -133,7 +133,7 @@ export default class Screens extends Component {
     }
   };
 
-  render() {
+  render () {
     const { gps, isSearchVisible } = this.state;
     return (
       <View style={styles.container}>
@@ -174,7 +174,7 @@ export default class Screens extends Component {
         {showVideo && (
           <Video
             onPlaybackStatusUpdate={this.handleVideoStatus}
-            resizeMode="cover"
+            resizeMode='cover'
             shouldPlay
             source={smokeVideo}
             style={[styles.video, this.getVideoStyle()]}

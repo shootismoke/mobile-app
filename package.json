@@ -4,7 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "semistandard 'App/**/*.js'",
+    "lint": "semistandard 'App/**/*.js' --parser babel-eslint",
     "start": "exp start",
     "test": "echo Skipped for now."
   },
@@ -19,6 +19,7 @@
     "truncate": "^2.0.1"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.6",
     "semistandard": "^12.0.1"
   }
 }

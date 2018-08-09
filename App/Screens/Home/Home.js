@@ -3,8 +3,6 @@
 
 import React, { Component } from 'react';
 import {
-  Alert,
-  Platform,
   ScrollView,
   Share,
   StyleSheet,
@@ -12,12 +10,10 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import retry from 'async-retry';
 
 import Cigarettes from './Cigarettes';
 import Footer from '../../Footer';
 import Header from '../../Header';
-import getCurrentPosition from '../../utils/getCurrentPosition';
 import pm25ToCigarettes from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
@@ -45,7 +41,7 @@ export default class Home extends Component {
       )} cigarettes today by breathing urban air. And you? Find out here: shootismoke.github.io`
     });
 
-  render() {
+  render () {
     const {
       screenProps: { api }
     } = this.props;
@@ -70,9 +66,6 @@ export default class Home extends Component {
   }
 
   renderPresentPast = () => {
-    const {
-      screenProps: { api }
-    } = this.props;
     const time = new Date().getHours();
 
     if (time < 15) return "You'll smoke";
@@ -101,7 +94,8 @@ export default class Home extends Component {
       <Text style={styles.shit}>
         {this.renderShit()}! {this.renderPresentPast()}{' '}
         <Text style={styles.cigarettesCount}>
-          {cigarettes} cigarette{cigarettes === 1 ? '' : 's'}
+          {cigarettes} cigarette
+          {cigarettes === 1 ? '' : 's'}
         </Text>{' '}
         today.
       </Text>
