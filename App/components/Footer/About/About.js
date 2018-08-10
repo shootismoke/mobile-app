@@ -209,6 +209,8 @@ const styles = StyleSheet.create({
   },
   statisticsLeft: {
     alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    marginTop: 36,
     paddingRight: 10,
     width: 90
   },
