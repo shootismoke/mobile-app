@@ -17,7 +17,8 @@ export default class Cigarettes extends Component {
 
   render () {
     const { pm25, style } = this.props;
-    const cigarettes = Math.min(pm25ToCigarettes(pm25), 63); // We don't show more than 63
+    const cigarettes =
+      Math.round(Math.min(pm25ToCigarettes(pm25), 63) * 10) / 10; // We don't show more than 63
     // const cigarettes = 0.9; // Can change values here for testing
 
     const count = Math.floor(cigarettes);
