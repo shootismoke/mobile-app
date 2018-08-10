@@ -20,7 +20,7 @@
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.1.4",
+      "buildNumber": "1.1.5",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_KEY"
@@ -31,7 +31,7 @@
       },
       "loadJSInBackgroundExperimental": true
     },
-    "name": "Shoot! I Smoke",
+    "name": "Sh**t! I Smoke",
     "primaryColor": "#EBE7DD",
     "privacy": "public",
     "sdkVersion": "28.0.0",
@@ -40,6 +40,6 @@
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.1.4"
+    "version": "1.1.5"
   }
 }
