@@ -83,7 +83,7 @@ export default class Screens extends Component {
         const response = await getCurrentPosition();
         coords = response.coords;
 
-        // Un comment to get random location
+        // Uncomment to get random location
         // coords = {
         //   latitude: Math.random() * 90,
         //   longitude: Math.random() * 90
