@@ -33,35 +33,27 @@ export default class Header extends Component {
 
     try {
       const { data } = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
-          currentLocation.latitude
-        },${currentLocation.longitude}&key=${
-          Constants.manifest.extra.googleGeocodingApiKey
-        }&language=en`
+        `https://us1.locationiq.com/v1/reverse.php?key=${
+          Constants.manifest.extra.locationIqKey
+        }&lat=${currentLocation.latitude}&lon=${
+          currentLocation.longitude
+        }&format=json`
       );
 
       // If we got data from the Google Geocoding service, then we use that one
-      if (!data || !data.results || !data.results.length) {
-        throw new Error();
-      }
-
-      const geoname = data.results[0];
-      if (!geoname.formatted_address) {
-        throw new Error();
+      if (!data || !data.address || !data.display_name) {
+        throw new Error('No data from LocationIQ.');
       }
 
       // We format the formatted_address to remove postal code and street number for privacy reasons
-      const postalCode = geoname.address_components.find(component =>
-        component.types.includes('postal_code')
-      );
-      const streetNumber = geoname.address_components.find(component =>
-        component.types.includes('street_number')
-      );
+      const postalCode = data.address.postcode;
+      const streetNumber = data.address.house_number;
 
       this.setState({
-        locationName: geoname.formatted_address
-          .replace(postalCode && postalCode.long_name, '')
-          .replace(streetNumber && streetNumber.long_name, '')
+        locationName: data.display_name
+          .replace(postalCode, '')
+          .replace(streetNumber, '')
+          .replace(/^,/, '') // Remove starting comma
           .replace(', ,', ',') // Remove unnecessary commas
           .replace(/ +/g, ' ') // Remove double spaces
           .replace(' ,', ',') // Self-explanatory

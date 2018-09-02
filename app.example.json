@@ -14,7 +14,7 @@
       "algoliaApiKey": "YOUR_KEY",
       "algoliaApplicationId": "YOUR_KEY",
       "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
-      "googleGeocodingApiKey": "YOUR_KEY",
+      "locationIqKey": "YOUR_KEY",
       "waqiToken": "YOUR_KEY"
     },
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
