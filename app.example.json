@@ -14,13 +14,13 @@
       "algoliaApiKey": "YOUR_KEY",
       "algoliaApplicationId": "YOUR_KEY",
       "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
-      "googleGeocodingApiKey": "YOUR_KEY",
+      "locationIqKey": "YOUR_KEY",
       "waqiToken": "YOUR_KEY"
     },
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.1.7",
+      "buildNumber": "1.1.8",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_KEY"
@@ -40,6 +40,6 @@
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.1.7"
+    "version": "1.1.8"
   }
 }
