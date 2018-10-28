@@ -9,13 +9,13 @@
     "test": "echo Skipped for now."
   },
   "dependencies": {
-    "async-retry": "^1.2.1",
+    "async-retry": "^1.2.3",
     "axios": "^0.18.0",
     "expo": "^28.0.0",
     "haversine": "^1.1.0",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
-    "react-navigation": "^2.11.2",
+    "react-navigation": "^2.18.2",
     "truncate": "^2.0.1"
   },
   "devDependencies": {
