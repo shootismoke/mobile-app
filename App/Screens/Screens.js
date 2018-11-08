@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import { Video } from 'expo';
 import { Dimensions, StyleSheet, View } from 'react-native';
+import { Location, Permissions, Video } from 'expo';
 import retry from 'async-retry';
 import { createStackNavigator } from 'react-navigation';
 
 import * as dataSources from '../utils/dataSources';
 import { ErrorScreen } from './ErrorScreen';
-import { getCurrentPosition } from '../utils/getCurrentPosition';
 import { Home } from './Home';
 import { Loading } from './Loading';
 import { MapScreen } from './MapScreen';
@@ -56,7 +55,7 @@ const RootStack = createStackNavigator(
 export class Screens extends Component {
   state = {
     api: null,
-    currentLocation: null, // Initialized to GPS, but can be changed by user
+    chosenLocation: null, // Initialized to GPS, but can be changed by user
     error: null, // Error here or in children component tree
     gps: null,
     isSearchVisible: false,
@@ -72,16 +71,20 @@ export class Screens extends Component {
   }
 
   async fetchData() {
-    const { currentLocation } = this.state;
+    const { chosenLocation } = this.state;
     try {
       this.setState({ api: null, error: null });
 
-      // If the currentLocation has been set by the user, then we don't refetch
+      // If the chosenLocation has been set by the user, then we don't refetch
       // the user's GPS
       let coords;
-      if (!currentLocation) {
-        const response = await getCurrentPosition();
-        coords = response.coords;
+      if (!chosenLocation) {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+          throw new Error('Permission to access location was denied.');
+        }
+
+        const { coords } = await Location.getCurrentPositionAsync({});
 
         // Uncomment to get random location
         // coords = {
@@ -89,7 +92,7 @@ export class Screens extends Component {
         //   longitude: Math.random() * 90
         // };
 
-        this.setState({ currentLocation: coords, gps: coords });
+        this.setState({ chosenLocation: coords, gps: coords });
       }
 
       // We currently have 2 sources, aqicn, and windWaqi
@@ -100,7 +103,7 @@ export class Screens extends Component {
         async (_, attempt) => {
           // Attempt starts at 1
           const result = await sources[(attempt - 1) % 2](
-            currentLocation || coords
+            chosenLocation || coords
           );
           return result;
         },
@@ -108,6 +111,7 @@ export class Screens extends Component {
       );
       this.setState({ api });
     } catch (error) {
+      console.error(error);
       this.setState({ error });
     }
   }
@@ -124,8 +128,8 @@ export class Screens extends Component {
     return { opacity: 1 };
   };
 
-  handleLocationChanged = currentLocation => {
-    this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
+  handleLocationChanged = chosenLocation => {
+    this.setState({ chosenLocation, isSearchVisible: false }, this.fetchData);
   };
 
   handleSearchHide = () => this.setState({ isSearchVisible: false });
@@ -154,7 +158,7 @@ export class Screens extends Component {
   }
 
   renderScreen = () => {
-    const { api, currentLocation, error, gps, showVideo } = this.state;
+    const { api, chosenLocation, error, gps, showVideo } = this.state;
 
     if (error) {
       return (
@@ -162,7 +166,7 @@ export class Screens extends Component {
       );
     }
 
-    if (!api || !currentLocation) {
+    if (!api || !chosenLocation) {
       return <Loading gps={gps} />;
     }
 
@@ -171,7 +175,7 @@ export class Screens extends Component {
         <RootStack
           screenProps={{
             api,
-            currentLocation,
+            chosenLocation,
             gps,
             onChangeLocationClick: this.handleSearchShow
           }}
