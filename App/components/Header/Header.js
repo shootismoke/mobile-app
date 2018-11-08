@@ -7,12 +7,12 @@ import { Constants } from 'expo';
 import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import BackButton from '../BackButton';
+import { BackButton } from '../BackButton';
 import changeLocation from '../../../assets/images/changeLocation.png';
-import getCorrectLatLng from '../../utils/getCorrectLatLng';
+import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
 import * as theme from '../../utils/theme';
 
-export default class Header extends Component {
+export class Header extends Component {
   static defaultProps = {
     showChangeLocation: false
   };

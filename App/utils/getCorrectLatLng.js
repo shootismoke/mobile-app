@@ -12,7 +12,7 @@
  * @param {*} station - An object containing {latitude, longitude} representing
  * the station's location.
  */
-const getCorrectLatLng = (currentLocation, station) => {
+export const getCorrectLatLng = (currentLocation, station) => {
   const d1 =
     Math.abs(currentLocation.latitude - station.latitude) +
     Math.abs(currentLocation.longitude - station.longitude);
@@ -28,5 +28,3 @@ const getCorrectLatLng = (currentLocation, station) => {
     longitude: station.latitude
   };
 };
-
-export default getCorrectLatLng;

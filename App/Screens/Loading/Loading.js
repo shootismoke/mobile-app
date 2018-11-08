@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import Background from './Background';
+import { Background } from './Background';
 import * as theme from '../../utils/theme';
 
-export default class Loading extends Component {
+export class Loading extends Component {
   static propTypes = {
     gps: PropTypes.object
   };

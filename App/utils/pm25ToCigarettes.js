@@ -8,6 +8,4 @@
  * @see http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
  * @param {Float} api - The api object returned by the WAQI api.
  */
-const pm25ToCigarettes = pm25 => pm25 / 22;
-
-export default pm25ToCigarettes;
+export const pm25ToCigarettes = pm25 => pm25 / 22;

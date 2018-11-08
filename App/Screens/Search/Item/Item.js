@@ -7,7 +7,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import pinIcon from '../../../../assets/images/location.png';
 import * as theme from '../../../utils/theme';
 
-export default class Item extends Component {
+export class Item extends Component {
   handleClick = () => {
     const {
       item: { city, country, county, _geoloc, locale_names: localeNames },

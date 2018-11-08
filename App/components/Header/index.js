@@ -1,6 +1,4 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import Header from './Header';
-
-export default Header;
+export * from './Header';

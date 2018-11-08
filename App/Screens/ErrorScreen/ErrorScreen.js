@@ -5,10 +5,10 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import error from '../../../assets/images/error.png';
-import Footer from '../../components/Footer';
+import { Footer } from '../../components/Footer';
 import * as theme from '../../utils/theme';
 
-export default class ErrorScreen extends Component {
+export class ErrorScreen extends Component {
   render () {
     const { onChangeLocationClick } = this.props;
     return (

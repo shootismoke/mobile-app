@@ -4,16 +4,16 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
-
-import getCorrectLatLng from '../../utils/getCorrectLatLng';
-import Header from '../../components/Header';
-import homeIcon from '../../../assets/images/home.png';
-import SearchHeader from '../Search/SearchHeader';
-import stationIcon from '../../../assets/images/station.png';
-import * as theme from '../../utils/theme';
 import truncate from 'truncate';
 
-export default class MapScreen extends Component {
+import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
+import { Header } from '../../components/Header';
+import homeIcon from '../../../assets/images/home.png';
+import { SearchHeader } from '../Search/SearchHeader';
+import stationIcon from '../../../assets/images/station.png';
+import * as theme from '../../utils/theme';
+
+export class MapScreen extends Component {
   static navigationOptions = {
     header: props => {
       return (

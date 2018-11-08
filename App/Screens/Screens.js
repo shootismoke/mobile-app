@@ -2,19 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import { Video } from 'expo';
 import { Dimensions, StyleSheet, View } from 'react-native';
+import { Location, Permissions, Video } from 'expo';
 import retry from 'async-retry';
 import { createStackNavigator } from 'react-navigation';
 
 import * as dataSources from '../utils/dataSources';
-import ErrorScreen from './ErrorScreen';
-import getCurrentPosition from '../utils/getCurrentPosition';
-import Home from './Home';
-import Loading from './Loading';
-import MapScreen from './MapScreen';
-import pm25ToCigarettes from '../utils/pm25ToCigarettes';
-import Search from './Search';
+import { ErrorScreen } from './ErrorScreen';
+import { Home } from './Home';
+import { Loading } from './Loading';
+import { MapScreen } from './MapScreen';
+import { pm25ToCigarettes } from '../utils/pm25ToCigarettes';
+import { Search } from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
@@ -53,7 +52,7 @@ const RootStack = createStackNavigator(
   }
 );
 
-export default class Screens extends Component {
+export class Screens extends Component {
   state = {
     api: null,
     currentLocation: null, // Initialized to GPS, but can be changed by user
@@ -74,14 +73,20 @@ export default class Screens extends Component {
   async fetchData () {
     const { currentLocation } = this.state;
     try {
+      let currentPosition = currentLocation; // The current { latitude, longitude } the user chose
+
       this.setState({ api: null, error: null });
 
       // If the currentLocation has been set by the user, then we don't refetch
       // the user's GPS
-      let coords;
-      if (!currentLocation) {
-        const response = await getCurrentPosition();
-        coords = response.coords;
+      if (!currentPosition) {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+          throw new Error('Permission to access location was denied.');
+        }
+
+        const { coords } = await Location.getCurrentPositionAsync({});
+        currentPosition = coords;
 
         // Uncomment to get random location
         // coords = {
@@ -89,7 +94,10 @@ export default class Screens extends Component {
         //   longitude: Math.random() * 90
         // };
 
-        this.setState({ currentLocation: coords, gps: coords });
+        this.setState({
+          currentLocation: coords,
+          gps: coords
+        });
       }
 
       // We currently have 2 sources, aqicn, and windWaqi
@@ -99,15 +107,14 @@ export default class Screens extends Component {
       const api = await retry(
         async (_, attempt) => {
           // Attempt starts at 1
-          const result = await sources[(attempt - 1) % 2](
-            currentLocation || coords
-          );
+          const result = await sources[(attempt - 1) % 2](currentPosition);
           return result;
         },
         { retries: 3 } // 2 attemps per source
       );
       this.setState({ api });
     } catch (error) {
+      console.error(error);
       this.setState({ error });
     }
   }

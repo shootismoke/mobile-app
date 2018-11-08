@@ -7,7 +7,7 @@ import { Constants } from 'expo';
 /**
  * Fetch the PM2.5 level from http://api.waqi.info.
  */
-const aqicn = async ({ latitude, longitude }) => {
+export const aqicn = async ({ latitude, longitude }) => {
   const { data: response } = await axios.get(
     `http://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${
       Constants.manifest.extra.waqiToken
@@ -92,5 +92,3 @@ const aqicn = async ({ latitude, longitude }) => {
     }
   };
 };
-
-export default aqicn;

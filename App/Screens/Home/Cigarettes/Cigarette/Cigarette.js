@@ -9,7 +9,7 @@ import buttVertical from '../../../../../assets/images/butt-vertical.png';
 import head from '../../../../../assets/images/head.png';
 import headVertical from '../../../../../assets/images/head-vertical.png';
 
-export default class Cigarette extends Component {
+export class Cigarette extends Component {
   static defaultProps = {
     length: 1
   };

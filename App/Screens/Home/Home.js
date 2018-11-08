@@ -11,13 +11,13 @@ import {
   View
 } from 'react-native';
 
-import Cigarettes from './Cigarettes';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import pm25ToCigarettes from '../../utils/pm25ToCigarettes';
+import { Cigarettes } from './Cigarettes';
+import { Footer } from '../../components/Footer';
+import { Header } from '../../components/Header';
+import { pm25ToCigarettes } from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
-export default class Home extends Component {
+export class Home extends Component {
   static navigationOptions = {
     header: props => {
       return (

@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "lint": "semistandard 'App/**/*.js' --parser babel-eslint",
-    "start": "exp start",
+    "start": "expo start",
     "test": "echo Skipped for now."
   },
   "dependencies": {

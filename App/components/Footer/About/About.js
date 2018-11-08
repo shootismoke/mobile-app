@@ -16,9 +16,9 @@ import {
 
 import cigarette from '../../../../assets/images/cigarette.png';
 import * as theme from '../../../utils/theme';
-import BackButton from '../../BackButton';
+import { BackButton } from '../../BackButton';
 
-export default class About extends Component {
+export class About extends Component {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
 
   handleOpenAqi = () => Linking.openURL('http://aqicn.org/');

@@ -4,10 +4,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Cigarette from './Cigarette';
-import pm25ToCigarettes from '../../../utils/pm25ToCigarettes';
+import { Cigarette } from './Cigarette';
+import { pm25ToCigarettes } from '../../../utils/pm25ToCigarettes';
 
-export default class Cigarettes extends Component {
+export class Cigarettes extends Component {
   getSize = cigarettes => {
     if (cigarettes <= 1) return 'big';
     if (cigarettes <= 5) return 'big';

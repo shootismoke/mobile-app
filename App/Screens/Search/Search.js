@@ -7,9 +7,9 @@ import { Constants } from 'expo';
 import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
 import retry from 'async-retry';
 
-import BackButton from '../../components/BackButton';
-import SearchHeader from './SearchHeader';
-import Item from './Item';
+import { BackButton } from '../../components/BackButton';
+import { SearchHeader } from './SearchHeader';
+import { Item } from './Item';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html
@@ -20,7 +20,7 @@ const algoliaUrls = [
   'https://places-3.algolianet.com'
 ];
 
-export default class Search extends Component {
+export class Search extends Component {
   state = {
     hasErrors: false, // Error from algolia
     hits: null,
