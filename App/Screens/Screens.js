@@ -8,13 +8,13 @@ import retry from 'async-retry';
 import { createStackNavigator } from 'react-navigation';
 
 import * as dataSources from '../utils/dataSources';
-import ErrorScreen from './ErrorScreen';
-import getCurrentPosition from '../utils/getCurrentPosition';
-import Home from './Home';
-import Loading from './Loading';
-import MapScreen from './MapScreen';
-import pm25ToCigarettes from '../utils/pm25ToCigarettes';
-import Search from './Search';
+import { ErrorScreen } from './ErrorScreen';
+import { getCurrentPosition } from '../utils/getCurrentPosition';
+import { Home } from './Home';
+import { Loading } from './Loading';
+import { MapScreen } from './MapScreen';
+import { pm25ToCigarettes } from '../utils/pm25ToCigarettes';
+import { Search } from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
@@ -53,7 +53,7 @@ const RootStack = createStackNavigator(
   }
 );
 
-export default class Screens extends Component {
+export class Screens extends Component {
   state = {
     api: null,
     currentLocation: null, // Initialized to GPS, but can be changed by user
@@ -63,15 +63,15 @@ export default class Screens extends Component {
     showVideo: true
   };
 
-  componentWillMount () {
+  componentWillMount() {
     this.fetchData();
   }
 
-  componentDidCatch (error) {
+  componentDidCatch(error) {
     this.setState({ error });
   }
 
-  async fetchData () {
+  async fetchData() {
     const { currentLocation } = this.state;
     try {
       this.setState({ api: null, error: null });
@@ -138,7 +138,7 @@ export default class Screens extends Component {
     }
   };
 
-  render () {
+  render() {
     const { gps, isSearchVisible } = this.state;
     return (
       <View style={styles.container}>
@@ -179,7 +179,7 @@ export default class Screens extends Component {
         {showVideo && (
           <Video
             onPlaybackStatusUpdate={this.handleVideoStatus}
-            resizeMode='cover'
+            resizeMode="cover"
             shouldPlay
             source={smokeVideo}
             style={[styles.video, this.getVideoStyle()]}

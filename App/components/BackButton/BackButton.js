@@ -7,10 +7,10 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import backIcon from '../../../assets/images/back.png';
 import * as theme from '../../utils/theme';
 
-export default class BackButton extends Component {
+export class BackButton extends Component {
   onClick = () => this.props.onClick();
 
-  render () {
+  render() {
     const { style } = this.props;
 
     return (

@@ -4,10 +4,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import About from './About';
+import { About } from './About';
 import * as theme from '../../utils/theme';
 
-export default class Error extends Component {
+export class Footer extends Component {
   static defaultProps = {
     text: 'Click to understand how we did the math.'
   };
@@ -20,7 +20,7 @@ export default class Error extends Component {
 
   handleAboutShow = () => this.setState({ isAboutVisible: true });
 
-  render () {
+  render() {
     const { style, text } = this.props;
     const { isAboutVisible } = this.state;
     return (

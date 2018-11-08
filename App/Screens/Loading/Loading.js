@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import Background from './Background';
+import { Background } from './Background';
 import * as theme from '../../utils/theme';
 
-export default class Loading extends Component {
+export class Loading extends Component {
   static propTypes = {
     gps: PropTypes.object
   };
@@ -19,7 +19,7 @@ export default class Loading extends Component {
 
   longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
 
-  componentWillReceiveProps ({ gps }) {
+  componentWillReceiveProps({ gps }) {
     if (!this.props.gps && gps) {
       this.longWaitingTimeout = setTimeout(
         () => this.setState({ longWaiting: true }),
@@ -28,13 +28,13 @@ export default class Loading extends Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.longWaitingTimeout) {
       clearTimeout(this.longWaitingTimeout);
     }
   }
 
-  render () {
+  render() {
     return (
       <Background style={styles.container}>
         <Text style={styles.text}>{this.renderText()}</Text>

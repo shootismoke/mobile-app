@@ -6,7 +6,7 @@ import axios from 'axios';
 /**
  * Fetch the PM2.5 level from https://wind.waqi.info.
  */
-const windWaqi = async ({ latitude, longitude }) => {
+export const windWaqi = async ({ latitude, longitude }) => {
   const { data: response } = await axios.get(
     `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`,
     { timeout: 6000 }
@@ -49,5 +49,3 @@ const windWaqi = async ({ latitude, longitude }) => {
     throw new Error(response);
   }
 };
-
-export default windWaqi;

@@ -11,13 +11,13 @@ import {
   View
 } from 'react-native';
 
-import Cigarettes from './Cigarettes';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import pm25ToCigarettes from '../../utils/pm25ToCigarettes';
+import { Cigarettes } from './Cigarettes';
+import { Footer } from '../../components/Footer';
+import { Header } from '../../components/Header';
+import { pm25ToCigarettes } from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
-export default class Home extends Component {
+export class Home extends Component {
   static navigationOptions = {
     header: props => {
       return (
@@ -41,7 +41,7 @@ export default class Home extends Component {
       )} cigarettes today by breathing urban air. And you? Find out here: shootismoke.github.io`
     });
 
-  render () {
+  render() {
     const {
       screenProps: {
         api: { pm25 }
