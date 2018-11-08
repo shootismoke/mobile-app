@@ -55,7 +55,7 @@ const RootStack = createStackNavigator(
 export class Screens extends Component {
   state = {
     api: null,
-    chosenLocation: null, // Initialized to GPS, but can be changed by user
+    currentLocation: null, // Initialized to GPS, but can be changed by user
     error: null, // Error here or in children component tree
     gps: null,
     isSearchVisible: false,
@@ -71,20 +71,22 @@ export class Screens extends Component {
   }
 
   async fetchData() {
-    const { chosenLocation } = this.state;
+    const { currentLocation } = this.state;
     try {
+      let currentPosition = currentLocation; // The current { latitude, longitude } the user chose
+
       this.setState({ api: null, error: null });
 
-      // If the chosenLocation has been set by the user, then we don't refetch
+      // If the currentLocation has been set by the user, then we don't refetch
       // the user's GPS
-      let coords;
-      if (!chosenLocation) {
+      if (!currentPosition) {
         const { status } = await Permissions.askAsync(Permissions.LOCATION);
         if (status !== 'granted') {
           throw new Error('Permission to access location was denied.');
         }
 
         const { coords } = await Location.getCurrentPositionAsync({});
+        currentPosition = coords;
 
         // Uncomment to get random location
         // coords = {
@@ -92,7 +94,10 @@ export class Screens extends Component {
         //   longitude: Math.random() * 90
         // };
 
-        this.setState({ chosenLocation: coords, gps: coords });
+        this.setState({
+          currentLocation: coords,
+          gps: coords
+        });
       }
 
       // We currently have 2 sources, aqicn, and windWaqi
@@ -102,9 +107,7 @@ export class Screens extends Component {
       const api = await retry(
         async (_, attempt) => {
           // Attempt starts at 1
-          const result = await sources[(attempt - 1) % 2](
-            chosenLocation || coords
-          );
+          const result = await sources[(attempt - 1) % 2](currentPosition);
           return result;
         },
         { retries: 3 } // 2 attemps per source
@@ -128,8 +131,8 @@ export class Screens extends Component {
     return { opacity: 1 };
   };
 
-  handleLocationChanged = chosenLocation => {
-    this.setState({ chosenLocation, isSearchVisible: false }, this.fetchData);
+  handleLocationChanged = currentLocation => {
+    this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
   };
 
   handleSearchHide = () => this.setState({ isSearchVisible: false });
@@ -158,7 +161,7 @@ export class Screens extends Component {
   }
 
   renderScreen = () => {
-    const { api, chosenLocation, error, gps, showVideo } = this.state;
+    const { api, currentLocation, error, gps, showVideo } = this.state;
 
     if (error) {
       return (
@@ -166,7 +169,7 @@ export class Screens extends Component {
       );
     }
 
-    if (!api || !chosenLocation) {
+    if (!api || !currentLocation) {
       return <Loading gps={gps} />;
     }
 
@@ -175,7 +178,7 @@ export class Screens extends Component {
         <RootStack
           screenProps={{
             api,
-            chosenLocation,
+            currentLocation,
             gps,
             onChangeLocationClick: this.handleSearchShow
           }}
