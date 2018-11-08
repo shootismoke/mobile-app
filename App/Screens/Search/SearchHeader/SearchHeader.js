@@ -33,7 +33,7 @@ export class SearchHeader extends Component {
     });
   };
 
-  render() {
+  render () {
     const {
       asTouchable,
       elevated,
@@ -60,11 +60,11 @@ export class SearchHeader extends Component {
           style={[styles.content, style]}
         >
           <TextInput
-            underlineColorAndroid="transparent"
+            underlineColorAndroid='transparent'
             editable={!asTouchable}
             onChangeText={onChangeSearch}
-            placeholder="Search for a city or address"
-            placeholderTextColor="rgba(255, 255, 255, 0.6)"
+            placeholder='Search for a city or address'
+            placeholderTextColor='rgba(255, 255, 255, 0.6)'
             style={styles.input}
             value={search}
             {...rest}

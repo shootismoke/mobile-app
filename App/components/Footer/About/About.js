@@ -33,11 +33,11 @@ export class About extends Component {
   handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');
 
-  render() {
+  render () {
     const { onRequestClose, ...rest } = this.props;
 
     return (
-      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
+      <Modal animationType='slide' onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
           <ScrollView
             style={theme.withPadding}

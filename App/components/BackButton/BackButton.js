@@ -10,7 +10,7 @@ import * as theme from '../../utils/theme';
 export class BackButton extends Component {
   onClick = () => this.props.onClick();
 
-  render() {
+  render () {
     const { style } = this.props;
 
     return (

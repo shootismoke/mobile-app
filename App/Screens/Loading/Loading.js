@@ -19,7 +19,7 @@ export class Loading extends Component {
 
   longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
 
-  componentWillReceiveProps({ gps }) {
+  componentWillReceiveProps ({ gps }) {
     if (!this.props.gps && gps) {
       this.longWaitingTimeout = setTimeout(
         () => this.setState({ longWaiting: true }),
@@ -28,13 +28,13 @@ export class Loading extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (this.longWaitingTimeout) {
       clearTimeout(this.longWaitingTimeout);
     }
   }
 
-  render() {
+  render () {
     return (
       <Background style={styles.container}>
         <Text style={styles.text}>{this.renderText()}</Text>

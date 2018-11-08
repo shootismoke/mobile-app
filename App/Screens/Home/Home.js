@@ -41,7 +41,7 @@ export class Home extends Component {
       )} cigarettes today by breathing urban air. And you? Find out here: shootismoke.github.io`
     });
 
-  render() {
+  render () {
     const {
       screenProps: {
         api: { pm25 }

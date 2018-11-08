@@ -9,7 +9,7 @@ import { Footer } from '../../components/Footer';
 import * as theme from '../../utils/theme';
 
 export class ErrorScreen extends Component {
-  render() {
+  render () {
     const { onChangeLocationClick } = this.props;
     return (
       <View style={styles.container}>
@@ -36,7 +36,7 @@ export class ErrorScreen extends Component {
             There's either a problem with our databases, or you don't have any
             Air Monitoring Stations near you. Try again later!
           </Text>
-          <Footer text="Click to know how the app works." />
+          <Footer text='Click to know how the app works.' />
         </View>
       </View>
     );

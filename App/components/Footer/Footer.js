@@ -20,7 +20,7 @@ export class Footer extends Component {
 
   handleAboutShow = () => this.setState({ isAboutVisible: true });
 
-  render() {
+  render () {
     const { style, text } = this.props;
     const { isAboutVisible } = this.state;
     return (

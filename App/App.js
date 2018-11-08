@@ -12,7 +12,7 @@ export class App extends Component {
     fontLoaded: false
   };
 
-  async componentDidMount() {
+  async componentDidMount () {
     // Using custom fonts with Expo
     // https://docs.expo.io/versions/latest/guides/using-custom-fonts
     await Font.loadAsync({
@@ -23,7 +23,7 @@ export class App extends Component {
     this.setState({ fontLoaded: true });
   }
 
-  render() {
+  render () {
     const { fontLoaded } = this.state;
 
     return fontLoaded ? <Screens /> : <LoadingBackground />;

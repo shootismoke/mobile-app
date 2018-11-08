@@ -27,7 +27,7 @@ export class Item extends Component {
     });
   };
 
-  render() {
+  render () {
     const {
       item: { city, country, county, locale_names: localeNames }
     } = this.props;
