@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { About } from './About';
+import { About } from '../../Screens/About';
 import * as theme from '../../utils/theme';
 
 export class Footer extends Component {
@@ -20,7 +20,7 @@ export class Footer extends Component {
 
   handleAboutShow = () => this.setState({ isAboutVisible: true });
 
-  render () {
+  render() {
     const { style, text } = this.props;
     const { isAboutVisible } = this.state;
     return (
