@@ -2,22 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Constants } from 'expo';
 import haversine from 'haversine';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { BackButton } from '../BackButton';
-import changeLocation from '../../../assets/images/changeLocation.png';
-import { CurrentLocation } from '../CurrentLocation';
-import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
-import * as theme from '../../utils/theme';
+import { BackButton } from '../../../components/BackButton';
+import changeLocation from '../../../../assets/images/changeLocation.png';
+import { CurrentLocation } from '../../../components/CurrentLocation';
+import { getCorrectLatLng } from '../../../utils/getCorrectLatLng';
+import * as theme from '../../../utils/theme';
 
 export class Header extends Component {
-  static defaultProps = {
-    showChangeLocation: false
-  };
-
   render() {
     const {
       api,
@@ -27,7 +21,6 @@ export class Header extends Component {
       onChangeLocationClick,
       onClick,
       showBackButton,
-      showChangeLocation,
       style
     } = this.props;
     const distance = Math.round(
@@ -56,7 +49,7 @@ export class Header extends Component {
           <TouchableOpacity
             disabled={!onClick}
             onPress={onClick}
-            style={showChangeLocation ? { maxWidth: '80%' } : undefined}
+            style={styles.currentLocation}
           >
             <CurrentLocation
               api={api}
@@ -68,11 +61,10 @@ export class Header extends Component {
               km
             </Text>
           </TouchableOpacity>
-          {showChangeLocation && (
-            <TouchableOpacity onPress={onChangeLocationClick}>
-              <Image source={changeLocation} style={styles.changeLocation} />
-            </TouchableOpacity>
-          )}
+
+          <TouchableOpacity onPress={onChangeLocationClick}>
+            <Image source={changeLocation} style={styles.changeLocation} />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -95,6 +87,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  currentLocation: {
+    maxWidth: '80%'
   },
   subtitle: {
     ...theme.text,

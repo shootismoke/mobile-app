@@ -13,7 +13,7 @@ import {
 
 import { Cigarettes } from './Cigarettes';
 import { Footer } from '../../components/Footer';
-import { Header } from '../../components/Header';
+import { Header } from './Header';
 import { pm25ToCigarettes } from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
@@ -24,7 +24,6 @@ export class Home extends Component {
         <Header
           {...props.screenProps}
           onClick={() => props.navigation.navigate('Map')} // TODO Possible not to create a new function every time?
-          showChangeLocation
         />
       );
     }
