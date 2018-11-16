@@ -57,7 +57,7 @@ export const paragraph = Platform.select({
 export const shitText = {
   color: textColor,
   fontFamily: boldFont,
-  fontSize: 64
+  fontSize: 48
 };
 
 /**

@@ -38,7 +38,7 @@ export class About extends Component {
       <ScrollView style={theme.withPadding}>
         <BackButton onClick={navigation.pop} style={styles.backButton} />
 
-        <View style={styles.about}>
+        <View style={styles.section}>
           <Text style={styles.h2}>About</Text>
           <Text style={[theme.text, theme.paragraph]}>
             This app was inspired by Berkeley Earth’s findings about the{' '}
@@ -61,6 +61,12 @@ export class About extends Component {
             </Text>
           </Text>
         </View>
+
+        <View style={styles.section}>
+          <Text style={styles.h2}>About</Text>
+          <Text style={[theme.text, theme.paragraph]}>HELLO</Text>
+        </View>
+
         <View style={styles.credits}>
           <Text style={styles.h2}>Credits</Text>
           <Text style={[theme.text, theme.paragraph]}>
@@ -107,12 +113,15 @@ const styles = StyleSheet.create({
     borderTopColor: theme.secondaryTextColor,
     borderTopWidth: 1,
     marginBottom: theme.defaultSpacing,
-    marginTop: 2 * theme.defaultSpacing,
+    marginTop: theme.defaultSpacing,
     paddingTop: theme.defaultSpacing
   },
   h2: {
     ...theme.title,
     fontSize: 32,
     lineHeight: 44
+  },
+  section: {
+    marginBottom: theme.defaultSpacing
   }
 });
