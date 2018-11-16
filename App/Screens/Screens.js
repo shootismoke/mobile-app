@@ -35,21 +35,13 @@ const RootStack = createStackNavigator(
   },
   {
     cardStyle: {
-      backgroundColor: 'transparent',
-      elevation: 0,
-      shadowOpacity: 0
+      backgroundColor: theme.backgroundColor
     },
     headerMode: 'none',
     initialRouteName: 'Home',
     navigationOptions: {
-      gesturesEnabled: false,
       headerVisible: false
-    },
-    transitionConfig: () => ({
-      containerStyle: {
-        backgroundColor: 'transparent'
-      }
-    })
+    }
   }
 );
 
