@@ -98,8 +98,8 @@ export class Search extends Component {
   };
 
   handleItemClick = item => {
-    this.setState({ search: '' });
-    this.props.onLocationChanged(item);
+    this.props.stores.location.setCurrent(item);
+    this.props.stores.setApi(undefined);
   };
 
   render() {
@@ -110,8 +110,6 @@ export class Search extends Component {
       <View style={styles.container}>
         <BackButton onClick={navigation.pop} style={styles.backButton} />
         <SearchHeader
-          autoFocus
-          elevated
           onChangeSearch={this.handleChangeSearch}
           search={search}
         />
@@ -151,7 +149,8 @@ const styles = StyleSheet.create({
     marginVertical: 18
   },
   container: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flexGrow: 1
   },
   list: {
     flex: 1

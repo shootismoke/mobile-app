@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableHighlight,
-  View
-} from 'react-native';
+import { Image, StyleSheet, TextInput } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
 import searchIcon from '../../../../assets/images/search.png';
@@ -35,28 +29,17 @@ export class SearchHeader extends Component {
   };
 
   render() {
-    const {
-      asTouchable,
-      elevated,
-      onChangeSearch,
-      onClick,
-      search,
-      style,
-      ...rest
-    } = this.props;
-    const Wrapper = asTouchable ? TouchableHighlight : View;
-
+    const { onChangeSearch, search } = this.props;
     return (
-      <Banner>
+      <Banner elevated shadowPosition="bottom">
         <TextInput
-          underlineColorAndroid="transparent"
-          editable={!asTouchable}
+          autoFocus
           onChangeText={onChangeSearch}
           placeholder="Search for a city or address"
           placeholderTextColor="rgba(255, 255, 255, 0.6)"
           style={styles.input}
+          underlineColorAndroid="transparent"
           value={search}
-          {...rest}
         />
         <Image source={searchIcon} />
       </Banner>

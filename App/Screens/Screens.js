@@ -64,9 +64,15 @@ export class Screens extends Component {
     this.setState({ error });
   }
 
+  componentDidUpdate(prevProps) {
+    if (!!prevProps.stores.api && !this.props.stores.api) {
+      this.fetchData();
+    }
+  }
+
   async fetchData() {
     const { stores } = this.props;
-    const { api, location } = stores;
+    const { location } = stores;
 
     try {
       // The current { latitude, longitude } the user chose
