@@ -3,16 +3,21 @@
 
 import React, { Component } from 'react';
 import { Font } from 'expo';
+import { Provider } from 'mobx-react';
 
-import { Screens } from './Screens';
+import { RootStore } from './stores';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
+import { Screens } from './Screens';
+
+// Set up global MST stores
+const stores = RootStore.create({ api: undefined, location: {} });
 
 export class App extends Component {
   state = {
     fontLoaded: false
   };
 
-  async componentDidMount () {
+  async componentDidMount() {
     // Using custom fonts with Expo
     // https://docs.expo.io/versions/latest/guides/using-custom-fonts
     await Font.loadAsync({
@@ -23,9 +28,15 @@ export class App extends Component {
     this.setState({ fontLoaded: true });
   }
 
-  render () {
+  render() {
     const { fontLoaded } = this.state;
 
-    return fontLoaded ? <Screens /> : <LoadingBackground />;
+    return fontLoaded ? (
+      <Provider stores={stores}>
+        <Screens />
+      </Provider>
+    ) : (
+      <LoadingBackground />
+    );
   }
 }

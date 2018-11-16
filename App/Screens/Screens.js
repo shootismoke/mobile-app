@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 import { Location, Permissions, Video } from 'expo';
 import retry from 'async-retry';
 import { createStackNavigator } from 'react-navigation';
@@ -52,17 +53,16 @@ const RootStack = createStackNavigator(
   }
 );
 
+@inject('stores')
+@observer
 export class Screens extends Component {
   state = {
-    api: null,
-    currentLocation: null, // Current selected location of the user, initialized to GPS, but can be changed by user
     error: null, // Error here or in children component tree
-    gps: null, // GPS location of the user
     isSearchVisible: false, // Search modal on or off
     showVideo: true // Showing video or not
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchData();
   }
 
@@ -71,12 +71,14 @@ export class Screens extends Component {
   }
 
   async fetchData() {
-    const { currentLocation } = this.state;
+    const { stores } = this.props;
+    const { api, location } = stores;
+
     try {
       // The current { latitude, longitude } the user chose
-      let currentPosition = currentLocation;
+      let currentPosition = location.current;
 
-      this.setState({ api: null, error: null });
+      this.setState({ error: null });
 
       // If the currentLocation has been set by the user, then we don't refetch
       // the user's GPS
@@ -99,17 +101,15 @@ export class Screens extends Component {
 
         currentPosition = coords;
 
-        this.setState({
-          currentLocation: coords,
-          gps: coords
-        });
+        location.setCurrent(coords);
+        location.setGps(coords);
       }
 
       // We currently have 2 sources, aqicn, and windWaqi
       // We put them in an array
       const sources = [dataSources.aqicn, dataSources.windWaqi];
 
-      const api = await retry(
+      const _api = await retry(
         async (_, attempt) => {
           // Attempt starts at 1
           const result = await sources[(attempt - 1) % 2](currentPosition);
@@ -117,17 +117,21 @@ export class Screens extends Component {
         },
         { retries: 3 } // 2 attemps per source
       );
-      this.setState({ api });
+
+      stores.setApi(_api);
     } catch (error) {
       // TODO Add to sentry
+      console.error(error);
       this.setState({ error });
     }
   }
 
   getVideoStyle = () => {
     const {
-      api: { rawPm25 }
-    } = this.state;
+      stores: {
+        api: { rawPm25 }
+      }
+    } = this.props;
     const cigarettes = pm25ToCigarettes(rawPm25);
 
     if (cigarettes <= 1) return { opacity: 0.2 };
@@ -151,12 +155,16 @@ export class Screens extends Component {
   };
 
   render() {
-    const { gps, isSearchVisible } = this.state;
+    const {
+      stores: { location }
+    } = this.props;
+    const { isSearchVisible } = this.state;
+
     return (
       <View style={styles.container}>
         {this.renderScreen()}
         <Search
-          gps={gps}
+          gps={location.gps}
           onLocationChanged={this.handleLocationChanged}
           onRequestClose={this.handleSearchHide}
           visible={isSearchVisible}
@@ -166,25 +174,28 @@ export class Screens extends Component {
   }
 
   renderScreen = () => {
-    const { api, currentLocation, error, gps, showVideo } = this.state;
+    const {
+      stores: { api, location }
+    } = this.props;
+    const { error, showVideo } = this.state;
 
     if (error) {
       return (
-        <ErrorScreen gps={gps} onChangeLocationClick={this.handleSearchShow} />
+        <ErrorScreen
+          gps={location.gps}
+          onChangeLocationClick={this.handleSearchShow}
+        />
       );
     }
 
-    if (!api || !currentLocation) {
-      return <Loading gps={gps} />;
+    if (!api || !location.gps) {
+      return <Loading gps={location.gps} />;
     }
 
     return (
       <View style={theme.fullScreen}>
         <RootStack
           screenProps={{
-            api,
-            currentLocation,
-            gps,
             onChangeLocationClick: this.handleSearchShow
           }}
         />

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import {
   ScrollView,
   Share,
@@ -17,18 +18,9 @@ import { Header } from './Header';
 import { pm25ToCigarettes } from '../../utils/pm25ToCigarettes';
 import * as theme from '../../utils/theme';
 
+@inject('stores')
+@observer
 export class Home extends Component {
-  static navigationOptions = {
-    header: props => {
-      return (
-        <Header
-          {...props.screenProps}
-          onClick={() => props.navigation.navigate('Map')} // TODO Possible not to create a new function every time?
-        />
-      );
-    }
-  };
-
   goToMap = () => this.props.navigation.navigate('Map');
 
   handleShare = () =>
@@ -42,27 +34,30 @@ export class Home extends Component {
 
   render() {
     const {
-      screenProps: {
+      stores: {
         api: { rawPm25 }
       }
     } = this.props;
     return (
-      <ScrollView bounces={false} contentContainerStyle={styles.container}>
-        <View style={styles.content}>
-          <Cigarettes rawPm25={rawPm25} />
-          <View style={styles.main}>{this.renderText()}</View>
-          <TouchableOpacity
-            onPress={this.handleShare}
-            style={styles.shareButton}
-          >
-            <View style={theme.bigButton}>
-              <Text style={theme.bigButtonText}>SHARE WITH YOUR FRIENDS</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+      <View>
+        <Header onClick={this.goToMap} />
+        <ScrollView bounces={false} contentContainerStyle={styles.container}>
+          <View style={styles.content}>
+            <Cigarettes rawPm25={rawPm25} />
+            <View style={styles.main}>{this.renderText()}</View>
+            <TouchableOpacity
+              onPress={this.handleShare}
+              style={styles.shareButton}
+            >
+              <View style={theme.bigButton}>
+                <Text style={theme.bigButtonText}>SHARE WITH YOUR FRIENDS</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
 
-        <Footer style={styles.footer} />
-      </ScrollView>
+          <Footer style={styles.footer} />
+        </ScrollView>
+      </View>
     );
   }
 
@@ -75,7 +70,7 @@ export class Home extends Component {
 
   renderShit = () => {
     const {
-      screenProps: {
+      stores: {
         api: { rawPm25 }
       }
     } = this.props;
@@ -89,7 +84,7 @@ export class Home extends Component {
 
   renderText = () => {
     const {
-      screenProps: {
+      stores: {
         api: { rawPm25 }
       }
     } = this.props;

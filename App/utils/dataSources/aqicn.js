@@ -84,9 +84,13 @@ export const aqicn = async ({ latitude, longitude }) => {
     throw new Error('PM2.5 not defined in response.');
   }
 
-  // TODO Find the real raw value
-  // https://github.com/amaurymartiny/shoot-i-smoke/issues/46
-  response.data.rawPm25 = response.data.iaqi.pm25.v;
-
-  return response.data;
+  return {
+    aqi: response.data.aqi,
+    city: response.data.city,
+    dominentpol: response.data.dominentpol,
+    iaqi: response.data.iaqi,
+    idx: response.data.idx,
+    rawPm25: response.data.iaqi.pm25.v, // TODO Find the real raw value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
+    time: response.data.time
+  };
 };

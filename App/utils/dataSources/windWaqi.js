@@ -42,13 +42,19 @@ export const windWaqi = async ({ latitude, longitude }) => {
     }
 
     return {
+      aqi: data.v,
       city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo },
+      dominentpol: data.pol,
       iaqi: {
-        pm25: {
+        [data.pol]: {
           v: data.v
         }
       },
-      rawPm25: data.v // TODO Get the real raw pm25 value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
+      idx: data.x,
+      rawPm25: data.v, // TODO Find the real raw value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
+      time: {
+        v: data.t
+      }
     };
   } else {
     throw new Error(response);

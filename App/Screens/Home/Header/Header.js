@@ -2,36 +2,27 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import haversine from 'haversine';
+import { inject, observer } from 'mobx-react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { BackButton } from '../../../components/BackButton';
 import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
-import { getCorrectLatLng } from '../../../utils/getCorrectLatLng';
 import * as theme from '../../../utils/theme';
 
+@inject('stores')
+@observer
 export class Header extends Component {
   render() {
     const {
-      api,
-      currentLocation,
       elevated,
       onBackClick,
       onChangeLocationClick,
       onClick,
       showBackButton,
+      stores: { api, location, distanceToStation },
       style
     } = this.props;
-    const distance = Math.round(
-      haversine(
-        currentLocation,
-        getCorrectLatLng(currentLocation, {
-          latitude: api.city.geo[0],
-          longitude: api.city.geo[1]
-        })
-      )
-    );
 
     return (
       <View
@@ -53,11 +44,11 @@ export class Header extends Component {
           >
             <CurrentLocation
               api={api}
-              currentLocation={currentLocation}
+              currentLocation={location.current}
               numberOfLines={2}
             />
             <Text style={styles.subtitle}>
-              Distance to Air Quality Station: {distance}
+              Distance to Air Quality Station: {distanceToStation}
               km
             </Text>
           </TouchableOpacity>
