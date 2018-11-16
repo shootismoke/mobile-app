@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Constants } from 'expo';
-import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import retry from 'async-retry';
 
@@ -103,32 +103,30 @@ export class Search extends Component {
   };
 
   render() {
-    const { onRequestClose, ...rest } = this.props;
+    const { navigation } = this.props;
     const { hits, search } = this.state;
 
     return (
-      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
-        <View style={styles.container}>
-          <BackButton onClick={onRequestClose} style={styles.backButton} />
-          <SearchHeader
-            autoFocus
-            elevated
-            onChangeSearch={this.handleChangeSearch}
-            search={search}
-          />
-          <FlatList
-            data={hits}
-            ItemSeparatorComponent={this.renderSeparator}
-            keyboardShouldPersistTaps="always"
-            keyExtractor={({ objectID }) => objectID}
-            ListEmptyComponent={
-              <Text style={styles.noResults}>{this.renderInfoText()}</Text>
-            }
-            renderItem={this.renderItem}
-            style={styles.list}
-          />
-        </View>
-      </Modal>
+      <View style={styles.container}>
+        <BackButton onClick={navigation.pop} style={styles.backButton} />
+        <SearchHeader
+          autoFocus
+          elevated
+          onChangeSearch={this.handleChangeSearch}
+          search={search}
+        />
+        <FlatList
+          data={hits}
+          ItemSeparatorComponent={this.renderSeparator}
+          keyboardShouldPersistTaps="always"
+          keyExtractor={({ objectID }) => objectID}
+          ListEmptyComponent={
+            <Text style={styles.noResults}>{this.renderInfoText()}</Text>
+          }
+          renderItem={this.renderItem}
+          style={styles.list}
+        />
+      </View>
     );
   }
 
@@ -153,8 +151,6 @@ const styles = StyleSheet.create({
     marginVertical: 18
   },
   container: {
-    ...theme.fullScreen,
-    ...theme.modal,
     backgroundColor: 'white'
   },
   list: {

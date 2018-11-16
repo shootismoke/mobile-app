@@ -24,6 +24,8 @@ export class Home extends Component {
 
   goToDetails = () => this.props.navigation.navigate('Details');
 
+  goToSearch = () => this.props.navigation.navigate('Search');
+
   handleShare = () =>
     Share.share({
       title:
@@ -36,7 +38,7 @@ export class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header onClick={this.goToDetails} />
+        <Header onChangeLocationClick={this.goToSearch} />
         <ScrollView
           bounces={false}
           contentContainerStyle={styles.scrollContainer}

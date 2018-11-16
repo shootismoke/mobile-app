@@ -13,22 +13,22 @@ export const primaryColor = '#F8A65D';
 export const textColor = '#414248';
 export const secondaryTextColor = '#7B7D88';
 
-export const elevatedLevel1 = {
+export const elevatedLevel1 = position => ({
   elevation: 2,
   shadowColor: 'black',
-  shadowOffset: { width: 0, height: -2 },
+  shadowOffset: { width: 0, height: position === 'top' ? -2 : 2 },
   shadowOpacity: 0.2,
   shadowRadius: 2
-};
+});
 
-export const elevatedLevel2 = {
+export const elevatedLevel2 = position => ({
   elevation: 10,
   shadowColor: 'black',
-  shadowOffset: { width: 0, height: -9 },
+  shadowOffset: { width: 0, height: position === 'top' ? -9 : 9 },
   shadowOpacity: 0.4,
   shadowRadius: 9,
   zIndex: 100
-};
+});
 
 export const fullScreen = {
   backgroundColor,
@@ -86,6 +86,7 @@ export const withPadding = {
 export const bigButton = {
   backgroundColor: primaryColor,
   borderRadius: 24,
+  height: 48,
   minWidth: '80%',
   paddingHorizontal: 24,
   paddingVertical: 12
@@ -102,5 +103,6 @@ export const bigButtonText = {
       fontSize: 14
     }
   }),
+  lineHeight: 24,
   textAlign: 'center'
 };

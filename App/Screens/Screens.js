@@ -31,6 +31,9 @@ const RootStack = createStackNavigator(
     },
     Home: {
       screen: Home
+    },
+    Search: {
+      screen: Search
     }
   },
   {
@@ -50,7 +53,6 @@ const RootStack = createStackNavigator(
 export class Screens extends Component {
   state = {
     error: null, // Error here or in children component tree
-    isSearchVisible: false, // Search modal on or off
     showVideo: true // Showing video or not
   };
 
@@ -129,14 +131,6 @@ export class Screens extends Component {
     return { opacity: 1 };
   };
 
-  handleLocationChanged = currentLocation => {
-    this.setState({ currentLocation, isSearchVisible: false }, this.fetchData);
-  };
-
-  handleSearchHide = () => this.setState({ isSearchVisible: false });
-
-  handleSearchShow = () => this.setState({ isSearchVisible: true });
-
   handleVideoStatus = ({ didJustFinish }) => {
     if (didJustFinish && this.state.showVideo) {
       this.setState({ showVideo: false });
@@ -144,22 +138,7 @@ export class Screens extends Component {
   };
 
   render() {
-    const {
-      stores: { location }
-    } = this.props;
-    const { isSearchVisible } = this.state;
-
-    return (
-      <View style={styles.container}>
-        {this.renderScreen()}
-        <Search
-          gps={location.gps}
-          onLocationChanged={this.handleLocationChanged}
-          onRequestClose={this.handleSearchHide}
-          visible={isSearchVisible}
-        />
-      </View>
-    );
+    return <View style={styles.container}>{this.renderScreen()}</View>;
   }
 
   renderScreen = () => {

@@ -51,8 +51,6 @@ export class Header extends Component {
       iaqi: { no2, o3, pm10, pm25 }
     } = api;
 
-    console.log(api.iaqi);
-
     return (
       <View style={styles.container}>
         <BackButton onClick={onBackClick} style={styles.backButton} />
@@ -98,13 +96,15 @@ const styles = StyleSheet.create({
     marginBottom: theme.defaultSpacing
   },
   changeLocation: {
-    marginRight: 5
+    marginRight: theme.defaultSpacing
   },
   container: {
-    ...theme.elevatedLevel1,
+    ...theme.elevatedLevel1('bottom'),
     ...theme.withPadding,
+    backgroundColor: 'white',
     paddingBottom: 15,
-    paddingTop: theme.defaultSpacing
+    paddingTop: theme.defaultSpacing,
+    zIndex: 1
   },
   content: {
     flexDirection: 'row'
@@ -127,9 +127,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: theme.defaultSpacing
-  },
-  title: {
-    ...theme.title,
-    fontSize: 15
   }
 });
