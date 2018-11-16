@@ -1,7 +1,7 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Font } from 'expo';
 import { Provider } from 'mobx-react';
 
@@ -12,7 +12,7 @@ import { Screens } from './Screens';
 // Set up global MST stores
 const stores = RootStore.create({ api: undefined, location: {} });
 
-export class App extends Component {
+export class App extends PureComponent {
   state = {
     fontLoaded: false
   };

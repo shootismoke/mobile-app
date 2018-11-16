@@ -1,33 +1,14 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
 import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
 
-export class SearchHeader extends Component {
-  handleClick = () => {
-    const {
-      item: { city, country, county, _geoloc, locale_names: localeNames },
-      onClick
-    } = this.props;
-    onClick({
-      latitude: _geoloc.lat,
-      longitude: _geoloc.lng,
-      name: [
-        localeNames[0],
-        city,
-        county && county.length ? county[0] : null,
-        country
-      ]
-        .filter(_ => _)
-        .join(', ')
-    });
-  };
-
+export class SearchHeader extends PureComponent {
   render() {
     const { onChangeSearch, search } = this.props;
     return (

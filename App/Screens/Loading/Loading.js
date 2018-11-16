@@ -1,25 +1,20 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { Background } from './Background';
 import * as theme from '../../utils/theme';
 
-export class Loading extends Component {
-  static propTypes = {
-    gps: PropTypes.object
-  };
-
+export class Loading extends PureComponent {
   state = {
     longWaiting: false // If api is taking a long time
   };
 
   longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
 
-  componentWillReceiveProps ({ gps }) {
+  componentWillReceiveProps({ gps }) {
     if (!this.props.gps && gps) {
       this.longWaitingTimeout = setTimeout(
         () => this.setState({ longWaiting: true }),
@@ -28,13 +23,13 @@ export class Loading extends Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.longWaitingTimeout) {
       clearTimeout(this.longWaitingTimeout);
     }
   }
 
-  render () {
+  render() {
     return (
       <Background style={styles.container}>
         <Text style={styles.text}>{this.renderText()}</Text>

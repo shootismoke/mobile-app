@@ -1,23 +1,15 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Constants } from 'expo';
-import {
-  Image,
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Box } from './Box';
 import * as theme from '../../utils/theme';
 import { BackButton } from '../../components/BackButton';
 
-export class About extends Component {
+export class About extends PureComponent {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
 
   handleOpenAqi = () => Linking.openURL('http://aqicn.org/');

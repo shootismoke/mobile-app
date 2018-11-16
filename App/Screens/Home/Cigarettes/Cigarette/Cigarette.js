@@ -1,7 +1,7 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import butt from '../../../../../assets/images/butt.png';
@@ -9,7 +9,7 @@ import buttVertical from '../../../../../assets/images/butt-vertical.png';
 import head from '../../../../../assets/images/head.png';
 import headVertical from '../../../../../assets/images/head-vertical.png';
 
-export class Cigarette extends Component {
+export class Cigarette extends PureComponent {
   static defaultProps = {
     length: 1
   };
@@ -76,7 +76,7 @@ export class Cigarette extends Component {
     }
   };
 
-  render () {
+  render() {
     const { diagonal, length, style, vertical } = this.props;
 
     // Max and min lengths of a cigarette
@@ -88,12 +88,12 @@ export class Cigarette extends Component {
         style={[
           diagonal
             ? {
-              justifyContent: 'center',
-              height:
+                justifyContent: 'center',
+                height:
                   (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
-              width:
+                width:
                   (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
-            }
+              }
             : null
         ]}
       >
@@ -103,13 +103,13 @@ export class Cigarette extends Component {
             styles.container,
             diagonal
               ? {
-                width: minWidth + length * (maxWidth - minWidth)
-              }
+                  width: minWidth + length * (maxWidth - minWidth)
+                }
               : vertical
-                ? {
+              ? {
                   height: minWidth + length * (maxWidth - minWidth)
                 }
-                : {
+              : {
                   width: minWidth + length * (maxWidth - minWidth)
                 },
             diagonal ? styles.diagonal : null,

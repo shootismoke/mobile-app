@@ -1,13 +1,13 @@
 // Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import pinIcon from '../../../../assets/images/location.png';
 import * as theme from '../../../utils/theme';
 
-export class Item extends Component {
+export class Item extends PureComponent {
   handleClick = () => {
     const {
       item: { city, country, county, _geoloc, locale_names: localeNames },
@@ -27,7 +27,7 @@ export class Item extends Component {
     });
   };
 
-  render () {
+  render() {
     const {
       item: { city, country, county, locale_names: localeNames }
     } = this.props;
