@@ -5,8 +5,10 @@ import { Constants } from 'expo';
 import { Platform } from 'react-native';
 
 export const backgroundColor = '#FAFAFC';
+export const boldFont = 'gotham-black';
 export const defaultSpacing = 18;
 export const iconBackgroundColor = '#EBE7DD';
+export const normalFont = 'gotham-book';
 export const primaryColor = '#F8A65D';
 export const textColor = '#414248';
 export const secondaryTextColor = '#7B7D88';
@@ -36,7 +38,7 @@ export const fullScreen = {
 
 export const link = {
   color: primaryColor,
-  fontFamily: 'gotham-book',
+  fontFamily: normalFont,
   textDecorationLine: 'underline'
 };
 
@@ -60,7 +62,7 @@ export const paragraph = Platform.select({
  */
 export const shitText = {
   color: textColor,
-  fontFamily: 'gotham-black',
+  fontFamily: boldFont,
   fontSize: 48
 };
 
@@ -69,7 +71,7 @@ export const shitText = {
  */
 export const text = {
   color: secondaryTextColor,
-  fontFamily: 'gotham-book',
+  fontFamily: normalFont,
   fontSize: 12,
   letterSpacing: 0.22,
   textAlign: 'justify'
@@ -78,7 +80,7 @@ export const text = {
 export const title = {
   letterSpacing: 2,
   color: textColor,
-  fontFamily: 'gotham-black',
+  fontFamily: boldFont,
   fontSize: 15
 };
 

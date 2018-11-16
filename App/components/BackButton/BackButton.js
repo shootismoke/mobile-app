@@ -10,7 +10,7 @@ import * as theme from '../../utils/theme';
 export class BackButton extends Component {
   onClick = () => this.props.onClick();
 
-  render () {
+  render() {
     const { style } = this.props;
 
     return (
@@ -34,9 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   backText: {
-    color: theme.secondaryTextColor,
-    fontFamily: 'gotham-book',
-    fontSize: 13,
+    ...theme.text,
     marginLeft: 9
   }
 });

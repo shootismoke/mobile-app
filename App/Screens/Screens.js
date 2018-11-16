@@ -88,9 +88,13 @@ export class Screens extends Component {
 
         // const { coords } = await Location.getCurrentPositionAsync({});
         // Uncomment to get random location
+        // coords = {
+        //   latitude: Math.random() * 90,
+        //   longitude: Math.random() * 90
+        // };
         coords = {
-          latitude: Math.random() * 90,
-          longitude: Math.random() * 90
+          latitude: 48.4,
+          longitude: 2.34
         };
 
         currentPosition = coords;
