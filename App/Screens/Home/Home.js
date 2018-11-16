@@ -13,9 +13,8 @@ import {
 } from 'react-native';
 
 import { Cigarettes } from './Cigarettes';
-import { Footer } from '../../components/Footer';
 import { Header } from './Header';
-import { pm25ToCigarettes } from '../../utils/pm25ToCigarettes';
+import { SmallButton } from './SmallButton';
 import * as theme from '../../utils/theme';
 
 @inject('stores')
@@ -27,34 +26,71 @@ export class Home extends Component {
     Share.share({
       title:
         'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
-      message: `Shoot! I 'smoked' ${pm25ToCigarettes(
-        this.props.screenProps.api.rawPm25
-      )} cigarettes today by breathing urban air. And you? Find out here: shootismoke.github.io`
+      message: `Shoot! I 'smoked' ${
+        this.props.stores.cigarettes
+      } cigarettes today by breathing urban air. And you? Find out here: https://shootismoke.github.io`
     });
 
   render() {
     return (
       <View style={styles.container}>
         <Header onClick={this.goToMap} />
-        <ScrollView bounces={false} contentContainerStyle={styles.container}>
+        <ScrollView
+          bounces={false}
+          contentContainerStyle={styles.scrollContainer}
+        >
+          <View />
           <View style={styles.content}>
             <Cigarettes />
             <View style={styles.main}>{this.renderText()}</View>
-            <TouchableOpacity
-              onPress={this.handleShare}
-              style={styles.shareButton}
-            >
-              <View style={theme.bigButton}>
-                <Text style={theme.bigButtonText}>SHARE WITH YOUR FRIENDS</Text>
-              </View>
-            </TouchableOpacity>
           </View>
-
-          <Footer style={styles.footer} />
+          <View style={styles.cta}>
+            {this.renderBigButton()}
+            {this.renderFooter()}
+          </View>
         </ScrollView>
       </View>
     );
   }
+
+  renderBigButton = () => {
+    const {
+      stores: { isStationTooFar }
+    } = this.props;
+    if (isStationTooFar) {
+      return (
+        <TouchableOpacity onPress={this.handleShare}>
+          <View style={theme.bigButton}>
+            <Text style={theme.bigButtonText}>WHY IS THE STATION SO FAR?</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
+    return (
+      <TouchableOpacity onPress={this.goToMap}>
+        <View style={theme.bigButton}>
+          <Text style={theme.bigButtonText}>SEE DETAILS</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  renderFooter = () => {
+    const {
+      stores: { isStationTooFar }
+    } = this.props;
+    return (
+      <View style={styles.smallButtons}>
+        {isStationTooFar ? (
+          <SmallButton text="MORE DETAILS" />
+        ) : (
+          <SmallButton text="ABOUT" />
+        )}
+        <SmallButton text="SHARE" onPress={this.handleShare} />
+      </View>
+    );
+  };
 
   renderPresentPast = () => {
     const time = new Date().getHours();
@@ -65,11 +101,8 @@ export class Home extends Component {
 
   renderShit = () => {
     const {
-      stores: {
-        api: { rawPm25 }
-      }
+      stores: { cigarettes }
     } = this.props;
-    const cigarettes = pm25ToCigarettes(rawPm25);
 
     if (cigarettes <= 1) return 'Oh';
     if (cigarettes < 5) return 'Sh*t';
@@ -78,16 +111,12 @@ export class Home extends Component {
   };
 
   renderText = () => {
-    const {
-      stores: {
-        api: { rawPm25 }
-      }
-    } = this.props;
+    const { stores } = this.props;
     // Round to 1 decimal
-    const cigarettes = Math.round(pm25ToCigarettes(rawPm25) * 10) / 10;
+    const cigarettes = Math.round(stores.cigarettes * 10) / 10;
 
     return (
-      <Text style={styles.shit}>
+      <Text adjustsFontSizeToFit style={styles.shit}>
         {this.renderShit()}! {this.renderPresentPast()}{' '}
         <Text style={styles.cigarettesCount}>
           {cigarettes} cigarette
@@ -109,24 +138,28 @@ const styles = StyleSheet.create({
   },
   content: {
     ...theme.withPadding,
-    flexDirection: 'column',
-    flexGrow: 1,
     justifyContent: 'center'
+  },
+  cta: {
+    alignItems: 'center'
   },
   dots: {
     color: theme.primaryColor
   },
-  footer: {
-    ...theme.withPadding
-  },
   main: {
     marginBottom: 22
   },
-  shareButton: {
-    alignItems: 'flex-start'
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-around'
   },
   shit: {
     ...theme.shitText,
     marginTop: 22
+  },
+  smallButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: theme.defaultSpacing
   }
 });

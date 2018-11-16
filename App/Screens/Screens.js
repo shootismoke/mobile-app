@@ -13,7 +13,6 @@ import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
 import { Loading } from './Loading';
-import { pm25ToCigarettes } from '../utils/pm25ToCigarettes';
 import { Search } from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
@@ -128,11 +127,8 @@ export class Screens extends Component {
 
   getVideoStyle = () => {
     const {
-      stores: {
-        api: { rawPm25 }
-      }
+      stores: { cigarettes }
     } = this.props;
-    const cigarettes = pm25ToCigarettes(rawPm25);
 
     if (cigarettes <= 1) return { opacity: 0.2 };
     if (cigarettes < 5) return { opacity: 0.5 };

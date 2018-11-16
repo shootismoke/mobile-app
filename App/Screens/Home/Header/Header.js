@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { BackButton } from '../../../components/BackButton';
 import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import * as theme from '../../../utils/theme';
@@ -15,33 +14,14 @@ import * as theme from '../../../utils/theme';
 export class Header extends Component {
   render() {
     const {
-      elevated,
-      onBackClick,
       onChangeLocationClick,
-      onClick,
-      showBackButton,
-      stores: { api, location, distanceToStation },
-      style
+      stores: { api, location, distanceToStation }
     } = this.props;
 
     return (
-      <View
-        style={[
-          styles.container,
-          elevated ? theme.elevatedLevel1 : null,
-          style
-        ]}
-      >
-        {showBackButton && (
-          <BackButton onClick={onBackClick} style={styles.backButton} />
-        )}
-
+      <View style={styles.container}>
         <View style={styles.content}>
-          <TouchableOpacity
-            disabled={!onClick}
-            onPress={onClick}
-            style={styles.currentLocation}
-          >
+          <View style={styles.currentLocation}>
             <CurrentLocation
               api={api}
               currentLocation={location.current}
@@ -51,7 +31,7 @@ export class Header extends Component {
               Distance to Air Quality Station: {distanceToStation}
               km
             </Text>
-          </TouchableOpacity>
+          </View>
 
           <TouchableOpacity onPress={onChangeLocationClick}>
             <Image source={changeLocation} style={styles.changeLocation} />

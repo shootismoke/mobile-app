@@ -63,7 +63,7 @@ export const paragraph = Platform.select({
 export const shitText = {
   color: textColor,
   fontFamily: boldFont,
-  fontSize: 48
+  fontSize: 64
 };
 
 /**
@@ -79,6 +79,7 @@ export const text = {
 
 export const title = {
   letterSpacing: 2,
+  lineHeight: 21,
   color: textColor,
   fontFamily: boldFont,
   fontSize: 15
@@ -90,9 +91,10 @@ export const withPadding = {
 
 export const bigButton = {
   backgroundColor: primaryColor,
-  borderRadius: 22,
-  paddingHorizontal: 22,
-  paddingVertical: 11
+  borderRadius: 24,
+  minWidth: '80%',
+  paddingHorizontal: 24,
+  paddingVertical: 12
 };
 
 export const bigButtonText = {
