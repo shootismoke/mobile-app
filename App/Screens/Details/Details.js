@@ -6,10 +6,10 @@ import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
 import truncate from 'truncate';
 
+import { Distance } from './Distance';
 import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
 import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
-import { SearchHeader } from '../Search/SearchHeader';
 import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
 
@@ -49,7 +49,7 @@ export class Details extends Component {
 
   render() {
     const {
-      screenProps: { api, currentLocation, onChangeLocationClick }
+      screenProps: { api, currentLocation }
     } = this.props;
     const { showMap } = this.state;
 
@@ -67,13 +67,6 @@ export class Details extends Component {
 
     return (
       <View style={styles.container}>
-        <SearchHeader
-          asTouchable
-          elevated="very"
-          onClick={onChangeLocationClick}
-          onPress={onChangeLocationClick}
-          search=""
-        />
         <View style={styles.mapContainer}>
           {showMap && (
             <MapView
@@ -105,6 +98,7 @@ export class Details extends Component {
             </MapView>
           )}
         </View>
+        <Distance api={api} currentLocation={currentLocation} />
       </View>
     );
   }

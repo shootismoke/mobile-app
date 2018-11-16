@@ -10,6 +10,7 @@ import {
   View
 } from 'react-native';
 
+import { Banner } from '../../../components/Banner';
 import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
 
@@ -33,7 +34,7 @@ export class SearchHeader extends Component {
     });
   };
 
-  render () {
+  render() {
     const {
       asTouchable,
       elevated,
@@ -46,32 +47,19 @@ export class SearchHeader extends Component {
     const Wrapper = asTouchable ? TouchableHighlight : View;
 
     return (
-      <Wrapper
-        onPress={asTouchable ? onClick : undefined}
-        style={[
-          styles.container,
-          elevated === true ? theme.elevatedLevel1 : null,
-          elevated === 'very' ? theme.elevatedLevel2 : null
-        ]}
-        underlayColor={asTouchable ? theme.primaryColor : undefined} // https://github.com/facebook/react-native/issues/11834
-      >
-        <View
-          pointerEvents={asTouchable ? 'none' : 'auto'}
-          style={[styles.content, style]}
-        >
-          <TextInput
-            underlineColorAndroid='transparent'
-            editable={!asTouchable}
-            onChangeText={onChangeSearch}
-            placeholder='Search for a city or address'
-            placeholderTextColor='rgba(255, 255, 255, 0.6)'
-            style={styles.input}
-            value={search}
-            {...rest}
-          />
-          <Image source={searchIcon} />
-        </View>
-      </Wrapper>
+      <Banner>
+        <TextInput
+          underlineColorAndroid="transparent"
+          editable={!asTouchable}
+          onChangeText={onChangeSearch}
+          placeholder="Search for a city or address"
+          placeholderTextColor="rgba(255, 255, 255, 0.6)"
+          style={styles.input}
+          value={search}
+          {...rest}
+        />
+        <Image source={searchIcon} />
+      </Banner>
     );
   }
 }
