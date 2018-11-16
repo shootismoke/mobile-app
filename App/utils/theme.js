@@ -5,6 +5,7 @@ import { Constants } from 'expo';
 import { Platform } from 'react-native';
 
 export const backgroundColor = '#FAFAFC';
+export const defaultSpacing = 18;
 export const iconBackgroundColor = '#EBE7DD';
 export const primaryColor = '#F8A65D';
 export const textColor = '#414248';
@@ -77,11 +78,12 @@ export const text = {
 export const title = {
   letterSpacing: 2,
   color: textColor,
-  fontFamily: 'gotham-black'
+  fontFamily: 'gotham-black',
+  fontSize: 15
 };
 
 export const withPadding = {
-  paddingHorizontal: 19
+  paddingHorizontal: defaultSpacing
 };
 
 export const bigButton = {

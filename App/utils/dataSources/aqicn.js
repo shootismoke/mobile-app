@@ -84,11 +84,5 @@ export const aqicn = async ({ latitude, longitude }) => {
     throw new Error('PM2.5 not defined in response.');
   }
 
-  return {
-    pm25: response.data.iaqi.pm25.v,
-    city: {
-      name: response.data.city.name,
-      geo: [+response.data.city.geo[0], +response.data.city.geo[1]]
-    }
-  };
+  return response.data;
 };

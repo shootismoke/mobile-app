@@ -7,13 +7,13 @@ import { StyleSheet, View } from 'react-native';
 import truncate from 'truncate';
 
 import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
-import { Header } from '../../components/Header';
+import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
 import { SearchHeader } from '../Search/SearchHeader';
 import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
 
-export class MapScreen extends Component {
+export class Details extends Component {
   static navigationOptions = {
     header: props => {
       return (
@@ -32,15 +32,9 @@ export class MapScreen extends Component {
     showMap: false
   };
 
-  showMapTimeout = null;
-
-  componentWillMount () {
+  componentWillMount() {
     // Show map after 200ms for smoother screen transition
     setTimeout(() => this.setState({ showMap: true }), 500);
-  }
-
-  componentWillUnmount () {
-    clearTimeout(this.showMapTimeout);
   }
 
   handleMapReady = () => {
@@ -53,7 +47,7 @@ export class MapScreen extends Component {
     this.stationMarker = ref;
   };
 
-  render () {
+  render() {
     const {
       screenProps: { api, currentLocation, onChangeLocationClick }
     } = this.props;
@@ -75,10 +69,10 @@ export class MapScreen extends Component {
       <View style={styles.container}>
         <SearchHeader
           asTouchable
-          elevated='very'
+          elevated="very"
           onClick={onChangeLocationClick}
           onPress={onChangeLocationClick}
-          search=''
+          search=""
         />
         <View style={styles.mapContainer}>
           {showMap && (
@@ -99,14 +93,14 @@ export class MapScreen extends Component {
                 coordinate={station}
                 image={stationIcon}
                 ref={this.handleStationRef}
-                title='Air Quality Station'
+                title="Air Quality Station"
                 description={truncate(station.description, 40)}
               />
               <MapView.Marker
-                color='blue'
+                color="blue"
                 coordinate={currentLocation}
                 image={homeIcon}
-                title='Your position'
+                title="Your position"
               />
             </MapView>
           )}

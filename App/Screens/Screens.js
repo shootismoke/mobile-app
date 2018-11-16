@@ -8,10 +8,10 @@ import retry from 'async-retry';
 import { createStackNavigator } from 'react-navigation';
 
 import * as dataSources from '../utils/dataSources';
+import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
 import { Loading } from './Loading';
-import { MapScreen } from './MapScreen';
 import { pm25ToCigarettes } from '../utils/pm25ToCigarettes';
 import { Search } from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
@@ -26,7 +26,7 @@ const RootStack = createStackNavigator(
       screen: Home
     },
     Map: {
-      screen: MapScreen
+      screen: Details
     }
   },
   {
@@ -55,25 +55,26 @@ const RootStack = createStackNavigator(
 export class Screens extends Component {
   state = {
     api: null,
-    currentLocation: null, // Initialized to GPS, but can be changed by user
+    currentLocation: null, // Current selected location of the user, initialized to GPS, but can be changed by user
     error: null, // Error here or in children component tree
-    gps: null,
-    isSearchVisible: false,
-    showVideo: true
+    gps: null, // GPS location of the user
+    isSearchVisible: false, // Search modal on or off
+    showVideo: true // Showing video or not
   };
 
-  componentWillMount () {
+  componentWillMount() {
     this.fetchData();
   }
 
-  componentDidCatch (error) {
+  componentDidCatch(error) {
     this.setState({ error });
   }
 
-  async fetchData () {
+  async fetchData() {
     const { currentLocation } = this.state;
     try {
-      let currentPosition = currentLocation; // The current { latitude, longitude } the user chose
+      // The current { latitude, longitude } the user chose
+      let currentPosition = currentLocation;
 
       this.setState({ api: null, error: null });
 
@@ -85,14 +86,14 @@ export class Screens extends Component {
           throw new Error('Permission to access location was denied.');
         }
 
-        const { coords } = await Location.getCurrentPositionAsync({});
-        currentPosition = coords;
-
+        // const { coords } = await Location.getCurrentPositionAsync({});
         // Uncomment to get random location
-        // coords = {
-        //   latitude: Math.random() * 90,
-        //   longitude: Math.random() * 90
-        // };
+        coords = {
+          latitude: Math.random() * 90,
+          longitude: Math.random() * 90
+        };
+
+        currentPosition = coords;
 
         this.setState({
           currentLocation: coords,
@@ -114,7 +115,7 @@ export class Screens extends Component {
       );
       this.setState({ api });
     } catch (error) {
-      console.error(error);
+      // TODO Add to sentry
       this.setState({ error });
     }
   }
@@ -145,7 +146,7 @@ export class Screens extends Component {
     }
   };
 
-  render () {
+  render() {
     const { gps, isSearchVisible } = this.state;
     return (
       <View style={styles.container}>
@@ -186,7 +187,7 @@ export class Screens extends Component {
         {showVideo && (
           <Video
             onPlaybackStatusUpdate={this.handleVideoStatus}
-            resizeMode='cover'
+            resizeMode="cover"
             shouldPlay
             source={smokeVideo}
             style={[styles.video, this.getVideoStyle()]}

@@ -14,9 +14,9 @@ import {
   View
 } from 'react-native';
 
-import cigarette from '../../../../assets/images/cigarette.png';
-import * as theme from '../../../utils/theme';
-import { BackButton } from '../../BackButton';
+import cigarette from '../../../assets/images/cigarette.png';
+import * as theme from '../../utils/theme';
+import { BackButton } from '../../components/BackButton';
 
 export class About extends Component {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
@@ -33,11 +33,11 @@ export class About extends Component {
   handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');
 
-  render () {
+  render() {
     const { onRequestClose, ...rest } = this.props;
 
     return (
-      <Modal animationType='slide' onRequestClose={onRequestClose} {...rest}>
+      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
           <ScrollView
             style={theme.withPadding}
