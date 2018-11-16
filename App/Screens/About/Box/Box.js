@@ -54,8 +54,9 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   cigarette: {
-    left: 16,
-    position: 'absolute'
+    left: 6,
+    position: 'absolute',
+    bottom: 12
   },
   equal: {
     ...theme.text,
