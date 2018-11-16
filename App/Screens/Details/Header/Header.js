@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 
 import { BackButton } from '../../../components/BackButton';
 import changeLocation from '../../../../assets/images/changeLocation.png';
@@ -34,18 +35,23 @@ const weekdays = [
   'Saturday'
 ];
 
+@inject('stores')
+@observer
 export class Header extends Component {
-  static defaultProps = {
-    showChangeLocation: false
-  };
-
   render() {
-    const { api, currentLocation, onBackClick } = this.props;
+    const {
+      onBackClick,
+      stores: { api }
+    } = this.props;
 
     const lastUpdated =
-      api && api.debug && api.debug.sync ? new Date(api.debug.sync) : null;
-    const { dominantpol } = api;
-    const { no2, o3, pm10, pm25 } = api.iaqi || {};
+      api.time && api.time.v ? new Date(api.time.v * 1000) : null;
+    const {
+      dominantpol,
+      iaqi: { no2, o3, pm10, pm25 }
+    } = api;
+
+    console.log(api.iaqi);
 
     return (
       <View style={styles.container}>
@@ -55,11 +61,7 @@ export class Header extends Component {
           <Image source={changeLocation} style={styles.changeLocation} />
 
           <View>
-            <CurrentLocation
-              api={api}
-              currentLocation={currentLocation}
-              style={styles.currentLocation}
-            />
+            <CurrentLocation style={styles.currentLocation} />
             {lastUpdated &&
               this.renderInfo(
                 'Latest Update:',

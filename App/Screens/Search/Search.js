@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Constants } from 'expo';
 import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 import retry from 'async-retry';
 
 import { BackButton } from '../../components/BackButton';
@@ -20,6 +21,8 @@ const algoliaUrls = [
   'https://places-3.algolianet.com'
 ];
 
+@inject('stores')
+@observer
 export class Search extends Component {
   state = {
     hasErrors: false, // Error from algolia
@@ -30,12 +33,17 @@ export class Search extends Component {
 
   typingTimeout = null; // Timeout to detect when user stops typing
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     clearTimeout(this.typingTimeout);
   }
 
   fetchResults = async search => {
-    const { gps } = this.props;
+    const {
+      stores: {
+        location: { gps }
+      }
+    } = this.props;
+
     try {
       this.setState({ loading: true });
       await retry(
@@ -57,11 +65,11 @@ export class Search extends Component {
                 Constants.manifest.extra.algoliaApplicationId &&
                 Constants.manifest.extra.algoliaApiKey
                   ? {
-                    'X-Algolia-Application-Id':
+                      'X-Algolia-Application-Id':
                         Constants.manifest.extra.algoliaApplicationId,
-                    'X-Algolia-API-Key':
+                      'X-Algolia-API-Key':
                         Constants.manifest.extra.algoliaApiKey
-                  }
+                    }
                   : undefined,
 
               timeout: 3000
@@ -94,12 +102,12 @@ export class Search extends Component {
     this.props.onLocationChanged(item);
   };
 
-  render () {
+  render() {
     const { onRequestClose, ...rest } = this.props;
     const { hits, search } = this.state;
 
     return (
-      <Modal animationType='slide' onRequestClose={onRequestClose} {...rest}>
+      <Modal animationType="slide" onRequestClose={onRequestClose} {...rest}>
         <View style={styles.container}>
           <BackButton onClick={onRequestClose} style={styles.backButton} />
           <SearchHeader
@@ -111,7 +119,7 @@ export class Search extends Component {
           <FlatList
             data={hits}
             ItemSeparatorComponent={this.renderSeparator}
-            keyboardShouldPersistTaps='always'
+            keyboardShouldPersistTaps="always"
             keyExtractor={({ objectID }) => objectID}
             ListEmptyComponent={
               <Text style={styles.noResults}>{this.renderInfoText()}</Text>

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
 import truncate from 'truncate';
@@ -13,26 +14,16 @@ import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
 
+@inject('stores')
+@observer
 export class Details extends Component {
-  static navigationOptions = {
-    header: props => {
-      return (
-        <Header
-          {...props.screenProps}
-          elevated
-          onBackClick={props.navigation.pop}
-          showBackButton
-          style={styles.header}
-        />
-      );
-    }
-  };
+  static navigationOptions = { header: null };
 
   state = {
     showMap: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     // Show map after 200ms for smoother screen transition
     setTimeout(() => this.setState({ showMap: true }), 500);
   }
@@ -49,7 +40,8 @@ export class Details extends Component {
 
   render() {
     const {
-      screenProps: { api, currentLocation }
+      navigation,
+      stores: { api, location }
     } = this.props;
     const { showMap } = this.state;
 
@@ -59,7 +51,7 @@ export class Details extends Component {
           ? api.attributions[0].name
           : null,
       title: api.city.name,
-      ...getCorrectLatLng(currentLocation, {
+      ...getCorrectLatLng(location.current, {
         latitude: api.city.geo[0],
         longitude: api.city.geo[1]
       })
@@ -67,16 +59,17 @@ export class Details extends Component {
 
     return (
       <View style={styles.container}>
+        <Header onBackClick={navigation.pop} style={styles.header} />
         <View style={styles.mapContainer}>
           {showMap && (
             <MapView
               initialRegion={{
-                latitude: (currentLocation.latitude + station.latitude) / 2,
+                latitude: (location.current.latitude + station.latitude) / 2,
                 latitudeDelta:
-                  Math.abs(currentLocation.latitude - station.latitude) * 2,
-                longitude: (currentLocation.longitude + station.longitude) / 2,
+                  Math.abs(location.current.latitude - station.latitude) * 2,
+                longitude: (location.current.longitude + station.longitude) / 2,
                 longitudeDelta:
-                  Math.abs(currentLocation.longitude - station.longitude) * 2
+                  Math.abs(location.current.longitude - station.longitude) * 2
               }}
               onMapReady={this.handleMapReady}
               style={styles.map}
@@ -91,14 +84,14 @@ export class Details extends Component {
               />
               <MapView.Marker
                 color="blue"
-                coordinate={currentLocation}
+                coordinate={location.current}
                 image={homeIcon}
                 title="Your position"
               />
             </MapView>
           )}
         </View>
-        <Distance api={api} currentLocation={currentLocation} />
+        <Distance />
       </View>
     );
   }

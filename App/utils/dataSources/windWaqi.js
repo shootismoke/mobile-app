@@ -43,6 +43,7 @@ export const windWaqi = async ({ latitude, longitude }) => {
 
     return {
       aqi: data.v,
+      attributions: [],
       city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo },
       dominentpol: data.pol,
       iaqi: {

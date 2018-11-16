@@ -4,22 +4,27 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Constants } from 'expo';
+import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text } from 'react-native';
 
 import * as theme from '../../utils/theme';
 
+@inject('stores')
+@observer
 export class CurrentLocation extends Component {
   state = {
     locationName: 'Fetching...'
   };
 
   async componentDidMount() {
-    const { api, currentLocation } = this.props;
+    const {
+      stores: { api, location }
+    } = this.props;
 
     // If our currentLocation already has a name (from Algolia), then we don't
     // need Google Geocoding for the name
-    if (currentLocation.name) {
-      this.setState({ locationName: currentLocation.name.toUpperCase() });
+    if (location.name) {
+      this.setState({ locationName: location.name.toUpperCase() });
       return;
     }
 
@@ -27,8 +32,8 @@ export class CurrentLocation extends Component {
       const { data } = await axios.get(
         `https://us1.locationiq.com/v1/reverse.php?key=${
           Constants.manifest.extra.locationIqKey
-        }&lat=${currentLocation.latitude}&lon=${
-          currentLocation.longitude
+        }&lat=${location.current.latitude}&lon=${
+          location.current.longitude
         }&format=json`
       );
 
@@ -59,7 +64,7 @@ export class CurrentLocation extends Component {
   }
 
   render() {
-    const { api, currentLocation, style, ...rest } = this.props;
+    const { stores, style, ...rest } = this.props;
     const { locationName } = this.state;
 
     return (

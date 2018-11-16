@@ -86,6 +86,7 @@ export const aqicn = async ({ latitude, longitude }) => {
 
   return {
     aqi: response.data.aqi,
+    attributions: response.data.attributions,
     city: response.data.city,
     dominentpol: response.data.dominentpol,
     iaqi: response.data.iaqi,

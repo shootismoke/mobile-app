@@ -2,29 +2,25 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import haversine from 'haversine';
+import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
-import { getCorrectLatLng } from '../../../utils/getCorrectLatLng';
 import * as theme from '../../../utils/theme';
 
+@inject('stores')
+@observer
 export class Distance extends Component {
   render() {
-    const { api, currentLocation } = this.props;
-    const distance = Math.round(
-      haversine(
-        currentLocation,
-        getCorrectLatLng(currentLocation, {
-          latitude: api.city.geo[0],
-          longitude: api.city.geo[1]
-        })
-      )
-    );
+    const {
+      stores: { distanceToStation }
+    } = this.props;
 
     return (
       <Banner elevated="very" style={styles.banner}>
-        <Text style={styles.distance}>AQI STATION: {distance}KM AWAY</Text>
+        <Text style={styles.distance}>
+          AQI STATION: {distanceToStation}KM AWAY
+        </Text>
       </Banner>
     );
   }
