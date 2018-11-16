@@ -42,12 +42,6 @@ export const link = {
   textDecorationLine: 'underline'
 };
 
-export const modal = Platform.select({
-  android: {
-    marginTop: -Constants.statusBarHeight // On Android the modal only goes up until the status bar
-  }
-});
-
 export const paragraph = Platform.select({
   android: {
     lineHeight: 28

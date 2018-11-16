@@ -17,8 +17,6 @@ import * as theme from '../../utils/theme';
 @inject('stores')
 @observer
 export class Details extends Component {
-  static navigationOptions = { header: null };
-
   state = {
     showMap: false
   };

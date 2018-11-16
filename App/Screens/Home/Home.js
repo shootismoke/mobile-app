@@ -20,7 +20,9 @@ import * as theme from '../../utils/theme';
 @inject('stores')
 @observer
 export class Home extends Component {
-  goToMap = () => this.props.navigation.navigate('Map');
+  goToAbout = () => this.props.navigation.navigate('About');
+
+  goToDetails = () => this.props.navigation.navigate('Details');
 
   handleShare = () =>
     Share.share({
@@ -34,7 +36,7 @@ export class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header onClick={this.goToMap} />
+        <Header onClick={this.goToDetails} />
         <ScrollView
           bounces={false}
           contentContainerStyle={styles.scrollContainer}
@@ -68,7 +70,7 @@ export class Home extends Component {
     }
 
     return (
-      <TouchableOpacity onPress={this.goToMap}>
+      <TouchableOpacity onPress={this.goToDetails}>
         <View style={theme.bigButton}>
           <Text style={theme.bigButtonText}>SEE DETAILS</Text>
         </View>
@@ -83,9 +85,9 @@ export class Home extends Component {
     return (
       <View style={styles.smallButtons}>
         {isStationTooFar ? (
-          <SmallButton text="MORE DETAILS" />
+          <SmallButton text="MORE DETAILS" onPress={this.goToDetails} />
         ) : (
-          <SmallButton text="ABOUT" />
+          <SmallButton text="ABOUT" onPress={this.goToAbout} />
         )}
         <SmallButton text="SHARE" onPress={this.handleShare} />
       </View>

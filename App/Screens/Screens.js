@@ -8,6 +8,7 @@ import { Location, Permissions, Video } from 'expo';
 import retry from 'async-retry';
 import { createStackNavigator } from 'react-navigation';
 
+import { About } from './About';
 import * as dataSources from '../utils/dataSources';
 import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
@@ -19,14 +20,17 @@ import * as theme from '../utils/theme';
 
 const RootStack = createStackNavigator(
   {
+    About: {
+      screen: About
+    },
+    Details: {
+      screen: Details
+    },
     Error: {
       screen: ErrorScreen
     },
     Home: {
       screen: Home
-    },
-    Map: {
-      screen: Details
     }
   },
   {
@@ -35,14 +39,11 @@ const RootStack = createStackNavigator(
       elevation: 0,
       shadowOpacity: 0
     },
+    headerMode: 'none',
     initialRouteName: 'Home',
     navigationOptions: {
       gesturesEnabled: false,
-      headerStyle: {
-        elevation: 0,
-        shadowOpacity: 0
-      },
-      headerTransparent: true
+      headerVisible: false
     },
     transitionConfig: () => ({
       containerStyle: {
