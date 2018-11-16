@@ -36,20 +36,20 @@ export class Home extends Component {
       title:
         'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
       message: `Shoot! I 'smoked' ${pm25ToCigarettes(
-        this.props.screenProps.api.pm25
+        this.props.screenProps.api.rawPm25
       )} cigarettes today by breathing urban air. And you? Find out here: shootismoke.github.io`
     });
 
   render() {
     const {
       screenProps: {
-        api: { pm25 }
+        api: { rawPm25 }
       }
     } = this.props;
     return (
       <ScrollView bounces={false} contentContainerStyle={styles.container}>
         <View style={styles.content}>
-          <Cigarettes pm25={pm25} />
+          <Cigarettes rawPm25={rawPm25} />
           <View style={styles.main}>{this.renderText()}</View>
           <TouchableOpacity
             onPress={this.handleShare}
@@ -76,10 +76,10 @@ export class Home extends Component {
   renderShit = () => {
     const {
       screenProps: {
-        api: { pm25 }
+        api: { rawPm25 }
       }
     } = this.props;
-    const cigarettes = pm25ToCigarettes(pm25);
+    const cigarettes = pm25ToCigarettes(rawPm25);
 
     if (cigarettes <= 1) return 'Oh';
     if (cigarettes < 5) return 'Sh*t';
@@ -90,11 +90,11 @@ export class Home extends Component {
   renderText = () => {
     const {
       screenProps: {
-        api: { pm25 }
+        api: { rawPm25 }
       }
     } = this.props;
     // Round to 1 decimal
-    const cigarettes = Math.round(pm25ToCigarettes(pm25) * 10) / 10;
+    const cigarettes = Math.round(pm25ToCigarettes(rawPm25) * 10) / 10;
 
     return (
       <Text style={styles.shit}>

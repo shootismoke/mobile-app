@@ -42,8 +42,13 @@ export const windWaqi = async ({ latitude, longitude }) => {
     }
 
     return {
-      pm25: data.v,
-      city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo }
+      city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo },
+      iaqi: {
+        pm25: {
+          v: data.v
+        }
+      },
+      rawPm25: data.v // TODO Get the real raw pm25 value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
     };
   } else {
     throw new Error(response);

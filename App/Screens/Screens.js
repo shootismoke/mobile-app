@@ -126,9 +126,9 @@ export class Screens extends Component {
 
   getVideoStyle = () => {
     const {
-      api: { pm25 }
+      api: { rawPm25 }
     } = this.state;
-    const cigarettes = pm25ToCigarettes(pm25);
+    const cigarettes = pm25ToCigarettes(rawPm25);
 
     if (cigarettes <= 1) return { opacity: 0.2 };
     if (cigarettes < 5) return { opacity: 0.5 };

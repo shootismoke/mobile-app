@@ -2,15 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Constants } from 'expo';
-import haversine from 'haversine';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { BackButton } from '../../../components/BackButton';
 import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
-import { getCorrectLatLng } from '../../../utils/getCorrectLatLng';
 import * as theme from '../../../utils/theme';
 
 /**
@@ -77,7 +73,7 @@ export class Header extends Component {
                 this.renderInfo('PM2.5 AQI:', pm25.v, styles.pollutantItem)}
               {o3 && this.renderInfo('O3 AQI:', o3.v, styles.pollutantItem)}
               {pm10 &&
-                this.renderInfo('PM2.5 AQI:', pm10.v, styles.pollutantItem)}
+                this.renderInfo('PM10 AQI:', pm10.v, styles.pollutantItem)}
               {no2 && this.renderInfo('NO2 AQI:', no2.v, styles.pollutantItem)}
             </View>
           </View>
