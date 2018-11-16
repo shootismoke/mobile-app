@@ -2,11 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
 
 import { Cigarette } from './Cigarette';
 import { pm25ToCigarettes } from '../../../utils/pm25ToCigarettes';
 
+@inject('stores')
+@observer
 export class Cigarettes extends Component {
   getSize = cigarettes => {
     if (cigarettes <= 1) return 'big';
@@ -16,7 +19,12 @@ export class Cigarettes extends Component {
   };
 
   render() {
-    const { rawPm25, style } = this.props;
+    const {
+      stores: {
+        api: { rawPm25 }
+      },
+      style
+    } = this.props;
     const cigarettes =
       Math.round(Math.min(pm25ToCigarettes(rawPm25), 63) * 10) / 10; // We don't show more than 63
     // const cigarettes = 0.9; // Can change values here for testing

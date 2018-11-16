@@ -33,17 +33,12 @@ export class Home extends Component {
     });
 
   render() {
-    const {
-      stores: {
-        api: { rawPm25 }
-      }
-    } = this.props;
     return (
-      <View>
+      <View style={styles.container}>
         <Header onClick={this.goToMap} />
         <ScrollView bounces={false} contentContainerStyle={styles.container}>
           <View style={styles.content}>
-            <Cigarettes rawPm25={rawPm25} />
+            <Cigarettes />
             <View style={styles.main}>{this.renderText()}</View>
             <TouchableOpacity
               onPress={this.handleShare}
