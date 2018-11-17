@@ -6,12 +6,17 @@ import { Platform } from 'react-native';
 
 export const backgroundColor = '#FAFAFC';
 export const boldFont = 'gotham-black';
-export const defaultSpacing = 18;
 export const iconBackgroundColor = '#EBE7DD';
 export const normalFont = 'gotham-book';
 export const primaryColor = '#F8A65D';
 export const textColor = '#414248';
 export const secondaryTextColor = '#7B7D88';
+export const spacing = {
+  tiny: 6,
+  small: 12,
+  normal: 18,
+  big: 36
+};
 
 export const elevatedLevel1 = position => ({
   elevation: 2,
@@ -72,7 +77,7 @@ export const title = {
 };
 
 export const withPadding = {
-  paddingHorizontal: defaultSpacing
+  paddingHorizontal: spacing.normal
 };
 
 export const bigButton = {

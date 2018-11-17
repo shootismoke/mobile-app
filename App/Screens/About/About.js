@@ -139,22 +139,23 @@ const styles = StyleSheet.create({
     fontSize: 8
   },
   backButton: {
-    marginBottom: theme.defaultSpacing,
-    marginTop: theme.defaultSpacing
+    marginBottom: theme.spacing.normal,
+    marginTop: theme.spacing.normal
   },
   credits: {
     borderTopColor: theme.iconBackgroundColor,
     borderTopWidth: 1,
-    marginBottom: theme.defaultSpacing,
-    marginTop: theme.defaultSpacing,
-    paddingTop: 2 * theme.defaultSpacing
+    marginBottom: theme.spacing.normal,
+    paddingTop: theme.spacing.big
   },
   h2: {
     ...theme.title,
-    fontSize: 32,
-    lineHeight: 36
+    fontSize: 20,
+    letterSpacing: 0,
+    lineHeight: 24,
+    marginBottom: theme.spacing.small
   },
   section: {
-    marginBottom: theme.defaultSpacing
+    marginBottom: theme.spacing.big
   }
 });

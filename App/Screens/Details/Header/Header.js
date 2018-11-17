@@ -71,24 +71,24 @@ export class Header extends Component {
 
 const styles = StyleSheet.create({
   backButton: {
-    marginBottom: theme.defaultSpacing
+    marginBottom: theme.spacing.normal
   },
   changeLocation: {
-    marginRight: theme.defaultSpacing
+    marginRight: theme.spacing.normal
   },
   container: {
     ...theme.elevatedLevel1('bottom'),
     ...theme.withPadding,
     backgroundColor: 'white',
     paddingBottom: 15,
-    paddingTop: theme.defaultSpacing,
+    paddingTop: theme.spacing.normal,
     zIndex: 1
   },
   content: {
     flex: 1
   },
   currentLocation: {
-    marginBottom: theme.defaultSpacing
+    marginBottom: theme.spacing.normal
   },
   info: {
     ...theme.text,
@@ -107,6 +107,6 @@ const styles = StyleSheet.create({
   pollutants: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: theme.defaultSpacing
+    marginTop: theme.spacing.normal
   }
 });

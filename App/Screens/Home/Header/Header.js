@@ -50,15 +50,13 @@ export class Header extends Component {
 
 const styles = StyleSheet.create({
   backButton: {
-    marginBottom: theme.defaultSpacing
+    marginBottom: theme.spacing.normal
   },
   changeLocation: {
-    marginRight: 5
+    marginRight: theme.spacing.tiny
   },
   container: {
-    paddingBottom: 15,
-    paddingHorizontal: 17,
-    paddingTop: 18
+    padding: theme.spacing.normal
   },
   content: {
     alignItems: 'center',
@@ -77,6 +75,6 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   warning: {
-    marginRight: 5
+    marginRight: theme.spacing.tiny
   }
 });

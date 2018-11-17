@@ -164,10 +164,10 @@ const styles = StyleSheet.create({
   },
   isStationTooFar: {
     ...theme.text,
-    marginVertical: theme.defaultSpacing
+    marginVertical: theme.spacing.normal
   },
   main: {
-    marginBottom: theme.defaultSpacing
+    marginBottom: theme.spacing.normal
   },
   scrollContainer: {
     flexGrow: 1,
@@ -176,12 +176,12 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1 },
   shit: {
     ...theme.shitText,
-    marginTop: theme.defaultSpacing
+    marginTop: theme.spacing.normal
   },
   smallButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 2 * theme.defaultSpacing,
-    marginTop: theme.defaultSpacing
+    marginBottom: 2 * theme.spacing.normal,
+    marginTop: theme.spacing.normal
   }
 });

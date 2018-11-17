@@ -81,7 +81,11 @@ export class Screens extends Component {
     } = this.props;
 
     if (error) {
-      return <ErrorStack />;
+      return (
+        <View style={theme.fullScreen}>
+          <ErrorStack />
+        </View>
+      );
     }
 
     if (!api || !location.gps) {
