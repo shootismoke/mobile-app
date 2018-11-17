@@ -64,7 +64,7 @@ export class Home extends Component {
     } = this.props;
     if (isStationTooFar) {
       return (
-        <TouchableOpacity onPress={this.handleShare}>
+        <TouchableOpacity onPress={this.goToAbout}>
           <View style={theme.bigButton}>
             <Text style={theme.bigButtonText}>WHY IS THE STATION SO FAR?</Text>
           </View>
