@@ -4,7 +4,7 @@
 /**
  * Inverse a linear function.
  */
-function invLinear(aqiHigh, aqiLow, concHigh, concLow, aqi) {
+function invLinear (aqiHigh, aqiLow, concHigh, concLow, aqi) {
   return ((aqi - aqiLow) / (aqiHigh - aqiLow)) * (concHigh - concLow) + concLow;
 }
 
@@ -16,7 +16,7 @@ export const aqiToRaw = {
    * @param {Float} pm25 - The PM25 AQI.
    * @see https://github.com/amaurymartiny/shoot-i-smoke/issues/46
    */
-  pm25(aqi) {
+  pm25 (aqi) {
     if (aqi >= 0 && aqi <= 50) {
       return invLinear(50, 0, 12, 0, aqi);
     } else if (aqi > 50 && aqi <= 100) {

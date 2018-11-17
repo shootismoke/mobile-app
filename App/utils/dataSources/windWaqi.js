@@ -54,7 +54,7 @@ export const windWaqi = async ({ latitude, longitude }) => {
         }
       },
       idx: +data.x,
-      rawPm25: aqiToRaw(+data.v),
+      rawPm25: aqiToRaw.pm25(+data.v),
       time: {
         v: data.t
       }

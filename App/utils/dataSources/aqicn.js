@@ -93,7 +93,7 @@ export const aqicn = async ({ latitude, longitude }) => {
     dominentpol: response.data.dominentpol,
     iaqi: response.data.iaqi,
     idx: response.data.idx,
-    rawPm25: aqiToRaw(response.data.iaqi.pm25.v),
+    rawPm25: aqiToRaw.pm25(response.data.iaqi.pm25.v),
     time: response.data.time
   };
 };

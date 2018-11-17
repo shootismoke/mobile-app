@@ -8,6 +8,11 @@
     "start": "expo start",
     "test": "jest"
   },
+  "semistandard": {
+    "env": [
+      "jest"
+    ]
+  },
   "dependencies": {
     "@expo/vector-icons": "^8.0.0",
     "async-retry": "^1.2.3",
