@@ -67,12 +67,11 @@ const ErrorStack = createStackNavigator(
 @observer
 export class Screens extends Component {
   state = {
-    error: null, // Error here or in children component tree
     showVideo: true // Showing video or not
   };
 
   componentDidCatch(error) {
-    this.setState({ error });
+    this.props.stores.setError(error);
   }
 
   getVideoStyle = () => {
@@ -98,9 +97,9 @@ export class Screens extends Component {
 
   renderScreen = () => {
     const {
-      stores: { api, location }
+      stores: { api, error, location }
     } = this.props;
-    const { error, showVideo } = this.state;
+    const { showVideo } = this.state;
 
     if (error) {
       return <ErrorStack />;

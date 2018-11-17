@@ -8,7 +8,7 @@ import axios from 'axios';
  */
 export const windWaqi = async ({ latitude, longitude }) => {
   const { data: response } = await axios.get(
-    `https://wind.waqi.inrfo/mapq/nearest?geo=1/${latitude}/${longitude}`,
+    `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`,
     { timeout: 6000 }
   );
 

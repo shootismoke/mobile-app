@@ -10,7 +10,7 @@ import { Background as LoadingBackground } from './Screens/Loading/Background';
 import { Screens } from './Screens';
 
 // Set up global MST stores
-const stores = RootStore.create({ api: undefined, location: {} });
+const stores = RootStore.create({ api: undefined, error: false, location: {} });
 
 export class App extends PureComponent {
   state = {

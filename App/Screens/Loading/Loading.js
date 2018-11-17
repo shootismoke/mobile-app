@@ -92,8 +92,8 @@ export class Loading extends Component {
       stores.setApi(_api);
     } catch (error) {
       // TODO Add to sentry
-      console.error(error);
-      throw error;
+      // https://github.com/amaurymartiny/shoot-i-smoke/issues/22
+      stores.setError(true);
     }
   }
 

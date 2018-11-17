@@ -5,6 +5,7 @@ import haversine from 'haversine';
 import { types } from 'mobx-state-tree';
 
 import { ApiStore } from './api';
+import { ErrorStore } from './error';
 import { getCorrectLatLng } from '../utils/getCorrectLatLng';
 import { LocationStore } from './location';
 import { pm25ToCigarettes } from '../utils/pm25ToCigarettes';
@@ -15,6 +16,7 @@ export const MAX_DISTANCE_TO_STATION = 15;
 export const RootStore = types
   .model('RootStore', {
     api: ApiStore,
+    error: ErrorStore,
     location: LocationStore
   })
   .views(self => ({
@@ -48,5 +50,8 @@ export const RootStore = types
   .actions(self => ({
     setApi(api) {
       self.api = api;
+    },
+    setError(error) {
+      self.error = error;
     }
   }));
