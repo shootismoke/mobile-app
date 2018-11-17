@@ -10,7 +10,7 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 ## Screenshots
 
-![screenshot-1](https://lh3.googleusercontent.com/BLVtUTguTcE7J1oeovfQhu1OI7jChczWv-evW2QgYlD8Dcv-66oGe4Th6O_soGP9SPA=w720-h310) ![screenshot-2](https://lh3.googleusercontent.com/XJTcPDB211FAJVFRpxxePlItSUy4rrZepOmRVZlM9kiF6DIorSOSfaFH1-0tSsQauw=w720-h310) ![screenshot-3](https://lh3.googleusercontent.com/j5-atGUl2UlY7UOF0x3dLA-qR9QWW8IdGmA8ZsBY06_W-W3uMDYzCprt5E2AdGdPiA=w720-h310)
+![screenshot-1](https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506) ![screenshot-2](https://lh3.googleusercontent.com/LdpBxKgzW-1DjItGLXYZFoZWMTQ-kztkZ71Er17ccF2vH2tyAdmrQGUVoo8te6Irzwo=w2836-h1506) ![screenshot-3](https://lh3.googleusercontent.com/qfn2N3e2MzMzB1dow033ZhTzOOwlkleIrf7mHmzqjP31MoAhhbr9OL2NMJz0mPqcioDI=w2836-h1506) ![screenshot-4](https://lh3.googleusercontent.com/5195BJzKqOx70RHIUlevBoiAuDbYdTaL0c38khQynDNKQCpSc317lBHzatjH-F2dsQ=w2836-h1506) ![screenshot-5](https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506)
 
 ## Try it on Expo
 
