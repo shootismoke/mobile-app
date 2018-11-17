@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   noResults: {
     ...theme.text,
     ...theme.withPadding,
-    marginTop: 22
+    marginTop: theme.defaultSpacing
   },
   separator: {
     backgroundColor: '#D2D2D2',

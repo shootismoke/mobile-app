@@ -36,8 +36,8 @@ export class Footer extends PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 22,
-    marginTop: 22
+    marginBottom: theme.defaultSpacing,
+    marginTop: theme.defaultSpacing
   },
   link: {
     ...theme.text,

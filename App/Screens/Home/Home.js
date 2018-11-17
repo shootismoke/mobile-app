@@ -42,6 +42,7 @@ export class Home extends Component {
         <ScrollView
           bounces={false}
           contentContainerStyle={styles.scrollContainer}
+          style={styles.scrollView}
         >
           <View />
           <View style={styles.content}>
@@ -151,19 +152,21 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   main: {
-    marginBottom: 22
+    marginBottom: theme.defaultSpacing
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'space-around'
   },
+  scrollView: { flex: 1 },
   shit: {
     ...theme.shitText,
-    marginTop: 22
+    marginTop: theme.defaultSpacing
   },
   smallButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 2 * theme.defaultSpacing,
     marginTop: theme.defaultSpacing
   }
 });

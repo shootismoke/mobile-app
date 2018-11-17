@@ -46,7 +46,7 @@ export class ErrorScreen extends Component {
 const styles = StyleSheet.create({
   chooseOther: {
     ...theme.bigButton,
-    marginTop: 22
+    marginTop: theme.defaultSpacing
   },
   container: {
     ...theme.fullScreen,

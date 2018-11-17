@@ -44,7 +44,7 @@ export class Header extends Component {
 
 const styles = StyleSheet.create({
   backButton: {
-    marginBottom: 22
+    marginBottom: theme.defaultSpacing
   },
   changeLocation: {
     marginRight: 5
