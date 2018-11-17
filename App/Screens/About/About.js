@@ -102,11 +102,11 @@ const styles = StyleSheet.create({
     marginTop: theme.defaultSpacing
   },
   credits: {
-    borderTopColor: theme.secondaryTextColor,
+    borderTopColor: theme.iconBackgroundColor,
     borderTopWidth: 1,
     marginBottom: theme.defaultSpacing,
     marginTop: theme.defaultSpacing,
-    paddingTop: theme.defaultSpacing
+    paddingTop: 2 * theme.defaultSpacing
   },
   h2: {
     ...theme.title,
