@@ -70,7 +70,7 @@ export class Screens extends Component {
     showVideo: true // Showing video or not
   };
 
-  componentDidCatch(error) {
+  componentDidCatch (error) {
     this.props.stores.setError(error);
   }
 
@@ -91,7 +91,7 @@ export class Screens extends Component {
     }
   };
 
-  render() {
+  render () {
     return <View style={styles.container}>{this.renderScreen()}</View>;
   }
 
@@ -119,7 +119,7 @@ export class Screens extends Component {
         {showVideo && (
           <Video
             onPlaybackStatusUpdate={this.handleVideoStatus}
-            resizeMode="cover"
+            resizeMode='cover'
             shouldPlay
             source={smokeVideo}
             style={[styles.video, this.getVideoStyle()]}

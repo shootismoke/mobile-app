@@ -16,7 +16,7 @@ export class CurrentLocation extends Component {
     locationName: 'Fetching...'
   };
 
-  async componentDidMount() {
+  async componentDidMount () {
     const {
       stores: { api, location }
     } = this.props;
@@ -63,7 +63,7 @@ export class CurrentLocation extends Component {
     }
   }
 
-  render() {
+  render () {
     const { stores, style, ...rest } = this.props;
     const { locationName } = this.state;
 

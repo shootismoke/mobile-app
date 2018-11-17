@@ -8,7 +8,7 @@ import cigarette from '../../../../assets/images/cigarette.png';
 import * as theme from '../../../utils/theme';
 
 export class Box extends PureComponent {
-  render() {
+  render () {
     return (
       <View style={styles.box}>
         <View style={styles.equivalence}>

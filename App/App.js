@@ -17,7 +17,7 @@ export class App extends PureComponent {
     fontLoaded: false
   };
 
-  async componentDidMount() {
+  async componentDidMount () {
     // Using custom fonts with Expo
     // https://docs.expo.io/versions/latest/guides/using-custom-fonts
     await Font.loadAsync({
@@ -28,7 +28,7 @@ export class App extends PureComponent {
     this.setState({ fontLoaded: true });
   }
 
-  render() {
+  render () {
     const { fontLoaded } = this.state;
 
     return fontLoaded ? (

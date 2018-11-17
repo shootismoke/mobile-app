@@ -20,11 +20,11 @@ export class Loading extends Component {
 
   longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
 
-  componentDidMount() {
+  componentDidMount () {
     this.fetchData();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (!prevProps.stores.gps && this.props.gps) {
       // Start a 2s timeout to occupy user while he's waiting.
       this.longWaitingTimeout = setTimeout(
@@ -34,16 +34,15 @@ export class Loading extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (this.longWaitingTimeout) {
       clearTimeout(this.longWaitingTimeout);
     }
   }
 
-  async fetchData() {
+  async fetchData () {
     const { stores } = this.props;
     const { location } = stores;
-    const { gps } = stores; // eslint-disable-line Only used to track mobx variable
 
     try {
       // The current { latitude, longitude } the user chose
@@ -59,12 +58,12 @@ export class Loading extends Component {
           throw new Error('Permission to access location was denied.');
         }
 
-        // const { coords } = await Location.getCurrentPositionAsync({});
+        const { coords } = await Location.getCurrentPositionAsync({});
         // Uncomment to get other locations
-        const coords = {
-          latitude: Math.random() * 90,
-          longitude: Math.random() * 90
-        };
+        // const coords = {
+        //   latitude: Math.random() * 90,
+        //   longitude: Math.random() * 90
+        // };
         // const coords = {
         //   latitude: 48.4,
         //   longitude: 2.34
@@ -95,7 +94,7 @@ export class Loading extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <Background style={styles.container}>
         <Text style={styles.text}>{this.renderText()}</Text>
@@ -113,7 +112,7 @@ export class Loading extends Component {
   renderText = () => {
     const {
       stores: {
-        api, // eslint-disable-line Only used to subscribe to the mobx variable
+        api,
         location: { gps }
       }
     } = this.props;
@@ -121,6 +120,7 @@ export class Loading extends Component {
     let coughs = 0; // Number of times to show "Cough..."
     if (gps) ++coughs;
     if (longWaiting) ++coughs;
+    if (api) ++coughs;
 
     return (
       <Text>

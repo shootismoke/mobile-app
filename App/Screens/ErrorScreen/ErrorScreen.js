@@ -10,7 +10,7 @@ import * as theme from '../../utils/theme';
 export class ErrorScreen extends Component {
   goToSearch = () => this.props.navigation.navigate('Search');
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <View />

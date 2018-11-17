@@ -17,7 +17,7 @@ export class Cigarettes extends Component {
     return 'small';
   };
 
-  render() {
+  render () {
     const { stores, style } = this.props;
     const cigarettes = Math.round(Math.min(stores.cigarettes, 63) * 10) / 10; // We don't show more than 63
     // const cigarettes = 0.9; // Can change values here for testing
@@ -33,13 +33,13 @@ export class Cigarettes extends Component {
         <View style={styles.container}>
           {cigarettes > 1 && count >= 1
             ? Array.from(Array(count)).map((_, i) => (
-                <View key={i}>
-                  <Cigarette
-                    size={this.getSize(cigarettes)}
-                    vertical={vertical}
-                  />
-                </View>
-              ))
+              <View key={i}>
+                <Cigarette
+                  size={this.getSize(cigarettes)}
+                  vertical={vertical}
+                />
+              </View>
+            ))
             : null}
           {cigarettes === 1 || decimal > 0 ? (
             <Cigarette

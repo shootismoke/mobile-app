@@ -20,13 +20,13 @@ export const RootStore = types
     location: LocationStore
   })
   .views(self => ({
-    get cigarettes() {
+    get cigarettes () {
       if (!self.api) {
         return 0;
       }
       return pm25ToCigarettes(self.api.rawPm25);
     },
-    get distanceToStation() {
+    get distanceToStation () {
       if (!self.api || !self.location.current) {
         return 0;
       }
@@ -43,15 +43,15 @@ export const RootStore = types
     }
   }))
   .views(self => ({
-    get isStationTooFar() {
+    get isStationTooFar () {
       return self.distanceToStation > MAX_DISTANCE_TO_STATION;
     }
   }))
   .actions(self => ({
-    setApi(newApi) {
+    setApi (newApi) {
       self.api = newApi;
     },
-    setError(newError) {
+    setError (newError) {
       // TODO Add sentry
       // https://github.com/amaurymartiny/shoot-i-smoke/issues/22
       self.error = newError;

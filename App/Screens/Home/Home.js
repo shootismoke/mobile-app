@@ -35,7 +35,7 @@ export class Home extends Component {
       } cigarettes today by breathing urban air. And you? Find out here: https://shootismoke.github.io`
     });
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <Header onChangeLocationClick={this.goToSearch} />
@@ -75,7 +75,7 @@ export class Home extends Component {
     return (
       <TouchableOpacity onPress={this.goToDetails}>
         <View style={theme.bigButton}>
-          <Text style={theme.bigButtonText}>SEE DETAILS</Text>
+          <Text style={theme.bigButtonText}>SEE DETAILED INFO</Text>
         </View>
       </TouchableOpacity>
     );
@@ -88,11 +88,11 @@ export class Home extends Component {
     return (
       <View style={styles.smallButtons}>
         {isStationTooFar ? (
-          <SmallButton text="MORE DETAILS" onPress={this.goToDetails} />
+          <SmallButton text='MORE DETAILS' onPress={this.goToDetails} />
         ) : (
-          <SmallButton text="ABOUT" onPress={this.goToAbout} />
+          <SmallButton text='FAQ/ABOUT' onPress={this.goToAbout} />
         )}
-        <SmallButton text="SHARE" onPress={this.handleShare} />
+        <SmallButton text='SHARE' onPress={this.handleShare} />
       </View>
     );
   };

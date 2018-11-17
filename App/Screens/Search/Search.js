@@ -33,7 +33,7 @@ export class Search extends Component {
 
   typingTimeout = null; // Timeout to detect when user stops typing
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearTimeout(this.typingTimeout);
   }
 
@@ -65,11 +65,11 @@ export class Search extends Component {
                 Constants.manifest.extra.algoliaApplicationId &&
                 Constants.manifest.extra.algoliaApiKey
                   ? {
-                      'X-Algolia-Application-Id':
+                    'X-Algolia-Application-Id':
                         Constants.manifest.extra.algoliaApplicationId,
-                      'X-Algolia-API-Key':
+                    'X-Algolia-API-Key':
                         Constants.manifest.extra.algoliaApiKey
-                    }
+                  }
                   : undefined,
 
               timeout: 3000
@@ -104,7 +104,7 @@ export class Search extends Component {
     this.props.stores.setApi(undefined);
   };
 
-  render() {
+  render () {
     const { navigation } = this.props;
     const { hits, search } = this.state;
 
@@ -118,7 +118,7 @@ export class Search extends Component {
         <FlatList
           data={hits}
           ItemSeparatorComponent={this.renderSeparator}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
           keyExtractor={({ objectID }) => objectID}
           ListEmptyComponent={
             <Text style={styles.noResults}>{this.renderInfoText()}</Text>

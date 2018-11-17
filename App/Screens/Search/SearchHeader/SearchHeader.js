@@ -9,17 +9,17 @@ import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
 
 export class SearchHeader extends PureComponent {
-  render() {
+  render () {
     const { onChangeSearch, search } = this.props;
     return (
-      <Banner elevated shadowPosition="bottom">
+      <Banner elevated shadowPosition='bottom'>
         <TextInput
           autoFocus
           onChangeText={onChangeSearch}
-          placeholder="Search for a city or address"
-          placeholderTextColor="rgba(255, 255, 255, 0.6)"
+          placeholder='Search for a city or address'
+          placeholderTextColor='rgba(255, 255, 255, 0.6)'
           style={styles.input}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           value={search}
         />
         <Image source={searchIcon} />

@@ -76,7 +76,7 @@ export class Cigarette extends PureComponent {
     }
   };
 
-  render() {
+  render () {
     const { diagonal, length, style, vertical } = this.props;
 
     // Max and min lengths of a cigarette
@@ -88,12 +88,12 @@ export class Cigarette extends PureComponent {
         style={[
           diagonal
             ? {
-                justifyContent: 'center',
-                height:
+              justifyContent: 'center',
+              height:
                   (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
-                width:
+              width:
                   (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
-              }
+            }
             : null
         ]}
       >
@@ -103,13 +103,13 @@ export class Cigarette extends PureComponent {
             styles.container,
             diagonal
               ? {
-                  width: minWidth + length * (maxWidth - minWidth)
-                }
+                width: minWidth + length * (maxWidth - minWidth)
+              }
               : vertical
-              ? {
+                ? {
                   height: minWidth + length * (maxWidth - minWidth)
                 }
-              : {
+                : {
                   width: minWidth + length * (maxWidth - minWidth)
                 },
             diagonal ? styles.diagonal : null,

@@ -14,7 +14,7 @@ import * as theme from '../../../utils/theme';
 @inject('stores')
 @observer
 export class Header extends Component {
-  render() {
+  render () {
     const {
       onBackClick,
       stores: { api }

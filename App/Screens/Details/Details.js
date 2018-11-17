@@ -21,7 +21,7 @@ export class Details extends Component {
     showMap: false
   };
 
-  componentDidMount() {
+  componentDidMount () {
     // Show map after 200ms for smoother screen transition
     setTimeout(() => this.setState({ showMap: true }), 500);
   }
@@ -36,7 +36,7 @@ export class Details extends Component {
     this.stationMarker = ref;
   };
 
-  render() {
+  render () {
     const {
       navigation,
       stores: { api, location }
@@ -83,14 +83,14 @@ export class Details extends Component {
                 coordinate={station}
                 image={stationIcon}
                 ref={this.handleStationRef}
-                title="Air Quality Station"
+                title='Air Quality Station'
                 description={truncate(station.description, 40)}
               />
               <MapView.Marker
-                color="blue"
+                color='blue'
                 coordinate={currentLocation}
                 image={homeIcon}
-                title="Your position"
+                title='Your position'
               />
             </MapView>
           )}
