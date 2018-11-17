@@ -15,6 +15,7 @@ import {
 import { Cigarettes } from './Cigarettes';
 import { Header } from './Header';
 import { SmallButton } from './SmallButton';
+import { SmokeVideo } from './SmokeVideo';
 import * as theme from '../../utils/theme';
 
 @inject('stores')
@@ -38,6 +39,7 @@ export class Home extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <SmokeVideo />
         <Header onChangeLocationClick={this.goToSearch} />
         <ScrollView
           bounces={false}
