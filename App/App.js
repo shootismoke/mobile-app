@@ -13,9 +13,7 @@ import { Screens } from './Screens';
 // Set up global MST stores
 const stores = RootStore.create({ api: undefined, error: false, location: {} });
 
-// Remove this once Sentry is correctly setup.
-Sentry.enableInExpoDevelopment = true;
-
+// Add sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
 }
