@@ -46,10 +46,11 @@ export class Header extends Component {
 
     const lastUpdated =
       api.time && api.time.v ? new Date(api.time.v * 1000) : null;
-    const {
-      dominantpol,
-      iaqi: { no2, o3, pm10, pm25 }
-    } = api;
+    const { dominentpol, iaqi } = api;
+    const pm10 = iaqi.get('pm10');
+    const pm25 = iaqi.get('pm25');
+    const o3 = iaqi.get('o3');
+    const no2 = iaqi.get('no2');
 
     return (
       <View style={styles.container}>
@@ -65,8 +66,8 @@ export class Header extends Component {
                 'Latest Update:',
                 `${weekdays[lastUpdated.getDay()]} ${hhmm(lastUpdated)}`
               )}
-            {dominantpol &&
-              this.renderInfo('Primary pollutant:', dominantpol.toUpperCase())}
+            {dominentpol &&
+              this.renderInfo('Primary pollutant:', dominentpol.toUpperCase())}
 
             <View style={styles.pollutants}>
               {pm25 &&
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   },
   info: {
     ...theme.text,
-    marginVertical: 2
+    marginVertical: 5
   },
   label: {
     color: theme.primaryColor,
