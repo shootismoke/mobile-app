@@ -7,7 +7,7 @@
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
-      "versionCode": 4
+      "versionCode": 5
     },
     "assetBundlePatterns": ["assets/fonts/*"],
     "extra": {
@@ -20,7 +20,7 @@
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.1.8",
+      "buildNumber": "1.2.0",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_KEY"
@@ -40,6 +40,6 @@
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.1.8"
+    "version": "1.2.0"
   }
 }
