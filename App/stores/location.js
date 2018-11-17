@@ -21,10 +21,10 @@ export const LocationStore = types
     gps
   })
   .actions(self => ({
-    setCurrent(current) {
-      self.current = current;
+    setCurrent(newCurrent) {
+      self.current = newCurrent;
     },
-    setGps(gps) {
-      self.gps = gps;
+    setGps(newGps) {
+      self.gps = newGps;
     }
   }));

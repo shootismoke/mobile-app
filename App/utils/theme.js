@@ -87,7 +87,6 @@ export const bigButton = {
   backgroundColor: primaryColor,
   borderRadius: 24,
   height: 48,
-  minWidth: '80%',
   paddingHorizontal: 24,
   paddingVertical: 12
 };
@@ -97,7 +96,7 @@ export const bigButtonText = {
   color: 'white',
   ...Platform.select({
     android: {
-      fontSize: 15
+      fontSize: 14
     },
     ios: {
       fontSize: 14

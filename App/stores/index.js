@@ -48,10 +48,10 @@ export const RootStore = types
     }
   }))
   .actions(self => ({
-    setApi(api) {
-      self.api = api;
+    setApi(newApi) {
+      self.api = newApi;
     },
-    setError(error) {
-      self.error = error;
+    setError(newError) {
+      self.error = newError;
     }
   }));

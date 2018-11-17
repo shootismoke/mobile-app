@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   cta: {
-    alignItems: 'center'
+    ...theme.withPadding
   },
   dots: {
     color: theme.primaryColor
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   smallButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginBottom: 2 * theme.defaultSpacing,
     marginTop: theme.defaultSpacing
   }
