@@ -32,10 +32,10 @@ export class Header extends Component {
       <View style={styles.container}>
         <BackButton onClick={onBackClick} style={styles.backButton} />
 
-        <View style={styles.content}>
+        <View style={styles.layout}>
           <Image source={changeLocation} style={styles.changeLocation} />
 
-          <View>
+          <View style={styles.content}>
             <CurrentLocation style={styles.currentLocation} />
             {lastUpdated &&
               this.renderInfo(
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   content: {
-    flexDirection: 'row'
+    flex: 1
   },
   currentLocation: {
     marginBottom: theme.defaultSpacing
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
   label: {
     color: theme.primaryColor,
     fontFamily: theme.boldFont
+  },
+  layout: {
+    flexDirection: 'row'
   },
   pollutantItem: {
     flexBasis: '34%'
