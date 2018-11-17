@@ -44,6 +44,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Algolia Places          | https://community.algolia.com/places/rest.html (`Get Started` button on the bottom) | Optional, lower API rates if not provided.              |
 | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                                |
 | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                                |
+| Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                               |
 
 Then run the following commands:
 
