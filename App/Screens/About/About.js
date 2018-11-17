@@ -24,7 +24,7 @@ export class About extends PureComponent {
   handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');
 
-  render() {
+  render () {
     const { navigation } = this.props;
     return (
       <ScrollView style={theme.withPadding}>

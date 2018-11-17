@@ -56,8 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   errorDescription: {
-    ...theme.text,
-    ...theme.paragraph
+    ...theme.text
   },
   errorText: {
     ...theme.shitText,

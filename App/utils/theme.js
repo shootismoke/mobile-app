@@ -42,15 +42,6 @@ export const link = {
   textDecorationLine: 'underline'
 };
 
-export const paragraph = Platform.select({
-  android: {
-    lineHeight: 28
-  },
-  ios: {
-    lineHeight: 20
-  }
-});
-
 /**
  * Big text with "Sh*t! I smoked...""
  */
@@ -68,6 +59,7 @@ export const text = {
   fontFamily: normalFont,
   fontSize: 12,
   letterSpacing: 0.22,
+  lineHeight: 16,
   textAlign: 'justify'
 };
 

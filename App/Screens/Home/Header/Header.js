@@ -8,6 +8,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import * as theme from '../../../utils/theme';
+import warning from '../../../../assets/images/warning.png';
 
 @inject('stores')
 @observer
@@ -15,7 +16,7 @@ export class Header extends Component {
   render () {
     const {
       onChangeLocationClick,
-      stores: { api, location, distanceToStation }
+      stores: { api, distanceToStation, isStationTooFar, location }
     } = this.props;
 
     return (
@@ -27,10 +28,15 @@ export class Header extends Component {
               currentLocation={location.current}
               numberOfLines={2}
             />
-            <Text style={styles.subtitle}>
-              Distance to Air Quality Station: {distanceToStation}
-              km
-            </Text>
+            <View style={styles.distance}>
+              {isStationTooFar && (
+                <Image source={warning} style={styles.warning} />
+              )}
+              <Text style={theme.text}>
+                Air Quality Station: {distanceToStation}
+                km away
+              </Text>
+            </View>
           </View>
 
           <TouchableOpacity onPress={onChangeLocationClick}>
@@ -62,12 +68,15 @@ const styles = StyleSheet.create({
   currentLocation: {
     maxWidth: '80%'
   },
-  subtitle: {
-    ...theme.text,
+  distance: {
+    flexDirection: 'row',
     marginTop: 11
   },
   title: {
     ...theme.title,
     fontSize: 15
+  },
+  warning: {
+    marginRight: 5
   }
 });

@@ -37,6 +37,9 @@ export class Home extends Component {
     });
 
   render () {
+    const {
+      stores: { isStationTooFar }
+    } = this.props;
     return (
       <View style={styles.container}>
         <SmokeVideo />
@@ -52,6 +55,12 @@ export class Home extends Component {
             <View style={styles.main}>{this.renderText()}</View>
           </View>
           <View style={styles.cta}>
+            {isStationTooFar && (
+              <Text style={styles.isStationTooFar}>
+                We couldn’t find a closer station to you.{'\n'}Results may be
+                inaccurate at this distance.
+              </Text>
+            )}
             {this.renderBigButton()}
             {this.renderFooter()}
           </View>
@@ -152,6 +161,10 @@ const styles = StyleSheet.create({
   },
   dots: {
     color: theme.primaryColor
+  },
+  isStationTooFar: {
+    ...theme.text,
+    marginVertical: theme.defaultSpacing
   },
   main: {
     marginBottom: theme.defaultSpacing
