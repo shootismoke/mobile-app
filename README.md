@@ -51,11 +51,11 @@ cp app.example.json app.json # Replace the API keys placeholders with your own t
 yarn start
 ```
 
-This app is created with Expo, using React Native. When you run `yarn start`, the packager will show, and you can either:
+This app is created with Expo, using React Native. When you run `yarn start`, the Expo packager will show, and you can either:
 
 - install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
-- press `a` to open the Android simulator.
-- press `i` to open the iOS simulator.
+- open the Android simulator.
+- open the iOS simulator.
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 
