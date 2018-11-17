@@ -43,13 +43,19 @@ export class Details extends Component {
     } = this.props;
     const { showMap } = this.state;
 
+    // TODO
+    // I have no idea why, but if we don't clone the object, and continue to
+    // use `location.current` everywhere, we get a `setting key of frozen
+    // object` error. It's related to the MapView below.
+    const currentLocation = { ...location.current };
+
     const station = {
       description:
         api.attributions && api.attributions.length
           ? api.attributions[0].name
           : null,
       title: api.city.name,
-      ...getCorrectLatLng(location.current, {
+      ...getCorrectLatLng(currentLocation, {
         latitude: api.city.geo[0],
         longitude: api.city.geo[1]
       })
@@ -62,12 +68,12 @@ export class Details extends Component {
           {showMap && (
             <MapView
               initialRegion={{
-                latitude: (location.current.latitude + station.latitude) / 2,
+                latitude: (currentLocation.latitude + station.latitude) / 2,
                 latitudeDelta:
-                  Math.abs(location.current.latitude - station.latitude) * 2,
-                longitude: (location.current.longitude + station.longitude) / 2,
+                  Math.abs(currentLocation.latitude - station.latitude) * 2,
+                longitude: (currentLocation.longitude + station.longitude) / 2,
                 longitudeDelta:
-                  Math.abs(location.current.longitude - station.longitude) * 2
+                  Math.abs(currentLocation.longitude - station.longitude) * 2
               }}
               onMapReady={this.handleMapReady}
               style={styles.map}
@@ -82,7 +88,7 @@ export class Details extends Component {
               />
               <MapView.Marker
                 color="blue"
-                coordinate={location.current}
+                coordinate={currentLocation}
                 image={homeIcon}
                 title="Your position"
               />

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
+import { formatRelative } from 'date-fns';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 
@@ -9,31 +10,6 @@ import { BackButton } from '../../../components/BackButton';
 import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import * as theme from '../../../utils/theme';
-
-/**
- * Format date to hh:mm.
- *
- * @param {Date} date - The Date object to format.
- */
-const hhmm = date => {
-  const time = date
-    .toISOString()
-    .split('T')[1] // Get
-    .split('.')[0]
-    .split(':');
-
-  return `${time[0]}:${time[1]}`;
-};
-
-const weekdays = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
 
 @inject('stores')
 @observer
@@ -64,14 +40,14 @@ export class Header extends Component {
             {lastUpdated &&
               this.renderInfo(
                 'Latest Update:',
-                `${weekdays[lastUpdated.getDay()]} ${hhmm(lastUpdated)}`
+                formatRelative(lastUpdated, new Date())
               )}
             {dominentpol &&
               this.renderInfo('Primary pollutant:', dominentpol.toUpperCase())}
 
             <View style={styles.pollutants}>
               {pm25 &&
-                this.renderInfo('PM2.5 AQI:', pm25.v, styles.pollutantItem)}
+                this.renderInfo('PM25 AQI:', pm25.v, styles.pollutantItem)}
               {o3 && this.renderInfo('O3 AQI:', o3.v, styles.pollutantItem)}
               {pm10 &&
                 this.renderInfo('PM10 AQI:', pm10.v, styles.pollutantItem)}

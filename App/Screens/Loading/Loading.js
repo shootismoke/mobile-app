@@ -60,15 +60,15 @@ export class Loading extends Component {
         }
 
         // const { coords } = await Location.getCurrentPositionAsync({});
-        // Uncomment to get random location
-        // coords = {
-        //   latitude: Math.random() * 90,
-        //   longitude: Math.random() * 90
-        // };
-        coords = {
-          latitude: 48.4,
-          longitude: 2.34
+        // Uncomment to get other locations
+        const coords = {
+          latitude: Math.random() * 90,
+          longitude: Math.random() * 90
         };
+        // const coords = {
+        //   latitude: 48.4,
+        //   longitude: 2.34
+        // };
 
         currentPosition = coords;
 
@@ -91,8 +91,6 @@ export class Loading extends Component {
 
       stores.setApi(_api);
     } catch (error) {
-      // TODO Add to sentry
-      // https://github.com/amaurymartiny/shoot-i-smoke/issues/22
       stores.setError(true);
     }
   }
