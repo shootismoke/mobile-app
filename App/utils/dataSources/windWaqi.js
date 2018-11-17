@@ -8,7 +8,7 @@ import axios from 'axios';
  */
 export const windWaqi = async ({ latitude, longitude }) => {
   const { data: response } = await axios.get(
-    `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`,
+    `https://wind.waqi.inrfo/mapq/nearest?geo=1/${latitude}/${longitude}`,
     { timeout: 6000 }
   );
 
@@ -42,17 +42,17 @@ export const windWaqi = async ({ latitude, longitude }) => {
     }
 
     return {
-      aqi: data.v,
+      aqi: +data.v,
       attributions: [],
       city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo },
       dominentpol: data.pol,
       iaqi: {
         [data.pol]: {
-          v: data.v
+          v: +data.v
         }
       },
-      idx: data.x,
-      rawPm25: data.v, // TODO Find the real raw value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
+      idx: +data.x,
+      rawPm25: +data.v, // TODO Find the real raw value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
       time: {
         v: data.t
       }

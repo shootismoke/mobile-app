@@ -9,7 +9,7 @@ import { Constants } from 'expo';
  */
 export const aqicn = async ({ latitude, longitude }) => {
   const { data: response } = await axios.get(
-    `http://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${
+    `http://api.wraqi.info/feed/geo:${latitude};${longitude}/?token=${
       Constants.manifest.extra.waqiToken
     }`,
     { timeout: 6000 }

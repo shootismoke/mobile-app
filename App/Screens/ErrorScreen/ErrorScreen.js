@@ -5,12 +5,12 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import error from '../../../assets/images/error.png';
-import { Footer } from '../../components/Footer';
 import * as theme from '../../utils/theme';
 
 export class ErrorScreen extends Component {
+  goToSearch = () => this.props.navigation.navigate('Search');
+
   render() {
-    const { onChangeLocationClick } = this.props;
     return (
       <View style={styles.container}>
         <View />
@@ -25,18 +25,18 @@ export class ErrorScreen extends Component {
               load your cigarettes.
             </Text>
           </View>
-          <TouchableOpacity onPress={onChangeLocationClick}>
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={this.goToSearch}>
             <View style={styles.chooseOther}>
               <Text style={theme.bigButtonText}>CHOOSE OTHER LOCATION</Text>
             </View>
           </TouchableOpacity>
-        </View>
-        <View>
           <Text style={styles.errorDescription}>
             There's either a problem with our databases, or you don't have any
             Air Monitoring Stations near you. Try again later!
           </Text>
-          <Footer text="Click to know how the app works." />
         </View>
       </View>
     );
@@ -46,14 +46,14 @@ export class ErrorScreen extends Component {
 const styles = StyleSheet.create({
   chooseOther: {
     ...theme.bigButton,
-    marginTop: theme.defaultSpacing
+    marginVertical: theme.defaultSpacing
   },
   container: {
     ...theme.fullScreen,
     ...theme.withPadding,
     flexGrow: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around'
   },
   errorDescription: {
     ...theme.text,

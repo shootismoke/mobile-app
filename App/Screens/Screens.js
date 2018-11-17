@@ -4,12 +4,10 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import { Location, Permissions, Video } from 'expo';
-import retry from 'async-retry';
+import { Video } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 
 import { About } from './About';
-import * as dataSources from '../utils/dataSources';
 import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
@@ -18,6 +16,20 @@ import { Search } from './Search';
 import smokeVideo from '../../assets/video/smoke.mp4';
 import * as theme from '../utils/theme';
 
+const stackNavigatorOptions = initialRouteName => ({
+  cardStyle: {
+    backgroundColor: theme.backgroundColor
+  },
+  headerMode: 'none',
+  initialRouteName,
+  navigationOptions: {
+    headerVisible: false
+  }
+});
+
+/**
+ * The main stack navigator, for the app.
+ */
 const RootStack = createStackNavigator(
   {
     About: {
@@ -26,9 +38,6 @@ const RootStack = createStackNavigator(
     Details: {
       screen: Details
     },
-    Error: {
-      screen: ErrorScreen
-    },
     Home: {
       screen: Home
     },
@@ -36,16 +45,22 @@ const RootStack = createStackNavigator(
       screen: Search
     }
   },
+  stackNavigatorOptions('Home')
+);
+
+/**
+ * A second stack navigator, for the error case.
+ */
+const ErrorStack = createStackNavigator(
   {
-    cardStyle: {
-      backgroundColor: theme.backgroundColor
+    Error: {
+      screen: ErrorScreen
     },
-    headerMode: 'none',
-    initialRouteName: 'Home',
-    navigationOptions: {
-      headerVisible: false
+    Search: {
+      screen: Search
     }
-  }
+  },
+  stackNavigatorOptions('Error')
 );
 
 @inject('stores')
@@ -56,74 +71,8 @@ export class Screens extends Component {
     showVideo: true // Showing video or not
   };
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
   componentDidCatch(error) {
     this.setState({ error });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!!prevProps.stores.api && !this.props.stores.api) {
-      this.fetchData();
-    }
-  }
-
-  async fetchData() {
-    const { stores } = this.props;
-    const { location } = stores;
-
-    try {
-      // The current { latitude, longitude } the user chose
-      let currentPosition = location.current;
-
-      this.setState({ error: null });
-
-      // If the currentLocation has been set by the user, then we don't refetch
-      // the user's GPS
-      if (!currentPosition) {
-        const { status } = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-          throw new Error('Permission to access location was denied.');
-        }
-
-        // const { coords } = await Location.getCurrentPositionAsync({});
-        // Uncomment to get random location
-        // coords = {
-        //   latitude: Math.random() * 90,
-        //   longitude: Math.random() * 90
-        // };
-        coords = {
-          latitude: 48.4,
-          longitude: 2.34
-        };
-
-        currentPosition = coords;
-
-        location.setCurrent(coords);
-        location.setGps(coords);
-      }
-
-      // We currently have 2 sources, aqicn, and windWaqi
-      // We put them in an array
-      const sources = [dataSources.aqicn, dataSources.windWaqi];
-
-      const _api = await retry(
-        async (_, attempt) => {
-          // Attempt starts at 1
-          const result = await sources[(attempt - 1) % 2](currentPosition);
-          return result;
-        },
-        { retries: 3 } // 2 attemps per source
-      );
-
-      stores.setApi(_api);
-    } catch (error) {
-      // TODO Add to sentry
-      console.error(error);
-      this.setState({ error });
-    }
   }
 
   getVideoStyle = () => {
@@ -154,12 +103,7 @@ export class Screens extends Component {
     const { error, showVideo } = this.state;
 
     if (error) {
-      return (
-        <ErrorScreen
-          gps={location.gps}
-          onChangeLocationClick={this.handleSearchShow}
-        />
-      );
+      return <ErrorStack />;
     }
 
     if (!api || !location.gps) {

@@ -9,13 +9,13 @@ export const ApiStore = types.maybe(
     attributions: types.array(
       types.model({
         name: types.string,
-        url: types.string
+        url: types.maybe(types.string)
       })
     ),
     city: types.model({
       geo: types.array(types.number),
       name: types.string,
-      url: types.string
+      url: types.maybe(types.string)
     }),
     dominentpol: types.string,
     iaqi: types.map(
