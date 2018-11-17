@@ -9,6 +9,7 @@
     "test": "echo Skipped for now."
   },
   "dependencies": {
+    "@expo/vector-icons": "^8.0.0",
     "async-retry": "^1.2.3",
     "axios": "^0.18.0",
     "date-fns": "^2.0.0-alpha.25",

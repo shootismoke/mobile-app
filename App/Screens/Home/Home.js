@@ -99,11 +99,19 @@ export class Home extends Component {
     return (
       <View style={styles.smallButtons}>
         {isStationTooFar ? (
-          <SmallButton text='MORE DETAILS' onPress={this.goToDetails} />
+          <SmallButton
+            icon='plus-circle'
+            text='MORE DETAILS'
+            onPress={this.goToDetails}
+          />
         ) : (
-          <SmallButton text='FAQ/ABOUT' onPress={this.goToAbout} />
+          <SmallButton
+            icon='question-circle'
+            text='FAQ/ABOUT'
+            onPress={this.goToAbout}
+          />
         )}
-        <SmallButton text='SHARE' onPress={this.handleShare} />
+        <SmallButton icon='share-alt' text='SHARE' onPress={this.handleShare} />
       </View>
     );
   };

@@ -63,7 +63,7 @@ export const text = {
   color: secondaryTextColor,
   fontFamily: normalFont,
   fontSize: 12,
-  letterSpacing: 0.22,
+  letterSpacing: 0.85,
   lineHeight: 16,
   textAlign: 'justify'
 };
