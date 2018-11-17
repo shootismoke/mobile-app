@@ -1,13 +1,13 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { About } from './About';
+import { About } from '../../Screens/About';
 import * as theme from '../../utils/theme';
 
-export class Footer extends Component {
+export class Footer extends PureComponent {
   static defaultProps = {
     text: 'Click to understand how we did the math.'
   };
@@ -36,8 +36,8 @@ export class Footer extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 22,
-    marginTop: 22
+    marginBottom: theme.spacing.normal,
+    marginTop: theme.spacing.normal
   },
   link: {
     ...theme.text,

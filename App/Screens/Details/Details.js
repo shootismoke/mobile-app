@@ -1,46 +1,29 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
 import truncate from 'truncate';
 
+import { Distance } from './Distance';
 import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
-import { Header } from '../../components/Header';
+import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
-import { SearchHeader } from '../Search/SearchHeader';
 import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
 
-export class MapScreen extends Component {
-  static navigationOptions = {
-    header: props => {
-      return (
-        <Header
-          {...props.screenProps}
-          elevated
-          onBackClick={props.navigation.pop}
-          showBackButton
-          style={styles.header}
-        />
-      );
-    }
-  };
-
+@inject('stores')
+@observer
+export class Details extends Component {
   state = {
     showMap: false
   };
 
-  showMapTimeout = null;
-
-  componentWillMount () {
+  componentDidMount () {
     // Show map after 200ms for smoother screen transition
     setTimeout(() => this.setState({ showMap: true }), 500);
-  }
-
-  componentWillUnmount () {
-    clearTimeout(this.showMapTimeout);
   }
 
   handleMapReady = () => {
@@ -55,9 +38,16 @@ export class MapScreen extends Component {
 
   render () {
     const {
-      screenProps: { api, currentLocation, onChangeLocationClick }
+      navigation,
+      stores: { api, location }
     } = this.props;
     const { showMap } = this.state;
+
+    // TODO
+    // I have no idea why, but if we don't clone the object, and continue to
+    // use `location.current` everywhere, we get a `setting key of frozen
+    // object` error. It's related to the MapView below.
+    const currentLocation = { ...location.current };
 
     const station = {
       description:
@@ -73,13 +63,7 @@ export class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <SearchHeader
-          asTouchable
-          elevated='very'
-          onClick={onChangeLocationClick}
-          onPress={onChangeLocationClick}
-          search=''
-        />
+        <Header onBackClick={navigation.pop} style={styles.header} />
         <View style={styles.mapContainer}>
           {showMap && (
             <MapView
@@ -111,6 +95,7 @@ export class MapScreen extends Component {
             </MapView>
           )}
         </View>
+        <Distance />
       </View>
     );
   }

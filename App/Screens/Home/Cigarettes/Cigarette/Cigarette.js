@@ -1,7 +1,7 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import butt from '../../../../../assets/images/butt.png';
@@ -9,7 +9,7 @@ import buttVertical from '../../../../../assets/images/butt-vertical.png';
 import head from '../../../../../assets/images/head.png';
 import headVertical from '../../../../../assets/images/head-vertical.png';
 
-export class Cigarette extends Component {
+export class Cigarette extends PureComponent {
   static defaultProps = {
     length: 1
   };

@@ -1,4 +1,4 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
 import axios from 'axios';
@@ -42,8 +42,20 @@ export const windWaqi = async ({ latitude, longitude }) => {
     }
 
     return {
-      pm25: data.v,
-      city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo }
+      aqi: +data.v,
+      attributions: [],
+      city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo },
+      dominentpol: data.pol,
+      iaqi: {
+        [data.pol]: {
+          v: +data.v
+        }
+      },
+      idx: +data.x,
+      rawPm25: +data.v, // TODO Find the real raw value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
+      time: {
+        v: data.t
+      }
     };
   } else {
     throw new Error(response);

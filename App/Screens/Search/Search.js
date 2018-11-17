@@ -1,10 +1,11 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Constants } from 'expo';
-import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 import retry from 'async-retry';
 
 import { BackButton } from '../../components/BackButton';
@@ -20,6 +21,8 @@ const algoliaUrls = [
   'https://places-3.algolianet.com'
 ];
 
+@inject('stores')
+@observer
 export class Search extends Component {
   state = {
     hasErrors: false, // Error from algolia
@@ -35,7 +38,12 @@ export class Search extends Component {
   }
 
   fetchResults = async search => {
-    const { gps } = this.props;
+    const {
+      stores: {
+        location: { gps }
+      }
+    } = this.props;
+
     try {
       this.setState({ loading: true });
       await retry(
@@ -90,37 +98,35 @@ export class Search extends Component {
   };
 
   handleItemClick = item => {
-    this.setState({ search: '' });
-    this.props.onLocationChanged(item);
+    // Reset everything when we choose a new location.
+    this.props.stores.location.setCurrent(item);
+    this.props.stores.setError(false);
+    this.props.stores.setApi(undefined);
   };
 
   render () {
-    const { onRequestClose, ...rest } = this.props;
+    const { navigation } = this.props;
     const { hits, search } = this.state;
 
     return (
-      <Modal animationType='slide' onRequestClose={onRequestClose} {...rest}>
-        <View style={styles.container}>
-          <BackButton onClick={onRequestClose} style={styles.backButton} />
-          <SearchHeader
-            autoFocus
-            elevated
-            onChangeSearch={this.handleChangeSearch}
-            search={search}
-          />
-          <FlatList
-            data={hits}
-            ItemSeparatorComponent={this.renderSeparator}
-            keyboardShouldPersistTaps='always'
-            keyExtractor={({ objectID }) => objectID}
-            ListEmptyComponent={
-              <Text style={styles.noResults}>{this.renderInfoText()}</Text>
-            }
-            renderItem={this.renderItem}
-            style={styles.list}
-          />
-        </View>
-      </Modal>
+      <View style={styles.container}>
+        <BackButton onClick={navigation.pop} style={styles.backButton} />
+        <SearchHeader
+          onChangeSearch={this.handleChangeSearch}
+          search={search}
+        />
+        <FlatList
+          data={hits}
+          ItemSeparatorComponent={this.renderSeparator}
+          keyboardShouldPersistTaps='always'
+          keyExtractor={({ objectID }) => objectID}
+          ListEmptyComponent={
+            <Text style={styles.noResults}>{this.renderInfoText()}</Text>
+          }
+          renderItem={this.renderItem}
+          style={styles.list}
+        />
+      </View>
     );
   }
 
@@ -145,9 +151,8 @@ const styles = StyleSheet.create({
     marginVertical: 18
   },
   container: {
-    ...theme.fullScreen,
-    ...theme.modal,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flexGrow: 1
   },
   list: {
     flex: 1
@@ -155,7 +160,7 @@ const styles = StyleSheet.create({
   noResults: {
     ...theme.text,
     ...theme.withPadding,
-    marginTop: 22
+    marginTop: theme.spacing.normal
   },
   separator: {
     backgroundColor: '#D2D2D2',

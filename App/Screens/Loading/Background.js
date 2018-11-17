@@ -1,12 +1,12 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import * as theme from '../../utils/theme';
 
-export class Background extends Component {
+export class Background extends PureComponent {
   render () {
     return (
       <View style={[styles.container, this.props.style]}>

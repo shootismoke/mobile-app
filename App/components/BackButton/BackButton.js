@@ -1,13 +1,13 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
 import * as theme from '../../utils/theme';
 
-export class BackButton extends Component {
+export class BackButton extends PureComponent {
   onClick = () => this.props.onClick();
 
   render () {
@@ -34,9 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   backText: {
-    color: theme.secondaryTextColor,
-    fontFamily: 'gotham-book',
-    fontSize: 13,
+    ...theme.text,
     marginLeft: 9
   }
 });

@@ -1,4 +1,4 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
 /**
@@ -8,4 +8,4 @@
  * @see http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
  * @param {Float} api - The api object returned by the WAQI api.
  */
-export const pm25ToCigarettes = pm25 => pm25 / 22;
+export const pm25ToCigarettes = rawPm25 => rawPm25 / 22;

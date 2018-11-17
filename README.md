@@ -10,7 +10,13 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 ## Screenshots
 
-![screenshot-1](https://lh3.googleusercontent.com/BLVtUTguTcE7J1oeovfQhu1OI7jChczWv-evW2QgYlD8Dcv-66oGe4Th6O_soGP9SPA=w720-h310) ![screenshot-2](https://lh3.googleusercontent.com/XJTcPDB211FAJVFRpxxePlItSUy4rrZepOmRVZlM9kiF6DIorSOSfaFH1-0tSsQauw=w720-h310) ![screenshot-3](https://lh3.googleusercontent.com/j5-atGUl2UlY7UOF0x3dLA-qR9QWW8IdGmA8ZsBY06_W-W3uMDYzCprt5E2AdGdPiA=w720-h310)
+<p float="left">
+  <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-1" width="150">
+  <img src="https://lh3.googleusercontent.com/LdpBxKgzW-1DjItGLXYZFoZWMTQ-kztkZ71Er17ccF2vH2tyAdmrQGUVoo8te6Irzwo=w2836-h1506" alt="screenshot-2" width="150">
+  <img src="https://lh3.googleusercontent.com/qfn2N3e2MzMzB1dow033ZhTzOOwlkleIrf7mHmzqjP31MoAhhbr9OL2NMJz0mPqcioDI=w2836-h1506" alt="screenshot-3" width="150">
+  <img src="https://lh3.googleusercontent.com/5195BJzKqOx70RHIUlevBoiAuDbYdTaL0c38khQynDNKQCpSc317lBHzatjH-F2dsQ=w2836-h1506" alt="screenshot-4" width="150">
+  <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-5" width="150">
+</p>
 
 ## Try it on Expo
 
@@ -51,11 +57,11 @@ cp app.example.json app.json # Replace the API keys placeholders with your own t
 yarn start
 ```
 
-This app is created with Expo, using React Native. When you run `yarn start`, the packager will show, and you can either:
+This app is created with Expo, using React Native. When you run `yarn start`, the Expo packager will show, and you can either:
 
 - install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
-- press `a` to open the Android simulator.
-- press `i` to open the iOS simulator.
+- open the Android simulator.
+- open the iOS simulator.
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 

@@ -1,77 +1,29 @@
-// Copyright (c) 2018, Amaury Martiny and the Shoot! I Smoke contributors
+// Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableHighlight,
-  View
-} from 'react-native';
+import React, { PureComponent } from 'react';
+import { Image, StyleSheet, TextInput } from 'react-native';
 
+import { Banner } from '../../../components/Banner';
 import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
 
-export class SearchHeader extends Component {
-  handleClick = () => {
-    const {
-      item: { city, country, county, _geoloc, locale_names: localeNames },
-      onClick
-    } = this.props;
-    onClick({
-      latitude: _geoloc.lat,
-      longitude: _geoloc.lng,
-      name: [
-        localeNames[0],
-        city,
-        county && county.length ? county[0] : null,
-        country
-      ]
-        .filter(_ => _)
-        .join(', ')
-    });
-  };
-
+export class SearchHeader extends PureComponent {
   render () {
-    const {
-      asTouchable,
-      elevated,
-      onChangeSearch,
-      onClick,
-      search,
-      style,
-      ...rest
-    } = this.props;
-    const Wrapper = asTouchable ? TouchableHighlight : View;
-
+    const { onChangeSearch, search } = this.props;
     return (
-      <Wrapper
-        onPress={asTouchable ? onClick : undefined}
-        style={[
-          styles.container,
-          elevated === true ? theme.elevatedLevel1 : null,
-          elevated === 'very' ? theme.elevatedLevel2 : null
-        ]}
-        underlayColor={asTouchable ? theme.primaryColor : undefined} // https://github.com/facebook/react-native/issues/11834
-      >
-        <View
-          pointerEvents={asTouchable ? 'none' : 'auto'}
-          style={[styles.content, style]}
-        >
-          <TextInput
-            underlineColorAndroid='transparent'
-            editable={!asTouchable}
-            onChangeText={onChangeSearch}
-            placeholder='Search for a city or address'
-            placeholderTextColor='rgba(255, 255, 255, 0.6)'
-            style={styles.input}
-            value={search}
-            {...rest}
-          />
-          <Image source={searchIcon} />
-        </View>
-      </Wrapper>
+      <Banner elevated shadowPosition='bottom'>
+        <TextInput
+          autoFocus
+          onChangeText={onChangeSearch}
+          placeholder='Search for a city or address'
+          placeholderTextColor='rgba(255, 255, 255, 0.6)'
+          style={styles.input}
+          underlineColorAndroid='transparent'
+          value={search}
+        />
+        <Image source={searchIcon} />
+      </Banner>
     );
   }
 }
