@@ -3,6 +3,8 @@
 
 import axios from 'axios';
 
+import { aqiToRaw } from './utils/aqiToRaw';
+
 /**
  * Fetch the PM2.5 level from https://wind.waqi.info.
  */
@@ -52,7 +54,7 @@ export const windWaqi = async ({ latitude, longitude }) => {
         }
       },
       idx: +data.x,
-      rawPm25: +data.v, // TODO Find the real raw value https://github.com/amaurymartiny/shoot-i-smoke/issues/46
+      rawPm25: aqiToRaw.pm25(+data.v),
       time: {
         v: data.t
       }

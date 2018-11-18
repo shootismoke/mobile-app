@@ -6,7 +6,12 @@
   "scripts": {
     "lint": "semistandard 'App/**/*.js' --parser babel-eslint",
     "start": "expo start",
-    "test": "echo Skipped for now."
+    "test": "jest"
+  },
+  "semistandard": {
+    "env": [
+      "jest"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^8.0.0",
@@ -25,6 +30,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
+    "jest": "^23.6.0",
     "semistandard": "^12.0.1"
   }
 }
