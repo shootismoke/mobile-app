@@ -16,6 +16,7 @@ import { Cigarettes } from './Cigarettes';
 import { Header } from './Header';
 import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
+import swearWords from './swearWords';
 import * as theme from '../../utils/theme';
 
 @inject('stores')
@@ -129,9 +130,9 @@ export class Home extends Component {
     } = this.props;
 
     if (cigarettes <= 1) return 'Oh';
-    if (cigarettes < 5) return 'Sh*t';
-    if (cigarettes < 15) return 'F*ck';
-    return 'WTF';
+
+    // Return a random swear word
+    return swearWords[Math.floor(Math.random() * swearWords.length)];
   };
 
   renderText = () => {
