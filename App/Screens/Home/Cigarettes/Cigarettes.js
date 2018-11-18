@@ -61,6 +61,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row',
     flexWrap: 'wrap'
-  },
-  single: { marginLeft: -20 } // Empiric
+  }
 });

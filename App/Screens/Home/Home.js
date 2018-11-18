@@ -50,7 +50,6 @@ export class Home extends Component {
           contentContainerStyle={styles.scrollContainer}
           style={styles.scrollView}
         >
-          <View />
           <View style={styles.content}>
             <Cigarettes />
             <View style={styles.main}>{this.renderText()}</View>
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'space-around'
+    justifyContent: 'flex-start'
   },
   scrollView: { flex: 1 },
   shit: {
