@@ -2,7 +2,9 @@
   "expo": {
     "android": {
       "config": {
-        "googleMaps": { "apiKey": "YOUR_KEY" }
+        "googleMaps": {
+          "apiKey": "YOUR_KEY"
+        }
       },
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
@@ -15,9 +17,22 @@
       "algoliaApplicationId": "YOUR_KEY",
       "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
       "locationIqKey": "YOUR_KEY",
+      "sentryPublicDsn": "YOUR_KEY",
       "waqiToken": "YOUR_KEY"
     },
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "YOUR_SENTRY_ORG",
+            "project": "YOUR_SENTRY_PROJECT",
+            "authToken": "YOUR_KEY"
+          }
+        }
+      ]
+    },
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
       "buildNumber": "1.2.0",

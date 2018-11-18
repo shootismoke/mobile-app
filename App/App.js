@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { PureComponent } from 'react';
-import { Font } from 'expo';
+import { Constants, Font } from 'expo';
 import { Provider } from 'mobx-react';
+import Sentry from 'sentry-expo';
 
 import { RootStore } from './stores';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
@@ -11,6 +12,11 @@ import { Screens } from './Screens';
 
 // Set up global MST stores
 const stores = RootStore.create({ api: undefined, error: false, location: {} });
+
+// Add sentry if available
+if (Constants.manifest.extra.sentryPublicDsn) {
+  Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
+}
 
 export class App extends PureComponent {
   state = {
