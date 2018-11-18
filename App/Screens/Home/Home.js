@@ -162,10 +162,12 @@ const styles = StyleSheet.create({
   },
   content: {
     ...theme.withPadding,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: theme.spacing.normal
   },
   cta: {
-    ...theme.withPadding
+    ...theme.withPadding,
+    marginTop: theme.spacing.normal
   },
   dots: {
     color: theme.primaryColor
