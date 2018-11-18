@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import { Constants } from 'expo';
-import { PixelRatio, Platform } from 'react-native';
-
-const pixelRatio = PixelRatio.get() / 1.8;
+import { Platform } from 'react-native';
 
 export const backgroundColor = '#FAFAFC';
 export const boldFont = 'gotham-black';
@@ -14,10 +12,10 @@ export const primaryColor = '#F8A65D';
 export const textColor = '#414248';
 export const secondaryTextColor = '#7B7D88';
 export const spacing = {
-  tiny: 6 * pixelRatio,
-  small: 12 * pixelRatio,
-  normal: 18 * pixelRatio,
-  big: 36 * pixelRatio
+  tiny: 6,
+  small: 12,
+  normal: 18,
+  big: 36
 };
 
 export const elevatedLevel1 = position => ({
@@ -55,7 +53,7 @@ export const link = {
 export const shitText = {
   color: textColor,
   fontFamily: boldFont,
-  fontSize: 48 * pixelRatio
+  fontSize: 48
 };
 
 /**
@@ -64,18 +62,18 @@ export const shitText = {
 export const text = {
   color: secondaryTextColor,
   fontFamily: normalFont,
-  fontSize: 12 * pixelRatio,
+  fontSize: 12,
   letterSpacing: 0.85,
-  lineHeight: 16 * pixelRatio,
+  lineHeight: 16,
   textAlign: 'justify'
 };
 
 export const title = {
   letterSpacing: 2,
-  lineHeight: 21 * pixelRatio,
+  lineHeight: 21,
   color: textColor,
   fontFamily: boldFont,
-  fontSize: 15 * pixelRatio
+  fontSize: 15
 };
 
 export const withPadding = {
@@ -84,10 +82,10 @@ export const withPadding = {
 
 export const bigButton = {
   backgroundColor: primaryColor,
-  borderRadius: 24 * pixelRatio,
-  height: 48 * pixelRatio,
-  paddingHorizontal: 24 * pixelRatio,
-  paddingVertical: 12 * pixelRatio
+  borderRadius: 24,
+  height: 48,
+  paddingHorizontal: 24,
+  paddingVertical: 12
 };
 
 export const bigButtonText = {
@@ -95,12 +93,12 @@ export const bigButtonText = {
   color: 'white',
   ...Platform.select({
     android: {
-      fontSize: 14 * pixelRatio
+      fontSize: 14
     },
     ios: {
-      fontSize: 14 * pixelRatio
+      fontSize: 14
     }
   }),
-  lineHeight: 24 * pixelRatio,
+  lineHeight: 24,
   textAlign: 'center'
 };

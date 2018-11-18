@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   isStationTooFar: {
     ...theme.text,
-    marginVertical: theme.spacing.normal
+    marginBottom: theme.spacing.normal
   },
   main: {
     marginBottom: theme.spacing.normal
