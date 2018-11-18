@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   pollutantItem: {
-    flexBasis: '34%'
+    flexBasis: '45%'
   },
   pollutants: {
     flexDirection: 'row',
