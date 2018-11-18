@@ -100,7 +100,7 @@ export class Search extends Component {
   handleItemClick = item => {
     // Reset everything when we choose a new location.
     this.props.stores.location.setCurrent(item);
-    this.props.stores.setError(false);
+    this.props.stores.setError(undefined);
     this.props.stores.setApi(undefined);
   };
 

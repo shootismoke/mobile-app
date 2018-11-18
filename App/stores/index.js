@@ -54,6 +54,6 @@ export const RootStore = types
     setError (newError) {
       // TODO Add sentry
       // https://github.com/amaurymartiny/shoot-i-smoke/issues/22
-      self.error = newError;
+      self.error = !!newError;
     }
   }));
