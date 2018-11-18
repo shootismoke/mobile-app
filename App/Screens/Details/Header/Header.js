@@ -16,7 +16,7 @@ const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 @inject('stores')
 @observer
 export class Header extends Component {
-  render () {
+  render() {
     const {
       onBackClick,
       stores: { api }
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   pollutantItem: {
-    flexBasis: '34%'
+    flexBasis: '45%'
   },
   pollutants: {
     flexDirection: 'row',
