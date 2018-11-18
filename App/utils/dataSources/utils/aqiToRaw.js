@@ -1,7 +1,7 @@
 // Copyright (c) 2018, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-function roundTo1Decimal(n) {
+function roundTo1Decimal (n) {
   return Math.round(10 * n) / 10;
 }
 
@@ -13,7 +13,7 @@ function roundTo1Decimal(n) {
  * @see https://github.com/amaurymartiny/shoot-i-smoke/issues/46
  * @see https://www3.epa.gov/airnow/aqi-technical-assistance-document-sept2018.pdf
  */
-function aqiToRawFormula(pollutant, aqi) {
+function aqiToRawFormula (pollutant, aqi) {
   const segment = breakPoints[pollutant].find(
     ([[aqiLow, aqiHigh]]) => aqiLow <= aqi && aqi <= aqiHigh
   );
