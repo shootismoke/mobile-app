@@ -5482,10 +5482,10 @@ mobx-state-tree@^3.7.1:
   resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.7.1.tgz#161fc1b46224d3defa28b482914d3aa8e1b80ed7"
   integrity sha512-XJHT4ldB2eoHBOqTsNLOsJHNsClSkAUwNWQm9njat28Md0ymQIpVPpcKywz9I8tbu2RoWlEm1/U4v6SeQEk/sA==
 
-mobx@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.6.0.tgz#e381c357e0ed7685a99a896455ecc66ff5ab84ee"
-  integrity sha512-xrA0tBnSMANXCDjS2W/6YTasesA8mkg9o+v/Bw/OcbXaRVE6/soVwDMWIh7A6TwMDY4tYQprQJZ5WQN1TRSb3A==
+mobx@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-4.6.0.tgz#88a8ed21ff81b8861778c4b0d38e3dcdd1a7ddde"
+  integrity sha512-qoX4BsUpA37yLzYAmNsApPiRlpMr8uwt+KYVTJNv9IhpD8NQVMno/K3EqZKAsiWo9IEvPOuQ0B6z7Z7ISjULpA==
 
 morgan@^1.9.0:
   version "1.9.0"
@@ -7876,9 +7876,9 @@ xcode@^0.9.1:
     simple-plist "^0.2.1"
     uuid "3.0.1"
 
-"xcode@git+https://github.com/apache/cordova-node-xcode.git#e7646f0680d509b590b839e567c217590451505b":
+"xcode@https://github.com/apache/cordova-node-xcode#e7646f0680d509b590b839e567c217590451505b":
   version "1.0.1-dev"
-  resolved "git+https://github.com/apache/cordova-node-xcode.git#e7646f0680d509b590b839e567c217590451505b"
+  resolved "https://github.com/apache/cordova-node-xcode#e7646f0680d509b590b839e567c217590451505b"
   dependencies:
     simple-plist "^0.2.1"
     uuid "3.0.1"
