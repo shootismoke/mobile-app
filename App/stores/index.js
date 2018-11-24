@@ -10,8 +10,8 @@ import { getCorrectLatLng } from '../utils/getCorrectLatLng';
 import { LocationStore } from './location';
 import { pm25ToCigarettes } from '../utils/pm25ToCigarettes';
 
-// Above this distance, we consider the station too far from the user
-export const MAX_DISTANCE_TO_STATION = 15;
+// Above this distance (km), we consider the station too far from the user
+export const MAX_DISTANCE_TO_STATION = 10;
 
 export const RootStore = types
   .model('RootStore', {
