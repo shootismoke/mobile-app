@@ -48,8 +48,6 @@ export class Loading extends Component {
       // The current { latitude, longitude } the user chose
       let currentPosition = location.current;
 
-      this.setState({ error: null });
-
       // If the currentLocation has been set by the user, then we don't refetch
       // the user's GPS
       if (!currentPosition) {
@@ -79,7 +77,7 @@ export class Loading extends Component {
       // We put them in an array
       const sources = [dataSources.aqicn, dataSources.windWaqi];
 
-      const _api = await retry(
+      const api = await retry(
         async (_, attempt) => {
           // Attempt starts at 1
           const result = await sources[(attempt - 1) % 2](currentPosition);
@@ -88,9 +86,9 @@ export class Loading extends Component {
         { retries: 3 } // 2 attemps per source
       );
 
-      stores.setApi(_api);
+      stores.setApi(api);
     } catch (error) {
-      stores.setError(true);
+      stores.setError(error);
     }
   }
 

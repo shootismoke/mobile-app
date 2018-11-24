@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { createStackNavigator } from 'react-navigation';
 
@@ -72,7 +72,7 @@ export class Screens extends Component {
     this.props.stores.setError(error);
   }
   render () {
-    return <View style={styles.container}>{this.renderScreen()}</View>;
+    return <View style={theme.fullScreen}>{this.renderScreen()}</View>;
   }
 
   renderScreen = () => {
@@ -81,31 +81,13 @@ export class Screens extends Component {
     } = this.props;
 
     if (error) {
-      return (
-        <View style={theme.fullScreen}>
-          <ErrorStack />
-        </View>
-      );
+      return <ErrorStack />;
     }
 
-    if (!api || !location.gps) {
-      return <Loading gps={location.gps} />;
+    if (!api || !location.current) {
+      return <Loading />;
     }
 
-    return (
-      <View style={theme.fullScreen}>
-        <RootStack
-          screenProps={{
-            onChangeLocationClick: this.handleSearchShow
-          }}
-        />
-      </View>
-    );
+    return <RootStack />;
   };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1
-  }
-});
