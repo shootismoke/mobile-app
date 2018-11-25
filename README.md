@@ -31,7 +31,7 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 If you find a bug, or if you have an idea of a cool feature, please file an issue here. We really appreciate feedback and inputs.
 
-If you would like to help coding please read the Getting Started guide.
+If you would like to help coding please read on.
 
 ### Getting Started
 
@@ -40,7 +40,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Service                 | Url                                                                                 | Comments                                                |
 | ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------- |
 | World Air Quality Index | http://aqicn.org/api/                                                               | Required.                                               |
-| Google Geocoding        | https://developers.google.com/maps/documentation/geocoding/intro                    | Optional, but recommended for showing precise location. |
+| LocationIQ              | https://locationiq.com/                                                             | Optional, but recommended for showing precise location. |
 | Algolia Places          | https://community.algolia.com/places/rest.html (`Get Started` button on the bottom) | Optional, lower API rates if not provided.              |
 | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                                |
 | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                                |
