@@ -24,16 +24,6 @@ export class Loading extends Component {
     this.fetchData();
   }
 
-  componentDidUpdate (prevProps) {
-    if (!prevProps.stores.gps && this.props.gps) {
-      // Start a 2s timeout to occupy user while he's waiting.
-      this.longWaitingTimeout = setTimeout(
-        () => this.setState({ longWaiting: true }),
-        2000 // Set longWaiting after 2s of waiting
-      );
-    }
-  }
-
   componentWillUnmount () {
     if (this.longWaitingTimeout) {
       clearTimeout(this.longWaitingTimeout);
@@ -77,6 +67,13 @@ export class Loading extends Component {
       // We put them in an array
       const sources = [dataSources.aqicn, dataSources.windWaqi];
 
+      // Set a 2s timer that will set `longWaiting` to true. Used to show an
+      // additional "cough" message on the loading screen
+      this.longWaitingTimeout = setTimeout(
+        () => this.setState({ longWaiting: true }),
+        2000
+      );
+
       const api = await retry(
         async (_, attempt) => {
           // Attempt starts at 1
@@ -94,7 +91,7 @@ export class Loading extends Component {
 
   render () {
     return (
-      <Background style={styles.container}>
+      <Background style={theme.withPadding}>
         <Text style={styles.text}>{this.renderText()}</Text>
       </Background>
     );
@@ -134,9 +131,6 @@ export class Loading extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding
-  },
   dots: {
     color: theme.primaryColor
   },
