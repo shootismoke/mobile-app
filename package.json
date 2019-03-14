@@ -1,6 +1,6 @@
 {
   "name": "shoot-i-smoke",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
@@ -14,24 +14,24 @@
     ]
   },
   "dependencies": {
-    "@expo/vector-icons": "^8.0.0",
+    "@expo/vector-icons": "^9.0.0",
     "async-retry": "^1.2.3",
     "axios": "^0.18.0",
     "date-fns": "^2.0.0-alpha.25",
-    "expo": "^30.0.0",
+    "expo": "^32.0.0",
     "haversine": "^1.1.0",
     "mobx": "^4.6.0",
     "mobx-react": "^5.3.6",
     "mobx-state-tree": "^3.7.1",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "react-navigation": "^2.13.0",
-    "sentry-expo": "^1.10.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-navigation": "^3.0.9",
+    "sentry-expo": "~1.11.2",
     "truncate": "^2.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
-    "jest": "^23.6.0",
+    "jest": "^24.5.0",
     "semistandard": "^12.0.1"
   }
 }

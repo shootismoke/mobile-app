@@ -37,6 +37,8 @@ export class Search extends Component {
     clearTimeout(this.typingTimeout);
   }
 
+  // TODO This should be a cancelable Promise, to avoid the warning
+  // "Can't call setState on an unmounted component"
   fetchResults = async search => {
     const {
       stores: {
@@ -137,8 +139,10 @@ export class Search extends Component {
   renderSeparator = () => <View style={styles.separator} />;
 
   renderInfoText = () => {
-    const { hasErrors, hits } = this.state;
+    const { hasErrors, hits, loading, search } = this.state;
 
+    if (!search) return '';
+    if (loading) return 'Waiting for results...';
     if (hasErrors) return 'Error fetching locations. Please try again later.';
     if (hits && hits.length === 0) return 'No results.';
     return 'Waiting for results.';

@@ -59,7 +59,12 @@ export class CurrentLocation extends Component {
       });
     } catch (error) {
       // Show AQI station name if we don't have reverse geocoding data
-      this.setState({ locationName: api.city.name.toUpperCase() });
+      this.setState({
+        locationName:
+          api.city && api.city.name
+            ? api.city.name.toUpperCase()
+            : 'UNKNOWN AQI STATION'
+      });
     }
   }
 
