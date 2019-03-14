@@ -35,7 +35,7 @@
     },
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.2.1",
+      "buildNumber": "1.2.2",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_KEY"
@@ -49,12 +49,12 @@
     "name": "Sh**t! I Smoke",
     "primaryColor": "#EBE7DD",
     "privacy": "public",
-    "sdkVersion": "30.0.0",
+    "sdkVersion": "32.0.0",
     "slug": "shoot-i-smoke",
     "splash": {
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.2.1"
+    "version": "1.2.2"
   }
 }

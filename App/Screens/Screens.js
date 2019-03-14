@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import { createStackNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 import { About } from './About';
 import { Details } from './Details';
@@ -20,7 +20,7 @@ const stackNavigatorOptions = initialRouteName => ({
   },
   headerMode: 'none',
   initialRouteName,
-  navigationOptions: {
+  defaultNavigationOptions: {
     headerVisible: false
   }
 });
@@ -28,37 +28,41 @@ const stackNavigatorOptions = initialRouteName => ({
 /**
  * The main stack navigator, for the app.
  */
-const RootStack = createStackNavigator(
-  {
-    About: {
-      screen: About
+const RootStack = createAppContainer(
+  createStackNavigator(
+    {
+      About: {
+        screen: About
+      },
+      Details: {
+        screen: Details
+      },
+      Home: {
+        screen: Home
+      },
+      Search: {
+        screen: Search
+      }
     },
-    Details: {
-      screen: Details
-    },
-    Home: {
-      screen: Home
-    },
-    Search: {
-      screen: Search
-    }
-  },
-  stackNavigatorOptions('Home')
+    stackNavigatorOptions('Home')
+  )
 );
 
 /**
  * A second stack navigator, for the error case.
  */
-const ErrorStack = createStackNavigator(
-  {
-    Error: {
-      screen: ErrorScreen
+const ErrorStack = createAppContainer(
+  createStackNavigator(
+    {
+      Error: {
+        screen: ErrorScreen
+      },
+      Search: {
+        screen: Search
+      }
     },
-    Search: {
-      screen: Search
-    }
-  },
-  stackNavigatorOptions('Error')
+    stackNavigatorOptions('Error')
+  )
 );
 
 @inject('stores')
