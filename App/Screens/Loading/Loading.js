@@ -41,12 +41,17 @@ export class Loading extends Component {
       // If the currentLocation has been set by the user, then we don't refetch
       // the user's GPS
       if (!currentPosition) {
+        console.log('<Loading> - fetchData - Asking for location permission');
         const { status } = await Permissions.askAsync(Permissions.LOCATION);
+
         if (status !== 'granted') {
-          throw new Error('Permission to access location was denied.');
+          throw new Error('Permission to access location was denied');
         }
 
-        const { coords } = await Location.getCurrentPositionAsync({});
+        console.log('<Loading> - fetchData - Fetching location');
+        const { coords } = await Location.getCurrentPositionAsync({
+          timeout: 5000
+        });
         // Uncomment to get other locations
         // const coords = {
         //   latitude: Math.random() * 90,
@@ -58,6 +63,7 @@ export class Loading extends Component {
         // };
 
         currentPosition = coords;
+        console.log('<Loading> - fetchData - Got location', currentPosition);
 
         location.setCurrent(coords);
         location.setGps(coords);
@@ -77,7 +83,14 @@ export class Loading extends Component {
       const api = await retry(
         async (_, attempt) => {
           // Attempt starts at 1
+          console.log(
+            `<Loading> - fetchData - Attempt #${attempt}: ${
+              sources[(attempt - 1) % 2].name
+            }`
+          );
           const result = await sources[(attempt - 1) % 2](currentPosition);
+          console.log('<Loading> - fetchData - Got result', result);
+
           return result;
         },
         { retries: 3 } // 2 attemps per source
@@ -85,7 +98,8 @@ export class Loading extends Component {
 
       stores.setApi(api);
     } catch (error) {
-      stores.setError(error);
+      console.log('<Loading> - fetchData - Error', error);
+      stores.setError(error.message);
     }
   }
 
