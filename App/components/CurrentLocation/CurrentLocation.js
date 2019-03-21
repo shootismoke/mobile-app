@@ -29,6 +29,9 @@ export class CurrentLocation extends Component {
     }
 
     try {
+      console.log(
+        '<CurrentLocation> - componentDidMount - Fetching reverse geocoding'
+      );
       const { data } = await axios.get(
         `https://us1.locationiq.com/v1/reverse.php?key=${
           Constants.manifest.extra.locationIqKey
@@ -41,6 +44,8 @@ export class CurrentLocation extends Component {
       if (!data || !data.address || !data.display_name) {
         throw new Error('No data from LocationIQ.');
       }
+
+      console.log('<CurrentLocation> - componentDidMount - Got result');
 
       // We format the formatted_address to remove postal code and street number for privacy reasons
       const postalCode = data.address.postcode;
@@ -58,6 +63,8 @@ export class CurrentLocation extends Component {
           .toUpperCase()
       });
     } catch (error) {
+      console.log('<CurrentLocation> - componentDidMount - Error', error);
+
       // Show AQI station name if we don't have reverse geocoding data
       this.setState({
         locationName:

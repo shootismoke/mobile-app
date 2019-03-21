@@ -50,6 +50,11 @@ export class Search extends Component {
       this.setState({ loading: true });
       await retry(
         async (_, attempt) => {
+          console.log(
+            `<Search> - fetchResults - Attempt #${attempt}: ${
+              algoliaUrls[attempt - 1]
+            }/1/places/query`
+          );
           const {
             data: { hits }
           } = await axios.post(
@@ -77,6 +82,8 @@ export class Search extends Component {
               timeout: 3000
             }
           );
+
+          console.log('<Search> - fetchResults - Got', hits.length, 'results');
           this.setState({ hits });
         },
         {
