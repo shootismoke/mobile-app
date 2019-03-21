@@ -85,7 +85,7 @@ export class Loading extends Component {
 
       stores.setApi(api);
     } catch (error) {
-      stores.setError(error);
+      stores.setError(error.message);
     }
   }
 

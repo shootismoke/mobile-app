@@ -11,7 +11,11 @@ import { Background as LoadingBackground } from './Screens/Loading/Background';
 import { Screens } from './Screens';
 
 // Set up global MST stores
-const stores = RootStore.create({ api: undefined, error: false, location: {} });
+const stores = RootStore.create({
+  api: undefined,
+  error: undefined,
+  location: {}
+});
 
 // Add sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {

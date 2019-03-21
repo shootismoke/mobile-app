@@ -73,8 +73,9 @@ export class Screens extends Component {
   };
 
   componentDidCatch (error) {
-    this.props.stores.setError(error);
+    this.props.stores.setError(error.message);
   }
+
   render () {
     return <View style={theme.fullScreen}>{this.renderScreen()}</View>;
   }
