@@ -1,4 +1,4 @@
-# Sh**t! I Smoke
+# Sh\*\*t! I Smoke
 
 Know how many cigarettes you smoke based on the pollution of your location.
 
@@ -22,10 +22,10 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
-| Release Channel | Description                                                                 | Url                                                                        |
-| --------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Production      | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
-| Staging         | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
+| Release Channel | Version | Description                                                                 | Url                                                                        |
+| --------------- | ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Production      | v1.2.2  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
+| Staging         | v1.3.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
 ## Contribute
 
