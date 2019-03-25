@@ -13,7 +13,7 @@ import * as theme from '../../utils/theme';
 export class ErrorScreen extends Component {
   goToSearch = () => this.props.navigation.navigate('Search');
 
-  render () {
+  render() {
     const { error: errorText } = this.props.stores;
 
     return (
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     ...theme.text,
-    fontFamily: 'Courier',
     fontSize: 10,
     marginTop: theme.spacing.small
   },
