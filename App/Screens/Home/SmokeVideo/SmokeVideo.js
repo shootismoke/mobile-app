@@ -37,6 +37,7 @@ export class SmokeVideo extends Component {
 
 const styles = StyleSheet.create({
   video: {
+    backgroundColor: 'white',
     bottom: 0,
     height: Dimensions.get('screen').height,
     position: 'absolute',

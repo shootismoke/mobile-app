@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     ...theme.text,
-    fontFamily: 'Courier',
     fontSize: 10,
     marginTop: theme.spacing.small
   },

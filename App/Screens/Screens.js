@@ -68,10 +68,6 @@ const ErrorStack = createAppContainer(
 @inject('stores')
 @observer
 export class Screens extends Component {
-  state = {
-    showVideo: true // Showing video or not
-  };
-
   componentDidCatch (error) {
     this.props.stores.setError(error.message);
   }
