@@ -6,7 +6,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Video } from 'expo';
 
-import smokeVideo from '../../../../assets/video/smoke.mp4';
+import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
 
 @inject('stores')
 @observer
@@ -37,7 +37,6 @@ export class SmokeVideo extends Component {
 
 const styles = StyleSheet.create({
   video: {
-    backgroundColor: 'white',
     bottom: 0,
     height: Dimensions.get('screen').height,
     position: 'absolute',

@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     marginVertical: 18
   },
   container: {
-    backgroundColor: 'white',
     flexGrow: 1
   },
   list: {
