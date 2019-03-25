@@ -68,11 +68,11 @@ const ErrorStack = createAppContainer(
 @inject('stores')
 @observer
 export class Screens extends Component {
-  componentDidCatch(error) {
+  componentDidCatch (error) {
     this.props.stores.setError(error.message);
   }
 
-  render() {
+  render () {
     return <View style={theme.fullScreen}>{this.renderScreen()}</View>;
   }
 
