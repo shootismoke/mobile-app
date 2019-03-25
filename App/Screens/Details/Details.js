@@ -103,7 +103,6 @@ export class Details extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flexGrow: 1
   },
   header: {
