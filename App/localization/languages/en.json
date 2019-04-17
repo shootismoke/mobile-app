@@ -3,7 +3,7 @@
   "error_screen_common_sorry": "Sorry!\n",
   "error_screen_error_cannot_load_cigarettes": "We cannot\nload your\ncigarettes.",
   "error_screen_choose_other_location": "Choose other location",
-  "error_screen_error_description": "There's either a problem with our databases, or you don't have any Air\nMonitoring Stations near you. Try again later!",
+  "error_screen_error_description": "There's either a problem with our databases, or you don't have any Air Monitoring Stations near you. Try again later!",
   "error_screen_error_message": "Error: {{errorText}}",
   "home_station_too_far_message": "We couldn’t find a closer station to you.\nResults may be inaccurate at this distance.",
   "home_share_title": "Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?",
