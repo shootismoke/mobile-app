@@ -22,8 +22,6 @@ yarn-error.log*
 
 # secrets
 app.json
-.idea/misc.xml
-.idea/modules.xml
-.idea/shoot-i-smoke.iml
-.idea/vcs.xml
-.idea/workspace.xml
+
+# ide files
+.idea/
