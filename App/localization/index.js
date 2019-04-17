@@ -1,3 +1,6 @@
+// Copyright (c) 2018-2019, Amaury Martiny
+// SPDX-License-Identifier: GPL-3.0
+
 import { Localization } from 'expo';
 import i18n from 'i18n-js';
 

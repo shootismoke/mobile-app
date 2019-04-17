@@ -6,11 +6,11 @@ import { formatRelative } from 'date-fns';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 
-import { BackButton } from '../../../components/BackButton';
 import locationIcon from '../../../../assets/images/location.png';
+import { BackButton } from '../../../components/BackButton';
 import { CurrentLocation } from '../../../components/CurrentLocation';
+import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
-import {i18n} from '../../../localization';
 
 const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 

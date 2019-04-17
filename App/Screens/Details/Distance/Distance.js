@@ -6,8 +6,8 @@ import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
+import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
-import {i18n} from '../../../localization';
 
 @inject('stores')
 @observer

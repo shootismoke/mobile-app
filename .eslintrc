@@ -4,7 +4,25 @@
     "es6": true,
     "jest": true
   },
-  "extends": ["standard", "prettier", "prettier/standard"],
+  "extends": [
+    "prettier",
+    "prettier/standard",
+    "semistandard"
+  ],
   "parser": "babel-eslint",
-  "plugins": ["import", "prettier", "standard"]
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
+  "plugins": [
+    "import",
+    "prettier",
+    "react",
+    "standard"
+  ],
+  "rules": {
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1
+  }
 }
