@@ -18,7 +18,7 @@ Know how many cigarettes you smoke based on the pollution of your location.
   <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-5" width="150">
 </p>
 
-## :bicyclist: Try it on Expo
+## :iphone: Try it on Expo
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
