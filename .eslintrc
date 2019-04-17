@@ -1,0 +1,10 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": ["standard", "prettier", "prettier/standard"],
+  "parser": "babel-eslint",
+  "plugins": ["import", "prettier", "standard"]
+}
