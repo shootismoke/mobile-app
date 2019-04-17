@@ -6,9 +6,9 @@ import { Constants } from 'expo';
 import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Box } from './Box';
-import * as theme from '../../utils/theme';
 import { BackButton } from '../../components/BackButton';
-import {i18n} from '../../localization';
+import { i18n } from '../../localization';
+import * as theme from '../../utils/theme';
 
 export class About extends PureComponent {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');

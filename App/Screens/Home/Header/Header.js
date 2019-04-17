@@ -6,10 +6,10 @@ import { inject, observer } from 'mobx-react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import changeLocation from '../../../../assets/images/changeLocation.png';
-import { CurrentLocation } from '../../../components/CurrentLocation';
-import * as theme from '../../../utils/theme';
 import warning from '../../../../assets/images/warning.png';
-import {i18n} from '../../../localization';
+import { CurrentLocation } from '../../../components/CurrentLocation';
+import { i18n } from '../../../localization';
+import * as theme from '../../../utils/theme';
 
 @inject('stores')
 @observer

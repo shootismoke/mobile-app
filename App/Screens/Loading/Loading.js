@@ -8,9 +8,9 @@ import retry from 'async-retry';
 import { StyleSheet, Text } from 'react-native';
 
 import { Background } from './Background';
+import { i18n } from '../../localization';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
-import {i18n} from '../../localization';
 
 @inject('stores')
 @observer
@@ -128,9 +128,9 @@ export class Loading extends Component {
     } = this.props;
     const { longWaiting } = this.state;
     let coughs = 0; // Number of times to show "Cough..."
-    if (gps) ++coughs;
-    if (longWaiting) ++coughs;
-    if (api) ++coughs;
+    if (gps)++coughs;
+    if (longWaiting)++coughs;
+    if (api)++coughs;
 
     return (
       <Text>

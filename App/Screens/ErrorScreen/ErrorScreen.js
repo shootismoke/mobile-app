@@ -6,8 +6,8 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import error from '../../../assets/images/error.png';
-import * as theme from '../../utils/theme';
 import { i18n } from '../../localization';
+import * as theme from '../../utils/theme';
 
 @inject('stores')
 @observer

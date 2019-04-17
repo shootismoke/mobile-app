@@ -4,7 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "semistandard 'App/**/*.js' --parser babel-eslint",
+    "lint": "eslint 'App/**/*.js'",
     "start": "expo start",
     "test": "jest"
   },
@@ -31,8 +31,18 @@
     "truncate": "^2.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "jest": "^24.5.0",
-    "semistandard": "^12.0.1"
+    "babel-eslint": "^10.0.1",
+    "babel-preset-expo": "^5.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-semistandard": "^13.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.5.0"
   }
 }
