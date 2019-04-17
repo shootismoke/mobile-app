@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Video } from 'expo';
 
@@ -16,26 +16,39 @@ export class SmokeVideo extends Component {
       stores: { cigarettes }
     } = this.props;
 
-    if (cigarettes <= 1) return { opacity: 0.2 };
-    if (cigarettes < 5) return { opacity: 0.5 };
-    if (cigarettes < 15) return { opacity: 0.7 };
-    return { opacity: 1 };
+    if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
+    if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
+    if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };
+    return { backgroundColor: '#FFFFFF00' };
   };
 
   render () {
     return (
-      <Video
-        isLooping
-        resizeMode='cover'
-        shouldPlay
-        source={smokeVideo}
-        style={[styles.video, this.getVideoStyle()]}
-      />
+      <View style={styles.container}>
+        <View style={[styles.overlay, this.getVideoStyle()]} />
+        <Video
+          isLooping
+          resizeMode='cover'
+          shouldPlay
+          source={smokeVideo}
+          style={styles.video}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    bottom: 0,
+    height: Dimensions.get('screen').height,
+    position: 'absolute',
+    right: 0,
+    width: Dimensions.get('screen').width
+  },
+  overlay: {
+    flex: 1
+  },
   video: {
     bottom: 0,
     height: Dimensions.get('screen').height,
