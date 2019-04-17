@@ -13,7 +13,7 @@ import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
-import {i18n} from "../../localization";
+import {i18n} from '../../localization';
 
 @inject('stores')
 @observer

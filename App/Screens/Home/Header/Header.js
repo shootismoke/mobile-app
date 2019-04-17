@@ -9,7 +9,7 @@ import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import * as theme from '../../../utils/theme';
 import warning from '../../../../assets/images/warning.png';
-import {i18n} from "../../../localization";
+import {i18n} from '../../../localization';
 
 @inject('stores')
 @observer

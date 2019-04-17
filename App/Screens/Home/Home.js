@@ -18,7 +18,7 @@ import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
 import swearWords from './swearWords';
 import * as theme from '../../utils/theme';
-import {i18n} from "../../localization";
+import {i18n} from '../../localization';
 
 @inject('stores')
 @observer

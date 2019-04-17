@@ -7,7 +7,7 @@ import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
 import * as theme from '../../../utils/theme';
-import {i18n} from "../../../localization";
+import {i18n} from '../../../localization';
 
 @inject('stores')
 @observer

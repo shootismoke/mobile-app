@@ -7,11 +7,11 @@ const fr = require('./languages/fr');
 
 i18n.fallbacks = true;
 i18n.translations = {
-    en,
-    fr
+  en,
+  fr
 };
 i18n.locale = Localization.locale;
 
 export {
-    i18n
+  i18n
 };

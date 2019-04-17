@@ -7,7 +7,7 @@ import { Image, StyleSheet, TextInput } from 'react-native';
 import { Banner } from '../../../components/Banner';
 import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
-import {i18n} from "../../../localization";
+import {i18n} from '../../../localization';
 
 export class SearchHeader extends PureComponent {
   render () {

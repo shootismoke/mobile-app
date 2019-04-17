@@ -10,7 +10,7 @@ import { StyleSheet, Text } from 'react-native';
 import { Background } from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
-import {i18n} from "../../localization";
+import {i18n} from '../../localization';
 
 @inject('stores')
 @observer
