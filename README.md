@@ -18,7 +18,7 @@ Know how many cigarettes you smoke based on the pollution of your location.
   <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-5" width="150">
 </p>
 
-## :star: Try it on Expo
+## :bicyclist: Try it on Expo
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
@@ -28,10 +28,6 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 | Staging         | v1.3.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
 ## :hammer: Build it yourself
-
-If you would like to help coding please read on.
-
-### :runner: Getting Started
 
 Before developing the app, you need to fetch your own API tokens for the following services:
 
@@ -74,6 +70,6 @@ More information on contributing [here](./CONTRIBUTING.md).
 
 GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 
-## :gift: Credits
+## :star: Credits
 
 Created with ❤ by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
