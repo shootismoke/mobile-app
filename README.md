@@ -66,6 +66,10 @@ If you find a bug, or if you have an idea for this app, please file an issue [he
 
 More information on contributing [here](./CONTRIBUTING.md).
 
+## :microscope: Tests
+
+The codebase unfortunately isn't much covered by tests. Check out the `*.spec.js` files in the project for tests. If you're interested to help out, have a look at [#19](https://github.com/amaurymartiny/shoot-i-smoke/issues/19).
+
 ## :newspaper: License
 
 GPL-3.0. See [LICENSE](./LICENSE) file for more information.

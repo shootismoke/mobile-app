@@ -7,13 +7,13 @@ import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
 import truncate from 'truncate';
 
-import { Distance } from './Distance';
-import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
-import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
+import { Distance } from './Distance';
+import { Header } from './Header';
+import { i18n } from '../../localization';
+import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
 import * as theme from '../../utils/theme';
-import {i18n} from '../../localization';
 
 @inject('stores')
 @observer

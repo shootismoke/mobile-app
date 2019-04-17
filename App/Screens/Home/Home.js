@@ -14,11 +14,11 @@ import {
 
 import { Cigarettes } from './Cigarettes';
 import { Header } from './Header';
+import { i18n } from '../../localization';
 import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
 import swearWords from './swearWords';
 import * as theme from '../../utils/theme';
-import {i18n} from '../../localization';
 
 @inject('stores')
 @observer

@@ -6,7 +6,6 @@ import {inject, observer} from 'mobx-react';
 import {Location, Permissions, TaskManager} from 'expo';
 import retry from 'async-retry';
 import {StyleSheet, Text} from 'react-native';
-
 import {Background} from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
@@ -142,9 +141,9 @@ export class Loading extends Component {
     } = this.props;
     const { longWaiting } = this.state;
     let coughs = 0; // Number of times to show "Cough..."
-    if (gps) ++coughs;
-    if (longWaiting) ++coughs;
-    if (api) ++coughs;
+    if (gps)++coughs;
+    if (longWaiting)++coughs;
+    if (api)++coughs;
 
     return (
       <Text>

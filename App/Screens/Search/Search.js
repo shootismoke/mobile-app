@@ -9,8 +9,8 @@ import { inject, observer } from 'mobx-react';
 import retry from 'async-retry';
 
 import { BackButton } from '../../components/BackButton';
-import { SearchHeader } from './SearchHeader';
 import { Item } from './Item';
+import { SearchHeader } from './SearchHeader';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html

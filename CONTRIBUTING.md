@@ -47,9 +47,9 @@ People _love_ thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
 
-The code style adheres to [semistandard](https://github.com/Flet/semistandard), and that is the only requirement. Run `yarn lint` to make sure the code you wrote passes linting.
+The code style adheres to [semistandard](https://github.com/Flet/semistandard). We use an opiniated `eslint`, which is configured to behave like `prettier` + `semistandard`.
 
-We also recommend adding the [prettier](https://github.com/prettier/prettier) extension to your IDE, though it is not mandatory.
+Run `yarn lint` to make sure that your code passes linting. You can optionally add the `--fix` flag to let `eslint` automatically fix some errors.
 
 ## License
 

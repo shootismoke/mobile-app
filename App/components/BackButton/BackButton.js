@@ -6,7 +6,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
 import * as theme from '../../utils/theme';
-import {i18n} from '../../localization';
+import { i18n } from '../../localization';
 
 export class BackButton extends PureComponent {
   onClick = () => this.props.onClick();
