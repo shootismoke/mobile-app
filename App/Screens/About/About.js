@@ -8,6 +8,7 @@ import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Box } from './Box';
 import * as theme from '../../utils/theme';
 import { BackButton } from '../../components/BackButton';
+import {i18n} from '../../localization';
 
 export class About extends PureComponent {
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
@@ -32,15 +33,14 @@ export class About extends PureComponent {
 
         <View style={styles.section}>
           <Text style={styles.h2}>
-            How do you calculate the number of cigarettes?
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
           </Text>
           <Text style={theme.text}>
-            This app was inspired by Berkeley Earth’s findings about the{' '}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_1')}{' '}
             <Text onPress={this.handleOpenArticle} style={theme.link}>
-              equivalence between air pollution and cigarette smoking
+              {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_link_1')}
             </Text>
-            . The rule of thumb is simple: one cigarette per day is the rough
-            equivalent of a PM2.5 level of 22{' '}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_2')}{' '}
             <Text style={styles.micro}>&micro;</Text>
             g/m&sup3;
             {' \u207D'}
@@ -57,46 +57,35 @@ export class About extends PureComponent {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.h2}>Where does the data come from?</Text>
+          <Text style={styles.h2}>{i18n.t('about_where_does_data_come_from_title')}</Text>
           <Text style={theme.text}>
-            Air quality data comes from{' '}
+            {i18n.t('about_where_does_data_come_from_message_1')}{' '}
             <Text onPress={this.handleOpenAqi} style={theme.link}>
-              WAQI
+              {i18n.t('about_where_does_data_come_from_link_1')}
             </Text>{' '}
-            in the form of PM2.5 AQI levels which are usually updated every one
-            hour and converted to direct PM2.5 levels by the app.
+            {i18n.t('about_were_does_data_come_from_message_2')}
           </Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.h2}>
-            Why is the station so far away from my current location?
+            {i18n.t('about_why_is_the_station_so_far_title')}
           </Text>
           <Text style={theme.text}>
-            Since stations that measure and communicate Air Quality results
-            every hour are expensive, the data is still limited to
-            well-developed regions and larger cities around the globe. If you
-            are far from a more prominent urban center, results will probably
-            not be so accurate. Chances are that your air is better in that case
-            at least!
+            {i18n.t('about_why_is_the_station_so_far_message')}
           </Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.h2}>
-            The results are weird or inconsistent with other sources!
+            {i18n.t('about_weird_results_title')}
           </Text>
           <Text style={theme.text}>
-            We have also encountered a few surprising results: large cities with
-            better air than small villages; sudden huge increases in the number
-            of cigarettes; stations of the same town showing significantly
-            different numbers... The fact is air quality depends on several
-            factors such as temperature, pressure, humidity and even wind
-            direction and intensity. If the result seems weird for you, check{' '}
+            {i18n.t('about_weird_results_message_1')}{' '}
             <Text onPress={this.handleOpenAqi} style={theme.link}>
-              WAQI
+              {i18n.t('about_weird_results_link_1')}
             </Text>{' '}
-            for more information and history on your station.
+            {i18n.t('about_weird_results_message_2')}
           </Text>
         </View>
 

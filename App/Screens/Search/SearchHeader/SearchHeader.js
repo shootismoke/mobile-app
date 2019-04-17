@@ -7,6 +7,7 @@ import { Image, StyleSheet, TextInput } from 'react-native';
 import { Banner } from '../../../components/Banner';
 import searchIcon from '../../../../assets/images/search.png';
 import * as theme from '../../../utils/theme';
+import {i18n} from '../../../localization';
 
 export class SearchHeader extends PureComponent {
   render () {
@@ -16,7 +17,7 @@ export class SearchHeader extends PureComponent {
         <TextInput
           autoFocus
           onChangeText={onChangeSearch}
-          placeholder='Search for a city or address'
+          placeholder={i18n.t('search_header_input_placeholder')}
           placeholderTextColor='rgba(255, 255, 255, 0.6)'
           style={styles.input}
           underlineColorAndroid='transparent'

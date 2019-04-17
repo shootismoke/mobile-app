@@ -18,6 +18,7 @@ import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
 import swearWords from './swearWords';
 import * as theme from '../../utils/theme';
+import {i18n} from '../../localization';
 
 @inject('stores')
 @observer
@@ -30,11 +31,8 @@ export class Home extends Component {
 
   handleShare = () =>
     Share.share({
-      title:
-        'Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?',
-      message: `Shoot! I 'smoked' ${
-        this.props.stores.cigarettes
-      } cigarettes today by breathing urban air. And you? Find out here: https://shootismoke.github.io`
+      title: i18n.t('home_share_title'),
+      message: i18n.t('home_share_message', { cigarettes: this.props.stores.cigarettes })
     });
 
   render () {
@@ -57,8 +55,7 @@ export class Home extends Component {
           <View style={styles.cta}>
             {isStationTooFar && (
               <Text style={styles.isStationTooFar}>
-                We couldn’t find a closer station to you.{'\n'}Results may be
-                inaccurate at this distance.
+                {i18n.t('home_station_too_far_message')}
               </Text>
             )}
             {this.renderBigButton()}
@@ -77,7 +74,7 @@ export class Home extends Component {
       return (
         <TouchableOpacity onPress={this.goToAbout}>
           <View style={theme.bigButton}>
-            <Text style={theme.bigButtonText}>WHY IS THE STATION SO FAR?</Text>
+            <Text style={theme.bigButtonText}>{i18n.t('home_btn_why_is_station_so_far').toUpperCase()}</Text>
           </View>
         </TouchableOpacity>
       );
@@ -86,7 +83,7 @@ export class Home extends Component {
     return (
       <TouchableOpacity onPress={this.goToDetails}>
         <View style={theme.bigButton}>
-          <Text style={theme.bigButtonText}>SEE DETAILED INFO</Text>
+          <Text style={theme.bigButtonText}>{i18n.t('home_btn_see_detailed_info').toUpperCase()}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -101,17 +98,17 @@ export class Home extends Component {
         {isStationTooFar ? (
           <SmallButton
             icon='plus-circle'
-            text='MORE DETAILS'
+            text={i18n.t('home_btn_more_details').toUpperCase()}
             onPress={this.goToDetails}
           />
         ) : (
           <SmallButton
             icon='question-circle'
-            text='FAQ/ABOUT'
+            text={i18n.t('home_btn_faq_about').toUpperCase()}
             onPress={this.goToAbout}
           />
         )}
-        <SmallButton icon='share-alt' text='SHARE' onPress={this.handleShare} />
+        <SmallButton icon='share-alt' text={i18n.t('home_btn_share').toUpperCase()} onPress={this.handleShare} />
       </View>
     );
   };
@@ -119,8 +116,8 @@ export class Home extends Component {
   renderPresentPast = () => {
     const time = new Date().getHours();
 
-    if (time < 15) return "You'll smoke";
-    return 'You smoked';
+    if (time < 15) return i18n.t('home_common_you_ll_smoke');
+    return i18n.t('home_common_you_smoked');
   };
 
   renderShit = () => {
@@ -128,7 +125,7 @@ export class Home extends Component {
       stores: { cigarettes }
     } = this.props;
 
-    if (cigarettes <= 1) return 'Oh';
+    if (cigarettes <= 1) return i18n.t('home_common_oh');
 
     // Return a random swear word
     return swearWords[Math.floor(Math.random() * swearWords.length)];
@@ -139,14 +136,23 @@ export class Home extends Component {
     // Round to 1 decimal
     const cigarettes = Math.round(stores.cigarettes * 10) / 10;
 
+    const text = i18n.t('home_smoked_cigarette_title', {
+      swearWord: this.renderShit(),
+      presentPast: this.renderPresentPast(),
+      singularPlural: cigarettes === 1 ? i18n.t('home_common_cigarette').toLowerCase() : i18n.t('home_common_cigarettes').toLowerCase(),
+      cigarettes
+    });
+
+    const firstPartText = text.split('<')[0];
+    const secondPartText = text.split('<')[1];
+
     return (
       <Text adjustsFontSizeToFit style={styles.shit}>
-        {this.renderShit()}! {this.renderPresentPast()}{' '}
+        {firstPartText}
         <Text style={styles.cigarettesCount}>
-          {cigarettes} cigarette
-          {cigarettes === 1 ? '' : 's'}
-        </Text>{' '}
-        today.
+          {secondPartText.split('>')[0]}
+        </Text>
+        {secondPartText.split('>')[1]}
       </Text>
     );
   };

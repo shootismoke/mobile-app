@@ -10,6 +10,7 @@ import { StyleSheet, Text } from 'react-native';
 import { Background } from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
+import {i18n} from '../../localization';
 
 @inject('stores')
 @observer
@@ -113,7 +114,7 @@ export class Loading extends Component {
 
   renderCough = index => (
     <Text key={index}>
-      Cough
+      {i18n.t('loading_title_cough')}
       <Text style={styles.dots}>...</Text>
     </Text>
   );
@@ -133,7 +134,7 @@ export class Loading extends Component {
 
     return (
       <Text>
-        Loading
+        {i18n.t('loading_title_loading')}
         <Text style={styles.dots}>...</Text>
         {Array.from({ length: coughs }, (_, index) => index + 1).map(
           // Create array 1..N and rendering Cough...

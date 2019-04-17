@@ -9,6 +9,7 @@ import changeLocation from '../../../../assets/images/changeLocation.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import * as theme from '../../../utils/theme';
 import warning from '../../../../assets/images/warning.png';
+import {i18n} from '../../../localization';
 
 @inject('stores')
 @observer
@@ -33,8 +34,7 @@ export class Header extends Component {
                 <Image source={warning} style={styles.warning} />
               )}
               <Text style={theme.text}>
-                Air Quality Station: {distanceToStation}
-                km away
+                {i18n.t('home_header_air_quality_station_distance', { distanceToStation })}
               </Text>
             </View>
           </View>

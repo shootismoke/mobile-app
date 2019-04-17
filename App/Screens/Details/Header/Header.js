@@ -10,6 +10,7 @@ import { BackButton } from '../../../components/BackButton';
 import locationIcon from '../../../../assets/images/location.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import * as theme from '../../../utils/theme';
+import {i18n} from '../../../localization';
 
 const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 
@@ -37,11 +38,11 @@ export class Header extends Component {
             <CurrentLocation style={styles.currentLocation} />
             {lastUpdated &&
               this.renderInfo(
-                'Latest Update:',
+                i18n.t('details_header_latest_update_label'),
                 formatRelative(lastUpdated, new Date())
               )}
             {dominentpol &&
-              this.renderInfo('Primary pollutant:', dominentpol.toUpperCase())}
+              this.renderInfo(i18n.t('details_header_primary_pollutant_label'), dominentpol.toUpperCase())}
 
             <View style={styles.pollutants}>
               {trackedPollutant.map(

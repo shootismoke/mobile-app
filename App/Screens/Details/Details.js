@@ -13,6 +13,7 @@ import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import * as theme from '../../utils/theme';
+import {i18n} from '../../localization';
 
 @inject('stores')
 @observer
@@ -83,14 +84,14 @@ export class Details extends Component {
                 coordinate={station}
                 image={stationIcon}
                 ref={this.handleStationRef}
-                title='Air Quality Station'
+                title={i18n.t('details_air_quality_station_marker')}
                 description={truncate(station.description, 40)}
               />
               <MapView.Marker
                 color='blue'
                 coordinate={currentLocation}
                 image={homeIcon}
-                title='Your position'
+                title={i18n.t('details_your_position_marker')}
               />
             </MapView>
           )}

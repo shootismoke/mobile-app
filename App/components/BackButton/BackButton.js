@@ -6,6 +6,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
 import * as theme from '../../utils/theme';
+import {i18n} from '../../localization';
 
 export class BackButton extends PureComponent {
   onClick = () => this.props.onClick();
@@ -21,7 +22,7 @@ export class BackButton extends PureComponent {
           style={styles.backButton}
         >
           <Image source={backIcon} />
-          <Text style={styles.backText}>Back</Text>
+          <Text style={styles.backText}>{i18n.t('nav_btn_back')}</Text>
         </TouchableOpacity>
       </View>
     );
