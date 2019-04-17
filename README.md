@@ -1,6 +1,6 @@
 # Sh\*\*t! I Smoke
 
-Know how many cigarettes you smoke based on the pollution of your location.
+Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:
 
 [![Travis (.org)](https://img.shields.io/travis/amaurymartiny/shoot-i-smoke.svg)](https://travis-ci.org/amaurymartiny/shoot-i-smoke)
 ![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
