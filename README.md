@@ -1,6 +1,6 @@
 # Sh\*\*t! I Smoke
 
-Know how many cigarettes you smoke based on the pollution of your location.
+Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:
 
 [![Travis (.org)](https://img.shields.io/travis/amaurymartiny/shoot-i-smoke.svg)](https://travis-ci.org/amaurymartiny/shoot-i-smoke)
 ![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
@@ -8,7 +8,7 @@ Know how many cigarettes you smoke based on the pollution of your location.
 
 [![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
 
-## Screenshots
+## :camera: Screenshots
 
 <p float="left">
   <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-1" width="150">
@@ -18,7 +18,7 @@ Know how many cigarettes you smoke based on the pollution of your location.
   <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-5" width="150">
 </p>
 
-## Try it on Expo
+## :iphone: Try it on Expo
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
@@ -27,13 +27,7 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 | Production      | v1.3.0  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
 | Staging         | v1.3.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
-## Contribute
-
-If you find a bug, or if you have an idea of a cool feature, please file an issue here. We really appreciate feedback and inputs.
-
-If you would like to help coding please read on.
-
-### Getting Started
+## :hammer: Build it yourself
 
 Before developing the app, you need to fetch your own API tokens for the following services:
 
@@ -66,10 +60,16 @@ This app is created with Expo, using React Native. When you run `yarn start`, th
 
 All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 
-## License
+## :raising_hand: Contribute
 
-GPL-3.0. See LICENSE file for more information.
+If you find a bug, or if you have an idea for this app, please file an issue [here](https://github.com/amaurymartiny/shoot-i-smoke/issues). We really appreciate feedback and inputs!
 
-## Credits
+More information on contributing [here](./CONTRIBUTING.md).
+
+## :newspaper: License
+
+GPL-3.0. See [LICENSE](./LICENSE) file for more information.
+
+## :star: Credits
 
 Created with ❤ by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
