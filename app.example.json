@@ -9,7 +9,7 @@
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
-      "versionCode": 7
+      "versionCode": 8
     },
     "assetBundlePatterns": ["assets/fonts/*"],
     "extra": {
@@ -35,7 +35,7 @@
     },
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.3.0",
+      "buildNumber": "1.3.1",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_KEY"
@@ -55,6 +55,6 @@
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.3.0"
+    "version": "1.3.1"
   }
 }
