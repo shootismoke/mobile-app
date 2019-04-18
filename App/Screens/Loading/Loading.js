@@ -11,7 +11,7 @@ import {Background} from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
 import {i18n} from '../../localization';
-import {AqiHistoryManager} from "../../managers";
+import {AqiHistoryManager} from '../../managers';
 
 const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
 
@@ -39,30 +39,29 @@ export class Loading extends Component {
     await Location.startLocationUpdatesAsync(TASK_STORE_AQI_HISTORY, {
       accuracy: Location.Accuracy.BestForNavigation,
       timeInterval: AqiHistoryManager.SAVE_DATA_INTERVAL,
-      distanceInterval: 0,
+      distanceInterval: 0
     });
   };
 
   _apiCall = async (currentPosition) => {
-
     // We currently have 2 sources, aqicn, and windWaqi
     // We put them in an array
     const sources = [dataSources.aqicn, dataSources.windWaqi];
 
     return retry(
-        async (_, attempt) => {
-          // Attempt starts at 1
-          console.log(
-              `<Loading> - fetchData - Attempt #${attempt}: ${
-                  sources[(attempt - 1) % 2].name
-                  }`
-          );
-          const result = await sources[(attempt - 1) % 2](currentPosition);
-          console.log('<Loading> - fetchData - Got result', result);
+      async (_, attempt) => {
+        // Attempt starts at 1
+        console.log(
+          `<Loading> - fetchData - Attempt #${attempt}: ${
+            sources[(attempt - 1) % 2].name
+          }`
+        );
+        const result = await sources[(attempt - 1) % 2](currentPosition);
+        console.log('<Loading> - fetchData - Got result', result);
 
-          return result;
-        },
-        {retries: 3} // 2 attempts per source
+        return result;
+      },
+      {retries: 3} // 2 attempts per source
     );
   };
 
@@ -174,19 +173,19 @@ TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
     const sources = [dataSources.aqicn, dataSources.windWaqi];
 
     const api = await retry(
-        async (_, attempt) => {
-          // Attempt starts at 1
-          console.log(
-              `<Loading> - fetchData - Attempt #${attempt}: ${
-                  sources[(attempt - 1) % 2].name
-                  }`
-          );
-          const result = await sources[(attempt - 1) % 2](coords);
-          console.log('<Loading> - fetchData - Got result', result);
+      async (_, attempt) => {
+        // Attempt starts at 1
+        console.log(
+          `<Loading> - fetchData - Attempt #${attempt}: ${
+            sources[(attempt - 1) % 2].name
+          }`
+        );
+        const result = await sources[(attempt - 1) % 2](coords);
+        console.log('<Loading> - fetchData - Got result', result);
 
-          return result;
-        },
-        {retries: 3} // 2 attempts per source
+        return result;
+      },
+      {retries: 3} // 2 attempts per source
     );
 
     if (await AqiHistoryManager.isSaveNeeded()) {
