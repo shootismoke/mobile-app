@@ -1,16 +1,19 @@
 // Copyright (c) 2018-2019, Amaury Martiny
 // SPDX-License-Identifier: GPL-3.0
 
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { Location, Permissions } from 'expo';
+import React, {Component} from 'react';
+import {inject, observer} from 'mobx-react';
+import {Location, Permissions, TaskManager} from 'expo';
 import retry from 'async-retry';
-import { StyleSheet, Text } from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
-import { Background } from './Background';
+import {Background} from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
 import {i18n} from '../../localization';
+import {AqiHistoryManager} from "../../managers";
+
+const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
 
 @inject('stores')
 @observer
@@ -21,8 +24,9 @@ export class Loading extends Component {
 
   longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
 
-  componentDidMount () {
-    this.fetchData();
+  async componentDidMount () {
+    await this.fetchData();
+    await this._startRecordingAqiHistory();
   }
 
   componentWillUnmount () {
@@ -30,6 +34,37 @@ export class Loading extends Component {
       clearTimeout(this.longWaitingTimeout);
     }
   }
+
+  _startRecordingAqiHistory = async () => {
+    await Location.startLocationUpdatesAsync(TASK_STORE_AQI_HISTORY, {
+      accuracy: Location.Accuracy.BestForNavigation,
+      timeInterval: AqiHistoryManager.SAVE_DATA_INTERVAL,
+      distanceInterval: 0,
+    });
+  };
+
+  _apiCall = async (currentPosition) => {
+
+    // We currently have 2 sources, aqicn, and windWaqi
+    // We put them in an array
+    const sources = [dataSources.aqicn, dataSources.windWaqi];
+
+    return retry(
+        async (_, attempt) => {
+          // Attempt starts at 1
+          console.log(
+              `<Loading> - fetchData - Attempt #${attempt}: ${
+                  sources[(attempt - 1) % 2].name
+                  }`
+          );
+          const result = await sources[(attempt - 1) % 2](currentPosition);
+          console.log('<Loading> - fetchData - Got result', result);
+
+          return result;
+        },
+        {retries: 3} // 2 attempts per source
+    );
+  };
 
   async fetchData () {
     const { stores } = this.props;
@@ -70,10 +105,6 @@ export class Loading extends Component {
         location.setGps(coords);
       }
 
-      // We currently have 2 sources, aqicn, and windWaqi
-      // We put them in an array
-      const sources = [dataSources.aqicn, dataSources.windWaqi];
-
       // Set a 2s timer that will set `longWaiting` to true. Used to show an
       // additional "cough" message on the loading screen
       this.longWaitingTimeout = setTimeout(
@@ -81,23 +112,7 @@ export class Loading extends Component {
         2000
       );
 
-      const api = await retry(
-        async (_, attempt) => {
-          // Attempt starts at 1
-          console.log(
-            `<Loading> - fetchData - Attempt #${attempt}: ${
-              sources[(attempt - 1) % 2].name
-            }`
-          );
-          const result = await sources[(attempt - 1) % 2](currentPosition);
-          console.log('<Loading> - fetchData - Got result', result);
-
-          return result;
-        },
-        { retries: 3 } // 2 attemps per source
-      );
-
-      stores.setApi(api);
+      stores.setApi(await this._apiCall(currentPosition));
     } catch (error) {
       console.log('<Loading> - fetchData - Error', error);
       stores.setError(error.message);
@@ -144,6 +159,41 @@ export class Loading extends Component {
     );
   };
 }
+
+TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
+  if (error) {
+    console.log('<Loading> - TaskManager - defineTask - Error', error.message);
+    return;
+  }
+  if (data) {
+    const { locations } = data;
+    const { coords } = locations[0];
+
+    // We currently have 2 sources, aqicn, and windWaqi
+    // We put them in an array
+    const sources = [dataSources.aqicn, dataSources.windWaqi];
+
+    const api = await retry(
+        async (_, attempt) => {
+          // Attempt starts at 1
+          console.log(
+              `<Loading> - fetchData - Attempt #${attempt}: ${
+                  sources[(attempt - 1) % 2].name
+                  }`
+          );
+          const result = await sources[(attempt - 1) % 2](coords);
+          console.log('<Loading> - fetchData - Got result', result);
+
+          return result;
+        },
+        {retries: 3} // 2 attempts per source
+    );
+
+    if (await AqiHistoryManager.isSaveNeeded()) {
+      await AqiHistoryManager.saveData(api.city.name, api.rawPm25);
+    }
+  }
+});
 
 const styles = StyleSheet.create({
   dots: {
