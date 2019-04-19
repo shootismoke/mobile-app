@@ -53,4 +53,4 @@ Run `yarn lint` to make sure that your code passes linting. You can optionally a
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its GPL-3.0 License.
+By contributing, you agree that your contributions will be licensed under its GPL-3.0 License owned by Marcelo S. Coelho & Amaury Martiny.
