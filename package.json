@@ -1,17 +1,16 @@
 {
   "name": "shoot-i-smoke",
   "version": "1.3.1",
+  "author": "Amaury Martiny <amaury.martiny@protonmail.com>",
+  "contributors": [
+    "Marcelo S. Coelho"
+  ],
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
     "lint": "eslint 'App/**/*.js'",
     "start": "expo start",
     "test": "jest"
-  },
-  "semistandard": {
-    "env": [
-      "jest"
-    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^9.0.0",
