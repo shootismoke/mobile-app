@@ -189,7 +189,7 @@ TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
     );
 
     if (await AqiHistoryManager.isSaveNeeded()) {
-      await AqiHistoryManager.saveData(api.city.name, api.rawPm25);
+      await AqiHistoryManager.saveData(api.city.name, api.rawPm25, coords);
     }
   }
 });
