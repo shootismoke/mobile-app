@@ -12,7 +12,7 @@ export const init = async () => {
 
   await db.transaction((tx) => {
     tx.executeSql(
-      'create table if not exists history(id integer not null, location varchar(255) not null, rawPm25 decimal not null, creation_time timestamp not null, primary key (id))',
+      'create table if not exists history(id integer not null, location varchar(255) not null, lat numeric not null, lng numeric not null, rawPm25 decimal not null, creation_time timestamp not null, primary key (id))',
       [],
       () => {},
       (transaction, error) => console.log('DB init error', error)
@@ -47,13 +47,13 @@ export const isSaveNeeded = async () => {
   return promise;
 };
 
-export const saveData = async (location, rawPm25) => {
+export const saveData = async (location, rawPm25, { lat, lng }) => {
   const db = await init();
 
   db.transaction((tx) => {
     tx.executeSql(
-      'insert into history (id, location, rawPm25, creation_time) values (?, ?, ?, ?)',
-      [Date.now(), location, rawPm25, Date.now()],
+      'insert into history (id, location, lat, lng, rawPm25, creation_time) values (?, ?, ?, ?, ?, ?)',
+      [Date.now(), location, lat, lng, rawPm25, Date.now()],
       () => {},
       (transaction, error) => console.log('DB insert error', error)
     );
