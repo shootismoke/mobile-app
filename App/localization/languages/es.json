@@ -2,7 +2,7 @@
   "error_screen_common_sorry": "Disculpa!\n",
   "error_screen_error_cannot_load_cigarettes": "No logramos\ncargar tus\ncigarrillos.",
   "error_screen_choose_other_location": "Elige otra ubicación",
-  "error_screen_error_description": "Existe un problema con nuestra base de datos, o no se existen estaciones de monitoreo de aire cerca. Intente más tarde ",
+  "error_screen_error_description": "Existe un problema con nuestra base de datos, o no existen estaciones de monitoreo de aire cerca. Intente más tarde ",
   "error_screen_error_message": "Error: {{errorText}}",
   "home_station_too_far_message": "No logramos encontrar una estación cercana.\nLos resultados pueden ser inexactos a esta distancia.",
   "home_share_title": "¿Sabía que puede estar fumando hasta 20 cigarrillos por día, solo por vivir en una gran ciudad?",
