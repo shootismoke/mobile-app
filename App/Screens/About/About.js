@@ -129,6 +129,10 @@ export class About extends PureComponent {
             {'\n'}
             Shoot! I Smoke v{Constants.manifest.version}.
           </Text>
+          <View style={styles.language}>
+            <Text style={theme.text}>Change language:</Text>
+            <Language></Language>
+          </View>
         </View>
       </ScrollView>
     );
@@ -156,6 +160,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 24,
     marginBottom: theme.spacing.small
+  },
+  language: {
+    marginTop: theme.spacing.normal,
+    justifyContent: 'space-between'
   },
   section: {
     marginBottom: theme.spacing.big

@@ -28,6 +28,7 @@ i18n.translations = {
   es,
   fr
 };
+console.log('AAAAAAA');
 i18n.locale = Localization.locale;
 
 export {
