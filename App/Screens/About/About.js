@@ -103,27 +103,27 @@ export class About extends PureComponent {
         </View>
 
         <View style={styles.credits}>
-          <Text style={styles.h2}>Credits</Text>
+          <Text style={styles.h2}>{i18n.t('about_credits_title')}</Text>
           <Text style={theme.text}>
-            Concept &amp; Development by{' '}
+            {i18n.t('about_credits_concept_and_development')}{' '}
             <Text onPress={this.handleOpenAmaury} style={theme.link}>
               Amaury Martiny
             </Text>
             .{'\n'}
-            Design &amp; Copywriting by{' '}
+            {i18n.t('about_credits_design_and_copywriting')}{' '}
             <Text onPress={this.handleOpenMarcelo} style={theme.link}>
               Marcelo S. Coelho
             </Text>
             .{'\n'}
             {'\n'}
-            Air quality data from{' '}
+            {i18n.t('about_credits_data_from')}{' '}
             <Text onPress={this.handleOpenAqi} style={theme.link}>
               WAQI
             </Text>
             .{'\n'}
-            Source code{' '}
+            {i18n.t('about_credits_source_code')}{' '}
             <Text onPress={this.handleOpenGithub} style={theme.link}>
-              available on Github
+              {i18n.t('about_credits_available_github')}
             </Text>
             .{'\n'}
             {'\n'}

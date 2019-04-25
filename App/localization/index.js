@@ -19,11 +19,13 @@ import i18n from 'i18n-js';
 
 // languages
 const en = require('./languages/en');
+const es = require('./languages/es');
 const fr = require('./languages/fr');
 
 i18n.fallbacks = true;
 i18n.translations = {
   en,
+  es,
   fr
 };
 i18n.locale = Localization.locale;
