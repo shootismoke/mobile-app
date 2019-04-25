@@ -18,6 +18,7 @@ import React, { PureComponent } from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 
 import cigarette from '../../../../assets/images/cigarette.png';
+import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
 
 export class Box extends PureComponent {
@@ -28,7 +29,7 @@ export class Box extends PureComponent {
           <View style={styles.statisticsLeft}>
             <Image source={cigarette} style={styles.cigarette} />
             <Text style={styles.value} />
-            <Text style={styles.label}>per day</Text>
+            <Text style={styles.label}>{i18n.t('about_box_per_day')}</Text>
           </View>
           <Text style={styles.equal}>=</Text>
           <View style={styles.statisticsRight}>
@@ -40,9 +41,7 @@ export class Box extends PureComponent {
           </View>
         </View>
         <Text style={styles.boxDescription}>
-          *Atmospheric particulate matter (PM) that have a diameter of less than
-          2.5 micrometers, with increased chances of inhalation by living
-          beings.
+          {i18n.t('about_box_footnote')}
         </Text>
       </View>
     );

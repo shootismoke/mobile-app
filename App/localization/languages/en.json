@@ -39,6 +39,8 @@
   "about_how_do_you_calculate_the_number_of_cigarettes_message_1": "This app was inspired by Berkeley Earth’s findings about the",
   "about_how_do_you_calculate_the_number_of_cigarettes_link_1": "equivalence between air pollution and cigarette smoking",
   "about_how_do_you_calculate_the_number_of_cigarettes_message_2": ". The rule of thumb is simple: one cigarette per day is the rough equivalent of a PM2.5 level of 22",
+  "about_box_per_day": "per day",
+  "about_box_footnote": "*Atmospheric particulate matter (PM) that have a diameter of less than 2.5 micrometers, with increased chances of inhalation by living beings.",
   "about_where_does_data_come_from_title": "Where does the data come from?",
   "about_where_does_data_come_from_message_1": "Air quality data comes from",
   "about_where_does_data_come_from_link_1": "WAQI",
@@ -48,5 +50,11 @@
   "about_weird_results_title": "The results are weird or inconsistent with other sources!",
   "about_weird_results_message_1": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check",
   "about_weird_results_link_1": "WAQI",
-  "about_weird_results_message_2": "for more information and history on your station."
+  "about_weird_results_message_2": "for more information and history on your station.",
+  "about_credits_title": "Credits",
+  "about_credits_concept_and_development": "Concept & Development by",
+  "about_credits_design_and_copywriting": "Design & Copywriting by",
+  "about_credits_data_from": "Air quality data from",
+  "about_credits_source_code": "Source code",
+  "about_credits_available_github": "available on Github"
 }
