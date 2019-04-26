@@ -64,6 +64,8 @@ All the code lives in the `App/` folder. The app itself is pretty small, so it s
 
 If you find a bug, or if you have an idea for this app, please file an issue [here](https://github.com/amaurymartiny/shoot-i-smoke/issues). We really appreciate feedback and inputs!
 
+🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX).
+
 More information on contributing [here](./CONTRIBUTING.md).
 
 ## :microscope: Tests
