@@ -20,6 +20,7 @@ import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Box } from './Box';
 import { BackButton } from '../../components/BackButton';
+import { Language } from './Language';
 import { i18n } from '../../localization';
 import * as theme from '../../utils/theme';
 

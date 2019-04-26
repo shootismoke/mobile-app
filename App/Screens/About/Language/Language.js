@@ -16,7 +16,7 @@
 
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { Picker, StyleSheet } from 'react-native';
+import { Button, Picker, StyleSheet, View } from 'react-native';
 
 import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
@@ -32,21 +32,28 @@ export class Language extends Component {
 
   render () {
     return (
-      <Picker
-        itemStyle={theme.text}
-        onValueChange={this.handleValueChange}
-        selectedValue={i18n.locale}
-        style={styles.picker}
-      >
-        <Picker.Item label="English (US)" value="en" />
-        <Picker.Item label="Spanish (Spain)" value="es" />
-      </Picker>
+      <View style={{ borderWidth: 0 }}>
+        <Button title="ABC" />
+        <Picker
+          itemStyle={theme.text}
+          onValueChange={this.handleValueChange}
+          selectedValue={i18n.locale}
+          style={styles.picker}
+        >
+          <Picker.Item label="English (US)" value="en" />
+          <Picker.Item label="Spanish (Spain)" value="es" />
+        </Picker>
+      </View>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
   picker: {
-    width: 200
+    height: 1000,
+    position: 'absolute',
+    top: 0,
+    width: 1000
   }
 });
