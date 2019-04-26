@@ -39,6 +39,8 @@
   "about_how_do_you_calculate_the_number_of_cigarettes_message_1": "Esta aplicación se inspiró en los hallazgos de Berkeley Earth sobre la",
   "about_how_do_you_calculate_the_number_of_cigarettes_link_1": "Equivalencia entre la contaminación del aire y el tabaquismo.",
   "about_how_do_you_calculate_the_number_of_cigarettes_message_2": ". La regla es simple: un cigarrillo por día equivale aproximadamente a un nivel de PM2.5 de 22",
+  "about_box_per_day": "por día",
+  "about_box_footnote": "*Material particulado atmosférico (PM) que tiene un diámetro de menos de 2.5 micrómetros, con mayores posibilidades de inhalación por los seres vivos.",
   "about_where_does_data_come_from_title": "Origen de los datos",
   "about_where_does_data_come_from_message_1": "Los datos de calidad del aire provienen de",
   "about_where_does_data_come_from_link_1": "WAQI",
@@ -48,5 +50,11 @@
   "about_weird_results_title": "Resultados inconsistentes!",
   "about_weird_results_message_1": "Hemos encontrado algunos resultados sorprendentes: ciudades grandes con mejor aire que pequeñas aldeas;grandes aumentos en el número de cigarrillos; Las estaciones de la misma ciudad muestran números significativamente diferentes ... El hecho es que la calidad del aire depende de varios factores, como la temperatura, la presión, la humedad e incluso la dirección e intensidad del viento. Si el resultado te parece extraño, verifica",
   "about_weird_results_link_1": "WAQI",
-  "about_weird_results_message_2": "Para más información en su estación."
+  "about_weird_results_message_2": "Para más información en su estación.",
+  "about_credits_title": "Creditos",
+  "about_credits_concept_and_development": "Concepto y Desarrollo por",
+  "about_credits_design_and_copywriting": "Diseño y Copywriting por",
+  "about_credits_data_from": "Datos de calidad del aire de",
+  "about_credits_source_code": "Código fuente",
+  "about_credits_available_github": "disponible en Github"
 }
