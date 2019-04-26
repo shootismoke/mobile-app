@@ -16,7 +16,7 @@
 
 import React, { PureComponent } from 'react';
 import { Constants } from 'expo';
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Box } from './Box';
 import { BackButton } from '../../components/BackButton';
@@ -54,7 +54,7 @@ export class About extends PureComponent {
             <Text onPress={this.handleOpenArticle} style={theme.link}>
               {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_link_1')}
             </Text>
-            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_2')}{' '}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_2')}
             <Text style={styles.micro}>&micro;</Text>
             g/m&sup3;
             {' \u207D'}
@@ -131,8 +131,8 @@ export class About extends PureComponent {
             Shoot! I Smoke v{Constants.manifest.version}.
           </Text>
           <View style={styles.language}>
-            <Text style={theme.text}>Change language:</Text>
-            <Language></Language>
+            <Text style={theme.text}>{i18n.t('about_language')}: </Text>
+            <Language />
           </View>
         </View>
       </ScrollView>
@@ -163,8 +163,18 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.small
   },
   language: {
-    marginTop: theme.spacing.normal,
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+    marginTop: theme.spacing.normal
+  },
+  micro: {
+    ...Platform.select({
+      ios: {
+        fontFamily: 'Georgia'
+      },
+      android: {
+        fontFamily: 'normal'
+      }
+    })
   },
   section: {
     marginBottom: theme.spacing.big

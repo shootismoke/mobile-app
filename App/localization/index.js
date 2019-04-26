@@ -28,8 +28,10 @@ i18n.translations = {
   es,
   fr
 };
-console.log('AAAAAAA');
-i18n.locale = Localization.locale;
+
+// `Localization.locale` can come in the form of `en-US` sometimes, so we just
+// take the 1st part.
+i18n.locale = (Localization.locale || 'en').split('-')[0];
 
 export {
   i18n
