@@ -59,7 +59,6 @@ export class Cigarettes extends Component {
               diagonal={diagonal}
               length={decimal || 1}
               size={this.getSize(cigarettes)}
-              style={cigarettes <= 1 ? styles.single : undefined}
               vertical={vertical}
             />
           ) : null}
