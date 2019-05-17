@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react';
 import { formatRelative } from 'date-fns';
+import * as datesFnsLocales from 'date-fns/locale';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 
@@ -36,8 +37,7 @@ export class Header extends Component {
       stores: { api }
     } = this.props;
 
-    const lastUpdated =
-      api.time && api.time.v ? new Date(api.time.v * 1000) : null;
+    const lastUpdated = api.time && api.time.v ? new Date(api.time.v * 1000) : null;
     const { dominentpol, iaqi } = api;
 
     return (
@@ -52,10 +52,15 @@ export class Header extends Component {
             {lastUpdated &&
               this.renderInfo(
                 i18n.t('details_header_latest_update_label'),
-                formatRelative(lastUpdated, new Date())
+                formatRelative(lastUpdated, new Date(), {
+                  locale: datesFnsLocales[i18n.locale.split('-')[0]]
+                })
               )}
             {dominentpol &&
-              this.renderInfo(i18n.t('details_header_primary_pollutant_label'), dominentpol.toUpperCase())}
+              this.renderInfo(
+                i18n.t('details_header_primary_pollutant_label'),
+                dominentpol.toUpperCase()
+              )}
 
             <View style={styles.pollutants}>
               {trackedPollutant.map(

@@ -2743,6 +2743,11 @@ cosmiconfig@^5.0.5:
     lodash.get "^4.4.2"
     parse-json "^4.0.0"
 
+country-list@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/country-list/-/country-list-2.1.0.tgz#0c0c26183e30743a620e5a01edd905a1777b0094"
+  integrity sha512-RHyEQyui0SHKFFtK342rN1YE9vNRH6ZYgm8aG3rUUHQW6BmcFCkQln0YUILPyBtdBxocxYAfElm4nXk3KOG8vg==
+
 create-react-class@^15.6.3:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
@@ -4793,21 +4798,7 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
-iso-3166-1-alpha-2@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/iso-3166-1-alpha-2/-/iso-3166-1-alpha-2-1.0.0.tgz#bc9e0bb94e584df5468a932997a28552e26f97ac"
-  integrity sha1-vJ4LuU5YTfVGipMpl6KFUuJvl6w=
-  dependencies:
-    mout "^0.11.0"
-
-iso-639-1-zh@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/iso-639-1-zh/-/iso-639-1-zh-2.0.4.tgz#61b577d14ee8b0c2c8e73697a3c894fe02dbd541"
-  integrity sha1-YbV30U7osMLI5zaXo8iU/gLb1UE=
-  dependencies:
-    iso-639-1 "^2.0.0"
-
-iso-639-1@^2.0.0:
+iso-639-1@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/iso-639-1/-/iso-639-1-2.0.5.tgz#a72ad3de139a96c4c4420b97b60b0af4cec4d7a3"
   integrity sha512-2TcJ8AcsqM4AXLi92eFZX3xa7X6Eno/chq9yOR0AvSgb15Smmoh1miXyYJVWCkSmbzDimds3Ix2M4efhnOuxOg==
@@ -5556,14 +5547,6 @@ loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-locale-code@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/locale-code/-/locale-code-2.0.2.tgz#660d80c5825d8fe9f3ba4a72de5716833ec7d0ed"
-  integrity sha512-wNcUMwk6Nlc10pnZZXWtKArAOZHhH8p2vohPEIENg7ImwMrib/CwKSvyV4g9Wm7KjylyHzXnEMz4i/W3w57wlw==
-  dependencies:
-    iso-3166-1-alpha-2 "~1.0.0"
-    iso-639-1-zh "^2.0.4"
-
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -6158,11 +6141,6 @@ morgan@^1.9.0:
     depd "~1.1.2"
     on-finished "~2.3.0"
     on-headers "~1.0.1"
-
-mout@^0.11.0:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/mout/-/mout-0.11.1.tgz#ba3611df5f0e5b1ffbfd01166b8f02d1f5fa2b99"
-  integrity sha1-ujYR318OWx/7/QEWa48C0fX6K5k=
 
 ms@2.0.0:
   version "2.0.0"

@@ -26,20 +26,17 @@ const ptBR = require('./languages/pt-BR');
 i18n.fallbacks = true;
 i18n.translations = {
   en,
+  'en-GB': en,
   'en-US': en,
-  'en-UK': en,
   es,
   fr,
   'fr-BE': fr,
   'fr-CH': fr,
   'fr-FR': fr,
   'fr-CA': fr,
-  pt: ptBR,
   'pt-BR': ptBR
 };
 
 i18n.locale = Localization.locale || 'en';
 
-export {
-  i18n
-};
+export { i18n };

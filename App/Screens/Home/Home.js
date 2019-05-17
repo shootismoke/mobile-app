@@ -16,14 +16,7 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import {
-  ScrollView,
-  Share,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Cigarettes } from './Cigarettes';
 import { Header } from './Header';
@@ -67,9 +60,7 @@ export class Home extends Component {
           </View>
           <View style={styles.cta}>
             {isStationTooFar && (
-              <Text style={styles.isStationTooFar}>
-                {i18n.t('home_station_too_far_message')}
-              </Text>
+              <Text style={styles.isStationTooFar}>{i18n.t('home_station_too_far_message')}</Text>
             )}
             {this.renderBigButton()}
             {this.renderFooter()}
@@ -87,7 +78,9 @@ export class Home extends Component {
       return (
         <TouchableOpacity onPress={this.goToAbout}>
           <View style={theme.bigButton}>
-            <Text style={theme.bigButtonText}>{i18n.t('home_btn_why_is_station_so_far').toUpperCase()}</Text>
+            <Text style={theme.bigButtonText}>
+              {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
+            </Text>
           </View>
         </TouchableOpacity>
       );
@@ -96,7 +89,9 @@ export class Home extends Component {
     return (
       <TouchableOpacity onPress={this.goToDetails}>
         <View style={theme.bigButton}>
-          <Text style={theme.bigButtonText}>{i18n.t('home_btn_see_detailed_info').toUpperCase()}</Text>
+          <Text style={theme.bigButtonText}>
+            {i18n.t('home_btn_see_detailed_info').toUpperCase()}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -110,18 +105,22 @@ export class Home extends Component {
       <View style={styles.smallButtons}>
         {isStationTooFar ? (
           <SmallButton
-            icon='plus-circle'
+            icon="plus-circle"
             text={i18n.t('home_btn_more_details').toUpperCase()}
             onPress={this.goToDetails}
           />
         ) : (
           <SmallButton
-            icon='question-circle'
+            icon="question-circle"
             text={i18n.t('home_btn_faq_about').toUpperCase()}
             onPress={this.goToAbout}
           />
         )}
-        <SmallButton icon='share-alt' text={i18n.t('home_btn_share').toUpperCase()} onPress={this.handleShare} />
+        <SmallButton
+          icon="share-alt"
+          text={i18n.t('home_btn_share').toUpperCase()}
+          onPress={this.handleShare}
+        />
       </View>
     );
   };
@@ -152,19 +151,19 @@ export class Home extends Component {
     const text = i18n.t('home_smoked_cigarette_title', {
       swearWord: this.renderShit(),
       presentPast: this.renderPresentPast(),
-      singularPlural: cigarettes === 1 ? i18n.t('home_common_cigarette').toLowerCase() : i18n.t('home_common_cigarettes').toLowerCase(),
+      singularPlural:
+        cigarettes === 1
+          ? i18n.t('home_common_cigarette').toLowerCase()
+          : i18n.t('home_common_cigarettes').toLowerCase(),
       cigarettes
     });
 
-    const firstPartText = text.split('<')[0];
-    const secondPartText = text.split('<')[1];
+    const [firstPartText, secondPartText] = text.split('<');
 
     return (
       <Text adjustsFontSizeToFit style={styles.shit}>
         {firstPartText}
-        <Text style={styles.cigarettesCount}>
-          {secondPartText.split('>')[0]}
-        </Text>
+        <Text style={styles.cigarettesCount}>{secondPartText.split('>')[0]}</Text>
         {secondPartText.split('>')[1]}
       </Text>
     );
