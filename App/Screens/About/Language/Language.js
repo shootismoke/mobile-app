@@ -42,12 +42,6 @@ export class Language extends Component {
   };
 
   render () {
-    console.log(getLanguageName('en-US'));
-    console.log(getLanguageName('en-GB'));
-    console.log(getLanguageName('fr'));
-    console.log(getLanguageName('fr-BE'));
-    console.log(getLanguageName('es'));
-    console.log(getLanguageName('pt-BR'));
     // Using this hack to show custom picker style
     // https://github.com/facebook/react-native/issues/7817#issuecomment-264851951
     return (
