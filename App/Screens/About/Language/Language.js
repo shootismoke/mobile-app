@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import localeCode from 'locale-code';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { Picker, StyleSheet, Text, View } from 'react-native';
 
 import { i18n } from '../../../localization';
-import * as names from './names.json';
 import * as theme from '../../../utils/theme';
 
 @inject('stores')
@@ -37,7 +37,7 @@ export class Language extends Component {
     // https://github.com/facebook/react-native/issues/7817#issuecomment-264851951
     return (
       <View style={styles.container}>
-        <Text style={theme.link}>{names[i18n.locale].nativeName}</Text>
+        <Text style={theme.link}>{localeCode.getLanguageNativeName(i18n.locale)}</Text>
         <Picker
           itemStyle={theme.text}
           onValueChange={this.handleValueChange}
@@ -47,7 +47,7 @@ export class Language extends Component {
           {Object.keys(i18n.translations).map((lang) =>
             <Picker.Item
               key={lang}
-              label={names[lang].nativeName}
+              label={localeCode.getLanguageNativeName(lang)}
               value={lang}
             />)
           }
