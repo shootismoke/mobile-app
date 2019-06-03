@@ -6116,10 +6116,10 @@ mobx-state-tree@^3.7.1:
   resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.11.0.tgz#959890a0008101d7ef52a92a7156fdf7436a5ef2"
   integrity sha512-0a5ZDTMQxLO6WkqwNsCRYru5bxsjodQiOEoA4pHj03M0ZjiPtEvmMP6NKzRYZdPIvgDpuPvXB2QeUw5yOQXOLA==
 
-mobx@^4.6.0:
-  version "4.9.3"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-4.9.3.tgz#24294ff8ba34aeb03f1f02d8dd4984a1e55707bb"
-  integrity sha512-+CwJp0YgEz0Q3U7jQTvLT/ikqmFD7rPMs5oLCZfCMhQp35lnel+QLyfddTm6lFt0OvkMeXoToXmCkkFeU/eZPQ==
+mobx@^5.9.4:
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.9.4.tgz#1dee92aba33f67b7baeeb679e3bd376a12e55812"
+  integrity sha512-L9JjTX2rtQUAhCIgnHokfntNOsF14uioT9LqStf6Mya+16j56ZBe21E8Y9V59tfr2aH2kLQPD10qtCJXBuTAxw==
 
 moment-timezone@^0.5.23:
   version "0.5.23"
