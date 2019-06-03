@@ -7016,10 +7016,10 @@ react-native-screens@1.0.0-alpha.22, "react-native-screens@^1.0.0 || ^1.0.0-alph
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
-react-native-sentry@^0.40.2:
-  version "0.40.3"
-  resolved "https://registry.yarnpkg.com/react-native-sentry/-/react-native-sentry-0.40.3.tgz#de2dadd2e4bd39a08ac84e6561c7716313726b02"
-  integrity sha512-Dv4HLYLIWaq+deYiGTuKVsY0XDSsy1ltTypgngDASBD9N8JcxiqK5nQyNLlmxPSL7HEsBvCACPPE4HMBCNxfmQ==
+react-native-sentry@^0.42.0:
+  version "0.42.0"
+  resolved "https://registry.yarnpkg.com/react-native-sentry/-/react-native-sentry-0.42.0.tgz#9cd59659d9b6cd36d6fc4c48f50613cd82cde25f"
+  integrity sha512-Nt3/yDSiK0QCtuWMEX04e4DJ3sWyMbjUPiiRNs3omD0rCzt51i4F5/fORDz7aMuYH2tSUw6RWCfJmxc3ILvx7Q==
   dependencies:
     "@sentry/wizard" "^0.12.1"
     raven-js "^3.24.2"
@@ -7595,14 +7595,14 @@ send@0.16.2:
     range-parser "~1.2.0"
     statuses "~1.4.0"
 
-sentry-expo@~1.11.2:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-1.11.2.tgz#8d9b58fa58751673393e32ee5bdb7362f6034e9f"
-  integrity sha512-/nMuBnUDZB7QmbsVDgJmPEg9kbrmYQ8FWH0x/bk/VwUVU2Qo1wiuJxZTZtRPztznOF575XHZmC5VA5LGwyA0GQ==
+sentry-expo@~1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-1.12.0.tgz#250e513e2b9b31a51b212d347bcf38fd0b5d6d7a"
+  integrity sha512-tvgcglaOwcXdX1iBJYSiN3VjNkpDwJ5urUMiI/QMIYln1VXpYpoFdc2w3LMT/t/w2aU2ehg9rQoItAFxzjnIwA==
   dependencies:
     "@expo/spawn-async" "^1.2.8"
     mkdirp "^0.5.1"
-    react-native-sentry "^0.40.2"
+    react-native-sentry "^0.42.0"
     rimraf "^2.6.1"
 
 serialize-error@^2.1.0:
