@@ -16,14 +16,16 @@
 
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
-import {Location, Permissions, TaskManager} from 'expo';
+import * as Permissions from 'expo-permissions';
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
 import retry from 'async-retry';
 import {StyleSheet, Text} from 'react-native';
 import {Background} from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
 import {i18n} from '../../localization';
-import {AqiHistoryManager} from '../../managers';
+import { AqiHistoryDb } from '../../managers';
 
 const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
 
@@ -50,7 +52,7 @@ export class Loading extends Component {
   _startRecordingAqiHistory = async () => {
     await Location.startLocationUpdatesAsync(TASK_STORE_AQI_HISTORY, {
       accuracy: Location.Accuracy.BestForNavigation,
-      timeInterval: AqiHistoryManager.SAVE_DATA_INTERVAL,
+      timeInterval: AqiHistoryDb.SAVE_DATA_INTERVAL,
       distanceInterval: 0
     });
   };
@@ -200,8 +202,8 @@ TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
       {retries: 3} // 2 attempts per source
     );
 
-    if (await AqiHistoryManager.isSaveNeeded()) {
-      await AqiHistoryManager.saveData(api.city.name, api.rawPm25, coords);
+    if (await AqiHistoryDb.isSaveNeeded()) {
+      await AqiHistoryDb.saveData(api.city.name, api.rawPm25, coords);
     }
   }
 });
