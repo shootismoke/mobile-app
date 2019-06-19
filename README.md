@@ -24,7 +24,7 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 | Release Channel | Version | Description                                                                 | Url                                                                        |
 | --------------- | ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Production      | v1.3.0  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
+| Production      | v1.3.1  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
 | Staging         | v1.3.1  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
 ## :hammer: Build it yourself
@@ -64,7 +64,13 @@ All the code lives in the `App/` folder. The app itself is pretty small, so it s
 
 If you find a bug, or if you have an idea for this app, please file an issue [here](https://github.com/amaurymartiny/shoot-i-smoke/issues). We really appreciate feedback and inputs!
 
+🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX).
+
 More information on contributing [here](./CONTRIBUTING.md).
+
+## :microscope: Tests
+
+The codebase unfortunately isn't much covered by tests. Check out the `*.spec.js` files in the project for tests. If you're interested to help out, have a look at [#19](https://github.com/amaurymartiny/shoot-i-smoke/issues/19).
 
 ## :newspaper: License
 
@@ -73,3 +79,5 @@ GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 ## :star: Credits
 
 Created with ❤ by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
+
+<a href="https://www.producthunt.com/posts/sh-t-i-smoke?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sh-t-i-smoke" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=126582&theme=light" alt="Sh**t! I Smoke - See your city's air pollution measured in daily cigarettes. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>

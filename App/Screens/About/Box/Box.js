@@ -1,10 +1,24 @@
-// Copyright (c) 2018-2019, Amaury Martiny
-// SPDX-License-Identifier: GPL-3.0
+// Sh**t! I Smoke
+// Copyright (C) 2018-2019  Marcelo S. Coelho, Amaury Martiny
+
+// Sh**t! I Smoke is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Sh**t! I Smoke is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { PureComponent } from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 
 import cigarette from '../../../../assets/images/cigarette.png';
+import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
 
 export class Box extends PureComponent {
@@ -15,7 +29,7 @@ export class Box extends PureComponent {
           <View style={styles.statisticsLeft}>
             <Image source={cigarette} style={styles.cigarette} />
             <Text style={styles.value} />
-            <Text style={styles.label}>per day</Text>
+            <Text style={styles.label}>{i18n.t('about_box_per_day')}</Text>
           </View>
           <Text style={styles.equal}>=</Text>
           <View style={styles.statisticsRight}>
@@ -27,9 +41,7 @@ export class Box extends PureComponent {
           </View>
         </View>
         <Text style={styles.boxDescription}>
-          *Atmospheric particulate matter (PM) that have a diameter of less than
-          2.5 micrometers, with increased chances of inhalation by living
-          beings.
+          {i18n.t('about_box_footnote')}
         </Text>
       </View>
     );

@@ -1,5 +1,18 @@
-// Copyright (c) 2018-2019, Amaury Martiny
-// SPDX-License-Identifier: GPL-3.0
+// Sh**t! I Smoke
+// Copyright (C) 2018-2019  Marcelo S. Coelho, Amaury Martiny
+
+// Sh**t! I Smoke is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Sh**t! I Smoke is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
@@ -7,13 +20,13 @@ import { MapView } from 'expo';
 import { StyleSheet, View } from 'react-native';
 import truncate from 'truncate';
 
-import { Distance } from './Distance';
-import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
-import { Header } from './Header';
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
+import { Distance } from './Distance';
+import { Header } from './Header';
+import { i18n } from '../../localization';
+import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
 import * as theme from '../../utils/theme';
-import {i18n} from '../../localization';
 
 @inject('stores')
 @observer
