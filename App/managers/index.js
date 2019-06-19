@@ -1,4 +1,4 @@
-import * as AqiHistoryManager from './AqiHistoryManager';
+import * as AqiHistoryManager from './AqiHistoryDb';
 
 export {
   AqiHistoryManager
