@@ -15,7 +15,8 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { PureComponent } from 'react';
-import { Constants, Font } from 'expo';
+import * as Font from 'expo-font';
+import Constants from 'expo-constants';
 import { Provider } from 'mobx-react';
 import Sentry from 'sentry-expo';
 

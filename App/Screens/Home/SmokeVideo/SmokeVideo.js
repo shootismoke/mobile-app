@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import { Video } from 'expo';
+import { Video } from 'expo-av';
 
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
 

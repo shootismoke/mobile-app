@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { PureComponent } from 'react';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Box } from './Box';

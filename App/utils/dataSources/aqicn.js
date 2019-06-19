@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import axios from 'axios';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 
 import { aqiToRaw } from './utils/aqiToRaw';
 
