@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Localization } from 'expo';
+import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
 // languages

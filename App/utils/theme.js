@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 
 export const backgroundColor = '#FAFAFC';

@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text } from 'react-native';
 
