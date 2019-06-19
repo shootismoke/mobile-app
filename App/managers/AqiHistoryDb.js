@@ -1,4 +1,4 @@
-+import { SQLite } from 'expo-sqlite';
+import { SQLite } from 'expo-sqlite';
 import AqiHistory from './AqiHistory';
 
 export const SAVE_DATA_INTERVAL = 3600000; // 1 hour

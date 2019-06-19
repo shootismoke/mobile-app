@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, {Component} from 'react';
-import {inject, observer} from 'mobx-react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import * as Permissions from 'expo-permissions';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 import retry from 'async-retry';
-import {StyleSheet, Text} from 'react-native';
-import {Background} from './Background';
+import { StyleSheet, Text } from 'react-native';
+import { Background } from './Background';
 import * as dataSources from '../../utils/dataSources';
 import * as theme from '../../utils/theme';
-import {i18n} from '../../localization';
+import { i18n } from '../../localization';
 import { AqiHistoryDb } from '../../managers';
 
 const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
@@ -41,6 +41,7 @@ export class Loading extends Component {
   async componentDidMount () {
     await this.fetchData();
     await this._startRecordingAqiHistory();
+    console.warn(await AqiHistoryDb.getData(10));
   }
 
   componentWillUnmount () {
@@ -75,7 +76,7 @@ export class Loading extends Component {
 
         return result;
       },
-      {retries: 3} // 2 attempts per source
+      { retries: 3 } // 2 attempts per source
     );
   };
 
@@ -199,7 +200,7 @@ TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
 
         return result;
       },
-      {retries: 3} // 2 attempts per source
+      { retries: 3 } // 2 attempts per source
     );
 
     if (await AqiHistoryDb.isSaveNeeded()) {

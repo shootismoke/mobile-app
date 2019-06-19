@@ -1,5 +1,4 @@
 class AqiHistory {
-
   _id: number;
   _location: string;
   _lat: number;
@@ -7,7 +6,7 @@ class AqiHistory {
   _rawPm25: number;
   _creationTime: number;
 
-  constructor({ id, location, lat, lng, rawPm25, creationTime }) {
+  constructor ({ id, location, lat, lng, rawPm25, creationTime }) {
     this._id = id;
     this._location = location;
     this._lat = lat;
@@ -16,27 +15,27 @@ class AqiHistory {
     this._creationTime = creationTime;
   }
 
-  get id(): number {
+  get id (): number {
     return this._id;
   }
 
-  get location(): string {
+  get location (): string {
     return this._location;
   }
 
-  get lat(): number {
+  get lat (): number {
     return this._lat;
   }
 
-  get lng(): number {
+  get lng (): number {
     return this._lng;
   }
 
-  get rawPm25(): number {
+  get rawPm25 (): number {
     return this._rawPm25;
   }
 
-  get creationTime(): number {
+  get creationTime (): number {
     return this._creationTime;
   }
 }
