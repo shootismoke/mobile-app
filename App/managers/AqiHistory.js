@@ -40,3 +40,5 @@ class AqiHistory {
     return this._creationTime;
   }
 }
+
+export default AqiHistory;

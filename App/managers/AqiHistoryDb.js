@@ -1,4 +1,5 @@
-import { SQLite } from 'expo';
++import { SQLite } from 'expo-sqlite';
+import AqiHistory from './AqiHistory';
 
 export const SAVE_DATA_INTERVAL = 3600000; // 1 hour
 const DB_AQI_HISTORY = 'aqi-history';
@@ -47,13 +48,13 @@ export const isSaveNeeded = async (): Promise<boolean> => {
   return promise;
 };
 
-export const saveData = async (location, rawPm25, { lat, lng }): Promise<void> => {
+export const saveData = async (location, rawPm25, { latitude, longitude }): Promise<void> => {
   const db = await init();
 
   db.transaction((tx) => {
     tx.executeSql(
       'insert into history (id, location, lat, lng, rawPm25, creationTime) values (?, ?, ?, ?, ?, ?)',
-      [Date.now(), location, lat, lng, rawPm25, Date.now()],
+      [Date.now(), location, latitude, longitude, rawPm25, Date.now()],
       () => {},
       (transaction, error) => console.log('DB insert error', error)
     );

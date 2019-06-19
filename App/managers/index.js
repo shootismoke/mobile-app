@@ -1,5 +1,5 @@
-import * as AqiHistoryManager from './AqiHistoryDb';
+import * as AqiHistoryDb from './AqiHistoryDb';
 
 export {
-  AqiHistoryManager
+  AqiHistoryDb
 };
