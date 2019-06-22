@@ -27,7 +27,7 @@
     "expo-sqlite": "~5.0.1",
     "expo-task-manager": "~5.0.1",
     "haversine": "^1.1.0",
-    "i18n-js": "^3.2.1",
+    "i18n-js": "^3.3.0",
     "mobx": "^4.6.0",
     "mobx-react": "^5.3.6",
     "mobx-state-tree": "^3.7.1",
