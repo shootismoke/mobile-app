@@ -34,7 +34,7 @@
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-navigation": "^3.0.9",
-    "sentry-expo": "~1.12.0",
+    "sentry-expo": "~1.13.0",
     "truncate": "^2.1.0"
   },
   "devDependencies": {
