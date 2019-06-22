@@ -28,7 +28,7 @@
     "expo-task-manager": "~5.0.1",
     "haversine": "^1.1.0",
     "i18n-js": "^3.2.1",
-    "mobx": "^4.6.0",
+    "mobx": "^5.10.1",
     "mobx-react": "^5.3.6",
     "mobx-state-tree": "^3.7.1",
     "react": "16.8.3",
