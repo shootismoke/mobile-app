@@ -16,7 +16,8 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Location, Permissions } from 'expo';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 import retry from 'async-retry';
 import { StyleSheet, Text } from 'react-native';
 

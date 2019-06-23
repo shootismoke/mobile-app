@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import retry from 'async-retry';
