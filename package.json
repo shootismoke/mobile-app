@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "babel-preset-expo": "^5.1.1",
+    "babel-preset-expo": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-semistandard": "^13.0.0",
