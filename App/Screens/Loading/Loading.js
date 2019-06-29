@@ -41,7 +41,6 @@ export class Loading extends Component {
   async componentDidMount () {
     await this.fetchData();
     await this._startRecordingAqiHistory();
-    console.warn(await AqiHistoryDb.getData(10));
   }
 
   componentWillUnmount () {
