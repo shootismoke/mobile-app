@@ -8,7 +8,7 @@ export const initDb = () => {
   return SQLite.openDatabase(DB_AQI_HISTORY, '1.0', 'Aqi History', 5 * 1024 * 1024);
 };
 
-export const init = async (): Promise<any> => {
+export const init = async () => {
   const db = await initDb();
 
   await db.transaction((tx) => {
@@ -23,7 +23,7 @@ export const init = async (): Promise<any> => {
   return db;
 };
 
-export const isSaveNeeded = async (): Promise<boolean> => {
+export const isSaveNeeded = async () => {
   const db = await init();
 
   const promise = new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export const isSaveNeeded = async (): Promise<boolean> => {
   return promise;
 };
 
-export const saveData = async (location, rawPm25, { latitude, longitude }): Promise<void> => {
+export const saveData = async (location, rawPm25, { latitude, longitude }) => {
   const db = await init();
 
   db.transaction((tx) => {
@@ -61,7 +61,7 @@ export const saveData = async (location, rawPm25, { latitude, longitude }): Prom
   });
 };
 
-export const getData = async (limit): Promise<Array<AqiHistory>> => {
+export const getData = async (limit) => {
   const db = await init();
 
   const promise = new Promise((resolve, reject) => {
