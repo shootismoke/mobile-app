@@ -16,14 +16,7 @@
 
 import React, { PureComponent } from 'react';
 import Constants from 'expo-constants';
-import {
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Box } from './Box';
 import { BackButton } from '../../components/BackButton';
@@ -31,18 +24,7 @@ import { Language } from './Language';
 import { i18n } from '../../localization';
 import * as theme from '../../utils/theme';
 
-import { getData } from '../../managers/AqiHistoryDb';
-
 export class About extends PureComponent {
-  state = {
-    history: ''
-  };
-
-  async componentDidMount () {
-    const history = await getData(10);
-    this.setState({ history });
-  }
-
   handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
 
   handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
@@ -65,22 +47,14 @@ export class About extends PureComponent {
 
         <View style={styles.section}>
           <Text style={styles.h2}>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_title'
-            )}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
           </Text>
           <Text style={theme.text}>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
-            )}{' '}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_1')}{' '}
             <Text onPress={this.handleOpenArticle} style={theme.link}>
-              {i18n.t(
-                'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
-              )}
+              {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_link_1')}
             </Text>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_message_2'
-            )}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_2')}
             <Text style={styles.micro}>&micro;</Text>
             g/m&sup3;
             {' \u207D'}
@@ -97,9 +71,7 @@ export class About extends PureComponent {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.h2}>
-            {i18n.t('about_where_does_data_come_from_title')}
-          </Text>
+          <Text style={styles.h2}>{i18n.t('about_where_does_data_come_from_title')}</Text>
           <Text style={theme.text}>
             {i18n.t('about_where_does_data_come_from_message_1')}{' '}
             <Text onPress={this.handleOpenAqi} style={theme.link}>
@@ -119,7 +91,9 @@ export class About extends PureComponent {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.h2}>{i18n.t('about_weird_results_title')}</Text>
+          <Text style={styles.h2}>
+            {i18n.t('about_weird_results_title')}
+          </Text>
           <Text style={theme.text}>
             {i18n.t('about_weird_results_message_1')}{' '}
             <Text onPress={this.handleOpenAqi} style={theme.link}>
@@ -156,7 +130,6 @@ export class About extends PureComponent {
             {'\n'}
             Shoot! I Smoke v{Constants.manifest.version}.
           </Text>
-          <Text style={theme.text}>{JSON.stringify(this.state.history)}</Text>
           <View style={styles.language}>
             <Text style={theme.text}>{i18n.t('about_language')}: </Text>
             <Language />
