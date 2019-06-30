@@ -29,6 +29,28 @@ import { AqiHistoryDb } from '../../managers';
 
 const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
 
+async function apiCall (currentPosition) {
+  // We currently have 2 sources, aqicn, and windWaqi
+  // We put them in an array
+  const sources = [dataSources.aqicn, dataSources.windWaqi];
+
+  return retry(
+    async (_, attempt) => {
+      // Attempt starts at 1
+      console.log(
+        `<Loading> - fetchData - Attempt #${attempt}: ${
+          sources[(attempt - 1) % 2].name
+        }`
+      );
+      const result = await sources[(attempt - 1) % 2](currentPosition);
+      console.log('<Loading> - fetchData - Got result', result);
+
+      return result;
+    },
+    { retries: 3 } // 2 attempts per source
+  );
+}
+
 @inject('stores')
 @observer
 export class Loading extends Component {
@@ -55,28 +77,6 @@ export class Loading extends Component {
       timeInterval: AqiHistoryDb.SAVE_DATA_INTERVAL,
       distanceInterval: 0
     });
-  };
-
-  _apiCall = async (currentPosition) => {
-    // We currently have 2 sources, aqicn, and windWaqi
-    // We put them in an array
-    const sources = [dataSources.aqicn, dataSources.windWaqi];
-
-    return retry(
-      async (_, attempt) => {
-        // Attempt starts at 1
-        console.log(
-          `<Loading> - fetchData - Attempt #${attempt}: ${
-            sources[(attempt - 1) % 2].name
-          }`
-        );
-        const result = await sources[(attempt - 1) % 2](currentPosition);
-        console.log('<Loading> - fetchData - Got result', result);
-
-        return result;
-      },
-      { retries: 3 } // 2 attempts per source
-    );
   };
 
   async fetchData () {
@@ -125,7 +125,7 @@ export class Loading extends Component {
         2000
       );
 
-      stores.setApi(await this._apiCall(currentPosition));
+      stores.setApi(await apiCall(currentPosition));
     } catch (error) {
       console.log('<Loading> - fetchData - Error', error);
       stores.setError(error.message);
@@ -156,9 +156,9 @@ export class Loading extends Component {
     } = this.props;
     const { longWaiting } = this.state;
     let coughs = 0; // Number of times to show "Cough..."
-    if (gps)++coughs;
-    if (longWaiting)++coughs;
-    if (api)++coughs;
+    if (gps) ++coughs;
+    if (longWaiting) ++coughs;
+    if (api) ++coughs;
 
     return (
       <Text>
@@ -182,25 +182,7 @@ TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
     const { locations } = data;
     const { coords } = locations[0];
 
-    // We currently have 2 sources, aqicn, and windWaqi
-    // We put them in an array
-    const sources = [dataSources.aqicn, dataSources.windWaqi];
-
-    const api = await retry(
-      async (_, attempt) => {
-        // Attempt starts at 1
-        console.log(
-          `<Loading> - fetchData - Attempt #${attempt}: ${
-            sources[(attempt - 1) % 2].name
-          }`
-        );
-        const result = await sources[(attempt - 1) % 2](coords);
-        console.log('<Loading> - fetchData - Got result', result);
-
-        return result;
-      },
-      { retries: 3 } // 2 attempts per source
-    );
+    const api = await apiCall(coords);
 
     if (await AqiHistoryDb.isSaveNeeded()) {
       await AqiHistoryDb.saveData(api.city.name, api.rawPm25, coords);
