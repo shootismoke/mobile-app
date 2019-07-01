@@ -38,6 +38,8 @@
     "truncate": "^2.1.0"
   },
   "devDependencies": {
+    "@types/expo": "^32.0.13",
+    "@types/react-native": "^0.57.65",
     "babel-eslint": "^10.0.1",
     "babel-preset-expo": "^5.2.0",
     "eslint": "^5.16.0",
@@ -50,6 +52,7 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "typescript": "^3.5.2"
   }
 }
