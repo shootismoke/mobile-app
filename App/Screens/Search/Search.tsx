@@ -14,16 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as consoleFp from 'fp-ts/lib/Console';
+import * as either from 'fp-ts/lib/Either';
+import * as io from 'fp-ts/lib/IO';
+import * as task from 'fp-ts/lib/Task';
+import * as taskE from 'fp-ts/lib/TaskEither';
+import * as t from 'io-ts';
+import { failure } from 'io-ts/lib/PathReporter';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { inject, observer } from 'mobx-react';
-import retry from 'async-retry';
+import { NavigationInjectedProps } from 'react-navigation';
 
 import { BackButton } from '../../components/BackButton';
 import { Item } from './Item';
 import { SearchHeader } from './SearchHeader';
+import {
+  CurrentLocationContext,
+  ErrorContext,
+  GpsLocationContext,
+  LatLng,
+  Location
+} from '../../stores';
+import { sideEffect } from '../../utils/fp';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html
@@ -34,43 +49,45 @@ const algoliaUrls = [
   'https://places-3.algolianet.com'
 ];
 
-@inject('stores')
-@observer
-export class Search extends Component {
-  state = {
-    hasErrors: false, // Error from algolia
-    hits: null,
-    loading: false,
-    search: ''
-  };
+// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/132720a17e15cdfcffade54dd4a23a21c1e16831/types/algoliasearch/index.d.ts#L2072
+const AlgoliaHitT = t.exact(
+  t.intersection([
+    t.type({
+      _geoloc: t.type({
+        lat: t.number,
+        lng: t.number
+      }),
+      country: t.string,
+      locale_names: t.array(t.string),
+      objectID: t.string
+    }),
+    t.partial({
+      city: t.array(t.string),
+      county: t.array(t.string)
+    })
+  ])
+);
+export type AlgoliaHit = t.TypeOf<typeof AlgoliaHitT>;
 
-  typingTimeout = null; // Timeout to detect when user stops typing
+const AxiosResponseT = t.type({
+  data: t.type({
+    hits: t.array(AlgoliaHitT)
+  })
+});
 
-  componentWillUnmount () {
-    clearTimeout(this.typingTimeout);
-  }
-
-  // TODO This should be a cancelable Promise, to avoid the warning
-  // "Can't call setState on an unmounted component"
-  fetchResults = async search => {
-    const {
-      stores: {
-        location: { gps }
-      }
-    } = this.props;
-
-    try {
-      this.setState({ loading: true });
-      await retry(
-        async (_, attempt) => {
-          console.log(
-            `<Search> - fetchResults - Attempt #${attempt}: ${
-              algoliaUrls[attempt - 1]
-            }/1/places/query`
-          );
-          const {
-            data: { hits }
-          } = await axios.post(
+function fetchAlgolia(search: string, gps?: LatLng, attempt: number = 1) {
+  return pipe(
+    taskE.rightIO(
+      consoleFp.log(
+        `<Search> - handleChangeSearch - Attempt #${attempt}: ${
+          algoliaUrls[attempt - 1]
+        }/1/places/query`
+      )
+    ),
+    taskE.chain(() =>
+      taskE.tryCatch(
+        () =>
+          axios.post(
             `${algoliaUrls[attempt - 1]}/1/places/query`,
             {
               aroundLatLng: gps
@@ -83,90 +100,146 @@ export class Search extends Component {
             {
               headers:
                 Constants.manifest.extra.algoliaApplicationId &&
-                  Constants.manifest.extra.algoliaApiKey
+                Constants.manifest.extra.algoliaApiKey
                   ? {
-                    'X-Algolia-Application-Id':
-                      Constants.manifest.extra.algoliaApplicationId,
-                    'X-Algolia-API-Key':
-                      Constants.manifest.extra.algoliaApiKey
-                  }
+                      'X-Algolia-Application-Id':
+                        Constants.manifest.extra.algoliaApplicationId,
+                      'X-Algolia-API-Key':
+                        Constants.manifest.extra.algoliaApiKey
+                    }
                   : undefined,
 
               timeout: 3000
             }
-          );
+          ),
+        reason => new Error(String(reason))
+      )
+    ),
+    taskE.chain(response =>
+      task.of(
+        pipe(
+          AxiosResponseT.decode(response),
+          either.mapLeft(failure),
+          either.mapLeft(errs => errs[0]), // Only show 1st error
+          either.mapLeft(Error)
+        )
+      )
+    ),
+    taskE.map(response => response.data.hits),
+    taskE.chain((hits: AlgoliaHit[]) =>
+      taskE.rightIO(
+        sideEffect(
+          consoleFp.log(
+            `<Search> - handleChangeSearch - Got ${hits.length} results`
+          ),
+          hits
+        )
+      )
+    )
+  );
+}
 
-          console.log('<Search> - fetchResults - Got', hits.length, 'results');
-          this.setState({ hits });
-        },
-        {
-          retries: 3
-        }
-      );
-      this.setState({ loading: false });
-    } catch (error) {
-      this.setState({ hasErrors: true, loading: false });
-    }
-  };
+// Timeout to detect when user stops typing
+let typingTimeout: NodeJS.Timeout | null = null;
 
-  handleChangeSearch = search => {
-    this.setState({ search });
-    if (!search) {
+interface SearchProps extends NavigationInjectedProps {}
+
+export function Search(props: SearchProps) {
+  const { setLatLng } = useContext(CurrentLocationContext);
+  const { setError } = useContext(ErrorContext);
+  const gps = useContext(GpsLocationContext);
+
+  const [algoliaError, setAlgoliaError] = useState<Error | undefined>(
+    undefined
+  );
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [hits, setHits] = useState<AlgoliaHit[]>([]);
+
+  function handleChangeSearch(s: string) {
+    setSearch(s);
+    if (!s) {
       return;
     }
 
-    clearTimeout(this.typingTimeout);
-    this.typingTimeout = setTimeout(() => this.fetchResults(search), 500);
-  };
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+    typingTimeout = setTimeout(() => {
+      setHits([]);
+      setLoading(true);
 
-  handleItemClick = item => {
-    // Reset everything when we choose a new location.
-    this.props.stores.location.setCurrent(item);
-    this.props.stores.setError(undefined);
-    this.props.stores.setApi(undefined);
-  };
+      taskE.fold<Error, AlgoliaHit[], unknown>(
+        err => {
+          console.log('<Search> - handleChangeSearch -', err.message);
+          setLoading(false);
+          setAlgoliaError(err);
 
-  render () {
-    const { navigation } = this.props;
-    const { hits, search } = this.state;
+          // TODO Log on Sentry
+          return task.of(undefined as void);
+        },
+        hits => {
+          setLoading(false);
+          setAlgoliaError(undefined);
+          setHits(hits);
 
-    return (
-      <View style={styles.container}>
-        <BackButton onClick={navigation.pop} style={styles.backButton} />
-        <SearchHeader
-          onChangeSearch={this.handleChangeSearch}
-          search={search}
-        />
-        <FlatList
-          data={hits}
-          ItemSeparatorComponent={this.renderSeparator}
-          keyboardShouldPersistTaps='always'
-          keyExtractor={({ objectID }) => objectID}
-          ListEmptyComponent={
-            <Text style={styles.noResults}>{this.renderInfoText()}</Text>
-          }
-          renderItem={this.renderItem}
-          style={styles.list}
-        />
-      </View>
-    );
+          return task.of(undefined as void);
+        }
+      )(fetchAlgolia(s, gps))();
+    }, 500);
   }
 
-  renderItem = ({ item }) => (
-    <Item item={item} onClick={this.handleItemClick} />
+  function handleItemClick(item: Location) {
+    // Reset everything when we choose a new location.
+    setLatLng(item);
+    setError(undefined);
+    // TODO
+    // this.props.stores.setApi(undefined);
+  }
+
+  function renderItem({ item }: { item: AlgoliaHit }) {
+    return <Item item={item} onClick={handleItemClick} />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <BackButton
+        onClick={() => props.navigation.pop()}
+        style={styles.backButton}
+      />
+      <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
+      <FlatList
+        data={hits}
+        ItemSeparatorComponent={renderSeparator}
+        keyboardShouldPersistTaps="always"
+        keyExtractor={({ objectID }) => objectID}
+        ListEmptyComponent={
+          <Text style={styles.noResults}>
+            {renderInfoText(algoliaError, hits, loading, search)}
+          </Text>
+        }
+        renderItem={renderItem}
+        style={styles.list}
+      />
+    </View>
   );
+}
 
-  renderSeparator = () => <View style={styles.separator} />;
+function renderInfoText(
+  algoliaError: Error | undefined,
+  hits: AlgoliaHit[],
+  loading: boolean,
+  search: string
+) {
+  if (!search) return '';
+  if (loading) return 'Waiting for results...';
+  if (algoliaError) return 'Error fetching locations. Please try again later.';
+  if (hits && hits.length === 0) return 'No results.';
+  return 'Waiting for results.';
+}
 
-  renderInfoText = () => {
-    const { hasErrors, hits, loading, search } = this.state;
-
-    if (!search) return '';
-    if (loading) return 'Waiting for results...';
-    if (hasErrors) return 'Error fetching locations. Please try again later.';
-    if (hits && hits.length === 0) return 'No results.';
-    return 'Waiting for results.';
-  };
+function renderSeparator() {
+  return <View style={styles.separator} />;
 }
 
 const styles = StyleSheet.create({

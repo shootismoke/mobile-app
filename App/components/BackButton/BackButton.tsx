@@ -14,32 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import {
+  GestureResponderEvent,
+  Image,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
 import * as theme from '../../utils/theme';
 import { i18n } from '../../localization';
 
-export class BackButton extends PureComponent {
-  onClick = () => this.props.onClick();
+interface BackButtonProps {
+  onClick: (event: GestureResponderEvent) => void;
+  style?: StyleProp<ViewStyle>; // FIXME any
+}
 
-  render () {
-    const { style } = this.props;
+export function BackButton(props: BackButtonProps) {
+  const { style } = props;
 
-    return (
-      <View style={style}>
-        <TouchableOpacity
-          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={this.onClick}
-          style={styles.backButton}
-        >
-          <Image source={backIcon} />
-          <Text style={styles.backText}>{i18n.t('nav_btn_back')}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <View style={style}>
+      <TouchableOpacity
+        hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        onPress={props.onClick}
+        style={styles.backButton}
+      >
+        <Image source={backIcon} />
+        <Text style={styles.backText}>{i18n.t('nav_btn_back')}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

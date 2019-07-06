@@ -14,53 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
-import { Provider } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
 import Sentry from 'sentry-expo';
 
-import { RootStore } from './stores';
-import { Background as LoadingBackground } from './Screens/Loading/Background';
 import { Screens } from './Screens';
-
-// Set up global MST stores
-const stores = RootStore.create({
-  api: undefined,
-  error: undefined,
-  location: {}
-});
+import { Background as LoadingBackground } from './Screens/Loading/Background';
+import { ErrorContextProvider, LocationContextProvider } from './stores';
 
 // Add sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
 }
 
-export class App extends PureComponent {
-  state = {
-    fontLoaded: false
-  };
-
-  async componentDidMount () {
-    // Using custom fonts with Expo
-    // https://docs.expo.io/versions/latest/guides/using-custom-fonts
-    await Font.loadAsync({
+export function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
+  useEffect(() => {
+    Font.loadAsync({
       'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
       'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
-    });
+    })
+      .then(() => setFontLoaded(true))
+      .catch(console.error);
+  }, []);
 
-    this.setState({ fontLoaded: true });
-  }
-
-  render () {
-    const { fontLoaded } = this.state;
-
-    return fontLoaded ? (
-      <Provider stores={stores}>
+  return fontLoaded ? (
+    <ErrorContextProvider>
+      <LocationContextProvider>
         <Screens />
-      </Provider>
-    ) : (
-      <LoadingBackground />
-    );
-  }
+      </LocationContextProvider>
+    </ErrorContextProvider>
+  ) : (
+    <LoadingBackground />
+  );
 }

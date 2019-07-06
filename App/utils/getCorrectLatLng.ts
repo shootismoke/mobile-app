@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '../stores/location';
+
 /**
  * Station given by the Waqi API is fucked up. Sometimes it's [lat, lng],
  * sometimes it's [lng, lat].
@@ -25,7 +27,7 @@
  * @param {*} station - An object containing {latitude, longitude} representing
  * the station's location.
  */
-export const getCorrectLatLng = (currentLocation, station) => {
+export const getCorrectLatLng = (currentLocation: LatLng, station: LatLng) => {
   const d1 =
     Math.abs(currentLocation.latitude - station.latitude) +
     Math.abs(currentLocation.longitude - station.longitude);

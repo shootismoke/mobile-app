@@ -14,18 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
+import * as t from 'io-ts';
+import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import pinIcon from '../../../../assets/images/location.png';
+import { AlgoliaHit } from '../Search';
+import { Location } from '../../../stores/location';
 import * as theme from '../../../utils/theme';
 
-export class Item extends PureComponent {
-  handleClick = () => {
-    const {
-      item: { city, country, county, _geoloc, locale_names: localeNames },
-      onClick
-    } = this.props;
+interface ItemProps {
+  item: AlgoliaHit;
+  onClick: (item: Location) => void;
+}
+
+export function Item(props: ItemProps) {
+  const { item, onClick } = props;
+
+  const { city, country, county, _geoloc, locale_names: localeNames } = item;
+
+  const handleClick = () => {
     onClick({
       latitude: _geoloc.lat,
       longitude: _geoloc.lng,
@@ -40,24 +48,19 @@ export class Item extends PureComponent {
     });
   };
 
-  render () {
-    const {
-      item: { city, country, county, locale_names: localeNames }
-    } = this.props;
-    return (
-      <TouchableOpacity onPress={this.handleClick} style={styles.container}>
-        <Image source={pinIcon} />
-        <View style={styles.result}>
-          <Text style={styles.title}>{localeNames[0]}</Text>
-          <Text style={styles.description}>
-            {[city, county && county.length ? county[0] : null, country]
-              .filter(_ => _)
-              .join(', ')}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
+  return (
+    <TouchableOpacity onPress={handleClick} style={styles.container}>
+      <Image source={pinIcon} />
+      <View style={styles.result}>
+        <Text style={styles.title}>{localeNames[0]}</Text>
+        <Text style={styles.description}>
+          {[city, county && county.length ? county[0] : null, country]
+            .filter(_ => _)
+            .join(', ')}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({

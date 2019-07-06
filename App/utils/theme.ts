@@ -17,6 +17,8 @@
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 
+export type ShadowPosition = 'top' | 'bottom';
+
 export const backgroundColor = '#FAFAFC';
 export const boldFont = 'gotham-black';
 export const iconBackgroundColor = '#EBE7DD';
@@ -31,7 +33,7 @@ export const spacing = {
   big: 36
 };
 
-export const elevatedLevel1 = position => ({
+export const elevatedLevel1 = (position: ShadowPosition) => ({
   elevation: 2,
   shadowColor: 'black',
   shadowOffset: { width: 0, height: position === 'top' ? -2 : 2 },
@@ -39,7 +41,7 @@ export const elevatedLevel1 = position => ({
   shadowRadius: 2
 });
 
-export const elevatedLevel2 = position => ({
+export const elevatedLevel2 = (position: ShadowPosition) => ({
   elevation: 10,
   shadowColor: 'black',
   shadowOffset: { width: 0, height: position === 'top' ? -9 : 9 },
@@ -78,7 +80,7 @@ export const text = {
   fontSize: 12,
   letterSpacing: 0.85,
   lineHeight: 16,
-  textAlign: 'justify'
+  textAlign: 'justify' as 'justify'
 };
 
 export const title = {
@@ -113,5 +115,5 @@ export const bigButtonText = {
     }
   }),
   lineHeight: 24,
-  textAlign: 'center'
+  textAlign: 'center' as 'center'
 };

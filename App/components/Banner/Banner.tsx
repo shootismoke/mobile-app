@@ -15,19 +15,36 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import {
+  GestureResponderEvent,
+  StyleProp,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  ViewStyle
+} from 'react-native';
 
 import * as theme from '../../utils/theme';
 
-export const Banner = ({
+interface BannerProps {
+  asTouchable?: boolean;
+  children?: React.ReactNode;
+  elevated?: boolean | 'very';
+  onClick?: (event: GestureResponderEvent) => void;
+  shadowPosition?: theme.ShadowPosition;
+  style?: StyleProp<ViewStyle>;
+}
+
+export function Banner({
   asTouchable,
   children,
   elevated,
   onClick,
-  shadowPosition,
+  shadowPosition = 'bottom',
   style
-}) => {
-  const Wrapper = asTouchable ? TouchableHighlight : View;
+}: BannerProps) {
+  // FIXME any
+  const Wrapper: any = asTouchable ? TouchableHighlight : View;
 
   return (
     <Wrapper
@@ -47,7 +64,7 @@ export const Banner = ({
       </View>
     </Wrapper>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

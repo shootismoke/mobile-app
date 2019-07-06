@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
 
 import searchIcon from '../../../../assets/images/search.png';
@@ -22,24 +22,28 @@ import { Banner } from '../../../components/Banner';
 import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
 
-export class SearchHeader extends PureComponent {
-  render () {
-    const { onChangeSearch, search } = this.props;
-    return (
-      <Banner elevated shadowPosition="bottom">
-        <TextInput
-          autoFocus
-          onChangeText={onChangeSearch}
-          placeholder={i18n.t('search_header_input_placeholder')}
-          placeholderTextColor="rgba(255, 255, 255, 0.6)"
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          value={search}
-        />
-        <Image source={searchIcon} />
-      </Banner>
-    );
-  }
+interface SearchHeaderProps {
+  onChangeSearch?: (text: string) => void;
+  search: string;
+}
+
+export function SearchHeader(props: SearchHeaderProps) {
+  const { onChangeSearch, search } = props;
+
+  return (
+    <Banner elevated shadowPosition="bottom">
+      <TextInput
+        autoFocus
+        onChangeText={onChangeSearch}
+        placeholder={i18n.t('search_header_input_placeholder')}
+        placeholderTextColor="rgba(255, 255, 255, 0.6)"
+        style={styles.input}
+        underlineColorAndroid="transparent"
+        value={search}
+      />
+      <Image source={searchIcon} />
+    </Banner>
+  );
 }
 
 const styles = StyleSheet.create({
