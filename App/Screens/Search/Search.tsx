@@ -18,15 +18,17 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
-import * as consoleFp from 'fp-ts/lib/Console';
-import * as either from 'fp-ts/lib/Either';
-import * as io from 'fp-ts/lib/IO';
-import * as task from 'fp-ts/lib/Task';
-import * as taskE from 'fp-ts/lib/TaskEither';
+import * as C from 'fp-ts/lib/Console';
+import * as E from 'fp-ts/lib/Either';
+import * as O from 'fp-ts/lib/Option';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+import { capDelay, limitRetries } from 'retry-ts';
+import { retrying } from 'retry-ts/lib/Task';
 
 import { BackButton } from '../../components/BackButton';
 import { Item } from './Item';
@@ -75,67 +77,91 @@ const AxiosResponseT = t.type({
   })
 });
 
-function fetchAlgolia(search: string, gps?: LatLng, attempt: number = 1) {
-  return pipe(
-    taskE.rightIO(
-      consoleFp.log(
-        `<Search> - handleChangeSearch - Attempt #${attempt}: ${
-          algoliaUrls[attempt - 1]
-        }/1/places/query`
-      )
-    ),
-    taskE.chain(() =>
-      taskE.tryCatch(
-        () =>
-          axios.post(
-            `${algoliaUrls[attempt - 1]}/1/places/query`,
-            {
-              aroundLatLng: gps
-                ? `${gps.latitude},${gps.longitude}`
-                : undefined,
-              hitsPerPage: 10,
-              language: 'en',
-              query: search
-            },
-            {
-              headers:
-                Constants.manifest.extra.algoliaApplicationId &&
-                Constants.manifest.extra.algoliaApiKey
-                  ? {
-                      'X-Algolia-Application-Id':
-                        Constants.manifest.extra.algoliaApplicationId,
-                      'X-Algolia-API-Key':
-                        Constants.manifest.extra.algoliaApiKey
-                    }
-                  : undefined,
+function fetchAlgolia(search: string, gps?: LatLng) {
+  // THe attempt number
+  let attempt = 0;
 
-              timeout: 3000
-            }
-          ),
-        reason => new Error(String(reason))
-      )
-    ),
-    taskE.chain(response =>
-      task.of(
-        pipe(
-          AxiosResponseT.decode(response),
-          either.mapLeft(failure),
-          either.mapLeft(errs => errs[0]), // Only show 1st error
-          either.mapLeft(Error)
+  return retrying(
+    capDelay(2000, limitRetries(4)), // Do 4 times max, and set limit to 2s
+    status =>
+      pipe(
+        status.previousDelay,
+        O.fold(
+          () => TE.left(new Error()),
+          () =>
+            pipe(
+              TE.rightIO(
+                sideEffect(() => {
+                  ++attempt;
+                }, undefined)
+              ),
+              TE.chain(() =>
+                TE.rightIO(
+                  C.log(
+                    `<Search> - handleChangeSearch - Attempt #${attempt}: ${
+                      algoliaUrls[attempt - (1 % algoliaUrls.length)]
+                    }/1/places/query`
+                  )
+                )
+              ),
+              TE.chain(() =>
+                TE.tryCatch(
+                  () =>
+                    axios.post(
+                      `${algoliaUrls[attempt - 1]}/1/places/query`,
+                      {
+                        aroundLatLng: gps
+                          ? `${gps.latitude},${gps.longitude}`
+                          : undefined,
+                        hitsPerPage: 10,
+                        language: 'en',
+                        query: search
+                      },
+                      {
+                        headers:
+                          Constants.manifest.extra.algoliaApplicationId &&
+                          Constants.manifest.extra.algoliaApiKey
+                            ? {
+                                'X-Algolia-Application-Id':
+                                  Constants.manifest.extra.algoliaApplicationId,
+                                'X-Algolia-API-Key':
+                                  Constants.manifest.extra.algoliaApiKey
+                              }
+                            : undefined,
+
+                        timeout: 3000
+                      }
+                    ),
+                  reason => new Error(String(reason))
+                )
+              ),
+              TE.chain(response =>
+                T.of(
+                  pipe(
+                    AxiosResponseT.decode(response),
+                    E.mapLeft(failure),
+                    E.mapLeft(errs => errs[0]), // Only show 1st error
+                    E.mapLeft(Error)
+                  )
+                )
+              ),
+              TE.map(response => response.data.hits),
+              TE.chain((hits: AlgoliaHit[]) =>
+                TE.rightIO(
+                  sideEffect(
+                    C.log(
+                      `<Search> - handleChangeSearch - Got ${
+                        hits.length
+                      } results`
+                    ),
+                    hits
+                  )
+                )
+              )
+            )
         )
-      )
-    ),
-    taskE.map(response => response.data.hits),
-    taskE.chain((hits: AlgoliaHit[]) =>
-      taskE.rightIO(
-        sideEffect(
-          consoleFp.log(
-            `<Search> - handleChangeSearch - Got ${hits.length} results`
-          ),
-          hits
-        )
-      )
-    )
+      ),
+    E.isLeft
   );
 }
 
@@ -158,32 +184,34 @@ export function Search(props: SearchProps) {
 
   function handleChangeSearch(s: string) {
     setSearch(s);
+    setAlgoliaError(undefined);
+    setHits([]);
+
     if (!s) {
       return;
     }
+
+    setLoading(true);
 
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
     typingTimeout = setTimeout(() => {
-      setHits([]);
-      setLoading(true);
-
-      taskE.fold<Error, AlgoliaHit[], unknown>(
+      TE.fold<Error, AlgoliaHit[], unknown>(
         err => {
           console.log('<Search> - handleChangeSearch -', err.message);
           setLoading(false);
           setAlgoliaError(err);
 
           // TODO Log on Sentry
-          return task.of(undefined as void);
+          return T.of(undefined as void);
         },
         hits => {
           setLoading(false);
           setAlgoliaError(undefined);
           setHits(hits);
 
-          return task.of(undefined as void);
+          return T.of(undefined as void);
         }
       )(fetchAlgolia(s, gps))();
     }, 500);
