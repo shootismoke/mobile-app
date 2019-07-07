@@ -151,7 +151,10 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
 
   return (
     <ApiContext.Provider
-      value={{ api, reloadApp: () => setCurrentLocation(currentLocation) }}
+      value={{
+        api,
+        reloadApp: () => setCurrentLocation({ ...currentLocation! }) // Small trick to re-run effect
+      }}
     >
       {children}
     </ApiContext.Provider>
