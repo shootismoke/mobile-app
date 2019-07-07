@@ -25,14 +25,14 @@ import * as theme from '../../utils/theme';
 // The variable returned by setTimeout for longWaiting
 let longWaitingTimeout: NodeJS.Timeout | null = null;
 
-function clearLongWaiting() {
+function clearLongWaiting () {
   if (longWaitingTimeout) {
     clearTimeout(longWaitingTimeout);
     longWaitingTimeout = null;
   }
 }
 
-export function Loading() {
+export function Loading () {
   const { api } = useContext(ApiContext);
   const gps = useContext(GpsLocationContext);
 
@@ -62,7 +62,7 @@ export function Loading() {
   );
 }
 
-function renderCough(index: number) {
+function renderCough (index: number) {
   return (
     <Text key={index}>
       {i18n.t('loading_title_cough')}
@@ -71,7 +71,7 @@ function renderCough(index: number) {
   );
 }
 
-function renderText(longWaiting: boolean, gps?: Location, api?: Api) {
+function renderText (longWaiting: boolean, gps?: Location, api?: Api) {
   let coughs = 0; // Number of times to show "Cough..."
   if (gps) ++coughs;
   if (longWaiting) ++coughs;

@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as t from 'io-ts';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -28,7 +27,7 @@ interface ItemProps {
   onClick: (item: Location) => void;
 }
 
-export function Item(props: ItemProps) {
+export function Item (props: ItemProps) {
   const { item, onClick } = props;
 
   const { city, country, county, _geoloc, locale_names: localeNames } = item;

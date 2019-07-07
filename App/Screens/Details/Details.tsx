@@ -27,14 +27,13 @@ import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { distanceToStation, getCorrectLatLng } from '../../utils/station';
-import * as theme from '../../utils/theme';
 
 interface DetailsProps extends NavigationInjectedProps {}
 
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details(props: DetailsProps) {
+export function Details (props: DetailsProps) {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);

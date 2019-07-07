@@ -11,7 +11,7 @@ import { noop } from './noop';
 /**
  * Run function `fn()` as a side-effect, return `returnValue`
  */
-export function sideEffect<T>(fn: () => any, returnValue: T) {
+export function sideEffect<T> (fn: () => any, returnValue: T) {
   fn();
   return IO.of(returnValue);
 }
@@ -24,7 +24,7 @@ const EMPTY_OPTION_ERROR = new Error('Empty Option<delay>');
  * @param retries - The number of time to retry
  * @param teFn - A function returning a TE
  */
-export function retry<A>(
+export function retry<A> (
   retries: number,
   teFn: (status: RetryStatus, delay: number) => TE.TaskEither<Error, A>
 ) {

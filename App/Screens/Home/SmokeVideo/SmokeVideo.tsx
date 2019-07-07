@@ -21,7 +21,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
 import { ApiContext } from '../../../stores';
 
-export function SmokeVideo() {
+export function SmokeVideo () {
   const { api } = useContext(ApiContext)!;
   const {
     shootISmoke: { cigarettes }
@@ -41,7 +41,7 @@ export function SmokeVideo() {
   );
 }
 
-function getVideoStyle(cigarettes: number) {
+function getVideoStyle (cigarettes: number) {
   if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
   if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
   if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };

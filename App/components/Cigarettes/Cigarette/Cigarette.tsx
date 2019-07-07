@@ -30,7 +30,7 @@ interface CigaretteProps {
   size: CigaretteSize;
   vertical: boolean;
 }
-export function Cigarette(props: CigaretteProps) {
+export function Cigarette (props: CigaretteProps) {
   const { diagonal, length, vertical } = props;
 
   // Max and min lengths of a cigarette
@@ -42,11 +42,11 @@ export function Cigarette(props: CigaretteProps) {
       style={[
         diagonal
           ? {
-              justifyContent: 'center',
-              height:
+            justifyContent: 'center',
+            height:
                 (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
-              width: (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
-            }
+            width: (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
+          }
           : null
       ]}
     >
@@ -56,13 +56,13 @@ export function Cigarette(props: CigaretteProps) {
           styles.container,
           diagonal
             ? {
-                width: minWidth + length * (maxWidth - minWidth)
-              }
+              width: minWidth + length * (maxWidth - minWidth)
+            }
             : vertical
-            ? {
+              ? {
                 height: minWidth + length * (maxWidth - minWidth)
               }
-            : {
+              : {
                 width: minWidth + length * (maxWidth - minWidth)
               },
           diagonal ? styles.diagonal : null
@@ -81,7 +81,7 @@ export function Cigarette(props: CigaretteProps) {
   );
 }
 
-function getButtStyle(props: CigaretteProps) {
+function getButtStyle (props: CigaretteProps) {
   const ratio = 280 / 21; // Ratio of our image
   const { size } = props;
 
@@ -109,7 +109,7 @@ function getButtStyle(props: CigaretteProps) {
   }
 }
 
-function getHeadStyle(props: CigaretteProps) {
+function getHeadStyle (props: CigaretteProps) {
   const ratio = 27 / 20; // Ratio of our image
   const { size } = props;
 
@@ -131,7 +131,7 @@ function getHeadStyle(props: CigaretteProps) {
   }
 }
 
-function getMaxWidth(props: CigaretteProps) {
+function getMaxWidth (props: CigaretteProps) {
   const { diagonal, size } = props;
 
   if (diagonal) return 200;

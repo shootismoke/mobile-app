@@ -25,7 +25,7 @@ interface DistanceProps {
   distance: number;
 }
 
-export function Distance(props: DistanceProps) {
+export function Distance (props: DistanceProps) {
   return (
     <Banner elevated shadowPosition="top" style={styles.banner}>
       <Text style={styles.distance}>

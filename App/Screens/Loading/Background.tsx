@@ -24,7 +24,7 @@ interface BackgroundProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export function Background(props: BackgroundProps) {
+export function Background (props: BackgroundProps) {
   return <View style={[styles.container, props.style]}>{props.children}</View>;
 }
 

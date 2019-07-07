@@ -69,7 +69,7 @@ const sources = [
   { name: 'windWaqi', run: dataSources.windWaqi }
 ];
 
-export function fetchApi(currentPosition: LatLng) {
+export function fetchApi (currentPosition: LatLng) {
   return retry(sources.length, status =>
     pipe(
       TE.rightIO(
@@ -123,7 +123,7 @@ interface ApiContextProviderProps {
   children: JSX.Element;
 }
 
-export function ApiContextProvider({ children }: ApiContextProviderProps) {
+export function ApiContextProvider ({ children }: ApiContextProviderProps) {
   const { currentLocation, setCurrentLocation } = useContext(
     CurrentLocationContext
   );

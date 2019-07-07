@@ -30,7 +30,7 @@ interface SmallButtonProps extends TouchableOpacityProps {
   text: string;
 }
 
-export function SmallButton({ text, icon, ...rest }: SmallButtonProps) {
+export function SmallButton ({ text, icon, ...rest }: SmallButtonProps) {
   return (
     <TouchableOpacity style={styles.container} {...rest}>
       {icon && (

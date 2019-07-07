@@ -28,7 +28,7 @@ export const MAX_DISTANCE_TO_STATION = 10;
  * @param currentLocation - The current location of the user.
  * @param api - The api object returned by remote data.
  */
-export function distanceToStation(currentLocation: LatLng, api: Api) {
+export function distanceToStation (currentLocation: LatLng, api: Api) {
   return Math.round(
     haversine(
       currentLocation,
@@ -47,7 +47,7 @@ export function distanceToStation(currentLocation: LatLng, api: Api) {
  * @param currentLocation - The current location of the user.
  * @param api - The api object returned by remote data.
  */
-export function isStationTooFar(currentLocation: LatLng, api: Api) {
+export function isStationTooFar (currentLocation: LatLng, api: Api) {
   return distanceToStation(currentLocation, api) > MAX_DISTANCE_TO_STATION;
 }
 

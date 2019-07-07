@@ -8,7 +8,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "eslint 'App/**/*.js'",
+    "lint": "eslint --ext .ts,.tsx App",
     "start": "expo start",
     "test": "jest"
   },
@@ -42,6 +42,8 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-expo": "^5.2.0",
     "eslint": "^5.16.0",

@@ -28,7 +28,7 @@ interface CurrentLocationProps extends TextProps {
   currentLocation: Location;
 }
 
-function fetchReverseGeocode(currentLocation: LatLng) {
+function fetchReverseGeocode (currentLocation: LatLng) {
   return TE.tryCatch(
     async () => {
       const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
@@ -42,7 +42,7 @@ function fetchReverseGeocode(currentLocation: LatLng) {
 // Text to show when fetching reverse geocoding
 const LOADING_TEXT = 'Fetching...';
 
-export function CurrentLocation(props: CurrentLocationProps) {
+export function CurrentLocation (props: CurrentLocationProps) {
   const { api, currentLocation, style, ...rest } = props;
   const [locationName, setLocationName] = useState(
     currentLocation.name || LOADING_TEXT

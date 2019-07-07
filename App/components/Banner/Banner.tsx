@@ -35,7 +35,7 @@ interface BannerProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export function Banner({
+export function Banner ({
   asTouchable,
   children,
   elevated,

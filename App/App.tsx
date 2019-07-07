@@ -32,7 +32,7 @@ if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
 }
 
-export function App() {
+export function App () {
   const [fontLoaded, setFontLoaded] = useState(false);
   useEffect(() => {
     Font.loadAsync({

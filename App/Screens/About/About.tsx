@@ -34,7 +34,7 @@ import * as theme from '../../utils/theme';
 
 interface AboutProps extends NavigationInjectedProps {}
 
-export function About(props: AboutProps) {
+export function About (props: AboutProps) {
   const handleOpenAmaury = () =>
     Linking.openURL('https://twitter.com/amaurymartiny');
 

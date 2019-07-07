@@ -23,7 +23,7 @@ interface CigarettesProps {
   cigarettes: number;
 }
 
-export function Cigarettes(props: CigarettesProps) {
+export function Cigarettes (props: CigarettesProps) {
   const { cigarettes: realCigarettes } = props;
   const cigarettes = Math.round(Math.min(realCigarettes, 63) * 10) / 10; // We don't show more than 63
   // const cigarettes = 0.9; // Can change values here for testing
@@ -38,15 +38,15 @@ export function Cigarettes(props: CigarettesProps) {
     <View style={styles.container}>
       {cigarettes > 1 && count >= 1
         ? Array.from(Array(count)).map((_, i) => (
-            <View key={i}>
-              <Cigarette
-                diagonal={false}
-                length={1}
-                size={getSize(cigarettes)}
-                vertical={vertical}
-              />
-            </View>
-          ))
+          <View key={i}>
+            <Cigarette
+              diagonal={false}
+              length={1}
+              size={getSize(cigarettes)}
+              vertical={vertical}
+            />
+          </View>
+        ))
         : null}
       {cigarettes === 1 || decimal > 0 ? (
         <Cigarette
@@ -60,7 +60,7 @@ export function Cigarettes(props: CigarettesProps) {
   );
 }
 
-function getSize(cigarettes: number): CigaretteSize {
+function getSize (cigarettes: number): CigaretteSize {
   if (cigarettes <= 1) return 'big';
   if (cigarettes <= 5) return 'big';
   if (cigarettes <= 14) return 'medium';

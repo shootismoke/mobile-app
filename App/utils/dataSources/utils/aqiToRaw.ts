@@ -16,7 +16,7 @@
 
 export type Pollutant = 'pm25'; // Only support this pollutant for now
 
-function roundTo1Decimal(n: number) {
+function roundTo1Decimal (n: number) {
   return Math.round(10 * n) / 10;
 }
 
@@ -28,7 +28,7 @@ function roundTo1Decimal(n: number) {
  * @see https://github.com/amaurymartiny/shoot-i-smoke/issues/46
  * @see https://www3.epa.gov/airnow/aqi-technical-assistance-document-sept2018.pdf
  */
-function aqiToRawFormula(pollutant: 'pm25', aqi: number) {
+function aqiToRawFormula (pollutant: 'pm25', aqi: number) {
   const segment = breakPoints[pollutant].find(
     ([[aqiLow, aqiHigh]]) => aqiLow <= aqi && aqi <= aqiHigh
   );

@@ -25,7 +25,7 @@ import * as theme from '../../utils/theme';
 
 interface ErrorScreenProps extends NavigationInjectedProps {}
 
-export function ErrorScreen(props: ErrorScreenProps) {
+export function ErrorScreen (props: ErrorScreenProps) {
   const { error } = useContext(ErrorContext);
 
   return (

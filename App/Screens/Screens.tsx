@@ -31,7 +31,7 @@ import { Search } from './Search';
 import { Api, ApiContext, ErrorContext } from '../stores';
 import * as theme from '../utils/theme';
 
-function stackNavigatorOptions(initialRouteName: string) {
+function stackNavigatorOptions (initialRouteName: string) {
   return {
     cardStyle: {
       backgroundColor: theme.backgroundColor
@@ -84,7 +84,7 @@ const ErrorStack = createAppContainer(
   )
 );
 
-export function Screens() {
+export function Screens () {
   const { api } = useContext(ApiContext);
   const { error } = useContext(ErrorContext);
 
@@ -93,7 +93,7 @@ export function Screens() {
   return <View style={theme.fullScreen}>{stack}</View>;
 }
 
-function renderScreen(api?: Api, error?: string) {
+function renderScreen (api?: Api, error?: string) {
   if (error) {
     return <ErrorStack />;
   }

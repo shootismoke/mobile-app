@@ -27,7 +27,7 @@ interface SearchHeaderProps {
   search: string;
 }
 
-export function SearchHeader(props: SearchHeaderProps) {
+export function SearchHeader (props: SearchHeaderProps) {
   const { onChangeSearch, search } = props;
 
   return (

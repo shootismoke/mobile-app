@@ -74,7 +74,7 @@ const AxiosResponseT = t.type({
   })
 });
 
-function fetchAlgolia(search: string, gps?: LatLng) {
+function fetchAlgolia (search: string, gps?: LatLng) {
   return retry(algoliaUrls.length, status =>
     pipe(
       TE.rightIO(
@@ -104,11 +104,11 @@ function fetchAlgolia(search: string, gps?: LatLng) {
                   Constants.manifest.extra.algoliaApplicationId &&
                   Constants.manifest.extra.algoliaApiKey
                     ? {
-                        'X-Algolia-Application-Id':
+                      'X-Algolia-Application-Id':
                           Constants.manifest.extra.algoliaApplicationId,
-                        'X-Algolia-API-Key':
+                      'X-Algolia-API-Key':
                           Constants.manifest.extra.algoliaApiKey
-                      }
+                    }
                     : undefined,
 
                 timeout: 3000
@@ -145,7 +145,7 @@ let typingTimeout: NodeJS.Timeout | null = null;
 
 interface SearchProps extends NavigationInjectedProps {}
 
-export function Search(props: SearchProps) {
+export function Search (props: SearchProps) {
   const { setCurrentLocation } = useContext(CurrentLocationContext);
   const { setError } = useContext(ErrorContext);
   const gps = useContext(GpsLocationContext);
@@ -157,7 +157,7 @@ export function Search(props: SearchProps) {
   const [search, setSearch] = useState('');
   const [hits, setHits] = useState<AlgoliaHit[]>([]);
 
-  function handleChangeSearch(s: string) {
+  function handleChangeSearch (s: string) {
     setSearch(s);
     setAlgoliaError(undefined);
     setHits([]);
@@ -192,13 +192,13 @@ export function Search(props: SearchProps) {
     }, 500);
   }
 
-  function handleItemClick(item: Location) {
+  function handleItemClick (item: Location) {
     // Reset everything when we choose a new location.
     setCurrentLocation(item);
     setError(undefined);
   }
 
-  function renderItem({ item }: { item: AlgoliaHit }) {
+  function renderItem ({ item }: { item: AlgoliaHit }) {
     return <Item item={item} onClick={handleItemClick} />;
   }
 
@@ -226,7 +226,7 @@ export function Search(props: SearchProps) {
   );
 }
 
-function renderInfoText(
+function renderInfoText (
   algoliaError: Error | undefined,
   hits: AlgoliaHit[],
   loading: boolean,
@@ -239,7 +239,7 @@ function renderInfoText(
   return 'Waiting for results.';
 }
 
-function renderSeparator() {
+function renderSeparator () {
   return <View style={styles.separator} />;
 }
 

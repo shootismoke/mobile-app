@@ -22,7 +22,7 @@ import * as names from './names.json';
 import { ApiContext } from '../../../stores';
 import * as theme from '../../../utils/theme';
 
-export function Language() {
+export function Language () {
   const { reloadApp } = useContext(ApiContext);
 
   const handleValueChange = (itemValue: string) => {

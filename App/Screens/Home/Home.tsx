@@ -37,21 +37,21 @@ import * as theme from '../../utils/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
 
-export function Home(props: HomeProps) {
+export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
 
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
-  function goToAbout() {
+  function goToAbout () {
     props.navigation.navigate('About');
   }
 
-  function goToDetails() {
+  function goToDetails () {
     props.navigation.navigate('Details');
   }
 
-  function handleShare() {
+  function handleShare () {
     return Share.share({
       title: i18n.t('home_share_title'),
       message: i18n.t('home_share_message', {
@@ -109,14 +109,14 @@ export function Home(props: HomeProps) {
     );
   };
 
-  function renderPresentPast() {
+  function renderPresentPast () {
     const time = new Date().getHours();
 
     if (time < 15) return i18n.t('home_common_you_ll_smoke');
     return i18n.t('home_common_you_smoked');
   }
 
-  function renderShit() {
+  function renderShit () {
     if (api!.shootISmoke.cigarettes <= 1) return i18n.t('home_common_oh');
 
     // Return a random swear word

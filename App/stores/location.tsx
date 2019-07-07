@@ -50,7 +50,7 @@ export const CurrentLocationContext = createContext<LocationWithSetter>({
   setCurrentLocation: noop
 });
 
-function fetchGpsPosition() {
+function fetchGpsPosition () {
   return TE.tryCatch(
     async () => {
       const { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -77,7 +77,7 @@ function fetchGpsPosition() {
   );
 }
 
-export function LocationContextProvider({
+export function LocationContextProvider ({
   children
 }: {
   children: JSX.Element;
