@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import butt from '../../../../../assets/images/butt.png';
@@ -22,124 +22,126 @@ import buttVertical from '../../../../../assets/images/butt-vertical.png';
 import head from '../../../../../assets/images/head.png';
 import headVertical from '../../../../../assets/images/head-vertical.png';
 
-export class Cigarette extends PureComponent {
-  static defaultProps = {
-    length: 1
-  };
+export type CigaretteSize = 'small' | 'medium' | 'big';
 
-  getButtStyle = () => {
-    const ratio = 280 / 21; // Ratio of our image
-    const { size } = this.props;
+interface CigaretteProps {
+  diagonal: boolean;
+  length: number;
+  size: CigaretteSize;
+  vertical: boolean;
+}
+export function Cigarette(props: CigaretteProps) {
+  const { diagonal, length, vertical } = props;
 
-    switch (size) {
-      case 'big':
-        return {
-          overflow: 'hidden',
-          height: this.getMaxWidth() / ratio,
-          width: this.getMaxWidth()
-        };
-      case 'medium':
-        return {
-          overflow: 'hidden',
-          height: this.getMaxWidth(),
-          marginHorizontal: 4,
-          width: this.getMaxWidth() / ratio
-        };
-      default:
-        return {
-          overflow: 'hidden',
-          height: this.getMaxWidth(),
-          marginHorizontal: 2,
-          width: this.getMaxWidth() / ratio
-        };
-    }
-  };
+  // Max and min lengths of a cigarette
+  const maxWidth = getMaxWidth(props);
+  const minWidth = 0.4 * maxWidth;
 
-  getHeadStyle = () => {
-    const ratio = 27 / 20; // Ratio of our image
-    const { size } = this.props;
-    switch (size) {
-      case 'big':
-        return {};
-      case 'medium':
-        return {
-          height: 12 * ratio,
-          marginHorizontal: 4,
-          width: 12
-        };
-      default:
-        return {
-          height: 6 * ratio,
-          marginHorizontal: 2,
-          width: 6
-        };
-    }
-  };
-
-  getMaxWidth = () => {
-    const { diagonal, size } = this.props;
-    if (diagonal) return 200;
-    switch (size) {
-      case 'big':
-        return 280;
-      case 'medium':
-        return 160;
-      default:
-        return 81;
-    }
-  };
-
-  render () {
-    const { diagonal, length, style, vertical } = this.props;
-
-    // Max and min lengths of a cigarette
-    const maxWidth = this.getMaxWidth();
-    const minWidth = 0.4 * maxWidth;
-
-    return (
-      <View
-        style={[
-          diagonal
-            ? {
+  return (
+    <View
+      style={[
+        diagonal
+          ? {
               justifyContent: 'center',
               height:
-                  (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
-              width:
-                  (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
+                (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2),
+              width: (minWidth + length * (maxWidth - minWidth)) / Math.sqrt(2)
             }
-            : null
-        ]}
-      >
-        <View
-          removeClippedSubviews
-          style={[
-            styles.container,
-            diagonal
-              ? {
+          : null
+      ]}
+    >
+      <View
+        removeClippedSubviews
+        style={[
+          styles.container,
+          diagonal
+            ? {
                 width: minWidth + length * (maxWidth - minWidth)
               }
-              : vertical
-                ? {
-                  height: minWidth + length * (maxWidth - minWidth)
-                }
-                : {
-                  width: minWidth + length * (maxWidth - minWidth)
-                },
-            diagonal ? styles.diagonal : null,
-            style
-          ]}
-        >
-          <Image
-            source={vertical ? buttVertical : butt}
-            style={this.getButtStyle()}
-          />
-          <Image
-            source={vertical ? headVertical : head}
-            style={[styles.head, this.getHeadStyle()]}
-          />
-        </View>
+            : vertical
+            ? {
+                height: minWidth + length * (maxWidth - minWidth)
+              }
+            : {
+                width: minWidth + length * (maxWidth - minWidth)
+              },
+          diagonal ? styles.diagonal : null
+        ]}
+      >
+        <Image
+          source={vertical ? buttVertical : butt}
+          style={getButtStyle(props)}
+        />
+        <Image
+          source={vertical ? headVertical : head}
+          style={[styles.head, getHeadStyle(props)]}
+        />
       </View>
-    );
+    </View>
+  );
+}
+
+function getButtStyle(props: CigaretteProps) {
+  const ratio = 280 / 21; // Ratio of our image
+  const { size } = props;
+
+  switch (size) {
+    case 'big':
+      return {
+        overflow: 'hidden' as 'hidden',
+        height: getMaxWidth(props) / ratio,
+        width: getMaxWidth(props)
+      };
+    case 'medium':
+      return {
+        overflow: 'hidden' as 'hidden',
+        height: getMaxWidth(props),
+        marginHorizontal: 4,
+        width: getMaxWidth(props) / ratio
+      };
+    default:
+      return {
+        overflow: 'hidden' as 'hidden',
+        height: getMaxWidth(props),
+        marginHorizontal: 2,
+        width: getMaxWidth(props) / ratio
+      };
+  }
+}
+
+function getHeadStyle(props: CigaretteProps) {
+  const ratio = 27 / 20; // Ratio of our image
+  const { size } = props;
+
+  switch (size) {
+    case 'big':
+      return {};
+    case 'medium':
+      return {
+        height: 12 * ratio,
+        marginHorizontal: 4,
+        width: 12
+      };
+    default:
+      return {
+        height: 6 * ratio,
+        marginHorizontal: 2,
+        width: 6
+      };
+  }
+}
+
+function getMaxWidth(props: CigaretteProps) {
+  const { diagonal, size } = props;
+
+  if (diagonal) return 200;
+  switch (size) {
+    case 'big':
+      return 280;
+    case 'medium':
+      return 160;
+    default:
+      return 81;
   }
 }
 

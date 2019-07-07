@@ -16,23 +16,35 @@
 
 import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps
+} from 'react-native';
 
 import * as theme from '../../../utils/theme';
 
-export const SmallButton = ({ text, icon, ...rest }) => (
-  <TouchableOpacity style={styles.container} {...rest}>
-    {icon && (
-      <FontAwesome
-        color={theme.primaryColor}
-        name={icon}
-        size={15}
-        style={styles.icon}
-      />
-    )}
-    <Text style={styles.title}>{text}</Text>
-  </TouchableOpacity>
-);
+interface SmallButtonProps extends TouchableOpacityProps {
+  icon: string;
+  text: string;
+}
+
+export function SmallButton({ text, icon, ...rest }: SmallButtonProps) {
+  return (
+    <TouchableOpacity style={styles.container} {...rest}>
+      {icon && (
+        <FontAwesome
+          color={theme.primaryColor}
+          name={icon}
+          size={15}
+          style={styles.icon}
+        />
+      )}
+      <Text style={styles.title}>{text}</Text>
+    </TouchableOpacity>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

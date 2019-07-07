@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import {
   ScrollView,
   Share,
@@ -23,133 +23,117 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { NavigationInjectedProps } from 'react-navigation';
 
 import { Cigarettes } from './Cigarettes';
-import { Header } from './Header';
+// import { Header } from './Header';
 import { i18n } from '../../localization';
 import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
+import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
+import { isStationTooFar } from '../../utils/station';
 import * as theme from '../../utils/theme';
 
-export function
-  goToAbout = () => this.props.navigation.navigate('About');
+interface HomeProps extends NavigationInjectedProps {}
 
-  goToDetails = () => this.props.navigation.navigate('Details');
+export function Home(props: HomeProps) {
+  const api = useContext(ApiContext)!;
+  const { currentLocation } = useContext(CurrentLocationContext);
 
-  goToSearch = () => this.props.navigation.navigate('Search');
+  const isTooFar = isStationTooFar(currentLocation!, api);
 
-  handleShare = () =>
-    Share.share({
-      title: i18n.t('home_share_title'),
-      message: i18n.t('home_share_message', { cigarettes: this.props.stores.cigarettes })
-    });
-
-  render () {
-    const {
-      stores: { isStationTooFar }
-    } = this.props;
-    return (
-      <View style={styles.container}>
-        <SmokeVideo />
-        <Header onChangeLocationClick={this.goToSearch} />
-        <ScrollView
-          bounces={false}
-          contentContainerStyle={styles.scrollContainer}
-          style={styles.scrollView}
-        >
-          <View style={styles.content}>
-            <Cigarettes />
-            <View style={styles.main}>{this.renderText()}</View>
-          </View>
-          <View style={styles.cta}>
-            {isStationTooFar && (
-              <Text style={styles.isStationTooFar}>
-                {i18n.t('home_station_too_far_message')}
-              </Text>
-            )}
-            {this.renderBigButton()}
-            {this.renderFooter()}
-          </View>
-        </ScrollView>
-      </View>
-    );
+  function goToAbout() {
+    props.navigation.navigate('About');
   }
 
-  renderBigButton = () => {
-    const {
-      stores: { isStationTooFar }
-    } = this.props;
-    if (isStationTooFar) {
+  function goToDetails() {
+    props.navigation.navigate('Details');
+  }
+
+  function handleShare() {
+    return Share.share({
+      title: i18n.t('home_share_title'),
+      message: i18n.t('home_share_message', {
+        cigarettes: api!.shootISmoke.cigarettes
+      })
+    });
+  }
+
+  const renderBigButton = () => {
+    if (isTooFar) {
       return (
-        <TouchableOpacity onPress={this.goToAbout}>
+        <TouchableOpacity onPress={goToAbout}>
           <View style={theme.bigButton}>
-            <Text style={theme.bigButtonText}>{i18n.t('home_btn_why_is_station_so_far').toUpperCase()}</Text>
+            <Text style={theme.bigButtonText}>
+              {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
+            </Text>
           </View>
         </TouchableOpacity>
       );
     }
 
     return (
-      <TouchableOpacity onPress={this.goToDetails}>
+      <TouchableOpacity onPress={goToDetails}>
         <View style={theme.bigButton}>
-          <Text style={theme.bigButtonText}>{i18n.t('home_btn_see_detailed_info').toUpperCase()}</Text>
+          <Text style={theme.bigButtonText}>
+            {i18n.t('home_btn_see_detailed_info').toUpperCase()}
+          </Text>
         </View>
       </TouchableOpacity>
     );
   };
 
-  renderFooter = () => {
-    const {
-      stores: { isStationTooFar }
-    } = this.props;
+  const renderFooter = () => {
     return (
       <View style={styles.smallButtons}>
-        {isStationTooFar ? (
+        {isTooFar ? (
           <SmallButton
-            icon='plus-circle'
+            icon="plus-circle"
             text={i18n.t('home_btn_more_details').toUpperCase()}
-            onPress={this.goToDetails}
+            onPress={goToDetails}
           />
         ) : (
           <SmallButton
-            icon='question-circle'
+            icon="question-circle"
             text={i18n.t('home_btn_faq_about').toUpperCase()}
-            onPress={this.goToAbout}
+            onPress={goToAbout}
           />
         )}
-        <SmallButton icon='share-alt' text={i18n.t('home_btn_share').toUpperCase()} onPress={this.handleShare} />
+        <SmallButton
+          icon="share-alt"
+          text={i18n.t('home_btn_share').toUpperCase()}
+          onPress={handleShare}
+        />
       </View>
     );
   };
 
-  renderPresentPast = () => {
+  function renderPresentPast() {
     const time = new Date().getHours();
 
     if (time < 15) return i18n.t('home_common_you_ll_smoke');
     return i18n.t('home_common_you_smoked');
-  };
+  }
 
-  renderShit = () => {
-    const {
-      stores: { cigarettes }
-    } = this.props;
-
-    if (cigarettes <= 1) return i18n.t('home_common_oh');
+  function renderShit() {
+    if (api!.shootISmoke.cigarettes <= 1) return i18n.t('home_common_oh');
 
     // Return a random swear word
     return swearWords[Math.floor(Math.random() * swearWords.length)];
-  };
+  }
 
-  renderText = () => {
-    const { stores } = this.props;
+  const renderText = () => {
     // Round to 1 decimal
-    const cigarettes = Math.round(stores.cigarettes * 10) / 10;
+    const cigarettes = Math.round(api!.shootISmoke.cigarettes * 10) / 10;
 
     const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord: this.renderShit(),
-      presentPast: this.renderPresentPast(),
-      singularPlural: cigarettes === 1 ? i18n.t('home_common_cigarette').toLowerCase() : i18n.t('home_common_cigarettes').toLowerCase(),
+      swearWord: renderShit(),
+      presentPast: renderPresentPast(),
+      singularPlural:
+        cigarettes === 1
+          ? i18n.t('home_common_cigarette').toLowerCase()
+          : i18n.t('home_common_cigarettes').toLowerCase(),
       cigarettes
     });
 
@@ -166,6 +150,34 @@ export function
       </Text>
     );
   };
+
+  return (
+    <View style={styles.container}>
+      <SmokeVideo />
+      {/* <Header
+        onChangeLocationClick={() => props.navigation.navigate('Search')}
+      /> */}
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={styles.scrollContainer}
+        style={styles.scrollView}
+      >
+        <View style={styles.content}>
+          <Cigarettes />
+          <View style={styles.main}>{renderText()}</View>
+        </View>
+        <View style={styles.cta}>
+          {isStationTooFar && (
+            <Text style={styles.isStationTooFar}>
+              {i18n.t('home_station_too_far_message')}
+            </Text>
+          )}
+          {renderBigButton()}
+          {renderFooter()}
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -37,7 +37,8 @@ export interface Location extends LatLng {
   name?: string;
 }
 
-interface LocationWithSetter extends Partial<Location> {
+interface LocationWithSetter {
+  currentLocation?: Location;
   setLatLng: (latlng: { latitude: number; longitude: number }) => void;
 }
 
@@ -111,7 +112,7 @@ export function LocationContextProvider({
   return (
     <GpsLocationContext.Provider value={gpsLocation}>
       <CurrentLocationContext.Provider
-        value={{ ...currentLocation, setLatLng: setCurrentLocation }}
+        value={{ currentLocation, setLatLng: setCurrentLocation }}
       >
         {children}
       </CurrentLocationContext.Provider>

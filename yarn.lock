@@ -1408,6 +1408,11 @@
   resolved "https://registry.yarnpkg.com/@types/fbemitter/-/fbemitter-2.0.32.tgz#8ed204da0f54e9c8eaec31b1eec91e25132d082c"
   integrity sha1-jtIE2g9U6cjq7DGx7skeJRMtCCw=
 
+"@types/haversine@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/haversine/-/haversine-1.1.2.tgz#d2053989a596ecb71b94fd8cdbde121a7b0fc6ca"
+  integrity sha512-HkbSRNU+luEVX6kXp1N46GEF90hBA99sXa7ARU7rE1e26SgWEbkxB84Qb2ASLLRnISAoWRsy1IewG5fBXmhXOQ==
+
 "@types/invariant@^2.2.29":
   version "2.2.29"
   resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.29.tgz#aa845204cd0a289f65d47e0de63a6a815e30cc66"

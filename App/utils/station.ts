@@ -14,7 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import haversine from 'haversine';
+
+import { Api } from '../stores/api';
 import { LatLng } from '../stores/location';
+
+// Above this distance (km), we consider the station too far from the user
+export const MAX_DISTANCE_TO_STATION = 10;
+
+/**
+ * Get distance from current location to station.
+ *
+ * @param currentLocation - The current location of the user.
+ * @param api - The api object returned by remote data.
+ */
+export function distanceToStation(currentLocation: LatLng, api: Api) {
+  return Math.round(
+    haversine(
+      currentLocation,
+      getCorrectLatLng(currentLocation, {
+        latitude: api.city.geo[0],
+        longitude: api.city.geo[1]
+      })
+    )
+  );
+}
+
+/**
+ * Returns true if the station is at more than {@link MAX_DISTANCE_TO_STATION}
+ * kilometers away from the current location
+ *
+ * @param currentLocation - The current location of the user.
+ * @param api - The api object returned by remote data.
+ */
+export function isStationTooFar(currentLocation: LatLng, api: Api) {
+  return distanceToStation(currentLocation, api) > MAX_DISTANCE_TO_STATION;
+}
 
 /**
  * Station given by the Waqi API is fucked up. Sometimes it's [lat, lng],
@@ -22,9 +57,9 @@ import { LatLng } from '../stores/location';
  * We check here with the user's real currentLocation coordinates, and take the
  * "closest" one.
  *
- * @param {*} currentLocation - An object containing {latitude, longitude}
+ * @param currentLocation - An object containing {latitude, longitude}
  * representing the user's current location.
- * @param {*} station - An object containing {latitude, longitude} representing
+ * @param station - An object containing {latitude, longitude} representing
  * the station's location.
  */
 export const getCorrectLatLng = (currentLocation: LatLng, station: LatLng) => {

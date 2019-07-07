@@ -14,41 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import { inject, observer } from 'mobx-react';
 import { Video } from 'expo-av';
+import React, { useContext } from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
+import { ApiContext } from '../../../stores';
 
-@inject('stores')
-@observer
-export class SmokeVideo extends Component {
-  getVideoStyle = () => {
-    const {
-      stores: { cigarettes }
-    } = this.props;
+export function SmokeVideo() {
+  const {
+    shootISmoke: { cigarettes }
+  } = useContext(ApiContext)!;
 
-    if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
-    if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
-    if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };
-    return { backgroundColor: '#FFFFFF00' };
-  };
+  return (
+    <View style={styles.container}>
+      <View style={[styles.overlay, getVideoStyle(cigarettes)]} />
+      <Video
+        isLooping
+        resizeMode="cover"
+        shouldPlay
+        source={smokeVideo}
+        style={styles.video}
+      />
+    </View>
+  );
+}
 
-  render () {
-    return (
-      <View style={styles.container}>
-        <View style={[styles.overlay, this.getVideoStyle()]} />
-        <Video
-          isLooping
-          resizeMode='cover'
-          shouldPlay
-          source={smokeVideo}
-          style={styles.video}
-        />
-      </View>
-    );
-  }
+function getVideoStyle(cigarettes: number) {
+  if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
+  if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
+  if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };
+  return { backgroundColor: '#FFFFFF00' };
 }
 
 const styles = StyleSheet.create({

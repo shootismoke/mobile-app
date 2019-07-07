@@ -25,7 +25,7 @@ import {
 // import { About } from './About';
 // import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
-// import { Home } from './Home';
+import { Home } from './Home';
 import { Loading } from './Loading';
 import { Search } from './Search';
 import { Api, ApiContext, ErrorContext } from '../stores';
@@ -47,25 +47,25 @@ function stackNavigatorOptions(initialRouteName: string) {
 /**
  * The main stack navigator, for the app.
  */
-// const RootStack = createAppContainer(
-//   createStackNavigator(
-//     {
-//       // About: {
-//       //   screen: About
-//       // },
-//       // Details: {
-//       //   screen: Details
-//       // },
-//       // Home: {
-//       //   screen: Home
-//       // },
-//       // Search: {
-//       //   screen: Search
-//       // }
-//     },
-//     stackNavigatorOptions('Home')
-//   )
-// );
+const RootStack = createAppContainer(
+  createStackNavigator(
+    {
+      // About: {
+      //   screen: About
+      // },
+      // Details: {
+      //   screen: Details
+      // },
+      Home: {
+        screen: Home
+      }
+      // Search: {
+      //   screen: Search
+      // }
+    },
+    stackNavigatorOptions('Home')
+  )
+);
 
 /**
  * A stack navigator for the error case.
@@ -102,6 +102,5 @@ function renderScreen(api?: Api, error?: string) {
     return <Loading />;
   }
 
-  return null;
-  // return <RootStack />;
+  return <RootStack />;
 }

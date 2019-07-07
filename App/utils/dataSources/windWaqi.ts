@@ -18,6 +18,7 @@ import axios from 'axios';
 
 import { LatLng } from '../../stores';
 import { aqiToRaw } from './utils/aqiToRaw';
+import { pm25ToCigarettes } from './utils/pm25ToCigarettes';
 
 /**
  * Fetch the PM2.5 level from https://wind.waqi.info.
@@ -57,6 +58,8 @@ export async function windWaqi({ latitude, longitude }: LatLng) {
       throw new Error('PM2.5 not defined in response.');
     }
 
+    const rawPm25 = aqiToRaw.pm25(+data.v);
+
     return {
       aqi: +data.v,
       attributions: [],
@@ -68,9 +71,12 @@ export async function windWaqi({ latitude, longitude }: LatLng) {
         }
       },
       idx: +data.x,
-      rawPm25: aqiToRaw.pm25(+data.v),
       time: {
         v: data.t
+      },
+      shootISmoke: {
+        cigarettes: pm25ToCigarettes(rawPm25),
+        rawPm25
       }
     };
   } else {

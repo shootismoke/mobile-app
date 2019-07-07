@@ -49,7 +49,10 @@ export const ApiT = t.type({
     })
   ),
   idx: t.number,
-  rawPm25: t.number,
+  shootISmoke: t.type({
+    cigarettes: t.number,
+    rawPm25: t.number
+  }),
   time: t.type({
     s: t.union([t.string, t.undefined]),
     tz: t.union([t.string, t.undefined]),
@@ -115,12 +118,12 @@ interface ApiContextProviderProps {
 }
 
 export function ApiContextProvider({ children }: ApiContextProviderProps) {
-  const { latitude, longitude } = useContext(CurrentLocationContext);
+  const { currentLocation } = useContext(CurrentLocationContext);
   const { setError } = useContext(ErrorContext);
   const [api, setApi] = useState<Api | undefined>(undefined);
 
   useEffect(() => {
-    if (!latitude || !longitude) {
+    if (!currentLocation) {
       setApi(undefined);
       return;
     }
@@ -134,8 +137,8 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
         setApi(newApi);
         return T.of(undefined);
       }
-    )(fetchApi({ latitude, longitude }))();
-  }, [latitude, longitude]);
+    )(fetchApi(currentLocation))();
+  }, [currentLocation]);
 
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 }

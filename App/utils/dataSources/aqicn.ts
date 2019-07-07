@@ -19,6 +19,7 @@ import Constants from 'expo-constants';
 
 import { LatLng } from '../../stores';
 import { aqiToRaw } from './utils/aqiToRaw';
+import { pm25ToCigarettes } from './utils/pm25ToCigarettes';
 
 /**
  * Fetch the PM2.5 level from http://api.waqi.info.
@@ -100,6 +101,8 @@ export async function aqicn({ latitude, longitude }: LatLng) {
     throw new Error('PM2.5 not defined in response.');
   }
 
+  const rawPm25 = aqiToRaw.pm25(response.data.iaqi.pm25.v);
+
   return {
     aqi: response.data.aqi,
     attributions: response.data.attributions,
@@ -107,7 +110,10 @@ export async function aqicn({ latitude, longitude }: LatLng) {
     dominentpol: response.data.dominentpol,
     iaqi: response.data.iaqi,
     idx: response.data.idx,
-    rawPm25: aqiToRaw.pm25(response.data.iaqi.pm25.v),
-    time: response.data.time
+    time: response.data.time,
+    shootISmoke: {
+      cigarettes: pm25ToCigarettes(rawPm25),
+      rawPm25
+    }
   };
 }
