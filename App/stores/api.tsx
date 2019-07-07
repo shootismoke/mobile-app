@@ -16,21 +16,17 @@
 
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
-import * as O from 'fp-ts/lib/Option';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { capDelay, limitRetries } from 'retry-ts';
-import { retrying } from 'retry-ts/lib/Task';
 
 import { ErrorContext } from './error';
 import { CurrentLocationContext, LatLng } from './location';
 import * as dataSources from '../utils/dataSources';
-import { sideEffect } from '../utils/fp';
-import { noop } from '../utils/noop';
+import { retry, sideEffect } from '../utils/fp';
 
 export const ApiT = t.type({
   aqi: t.number,
@@ -70,73 +66,49 @@ const sources = [
 ];
 
 export function fetchApi(currentPosition: LatLng) {
-  return retrying(
-    capDelay(2000, limitRetries(sources.length)), // Do 2 times max, and set limit to 2s
-    status =>
-      pipe(
-        status.previousDelay,
-        O.fold(
-          () => TE.left(new Error()),
-          () =>
-            pipe(
-              TE.rightIO(
-                C.log(
-                  `<ApiContext> - fetchApi - Attempt #${status.iterNumber}: ${
-                    sources[(status.iterNumber - 1) % sources.length].name
-                  }`
-                )
-              ),
-              TE.chain(() =>
-                TE.tryCatch(
-                  () =>
-                    sources[(status.iterNumber - 1) % sources.length].run(
-                      currentPosition
-                    ),
-                  reason => new Error(String(reason))
-                )
-              ),
-              TE.chain(response =>
-                T.of(
-                  pipe(
-                    ApiT.decode(response),
-                    E.mapLeft(failure),
-                    E.mapLeft(errs => errs[0]), // Only show 1st error
-                    E.mapLeft(Error)
-                  )
-                )
-              ),
-              TE.chain((api: Api) =>
-                TE.rightIO(
-                  sideEffect(
-                    C.log(
-                      `<ApiContext> - fetchApi - Got result ${JSON.stringify(
-                        api
-                      )}`
-                    ),
-                    api
-                  )
-                )
-              )
-            )
+  return retry(sources.length, status =>
+    pipe(
+      TE.rightIO(
+        C.log(
+          `<ApiContext> - fetchApi - Attempt #${status.iterNumber}: ${
+            sources[(status.iterNumber - 1) % sources.length].name
+          }`
         )
       ),
-    e => {
-      E.fold(err => {
-        console.log(`<ApiContext> - fetchApi - Error ${err}`);
-      }, noop)(e);
-
-      return E.isLeft(e);
-    }
+      TE.chain(() =>
+        TE.tryCatch(
+          () =>
+            sources[(status.iterNumber - 1) % sources.length].run(
+              currentPosition
+            ),
+          reason => new Error(String(reason))
+        )
+      ),
+      TE.chain(response =>
+        T.of(
+          pipe(
+            ApiT.decode(response),
+            E.mapLeft(failure),
+            E.mapLeft(errs => errs[0]), // Only show 1st error
+            E.mapLeft(Error)
+          )
+        )
+      ),
+      TE.chain((api: Api) =>
+        TE.rightIO(
+          sideEffect(
+            C.log(
+              `<ApiContext> - fetchApi - Got result ${JSON.stringify(api)}`
+            ),
+            api
+          )
+        )
+      )
+    )
   );
 }
 
-interface Context {
-  api?: Api;
-}
-
-export const ApiContext = createContext<Context>({
-  api: undefined
-});
+export const ApiContext = createContext<Api | undefined>(undefined);
 
 interface ApiContextProviderProps {
   children: JSX.Element;
@@ -158,12 +130,12 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
         setError(err.message);
         return T.of(undefined);
       },
-      () => {
-        setApi(api);
+      newApi => {
+        setApi(newApi);
         return T.of(undefined);
       }
     )(fetchApi({ latitude, longitude }))();
   }, [latitude, longitude]);
 
-  return <ApiContext.Provider value={{ api }}>{children}</ApiContext.Provider>;
+  return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 }

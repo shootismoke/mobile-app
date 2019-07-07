@@ -113,10 +113,15 @@ const ErrorStack = createAppContainer(
 // }
 
 const RootNavigator = createAppContainer(
-  createSwitchNavigator({
-    Error: ErrorStack,
-    Loading: Loading
-  })
+  createSwitchNavigator(
+    {
+      Error: ErrorStack,
+      Loading: Loading
+    },
+    {
+      initialRouteName: 'Loading'
+    }
+  )
 );
 
 export function Screens() {

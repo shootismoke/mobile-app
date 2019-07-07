@@ -20,15 +20,12 @@ import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
-import * as O from 'fp-ts/lib/Option';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import { capDelay, limitRetries } from 'retry-ts';
-import { retrying } from 'retry-ts/lib/Task';
 
 import { BackButton } from '../../components/BackButton';
 import { Item } from './Item';
@@ -40,8 +37,7 @@ import {
   LatLng,
   Location
 } from '../../stores';
-import { sideEffect } from '../../utils/fp';
-import { noop } from '../../utils/noop';
+import { retry, sideEffect } from '../../utils/fp';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html
@@ -79,88 +75,68 @@ const AxiosResponseT = t.type({
 });
 
 function fetchAlgolia(search: string, gps?: LatLng) {
-  return retrying(
-    capDelay(2000, limitRetries(algoliaUrls.length)), // Do 4 times max, and set limit to 2s
-    status =>
-      pipe(
-        status.previousDelay,
-        O.fold(
-          () => TE.left(new Error()),
-          () =>
-            pipe(
-              TE.rightIO(
-                C.log(
-                  `<Search> - fetchAlgolia - Attempt #${status.iterNumber}: ${
-                    algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-                  }/1/places/query`
-                )
-              ),
-              TE.chain(() =>
-                TE.tryCatch(
-                  () =>
-                    axios.post(
-                      `${
-                        algoliaUrls[
-                          (status.iterNumber - 1) % algoliaUrls.length
-                        ]
-                      }/1/places/query`,
-                      {
-                        aroundLatLng: gps
-                          ? `${gps.latitude},${gps.longitude}`
-                          : undefined,
-                        hitsPerPage: 10,
-                        language: 'en',
-                        query: search
-                      },
-                      {
-                        headers:
-                          Constants.manifest.extra.algoliaApplicationId &&
-                          Constants.manifest.extra.algoliaApiKey
-                            ? {
-                                'X-Algolia-Application-Id':
-                                  Constants.manifest.extra.algoliaApplicationId,
-                                'X-Algolia-API-Key':
-                                  Constants.manifest.extra.algoliaApiKey
-                              }
-                            : undefined,
-
-                        timeout: 3000
-                      }
-                    ),
-                  reason => new Error(String(reason))
-                )
-              ),
-              TE.chain(response =>
-                T.of(
-                  pipe(
-                    AxiosResponseT.decode(response),
-                    E.mapLeft(failure),
-                    E.mapLeft(errs => errs[0]), // Only show 1st error
-                    E.mapLeft(Error)
-                  )
-                )
-              ),
-              TE.map(response => response.data.hits),
-              TE.chain((hits: AlgoliaHit[]) =>
-                TE.rightIO(
-                  sideEffect(
-                    C.log(
-                      `<Search> - fetchAlgolia - Got ${hits.length} results`
-                    ),
-                    hits
-                  )
-                )
-              )
-            )
+  return retry(algoliaUrls.length, status =>
+    pipe(
+      TE.rightIO(
+        C.log(
+          `<Search> - fetchAlgolia - Attempt #${status.iterNumber}: ${
+            algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+          }/1/places/query`
         )
       ),
-    e => {
-      E.fold(err => {
-        console.log(`<Search> - fetchAlgolia - Error ${err}`);
-      }, noop)(e);
+      TE.chain(() =>
+        TE.tryCatch(
+          () =>
+            axios.post(
+              `${
+                algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+              }/1/places/query`,
+              {
+                aroundLatLng: gps
+                  ? `${gps.latitude},${gps.longitude}`
+                  : undefined,
+                hitsPerPage: 10,
+                language: 'en',
+                query: search
+              },
+              {
+                headers:
+                  Constants.manifest.extra.algoliaApplicationId &&
+                  Constants.manifest.extra.algoliaApiKey
+                    ? {
+                        'X-Algolia-Application-Id':
+                          Constants.manifest.extra.algoliaApplicationId,
+                        'X-Algolia-API-Key':
+                          Constants.manifest.extra.algoliaApiKey
+                      }
+                    : undefined,
 
-      return E.isLeft(e);
-    }
+                timeout: 3000
+              }
+            ),
+          reason => new Error(String(reason))
+        )
+      ),
+      TE.chain(response =>
+        T.of(
+          pipe(
+            AxiosResponseT.decode(response),
+            E.mapLeft(failure),
+            E.mapLeft(errs => errs[0]), // Only show 1st error
+            E.mapLeft(Error)
+          )
+        )
+      ),
+      TE.map(response => response.data.hits),
+      TE.chain((hits: AlgoliaHit[]) =>
+        TE.rightIO(
+          sideEffect(
+            C.log(`<Search> - fetchAlgolia - Got ${hits.length} results`),
+            hits
+          )
+        )
+      )
+    )
   );
 }
 

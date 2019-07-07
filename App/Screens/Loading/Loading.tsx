@@ -14,133 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as ExpoLocation from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import * as TaskManager from 'expo-task-manager';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Background } from './Background';
 
 import { i18n } from '../../localization';
-import { AqiHistoryDb } from '../../managers';
-import {
-  CurrentLocationContext,
-  GpsLocationContext,
-  Location
-} from '../../stores';
-import * as dataSources from '../../utils/dataSources';
+import { Api, ApiContext, GpsLocationContext, Location } from '../../stores';
 import * as theme from '../../utils/theme';
 
-const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
-
-interface LoadingProps {}
-
 // The variable returned by setTimeout for longWaiting
-let longWaitingTimeout: number | null = null;
-
-function fetchApi() {}
+let longWaitingTimeout: NodeJS.Timeout | null = null;
 
 export function Loading() {
-  const currentLocation = useContext(CurrentLocationContext);
+  const api = useContext(ApiContext);
   const gps = useContext(GpsLocationContext);
 
   const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // Set a 2s timer that will set `longWaiting` to true. Used to show an
+    // additional "cough" message on the loading screen
+    longWaitingTimeout = setTimeout(() => {
+      console.log('<Loading> - Long waiting');
+      setLongWaiting(true);
+    }, 2000);
+  }, []);
 
-  // async componentDidMount () {
-  //   await this.fetchData();
-  //   await this._startRecordingAqiHistory();
-  // }
-
-  // componentWillUnmount () {
-  //   if (this.longWaitingTimeout) {
-  //     clearTimeout(this.longWaitingTimeout);
-  //   }
-  // }
-
-  // _startRecordingAqiHistory = async () => {
-  //   await Location.startLocationUpdatesAsync(TASK_STORE_AQI_HISTORY, {
-  //     accuracy: Location.Accuracy.BestForNavigation,
-  //     timeInterval: AqiHistoryDb.SAVE_DATA_INTERVAL,
-  //     distanceInterval: 0
-  //   });
-  // };
-
-  const _apiCall = async currentPosition => {
-    // We currently have 2 sources, aqicn, and windWaqi
-    // We put them in an array
-    const sources = [dataSources.aqicn, dataSources.windWaqi];
-
-    return retry(
-      async (_, attempt) => {
-        // Attempt starts at 1
-        console.log(
-          `<Loading> - fetchData - Attempt #${attempt}: ${
-            sources[(attempt - 1) % 2].name
-          }`
-        );
-        const result = await sources[(attempt - 1) % 2](currentPosition);
-        console.log('<Loading> - fetchData - Got result', result);
-
-        return result;
-      },
-      { retries: 3 } // 2 attempts per source
-    );
-  };
-
-  async function fetchData() {
-    const { stores } = this.props;
-    const { location } = stores;
-
-    try {
-      // The current { latitude, longitude } the user chose
-      let currentPosition = location.current;
-
-      // If the currentLocation has been set by the user, then we don't refetch
-      // the user's GPS
-      if (!currentPosition) {
-        console.log('<Loading> - fetchData - Asking for location permission');
-        const { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-        if (status !== 'granted') {
-          throw new Error('Permission to access location was denied');
-        }
-
-        console.log('<Loading> - fetchData - Fetching location');
-        const { coords } = await Location.getCurrentPositionAsync({
-          timeout: 5000
-        });
-        // Uncomment to get other locations
-        // const coords = {
-        //   latitude: Math.random() * 90,
-        //   longitude: Math.random() * 90
-        // };
-        // const coords = {
-        //   latitude: 48.4,
-        //   longitude: 2.34
-        // };
-
-        currentPosition = coords;
-        console.log('<Loading> - fetchData - Got location', currentPosition);
-
-        location.setCurrent(coords);
-        location.setGps(coords);
-      }
-
-      // Set a 2s timer that will set `longWaiting` to true. Used to show an
-      // additional "cough" message on the loading screen
-      this.longWaitingTimeout = setTimeout(
-        () => this.setState({ longWaiting: true }),
-        2000
-      );
-
-      stores.setApi(await this._apiCall(currentPosition));
-    } catch (error) {
-      console.log('<Loading> - fetchData - Error', error);
-      stores.setError(error.message);
+  useEffect(() => {
+    if (api && longWaitingTimeout) {
+      clearTimeout(longWaitingTimeout);
+      longWaitingTimeout = null;
     }
-  }
+  }, [api]);
 
   return (
     <Background style={theme.withPadding}>
@@ -158,7 +63,7 @@ function renderCough(index: number) {
   );
 }
 
-function renderText(longWaiting: boolean, gps: Location | undefined, api: any) {
+function renderText(longWaiting: boolean, gps?: Location, api?: Api) {
   let coughs = 0; // Number of times to show "Cough..."
   if (gps) ++coughs;
   if (longWaiting) ++coughs;
