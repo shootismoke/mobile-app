@@ -15,7 +15,6 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import {
   ScrollView,
   Share,
@@ -33,9 +32,7 @@ import { SmokeVideo } from './SmokeVideo';
 import swearWords from './swearWords';
 import * as theme from '../../utils/theme';
 
-@inject('stores')
-@observer
-export class Home extends Component {
+export function
   goToAbout = () => this.props.navigation.navigate('About');
 
   goToDetails = () => this.props.navigation.navigate('Details');

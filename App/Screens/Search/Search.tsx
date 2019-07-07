@@ -41,6 +41,7 @@ import {
   Location
 } from '../../stores';
 import { sideEffect } from '../../utils/fp';
+import { noop } from '../../utils/noop';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html
@@ -78,11 +79,8 @@ const AxiosResponseT = t.type({
 });
 
 function fetchAlgolia(search: string, gps?: LatLng) {
-  // THe attempt number
-  let attempt = 0;
-
   return retrying(
-    capDelay(2000, limitRetries(4)), // Do 4 times max, and set limit to 2s
+    capDelay(2000, limitRetries(algoliaUrls.length)), // Do 4 times max, and set limit to 2s
     status =>
       pipe(
         status.previousDelay,
@@ -91,24 +89,21 @@ function fetchAlgolia(search: string, gps?: LatLng) {
           () =>
             pipe(
               TE.rightIO(
-                sideEffect(() => {
-                  ++attempt;
-                }, undefined)
-              ),
-              TE.chain(() =>
-                TE.rightIO(
-                  C.log(
-                    `<Search> - handleChangeSearch - Attempt #${attempt}: ${
-                      algoliaUrls[attempt - (1 % algoliaUrls.length)]
-                    }/1/places/query`
-                  )
+                C.log(
+                  `<Search> - fetchAlgolia - Attempt #${status.iterNumber}: ${
+                    algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+                  }/1/places/query`
                 )
               ),
               TE.chain(() =>
                 TE.tryCatch(
                   () =>
                     axios.post(
-                      `${algoliaUrls[attempt - 1]}/1/places/query`,
+                      `${
+                        algoliaUrls[
+                          (status.iterNumber - 1) % algoliaUrls.length
+                        ]
+                      }/1/places/query`,
                       {
                         aroundLatLng: gps
                           ? `${gps.latitude},${gps.longitude}`
@@ -150,9 +145,7 @@ function fetchAlgolia(search: string, gps?: LatLng) {
                 TE.rightIO(
                   sideEffect(
                     C.log(
-                      `<Search> - handleChangeSearch - Got ${
-                        hits.length
-                      } results`
+                      `<Search> - fetchAlgolia - Got ${hits.length} results`
                     ),
                     hits
                   )
@@ -161,7 +154,13 @@ function fetchAlgolia(search: string, gps?: LatLng) {
             )
         )
       ),
-    E.isLeft
+    e => {
+      E.fold(err => {
+        console.log(`<Search> - fetchAlgolia - Error ${err}`);
+      }, noop)(e);
+
+      return E.isLeft(e);
+    }
   );
 }
 

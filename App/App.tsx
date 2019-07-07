@@ -21,7 +21,11 @@ import Sentry from 'sentry-expo';
 
 import { Screens } from './Screens';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
-import { ErrorContextProvider, LocationContextProvider } from './stores';
+import {
+  ApiContextProvider,
+  ErrorContextProvider,
+  LocationContextProvider
+} from './stores';
 
 // Add sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
@@ -42,7 +46,9 @@ export function App() {
   return fontLoaded ? (
     <ErrorContextProvider>
       <LocationContextProvider>
-        <Screens />
+        <ApiContextProvider>
+          <Screens />
+        </ApiContextProvider>
       </LocationContextProvider>
     </ErrorContextProvider>
   ) : (

@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-function roundTo1Decimal (n) {
+export type Pollutant = 'pm25'; // Only support this pollutant for now
+
+function roundTo1Decimal(n: number) {
   return Math.round(10 * n) / 10;
 }
 
@@ -26,7 +28,7 @@ function roundTo1Decimal (n) {
  * @see https://github.com/amaurymartiny/shoot-i-smoke/issues/46
  * @see https://www3.epa.gov/airnow/aqi-technical-assistance-document-sept2018.pdf
  */
-function aqiToRawFormula (pollutant, aqi) {
+function aqiToRawFormula(pollutant: 'pm25', aqi: number) {
   const segment = breakPoints[pollutant].find(
     ([[aqiLow, aqiHigh]]) => aqiLow <= aqi && aqi <= aqiHigh
   );
@@ -65,9 +67,9 @@ const breakPoints = {
 };
 
 // For now we only track pm25 converions
-const pollutants = ['pm25'];
+const pollutants = ['pm25'] as Pollutant[];
 
-export const aqiToRaw = {};
+export const aqiToRaw: { [index: string]: (aqi: number) => number } = {};
 
 pollutants.forEach(pollutant => {
   aqiToRaw[pollutant] = aqi => aqiToRawFormula(pollutant, aqi);

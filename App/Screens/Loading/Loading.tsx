@@ -14,50 +14,60 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import * as TaskManager from 'expo-task-manager';
-import * as Location from 'expo-location';
-import retry from 'async-retry';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Background } from './Background';
-import * as dataSources from '../../utils/dataSources';
-import * as theme from '../../utils/theme';
+
 import { i18n } from '../../localization';
 import { AqiHistoryDb } from '../../managers';
+import {
+  CurrentLocationContext,
+  GpsLocationContext,
+  Location
+} from '../../stores';
+import * as dataSources from '../../utils/dataSources';
+import * as theme from '../../utils/theme';
 
 const TASK_STORE_AQI_HISTORY = 'store-aqi-history';
 
-@inject('stores')
-@observer
-export class Loading extends Component {
-  state = {
-    longWaiting: false // If api is taking a long time
-  };
+interface LoadingProps {}
 
-  longWaitingTimeout = null; // The variable returned by setTimeout for longWaiting
+// The variable returned by setTimeout for longWaiting
+let longWaitingTimeout: number | null = null;
 
-  async componentDidMount () {
-    await this.fetchData();
-    await this._startRecordingAqiHistory();
-  }
+function fetchApi() {}
 
-  componentWillUnmount () {
-    if (this.longWaitingTimeout) {
-      clearTimeout(this.longWaitingTimeout);
-    }
-  }
+export function Loading() {
+  const currentLocation = useContext(CurrentLocationContext);
+  const gps = useContext(GpsLocationContext);
 
-  _startRecordingAqiHistory = async () => {
-    await Location.startLocationUpdatesAsync(TASK_STORE_AQI_HISTORY, {
-      accuracy: Location.Accuracy.BestForNavigation,
-      timeInterval: AqiHistoryDb.SAVE_DATA_INTERVAL,
-      distanceInterval: 0
-    });
-  };
+  const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time
 
-  _apiCall = async (currentPosition) => {
+  useEffect(() => {}, []);
+
+  // async componentDidMount () {
+  //   await this.fetchData();
+  //   await this._startRecordingAqiHistory();
+  // }
+
+  // componentWillUnmount () {
+  //   if (this.longWaitingTimeout) {
+  //     clearTimeout(this.longWaitingTimeout);
+  //   }
+  // }
+
+  // _startRecordingAqiHistory = async () => {
+  //   await Location.startLocationUpdatesAsync(TASK_STORE_AQI_HISTORY, {
+  //     accuracy: Location.Accuracy.BestForNavigation,
+  //     timeInterval: AqiHistoryDb.SAVE_DATA_INTERVAL,
+  //     distanceInterval: 0
+  //   });
+  // };
+
+  const _apiCall = async currentPosition => {
     // We currently have 2 sources, aqicn, and windWaqi
     // We put them in an array
     const sources = [dataSources.aqicn, dataSources.windWaqi];
@@ -79,7 +89,7 @@ export class Loading extends Component {
     );
   };
 
-  async fetchData () {
+  async function fetchData() {
     const { stores } = this.props;
     const { location } = stores;
 
@@ -132,45 +142,38 @@ export class Loading extends Component {
     }
   }
 
-  render () {
-    return (
-      <Background style={theme.withPadding}>
-        <Text style={styles.text}>{this.renderText()}</Text>
-      </Background>
-    );
-  }
+  return (
+    <Background style={theme.withPadding}>
+      <Text style={styles.text}>{renderText(longWaiting, gps, api)}</Text>
+    </Background>
+  );
+}
 
-  renderCough = index => (
+function renderCough(index: number) {
+  return (
     <Text key={index}>
       {i18n.t('loading_title_cough')}
       <Text style={styles.dots}>...</Text>
     </Text>
   );
+}
 
-  renderText = () => {
-    const {
-      stores: {
-        api,
-        location: { gps }
-      }
-    } = this.props;
-    const { longWaiting } = this.state;
-    let coughs = 0; // Number of times to show "Cough..."
-    if (gps)++coughs;
-    if (longWaiting)++coughs;
-    if (api)++coughs;
+function renderText(longWaiting: boolean, gps: Location | undefined, api: any) {
+  let coughs = 0; // Number of times to show "Cough..."
+  if (gps) ++coughs;
+  if (longWaiting) ++coughs;
+  if (api) ++coughs;
 
-    return (
-      <Text>
-        {i18n.t('loading_title_loading')}
-        <Text style={styles.dots}>...</Text>
-        {Array.from({ length: coughs }, (_, index) => index + 1).map(
-          // Create array 1..N and rendering Cough...
-          this.renderCough
-        )}
-      </Text>
-    );
-  };
+  return (
+    <Text>
+      {i18n.t('loading_title_loading')}
+      <Text style={styles.dots}>...</Text>
+      {Array.from({ length: coughs }, (_, index) => index + 1).map(
+        // Create array 1..N and rendering Cough...
+        renderCough
+      )}
+    </Text>
+  );
 }
 
 // TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
@@ -206,7 +209,6 @@ export class Loading extends Component {
 //       await AqiHistoryDb.saveData(api.city.name, api.rawPm25, coords);
 //     }
 //   }
-});
 
 const styles = StyleSheet.create({
   dots: {

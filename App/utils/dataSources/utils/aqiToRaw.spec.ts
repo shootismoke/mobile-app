@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { aqiToRaw } from './aqiToRaw';
+import { aqiToRaw, Pollutant } from './aqiToRaw';
 
-function testConversion (pollutant, aqi, raw) {
+function testConversion(pollutant: Pollutant, aqi: number, raw: number) {
   it(`should convert ${pollutant} AQI ${aqi} to ${raw}ug/m3`, () => {
     expect(aqiToRaw[pollutant](aqi)).toBe(raw);
   });

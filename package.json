@@ -16,7 +16,6 @@
     "@expo/vector-icons": "^10.0.2",
     "@types/expo": "^32.0.13",
     "@types/react-native": "^0.57.65",
-    "async-retry": "^1.2.3",
     "axios": "^0.19.0",
     "date-fns": "^2.0.0-alpha.25",
     "expo": "^33.0.0",
@@ -40,6 +39,7 @@
     "truncate": "^2.1.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.15",
     "babel-eslint": "^10.0.1",
     "babel-preset-expo": "^5.2.0",
     "eslint": "^5.16.0",

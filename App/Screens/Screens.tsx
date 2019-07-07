@@ -27,7 +27,7 @@ import {
 // import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
 // import { Home } from './Home';
-// import { Loading } from './Loading';
+import { Loading } from './Loading';
 import { Search } from './Search';
 import * as theme from '../utils/theme';
 
@@ -44,24 +44,24 @@ function stackNavigatorOptions(initialRouteName: string) {
   } as StackNavigatorConfig;
 }
 
-// /**
-//  * The main stack navigator, for the app.
-//  */
+/**
+ * The main stack navigator, for the app.
+ */
 // const RootStack = createAppContainer(
 //   createStackNavigator(
 //     {
-//       About: {
-//         screen: About
-//       },
-//       Details: {
-//         screen: Details
-//       },
-//       Home: {
-//         screen: Home
-//       },
-//       Search: {
-//         screen: Search
-//       }
+//       // About: {
+//       //   screen: About
+//       // },
+//       // Details: {
+//       //   screen: Details
+//       // },
+//       // Home: {
+//       //   screen: Home
+//       // },
+//       // Search: {
+//       //   screen: Search
+//       // }
 //     },
 //     stackNavigatorOptions('Home')
 //   )
@@ -114,7 +114,8 @@ const ErrorStack = createAppContainer(
 
 const RootNavigator = createAppContainer(
   createSwitchNavigator({
-    Error: ErrorStack
+    Error: ErrorStack,
+    Loading: Loading
   })
 );
 

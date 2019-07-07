@@ -14,19 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import * as theme from '../../utils/theme';
 
-export class Background extends PureComponent {
-  render () {
-    return (
-      <View style={[styles.container, this.props.style]}>
-        {this.props.children}
-      </View>
-    );
-  }
+interface BackgroundProps {
+  children?: JSX.Element;
+  style?: StyleProp<ViewStyle>;
+}
+
+export function Background(props: BackgroundProps) {
+  return <View style={[styles.container, props.style]}>{props.children}</View>;
 }
 
 const styles = StyleSheet.create({

@@ -17,12 +17,13 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
 
+import { LatLng } from '../../stores';
 import { aqiToRaw } from './utils/aqiToRaw';
 
 /**
  * Fetch the PM2.5 level from http://api.waqi.info.
  */
-export const aqicn = async ({ latitude, longitude }) => {
+export async function aqicn({ latitude, longitude }: LatLng) {
   const { data: response } = await axios.get(
     `http://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${
       Constants.manifest.extra.waqiToken
@@ -109,4 +110,4 @@ export const aqicn = async ({ latitude, longitude }) => {
     rawPm25: aqiToRaw.pm25(response.data.iaqi.pm25.v),
     time: response.data.time
   };
-};
+}

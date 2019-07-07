@@ -14,34 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { types } from 'mobx-state-tree';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
 
-export const ApiStore = types.maybe(
-  types.model('ApiStore', {
-    aqi: types.number,
-    attributions: types.array(
-      types.model({
-        name: types.string,
-        url: types.maybe(types.string)
-      })
-    ),
-    city: types.model({
-      geo: types.array(types.number),
-      name: types.string,
-      url: types.maybe(types.string)
-    }),
-    dominentpol: types.string,
-    iaqi: types.map(
-      types.model({
-        v: types.number
-      })
-    ),
-    idx: types.number,
-    rawPm25: types.number,
-    time: types.model({
-      s: types.maybe(types.string),
-      tz: types.maybe(types.string),
-      v: types.number
-    })
-  })
-);
+import { Api, fetchApi } from './api';
+
+describe('api', () => {
+  return TE.getOrElse<Error, Api>(() => {
+    fail();
+    return T.of(undefined);
+  })(fetchApi({ latitude: 52.5, longitude: 13.5 }))();
+});
