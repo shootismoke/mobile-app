@@ -146,7 +146,7 @@ let typingTimeout: NodeJS.Timeout | null = null;
 interface SearchProps extends NavigationInjectedProps {}
 
 export function Search(props: SearchProps) {
-  const { setLatLng } = useContext(CurrentLocationContext);
+  const { setCurrentLocation } = useContext(CurrentLocationContext);
   const { setError } = useContext(ErrorContext);
   const gps = useContext(GpsLocationContext);
 
@@ -194,10 +194,8 @@ export function Search(props: SearchProps) {
 
   function handleItemClick(item: Location) {
     // Reset everything when we choose a new location.
-    setLatLng(item);
+    setCurrentLocation(item);
     setError(undefined);
-    // TODO
-    // this.props.stores.setApi(undefined);
   }
 
   function renderItem({ item }: { item: AlgoliaHit }) {

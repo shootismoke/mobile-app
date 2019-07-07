@@ -39,7 +39,7 @@ export interface Location extends LatLng {
 
 interface LocationWithSetter {
   currentLocation?: Location;
-  setLatLng: (latlng?: LatLng) => void;
+  setCurrentLocation: (location?: Location) => void;
 }
 
 export const GpsLocationContext = createContext<Location | undefined>(
@@ -47,7 +47,7 @@ export const GpsLocationContext = createContext<Location | undefined>(
 );
 export const CurrentLocationContext = createContext<LocationWithSetter>({
   ...DEFAULT_LAT_LNG,
-  setLatLng: noop
+  setCurrentLocation: noop
 });
 
 function fetchGpsPosition() {
@@ -112,7 +112,7 @@ export function LocationContextProvider({
   return (
     <GpsLocationContext.Provider value={gpsLocation}>
       <CurrentLocationContext.Provider
-        value={{ currentLocation, setLatLng: setCurrentLocation }}
+        value={{ currentLocation, setCurrentLocation }}
       >
         {children}
       </CurrentLocationContext.Provider>

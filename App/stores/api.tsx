@@ -124,13 +124,16 @@ interface ApiContextProviderProps {
 }
 
 export function ApiContextProvider({ children }: ApiContextProviderProps) {
-  const { currentLocation } = useContext(CurrentLocationContext);
+  const { currentLocation, setCurrentLocation } = useContext(
+    CurrentLocationContext
+  );
   const { setError } = useContext(ErrorContext);
   const [api, setApi] = useState<Api | undefined>(undefined);
 
   useEffect(() => {
+    setApi(undefined);
+
     if (!currentLocation) {
-      setApi(undefined);
       return;
     }
 
@@ -147,7 +150,9 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
   }, [currentLocation]);
 
   return (
-    <ApiContext.Provider value={{ api, reloadApp: () => setApi(undefined) }}>
+    <ApiContext.Provider
+      value={{ api, reloadApp: () => setCurrentLocation(currentLocation) }}
+    >
       {children}
     </ApiContext.Provider>
   );
