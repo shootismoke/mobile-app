@@ -14,91 +14,69 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useState } from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
+import * as ExpoLocation from 'expo-location';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextProps } from 'react-native';
 
-import { Api, Location } from '../../stores';
+import { Api, LatLng, Location } from '../../stores';
 import * as theme from '../../utils/theme';
 
-interface CurrentLocationProps {
+interface CurrentLocationProps extends TextProps {
   api: Api;
   currentLocation: Location;
-  numberOfLines?: number;
-  style?: StyleProp<TextStyle>;
 }
 
+function fetchReverseGeocode(currentLocation: LatLng) {
+  return TE.tryCatch(
+    async () => {
+      const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
+
+      return reverse[0];
+    },
+    err => new Error(String(err))
+  );
+}
+
+// Text to show when fetching reverse geocoding
+const LOADING_TEXT = 'Fetching...';
+
 export function CurrentLocation(props: CurrentLocationProps) {
+  const { api, currentLocation, style, ...rest } = props;
   const [locationName, setLocationName] = useState(
-    props.currentLocation.name || 'Fetching...'
+    currentLocation.name || LOADING_TEXT
   );
 
-  const { style, ...rest } = props;
+  useEffect(() => {
+    if (currentLocation.name) {
+      return;
+    }
+
+    TE.fold<Error, ExpoLocation.Address, undefined>(
+      () => {
+        setLocationName(
+          api.city && api.city.name ? api.city.name : 'Unknown AQI Station'
+        );
+
+        return T.of(undefined);
+      },
+      reverse => {
+        setLocationName(
+          [reverse.street, reverse.city, reverse.country].join(', ')
+        );
+
+        return T.of(undefined);
+      }
+    )(fetchReverseGeocode(currentLocation))();
+  }, []);
 
   return (
     <Text style={[styles.title, style]} {...rest}>
-      {locationName}
+      {locationName.toUpperCase()}
     </Text>
   );
 }
-
-// async componentDidMount () {
-//   const {
-//     stores: { api, location }
-//   } = this.props;
-
-//   // If our currentLocation already has a name (from Algolia), then we don't
-//   // need Google Geocoding for the name
-//   if (location.name) {
-//     this.setState({ locationName: location.name.toUpperCase() });
-//     return;
-//   }
-
-//   try {
-//     console.log(
-//       '<CurrentLocation> - componentDidMount - Fetching reverse geocoding'
-//     );
-//     const { data } = await axios.get(
-//       `https://us1.locationiq.com/v1/reverse.php?key=${
-//         Constants.manifest.extra.locationIqKey
-//       }&lat=${location.current.latitude}&lon=${
-//         location.current.longitude
-//       }&format=json`
-//     );
-
-//     // If we got data from the Google Geocoding service, then we use that one
-//     if (!data || !data.address || !data.display_name) {
-//       throw new Error('No data from LocationIQ.');
-//     }
-
-//     console.log('<CurrentLocation> - componentDidMount - Got result');
-
-//     // We format the formatted_address to remove postal code and street number for privacy reasons
-//     const postalCode = data.address.postcode;
-//     const streetNumber = data.address.house_number;
-
-//     this.setState({
-//       locationName: data.display_name
-//         .replace(postalCode, '')
-//         .replace(streetNumber, '')
-//         .replace(/^,/, '') // Remove starting comma
-//         .replace(', ,', ',') // Remove unnecessary commas
-//         .replace(/ +/g, ' ') // Remove double spaces
-//         .replace(' ,', ',') // Self-explanatory
-//         .trim()
-//         .toUpperCase()
-//     });
-//   } catch (error) {
-//     console.log('<CurrentLocation> - componentDidMount - Error', error);
-
-//     // Show AQI station name if we don't have reverse geocoding data
-//     this.setState({
-//       locationName:
-//         api.city && api.city.name
-//           ? api.city.name.toUpperCase()
-//           : 'UNKNOWN AQI STATION'
-//     });
-//   }
-// }
 
 const styles = StyleSheet.create({
   title: {

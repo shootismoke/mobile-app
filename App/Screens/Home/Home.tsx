@@ -167,7 +167,7 @@ export function Home(props: HomeProps) {
           <View style={styles.main}>{renderText()}</View>
         </View>
         <View style={styles.cta}>
-          {isStationTooFar && (
+          {isTooFar && (
             <Text style={styles.isStationTooFar}>
               {i18n.t('home_station_too_far_message')}
             </Text>
