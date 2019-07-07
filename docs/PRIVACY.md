@@ -18,7 +18,6 @@ The app does use third party services that may collect information used to ident
 
 - World Air Quality Index (WAQI): http://aqicn.org/privacy
 - Google Maps API, for iOS and for Android: https://policies.google.com/privacy
-- LocationIQ: https://locationiq.com/privacy
 - Algolia: https://www.algolia.com/policies/privacy
 - Sentry: https://sentry.io/privacy/
 
