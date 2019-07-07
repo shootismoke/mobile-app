@@ -14,12 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 import {
   createAppContainer,
   createStackNavigator,
-  createSwitchNavigator,
   StackNavigatorConfig
 } from 'react-navigation';
 
@@ -29,6 +28,7 @@ import { ErrorScreen } from './ErrorScreen';
 // import { Home } from './Home';
 import { Loading } from './Loading';
 import { Search } from './Search';
+import { Api, ApiContext, ErrorContext } from '../stores';
 import * as theme from '../utils/theme';
 
 function stackNavigatorOptions(initialRouteName: string) {
@@ -84,50 +84,24 @@ const ErrorStack = createAppContainer(
   )
 );
 
-// @inject('stores')
-// @observer
-// export class Screens extends Component {
-//   componentDidCatch(error) {
-//     this.props.stores.setError(error.message);
-//   }
-
-//   render() {
-//     return <View style={theme.fullScreen}>{this.renderScreen()}</View>;
-//   }
-
-//   renderScreen = () => {
-//     const {
-//       stores: { api, error, location }
-//     } = this.props;
-
-//     if (error) {
-//       return <ErrorStack />;
-//     }
-
-//     if (!api || !location.current) {
-//       return <Loading />;
-//     }
-
-//     return <RootStack />;
-//   };
-// }
-
-const RootNavigator = createAppContainer(
-  createSwitchNavigator(
-    {
-      Error: ErrorStack,
-      Loading: Loading
-    },
-    {
-      initialRouteName: 'Loading'
-    }
-  )
-);
-
 export function Screens() {
-  return (
-    <View style={theme.fullScreen}>
-      <RootNavigator />
-    </View>
-  );
+  const api = useContext(ApiContext);
+  const { error } = useContext(ErrorContext);
+
+  const stack = renderScreen(api, error);
+
+  return <View style={theme.fullScreen}>{stack}</View>;
+}
+
+function renderScreen(api?: Api, error?: string) {
+  if (error) {
+    return <ErrorStack />;
+  }
+
+  if (!api) {
+    return <Loading />;
+  }
+
+  return null;
+  // return <RootStack />;
 }

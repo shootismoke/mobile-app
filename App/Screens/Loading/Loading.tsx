@@ -25,6 +25,13 @@ import * as theme from '../../utils/theme';
 // The variable returned by setTimeout for longWaiting
 let longWaitingTimeout: NodeJS.Timeout | null = null;
 
+function clearLongWaiting() {
+  if (longWaitingTimeout) {
+    clearTimeout(longWaitingTimeout);
+    longWaitingTimeout = null;
+  }
+}
+
 export function Loading() {
   const api = useContext(ApiContext);
   const gps = useContext(GpsLocationContext);
@@ -38,12 +45,13 @@ export function Loading() {
       console.log('<Loading> - Long waiting');
       setLongWaiting(true);
     }, 2000);
+
+    return clearLongWaiting;
   }, []);
 
   useEffect(() => {
-    if (api && longWaitingTimeout) {
-      clearTimeout(longWaitingTimeout);
-      longWaitingTimeout = null;
+    if (api) {
+      clearLongWaiting();
     }
   }, [api]);
 
