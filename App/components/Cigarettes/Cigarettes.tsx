@@ -14,16 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Cigarette, CigaretteSize } from './Cigarette';
-import { ApiContext } from '../../../stores';
 
-export function Cigarettes() {
-  const {
-    shootISmoke: { cigarettes: realCigarettes }
-  } = useContext(ApiContext)!;
+interface CigarettesProps {
+  cigarettes: number;
+}
+
+export function Cigarettes(props: CigarettesProps) {
+  const { cigarettes: realCigarettes } = props;
   const cigarettes = Math.round(Math.min(realCigarettes, 63) * 10) / 10; // We don't show more than 63
   // const cigarettes = 0.9; // Can change values here for testing
 

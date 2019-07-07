@@ -25,8 +25,8 @@ import {
 } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { Cigarettes } from './Cigarettes';
-// import { Header } from './Header';
+import { Cigarettes } from '../../components/Cigarettes';
+import { Header } from './Header';
 import { i18n } from '../../localization';
 import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
@@ -154,16 +154,16 @@ export function Home(props: HomeProps) {
   return (
     <View style={styles.container}>
       <SmokeVideo />
-      {/* <Header
+      <Header
         onChangeLocationClick={() => props.navigation.navigate('Search')}
-      /> */}
+      />
       <ScrollView
         bounces={false}
         contentContainerStyle={styles.scrollContainer}
         style={styles.scrollView}
       >
         <View style={styles.content}>
-          <Cigarettes />
+          <Cigarettes cigarettes={api.shootISmoke.cigarettes} />
           <View style={styles.main}>{renderText()}</View>
         </View>
         <View style={styles.cta}>
