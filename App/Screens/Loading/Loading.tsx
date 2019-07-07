@@ -33,7 +33,7 @@ function clearLongWaiting() {
 }
 
 export function Loading() {
-  const api = useContext(ApiContext);
+  const { api } = useContext(ApiContext);
   const gps = useContext(GpsLocationContext);
 
   const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time

@@ -31,14 +31,13 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 Before developing the app, you need to fetch your own API tokens for the following services:
 
-| Service                 | Url                                                                                 | Comments                                                |
-| ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| World Air Quality Index | http://aqicn.org/api/                                                               | Required.                                               |
-| LocationIQ              | https://locationiq.com/                                                             | Optional, but recommended for showing precise location. |
-| Algolia Places          | https://community.algolia.com/places/rest.html (`Get Started` button on the bottom) | Optional, lower API rates if not provided.              |
-| Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                                |
-| Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                                |
-| Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                               |
+| Service                 | Url                                                                                 | Comments                                   |
+| ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------ |
+| World Air Quality Index | http://aqicn.org/api/                                                               | Required.                                  |
+| Algolia Places          | https://community.algolia.com/places/rest.html (`Get Started` button on the bottom) | Optional, lower API rates if not provided. |
+| Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                   |
+| Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                   |
+| Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                  |
 
 Then run the following commands:
 
@@ -81,6 +80,7 @@ GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 Created with ❤ by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
 
 A **huge** thanks to the following contributors for their amazing work:
+
 - [@lucienbl](https://github.com/lucienbl)
 
 ---

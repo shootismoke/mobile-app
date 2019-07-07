@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { PureComponent } from 'react';
 import Constants from 'expo-constants';
+import React from 'react';
 import {
   Linking,
   Platform,
@@ -24,6 +24,7 @@ import {
   Text,
   View
 } from 'react-native';
+import { NavigationInjectedProps } from 'react-navigation';
 
 import { Box } from './Box';
 import { BackButton } from '../../components/BackButton';
@@ -31,128 +32,128 @@ import { Language } from './Language';
 import { i18n } from '../../localization';
 import * as theme from '../../utils/theme';
 
-export class About extends PureComponent {
-  handleOpenAmaury = () => Linking.openURL('https://twitter.com/amaurymartiny');
+interface AboutProps extends NavigationInjectedProps {}
 
-  handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
+export function About(props: AboutProps) {
+  const handleOpenAmaury = () =>
+    Linking.openURL('https://twitter.com/amaurymartiny');
 
-  handleOpenArticle = () =>
+  const handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
+
+  const handleOpenArticle = () =>
     Linking.openURL(
       'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
     );
 
-  handleOpenGithub = () => Linking.openURL(Constants.manifest.extra.githubUrl);
+  const handleOpenGithub = () =>
+    Linking.openURL(Constants.manifest.extra.githubUrl);
 
-  handleOpenMarcelo = () =>
+  const handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');
 
-  render() {
-    const { navigation } = this.props;
-    return (
-      <ScrollView style={theme.withPadding}>
-        <BackButton onClick={navigation.pop} style={styles.backButton} />
+  const { navigation } = props;
+  return (
+    <ScrollView style={theme.withPadding}>
+      <BackButton onClick={() => navigation.pop()} style={styles.backButton} />
 
-        <View style={styles.section}>
-          <Text style={styles.h2}>
+      <View style={styles.section}>
+        <Text style={styles.h2}>
+          {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
+        </Text>
+        <Text style={theme.text}>
+          {i18n.t(
+            'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
+          )}{' '}
+          <Text onPress={handleOpenArticle} style={theme.link}>
             {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_title'
+              'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
             )}
           </Text>
-          <Text style={theme.text}>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
-            )}{' '}
-            <Text onPress={this.handleOpenArticle} style={theme.link}>
-              {i18n.t(
-                'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
-              )}
-            </Text>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_message_2'
-            )}
-            <Text style={styles.micro}>&micro;</Text>
-            g/m&sup3;
-            {' \u207D'}
-            &sup1;
-            {'\u207E'}.
+          {i18n.t(
+            'about_how_do_you_calculate_the_number_of_cigarettes_message_2'
+          )}
+          <Text style={styles.micro}>&micro;</Text>
+          g/m&sup3;
+          {' \u207D'}
+          &sup1;
+          {'\u207E'}.
+        </Text>
+        <Box />
+        <Text style={styles.articleLink}>
+          (1){' '}
+          <Text onPress={handleOpenArticle} style={theme.link}>
+            http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
           </Text>
-          <Box />
-          <Text style={styles.articleLink}>
-            (1){' '}
-            <Text onPress={this.handleOpenArticle} style={theme.link}>
-              http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
-            </Text>
-          </Text>
-        </View>
+        </Text>
+      </View>
 
-        <View style={styles.section}>
-          <Text style={styles.h2}>
-            {i18n.t('about_where_does_data_come_from_title')}
-          </Text>
-          <Text style={theme.text}>
-            {i18n.t('about_where_does_data_come_from_message_1')}{' '}
-            <Text onPress={this.handleOpenAqi} style={theme.link}>
-              {i18n.t('about_where_does_data_come_from_link_1')}
-            </Text>{' '}
-            {i18n.t('about_were_does_data_come_from_message_2')}
-          </Text>
-        </View>
+      <View style={styles.section}>
+        <Text style={styles.h2}>
+          {i18n.t('about_where_does_data_come_from_title')}
+        </Text>
+        <Text style={theme.text}>
+          {i18n.t('about_where_does_data_come_from_message_1')}{' '}
+          <Text onPress={handleOpenAqi} style={theme.link}>
+            {i18n.t('about_where_does_data_come_from_link_1')}
+          </Text>{' '}
+          {i18n.t('about_were_does_data_come_from_message_2')}
+        </Text>
+      </View>
 
-        <View style={styles.section}>
-          <Text style={styles.h2}>
-            {i18n.t('about_why_is_the_station_so_far_title')}
-          </Text>
-          <Text style={theme.text}>
-            {i18n.t('about_why_is_the_station_so_far_message')}
-          </Text>
-        </View>
+      <View style={styles.section}>
+        <Text style={styles.h2}>
+          {i18n.t('about_why_is_the_station_so_far_title')}
+        </Text>
+        <Text style={theme.text}>
+          {i18n.t('about_why_is_the_station_so_far_message')}
+        </Text>
+      </View>
 
-        <View style={styles.section}>
-          <Text style={styles.h2}>{i18n.t('about_weird_results_title')}</Text>
-          <Text style={theme.text}>
-            {i18n.t('about_weird_results_message_1')}{' '}
-            <Text onPress={this.handleOpenAqi} style={theme.link}>
-              {i18n.t('about_weird_results_link_1')}
-            </Text>{' '}
-            {i18n.t('about_weird_results_message_2')}
-          </Text>
-        </View>
+      <View style={styles.section}>
+        <Text style={styles.h2}>{i18n.t('about_weird_results_title')}</Text>
+        <Text style={theme.text}>
+          {i18n.t('about_weird_results_message_1')}{' '}
+          <Text onPress={handleOpenAqi} style={theme.link}>
+            {i18n.t('about_weird_results_link_1')}
+          </Text>{' '}
+          {i18n.t('about_weird_results_message_2')}
+        </Text>
+      </View>
 
-        <View style={styles.credits}>
-          <Text style={styles.h2}>{i18n.t('about_credits_title')}</Text>
-          <Text style={theme.text}>
-            {i18n.t('about_credits_concept_and_development')}{' '}
-            <Text onPress={this.handleOpenAmaury} style={theme.link}>
-              Amaury Martiny
-            </Text>
-            .{'\n'}
-            {i18n.t('about_credits_design_and_copywriting')}{' '}
-            <Text onPress={this.handleOpenMarcelo} style={theme.link}>
-              Marcelo S. Coelho
-            </Text>
-            .{'\n'}
-            {'\n'}
-            {i18n.t('about_credits_data_from')}{' '}
-            <Text onPress={this.handleOpenAqi} style={theme.link}>
-              WAQI
-            </Text>
-            .{'\n'}
-            {i18n.t('about_credits_source_code')}{' '}
-            <Text onPress={this.handleOpenGithub} style={theme.link}>
-              {i18n.t('about_credits_available_github')}
-            </Text>
-            .{'\n'}
-            {'\n'}
-            Shoot! I Smoke v{Constants.manifest.version}.
+      <View style={styles.credits}>
+        <Text style={styles.h2}>{i18n.t('about_credits_title')}</Text>
+        <Text style={theme.text}>
+          {i18n.t('about_credits_concept_and_development')}{' '}
+          <Text onPress={handleOpenAmaury} style={theme.link}>
+            Amaury Martiny
           </Text>
-          <View style={styles.language}>
-            <Text style={theme.text}>{i18n.t('about_language')}: </Text>
-            <Language />
-          </View>
+          .{'\n'}
+          {i18n.t('about_credits_design_and_copywriting')}{' '}
+          <Text onPress={handleOpenMarcelo} style={theme.link}>
+            Marcelo S. Coelho
+          </Text>
+          .{'\n'}
+          {'\n'}
+          {i18n.t('about_credits_data_from')}{' '}
+          <Text onPress={handleOpenAqi} style={theme.link}>
+            WAQI
+          </Text>
+          .{'\n'}
+          {i18n.t('about_credits_source_code')}{' '}
+          <Text onPress={handleOpenGithub} style={theme.link}>
+            {i18n.t('about_credits_available_github')}
+          </Text>
+          .{'\n'}
+          {'\n'}
+          Shoot! I Smoke v{Constants.manifest.version}.
+        </Text>
+        <View style={styles.language}>
+          <Text style={theme.text}>{i18n.t('about_language')}: </Text>
+          <Language />
         </View>
-      </ScrollView>
-    );
-  }
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({

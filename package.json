@@ -34,6 +34,7 @@
     "io-ts": "^2.0.0",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-maps": "^0.24.2",
     "react-navigation": "^3.11.0",
     "retry-ts": "^0.1.0",
     "sentry-expo": "~1.13.0",

@@ -37,19 +37,19 @@ interface HeaderProps {
 }
 
 export function Header(props: HeaderProps) {
-  const api = useContext(ApiContext)!;
+  const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
   const { onChangeLocationClick } = props;
 
-  const distance = distanceToStation(currentLocation!, api);
-  const isTooFar = isStationTooFar(currentLocation!, api);
+  const distance = distanceToStation(currentLocation!, api!);
+  const isTooFar = isStationTooFar(currentLocation!, api!);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.currentLocation}>
           <CurrentLocation
-            api={api}
+            api={api!}
             currentLocation={currentLocation!}
             numberOfLines={2}
           />

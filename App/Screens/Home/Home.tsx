@@ -38,10 +38,10 @@ import * as theme from '../../utils/theme';
 interface HomeProps extends NavigationInjectedProps {}
 
 export function Home(props: HomeProps) {
-  const api = useContext(ApiContext)!;
+  const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
 
-  const isTooFar = isStationTooFar(currentLocation!, api);
+  const isTooFar = isStationTooFar(currentLocation!, api!);
 
   function goToAbout() {
     props.navigation.navigate('About');
@@ -163,7 +163,7 @@ export function Home(props: HomeProps) {
         style={styles.scrollView}
       >
         <View style={styles.content}>
-          <Cigarettes cigarettes={api.shootISmoke.cigarettes} />
+          <Cigarettes cigarettes={api!.shootISmoke.cigarettes} />
           <View style={styles.main}>{renderText()}</View>
         </View>
         <View style={styles.cta}>

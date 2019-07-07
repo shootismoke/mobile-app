@@ -14,30 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
 import { i18n } from '../../../localization';
 import * as theme from '../../../utils/theme';
 
-@inject('stores')
-@observer
-export class Distance extends Component {
-  render () {
-    const {
-      stores: { distanceToStation }
-    } = this.props;
+interface DistanceProps {
+  distance: number;
+}
 
-    return (
-      <Banner elevated shadowPosition='top' style={styles.banner}>
-        <Text style={styles.distance}>
-          {i18n.t('details_distance_label', { distanceToStation }).toUpperCase()}
-        </Text>
-      </Banner>
-    );
-  }
+export function Distance(props: DistanceProps) {
+  return (
+    <Banner elevated shadowPosition="top" style={styles.banner}>
+      <Text style={styles.distance}>
+        {i18n
+          .t('details_distance_label', { distanceToStation: props.distance })
+          .toUpperCase()}
+      </Text>
+    </Banner>
+  );
 }
 
 const styles = StyleSheet.create({

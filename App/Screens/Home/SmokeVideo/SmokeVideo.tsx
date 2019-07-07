@@ -22,9 +22,10 @@ import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
 import { ApiContext } from '../../../stores';
 
 export function SmokeVideo() {
+  const { api } = useContext(ApiContext)!;
   const {
     shootISmoke: { cigarettes }
-  } = useContext(ApiContext)!;
+  } = api!;
 
   return (
     <View style={styles.container}>

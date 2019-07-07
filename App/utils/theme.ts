@@ -59,7 +59,7 @@ export const fullScreen = {
 export const link = {
   color: primaryColor,
   fontFamily: normalFont,
-  textDecorationLine: 'underline'
+  textDecorationLine: 'underline' as 'underline'
 };
 
 /**

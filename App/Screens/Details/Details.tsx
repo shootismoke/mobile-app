@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { MapView } from 'expo';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { NavigationInjectedProps } from 'react-navigation';
 import truncate from 'truncate';
 
 import homeIcon from '../../../assets/images/home.png';
@@ -25,102 +25,95 @@ import stationIcon from '../../../assets/images/station.png';
 import { Distance } from './Distance';
 import { Header } from './Header';
 import { i18n } from '../../localization';
-import { getCorrectLatLng } from '../../utils/getCorrectLatLng';
+import { ApiContext, CurrentLocationContext } from '../../stores';
+import { distanceToStation, getCorrectLatLng } from '../../utils/station';
 import * as theme from '../../utils/theme';
 
-@inject('stores')
-@observer
-export class Details extends Component {
-  state = {
-    showMap: false
-  };
+interface DetailsProps extends NavigationInjectedProps {}
 
-  componentDidMount () {
+// Holds the ref to the MapView.Marker representing the AQI station
+let stationMarker: Marker | undefined;
+
+export function Details(props: DetailsProps) {
+  const { navigation } = props;
+
+  const [showMap, setShowMap] = useState(false);
+  const { api } = useContext(ApiContext);
+  const { currentLocation: _currentLocation } = useContext(
+    CurrentLocationContext
+  );
+
+  useEffect(() => {
     // Show map after 200ms for smoother screen transition
-    setTimeout(() => this.setState({ showMap: true }), 500);
-  }
+    setTimeout(() => setShowMap(true), 500);
+  }, []);
 
-  handleMapReady = () => {
-    this.stationMarker &&
-      this.stationMarker.showCallout &&
-      this.stationMarker.showCallout();
+  const handleMapReady = () => {
+    stationMarker && stationMarker.showCallout && stationMarker.showCallout();
   };
 
-  handleStationRef = ref => {
-    this.stationMarker = ref;
+  const handleStationRef = (ref: Marker) => {
+    stationMarker = ref;
   };
 
-  render () {
-    const {
-      navigation,
-      stores: { api, location }
-    } = this.props;
-    const { showMap } = this.state;
+  // TODO
+  // I have no idea why, but if we don't clone the object, and continue to
+  // use `location.current` everywhere, we get a `setting key of frozen
+  // object` error. It's related to the MapView below.
+  const currentLocation = { ..._currentLocation! };
 
-    // TODO
-    // I have no idea why, but if we don't clone the object, and continue to
-    // use `location.current` everywhere, we get a `setting key of frozen
-    // object` error. It's related to the MapView below.
-    const currentLocation = { ...location.current };
+  const station = {
+    description:
+      api!.attributions && api!.attributions.length
+        ? api!.attributions[0].name
+        : '',
+    title: api!.city.name,
+    ...getCorrectLatLng(currentLocation, {
+      latitude: api!.city.geo[0],
+      longitude: api!.city.geo[1]
+    })
+  };
 
-    const station = {
-      description:
-        api.attributions && api.attributions.length
-          ? api.attributions[0].name
-          : null,
-      title: api.city.name,
-      ...getCorrectLatLng(currentLocation, {
-        latitude: api.city.geo[0],
-        longitude: api.city.geo[1]
-      })
-    };
-
-    return (
-      <View style={styles.container}>
-        <Header onBackClick={navigation.pop} style={styles.header} />
-        <View style={styles.mapContainer}>
-          {showMap && (
-            <MapView
-              initialRegion={{
-                latitude: (currentLocation.latitude + station.latitude) / 2,
-                latitudeDelta:
-                  Math.abs(currentLocation.latitude - station.latitude) * 2,
-                longitude: (currentLocation.longitude + station.longitude) / 2,
-                longitudeDelta:
-                  Math.abs(currentLocation.longitude - station.longitude) * 2
-              }}
-              onMapReady={this.handleMapReady}
-              style={styles.map}
-            >
-              <MapView.Marker
-                color={theme.primaryColor}
-                coordinate={station}
-                image={stationIcon}
-                ref={this.handleStationRef}
-                title={i18n.t('details_air_quality_station_marker')}
-                description={truncate(station.description, 40)}
-              />
-              <MapView.Marker
-                color='blue'
-                coordinate={currentLocation}
-                image={homeIcon}
-                title={i18n.t('details_your_position_marker')}
-              />
-            </MapView>
-          )}
-        </View>
-        <Distance />
+  return (
+    <View style={styles.container}>
+      <Header onBackClick={() => navigation.pop()} />
+      <View style={styles.mapContainer}>
+        {showMap && (
+          <MapView
+            initialRegion={{
+              latitude: (currentLocation.latitude + station.latitude) / 2,
+              latitudeDelta:
+                Math.abs(currentLocation.latitude - station.latitude) * 2,
+              longitude: (currentLocation.longitude + station.longitude) / 2,
+              longitudeDelta:
+                Math.abs(currentLocation.longitude - station.longitude) * 2
+            }}
+            onMapReady={handleMapReady}
+            style={styles.map}
+          >
+            <Marker
+              coordinate={station}
+              image={stationIcon}
+              ref={handleStationRef}
+              title={i18n.t('details_air_quality_station_marker')}
+              description={truncate(station.description, 40)}
+            />
+            <Marker
+              coordinate={currentLocation}
+              image={homeIcon}
+              title={i18n.t('details_your_position_marker')}
+            />
+          </MapView>
+        )}
       </View>
-    );
-  }
+      <Distance distance={distanceToStation(currentLocation!, api!)} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1
-  },
-  header: {
-    backgroundColor: theme.backgroundColor
   },
   map: {
     flexGrow: 1

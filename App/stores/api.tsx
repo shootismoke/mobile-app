@@ -27,6 +27,7 @@ import { ErrorContext } from './error';
 import { CurrentLocationContext, LatLng } from './location';
 import * as dataSources from '../utils/dataSources';
 import { retry, sideEffect } from '../utils/fp';
+import { noop } from '../utils/noop';
 
 export const ApiT = t.type({
   aqi: t.number,
@@ -111,7 +112,12 @@ export function fetchApi(currentPosition: LatLng) {
   );
 }
 
-export const ApiContext = createContext<Api | undefined>(undefined);
+interface Context {
+  api?: Api;
+  reloadApp: () => void;
+}
+
+export const ApiContext = createContext<Context>({ reloadApp: noop });
 
 interface ApiContextProviderProps {
   children: JSX.Element;
@@ -140,5 +146,9 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
     )(fetchApi(currentLocation))();
   }, [currentLocation]);
 
-  return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
+  return (
+    <ApiContext.Provider value={{ api, reloadApp: () => setApi(undefined) }}>
+      {children}
+    </ApiContext.Provider>
+  );
 }

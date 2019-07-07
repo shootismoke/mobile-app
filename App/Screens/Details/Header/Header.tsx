@@ -14,74 +14,92 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
 import { formatRelative } from 'date-fns';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { inject, observer } from 'mobx-react';
+import React, { useContext } from 'react';
+import {
+  GestureResponderEvent,
+  Image,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  View
+} from 'react-native';
 
 import locationIcon from '../../../../assets/images/location.png';
 import { BackButton } from '../../../components/BackButton';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import { i18n } from '../../../localization';
+import { ApiContext, CurrentLocationContext } from '../../../stores';
 import * as theme from '../../../utils/theme';
 
 const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 
-@inject('stores')
-@observer
-export class Header extends Component {
-  render () {
-    const {
-      onBackClick,
-      stores: { api }
-    } = this.props;
+interface HeaderProps {
+  onBackClick: (event: GestureResponderEvent) => void;
+}
 
-    const lastUpdated =
-      api.time && api.time.v ? new Date(api.time.v * 1000) : null;
-    const { dominentpol, iaqi } = api;
+export function Header(props: HeaderProps) {
+  const { onBackClick } = props;
+  const { api } = useContext(ApiContext);
+  const { currentLocation } = useContext(CurrentLocationContext);
 
-    return (
-      <View style={styles.container}>
-        <BackButton onClick={onBackClick} style={styles.backButton} />
+  const lastUpdated =
+    api!.time && api!.time.v ? new Date(api!.time.v * 1000) : null;
+  const { dominentpol, iaqi } = api!;
 
-        <View style={styles.layout}>
-          <Image source={locationIcon} style={styles.changeLocation} />
+  return (
+    <View style={styles.container}>
+      <BackButton onClick={onBackClick} style={styles.backButton} />
 
-          <View style={styles.content}>
-            <CurrentLocation style={styles.currentLocation} />
-            {lastUpdated &&
-              this.renderInfo(
-                i18n.t('details_header_latest_update_label'),
-                formatRelative(lastUpdated, new Date())
-              )}
-            {dominentpol &&
-              this.renderInfo(i18n.t('details_header_primary_pollutant_label'), dominentpol.toUpperCase())}
+      <View style={styles.layout}>
+        <Image source={locationIcon} style={styles.changeLocation} />
 
-            <View style={styles.pollutants}>
-              {trackedPollutant.map(
-                pollutant =>
-                  iaqi.get(pollutant) &&
-                  this.renderInfo(
-                    `${pollutant.toUpperCase()} AQI:`,
-                    iaqi.get(pollutant).v,
-                    styles.pollutantItem
-                  )
-              )}
-            </View>
+        <View style={styles.content}>
+          <CurrentLocation
+            api={api!}
+            currentLocation={currentLocation!}
+            style={styles.currentLocation}
+          />
+          {lastUpdated &&
+            renderInfo(
+              i18n.t('details_header_latest_update_label'),
+              formatRelative(lastUpdated, new Date())
+            )}
+          {dominentpol &&
+            renderInfo(
+              i18n.t('details_header_primary_pollutant_label'),
+              dominentpol.toUpperCase()
+            )}
+
+          <View style={styles.pollutants}>
+            {trackedPollutant.map(
+              pollutant =>
+                iaqi[pollutant] &&
+                renderInfo(
+                  `${pollutant.toUpperCase()} AQI:`,
+                  iaqi[pollutant].v.toString(),
+                  styles.pollutantItem
+                )
+            )}
           </View>
         </View>
       </View>
-    );
-  }
-
-  renderInfo = (label, value, style = null) => {
-    return (
-      <Text key={label} style={[styles.info, style]}>
-        <Text style={styles.label}>{label}</Text> {value}
-      </Text>
-    );
-  };
+    </View>
+  );
 }
+
+const renderInfo = (
+  label: string,
+  value: string,
+  style?: StyleProp<TextStyle>
+) => {
+  return (
+    <Text key={label} style={[styles.info, style]}>
+      <Text style={styles.label}>{label}</Text> {value}
+    </Text>
+  );
+};
 
 const styles = StyleSheet.create({
   backButton: {

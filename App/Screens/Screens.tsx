@@ -22,8 +22,8 @@ import {
   StackNavigatorConfig
 } from 'react-navigation';
 
-// import { About } from './About';
-// import { Details } from './Details';
+import { About } from './About';
+import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
 import { Loading } from './Loading';
@@ -50,18 +50,18 @@ function stackNavigatorOptions(initialRouteName: string) {
 const RootStack = createAppContainer(
   createStackNavigator(
     {
-      // About: {
-      //   screen: About
-      // },
-      // Details: {
-      //   screen: Details
-      // },
+      About: {
+        screen: About
+      },
+      Details: {
+        screen: Details
+      },
       Home: {
         screen: Home
+      },
+      Search: {
+        screen: Search
       }
-      // Search: {
-      //   screen: Search
-      // }
     },
     stackNavigatorOptions('Home')
   )
@@ -85,7 +85,7 @@ const ErrorStack = createAppContainer(
 );
 
 export function Screens() {
-  const api = useContext(ApiContext);
+  const { api } = useContext(ApiContext);
   const { error } = useContext(ErrorContext);
 
   const stack = renderScreen(api, error);

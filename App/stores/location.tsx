@@ -39,7 +39,7 @@ export interface Location extends LatLng {
 
 interface LocationWithSetter {
   currentLocation?: Location;
-  setLatLng: (latlng: { latitude: number; longitude: number }) => void;
+  setLatLng: (latlng?: LatLng) => void;
 }
 
 export const GpsLocationContext = createContext<Location | undefined>(

@@ -18,7 +18,7 @@ import React, { useContext } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import error from '../../../assets/images/error.png';
+import errorPicture from '../../../assets/images/error.png';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
 import * as theme from '../../utils/theme';
@@ -26,11 +26,11 @@ import * as theme from '../../utils/theme';
 interface ErrorScreenProps extends NavigationInjectedProps {}
 
 export function ErrorScreen(props: ErrorScreenProps) {
-  const { error: errorText } = useContext(ErrorContext);
+  const { error } = useContext(ErrorContext);
 
   return (
     <View style={styles.container}>
-      <Image source={error} />
+      <Image source={errorPicture} />
       <View>
         <Text style={styles.errorText}>
           <Text style={styles.sorry}>
@@ -48,7 +48,7 @@ export function ErrorScreen(props: ErrorScreenProps) {
       </TouchableOpacity>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
       <Text style={styles.errorMessage}>
-        {i18n.t('error_screen_error_message', { errorText })}
+        {i18n.t('error_screen_error_message', { errorText: error })}
       </Text>
     </View>
   );
