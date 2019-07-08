@@ -29,7 +29,7 @@
     "haversine": "^1.1.0",
     "i18n-js": "^3.3.0",
     "mobx": "^4.6.0",
-    "mobx-react": "^5.3.6",
+    "mobx-react": "^6.1.1",
     "mobx-state-tree": "^3.14.0",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
