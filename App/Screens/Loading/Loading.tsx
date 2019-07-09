@@ -89,40 +89,6 @@ function renderText (longWaiting: boolean, gps?: Location, api?: Api) {
   );
 }
 
-// TaskManager.defineTask(TASK_STORE_AQI_HISTORY, async ({ data, error }) => {
-//   if (error) {
-//     console.log('<Loading> - TaskManager - defineTask - Error', error.message);
-//     return;
-//   }
-//   if (data) {
-//     const { locations } = data;
-//     const { coords } = locations[0];
-
-//     // We currently have 2 sources, aqicn, and windWaqi
-//     // We put them in an array
-//     const sources = [dataSources.aqicn, dataSources.windWaqi];
-
-//     const api = await retry(
-//       async (_, attempt) => {
-//         // Attempt starts at 1
-//         console.log(
-//           `<Loading> - fetchData - Attempt #${attempt}: ${
-//             sources[(attempt - 1) % 2].name
-//           }`
-//         );
-//         const result = await sources[(attempt - 1) % 2](coords);
-//         console.log('<Loading> - fetchData - Got result', result);
-
-//         return result;
-//       },
-//       { retries: 3 } // 2 attempts per source
-//     );
-
-//     if (await AqiHistoryDb.isSaveNeeded()) {
-//       await AqiHistoryDb.saveData(api.city.name, api.rawPm25, coords);
-//     }
-//   }
-
 const styles = StyleSheet.create({
   dots: {
     color: theme.primaryColor

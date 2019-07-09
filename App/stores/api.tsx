@@ -16,9 +16,9 @@
 
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
+import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import { pipe } from 'fp-ts/lib/pipeable';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ErrorContext } from './error';
 import { CurrentLocationContext, LatLng } from './location';
 import * as dataSources from '../utils/dataSources';
-import { retry, sideEffect } from '../utils/fp';
+import { retry, sideEffect, toError } from '../utils/fp';
 import { noop } from '../utils/noop';
 
 export const ApiT = t.type({
@@ -85,7 +85,7 @@ export function fetchApi (currentPosition: LatLng) {
             sources[(status.iterNumber - 1) % sources.length].run(
               currentPosition
             ),
-          reason => new Error(String(reason))
+          toError
         )
       ),
       TE.chain(response =>
@@ -137,16 +137,19 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
       return;
     }
 
-    TE.fold<Error, Api, undefined>(
-      err => {
-        setError(err.message);
-        return T.of(undefined);
-      },
-      newApi => {
-        setApi(newApi);
-        return T.of(undefined);
-      }
-    )(fetchApi(currentLocation))();
+    pipe(
+      fetchApi(currentLocation),
+      TE.fold(
+        err => {
+          setError(err.message);
+          return T.of(undefined);
+        },
+        newApi => {
+          setApi(newApi);
+          return T.of(undefined);
+        }
+      )
+    )();
   }, [currentLocation]);
 
   return (

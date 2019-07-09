@@ -16,11 +16,13 @@
 
 import * as Permissions from 'expo-permissions';
 import * as ExpoLocation from 'expo-location';
+import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { ErrorContext } from './error';
+import { toError } from '../utils/fp';
 import { noop } from '../utils/noop';
 
 export interface LatLng {
@@ -51,30 +53,27 @@ export const CurrentLocationContext = createContext<LocationWithSetter>({
 });
 
 function fetchGpsPosition () {
-  return TE.tryCatch(
-    async () => {
-      const { status } = await Permissions.askAsync(Permissions.LOCATION);
+  return TE.tryCatch(async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
-      if (status !== 'granted') {
-        throw new Error('Permission to access location was denied');
-      }
+    if (status !== 'granted') {
+      throw new Error('Permission to access location was denied');
+    }
 
-      console.log('<LocationContext> - fetchGpsPosition - Fetching location');
-      return ExpoLocation.getCurrentPositionAsync({
-        timeout: 5000
-      });
-      // Uncomment to get other locations
-      // const coords = {
-      //   latitude: Math.random() * 90,
-      //   longitude: Math.random() * 90
-      // };
-      // const coords = {
-      //   latitude: 48.4,
-      //   longitude: 2.34
-      // };
-    },
-    err => new Error(String(err))
-  );
+    console.log('<LocationContext> - fetchGpsPosition - Fetching location');
+    return ExpoLocation.getCurrentPositionAsync({
+      timeout: 5000
+    });
+    // Uncomment to get other locations
+    // const coords = {
+    //   latitude: Math.random() * 90,
+    //   longitude: Math.random() * 90
+    // };
+    // const coords = {
+    //   latitude: 48.4,
+    //   longitude: 2.34
+    // };
+  }, toError);
 }
 
 export function LocationContextProvider ({
@@ -89,24 +88,27 @@ export function LocationContextProvider ({
 
   // Fetch GPS location
   useEffect(() => {
-    TE.fold<Error, ExpoLocation.LocationData, undefined>(
-      err => {
-        console.log('<LocationContext> - fetchGpsPosition - Error', err);
-        setError(err.message);
+    pipe(
+      fetchGpsPosition(),
+      TE.fold(
+        err => {
+          console.log('<LocationContext> - fetchGpsPosition - Error', err);
+          setError(err.message);
 
-        return T.of(undefined);
-      },
-      ({ coords }) => {
-        console.log(
-          '<LocationContext> - fetchGpsPosition - Got location',
-          coords
-        );
-        setGpsLocation(coords);
-        setCurrentLocation(coords);
+          return T.of(undefined);
+        },
+        ({ coords }) => {
+          console.log(
+            '<LocationContext> - fetchGpsPosition - Got location',
+            coords
+          );
+          setGpsLocation(coords);
+          setCurrentLocation(coords);
 
-        return T.of(undefined);
-      }
-    )(fetchGpsPosition())();
+          return T.of(undefined);
+        }
+      )
+    )();
   }, []);
 
   return (

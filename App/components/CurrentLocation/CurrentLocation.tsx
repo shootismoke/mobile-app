@@ -15,12 +15,14 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import * as ExpoLocation from 'expo-location';
+import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
 import { Api, LatLng, Location } from '../../stores';
+import { toError } from '../../utils/fp';
 import * as theme from '../../utils/theme';
 
 interface CurrentLocationProps extends TextProps {
@@ -29,14 +31,11 @@ interface CurrentLocationProps extends TextProps {
 }
 
 function fetchReverseGeocode (currentLocation: LatLng) {
-  return TE.tryCatch(
-    async () => {
-      const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
+  return TE.tryCatch(async () => {
+    const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
 
-      return reverse[0];
-    },
-    err => new Error(String(err))
-  );
+    return reverse[0];
+  }, toError);
 }
 
 // Text to show when fetching reverse geocoding
@@ -53,22 +52,25 @@ export function CurrentLocation (props: CurrentLocationProps) {
       return;
     }
 
-    TE.fold<Error, ExpoLocation.Address, undefined>(
-      () => {
-        setLocationName(
-          api.city && api.city.name ? api.city.name : 'Unknown AQI Station'
-        );
+    pipe(
+      fetchReverseGeocode(currentLocation),
+      TE.fold(
+        () => {
+          setLocationName(
+            api.city && api.city.name ? api.city.name : 'Unknown AQI Station'
+          );
 
-        return T.of(undefined);
-      },
-      reverse => {
-        setLocationName(
-          [reverse.street, reverse.city, reverse.country].join(', ')
-        );
+          return T.of(undefined);
+        },
+        reverse => {
+          setLocationName(
+            [reverse.street, reverse.city, reverse.country].join(', ')
+          );
 
-        return T.of(undefined);
-      }
-    )(fetchReverseGeocode(currentLocation))();
+          return T.of(undefined);
+        }
+      )
+    )();
   }, []);
 
   return (

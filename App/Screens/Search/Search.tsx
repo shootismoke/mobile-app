@@ -26,6 +26,7 @@ import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+import Sentry from 'sentry-expo';
 
 import { BackButton } from '../../components/BackButton';
 import { Item } from './Item';
@@ -37,7 +38,7 @@ import {
   LatLng,
   Location
 } from '../../stores';
-import { retry, sideEffect } from '../../utils/fp';
+import { retry, sideEffect, toError } from '../../utils/fp';
 import * as theme from '../../utils/theme';
 
 // As per https://community.algolia.com/places/rest.html
@@ -114,7 +115,7 @@ function fetchAlgolia (search: string, gps?: LatLng) {
                 timeout: 3000
               }
             ),
-          reason => new Error(String(reason))
+          toError
         )
       ),
       TE.chain(response =>
@@ -172,23 +173,26 @@ export function Search (props: SearchProps) {
       clearTimeout(typingTimeout);
     }
     typingTimeout = setTimeout(() => {
-      TE.fold<Error, AlgoliaHit[], unknown>(
-        err => {
-          console.log('<Search> - handleChangeSearch -', err.message);
-          setLoading(false);
-          setAlgoliaError(err);
+      pipe(
+        fetchAlgolia(s, gps),
+        TE.fold(
+          err => {
+            console.log('<Search> - handleChangeSearch -', err.message);
+            setLoading(false);
+            setAlgoliaError(err);
 
-          // TODO Log on Sentry
-          return T.of(undefined as void);
-        },
-        hits => {
-          setLoading(false);
-          setAlgoliaError(undefined);
-          setHits(hits);
+            Sentry.captureException(err);
+            return T.of(undefined as void);
+          },
+          hits => {
+            setLoading(false);
+            setAlgoliaError(undefined);
+            setHits(hits);
 
-          return T.of(undefined as void);
-        }
-      )(fetchAlgolia(s, gps))();
+            return T.of(undefined as void);
+          }
+        )
+      )();
     }, 500);
   }
 
