@@ -16,7 +16,6 @@
 
 import { SQLite } from 'expo-sqlite';
 import * as C from 'fp-ts/lib/Console';
-import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 

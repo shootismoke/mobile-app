@@ -22,6 +22,8 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { ErrorContext } from './error';
+import { SAVE_DATA_INTERVAL } from '../managers/AqiHistoryDb';
+import { AQI_HISTORY_TASK } from '../managers/AqiHistoryTask';
 import { toError } from '../utils/fp';
 import { noop } from '../utils/noop';
 
@@ -61,6 +63,12 @@ function fetchGpsPosition () {
     }
 
     console.log('<LocationContext> - fetchGpsPosition - Fetching location');
+
+    // Start the task to record periodically on the background the location
+    ExpoLocation.startLocationUpdatesAsync(AQI_HISTORY_TASK, {
+      timeInterval: SAVE_DATA_INTERVAL
+    });
+
     return ExpoLocation.getCurrentPositionAsync({
       timeout: 5000
     });
