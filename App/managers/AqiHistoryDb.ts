@@ -1,88 +1,143 @@
 import { SQLite } from 'expo-sqlite';
-import AqiHistory from './AqiHistory';
 
-export const SAVE_DATA_INTERVAL = 3600000; // 1 hour
-const DB_AQI_HISTORY = 'aqi-history';
+import { LatLng } from '../stores';
 
-export const initDb = () => {
-  return SQLite.openDatabase(DB_AQI_HISTORY, '1.0', 'Aqi History', 5 * 1024 * 1024);
-};
+// FIXME correct types
+type Database = any;
+type ResultSet = any;
+type Transaction = any;
 
-export const init = async () => {
-  const db = await initDb();
+interface AqiHistoryItemInput extends LatLng {
+  rawPm25: number;
+}
 
-  await db.transaction((tx) => {
-    tx.executeSql(
-      'create table if not exists history(id integer primary key autoincrement, location varchar(255) not null, lat numeric not null, lng numeric not null, rawPm25 decimal not null, creationTime timestamp not null)',
-      [],
-      () => {},
-      (transaction, error) => console.log('DB init error', error)
-    );
-  });
+interface AqiHistoryItem extends AqiHistoryItemInput {
+  creationTime: Date;
+  id: number;
+}
 
-  return db;
-};
+let db: Database | undefined;
 
-export const isSaveNeeded = async () => {
+export const SAVE_DATA_INTERVAL = 36; // 1 hour
+const AQI_HISTORY_DB = 'AQI_HISTORY_DB';
+const AQI_HISTORY_TABLE = 'AqiHistory';
+
+async function initDb() {
+  console.log(`<AqiHistoryDb> - initDb - Open database ${AQI_HISTORY_DB}`);
+  await SQLite.openDatabase(AQI_HISTORY_DB);
+
+  return new Promise((resolve, reject) => {
+    db.transaction((tx: Transaction) => {
+      console.log(
+        `<AqiHistoryDb> - initDb - Creating (if not exists) table ${AQI_HISTORY_TABLE}`
+      );
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISYS ${AQI_HISTORY_TABLE}(
+          id INTEGER PRIMARY KEY,
+          latitude REAL NOT NULL,
+          longitude REAL NOT NULL,
+          rawPm25 REAL NOT NULL,
+          creationTime DATETIME DEFAULT CURRENT_TIMESTAMP
+        )`,
+        [],
+        () => resolve(db),
+        (_transaction: Transaction, error: Error) => reject(error)
+      );
+    });
+  }) as Promise<Database>;
+}
+
+async function init() {
+  if (db) {
+    return db;
+  }
+
+  return initDb();
+}
+
+async function isSaveNeeded() {
   const db = await init();
 
-  const promise = new Promise((resolve, reject) => {
-    db.readTransaction((tx) => {
+  return new Promise((resolve, reject) => {
+    db.readTransaction((tx: Transaction) => {
+      console.log(
+        `<AqiHistoryDb> - isSaveNeeded - Checking if is saved needed`
+      );
+
       tx.executeSql(
-        'select * from history order by id desc limit 1',
+        `SELECT * FROM ${AQI_HISTORY_TABLE} ORDER BY id DESC LIMIT 1`,
         [],
-        (transaction, resultSet) => {
+        (_transaction: Transaction, resultSet: ResultSet) => {
           if (resultSet.rows.length === 0) {
             resolve(true);
-          } else if ((resultSet.rows.item(0).creationTime + SAVE_DATA_INTERVAL) < Date.now()) {
+          } else if (
+            resultSet.rows.item(0).creationTime + SAVE_DATA_INTERVAL <
+            Date.now()
+          ) {
             resolve(true);
           } else {
             resolve(false);
           }
         },
-        (transaction, error) => reject(error)
+        (_transaction: Transaction, error: Error) => reject(error)
+      );
+    });
+  }) as Promise<boolean>;
+}
+
+export async function saveData(value: AqiHistoryItemInput) {
+  const db = await init();
+  const isNeeded = await isSaveNeeded();
+
+  console.log(`<AqiHistoryDb> - saveData - isSaveNeeded=${isNeeded}`);
+  if (!isNeeded) {
+    return false;
+  }
+
+  return new Promise((resolve, reject) => {
+    db.transaction((tx: Transaction) => {
+      console.log(
+        `<AqiHistoryDb> - saveData - Inserting new row in ${AQI_HISTORY_TABLE} with values ${JSON.stringify(
+          value
+        )}`
+      );
+
+      tx.executeSql(
+        `INSERT INTO ${AQI_HISTORY_TABLE} (latitude, longitude, rawPm25) VALUES (?, ?, ?)`,
+        [value.latitude, value.longitude, value.rawPm25],
+        () => resolve(),
+        (_transaction: Transaction, error: Error) => reject(error)
       );
     });
   });
+}
 
-  return promise;
-};
-
-export const saveData = async (location, rawPm25, { latitude, longitude }) => {
+export async function getData(date: Date) {
   const db = await init();
 
-  db.transaction((tx) => {
-    tx.executeSql(
-      'insert into history (location, lat, lng, rawPm25, creationTime) values (?, ?, ?, ?, ?)',
-      [location, latitude, longitude, rawPm25, Date.now()],
-      () => {},
-      (transaction, error) => console.log('DB insert error', error)
-    );
-  });
-};
+  return new Promise((resolve, reject) => {
+    db.readTransaction((tx: Transaction) => {
+      console.log(
+        `<AqiHistoryDb> - getData - Reading data since ${date.toISOString()}`
+      );
 
-export const getData = async (limit) => {
-  const db = await init();
-
-  const promise = new Promise((resolve, reject) => {
-    db.readTransaction((tx) => {
       tx.executeSql(
-        'select * from history order by creationTime desc limit ' + limit,
-        [],
-        (transaction, resultSet) => {
+        `SELECT * FROM ${AQI_HISTORY_TABLE}
+        WHERE creationTime > ?,
+        ORDER BY creationTime`,
+        [date],
+        (_transaction: Transaction, resultSet: ResultSet) => {
           let data = [];
 
           for (let i = 0; i < resultSet.rows.length; i++) {
-            const result = new AqiHistory(resultSet.rows.item(i));
+            const result = resultSet.rows.item(i) as AqiHistoryItem;
             data.push(result);
           }
 
           resolve(data);
         },
-        (transaction, error) => reject(error)
+        (_transaction: Transaction, error: Error) => reject(error)
       );
     });
   });
-
-  return promise;
-};
+}

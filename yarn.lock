@@ -1418,6 +1418,11 @@
   resolved "https://registry.yarnpkg.com/@types/haversine/-/haversine-1.1.2.tgz#d2053989a596ecb71b94fd8cdbde121a7b0fc6ca"
   integrity sha512-HkbSRNU+luEVX6kXp1N46GEF90hBA99sXa7ARU7rE1e26SgWEbkxB84Qb2ASLLRnISAoWRsy1IewG5fBXmhXOQ==
 
+"@types/i18n-js@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.1.tgz#e027d35513b2703e5d48b82771e7fcb3b664e2fb"
+  integrity sha512-m7tWPh9zKpQoYenIpkmeREb2oMaZiZB8qfGv+2ucDg1LgFnETAxYIXkT8dASGyVRWZyEhNEPlfODP4+QfXI3KQ==
+
 "@types/invariant@^2.2.29":
   version "2.2.29"
   resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.29.tgz#aa845204cd0a289f65d47e0de63a6a815e30cc66"

@@ -1,5 +1,1 @@
-import * as AqiHistoryDb from './AqiHistoryDb';
-
-export {
-  AqiHistoryDb
-};
+export * from './AqiHistoryDb';
