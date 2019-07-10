@@ -39,7 +39,11 @@ defineTask(AQI_HISTORY_TASK, async ({ data, error }) => {
     console.log(`<AqiHistoryTask> - defineTask - Fetching API`);
     pipe(
       fetchApi(coords),
-      TE.map(api => ({ ...coords, rawPm25: api.shootISmoke.rawPm25 })),
+      TE.map(api => ({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        rawPm25: api.shootISmoke.rawPm25
+      })),
       TE.chain(saveData),
       TE.fold(
         err => {

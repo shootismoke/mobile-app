@@ -16,6 +16,7 @@
 
 import { SQLite } from 'expo-sqlite';
 import * as C from 'fp-ts/lib/Console';
+import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 
@@ -36,32 +37,21 @@ interface AqiHistoryItem extends AqiHistoryItemInput {
   id: number;
 }
 
-export const SAVE_DATA_INTERVAL = 36; // 1 hour
+export const SAVE_DATA_INTERVAL = 360000 * 1000; // 1 hour
 const AQI_HISTORY_DB = 'AQI_HISTORY_DB';
 const AQI_HISTORY_TABLE = 'AqiHistory';
 
 function initDb () {
   return pipe(
-    TE.rightIO(
-      C.log(`<AqiHistoryDb> - initDb - Open database ${AQI_HISTORY_DB}`)
-    ),
-    TE.chain(() =>
-      TE.tryCatch(
-        () => SQLite.openDatabase(AQI_HISTORY_DB) as Promise<Database>,
-        toError
-      )
-    ),
+    TE.rightTask(T.of(SQLite.openDatabase(AQI_HISTORY_DB) as Database)),
     TE.chain(db =>
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
-              console.log(
-                `<AqiHistoryDb> - initDb - Creating (if not exists) table ${AQI_HISTORY_TABLE}`
-              );
               tx.executeSql(
                 `
-                  CREATE TABLE IF NOT EXISYS ${AQI_HISTORY_TABLE}(
+                  CREATE TABLE IF NOT EXISTS ${AQI_HISTORY_TABLE}(
                   id INTEGER PRIMARY KEY,
                   latitude REAL NOT NULL,
                   longitude REAL NOT NULL,
@@ -93,23 +83,31 @@ function isSaveNeeded () {
         () =>
           new Promise((resolve, reject) => {
             db.readTransaction((tx: Transaction) => {
-              console.log(
-                `<AqiHistoryDb> - isSaveNeeded - Checking if is saved needed`
-              );
+              // Get time of `SAVE_DATA_INTERVAL`ms before now
+              const now = new Date();
+              now.setMilliseconds(now.getMilliseconds() - SAVE_DATA_INTERVAL);
 
               tx.executeSql(
-                `SELECT * FROM ${AQI_HISTORY_TABLE} ORDER BY id DESC LIMIT 1`,
-                [],
+                `
+                  SELECT * FROM ${AQI_HISTORY_TABLE}
+                  WHERE creationTime > ?
+                  LIMIT 1
+                `,
+                [now.getTime() / 1000],
                 (_transaction: Transaction, resultSet: ResultSet) => {
-                  if (resultSet.rows.length === 0) {
-                    resolve(true);
-                  } else if (
-                    resultSet.rows.item(0).creationTime + SAVE_DATA_INTERVAL <
-                    Date.now()
-                  ) {
-                    resolve(true);
-                  } else {
+                  if (resultSet.rows.length > 0) {
+                    try {
+                      console.log(
+                        `<AqiHistoryDb> - isSaveNeeded - Last save happened at ${
+                          resultSet.rows.item(0).creationTime
+                        }`
+                      );
+                    } catch (err) {
+                      reject(err);
+                    }
                     resolve(false);
+                  } else {
+                    resolve(true);
                   }
                 },
                 (_transaction: Transaction, error: Error) => reject(error)
