@@ -31,7 +31,7 @@ import { BackButton } from '../../../components/BackButton';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
-import * as theme from '../../../utils/theme';
+import * as theme from '../../../util/theme';
 
 const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 

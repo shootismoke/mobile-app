@@ -38,8 +38,8 @@ import {
   LatLng,
   Location
 } from '../../stores';
-import { retry, sideEffect, toError } from '../../utils/fp';
-import * as theme from '../../utils/theme';
+import { retry, sideEffect, toError } from '../../util/fp';
+import * as theme from '../../util/theme';
 
 // As per https://community.algolia.com/places/rest.html
 const algoliaUrls = [

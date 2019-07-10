@@ -17,9 +17,9 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-import { LatLng } from '../../stores';
-import { aqiToRaw } from './utils/aqiToRaw';
-import { pm25ToCigarettes } from './utils/pm25ToCigarettes';
+import { LatLng } from '../../location';
+import { aqiToRaw } from './aqiToRaw';
+import { pm25ToCigarettes } from './pm25ToCigarettes';
 
 /**
  * Fetch the PM2.5 level from http://api.waqi.info.

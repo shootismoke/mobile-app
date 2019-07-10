@@ -20,7 +20,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import pinIcon from '../../../../assets/images/location.png';
 import { AlgoliaHit } from '../Search';
 import { Location } from '../../../stores/location';
-import * as theme from '../../../utils/theme';
+import * as theme from '../../../util/theme';
 
 interface ItemProps {
   item: AlgoliaHit;

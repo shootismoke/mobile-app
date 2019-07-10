@@ -26,7 +26,7 @@ import { Distance } from './Distance';
 import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
-import { distanceToStation, getCorrectLatLng } from '../../utils/station';
+import { distanceToStation, getCorrectLatLng } from '../../util/station';
 
 interface DetailsProps extends NavigationInjectedProps {}
 

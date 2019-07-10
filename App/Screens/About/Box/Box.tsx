@@ -19,7 +19,7 @@ import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 
 import cigarette from '../../../../assets/images/cigarette.png';
 import { i18n } from '../../../localization';
-import * as theme from '../../../utils/theme';
+import * as theme from '../../../util/theme';
 
 export function Box () {
   return (

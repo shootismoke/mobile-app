@@ -19,7 +19,7 @@ import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components/Banner';
 import { i18n } from '../../../localization';
-import * as theme from '../../../utils/theme';
+import * as theme from '../../../util/theme';
 
 interface DistanceProps {
   distance: number;

@@ -20,7 +20,7 @@ import { Picker, StyleSheet, Text, View } from 'react-native';
 import { i18n } from '../../../localization';
 import * as names from './names.json';
 import { ApiContext } from '../../../stores';
-import * as theme from '../../../utils/theme';
+import * as theme from '../../../util/theme';
 
 export function Language () {
   const { reloadApp } = useContext(ApiContext);

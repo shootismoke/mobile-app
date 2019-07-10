@@ -24,7 +24,7 @@ import {
   ViewStyle
 } from 'react-native';
 
-import * as theme from '../../utils/theme';
+import * as theme from '../../util/theme';
 
 interface BannerProps {
   asTouchable?: boolean;

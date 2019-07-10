@@ -28,8 +28,9 @@ import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
 import { Loading } from './Loading';
 import { Search } from './Search';
-import { Api, ApiContext, ErrorContext } from '../stores';
-import * as theme from '../utils/theme';
+import { ApiContext, ErrorContext } from '../stores';
+import { Api } from '../stores/fetchApi';
+import * as theme from '../util/theme';
 
 function stackNavigatorOptions (initialRouteName: string) {
   return {

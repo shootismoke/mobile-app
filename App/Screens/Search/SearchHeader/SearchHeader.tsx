@@ -20,7 +20,7 @@ import { Image, StyleSheet, TextInput } from 'react-native';
 import searchIcon from '../../../../assets/images/search.png';
 import { Banner } from '../../../components/Banner';
 import { i18n } from '../../../localization';
-import * as theme from '../../../utils/theme';
+import * as theme from '../../../util/theme';
 
 interface SearchHeaderProps {
   onChangeSearch?: (text: string) => void;

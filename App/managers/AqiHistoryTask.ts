@@ -14,20 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import TaskManager from 'expo-task-manager';
+import { defineTask } from 'expo-task-manager';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 import Sentry from 'sentry-expo';
 
 import { saveData } from './AqiHistoryDb';
-import { fetchApi, LatLng } from '../stores';
+import { fetchApi } from '../stores/fetchApi';
+import { LatLng } from '../stores/location';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
 
-TaskManager.defineTask(AQI_HISTORY_TASK, async ({ data, error }) => {
+defineTask(AQI_HISTORY_TASK, async ({ data, error }) => {
   if (error) {
-    console.log(`<TaskManager> - defineTask - Error ${error.message}`);
+    console.log(`<AqiHistoryTask> - defineTask - Error ${error.message}`);
     return;
   }
 
@@ -35,19 +36,20 @@ TaskManager.defineTask(AQI_HISTORY_TASK, async ({ data, error }) => {
     const { locations } = data as { locations: { coords: LatLng }[] };
     const { coords } = locations[0];
 
+    console.log(`<AqiHistoryTask> - defineTask - Fetching API`);
     pipe(
       fetchApi(coords),
       TE.map(api => ({ ...coords, rawPm25: api.shootISmoke.rawPm25 })),
       TE.chain(saveData),
       TE.fold(
         err => {
-          console.log(`<TaskManager> - defineTask - Error ${err.message}`);
+          console.log(`<AqiHistoryTask> - defineTask - Error ${err.message}`);
           Sentry.captureException(err);
 
           return T.of(undefined);
         },
         () => T.of(undefined)
       )
-    )();
+    )().catch(console.error);
   }
 });

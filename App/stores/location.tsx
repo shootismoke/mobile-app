@@ -24,8 +24,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ErrorContext } from './error';
 import { SAVE_DATA_INTERVAL } from '../managers/AqiHistoryDb';
 import { AQI_HISTORY_TASK } from '../managers/AqiHistoryTask';
-import { toError } from '../utils/fp';
-import { noop } from '../utils/noop';
+import { toError } from '../util/fp';
+import { noop } from '../util/noop';
 
 export interface LatLng {
   latitude: number;

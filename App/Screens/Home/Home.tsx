@@ -32,8 +32,8 @@ import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
-import { isStationTooFar } from '../../utils/station';
-import * as theme from '../../utils/theme';
+import { isStationTooFar } from '../../util/station';
+import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
 

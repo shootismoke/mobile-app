@@ -30,7 +30,7 @@ import { Box } from './Box';
 import { BackButton } from '../../components/BackButton';
 import { Language } from './Language';
 import { i18n } from '../../localization';
-import * as theme from '../../utils/theme';
+import * as theme from '../../util/theme';
 
 interface AboutProps extends NavigationInjectedProps {}
 

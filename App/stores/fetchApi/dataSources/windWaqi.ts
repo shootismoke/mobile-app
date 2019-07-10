@@ -16,9 +16,9 @@
 
 import axios from 'axios';
 
-import { LatLng } from '../../stores';
-import { aqiToRaw } from './utils/aqiToRaw';
-import { pm25ToCigarettes } from './utils/pm25ToCigarettes';
+import { LatLng } from '../../location';
+import { aqiToRaw } from './aqiToRaw';
+import { pm25ToCigarettes } from './pm25ToCigarettes';
 
 /**
  * Fetch the PM2.5 level from https://wind.waqi.info.

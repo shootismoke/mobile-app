@@ -21,7 +21,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import errorPicture from '../../../assets/images/error.png';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
-import * as theme from '../../utils/theme';
+import * as theme from '../../util/theme';
 
 interface ErrorScreenProps extends NavigationInjectedProps {}
 

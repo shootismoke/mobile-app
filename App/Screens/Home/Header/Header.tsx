@@ -29,8 +29,8 @@ import warning from '../../../../assets/images/warning.png';
 import { CurrentLocation } from '../../../components/CurrentLocation';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
-import { distanceToStation, isStationTooFar } from '../../../utils/station';
-import * as theme from '../../../utils/theme';
+import { distanceToStation, isStationTooFar } from '../../../util/station';
+import * as theme from '../../../util/theme';
 
 interface HeaderProps {
   onChangeLocationClick: (event: GestureResponderEvent) => void;

@@ -20,7 +20,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 import { LatLng } from '../stores';
-import { sideEffect, toError } from '../utils/fp';
+import { sideEffect, toError } from '../util/fp';
 
 // FIXME correct types
 type Database = any;

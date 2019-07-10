@@ -27,7 +27,7 @@ import {
 } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
-import * as theme from '../../utils/theme';
+import * as theme from '../../util/theme';
 import { i18n } from '../../localization';
 
 interface BackButtonProps {

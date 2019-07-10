@@ -21,9 +21,10 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
-import { Api, LatLng, Location } from '../../stores';
-import { toError } from '../../utils/fp';
-import * as theme from '../../utils/theme';
+import { LatLng, Location } from '../../stores';
+import { Api } from '../../stores/fetchApi';
+import { toError } from '../../util/fp';
+import * as theme from '../../util/theme';
 
 interface CurrentLocationProps extends TextProps {
   api: Api;

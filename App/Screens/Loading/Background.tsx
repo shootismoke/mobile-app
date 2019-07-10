@@ -17,7 +17,7 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import * as theme from '../../utils/theme';
+import * as theme from '../../util/theme';
 
 interface BackgroundProps {
   children?: JSX.Element;
