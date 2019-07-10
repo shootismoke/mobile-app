@@ -32,15 +32,18 @@ interface AqiHistoryItemInput extends LatLng {
   rawPm25: number;
 }
 
-interface AqiHistoryItem extends AqiHistoryItemInput {
+export interface AqiHistoryItem extends AqiHistoryItemInput {
   creationTime: Date;
   id: number;
 }
 
-export const SAVE_DATA_INTERVAL = 360000 * 1000; // 1 hour
+export const SAVE_DATA_INTERVAL = 3600 * 1000; // 1 hour
 const AQI_HISTORY_DB = 'AQI_HISTORY_DB';
 const AQI_HISTORY_TABLE = 'AqiHistory';
 
+/**
+ * Open database and create (if not exists) the AqiHistory table.
+ */
 function initDb () {
   return pipe(
     TE.rightTask(T.of(SQLite.openDatabase(AQI_HISTORY_DB) as Database)),
@@ -70,11 +73,17 @@ function initDb () {
   );
 }
 
+/**
+ * Fetch the db
+ */
 function getDb () {
   // TODO Only do initDb once (although that operation is idempotent)
   return initDb();
 }
 
+/**
+ * Check if we need to save a new entry (every `SAVE_DATA_INTERVAL`)
+ */
 function isSaveNeeded () {
   return pipe(
     getDb(),
@@ -98,7 +107,7 @@ function isSaveNeeded () {
                   if (resultSet.rows.length > 0) {
                     try {
                       console.log(
-                        `<AqiHistoryDb> - isSaveNeeded - Last save happened at ${
+                        `<AqiHistoryDb> - isSaveNeeded - false: last save happened at ${
                           resultSet.rows.item(0).creationTime
                         }`
                       );
@@ -120,6 +129,11 @@ function isSaveNeeded () {
   );
 }
 
+/**
+ * Add a new row in the table
+ *
+ * @param value - The entry to add.
+ */
 export function saveData (value: AqiHistoryItemInput) {
   return pipe(
     isSaveNeeded(),
@@ -160,6 +174,11 @@ export function saveData (value: AqiHistoryItemInput) {
   );
 }
 
+/**
+ * Get the average PM25 since `date`.
+ *
+ * @param date - The date to start calculating the average PM25.
+ */
 export function getAveragePm25 (date: Date) {
   return pipe(
     getDb(),
@@ -179,7 +198,7 @@ export function getAveragePm25 (date: Date) {
                 `,
                 [date.getTime() / 1000],
                 (_transaction: Transaction, resultSet: ResultSet) =>
-                  resolve(resultSet.rows.item(0)),
+                  resolve(resultSet.rows.item(0)['AVG(rawPm25)']),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             });
@@ -207,6 +226,7 @@ export function getData (limit: number) {
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
+                  ORDER BY id DESC
                   LIMIT ?
                 `,
                 [limit],
@@ -221,3 +241,31 @@ export function getData (limit: number) {
     )
   );
 }
+
+/**
+ * Clears the whole db. DANGEROUS.
+ */
+export function clearTable () {
+  return pipe(
+    getDb(),
+    TE.chain(db =>
+      TE.tryCatch(
+        () =>
+          new Promise((resolve, reject) => {
+            db.readTransaction((tx: Transaction) => {
+              tx.executeSql(
+                `DROP TABLE ${AQI_HISTORY_TABLE}`,
+                [],
+                () => resolve(undefined as void),
+                (_transaction: Transaction, error: Error) => reject(error)
+              );
+            });
+          }) as Promise<void>,
+        toError
+      )
+    )
+  );
+}
+
+// Uncomment this to clear the table
+// clearTable()();

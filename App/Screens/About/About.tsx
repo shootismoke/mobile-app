@@ -28,6 +28,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 
 import { Box } from './Box';
 import { BackButton } from '../../components/BackButton';
+import { Dev } from './Dev';
 import { Language } from './Language';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
@@ -152,6 +153,7 @@ export function About (props: AboutProps) {
           <Language />
         </View>
       </View>
+      <Dev />
     </ScrollView>
   );
 }
