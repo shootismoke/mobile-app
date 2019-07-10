@@ -175,16 +175,47 @@ export function getAveragePm25 (date: Date) {
               tx.executeSql(
                 `
                   SELECT AVG(rawPm25) FROM ${AQI_HISTORY_TABLE}
-                  WHERE creationTime > ?,
-                  ORDER BY creationTime
+                  WHERE creationTime > ?
                 `,
-                [date],
+                [date.getTime() / 1000],
                 (_transaction: Transaction, resultSet: ResultSet) =>
                   resolve(resultSet.rows.item(0)),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             });
           }) as Promise<number>,
+        toError
+      )
+    )
+  );
+}
+
+/**
+ * Get the `limit` last results in the db. Is only used for testing purposes for
+ * now.
+ *
+ * @param limit - The number of results we want to take.
+ */
+export function getData (limit: number) {
+  return pipe(
+    getDb(),
+    TE.chain(db =>
+      TE.tryCatch(
+        () =>
+          new Promise((resolve, reject) => {
+            db.readTransaction((tx: Transaction) => {
+              tx.executeSql(
+                `
+                  SELECT * FROM ${AQI_HISTORY_TABLE}
+                  LIMIT ?
+                `,
+                [limit],
+                (_transaction: Transaction, resultSet: ResultSet) =>
+                  resolve(resultSet.rows._array),
+                (_transaction: Transaction, error: Error) => reject(error)
+              );
+            });
+          }) as Promise<AqiHistoryItem[]>,
         toError
       )
     )
