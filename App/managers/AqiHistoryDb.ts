@@ -112,6 +112,7 @@ function isSaveNeeded () {
                         }`
                       );
                     } catch (err) {
+                      // It shouldn't catch, but we're never too sure
                       reject(err);
                     }
                     resolve(false);
