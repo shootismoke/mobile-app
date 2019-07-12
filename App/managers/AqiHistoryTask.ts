@@ -26,7 +26,7 @@ import { LatLng } from '../stores/location';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
 
-defineTask(AQI_HISTORY_TASK, async ({ data, error }) => {
+defineTask(AQI_HISTORY_TASK, ({ data, error }) => {
   if (error) {
     console.log(`<AqiHistoryTask> - defineTask - Error ${error.message}`);
     return;

@@ -37,7 +37,7 @@ export interface AqiHistoryItem extends AqiHistoryItemInput {
   id: number;
 }
 
-export const SAVE_DATA_INTERVAL = 3600 * 1000; // 1 hour
+export const SAVE_DATA_INTERVAL = 3600; // 1 hour in s
 const AQI_HISTORY_DB = 'AQI_HISTORY_DB';
 const AQI_HISTORY_TABLE = 'AqiHistory';
 
@@ -65,7 +65,7 @@ function initDb () {
                 () => resolve(db),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
-            });
+            }, reject);
           }) as Promise<Database>,
         toError
       )
@@ -91,7 +91,7 @@ function isSaveNeeded () {
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
-            db.readTransaction((tx: Transaction) => {
+            db.transaction((tx: Transaction) => {
               // Get time of `SAVE_DATA_INTERVAL`ms before now
               const now = new Date();
               now.setMilliseconds(now.getMilliseconds() - SAVE_DATA_INTERVAL);
@@ -99,10 +99,10 @@ function isSaveNeeded () {
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
-                  WHERE creationTime > ?
+                  WHERE creationTime > datetime(?)
                   LIMIT 1
                 `,
-                [now.getTime() / 1000],
+                [now.toISOString()],
                 (_transaction: Transaction, resultSet: ResultSet) => {
                   if (resultSet.rows.length > 0) {
                     try {
@@ -122,7 +122,7 @@ function isSaveNeeded () {
                 },
                 (_transaction: Transaction, error: Error) => reject(error)
               );
-            });
+            }, reject);
           }) as Promise<boolean>,
         toError
       )
@@ -167,7 +167,7 @@ export function saveData (value: AqiHistoryItemInput) {
                 () => resolve(),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
-            });
+            }, reject);
           }) as Promise<void>,
         toError
       )
@@ -187,7 +187,7 @@ export function getAveragePm25 (date: Date) {
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
-            db.readTransaction((tx: Transaction) => {
+            db.transaction((tx: Transaction) => {
               console.log(
                 `<AqiHistoryDb> - getAveragePm25 - Reading data since ${date.toISOString()}`
               );
@@ -195,14 +195,14 @@ export function getAveragePm25 (date: Date) {
               tx.executeSql(
                 `
                   SELECT AVG(rawPm25) FROM ${AQI_HISTORY_TABLE}
-                  WHERE creationTime > ?
+                  WHERE creationTime > datetime(?)
                 `,
-                [date.getTime() / 1000],
+                [date.toISOString()],
                 (_transaction: Transaction, resultSet: ResultSet) =>
                   resolve(resultSet.rows.item(0)['AVG(rawPm25)']),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
-            });
+            }, reject);
           }) as Promise<number>,
         toError
       )
@@ -223,7 +223,7 @@ export function getData (limit: number) {
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
-            db.readTransaction((tx: Transaction) => {
+            db.transaction((tx: Transaction) => {
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
@@ -235,7 +235,7 @@ export function getData (limit: number) {
                   resolve(resultSet.rows._array),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
-            });
+            }, reject);
           }) as Promise<AqiHistoryItem[]>,
         toError
       )
@@ -253,14 +253,14 @@ export function clearTable () {
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
-            db.readTransaction((tx: Transaction) => {
+            db.transaction((tx: Transaction) => {
               tx.executeSql(
                 `DROP TABLE ${AQI_HISTORY_TABLE}`,
                 [],
                 () => resolve(undefined as void),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
-            });
+            }, reject);
           }) as Promise<void>,
         toError
       )

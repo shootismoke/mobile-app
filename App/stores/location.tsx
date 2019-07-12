@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as Permissions from 'expo-permissions';
 import * as ExpoLocation from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import { isTaskRegisteredAsync } from 'expo-task-manager';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -65,9 +66,12 @@ function fetchGpsPosition () {
     console.log('<LocationContext> - fetchGpsPosition - Fetching location');
 
     // Start the task to record periodically on the background the location
-    ExpoLocation.startLocationUpdatesAsync(AQI_HISTORY_TASK, {
-      timeInterval: SAVE_DATA_INTERVAL
-    });
+    const isRegistered = await isTaskRegisteredAsync(AQI_HISTORY_TASK);
+    if (!isRegistered) {
+      ExpoLocation.startLocationUpdatesAsync(AQI_HISTORY_TASK, {
+        timeInterval: SAVE_DATA_INTERVAL * 1000 // in ms
+      });
+    }
 
     return ExpoLocation.getCurrentPositionAsync({
       timeout: 5000
