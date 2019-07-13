@@ -35,6 +35,13 @@ import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
 
+function getSwearWord (cigaretteCount: number) {
+  if (cigaretteCount <= 1) return i18n.t('home_common_oh');
+
+  // Return a random swear word
+  return swearWords[Math.floor(Math.random() * swearWords.length)];
+}
+
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { isGps } = useContext(CurrentLocationContext)!;
@@ -43,6 +50,10 @@ export function Home (props: HomeProps) {
     pastMonth: O.none,
     pastWeek: O.none
   });
+  const [cigaretteCount, setCigaretteCount] = useState(
+    api!.shootISmoke.cigarettes
+  );
+  const [swearWord, setSwearWord] = useState(i18n.t('home_common_oh'));
 
   useEffect(() => {
     pipe(
@@ -62,6 +73,22 @@ export function Home (props: HomeProps) {
     )();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      let cigCount = 0;
+      if (frequency === 'monthly') {
+        cigCount = O.getOrElse(() => 0)(aqiHistory.pastMonth);
+      } else if (frequency === 'weekly') {
+        cigCount = O.getOrElse(() => 0)(aqiHistory.pastWeek);
+      } else {
+        cigCount = api!.shootISmoke.cigarettes;
+      }
+
+      setCigaretteCount(cigCount);
+      setSwearWord(getSwearWord(cigCount));
+    }, 500);
+  }, [frequency]);
+
   function renderPresentPast () {
     if (!isGps) {
       return i18n.t('home_common_you_d_smoke');
@@ -70,19 +97,12 @@ export function Home (props: HomeProps) {
     return i18n.t('home_common_you_smoke');
   }
 
-  function renderShit () {
-    if (api!.shootISmoke.cigarettes <= 1) return i18n.t('home_common_oh');
-
-    // Return a random swear word
-    return swearWords[Math.floor(Math.random() * swearWords.length)];
-  }
-
   const renderText = () => {
     // Round to 1 decimal
-    const cigarettes = Math.round(api!.shootISmoke.cigarettes * 10) / 10;
+    const cigarettes = Math.round(cigaretteCount * 10) / 10;
 
     const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord: renderShit(),
+      swearWord,
       presentPast: renderPresentPast(),
       singularPlural:
         cigarettes === 1
@@ -117,10 +137,7 @@ export function Home (props: HomeProps) {
         style={styles.scrollView}
       >
         <View style={styles.content}>
-          <Cigarettes
-            cigarettes={api!.shootISmoke.cigarettes}
-            style={theme.withPadding}
-          />
+          <Cigarettes cigarettes={cigaretteCount} style={theme.withPadding} />
           <View style={styles.main}>{renderText()}</View>
           {isGps ? (
             <SelectFrequency

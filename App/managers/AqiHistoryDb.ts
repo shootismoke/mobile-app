@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { SQLite } from 'expo-sqlite';
-import { array } from 'fp-ts/lib/Array';
+import { array, flatten } from 'fp-ts/lib/Array';
 import * as C from 'fp-ts/lib/Console';
 import * as O from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
@@ -35,7 +35,7 @@ interface AqiHistoryDbItemInput extends LatLng {
 }
 
 export interface AqiHistoryDbItem extends AqiHistoryDbItemInput {
-  creationTime: Date;
+  creationTime: string;
   id: number;
 }
 
@@ -247,11 +247,13 @@ export function getAqiHistory () {
     array.sequence(TE.taskEither)([getData(oneWeekAgo), getData(oneMonthAgo)]),
     TE.map(([pastWeekData, pastMonthData]) => {
       const weekOption =
-        pastWeekData[0] && pastWeekData[0].creationTime >= oneWeekAgoBuffer
+        pastWeekData[0] &&
+        new Date(pastWeekData[0].creationTime) <= oneWeekAgoBuffer
           ? O.some(pastWeekData)
           : O.none;
       const monthOption =
-        pastMonthData[0] && pastMonthData[0].creationTime >= oneMonthAgoBuffer
+        pastMonthData[0] &&
+        new Date(pastMonthData[0].creationTime) <= oneMonthAgoBuffer
           ? O.some(pastMonthData)
           : O.none;
 
@@ -306,5 +308,67 @@ export function clearTable () {
   );
 }
 
-// Uncomment this to clear the table
-// clearTable()();
+export function populateRandom () {
+  const randomValues = flatten(
+    [...Array(30)].map((_, i) => [
+      0,
+      0,
+      Math.floor(Math.random() * 20 + 1),
+      new Date(new Date().setDate(new Date().getDate() - i - 1)).toISOString()
+    ])
+  );
+
+  return pipe(
+    getDb(),
+    TE.chain(db =>
+      TE.tryCatch(
+        () =>
+          new Promise((resolve, reject) => {
+            db.transaction((tx: Transaction) => {
+              tx.executeSql(
+                `
+                  INSERT INTO ${AQI_HISTORY_TABLE}
+                  (latitude, longitude, rawPm25, creationTime)
+                  VALUES
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?),
+                  (?, ?, ?, ?)
+                `,
+                randomValues,
+                () => resolve(),
+                (_transaction: Transaction, error: Error) => reject(error)
+              );
+            }, reject);
+          }) as Promise<void>,
+        toError
+      )
+    )
+  );
+}

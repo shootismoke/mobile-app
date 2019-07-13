@@ -20,7 +20,13 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
-import { AqiHistoryDbItem, getData } from '../../../managers/AqiHistoryDb';
+import { Button } from '../../../components';
+import {
+  AqiHistoryDbItem,
+  clearTable,
+  getData,
+  populateRandom
+} from '../../../managers/AqiHistoryDb';
 import * as theme from '../../../util/theme';
 
 export function Dev () {
@@ -53,6 +59,8 @@ export function Dev () {
     <View>
       <Text style={theme.text}>Average: {average}</Text>
       <Text style={theme.text}>All data: {JSON.stringify(allData)}</Text>
+      <Button onPress={() => populateRandom()()}>Populate Random Data</Button>
+      <Button onPress={() => clearTable()()}>Clear DB</Button>
     </View>
   );
 }
