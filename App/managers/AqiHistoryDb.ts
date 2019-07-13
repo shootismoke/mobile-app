@@ -23,6 +23,7 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 
 import { LatLng } from '../stores';
+import { pm25ToCigarettes } from '../stores/fetchApi/dataSources/pm25ToCigarettes';
 import { sideEffect, toError } from '../util/fp';
 
 // FIXME correct types
@@ -217,8 +218,8 @@ export function getData (date: Date) {
   );
 }
 
-function getAverage (data: number[]) {
-  return data.reduce((sum, current) => sum + current, 0) / data.length;
+function getSum (data: number[]) {
+  return data.reduce((sum, current) => sum + current, 0);
 }
 
 export interface AqiHistory {
@@ -270,8 +271,12 @@ export function getAqiHistory () {
       )
     ]),
     TE.map(([pastWeekData, pastMonthData]) => [
-      O.map(getAverage)(pastWeekData),
-      O.map(getAverage)(pastMonthData)
+      O.map(getSum)(pastWeekData),
+      O.map(getSum)(pastMonthData)
+    ]),
+    TE.map(([pastWeekData, pastMonthData]) => [
+      O.map(pm25ToCigarettes)(pastWeekData),
+      O.map(pm25ToCigarettes)(pastMonthData)
     ]),
     TE.map(
       ([pastWeek, pastMonth]) =>
