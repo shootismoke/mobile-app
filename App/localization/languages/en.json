@@ -18,7 +18,7 @@
   "home_common_oh": "Oh",
   "home_common_cigarette": "Cigarette",
   "home_common_cigarettes": "Cigarettes",
-  "home_smoked_cigarette_title": "{{swearWord}}! {{presentPast}} <{{cigarettes}} {{singularPlural}}> today.",
+  "home_smoked_cigarette_title": "{{swearWord}}! {{presentPast}} <{{cigarettes}} {{singularPlural}}>",
   "home_swear_word_dang": "Dang",
   "home_swear_word_shoot": "Shoot",
   "home_swear_word_darn": "Darn",

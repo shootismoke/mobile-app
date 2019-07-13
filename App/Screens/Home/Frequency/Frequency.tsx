@@ -15,35 +15,43 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Banner } from '../../../components';
-import { i18n } from '../../../localization';
+import { BoxButton } from '../../../components';
 import * as theme from '../../../util/theme';
 
-interface DistanceProps {
-  distance: number;
+const FREQUENCY = {
+  daily: undefined,
+  weekly: new Date(),
+  monthly: new Date()
+};
+type Frequency = keyof typeof FREQUENCY;
+
+interface FrequencyProps {
+  onChangeFrequency: (frequency: Frequency) => void;
 }
 
-export function Distance (props: DistanceProps) {
+export function Frequency (props: FrequencyProps) {
   return (
-    <Banner elevated shadowPosition="top" style={styles.banner}>
-      <Text style={styles.distance}>
-        {i18n
-          .t('details_distance_label', { distanceToStation: props.distance })
-          .toUpperCase()}
-      </Text>
-    </Banner>
+    <View style={styles.container}>
+      <BoxButton
+        onPress={() => props.onChangeFrequency('daily')}
+        style={styles.boxButton}
+      >
+        daily
+      </BoxButton>
+      <BoxButton style={styles.boxButton}>weekly</BoxButton>
+      <BoxButton style={styles.boxButton}>monthly</BoxButton>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  banner: {
-    flexDirection: 'row',
-    justifyContent: 'center'
+  boxButton: {
+    marginRight: theme.spacing.tiny
   },
-  distance: {
-    ...theme.title,
-    color: 'white'
+  container: {
+    flexDirection: 'row',
+    marginTop: theme.spacing.tiny
   }
 });

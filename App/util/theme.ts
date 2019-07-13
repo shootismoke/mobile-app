@@ -15,22 +15,22 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 export type ShadowPosition = 'top' | 'bottom';
 
 export const backgroundColor = '#FAFAFC';
-export const boldFont = 'gotham-black';
+export const gothamBlack = 'gotham-black';
 export const iconBackgroundColor = '#EBE7DD';
-export const normalFont = 'gotham-book';
+export const gotham = 'gotham-book';
 export const primaryColor = '#F8A65D';
-export const textColor = '#414248';
-export const secondaryTextColor = '#7B7D88';
+export const textColor = '#44464A';
+export const secondaryTextColor = '#8B909A';
 export const spacing = {
-  tiny: 6,
-  small: 12,
-  normal: 18,
-  big: 36
+  tiny: scale(10),
+  small: scale(15),
+  normal: scale(20),
+  big: scale(36)
 };
 
 export const elevatedLevel1 = (position: ShadowPosition) => ({
@@ -58,7 +58,7 @@ export const fullScreen = {
 
 export const link = {
   color: primaryColor,
-  fontFamily: normalFont,
+  fontFamily: gotham,
   textDecorationLine: 'underline' as 'underline'
 };
 
@@ -67,8 +67,10 @@ export const link = {
  */
 export const shitText = {
   color: textColor,
-  fontFamily: boldFont,
-  fontSize: 48
+  fontFamily: gothamBlack,
+  fontSize: scale(36),
+  letterSpacing: scale(-1),
+  lineHeight: scale(48)
 };
 
 /**
@@ -76,44 +78,21 @@ export const shitText = {
  */
 export const text = {
   color: secondaryTextColor,
-  fontFamily: normalFont,
-  fontSize: 12,
-  letterSpacing: 0.85,
-  lineHeight: 16,
+  fontFamily: gotham,
+  fontSize: scale(11),
+  letterSpacing: scale(0.85),
+  lineHeight: scale(15),
   textAlign: 'justify' as 'justify'
 };
 
 export const title = {
-  letterSpacing: 2,
-  lineHeight: 21,
+  letterSpacing: scale(3.14),
+  lineHeight: scale(18),
   color: textColor,
-  fontFamily: boldFont,
-  fontSize: 15
+  fontFamily: gothamBlack,
+  fontSize: scale(12)
 };
 
 export const withPadding = {
   paddingHorizontal: spacing.normal
-};
-
-export const bigButton = {
-  backgroundColor: primaryColor,
-  borderRadius: 24,
-  height: 48,
-  paddingHorizontal: 24,
-  paddingVertical: 12
-};
-
-export const bigButtonText = {
-  ...title,
-  color: 'white',
-  ...Platform.select({
-    android: {
-      fontSize: 14
-    },
-    ios: {
-      fontSize: 14
-    }
-  }),
-  lineHeight: 24,
-  textAlign: 'center' as 'center'
 };

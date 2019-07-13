@@ -15,20 +15,13 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import {
-  ScrollView,
-  Share,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { Cigarettes } from '../../components/Cigarettes';
+import { Button, Cigarettes } from '../../components';
+import { Frequency } from './Frequency';
 import { Header } from './Header';
 import { i18n } from '../../localization';
-import { SmallButton } from './SmallButton';
 import { SmokeVideo } from './SmokeVideo';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
@@ -63,24 +56,16 @@ export function Home (props: HomeProps) {
   const renderBigButton = () => {
     if (isTooFar) {
       return (
-        <TouchableOpacity onPress={goToAbout}>
-          <View style={theme.bigButton}>
-            <Text style={theme.bigButtonText}>
-              {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <Button onPress={goToAbout}>
+          {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
+        </Button>
       );
     }
 
     return (
-      <TouchableOpacity onPress={goToDetails}>
-        <View style={theme.bigButton}>
-          <Text style={theme.bigButtonText}>
-            {i18n.t('home_btn_see_detailed_info').toUpperCase()}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Button onPress={goToDetails}>
+        {i18n.t('home_btn_see_detailed_info').toUpperCase()}
+      </Button>
     );
   };
 
@@ -88,23 +73,17 @@ export function Home (props: HomeProps) {
     return (
       <View style={styles.smallButtons}>
         {isTooFar ? (
-          <SmallButton
-            icon="plus-circle"
-            text={i18n.t('home_btn_more_details').toUpperCase()}
-            onPress={goToDetails}
-          />
+          <Button icon="plus-circle" onPress={goToDetails} type="secondary">
+            {i18n.t('home_btn_more_details').toUpperCase()}
+          </Button>
         ) : (
-          <SmallButton
-            icon="question-circle"
-            text={i18n.t('home_btn_faq_about').toUpperCase()}
-            onPress={goToAbout}
-          />
+          <Button icon="question-circle" onPress={goToAbout} type="secondary">
+            {i18n.t('home_btn_faq_about').toUpperCase()}
+          </Button>
         )}
-        <SmallButton
-          icon="share-alt"
-          text={i18n.t('home_btn_share').toUpperCase()}
-          onPress={handleShare}
-        />
+        <Button icon="share-alt" onPress={handleShare} type="secondary">
+          {i18n.t('home_btn_share').toUpperCase()}
+        </Button>
       </View>
     );
   };
@@ -164,7 +143,10 @@ export function Home (props: HomeProps) {
       >
         <View style={styles.content}>
           <Cigarettes cigarettes={api!.shootISmoke.cigarettes} />
-          <View style={styles.main}>{renderText()}</View>
+          <View style={styles.main}>
+            {renderText()}
+            <Frequency onChangeFrequency={() => {}} />
+          </View>
         </View>
         <View style={styles.cta}>
           {isTooFar && (
@@ -219,7 +201,6 @@ const styles = StyleSheet.create({
   smallButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 2 * theme.spacing.normal,
     marginTop: theme.spacing.normal
   }
 });

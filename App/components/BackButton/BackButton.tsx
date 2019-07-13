@@ -31,7 +31,7 @@ import * as theme from '../../util/theme';
 import { i18n } from '../../localization';
 
 interface BackButtonProps {
-  onClick: (event: GestureResponderEvent) => void;
+  onPress: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>; // FIXME any
 }
 
@@ -42,7 +42,7 @@ export function BackButton (props: BackButtonProps) {
     <View style={style}>
       <TouchableOpacity
         hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-        onPress={props.onClick}
+        onPress={props.onPress}
         style={styles.backButton}
       >
         <Image source={backIcon} />

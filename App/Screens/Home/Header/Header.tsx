@@ -26,7 +26,7 @@ import {
 
 import changeLocation from '../../../../assets/images/changeLocation.png';
 import warning from '../../../../assets/images/warning.png';
-import { CurrentLocation } from '../../../components/CurrentLocation';
+import { CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { distanceToStation, isStationTooFar } from '../../../util/station';
@@ -91,11 +91,7 @@ const styles = StyleSheet.create({
   },
   distance: {
     flexDirection: 'row',
-    marginTop: 11
-  },
-  title: {
-    ...theme.title,
-    fontSize: 15
+    marginTop: theme.spacing.tiny
   },
   warning: {
     marginRight: theme.spacing.tiny

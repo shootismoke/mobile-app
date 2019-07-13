@@ -25,10 +25,11 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 import Sentry from 'sentry-expo';
 
-import { BackButton } from '../../components/BackButton';
+import { BackButton } from '../../components';
 import { Item } from './Item';
 import { SearchHeader } from './SearchHeader';
 import {
@@ -209,7 +210,7 @@ export function Search (props: SearchProps) {
   return (
     <View style={styles.container}>
       <BackButton
-        onClick={() => props.navigation.pop()}
+        onPress={() => props.navigation.pop()}
         style={styles.backButton}
       />
       <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
@@ -250,7 +251,7 @@ function renderSeparator () {
 const styles = StyleSheet.create({
   backButton: {
     ...theme.withPadding,
-    marginVertical: 18
+    marginVertical: theme.spacing.normal
   },
   container: {
     flexGrow: 1
@@ -266,6 +267,6 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: '#D2D2D2',
     height: 1,
-    marginLeft: 17 + 22 + 17 // Margin + imgWidth + margin
+    marginLeft: scale(17 + 22 + 17) // Margin + imgWidth + margin
   }
 });

@@ -17,8 +17,10 @@
 import React, { useContext } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+import { scale } from 'react-native-size-matters';
 
 import errorPicture from '../../../assets/images/error.png';
+import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
 import * as theme from '../../util/theme';
@@ -41,9 +43,9 @@ export function ErrorScreen (props: ErrorScreenProps) {
       </View>
       <TouchableOpacity onPress={() => props.navigation.navigate('Search')}>
         <View style={styles.chooseOther}>
-          <Text style={theme.bigButtonText}>
+          <Button style={styles.chooseOther}>
             {i18n.t('error_screen_choose_other_location').toUpperCase()}
-          </Text>
+          </Button>
         </View>
       </TouchableOpacity>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
@@ -56,7 +58,6 @@ export function ErrorScreen (props: ErrorScreenProps) {
 
 const styles = StyleSheet.create({
   chooseOther: {
-    ...theme.bigButton,
     marginVertical: theme.spacing.normal
   },
   container: {
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     ...theme.text,
-    fontSize: 10,
+    fontSize: scale(10),
     marginTop: theme.spacing.small
   },
   errorText: {

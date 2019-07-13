@@ -24,10 +24,11 @@ import {
   Text,
   View
 } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { Box } from './Box';
-import { BackButton } from '../../components/BackButton';
+import { BackButton } from '../../components';
 import { Dev } from './Dev';
 import { Language } from './Language';
 import { i18n } from '../../localization';
@@ -55,7 +56,7 @@ export function About (props: AboutProps) {
   const { navigation } = props;
   return (
     <ScrollView style={theme.withPadding}>
-      <BackButton onClick={() => navigation.pop()} style={styles.backButton} />
+      <BackButton onPress={() => navigation.pop()} style={styles.backButton} />
 
       <View style={styles.section}>
         <Text style={styles.h2}>
@@ -161,7 +162,7 @@ export function About (props: AboutProps) {
 const styles = StyleSheet.create({
   articleLink: {
     ...theme.text,
-    fontSize: 8
+    fontSize: scale(8)
   },
   backButton: {
     marginBottom: theme.spacing.normal,
@@ -175,9 +176,9 @@ const styles = StyleSheet.create({
   },
   h2: {
     ...theme.title,
-    fontSize: 20,
+    fontSize: scale(20),
     letterSpacing: 0,
-    lineHeight: 24,
+    lineHeight: scale(24),
     marginBottom: theme.spacing.small
   },
   language: {

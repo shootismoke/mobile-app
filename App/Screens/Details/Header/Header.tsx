@@ -27,8 +27,7 @@ import {
 } from 'react-native';
 
 import locationIcon from '../../../../assets/images/location.png';
-import { BackButton } from '../../../components/BackButton';
-import { CurrentLocation } from '../../../components/CurrentLocation';
+import { BackButton, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import * as theme from '../../../util/theme';
@@ -50,7 +49,7 @@ export function Header (props: HeaderProps) {
 
   return (
     <View style={styles.container}>
-      <BackButton onClick={onBackClick} style={styles.backButton} />
+      <BackButton onPress={onBackClick} style={styles.backButton} />
 
       <View style={styles.layout}>
         <Image source={locationIcon} style={styles.changeLocation} />
@@ -112,7 +111,7 @@ const styles = StyleSheet.create({
     ...theme.elevatedLevel1('bottom'),
     ...theme.withPadding,
     backgroundColor: 'white',
-    paddingBottom: 15,
+    paddingBottom: theme.spacing.small,
     paddingTop: theme.spacing.normal,
     zIndex: 1
   },
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme.primaryColor,
-    fontFamily: theme.boldFont
+    fontFamily: theme.gothamBlack
   },
   layout: {
     flexDirection: 'row'

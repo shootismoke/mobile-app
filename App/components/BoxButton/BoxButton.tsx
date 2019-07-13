@@ -15,47 +15,46 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import { FontAwesome } from '@expo/vector-icons';
 import {
+  GestureResponderEvent,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableOpacityProps
+  ViewStyle
 } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
-import * as theme from '../../../util/theme';
+import * as theme from '../../util/theme';
 
-interface SmallButtonProps extends TouchableOpacityProps {
-  icon: string;
-  text: string;
+interface BoxButtonProps {
+  children: string;
+  onPress?: (event: GestureResponderEvent) => void;
+  style?: StyleProp<ViewStyle>;
 }
 
-export function SmallButton ({ text, icon, ...rest }: SmallButtonProps) {
+export function BoxButton (props: BoxButtonProps) {
   return (
-    <TouchableOpacity style={styles.container} {...rest}>
-      {icon && (
-        <FontAwesome
-          color={theme.primaryColor}
-          name={icon}
-          size={15}
-          style={styles.icon}
-        />
-      )}
-      <Text style={styles.title}>{text}</Text>
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[styles.boxButton, props.style]}
+    >
+      <Text style={theme.shitText}>{props.children}</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row'
-  },
-  icon: {
-    marginRight: theme.spacing.tiny
-  },
-  title: {
-    ...theme.title,
-    color: theme.primaryColor,
-    lineHeight: 15
+  boxButton: {
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: scale(12),
+    borderWidth: 1,
+    elevation: 1,
+    padding: theme.spacing.tiny,
+    ...theme.elevatedLevel2('bottom')
+    // shadowColor: 'black',
+    // shadowOffset: { width: 20, height: 20 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 20
   }
 });
