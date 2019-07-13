@@ -15,10 +15,12 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { SQLite } from 'expo-sqlite';
+import { array } from 'fp-ts/lib/Array';
 import * as C from 'fp-ts/lib/Console';
+import * as O from 'fp-ts/lib/Option';
+import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import { pipe } from 'fp-ts/lib/pipeable';
 
 import { LatLng } from '../stores';
 import { sideEffect, toError } from '../util/fp';
@@ -28,11 +30,11 @@ type Database = any;
 type ResultSet = any;
 type Transaction = any;
 
-interface AqiHistoryItemInput extends LatLng {
+interface AqiHistoryDbItemInput extends LatLng {
   rawPm25: number;
 }
 
-export interface AqiHistoryItem extends AqiHistoryItemInput {
+export interface AqiHistoryDbItem extends AqiHistoryDbItemInput {
   creationTime: Date;
   id: number;
 }
@@ -135,7 +137,7 @@ function isSaveNeeded () {
  *
  * @param value - The entry to add.
  */
-export function saveData (value: AqiHistoryItemInput) {
+export function saveData (value: AqiHistoryDbItemInput) {
   return pipe(
     isSaveNeeded(),
     TE.chain(isNeeded =>
@@ -200,6 +202,7 @@ export function getData (date: Date) {
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
                   WHERE creationTime > datetime(?)
+                  ORDER BY id DESC
                 `,
                 [date.toISOString()],
                 (_transaction: Transaction, resultSet: ResultSet) =>
@@ -207,9 +210,73 @@ export function getData (date: Date) {
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             }, reject);
-          }) as Promise<AqiHistoryItem[]>,
+          }) as Promise<AqiHistoryDbItem[]>,
         toError
       )
+    )
+  );
+}
+
+function getAverage (data: number[]) {
+  return data.reduce((sum, current) => sum + current, 0) / data.length;
+}
+
+export interface AqiHistory {
+  pastMonth: O.Option<number>;
+  pastWeek: O.Option<number>;
+}
+
+/**
+ * Get data from past week and past month
+ */
+export function getAqiHistory () {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setHours(oneWeekAgo.getHours() - 7 * 24);
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  // Add a bit of buffer. The idea is that we take from the DB all data from the
+  // past week/month, but also require that the 1st sample falls inside the time
+  // buffers defined belowed, so that we don't only have too recent data.
+  const oneWeekAgoBuffer = new Date(oneWeekAgo);
+  oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
+  const oneMonthAgoBuffer = new Date(oneWeekAgo);
+  oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
+
+  return pipe(
+    array.sequence(TE.taskEither)([getData(oneWeekAgo), getData(oneMonthAgo)]),
+    TE.map(([pastWeekData, pastMonthData]) => {
+      const weekOption =
+        pastWeekData[0] && pastWeekData[0].creationTime >= oneWeekAgoBuffer
+          ? O.some(pastWeekData)
+          : O.none;
+      const monthOption =
+        pastMonthData[0] && pastMonthData[0].creationTime >= oneMonthAgoBuffer
+          ? O.some(pastMonthData)
+          : O.none;
+
+      return [weekOption, monthOption];
+    }),
+    TE.map(([pastWeekData, pastMonthData]) => [
+      pipe(
+        pastWeekData,
+        O.map(v => v.map(({ rawPm25 }) => rawPm25))
+      ),
+      pipe(
+        pastMonthData,
+        O.map(v => v.map(({ rawPm25 }) => rawPm25))
+      )
+    ]),
+    TE.map(([pastWeekData, pastMonthData]) => [
+      O.map(getAverage)(pastWeekData),
+      O.map(getAverage)(pastMonthData)
+    ]),
+    TE.map(
+      ([pastWeek, pastMonth]) =>
+        ({
+          pastWeek,
+          pastMonth
+        } as AqiHistory)
     )
   );
 }

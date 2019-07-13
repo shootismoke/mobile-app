@@ -26,6 +26,7 @@ import { LatLng } from '../location';
 import * as dataSources from './dataSources';
 import { saveData } from '../../managers/AqiHistoryDb';
 import { retry, sideEffect, toError } from '../../util/fp';
+import { isStationTooFar } from '../../util/station';
 
 const ApiT = t.type({
   aqi: t.number,
@@ -110,6 +111,11 @@ export function fetchApi (gps: LatLng) {
 export function fetchApiAndSave (gps: LatLng) {
   return pipe(
     fetchApi(gps),
+    TE.chain(api =>
+      isStationTooFar(gps, api)
+        ? TE.left(new Error('Station too far, not saving'))
+        : TE.right(api)
+    ),
     TE.map(api => ({
       latitude: gps.latitude,
       longitude: gps.longitude,

@@ -93,8 +93,7 @@ export const text = {
   fontSize: scale(11),
   letterSpacing: scale(0.85),
   lineHeight: scale(15),
-  textAlign: 'justify' as 'justify',
-  ...fixTextMargin
+  textAlign: 'justify' as 'justify'
 };
 
 export const title = {
@@ -103,7 +102,7 @@ export const title = {
   color: textColor,
   fontFamily: gothamBlack,
   fontSize: scale(12),
-  marginTop: scale(3) // FIXME No idea why I need this
+  ...fixTextMargin
 };
 
 export const withPadding = {

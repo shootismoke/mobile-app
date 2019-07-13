@@ -24,7 +24,7 @@ import {
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import * as theme from '../../../../util/theme';
+import * as theme from '../../util/theme';
 
 interface BoxButtonProps extends TouchableWithoutFeedbackProps {
   active?: boolean;

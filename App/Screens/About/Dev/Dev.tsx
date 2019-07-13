@@ -20,11 +20,11 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
-import { AqiHistoryItem, getData } from '../../../managers/AqiHistoryDb';
+import { AqiHistoryDbItem, getData } from '../../../managers/AqiHistoryDb';
 import * as theme from '../../../util/theme';
 
 export function Dev () {
-  const [allData, setAllData] = useState<AqiHistoryItem[]>([]);
+  const [allData, setAllData] = useState<AqiHistoryDbItem[]>([]);
 
   useEffect(() => {
     const oneWeekAgo = new Date();

@@ -14,86 +14,60 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from 'react';
-import { ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as O from 'fp-ts/lib/Option';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
+import React, { useContext, useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { Button, Cigarettes } from '../../components';
-import { Frequency, SelectFrequency } from './SelectFrequency';
+import { Cigarettes } from '../../components';
+import { Footer } from './Footer';
 import { Header } from './Header';
 import { i18n } from '../../localization';
+import { AqiHistory, getAqiHistory } from '../../managers';
+import { Frequency, SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
-import { isStationTooFar } from '../../util/station';
 import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
 
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
-  const { currentLocation } = useContext(CurrentLocationContext);
+  const { isGps } = useContext(CurrentLocationContext)!;
   const [frequency, setFrenquency] = useState<Frequency>('daily');
+  const [aqiHistory, setAqiHistory] = useState<AqiHistory>({
+    pastMonth: O.none,
+    pastWeek: O.none
+  });
 
-  const isTooFar = isStationTooFar(currentLocation!, api!);
+  useEffect(() => {
+    pipe(
+      getAqiHistory(),
+      TE.fold(
+        err => {
+          console.log(`<Home> - useEffect - ${err.message}`);
 
-  function goToAbout () {
-    props.navigation.navigate('About');
-  }
+          return T.of(undefined);
+        },
+        history => {
+          setAqiHistory(history);
 
-  function goToDetails () {
-    props.navigation.navigate('Details');
-  }
-
-  function handleShare () {
-    return Share.share({
-      title: i18n.t('home_share_title'),
-      message: i18n.t('home_share_message', {
-        cigarettes: api!.shootISmoke.cigarettes
-      })
-    });
-  }
-
-  const renderBigButton = () => {
-    if (isTooFar) {
-      return (
-        <Button onPress={goToAbout}>
-          {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
-        </Button>
-      );
-    }
-
-    return (
-      <Button onPress={goToDetails}>
-        {i18n.t('home_btn_see_detailed_info').toUpperCase()}
-      </Button>
-    );
-  };
-
-  const renderFooter = () => {
-    return (
-      <View style={styles.smallButtons}>
-        {isTooFar ? (
-          <Button icon="plus-circle" onPress={goToDetails} type="secondary">
-            {i18n.t('home_btn_more_details').toUpperCase()}
-          </Button>
-        ) : (
-          <Button icon="question-circle" onPress={goToAbout} type="secondary">
-            {i18n.t('home_btn_faq_about').toUpperCase()}
-          </Button>
-        )}
-        <Button icon="share-alt" onPress={handleShare} type="secondary">
-          {i18n.t('home_btn_share').toUpperCase()}
-        </Button>
-      </View>
-    );
-  };
+          return T.of(undefined);
+        }
+      )
+    )();
+  }, []);
 
   function renderPresentPast () {
-    const time = new Date().getHours();
+    if (!isGps) {
+      return i18n.t('home_common_you_d_smoke');
+    }
 
-    if (time < 15) return i18n.t('home_common_you_ll_smoke');
-    return i18n.t('home_common_you_smoked');
+    return i18n.t('home_common_you_smoke');
   }
 
   function renderShit () {
@@ -148,23 +122,21 @@ export function Home (props: HomeProps) {
             style={theme.withPadding}
           />
           <View style={styles.main}>{renderText()}</View>
-          <SelectFrequency
-            frequency={frequency}
-            onChangeFrequency={freq => {
-              setFrenquency(freq);
-            }}
-            style={styles.frequency}
-          />
-        </View>
-        <View style={styles.cta}>
-          {isTooFar && (
-            <Text style={styles.isStationTooFar}>
-              {i18n.t('home_station_too_far_message')}
+          {isGps ? (
+            <SelectFrequency
+              aqiHistory={aqiHistory}
+              frequency={frequency}
+              onChangeFrequency={freq => {
+                setFrenquency(freq);
+              }}
+            />
+          ) : (
+            <Text style={styles.thereToday}>
+              {i18n.t('home_smoked_there')}.
             </Text>
           )}
-          {renderBigButton()}
-          {renderFooter()}
         </View>
+        <Footer navigation={props.navigation} />
       </ScrollView>
     </View>
   );
@@ -182,16 +154,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: theme.spacing.normal
   },
-  cta: {
-    ...theme.withPadding,
-    marginTop: theme.spacing.normal
-  },
   dots: {
     color: theme.primaryColor
-  },
-  isStationTooFar: {
-    ...theme.text,
-    marginBottom: theme.spacing.normal
   },
   main: {
     ...theme.withPadding
@@ -205,9 +169,8 @@ const styles = StyleSheet.create({
     ...theme.shitText,
     marginTop: theme.spacing.normal
   },
-  smallButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: theme.spacing.small
+  thereToday: {
+    ...theme.shitText,
+    ...theme.withPadding
   }
 });

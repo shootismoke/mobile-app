@@ -46,6 +46,7 @@ export interface Location extends LatLng {
 
 interface LocationWithSetter {
   currentLocation?: Location;
+  isGps: boolean;
   setCurrentLocation: (location?: Location) => void;
 }
 
@@ -54,6 +55,7 @@ export const GpsLocationContext = createContext<Location | undefined>(
 );
 export const CurrentLocationContext = createContext<LocationWithSetter>({
   ...DEFAULT_LAT_LNG,
+  isGps: false,
   setCurrentLocation: noop
 });
 
@@ -70,9 +72,7 @@ function fetchGpsPosition () {
     // Start the task to record periodically on the background the location
     const isGpsRegistered = await isTaskRegisteredAsync(GPS_TASK);
     if (!isGpsRegistered) {
-      ExpoLocation.startLocationUpdatesAsync(GPS_TASK, {
-        timeInterval: SAVE_DATA_INTERVAL * 1000 // in ms
-      });
+      ExpoLocation.startLocationUpdatesAsync(GPS_TASK);
     }
     // Start the task to record periodically on the background the location
     const isAqiRegistered = await isTaskRegisteredAsync(AQI_HISTORY_TASK);
@@ -106,8 +106,8 @@ export function LocationContextProvider ({
 }) {
   const { setError } = useContext(ErrorContext);
 
-  const [gpsLocation, setGpsLocation] = useState<Location | undefined>();
-  const [currentLocation, setCurrentLocation] = useState<Location | Location>();
+  const [gpsLocation, setGpsLocation] = useState<Location>();
+  const [currentLocation, setCurrentLocation] = useState<Location>();
 
   // Fetch GPS location
   useEffect(() => {
@@ -138,7 +138,15 @@ export function LocationContextProvider ({
   return (
     <GpsLocationContext.Provider value={gpsLocation}>
       <CurrentLocationContext.Provider
-        value={{ currentLocation, setCurrentLocation }}
+        value={{
+          currentLocation,
+          isGps:
+            !!currentLocation &&
+            !!gpsLocation &&
+            currentLocation.latitude === gpsLocation.latitude &&
+            currentLocation.longitude === gpsLocation.longitude,
+          setCurrentLocation
+        }}
       >
         {children}
       </CurrentLocationContext.Provider>

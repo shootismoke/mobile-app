@@ -30,7 +30,6 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { Box } from './Box';
 import { BackButton } from '../../components';
 import { Dev } from './Dev';
-import { Language } from './Language';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 
@@ -149,10 +148,7 @@ export function About (props: AboutProps) {
           {'\n'}
           Shoot! I Smoke v{Constants.manifest.version}.
         </Text>
-        <View style={styles.language}>
-          <Text style={theme.text}>{i18n.t('about_language')}: </Text>
-          <Language />
-        </View>
+        {/* Add languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
       </View>
       <Dev />
     </ScrollView>
@@ -180,10 +176,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: scale(24),
     marginBottom: theme.spacing.small
-  },
-  language: {
-    flexDirection: 'row',
-    marginTop: theme.spacing.normal
   },
   micro: {
     ...Platform.select({
