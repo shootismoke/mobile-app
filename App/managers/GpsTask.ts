@@ -43,7 +43,7 @@ defineTask(GPS_TASK, ({ data, error }) => {
         longitude: coords.longitude
       })
     )
-      .then(() => console.log('<GpsTask> - defineTask - Updated Gps Location.'))
+      .then(() => console.log('<GpsTask> - defineTask - Updated Gps Location'))
       .catch(error =>
         console.log(`<GpsTask> - defineTask - Error ${error.message}`)
       );

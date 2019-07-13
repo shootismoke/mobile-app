@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { Result } from 'expo-background-fetch';
 import { defineTask } from 'expo-task-manager';
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
@@ -57,9 +58,9 @@ defineTask(AQI_HISTORY_TASK, () => {
         console.log(`<AqiHistoryTask> - defineTask - Error ${err.message}`);
         Sentry.captureException(err);
 
-        return T.of(undefined);
+        return T.of(Result.Failed);
       },
-      () => T.of(undefined)
+      () => T.of(Result.NewData)
     )
   )();
 });
