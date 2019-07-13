@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { Button, Cigarettes } from '../../components';
-import { Frequency } from './Frequency';
+import { Frequency, SelectFrequency } from './SelectFrequency';
 import { Header } from './Header';
 import { i18n } from '../../localization';
 import { SmokeVideo } from './SmokeVideo';
@@ -33,6 +33,7 @@ interface HomeProps extends NavigationInjectedProps {}
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
+  const [frequency, setFrenquency] = useState<Frequency>('daily');
 
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
@@ -142,11 +143,17 @@ export function Home (props: HomeProps) {
         style={styles.scrollView}
       >
         <View style={styles.content}>
-          <Cigarettes cigarettes={api!.shootISmoke.cigarettes} />
-          <View style={styles.main}>
-            {renderText()}
-            <Frequency onChangeFrequency={() => {}} />
-          </View>
+          <Cigarettes
+            cigarettes={api!.shootISmoke.cigarettes}
+            style={theme.withPadding}
+          />
+          <View style={styles.main}>{renderText()}</View>
+          <SelectFrequency
+            frequency={frequency}
+            onChangeFrequency={freq => {
+              setFrenquency(freq);
+            }}
+          />
         </View>
         <View style={styles.cta}>
           {isTooFar && (
@@ -171,13 +178,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   content: {
-    ...theme.withPadding,
     justifyContent: 'center',
     marginTop: theme.spacing.normal
   },
   cta: {
     ...theme.withPadding,
-    marginTop: theme.spacing.normal
+    marginTop: theme.spacing.big
   },
   dots: {
     color: theme.primaryColor
@@ -187,7 +193,7 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.normal
   },
   main: {
-    marginBottom: theme.spacing.normal
+    ...theme.withPadding
   },
   scrollContainer: {
     flexGrow: 1,
@@ -201,6 +207,6 @@ const styles = StyleSheet.create({
   smallButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: theme.spacing.normal
+    marginTop: theme.spacing.small
   }
 });

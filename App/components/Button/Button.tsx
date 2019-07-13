@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
   },
   bigButtonText: {
     ...theme.title,
-    color: theme.primaryColor,
-    marginTop: 3 // FIXME No idea why I need this
+    color: theme.primaryColor
   },
   icon: {
     marginRight: theme.spacing.tiny

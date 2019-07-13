@@ -33,6 +33,16 @@ export const spacing = {
   big: scale(36)
 };
 
+/**
+ * The Gotham font seems like not 100% aligned vertically in the middle,even
+ * when everything's configured in the middle, just remove this and see for
+ * youself.
+ * FIXME
+ */
+const fixTextMargin = {
+  marginTop: scale(3)
+};
+
 export const elevatedLevel1 = (position: ShadowPosition) => ({
   elevation: 2,
   shadowColor: 'black',
@@ -70,7 +80,8 @@ export const shitText = {
   fontFamily: gothamBlack,
   fontSize: scale(36),
   letterSpacing: scale(-1),
-  lineHeight: scale(48)
+  lineHeight: scale(48),
+  ...fixTextMargin
 };
 
 /**
@@ -82,7 +93,8 @@ export const text = {
   fontSize: scale(11),
   letterSpacing: scale(0.85),
   lineHeight: scale(15),
-  textAlign: 'justify' as 'justify'
+  textAlign: 'justify' as 'justify',
+  ...fixTextMargin
 };
 
 export const title = {
@@ -90,7 +102,8 @@ export const title = {
   lineHeight: scale(18),
   color: textColor,
   fontFamily: gothamBlack,
-  fontSize: scale(12)
+  fontSize: scale(12),
+  marginTop: scale(3) // FIXME No idea why I need this
 };
 
 export const withPadding = {

@@ -16,45 +16,56 @@
 
 import React from 'react';
 import {
-  GestureResponderEvent,
-  StyleProp,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  ViewStyle
+  TouchableWithoutFeedback,
+  TouchableWithoutFeedbackProps,
+  View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import * as theme from '../../util/theme';
+import * as theme from '../../../../util/theme';
 
-interface BoxButtonProps {
+interface BoxButtonProps extends TouchableWithoutFeedbackProps {
+  active?: boolean;
   children: string;
-  onPress?: (event: GestureResponderEvent) => void;
-  style?: StyleProp<ViewStyle>;
 }
 
 export function BoxButton (props: BoxButtonProps) {
+  const { active, children, onPress, style, ...rest } = props;
+
   return (
-    <TouchableOpacity
-      onPress={props.onPress}
-      style={[styles.boxButton, props.style]}
-    >
-      <Text style={theme.shitText}>{props.children}</Text>
-    </TouchableOpacity>
+    <TouchableWithoutFeedback onPress={onPress} {...rest}>
+      <View style={[styles.boxButton, style]}>
+        <Text
+          style={[styles.boxButtonText, active ? styles.activeText : undefined]}
+        >
+          {children}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  activeText: {
+    opacity: 1
+  },
   boxButton: {
     borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: scale(12),
     borderWidth: 1,
-    elevation: 1,
-    padding: theme.spacing.tiny,
-    ...theme.elevatedLevel2('bottom')
-    // shadowColor: 'black',
-    // shadowOffset: { width: 20, height: 20 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 20
+    elevation: 10,
+    paddingHorizontal: theme.spacing.small,
+    paddingVertical: scale(8),
+    shadowColor: 'black',
+    shadowOffset: { width: 20, height: 20 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20
+  },
+  boxButtonText: {
+    ...theme.shitText,
+    opacity: 0.3,
+    textAlign: 'center'
   }
 });

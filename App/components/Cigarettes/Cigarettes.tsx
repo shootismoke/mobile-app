@@ -15,12 +15,13 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { Cigarette, CigaretteSize } from './Cigarette';
 
 interface CigarettesProps {
   cigarettes: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function Cigarettes (props: CigarettesProps) {
@@ -35,7 +36,7 @@ export function Cigarettes (props: CigarettesProps) {
   const vertical = cigarettes > 5;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.style]}>
       {cigarettes > 1 && count >= 1
         ? Array.from(Array(count)).map((_, i) => (
           <View key={i}>
