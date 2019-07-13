@@ -38,7 +38,7 @@ interface HeaderProps {
 
 export function Header (props: HeaderProps) {
   const { api } = useContext(ApiContext)!;
-  const { currentLocation } = useContext(CurrentLocationContext);
+  const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { onChangeLocationClick } = props;
 
   const distance = distanceToStation(currentLocation!, api!);
@@ -58,7 +58,8 @@ export function Header (props: HeaderProps) {
             <Text style={theme.text}>
               {i18n.t('home_header_air_quality_station_distance', {
                 distanceToStation: distance
-              })}
+              })}{' '}
+              {!isGps && i18n.t('home_header_from_search')}
             </Text>
           </View>
         </View>
