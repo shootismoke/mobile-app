@@ -153,6 +153,7 @@ export function Home (props: HomeProps) {
             onChangeFrequency={freq => {
               setFrenquency(freq);
             }}
+            style={styles.frequency}
           />
         </View>
         <View style={styles.cta}>
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
   },
   cta: {
     ...theme.withPadding,
-    marginTop: theme.spacing.big
+    marginTop: theme.spacing.normal
   },
   dots: {
     color: theme.primaryColor

@@ -52,16 +52,17 @@ const styles = StyleSheet.create({
     opacity: 1
   },
   boxButton: {
+    backgroundColor: 'white',
     borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: scale(12),
     borderWidth: 1,
-    elevation: 10,
+    elevation: 1,
     paddingHorizontal: theme.spacing.small,
-    paddingVertical: scale(8),
+    paddingVertical: scale(4),
     shadowColor: 'black',
-    shadowOffset: { width: 20, height: 20 },
+    shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
-    shadowRadius: 20
+    shadowRadius: 4
   },
   boxButtonText: {
     ...theme.shitText,

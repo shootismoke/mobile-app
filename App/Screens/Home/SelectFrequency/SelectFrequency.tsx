@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     marginRight: theme.spacing.tiny
   },
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingBottom: theme.spacing.normal
   },
   content: {
     paddingHorizontal: theme.spacing.normal
