@@ -86,7 +86,7 @@ export function Home (props: HomeProps) {
 
       setCigaretteCount(cigCount);
       setSwearWord(getSwearWord(cigCount));
-    }, 500);
+    }, 200);
   }, [frequency]);
 
   function renderPresentPast () {

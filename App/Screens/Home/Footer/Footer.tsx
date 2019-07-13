@@ -100,7 +100,8 @@ export function Footer (props: FooterProps) {
 const styles = StyleSheet.create({
   container: {
     ...theme.withPadding,
-    marginTop: theme.spacing.normal
+    marginBottom: theme.spacing.normal,
+    marginTop: theme.spacing.tiny
   },
   isStationTooFar: {
     ...theme.text,

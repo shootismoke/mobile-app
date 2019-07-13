@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: scale(12),
     borderWidth: 1,
     elevation: 1,
+    marginBottom: theme.spacing.tiny,
     paddingHorizontal: theme.spacing.small,
     paddingVertical: scale(4),
     shadowColor: 'black',
