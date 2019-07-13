@@ -15,45 +15,51 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { defineTask } from 'expo-task-manager';
+import * as C from 'fp-ts/lib/Console';
+import * as E from 'fp-ts/lib/Either';
+import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import { pipe } from 'fp-ts/lib/pipeable';
+import { AsyncStorage } from 'react-native';
 import Sentry from 'sentry-expo';
 
-import { saveData } from './AqiHistoryDb';
-import { fetchApi } from '../stores/fetchApi';
+import { GPS_ASYNC_STORAGE } from './GpsTask';
+import { fetchApiAndSave } from '../stores/fetchApi';
 import { LatLng } from '../stores/location';
+import { sideEffect, toError } from '../util/fp';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
 
-defineTask(AQI_HISTORY_TASK, ({ data, error }) => {
-  if (error) {
-    console.log(`<AqiHistoryTask> - defineTask - Error ${error.message}`);
-    return;
-  }
-
-  if (data) {
-    const { locations } = data as { locations: { coords: LatLng }[] };
-    const { coords } = locations[0];
-
-    console.log(`<AqiHistoryTask> - defineTask - Fetching API`);
-    pipe(
-      fetchApi(coords),
-      TE.map(api => ({
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        rawPm25: api.shootISmoke.rawPm25
-      })),
-      TE.chain(saveData),
-      TE.fold(
-        err => {
-          console.log(`<AqiHistoryTask> - defineTask - Error ${err.message}`);
-          Sentry.captureException(err);
-
-          return T.of(undefined);
-        },
-        () => T.of(undefined)
+/**
+ * This task will fetch API data from remote and save to SQLite database
+ */
+defineTask(AQI_HISTORY_TASK, () => {
+  pipe(
+    TE.tryCatch(() => AsyncStorage.getItem(GPS_ASYNC_STORAGE), toError),
+    TE.chain(gpsString =>
+      TE.fromEither(
+        E.fromNullable(new Error(`AsyncStorage ${GPS_ASYNC_STORAGE} is empty`))(
+          gpsString
+        )
       )
-    )().catch(console.error);
-  }
+    ),
+    TE.chain(gpsString =>
+      TE.fromEither(E.tryCatch(() => JSON.parse(gpsString) as LatLng, toError))
+    ),
+    TE.chain(gps =>
+      TE.rightIO(
+        sideEffect(C.log(`<AqiHistoryTask> - defineTask - Fetching API`), gps)
+      )
+    ),
+    TE.chain(gps => fetchApiAndSave(gps)),
+    TE.fold(
+      err => {
+        console.log(`<AqiHistoryTask> - defineTask - Error ${err.message}`);
+        Sentry.captureException(err);
+
+        return T.of(undefined);
+      },
+      () => T.of(undefined)
+    )
+  )();
 });

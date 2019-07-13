@@ -20,36 +20,18 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
-import {
-  AqiHistoryItem,
-  getAveragePm25,
-  getData
-} from '../../../managers/AqiHistoryDb';
+import { AqiHistoryItem, getData } from '../../../managers/AqiHistoryDb';
 import * as theme from '../../../util/theme';
 
 export function Dev () {
   const [allData, setAllData] = useState<AqiHistoryItem[]>([]);
-  const [average, setAverage] = useState(0);
 
   useEffect(() => {
     const oneWeekAgo = new Date();
     oneWeekAgo.setHours(oneWeekAgo.getHours() - 24 * 7);
-    pipe(
-      getAveragePm25(oneWeekAgo),
-      TE.fold(
-        err => {
-          console.log(err);
-          return T.of(undefined);
-        },
-        avg => {
-          setAverage(avg);
-          return T.of(undefined);
-        }
-      )
-    )();
 
     pipe(
-      getData(10),
+      getData(oneWeekAgo),
       TE.fold(
         err => {
           console.log(err);
@@ -62,6 +44,10 @@ export function Dev () {
       )
     )();
   }, []);
+
+  // FIXME Calculate integral instead of average
+  const average =
+    allData.reduce((sum, current) => sum + current.rawPm25, 0) / allData.length;
 
   return (
     <View>

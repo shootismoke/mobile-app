@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import * as BackgroundFetch from 'expo-background-fetch';
 import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { isTaskRegisteredAsync } from 'expo-task-manager';
@@ -25,6 +26,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ErrorContext } from './error';
 import { SAVE_DATA_INTERVAL } from '../managers/AqiHistoryDb';
 import { AQI_HISTORY_TASK } from '../managers/AqiHistoryTask';
+import { GPS_TASK } from '../managers/GpsTask';
 import { toError } from '../util/fp';
 import { noop } from '../util/noop';
 
@@ -66,10 +68,19 @@ function fetchGpsPosition () {
     console.log('<LocationContext> - fetchGpsPosition - Fetching location');
 
     // Start the task to record periodically on the background the location
-    const isRegistered = await isTaskRegisteredAsync(AQI_HISTORY_TASK);
-    if (!isRegistered) {
-      ExpoLocation.startLocationUpdatesAsync(AQI_HISTORY_TASK, {
+    const isGpsRegistered = await isTaskRegisteredAsync(GPS_TASK);
+    if (!isGpsRegistered) {
+      ExpoLocation.startLocationUpdatesAsync(GPS_TASK, {
         timeInterval: SAVE_DATA_INTERVAL * 1000 // in ms
+      });
+    }
+    // Start the task to record periodically on the background the location
+    const isAqiRegistered = await isTaskRegisteredAsync(AQI_HISTORY_TASK);
+    if (!isAqiRegistered) {
+      BackgroundFetch.registerTaskAsync(AQI_HISTORY_TASK, {
+        minimumInterval: SAVE_DATA_INTERVAL, // in s
+        startOnBoot: true,
+        stopOnTerminate: true
       });
     }
 
@@ -111,8 +122,9 @@ export function LocationContextProvider ({
         },
         ({ coords }) => {
           console.log(
-            '<LocationContext> - fetchGpsPosition - Got location',
-            coords
+            `<LocationContext> - fetchGpsPosition - Got location ${JSON.stringify(
+              coords
+            )}`
           );
           setGpsLocation(coords);
           setCurrentLocation(coords);

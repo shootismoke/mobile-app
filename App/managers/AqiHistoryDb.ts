@@ -162,7 +162,11 @@ export function saveData (value: AqiHistoryItemInput) {
               );
 
               tx.executeSql(
-                `INSERT INTO ${AQI_HISTORY_TABLE} (latitude, longitude, rawPm25) VALUES (?, ?, ?)`,
+                `
+                  INSERT INTO ${AQI_HISTORY_TABLE}
+                  (latitude, longitude, rawPm25)
+                  VALUES (?, ?, ?)
+                `,
                 [value.latitude, value.longitude, value.rawPm25],
                 () => resolve(),
                 (_transaction: Transaction, error: Error) => reject(error)
@@ -176,11 +180,11 @@ export function saveData (value: AqiHistoryItemInput) {
 }
 
 /**
- * Get the average PM25 since `date`.
+ * Get the PM25 data since `date`.
  *
- * @param date - The date to start calculating the average PM25.
+ * @param date - The date to start calculating the PM25.
  */
-export function getAveragePm25 (date: Date) {
+export function getData (date: Date) {
   return pipe(
     getDb(),
     TE.chain(db =>
@@ -189,48 +193,15 @@ export function getAveragePm25 (date: Date) {
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
               console.log(
-                `<AqiHistoryDb> - getAveragePm25 - Reading data since ${date.toISOString()}`
+                `<AqiHistoryDb> - getData - Reading data since ${date.toISOString()}`
               );
 
-              tx.executeSql(
-                `
-                  SELECT AVG(rawPm25) FROM ${AQI_HISTORY_TABLE}
-                  WHERE creationTime > datetime(?)
-                `,
-                [date.toISOString()],
-                (_transaction: Transaction, resultSet: ResultSet) =>
-                  resolve(resultSet.rows.item(0)['AVG(rawPm25)']),
-                (_transaction: Transaction, error: Error) => reject(error)
-              );
-            }, reject);
-          }) as Promise<number>,
-        toError
-      )
-    )
-  );
-}
-
-/**
- * Get the `limit` last results in the db. Is only used for testing purposes for
- * now.
- *
- * @param limit - The number of results we want to take.
- */
-export function getData (limit: number) {
-  return pipe(
-    getDb(),
-    TE.chain(db =>
-      TE.tryCatch(
-        () =>
-          new Promise((resolve, reject) => {
-            db.transaction((tx: Transaction) => {
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
-                  ORDER BY id DESC
-                  LIMIT ?
+                  WHERE creationTime > datetime(?)
                 `,
-                [limit],
+                [date.toISOString()],
                 (_transaction: Transaction, resultSet: ResultSet) =>
                   resolve(resultSet.rows._array),
                 (_transaction: Transaction, error: Error) => reject(error)

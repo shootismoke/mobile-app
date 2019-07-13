@@ -24,6 +24,7 @@ import { failure } from 'io-ts/lib/PathReporter';
 
 import { LatLng } from '../location';
 import * as dataSources from './dataSources';
+import { saveData } from '../../managers/AqiHistoryDb';
 import { retry, sideEffect, toError } from '../../util/fp';
 
 const ApiT = t.type({
@@ -66,7 +67,7 @@ const sources = [
   { name: 'windWaqi', run: dataSources.windWaqi }
 ];
 
-export function fetchApi (currentPosition: LatLng) {
+export function fetchApi (gps: LatLng) {
   return retry(sources.length, status =>
     pipe(
       TE.rightIO(
@@ -78,10 +79,7 @@ export function fetchApi (currentPosition: LatLng) {
       ),
       TE.chain(() =>
         TE.tryCatch(
-          () =>
-            sources[(status.iterNumber - 1) % sources.length].run(
-              currentPosition
-            ),
+          () => sources[(status.iterNumber - 1) % sources.length].run(gps),
           toError
         )
       ),
@@ -106,5 +104,17 @@ export function fetchApi (currentPosition: LatLng) {
         )
       )
     )
+  );
+}
+
+export function fetchApiAndSave (gps: LatLng) {
+  return pipe(
+    fetchApi(gps),
+    TE.map(api => ({
+      latitude: gps.latitude,
+      longitude: gps.longitude,
+      rawPm25: api.shootISmoke.rawPm25
+    })),
+    TE.chain(saveData)
   );
 }
