@@ -65,7 +65,7 @@ export function Header (props: HeaderProps) {
         </View>
 
         <TouchableOpacity onPress={onChangeLocationClick}>
-          <Image source={changeLocation} style={styles.changeLocation} />
+          <Image source={changeLocation} />
         </TouchableOpacity>
       </View>
     </View>
@@ -88,9 +88,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   currentLocation: {
-    maxWidth: '80%'
+    marginRight: theme.spacing.tiny,
+    maxWidth: '75%'
   },
   distance: {
+    alignItems: 'center',
     flexDirection: 'row',
     marginTop: theme.spacing.tiny
   },

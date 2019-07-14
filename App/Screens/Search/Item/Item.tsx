@@ -15,48 +15,34 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View
+} from 'react-native';
 
+import gpsIcon from '../../../../assets/images/gps.png';
 import pinIcon from '../../../../assets/images/location.png';
-import { AlgoliaHit } from '../Search';
-import { Location } from '../../../stores/location';
 import * as theme from '../../../util/theme';
 
-interface ItemProps {
-  item: AlgoliaHit;
-  onClick: (item: Location) => void;
+interface ItemProps extends TouchableOpacityProps {
+  description: string;
+  icon: 'pin' | 'gps';
+  title: string;
 }
 
 export function Item (props: ItemProps) {
-  const { item, onClick } = props;
-
-  const { city, country, county, _geoloc, locale_names: localeNames } = item;
-
-  const handleClick = () => {
-    onClick({
-      latitude: _geoloc.lat,
-      longitude: _geoloc.lng,
-      name: [
-        localeNames[0],
-        city,
-        county && county.length ? county[0] : null,
-        country
-      ]
-        .filter(_ => _)
-        .join(', ')
-    });
-  };
+  const { description, icon, title, ...rest } = props;
 
   return (
-    <TouchableOpacity onPress={handleClick} style={styles.container}>
-      <Image source={pinIcon} />
+    <TouchableOpacity style={styles.container} {...rest}>
+      <Image source={icon === 'gps' ? gpsIcon : pinIcon} />
       <View style={styles.result}>
-        <Text style={styles.title}>{localeNames[0]}</Text>
-        <Text style={styles.description}>
-          {[city, county && county.length ? county[0] : null, country]
-            .filter(_ => _)
-            .join(', ')}
-        </Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -67,14 +53,13 @@ const styles = StyleSheet.create({
     ...theme.withPadding,
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 17
+    paddingVertical: theme.spacing.normal
   },
   description: {
-    ...theme.text,
-    marginTop: 4
+    ...theme.text
   },
   result: {
-    marginLeft: 17
+    marginLeft: theme.spacing.normal
   },
   title: {
     ...theme.title

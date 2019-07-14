@@ -14,133 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from 'react';
-import axios from 'axios';
-import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
-import * as C from 'fp-ts/lib/Console';
-import * as E from 'fp-ts/lib/Either';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import * as t from 'io-ts';
-import { failure } from 'io-ts/lib/PathReporter';
+import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 import Sentry from 'sentry-expo';
 
 import { BackButton } from '../../components';
-import { Item } from './Item';
+import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
+import { AlgoliaItem } from './AlgoliaItem';
+import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
 import {
   CurrentLocationContext,
   ErrorContext,
   GpsLocationContext,
-  LatLng,
   Location
 } from '../../stores';
-import { retry, sideEffect, toError } from '../../util/fp';
 import * as theme from '../../util/theme';
-
-// As per https://community.algolia.com/places/rest.html
-const algoliaUrls = [
-  'https://places-dsn.algolia.net',
-  'https://places-1.algolianet.com',
-  'https://places-2.algolianet.com',
-  'https://places-3.algolianet.com'
-];
-
-// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/132720a17e15cdfcffade54dd4a23a21c1e16831/types/algoliasearch/index.d.ts#L2072
-const AlgoliaHitT = t.exact(
-  t.intersection([
-    t.type({
-      _geoloc: t.type({
-        lat: t.number,
-        lng: t.number
-      }),
-      country: t.string,
-      locale_names: t.array(t.string),
-      objectID: t.string
-    }),
-    t.partial({
-      city: t.array(t.string),
-      county: t.array(t.string)
-    })
-  ])
-);
-export type AlgoliaHit = t.TypeOf<typeof AlgoliaHitT>;
-
-const AxiosResponseT = t.type({
-  data: t.type({
-    hits: t.array(AlgoliaHitT)
-  })
-});
-
-function fetchAlgolia (search: string, gps?: LatLng) {
-  return retry(algoliaUrls.length, status =>
-    pipe(
-      TE.rightIO(
-        C.log(
-          `<Search> - fetchAlgolia - Attempt #${status.iterNumber}: ${
-            algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-          }/1/places/query`
-        )
-      ),
-      TE.chain(() =>
-        TE.tryCatch(
-          () =>
-            axios.post(
-              `${
-                algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-              }/1/places/query`,
-              {
-                aroundLatLng: gps
-                  ? `${gps.latitude},${gps.longitude}`
-                  : undefined,
-                hitsPerPage: 10,
-                language: 'en',
-                query: search
-              },
-              {
-                headers:
-                  Constants.manifest.extra.algoliaApplicationId &&
-                  Constants.manifest.extra.algoliaApiKey
-                    ? {
-                      'X-Algolia-Application-Id':
-                          Constants.manifest.extra.algoliaApplicationId,
-                      'X-Algolia-API-Key':
-                          Constants.manifest.extra.algoliaApiKey
-                    }
-                    : undefined,
-
-                timeout: 3000
-              }
-            ),
-          toError
-        )
-      ),
-      TE.chain(response =>
-        T.of(
-          pipe(
-            AxiosResponseT.decode(response),
-            E.mapLeft(failure),
-            E.mapLeft(errs => errs[0]), // Only show 1st error
-            E.mapLeft(Error)
-          )
-        )
-      ),
-      TE.map(response => response.data.hits),
-      TE.chain((hits: AlgoliaHit[]) =>
-        TE.rightIO(
-          sideEffect(
-            C.log(`<Search> - fetchAlgolia - Got ${hits.length} results`),
-            hits
-          )
-        )
-      )
-    )
-  );
-}
 
 // Timeout to detect when user stops typing
 let typingTimeout: NodeJS.Timeout | null = null;
@@ -148,7 +42,7 @@ let typingTimeout: NodeJS.Timeout | null = null;
 interface SearchProps extends NavigationInjectedProps {}
 
 export function Search (props: SearchProps) {
-  const { setCurrentLocation } = useContext(CurrentLocationContext);
+  const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
   const { setError } = useContext(ErrorContext);
   const gps = useContext(GpsLocationContext);
 
@@ -204,7 +98,7 @@ export function Search (props: SearchProps) {
   }
 
   function renderItem ({ item }: { item: AlgoliaHit }) {
-    return <Item item={item} onClick={handleItemClick} />;
+    return <AlgoliaItem item={item} onClick={handleItemClick} />;
   }
 
   return (
@@ -219,11 +113,13 @@ export function Search (props: SearchProps) {
         ItemSeparatorComponent={renderSeparator}
         keyboardShouldPersistTaps="always"
         keyExtractor={({ objectID }) => objectID}
-        ListEmptyComponent={
-          <Text style={styles.noResults}>
-            {renderInfoText(algoliaError, hits, loading, search)}
-          </Text>
-        }
+        ListEmptyComponent={renderEmptyList(
+          algoliaError,
+          hits,
+          loading,
+          search,
+          isGps
+        )}
         renderItem={renderItem}
         style={styles.list}
       />
@@ -231,17 +127,27 @@ export function Search (props: SearchProps) {
   );
 }
 
-function renderInfoText (
+function renderEmptyList (
   algoliaError: Error | undefined,
   hits: AlgoliaHit[],
   loading: boolean,
-  search: string
+  search: string,
+  isGps: boolean
 ) {
-  if (!search) return '';
-  if (loading) return 'Waiting for results...';
-  if (algoliaError) return 'Error fetching locations. Please try again later.';
-  if (hits && hits.length === 0) return 'No results.';
-  return 'Waiting for results.';
+  if (isGps && !search) {
+    return null;
+  }
+  if (!search) return <GpsItem />;
+  if (loading) { return <Text style={styles.noResults}>Waiting for results...</Text>; }
+  if (algoliaError) {
+    return (
+      <Text style={styles.noResults}>
+        Error fetching locations. Please try again later.
+      </Text>
+    );
+  }
+  if (hits && hits.length === 0) { return <Text style={styles.noResults}>No results.</Text>; }
+  return <Text style={styles.noResults}>Waiting for results.</Text>;
 }
 
 function renderSeparator () {

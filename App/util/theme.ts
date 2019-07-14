@@ -15,6 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 export type ShadowPosition = 'top' | 'bottom';
@@ -40,7 +41,11 @@ export const spacing = {
  * FIXME
  */
 const fixTextMargin = {
-  marginTop: scale(3)
+  ...Platform.select({
+    ios: {
+      marginTop: scale(3)
+    }
+  })
 };
 
 export const elevatedLevel1 = (position: ShadowPosition) => ({
@@ -78,9 +83,9 @@ export const link = {
 export const shitText = {
   color: textColor,
   fontFamily: gothamBlack,
-  fontSize: scale(36),
+  fontSize: scale(32),
   letterSpacing: scale(-1),
-  lineHeight: scale(48),
+  lineHeight: scale(36),
   ...fixTextMargin
 };
 

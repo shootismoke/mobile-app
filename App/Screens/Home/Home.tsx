@@ -146,6 +146,7 @@ export function Home (props: HomeProps) {
               onChangeFrequency={freq => {
                 setFrenquency(freq);
               }}
+              style={styles.selectFrequency}
             />
           ) : (
             <Text style={styles.thereToday}>
@@ -182,6 +183,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   scrollView: { flex: 1 },
+  selectFrequency: {
+    marginTop: theme.spacing.tiny
+  },
   shit: {
     ...theme.shitText,
     marginTop: theme.spacing.normal
