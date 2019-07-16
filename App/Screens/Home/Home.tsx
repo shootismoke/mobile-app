@@ -127,7 +127,7 @@ export function Home (props: HomeProps) {
 
   return (
     <View style={styles.container}>
-      <SmokeVideo />
+      <SmokeVideo cigarettes={cigaretteCount} />
       <Header
         onChangeLocationClick={() => props.navigation.navigate('Search')}
       />
@@ -154,7 +154,7 @@ export function Home (props: HomeProps) {
             </Text>
           )}
         </View>
-        <Footer navigation={props.navigation} />
+        <Footer frequency={frequency} navigation={props.navigation} />
       </ScrollView>
     </View>
   );

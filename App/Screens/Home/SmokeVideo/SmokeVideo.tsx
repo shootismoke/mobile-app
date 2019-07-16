@@ -15,18 +15,16 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Video } from 'expo-av';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
-import { ApiContext } from '../../../stores';
 
-export function SmokeVideo () {
-  const { api } = useContext(ApiContext)!;
-  const {
-    shootISmoke: { cigarettes }
-  } = api!;
+interface SmokeVideoProps {
+  cigarettes: number;
+}
 
+export function SmokeVideo ({ cigarettes }: SmokeVideoProps) {
   return (
     <View style={styles.container}>
       <View style={[styles.overlay, getVideoStyle(cigarettes)]} />

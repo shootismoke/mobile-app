@@ -20,11 +20,14 @@ import { NavigationInjectedProps } from 'react-navigation';
 
 import { Button } from '../../../components';
 import { i18n } from '../../../localization';
+import { Frequency } from '../SelectFrequency';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
-interface FooterProps extends NavigationInjectedProps {}
+interface FooterProps extends NavigationInjectedProps {
+  frequency: Frequency;
+}
 
 export function Footer (props: FooterProps) {
   const { api } = useContext(ApiContext)!;
@@ -86,7 +89,7 @@ export function Footer (props: FooterProps) {
 
   return (
     <View style={styles.container}>
-      {isTooFar && (
+      {isTooFar && props.frequency === 'daily' && (
         <Text style={styles.isStationTooFar}>
           {i18n.t('home_station_too_far_message')}
         </Text>
