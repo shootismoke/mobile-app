@@ -22,7 +22,7 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 
-import { LatLng } from '../stores';
+import { LatLng } from '../stores/fetchGpsPosition';
 import { pm25ToCigarettes } from '../stores/fetchApi/dataSources/pm25ToCigarettes';
 import { sideEffect, toError } from '../util/fp';
 

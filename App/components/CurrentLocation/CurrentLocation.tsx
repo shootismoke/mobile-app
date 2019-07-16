@@ -14,29 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as ExpoLocation from 'expo-location';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
-import { LatLng, Location } from '../../stores';
 import { Api } from '../../stores/fetchApi';
-import { toError } from '../../util/fp';
+import { fetchReverseGeocode, Location } from '../../stores/fetchGpsPosition';
 import * as theme from '../../util/theme';
 
 interface CurrentLocationProps extends TextProps {
   api: Api;
   currentLocation: Location;
-}
-
-function fetchReverseGeocode (currentLocation: LatLng) {
-  return TE.tryCatch(async () => {
-    const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
-
-    return reverse[0];
-  }, toError);
 }
 
 // Text to show when fetching reverse geocoding
@@ -63,10 +53,10 @@ export function CurrentLocation (props: CurrentLocationProps) {
 
           return T.of(undefined);
         },
-        reverse => {
-          setLocationName(
-            [reverse.street, reverse.city, reverse.country].join(', ')
-          );
+        ({ name }) => {
+          if (name) {
+            setLocationName(name);
+          }
 
           return T.of(undefined);
         }
