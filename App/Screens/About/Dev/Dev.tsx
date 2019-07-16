@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as ExpoLocation from 'expo-location';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { AsyncStorage, Text, View } from 'react-native';
 
 import { Button } from '../../../components';
 import {
@@ -27,20 +29,31 @@ import {
   getData,
   populateRandom
 } from '../../../managers/AqiHistoryDb';
+import { AQI_HISTORY_LAST_FETCH } from '../../../managers/AqiHistoryTask';
+import { getLastKnownGps, GPS_TASK } from '../../../managers/GpsTask';
 import * as theme from '../../../util/theme';
 
 export function Dev () {
   const [allData, setAllData] = useState<AqiHistoryDbItem[]>([]);
+  const [
+    aqiHistoryTask,
+    setAqiHistoryTask
+  ] = useState<BackgroundFetch.Status | null>(null);
+  const [bgLocation, setBgLocation] = useState(false);
+  const [startedBgLocation, setStartedBgLocation] = useState(false);
+  const [asyncStorageGps, setAsyncStorageGps] = useState();
+  const [lastBgFetch, setLastBgFetch] = useState();
 
   useEffect(() => {
+    // Data in SQL db
     const oneWeekAgo = new Date();
     oneWeekAgo.setHours(oneWeekAgo.getHours() - 24 * 7);
-
     pipe(
       getData(oneWeekAgo),
       TE.fold(
         err => {
-          console.log(err);
+          console.log(`<Dev> - getData - Error ${err.message}`);
+
           return T.of(undefined);
         },
         data => {
@@ -49,16 +62,49 @@ export function Dev () {
         }
       )
     )();
-  }, []);
 
-  // FIXME Calculate integral instead of average
-  const average =
-    allData.reduce((sum, current) => sum + current.rawPm25, 0) / allData.length;
+    // GPS_TASK status
+    ExpoLocation.isBackgroundLocationAvailableAsync().then(setBgLocation);
+    ExpoLocation.hasStartedLocationUpdatesAsync(GPS_TASK).then(
+      setStartedBgLocation
+    );
+    pipe(
+      getLastKnownGps(),
+      TE.fold(
+        err => {
+          console.log(`<Dev> - getLastKnownGps - Error ${err.message}`);
+
+          return T.of(undefined);
+        },
+        data => {
+          setAsyncStorageGps(data);
+          return T.of(undefined);
+        }
+      )
+    )();
+
+    // AQI_HISTORY_TASK status
+    BackgroundFetch.getStatusAsync().then(setAqiHistoryTask);
+    AsyncStorage.getItem(AQI_HISTORY_LAST_FETCH).then(setLastBgFetch);
+  }, []);
 
   return (
     <View>
-      <Text style={theme.text}>Average: {average}</Text>
-      <Text style={theme.text}>All data: {JSON.stringify(allData)}</Text>
+      <Text style={theme.text}>
+        BackgroundFetch status:{' '}
+        {aqiHistoryTask && BackgroundFetch.Status[aqiHistoryTask]}
+      </Text>
+      <Text style={theme.text}>
+        isBackgroundLocationAvailableAsync: {bgLocation.toString()}
+      </Text>
+      <Text style={theme.text}>
+        hasStartedLocationUpdatesAsync: {startedBgLocation.toString()}
+      </Text>
+      <Text style={theme.text}>
+        Last known GPS: {JSON.stringify(asyncStorageGps)}
+      </Text>
+      <Text style={theme.text}>Last BackgroundFetch: {lastBgFetch}</Text>
+      <Text style={theme.text}>All DB: {JSON.stringify(allData)}</Text>
       <Button onPress={() => populateRandom()()}>Populate Random Data</Button>
       <Button onPress={() => clearTable()()}>Clear DB</Button>
     </View>

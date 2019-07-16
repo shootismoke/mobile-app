@@ -67,8 +67,6 @@ function fetchGpsPosition () {
       throw new Error('Permission to access location was denied');
     }
 
-    console.log('<LocationContext> - fetchGpsPosition - Fetching location');
-
     // Start the task to record periodically on the background the location
     const isGpsRegistered = await isTaskRegisteredAsync(GPS_TASK);
     if (!isGpsRegistered) {
@@ -80,8 +78,11 @@ function fetchGpsPosition () {
       BackgroundFetch.registerTaskAsync(AQI_HISTORY_TASK, {
         minimumInterval: SAVE_DATA_INTERVAL, // in s
         startOnBoot: true,
-        stopOnTerminate: true
+        stopOnTerminate: false
       });
+      // Apparently this is needed on iOS
+      // https://github.com/expo/expo/issues/3582#issuecomment-480924126
+      BackgroundFetch.setMinimumIntervalAsync(SAVE_DATA_INTERVAL);
     }
 
     return ExpoLocation.getCurrentPositionAsync({

@@ -195,10 +195,6 @@ export function getData (date: Date) {
         () =>
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
-              console.log(
-                `<AqiHistoryDb> - getData - Reading data since ${date.toISOString()}`
-              );
-
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
@@ -206,8 +202,15 @@ export function getData (date: Date) {
                   ORDER BY id DESC
                 `,
                 [date.toISOString()],
-                (_transaction: Transaction, resultSet: ResultSet) =>
-                  resolve(resultSet.rows._array),
+                (_transaction: Transaction, resultSet: ResultSet) => {
+                  console.log(
+                    `<AqiHistoryDb> - getData - ${
+                      resultSet.rows.length
+                    } results since ${date.toISOString()}`
+                  );
+                  resolve(resultSet.rows._array);
+                },
+
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             }, reject);

@@ -16,42 +16,24 @@
 
 import { Result } from 'expo-background-fetch';
 import { defineTask } from 'expo-task-manager';
-import * as C from 'fp-ts/lib/Console';
-import * as E from 'fp-ts/lib/Either';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { AsyncStorage } from 'react-native';
 import Sentry from 'sentry-expo';
 
-import { GPS_ASYNC_STORAGE } from './GpsTask';
+import { getLastKnownGps } from './GpsTask';
 import { fetchApiAndSave } from '../stores/fetchApi';
-import { LatLng } from '../stores/location';
-import { sideEffect, toError } from '../util/fp';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
+export const AQI_HISTORY_LAST_FETCH = 'AQI_HISTORY_LAST_FETCH';
 
 /**
  * This task will fetch API data from remote and save to SQLite database
  */
 defineTask(AQI_HISTORY_TASK, () => {
-  pipe(
-    TE.tryCatch(() => AsyncStorage.getItem(GPS_ASYNC_STORAGE), toError),
-    TE.chain(gpsString =>
-      TE.fromEither(
-        E.fromNullable(new Error(`AsyncStorage ${GPS_ASYNC_STORAGE} is empty`))(
-          gpsString
-        )
-      )
-    ),
-    TE.chain(gpsString =>
-      TE.fromEither(E.tryCatch(() => JSON.parse(gpsString) as LatLng, toError))
-    ),
-    TE.chain(gps =>
-      TE.rightIO(
-        sideEffect(C.log(`<AqiHistoryTask> - defineTask - Fetching API`), gps)
-      )
-    ),
+  return pipe(
+    getLastKnownGps(),
     TE.chain(gps => fetchApiAndSave(gps)),
     TE.fold(
       err => {
@@ -62,5 +44,8 @@ defineTask(AQI_HISTORY_TASK, () => {
       },
       () => T.of(Result.NewData)
     )
-  )();
+  )().then(() =>
+    // For dev purposes
+    AsyncStorage.setItem(AQI_HISTORY_LAST_FETCH, new Date().toISOString())
+  );
 });
