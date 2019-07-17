@@ -21,7 +21,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { defineTask } from 'expo-task-manager';
 import { AsyncStorage } from 'react-native';
 
-import { LatLng } from '../stores/location';
+import { LatLng } from '../stores/fetchGpsPosition';
 import { sideEffect, toError } from '../util/fp';
 
 export const GPS_TASK = 'GPS_TASK';
@@ -66,28 +66,34 @@ export function getLastKnownGps () {
 /**
  * This task will check user GPS location and save to AsyncStorage
  */
-defineTask(GPS_TASK, ({ data, error }) => {
-  if (error) {
-    console.log(`<GpsTask> - defineTask - Error ${error.message}`);
-    return;
-  }
+defineTask(GPS_TASK, async ({ data, error }) => {
+  try {
+    if (error) {
+      console.log(`<GpsTask> - defineTask - Error ${error.message}`);
+      return;
+    }
 
-  if (data) {
-    const { locations } = data as { locations: { coords: LatLng }[] };
-    const { coords } = locations[0];
+    if (data) {
+      const { locations } = data as { locations: { coords: LatLng }[] };
+      const { coords } = locations[0];
 
-    // Using TE.tryCatch here seems overkill
-    AsyncStorage.setItem(
-      GPS_ASYNC_STORAGE,
-      JSON.stringify({
-        creationTime: new Date().toISOString(),
-        latitude: coords.latitude,
-        longitude: coords.longitude
-      })
-    )
-      .then(() => console.log('<GpsTask> - defineTask - Updated Gps Location'))
-      .catch(error =>
-        console.log(`<GpsTask> - defineTask - Error ${error.message}`)
-      );
+      // Using TE.tryCatch here seems overkill
+      AsyncStorage.setItem(
+        GPS_ASYNC_STORAGE,
+        JSON.stringify({
+          creationTime: new Date().toISOString(),
+          latitude: coords.latitude,
+          longitude: coords.longitude
+        })
+      )
+        .then(() =>
+          console.log('<GpsTask> - defineTask - Updated Gps Location')
+        )
+        .catch(error =>
+          console.log(`<GpsTask> - defineTask - Error ${error.message}`)
+        );
+    }
+  } catch (err) {
+    console.log(`<GpsTask> - defineTask - Error ${err.message}`);
   }
 });

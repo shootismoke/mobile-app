@@ -40,7 +40,7 @@ export interface AqiHistoryDbItem extends AqiHistoryDbItemInput {
   id: number;
 }
 
-export const SAVE_DATA_INTERVAL = 3600; // 1 hour in s
+export const SAVE_DATA_INTERVAL = 3 * 3600; // 3 hours in s
 const AQI_HISTORY_DB = 'AQI_HISTORY_DB';
 const AQI_HISTORY_TABLE = 'AqiHistory';
 

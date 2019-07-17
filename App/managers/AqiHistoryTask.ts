@@ -26,12 +26,19 @@ import { getLastKnownGps } from './GpsTask';
 import { fetchApiAndSave } from '../stores/fetchApi';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
-export const AQI_HISTORY_LAST_FETCH = 'AQI_HISTORY_LAST_FETCH';
+export const AQI_HISTORY_LAST_FETCH_ATTEMPT = 'AQI_HISTORY_LAST_FETCH_ATTEMPT';
+export const AQI_HISTORY_LAST_FETCH_RESULT = 'AQI_HISTORY_LAST_FETCH_RESULT';
 
 /**
  * This task will fetch API data from remote and save to SQLite database
  */
 defineTask(AQI_HISTORY_TASK, () => {
+  // For dev purposes
+  AsyncStorage.setItem(
+    AQI_HISTORY_LAST_FETCH_ATTEMPT,
+    new Date().toISOString()
+  );
+
   return pipe(
     getLastKnownGps(),
     TE.chain(gps => fetchApiAndSave(gps)),
@@ -40,12 +47,12 @@ defineTask(AQI_HISTORY_TASK, () => {
         console.log(`<AqiHistoryTask> - defineTask - Error ${err.message}`);
         Sentry.captureException(err);
 
+        // For dev purposes
+        AsyncStorage.setItem(AQI_HISTORY_LAST_FETCH_RESULT, err.message);
+
         return T.of(Result.Failed);
       },
       () => T.of(Result.NewData)
     )
-  )().then(() =>
-    // For dev purposes
-    AsyncStorage.setItem(AQI_HISTORY_LAST_FETCH, new Date().toISOString())
-  );
+  )();
 });

@@ -29,7 +29,10 @@ import {
   getData,
   populateRandom
 } from '../../../managers/AqiHistoryDb';
-import { AQI_HISTORY_LAST_FETCH } from '../../../managers/AqiHistoryTask';
+import {
+  AQI_HISTORY_LAST_FETCH_ATTEMPT,
+  AQI_HISTORY_LAST_FETCH_RESULT
+} from '../../../managers/AqiHistoryTask';
 import { getLastKnownGps, GPS_TASK } from '../../../managers/GpsTask';
 import * as theme from '../../../util/theme';
 
@@ -42,7 +45,8 @@ export function Dev () {
   const [bgLocation, setBgLocation] = useState(false);
   const [startedBgLocation, setStartedBgLocation] = useState(false);
   const [asyncStorageGps, setAsyncStorageGps] = useState();
-  const [lastBgFetch, setLastBgFetch] = useState();
+  const [lastBgFetchAttempt, setLastBgFetchAttempt] = useState();
+  const [lastBgFetchResult, setLastBgFetchResult] = useState();
 
   useEffect(() => {
     // Data in SQL db
@@ -85,7 +89,12 @@ export function Dev () {
 
     // AQI_HISTORY_TASK status
     BackgroundFetch.getStatusAsync().then(setAqiHistoryTask);
-    AsyncStorage.getItem(AQI_HISTORY_LAST_FETCH).then(setLastBgFetch);
+    AsyncStorage.getItem(AQI_HISTORY_LAST_FETCH_ATTEMPT).then(
+      setLastBgFetchAttempt
+    );
+    AsyncStorage.getItem(AQI_HISTORY_LAST_FETCH_RESULT).then(
+      setLastBgFetchResult
+    );
   }, []);
 
   return (
@@ -103,7 +112,10 @@ export function Dev () {
       <Text style={theme.text}>
         Last known GPS: {JSON.stringify(asyncStorageGps)}
       </Text>
-      <Text style={theme.text}>Last BackgroundFetch: {lastBgFetch}</Text>
+      <Text style={theme.text}>Last BackgroundFetch: {lastBgFetchAttempt}</Text>
+      <Text style={theme.text}>
+        Last BackgroundFetch Result: {lastBgFetchResult}
+      </Text>
       <Text style={theme.text}>All DB: {JSON.stringify(allData)}</Text>
       <Button onPress={() => populateRandom()()}>Populate Random Data</Button>
       <Button onPress={() => clearTable()()}>Clear DB</Button>
