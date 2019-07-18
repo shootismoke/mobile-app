@@ -20,7 +20,7 @@
     "@types/react-native": "^0.57.65",
     "axios": "^0.19.0",
     "date-fns": "^2.0.0-alpha.25",
-    "expo": "^33.0.0",
+    "expo": "^33.0.7",
     "expo-av": "~5.0.2",
     "expo-background-fetch": "~5.0.1",
     "expo-constants": "~5.0.1",
