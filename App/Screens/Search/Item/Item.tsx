@@ -24,7 +24,7 @@ import {
   View
 } from 'react-native';
 
-import gpsIcon from '../../../../assets/images/gps.png';
+import gpsIcon from '../../../../assets/images/location-big.png';
 import pinIcon from '../../../../assets/images/location.png';
 import * as theme from '../../../util/theme';
 

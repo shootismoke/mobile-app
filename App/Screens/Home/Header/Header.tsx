@@ -25,7 +25,7 @@ import {
 } from 'react-native';
 
 import changeLocation from '../../../../assets/images/changeLocation.png';
-import warning from '../../../../assets/images/warning.png';
+import alert from '../../../../assets/images/alert.png';
 import { CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
@@ -54,7 +54,7 @@ export function Header (props: HeaderProps) {
             numberOfLines={2}
           />
           <View style={styles.distance}>
-            {isTooFar && <Image source={warning} style={styles.warning} />}
+            {isTooFar && <Image source={alert} style={styles.warning} />}
             <Text style={theme.text}>
               {i18n.t('home_header_air_quality_station_distance', {
                 distanceToStation: distance
