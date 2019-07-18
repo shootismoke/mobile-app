@@ -33,6 +33,9 @@ type Transaction = any;
 
 interface AqiHistoryDbItemInput extends LatLng {
   rawPm25: number;
+  station: string;
+  city?: string;
+  country?: string;
 }
 
 export interface AqiHistoryDbItem extends AqiHistoryDbItemInput {
@@ -57,13 +60,17 @@ function initDb () {
             db.transaction((tx: Transaction) => {
               tx.executeSql(
                 `
-                  CREATE TABLE IF NOT EXISTS ${AQI_HISTORY_TABLE}(
-                  id INTEGER PRIMARY KEY,
-                  latitude REAL NOT NULL,
-                  longitude REAL NOT NULL,
-                  rawPm25 REAL NOT NULL,
-                  creationTime DATETIME DEFAULT CURRENT_TIMESTAMP
-                )`,
+                  CREATE TABLE IF NOT EXISTS ${AQI_HISTORY_TABLE} (
+                    id INTEGER PRIMARY KEY,
+                    latitude REAL NOT NULL,
+                    longitude REAL NOT NULL,
+                    rawPm25 REAL NOT NULL,
+                    station TEXT,
+                    city TEXT,
+                    country TEXT,
+                    creationTime DATETIME DEFAULT CURRENT_TIMESTAMP
+                  );
+                `,
                 [],
                 () => resolve(db),
                 (_transaction: Transaction, error: Error) => reject(error)
@@ -95,32 +102,39 @@ function isSaveNeeded () {
         () =>
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
-              // Get time of `SAVE_DATA_INTERVAL`ms before now
-              const now = new Date();
-              now.setMilliseconds(now.getMilliseconds() - SAVE_DATA_INTERVAL);
-
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
-                  WHERE creationTime > datetime(?)
+                  ORDER BY id DESC
                   LIMIT 1
                 `,
-                [now.toISOString()],
+                [],
                 (_transaction: Transaction, resultSet: ResultSet) => {
-                  if (resultSet.rows.length > 0) {
-                    try {
+                  try {
+                    if (resultSet.rows.length === 0) {
+                      return resolve(true);
+                    }
+
+                    // Get the time difference (in ms) between now and last saved
+                    // item in the db
+                    const timeDiff =
+                      new Date().getTime() -
+                      new Date(
+                        resultSet.rows.item(0).creationTime.replace(' ', 'T')
+                      ).getTime();
+                    if (timeDiff / 1000 <= SAVE_DATA_INTERVAL) {
                       console.log(
-                        `<AqiHistoryDb> - isSaveNeeded - false: last save happened at ${
+                        `<AqiHistoryDb> - last save happened at ${
                           resultSet.rows.item(0).creationTime
                         }`
                       );
-                    } catch (err) {
-                      // It shouldn't catch, but we're never too sure
-                      reject(err);
+                      resolve(false);
+                    } else {
+                      resolve(true);
                     }
-                    resolve(false);
-                  } else {
-                    resolve(true);
+                  } catch (err) {
+                    // It shouldn't throw, but we're never too sure
+                    reject(err);
                   }
                 },
                 (_transaction: Transaction, error: Error) => reject(error)
@@ -149,8 +163,9 @@ export function saveData (value: AqiHistoryDbItemInput) {
         )
       )
     ),
-    TE.chain(isNeeded =>
-      isNeeded ? TE.right(undefined) : TE.left(new Error('Canceling saveData'))
+    TE.filterOrElse(
+      isNeeded => isNeeded,
+      () => new Error('Canceling saveData because isSaveNeeded=false')
     ),
     TE.chain(() => getDb()),
     TE.chain(db =>
@@ -167,10 +182,17 @@ export function saveData (value: AqiHistoryDbItemInput) {
               tx.executeSql(
                 `
                   INSERT INTO ${AQI_HISTORY_TABLE}
-                  (latitude, longitude, rawPm25)
-                  VALUES (?, ?, ?)
+                  (latitude, longitude, rawPm25, station, city, country)
+                  VALUES (?, ?, ?, ?, ?, ?)
                 `,
-                [value.latitude, value.longitude, value.rawPm25],
+                [
+                  value.latitude,
+                  value.longitude,
+                  value.rawPm25,
+                  value.station,
+                  value.city,
+                  value.country
+                ],
                 () => resolve(),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
@@ -296,16 +318,19 @@ export function getAqiHistory () {
  */
 export function clearTable () {
   return pipe(
-    getDb(),
+    TE.rightIO(
+      C.log(`<AqiHistoryDb> - clearTable - Dropping table ${AQI_HISTORY_TABLE}`)
+    ),
+    TE.chain(getDb),
     TE.chain(db =>
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
               tx.executeSql(
-                `DROP TABLE ${AQI_HISTORY_TABLE}`,
+                `DROP TABLE ${AQI_HISTORY_TABLE};`,
                 [],
-                () => resolve(undefined as void),
+                () => resolve(),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             }, reject);
@@ -322,6 +347,9 @@ export function populateRandom () {
       0,
       0,
       Math.floor(Math.random() * 20 + 1),
+      `some station ${Math.floor(Math.random() * 10 + 1)}`,
+      `some city ${Math.floor(Math.random() * 10 + 1)}`,
+      `some country ${Math.floor(Math.random() * 10 + 1)}`,
       new Date(new Date().setDate(new Date().getDate() - i - 1)).toISOString()
     ])
   );
@@ -336,38 +364,38 @@ export function populateRandom () {
               tx.executeSql(
                 `
                   INSERT INTO ${AQI_HISTORY_TABLE}
-                  (latitude, longitude, rawPm25, creationTime)
+                  (latitude, longitude, rawPm25, station, city, country, creationTime)
                   VALUES
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?)
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?)
                 `,
                 randomValues,
                 () => resolve(),

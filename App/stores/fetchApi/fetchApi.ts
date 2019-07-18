@@ -22,7 +22,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 
-import { LatLng } from '../location';
+import { Location } from '../fetchGpsPosition';
 import * as dataSources from './dataSources';
 import { saveData } from '../../managers/AqiHistoryDb';
 import { retry, sideEffect, toError } from '../../util/fp';
@@ -68,7 +68,7 @@ const sources = [
   { name: 'windWaqi', run: dataSources.windWaqi }
 ];
 
-export function fetchApi (gps: LatLng) {
+export function fetchApi (gps: Location) {
   return retry(sources.length, status =>
     pipe(
       TE.rightIO(
@@ -108,19 +108,18 @@ export function fetchApi (gps: LatLng) {
   );
 }
 
-export function fetchApiAndSave (gps: LatLng) {
+export function saveApi (gps: Location, api: Api) {
   return pipe(
-    fetchApi(gps),
-    TE.chain(api =>
-      isStationTooFar(gps, api)
-        ? TE.left(new Error('Station too far, not saving'))
-        : TE.right(api)
-    ),
-    TE.map(api => ({
-      latitude: gps.latitude,
-      longitude: gps.longitude,
-      rawPm25: api.shootISmoke.rawPm25
-    })),
+    isStationTooFar(gps, api)
+      ? TE.left(new Error('Station too far, not saving'))
+      : TE.right({
+        latitude: gps.latitude,
+        longitude: gps.longitude,
+        rawPm25: api.shootISmoke.rawPm25,
+        station: api.attributions[0].name,
+        city: gps.city,
+        country: gps.country
+      }),
     TE.chain(saveData)
   );
 }
