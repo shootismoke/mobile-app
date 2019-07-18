@@ -18,7 +18,7 @@
   "home_common_oh": "Oh",
   "home_common_cigarette": "Cigarrillo",
   "home_common_cigarettes": "Cigarrillos",
-  "home_smoked_cigarette_title": "{{swearWord}}! {{presentPast}} <{{cigarettes}} {{singularPlural}}> hoy.",
+  "home_smoked_cigarette_title": "{{swearWord}}! {{presentPast}} <{{cigarettes}} {{singularPlural}}>",
   "home_swear_word_dang": "Rayos",
   "home_swear_word_shoot": "Maldición",
   "home_swear_word_darn": "Caramba",

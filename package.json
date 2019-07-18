@@ -8,17 +8,21 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "eslint 'App/**/*.js'",
+    "lint": "eslint --ext .ts,.tsx App",
     "start": "expo start",
     "test": "jest"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.2",
-    "async-retry": "^1.2.3",
+    "@types/expo": "^32.0.13",
+    "@types/haversine": "^1.1.2",
+    "@types/i18n-js": "^3.0.1",
+    "@types/react-native": "^0.57.65",
     "axios": "^0.19.0",
     "date-fns": "^2.0.0-alpha.25",
     "expo": "^33.0.0",
     "expo-av": "~5.0.2",
+    "expo-background-fetch": "~5.0.1",
     "expo-constants": "~5.0.1",
     "expo-font": "~5.0.1",
     "expo-localization": "~5.0.1",
@@ -26,18 +30,23 @@
     "expo-permissions": "~5.0.1",
     "expo-sqlite": "~5.0.1",
     "expo-task-manager": "~5.0.1",
+    "fp-ts": "^2.0.0",
     "haversine": "^1.1.0",
     "i18n-js": "^3.3.0",
-    "mobx": "^4.6.0",
-    "mobx-react": "^5.3.6",
-    "mobx-state-tree": "^3.14.0",
+    "io-ts": "^2.0.0",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-maps": "^0.24.2",
+    "react-native-size-matters": "^0.2.1",
     "react-navigation": "^3.11.0",
+    "retry-ts": "^0.1.0",
     "sentry-expo": "~1.13.0",
     "truncate": "^2.1.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-expo": "^5.2.0",
     "eslint": "^5.16.0",
@@ -50,6 +59,9 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "jest-expo": "^33.0.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
   }
 }
