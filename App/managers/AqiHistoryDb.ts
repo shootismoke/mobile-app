@@ -17,7 +17,6 @@
 import { SQLite } from 'expo-sqlite';
 import { array, flatten } from 'fp-ts/lib/Array';
 import * as C from 'fp-ts/lib/Console';
-import * as O from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -243,13 +242,20 @@ export function getData (date: Date) {
   );
 }
 
+// TODO Calculate integral instead of sum
 function getSum (data: number[]) {
   return data.reduce((sum, current) => sum + current, 0);
 }
 
+interface AqiHistorySummary {
+  firstResult: Date;
+  lastResult: Date;
+  sum: number;
+}
+
 export interface AqiHistory {
-  pastMonth: O.Option<number>;
-  pastWeek: O.Option<number>;
+  pastMonth: AqiHistorySummary;
+  pastWeek: AqiHistorySummary;
 }
 
 /**
@@ -266,48 +272,32 @@ export function getAqiHistory () {
   // buffers defined belowed, so that we don't only have too recent data.
   const oneWeekAgoBuffer = new Date(oneWeekAgo);
   oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
-  const oneMonthAgoBuffer = new Date(oneWeekAgo);
-  oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
+  const oneMonthAgoBuffer = new Date(oneMonthAgo);
+  oneMonthAgoBuffer.setHours(oneMonthAgo.getHours() + 24);
 
   return pipe(
     array.sequence(TE.taskEither)([getData(oneWeekAgo), getData(oneMonthAgo)]),
-    TE.map(([pastWeekData, pastMonthData]) => {
-      const weekOption =
-        pastWeekData[0] &&
-        new Date(pastWeekData[0].creationTime) <= oneWeekAgoBuffer
-          ? O.some(pastWeekData)
-          : O.none;
-      const monthOption =
-        pastMonthData[0] &&
-        new Date(pastMonthData[0].creationTime) <= oneMonthAgoBuffer
-          ? O.some(pastMonthData)
-          : O.none;
-
-      return [weekOption, monthOption];
-    }),
-    TE.map(([pastWeekData, pastMonthData]) => [
-      pipe(
-        pastWeekData,
-        O.map(v => v.map(({ rawPm25 }) => rawPm25))
-      ),
-      pipe(
-        pastMonthData,
-        O.map(v => v.map(({ rawPm25 }) => rawPm25))
-      )
-    ]),
-    TE.map(([pastWeekData, pastMonthData]) => [
-      O.map(getSum)(pastWeekData),
-      O.map(getSum)(pastMonthData)
-    ]),
-    TE.map(([pastWeekData, pastMonthData]) => [
-      O.map(pm25ToCigarettes)(pastWeekData),
-      O.map(pm25ToCigarettes)(pastMonthData)
-    ]),
     TE.map(
-      ([pastWeek, pastMonth]) =>
+      ([pastWeekData, pastMonthData]) =>
         ({
-          pastWeek,
-          pastMonth
+          pastMonth: {
+            firstResult: new Date(
+              pastMonthData[pastMonthData.length - 1].creationTime
+            ),
+            lastResult: new Date(pastMonthData[0].creationTime),
+            sum: pm25ToCigarettes(
+              getSum(pastMonthData.map(({ rawPm25 }) => rawPm25))
+            )
+          },
+          pastWeek: {
+            firstResult: new Date(
+              pastWeekData[pastWeekData.length - 1].creationTime
+            ),
+            lastResult: new Date(pastWeekData[0].creationTime),
+            sum: pm25ToCigarettes(
+              getSum(pastWeekData.map(({ rawPm25 }) => rawPm25))
+            )
+          }
         } as AqiHistory)
     )
   );

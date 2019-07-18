@@ -46,10 +46,7 @@ export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { isGps } = useContext(CurrentLocationContext)!;
   const [frequency, setFrenquency] = useState<Frequency>('daily');
-  const [aqiHistory, setAqiHistory] = useState<AqiHistory>({
-    pastMonth: O.none,
-    pastWeek: O.none
-  });
+  const [aqiHistory, setAqiHistory] = useState<O.Option<AqiHistory>>(O.none);
   const [cigaretteCount, setCigaretteCount] = useState(
     api!.shootISmoke.cigarettes
   );
@@ -65,7 +62,7 @@ export function Home (props: HomeProps) {
           return T.of(undefined);
         },
         history => {
-          setAqiHistory(history);
+          setAqiHistory(O.some(history));
 
           return T.of(undefined);
         }
@@ -77,9 +74,17 @@ export function Home (props: HomeProps) {
     setTimeout(() => {
       let cigCount = 0;
       if (frequency === 'monthly') {
-        cigCount = O.getOrElse(() => 0)(aqiHistory.pastMonth);
+        cigCount = pipe(
+          aqiHistory,
+          O.map(({ pastMonth }) => pastMonth.sum),
+          O.getOrElse(() => 0)
+        );
       } else if (frequency === 'weekly') {
-        cigCount = O.getOrElse(() => 0)(aqiHistory.pastWeek);
+        cigCount = pipe(
+          aqiHistory,
+          O.map(({ pastWeek }) => pastWeek.sum),
+          O.getOrElse(() => 0)
+        );
       } else {
         cigCount = api!.shootISmoke.cigarettes;
       }
@@ -141,7 +146,6 @@ export function Home (props: HomeProps) {
           <View style={styles.main}>{renderText()}</View>
           {isGps ? (
             <SelectFrequency
-              aqiHistory={aqiHistory}
               frequency={frequency}
               onChangeFrequency={freq => {
                 setFrenquency(freq);
