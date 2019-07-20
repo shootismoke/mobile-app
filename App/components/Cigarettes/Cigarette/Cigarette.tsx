@@ -26,6 +26,9 @@ import headVertical from '../../../../assets/images/head-vertical.png';
 export type CigaretteOrientation = 'diagonal' | 'horizontal' | 'vertical';
 export type CigaretteSize = 'small' | 'medium' | 'big';
 
+// The height of 1 vertical cigarrette
+export const CIGARETTES_HEIGHT = 90;
+
 interface CigaretteProps {
   percentage: number;
   orientation: CigaretteOrientation;
@@ -60,7 +63,7 @@ function getMeasures (size: CigaretteSize, percentage: number) {
       return {
         height: Math.ceil(scale(7)),
         margin: Math.ceil(scale(6)),
-        width: getCigaretteActualLength(90, percentage)
+        width: getCigaretteActualLength(CIGARETTES_HEIGHT, percentage)
       };
     }
     case 'small': {
@@ -176,10 +179,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   diagonal: {
-    height: Math.floor(scale(90) / Math.SQRT2),
+    height: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2),
     position: 'absolute',
     transform: [{ rotate: '45deg' }, { scale: 1 }],
-    width: Math.floor(scale(90) / Math.SQRT2)
+    width: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2)
   },
   head: {
     flexGrow: 1,

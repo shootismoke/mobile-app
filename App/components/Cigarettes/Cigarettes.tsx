@@ -18,14 +18,14 @@ import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import { Cigarette, CigaretteSize } from './Cigarette';
+import { CIGARETTES_HEIGHT, Cigarette, CigaretteSize } from './Cigarette';
 
 interface CigarettesProps {
   cigarettes: number;
   style?: StyleProp<ViewStyle>;
 }
 
-export const CIGARETTES_HEIGHT = 90;
+export { CIGARETTES_HEIGHT };
 
 export function Cigarettes (props: CigarettesProps) {
   const { cigarettes: realCigarettes } = props;
