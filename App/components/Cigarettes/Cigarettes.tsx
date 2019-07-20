@@ -27,8 +27,8 @@ interface CigarettesProps {
 
 export function Cigarettes (props: CigarettesProps) {
   const { cigarettes: realCigarettes } = props;
-  // const cigarettes = Math.round(Math.min(realCigarettes, 50) * 10) / 10; // We don't show more than 50
-  const cigarettes = 0.9; // Can change values here for testing
+  const cigarettes = Math.round(Math.min(realCigarettes, 50) * 10) / 10; // We don't show more than 50
+  // const cigarettes = 1.9; // Can change values here for testing
 
   const count = Math.floor(cigarettes); // The cigarette count, without decimal
   const decimal = cigarettes - count;
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'flex-end',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    overflow: 'hidden'
+    flexWrap: 'wrap'
   }
 });

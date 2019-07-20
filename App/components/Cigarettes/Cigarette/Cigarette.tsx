@@ -44,6 +44,8 @@ function getCigaretteActualLength (length: number, percentage: number) {
 /**
  * Get height/width & margin of cigarette depending on `size` param, we assume
  * here that height<width, i.e. the cigarette is horizontal
+ *
+ * Measures come from Figma
  */
 function getMeasures (size: CigaretteSize, percentage: number) {
   switch (size) {
@@ -95,35 +97,47 @@ function getStyle (
         width: height
       };
     }
-    case 'diagonal': {
-      return {
-        height: Math.floor(scale(90)),
-        width: Math.floor(scale(90))
-      };
-    }
   }
 }
 
 export function Cigarette (props: CigaretteProps) {
   const { orientation, percentage, size, style } = props;
 
-  const computedStyle = getStyle(orientation, percentage, size);
-  return (
+  return orientation === 'diagonal' ? (
     <View
-      style={[styles.container, getStyle(orientation, percentage, size), style]}
+      style={[
+        styles.diagonal,
+        percentage >= 0.3
+          ? { paddingTop: -(30 / 0.7) * percentage + 30 / 0.7 } // very empirical
+          : undefined,
+        style
+      ]}
     >
-      {orientation === 'diagonal' ? (
-        <View style={[styles.diagonal]}>{renderCigarette('horizontal')}</View>
-      ) : (
-        renderCigarette(orientation)
+      {renderCigarette(
+        'horizontal',
+        percentage,
+        percentage >= 0.3 ? 'medium' : 'big'
       )}
     </View>
+  ) : (
+    renderCigarette(orientation, percentage, size, style)
   );
 }
 
-function renderCigarette (orientation: CigaretteOrientation) {
+function renderCigarette (
+  orientation: CigaretteOrientation,
+  percentage: number,
+  size: CigaretteSize,
+  additionalStyle?: StyleProp<ViewStyle>
+) {
   return (
-    <>
+    <View
+      style={[
+        styles.container,
+        getStyle(orientation, percentage, size),
+        additionalStyle
+      ]}
+    >
       <Image
         source={orientation === 'vertical' ? buttVertical : butt}
         style={[
@@ -144,7 +158,7 @@ function renderCigarette (orientation: CigaretteOrientation) {
             : { aspectRatio: 81 / 60, height: '100%', width: undefined }
         ]}
       />
-    </>
+    </View>
   );
 }
 
@@ -162,7 +176,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   diagonal: {
-    transform: [{ rotate: '45deg' }, { scale: 1 }]
+    height: Math.floor(scale(90) / Math.SQRT2),
+    position: 'absolute',
+    transform: [{ rotate: '45deg' }, { scale: 1 }],
+    width: Math.floor(scale(90) / Math.SQRT2)
   },
   head: {
     flexGrow: 1,
