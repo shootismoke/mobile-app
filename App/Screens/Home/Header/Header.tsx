@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     marginRight: theme.spacing.tiny
   },
   container: {
-    padding: theme.spacing.normal
+    paddingHorizontal: theme.spacing.normal,
+    paddingTop: theme.spacing.normal
   },
   content: {
     alignItems: 'center',
