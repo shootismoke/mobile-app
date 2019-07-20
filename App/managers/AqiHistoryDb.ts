@@ -112,7 +112,7 @@ function isSaveNeeded () {
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
-                  ORDER BY id DESC
+                  ORDER BY creationTime DESC
                   LIMIT 1
                 `,
                 [],
@@ -228,7 +228,7 @@ export function getData (date: Date) {
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
                   WHERE creationTime > datetime(?)
-                  ORDER BY id DESC
+                  ORDER BY creationTime DESC
                 `,
                 [date.toISOString()],
                 (_transaction: Transaction, resultSet: ResultSet) => {
@@ -286,7 +286,6 @@ function computeSummary (
     1
   );
 
-  console.log(oneWeekOrMonthAgo);
   // const firstResult.getTime() - oneWeekOrMonthAgo.getTime() <= 0
   const daysToResults = pipe(
     differenceInCalendarDays(firstResult, oneWeekOrMonthAgo),
@@ -404,7 +403,7 @@ export function populateRandom () {
                   (?, ?, ?, ?, ?, ?, ?),
                   (?, ?, ?, ?, ?, ?, ?),
                   (?, ?, ?, ?, ?, ?, ?),
-                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?)
                 `,
                 randomValues,
                 () => {
