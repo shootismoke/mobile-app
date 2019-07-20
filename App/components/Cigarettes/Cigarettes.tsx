@@ -25,6 +25,8 @@ interface CigarettesProps {
   style?: StyleProp<ViewStyle>;
 }
 
+export const CIGARETTES_HEIGHT = 90;
+
 export function Cigarettes (props: CigarettesProps) {
   const { cigarettes: realCigarettes } = props;
   const cigarettes = Math.round(Math.min(realCigarettes, 50) * 10) / 10; // We don't show more than 50
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-end',
     flexDirection: 'row',
-    height: scale(90),
+    height: scale(CIGARETTES_HEIGHT),
     // width: '60%'
     width: scale(250)
   },

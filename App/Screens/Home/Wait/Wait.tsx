@@ -16,8 +16,10 @@
 
 import React from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 import wait from '../../../../assets/images/wait.png';
+import { CIGARETTES_HEIGHT } from '../../../components/Cigarettes';
 
 interface WaitProps {
   style?: StyleProp<ViewStyle>;
@@ -32,5 +34,7 @@ export function Wait ({ style }: WaitProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {
+    height: scale(CIGARETTES_HEIGHT)
+  }
 });
