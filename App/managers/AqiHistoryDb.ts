@@ -14,16 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import {
+  addDays,
+  differenceInCalendarDays,
+  differenceInSeconds
+} from 'date-fns';
 import { SQLite } from 'expo-sqlite';
 import { array, flatten } from 'fp-ts/lib/Array';
 import * as C from 'fp-ts/lib/Console';
+import * as O from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 
 import { LatLng } from '../stores/fetchGpsPosition';
 import { pm25ToCigarettes } from '../stores/fetchApi/dataSources/pm25ToCigarettes';
+import { sqlToJsDate } from './util/sqlToJsDate';
 import { sideEffect, toError } from '../util/fp';
+import { ONE_WEEK_AGO, ONE_MONTH_AGO, NOW } from '../util/time';
 
 // FIXME correct types
 type Database = any;
@@ -116,12 +124,12 @@ function isSaveNeeded () {
 
                     // Get the time difference (in ms) between now and last saved
                     // item in the db
-                    const timeDiff =
-                      new Date().getTime() -
-                      new Date(
-                        resultSet.rows.item(0).creationTime.replace(' ', 'T')
-                      ).getTime();
-                    if (timeDiff / 1000 <= SAVE_DATA_INTERVAL) {
+                    const timeDiff = differenceInSeconds(
+                      NOW,
+                      sqlToJsDate(resultSet.rows.item(0).creationTime)
+                    );
+
+                    if (timeDiff <= SAVE_DATA_INTERVAL) {
                       console.log(
                         `<AqiHistoryDb> - last save happened at ${
                           resultSet.rows.item(0).creationTime
@@ -242,62 +250,73 @@ export function getData (date: Date) {
   );
 }
 
+interface AqiHistorySummary {
+  daysToResults: O.Option<number>;
+  firstResult: Date;
+  isCorrect: boolean;
+  lastResult: Date;
+  numberOfResults: number;
+  sum: number;
+}
+
+export interface AqiHistory {
+  monthly: AqiHistorySummary;
+  weekly: AqiHistorySummary;
+}
+
 // TODO Calculate integral instead of sum
 function getSum (data: number[]) {
   return data.reduce((sum, current) => sum + current, 0);
 }
 
-interface AqiHistorySummary {
-  firstResult: Date;
-  lastResult: Date;
-  sum: number;
-}
+/**
+ * From historical data, derive a summary
+ */
+function computeSummary (
+  pastData: AqiHistoryDbItem[],
+  weekOrMonth: keyof AqiHistory
+): AqiHistorySummary {
+  const firstResult = sqlToJsDate(pastData[pastData.length - 1].creationTime);
 
-export interface AqiHistory {
-  pastMonth: AqiHistorySummary;
-  pastWeek: AqiHistorySummary;
+  // We add some buffer to compute `daysUntilResults`. The idea is that we want
+  // the first result in our db to be really one week or one month ago, +/- 1
+  // day.
+  const oneWeekOrMonthAgo = addDays(
+    weekOrMonth === 'weekly' ? ONE_WEEK_AGO : ONE_MONTH_AGO,
+    1
+  );
+
+  console.log(oneWeekOrMonthAgo);
+  // const firstResult.getTime() - oneWeekOrMonthAgo.getTime() <= 0
+  const daysToResults = pipe(
+    differenceInCalendarDays(firstResult, oneWeekOrMonthAgo),
+    O.fromPredicate(days => days >= 0)
+  );
+
+  return {
+    daysToResults,
+    firstResult,
+    lastResult: sqlToJsDate(pastData[0].creationTime),
+    isCorrect: O.isNone(daysToResults),
+    numberOfResults: pastData.length,
+    sum: pm25ToCigarettes(getSum(pastData.map(({ rawPm25 }) => rawPm25)))
+  };
 }
 
 /**
  * Get data from past week and past month
  */
 export function getAqiHistory () {
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setHours(oneWeekAgo.getHours() - 7 * 24);
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-  // Add a bit of buffer. The idea is that we take from the DB all data from the
-  // past week/month, but also require that the 1st sample falls inside the time
-  // buffers defined belowed, so that we don't only have too recent data.
-  const oneWeekAgoBuffer = new Date(oneWeekAgo);
-  oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
-  const oneMonthAgoBuffer = new Date(oneMonthAgo);
-  oneMonthAgoBuffer.setHours(oneMonthAgo.getHours() + 24);
-
   return pipe(
-    array.sequence(TE.taskEither)([getData(oneWeekAgo), getData(oneMonthAgo)]),
+    array.sequence(TE.taskEither)([
+      getData(ONE_WEEK_AGO),
+      getData(ONE_MONTH_AGO)
+    ]),
     TE.map(
       ([pastWeekData, pastMonthData]) =>
         ({
-          pastMonth: {
-            firstResult: new Date(
-              pastMonthData[pastMonthData.length - 1].creationTime
-            ),
-            lastResult: new Date(pastMonthData[0].creationTime),
-            sum: pm25ToCigarettes(
-              getSum(pastMonthData.map(({ rawPm25 }) => rawPm25))
-            )
-          },
-          pastWeek: {
-            firstResult: new Date(
-              pastWeekData[pastWeekData.length - 1].creationTime
-            ),
-            lastResult: new Date(pastWeekData[0].creationTime),
-            sum: pm25ToCigarettes(
-              getSum(pastWeekData.map(({ rawPm25 }) => rawPm25))
-            )
-          }
+          monthly: computeSummary(pastMonthData, 'monthly'),
+          weekly: computeSummary(pastWeekData, 'weekly')
         } as AqiHistory)
     )
   );
@@ -385,10 +404,15 @@ export function populateRandom () {
                   (?, ?, ?, ?, ?, ?, ?),
                   (?, ?, ?, ?, ?, ?, ?),
                   (?, ?, ?, ?, ?, ?, ?),
-                  (?, ?, ?, ?, ?)
+                  (?, ?, ?, ?, ?, ?, ?),
                 `,
                 randomValues,
-                () => resolve(),
+                () => {
+                  console.log(
+                    '<AqiHistoryDb> - populateRandom - Successfully populated random data'
+                  );
+                  resolve();
+                },
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             }, reject);

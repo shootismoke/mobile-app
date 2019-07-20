@@ -23,6 +23,8 @@
   "home_common_cigarettes": "Cigarettes",
   "home_smoked_cigarette_title": "{{swearWord}}! {{presentPast}}\n<{{cigarettes}} {{singularPlural}}>",
   "home_smoked_there": "there today",
+  "home_wait_more_days": "{{days}} more days",
+  "home_wait_until_results": "to \nshow your results",
   "home_swear_word_dang": "Dang",
   "home_swear_word_shoot": "Shoot",
   "home_swear_word_darn": "Darn",
