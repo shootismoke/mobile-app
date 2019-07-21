@@ -14,4 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './Item';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+
+import * as theme from '../../util/theme';
+
+export function ListSeparator () {
+  return <View style={styles.separator} />;
+}
+
+const styles = StyleSheet.create({
+  separator: {
+    backgroundColor: '#D2D2D2',
+    height: 1,
+    marginHorizontal: theme.spacing.normal
+  }
+});

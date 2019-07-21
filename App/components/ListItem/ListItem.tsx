@@ -24,17 +24,17 @@ import {
   View
 } from 'react-native';
 
-import gpsIcon from '../../../../assets/images/location-big.png';
-import pinIcon from '../../../../assets/images/location.png';
-import * as theme from '../../../util/theme';
+import gpsIcon from '../../../assets/images/location-big.png';
+import pinIcon from '../../../assets/images/location.png';
+import * as theme from '../../util/theme';
 
-interface ItemProps extends TouchableOpacityProps {
+interface ListItemProps extends TouchableOpacityProps {
   description: string;
   icon: 'pin' | 'gps';
   title: string;
 }
 
-export function Item (props: ItemProps) {
+export function ListItem (props: ListItemProps) {
   const { description, icon, title, ...rest } = props;
 
   return (

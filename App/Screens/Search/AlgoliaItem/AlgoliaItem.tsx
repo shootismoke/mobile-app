@@ -16,9 +16,9 @@
 
 import React from 'react';
 
+import { ListItem } from '../../../components';
 import { AlgoliaHit } from '../fetchAlgolia';
-import { Item } from '../Item';
-import { Location } from '../../../stores/location';
+import { Location } from '../../../stores/fetchGpsPosition';
 
 interface ItemProps {
   item: AlgoliaHit;
@@ -46,7 +46,7 @@ export function AlgoliaItem (props: ItemProps) {
   };
 
   return (
-    <Item
+    <ListItem
       description={[city, county && county.length ? county[0] : null, country]
         .filter(_ => _)
         .join(', ')}

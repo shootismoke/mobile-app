@@ -17,6 +17,7 @@
     "@types/expo": "^32.0.13",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
+    "@types/node": "^12.6.8",
     "@types/react-native": "^0.60.2",
     "axios": "^0.19.0",
     "date-fns": "^1.30.1",

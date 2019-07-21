@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { formatRelative } from 'date-fns';
+import { distanceInWords } from 'date-fns';
 import React, { useContext } from 'react';
 import {
   GestureResponderEvent,
@@ -63,7 +63,9 @@ export function Header (props: HeaderProps) {
           {lastUpdated &&
             renderInfo(
               i18n.t('details_header_latest_update_label'),
-              formatRelative(lastUpdated, new Date())
+              `${distanceInWords(lastUpdated, new Date())} ${i18n.t(
+                'details_header_latest_update_ago'
+              )}`
             )}
           {dominentpol &&
             renderInfo(

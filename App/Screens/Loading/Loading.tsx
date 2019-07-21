@@ -19,8 +19,9 @@ import { StyleSheet, Text } from 'react-native';
 import { Background } from './Background';
 
 import { i18n } from '../../localization';
-import { ApiContext, GpsLocationContext, Location } from '../../stores';
+import { ApiContext, GpsLocationContext } from '../../stores';
 import { Api } from '../../stores/fetchApi';
+import { Location } from '../../stores/fetchGpsPosition';
 import * as theme from '../../util/theme';
 
 // The variable returned by setTimeout for longWaiting

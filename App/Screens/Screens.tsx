@@ -27,6 +27,7 @@ import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
 import { Loading } from './Loading';
+import { PastStations } from './PastStations';
 import { Search } from './Search';
 import { ApiContext, ErrorContext } from '../stores';
 import { Api } from '../stores/fetchApi';
@@ -59,6 +60,9 @@ const RootStack = createAppContainer(
       },
       Home: {
         screen: Home
+      },
+      PastStations: {
+        screen: PastStations
       },
       Search: {
         screen: Search
