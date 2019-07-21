@@ -71,7 +71,13 @@ export function PastStations (props: PastStationsProps) {
           )}
         </Text>
         <Text style={styles.description}>
-          {i18n.t('past_stations_monitored_description').toUpperCase()}
+          {i18n
+            .t(
+              frequency === 'weekly'
+                ? 'past_stations_monitored_weekly'
+                : 'past_stations_monitored_monthly'
+            )
+            .toUpperCase()}
         </Text>
       </View>
 

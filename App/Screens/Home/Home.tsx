@@ -59,7 +59,7 @@ export function Home (props: HomeProps) {
           return T.of(undefined);
         },
         history => {
-          console.log(`<Home> - getAqiHistory - ${JSON.stringify(history)}`);
+          console.log(`<Home> - getAqiHistory - Got data from DB`);
 
           setAqiHistory(O.some(history));
 
