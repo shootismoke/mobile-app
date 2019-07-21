@@ -24,6 +24,7 @@ import Sentry from 'sentry-expo';
 
 import { getLastKnownGps } from './GpsTask';
 import { fetchApi, saveApi } from '../stores/fetchApi';
+import { logFpError } from '../util/fp';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
 export const AQI_HISTORY_LAST_FETCH_ATTEMPT = 'AQI_HISTORY_LAST_FETCH_ATTEMPT';
@@ -59,5 +60,5 @@ defineTask(AQI_HISTORY_TASK, () => {
       },
       () => T.of(Result.NewData)
     )
-  )();
+  )().catch(logFpError);
 });

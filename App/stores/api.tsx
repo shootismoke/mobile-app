@@ -22,6 +22,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ErrorContext } from './error';
 import { Api, fetchApi, saveApi } from './fetchApi';
 import { CurrentLocationContext } from './location';
+import { logFpError } from '../util/fp';
 import { noop } from '../util/noop';
 
 interface Context {
@@ -51,21 +52,13 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
 
     pipe(
       fetchApi(currentLocation),
-      TE.chain(api =>
-        TE.rightTask(
-          pipe(
-            isGps ? saveApi(currentLocation, api) : TE.right(undefined),
-            TE.fold(
-              error => {
-                console.log(
-                  `<ApiContextProvider> - saveApi - ${error.message}`
-                );
-                return T.of(api);
-              },
-              () => T.of(api)
-            )
+      TE.chain(newApi =>
+        isGps
+          ? pipe(
+            saveApi(currentLocation, newApi),
+            TE.map(() => newApi)
           )
-        )
+          : TE.right(undefined)
       ),
       TE.fold(
         err => {
@@ -77,7 +70,7 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
   }, [currentLocation]);
 
   return (

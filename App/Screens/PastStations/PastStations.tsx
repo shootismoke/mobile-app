@@ -36,9 +36,13 @@ interface Params {
 
 interface PastStationsProps extends NavigationInjectedProps<Params> {}
 
+const UNKNOWN_STATION = i18n.t('').toUpperCase();
+
 // Determine when two `AqiHistoryDbItem` items are equal in the list, so that we
 // only show them once
-const eqStation = contramap((item: AqiHistoryDbItem) => item.station)(eqString);
+const eqStation = contramap(
+  (item: AqiHistoryDbItem) => item.station || UNKNOWN_STATION
+)(eqString);
 
 export function PastStations (props: PastStationsProps) {
   const { navigation } = props;
@@ -89,7 +93,7 @@ export function PastStations (props: PastStationsProps) {
           O.getOrElse<AqiHistoryDbItem[]>(() => [])
         )}
         ItemSeparatorComponent={renderSeparator}
-        keyExtractor={({ station }) => station}
+        keyExtractor={({ station }) => station || UNKNOWN_STATION}
         renderItem={renderItem}
         style={styles.list}
       />
@@ -102,7 +106,7 @@ function renderItem ({ item }: { item: AqiHistoryDbItem }) {
     <ListItem
       description={[item.city, item.country].join(', ')}
       icon="pin"
-      title={item.station}
+      title={item.station || UNKNOWN_STATION}
     />
   );
 }

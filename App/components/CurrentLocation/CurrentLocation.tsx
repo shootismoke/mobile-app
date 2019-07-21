@@ -22,7 +22,11 @@ import { StyleSheet, Text, TextProps } from 'react-native';
 
 import { Api } from '../../stores/fetchApi';
 import { fetchReverseGeocode, Location } from '../../stores/fetchGpsPosition';
+import { i18n } from '../../localization';
+import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
+
+const UNKNOWN_STATION = i18n.t('current_location_unknown_station');
 
 interface CurrentLocationProps extends TextProps {
   api: Api;
@@ -30,7 +34,7 @@ interface CurrentLocationProps extends TextProps {
 }
 
 // Text to show when fetching reverse geocoding
-const LOADING_TEXT = 'Fetching...';
+const LOADING_TEXT = `${i18n.t('current_location_fetching')}...`;
 
 export function CurrentLocation (props: CurrentLocationProps) {
   const { api, currentLocation, style, ...rest } = props;
@@ -47,9 +51,7 @@ export function CurrentLocation (props: CurrentLocationProps) {
       fetchReverseGeocode(currentLocation),
       TE.fold(
         () => {
-          setLocationName(
-            api.city && api.city.name ? api.city.name : 'Unknown AQI Station'
-          );
+          setLocationName(api.shootISmoke.station || UNKNOWN_STATION);
 
           return T.of(undefined);
         },
@@ -61,7 +63,7 @@ export function CurrentLocation (props: CurrentLocationProps) {
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
   }, []);
 
   return (

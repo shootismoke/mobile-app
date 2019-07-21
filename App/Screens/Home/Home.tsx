@@ -31,6 +31,7 @@ import { Frequency, SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
+import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
 import { Wait } from './Wait';
 
@@ -66,7 +67,7 @@ export function Home (props: HomeProps) {
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
   }, []);
 
   function getCigaretteCount () {

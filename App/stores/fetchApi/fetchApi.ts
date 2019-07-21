@@ -38,7 +38,7 @@ const ApiT = t.type({
   ),
   city: t.type({
     geo: t.tuple([t.number, t.number]),
-    name: t.string,
+    name: t.union([t.string, t.undefined]),
     url: t.union([t.string, t.undefined])
   }),
   dominentpol: t.string,
@@ -51,7 +51,8 @@ const ApiT = t.type({
   idx: t.number,
   shootISmoke: t.type({
     cigarettes: t.number,
-    rawPm25: t.number
+    rawPm25: t.number,
+    station: t.union([t.string, t.undefined])
   }),
   time: t.type({
     s: t.union([t.string, t.undefined]),
@@ -109,17 +110,14 @@ export function fetchApi (gps: Location) {
 }
 
 export function saveApi (gps: Location, api: Api) {
-  return pipe(
-    isStationTooFar(gps, api)
-      ? TE.left(new Error('Station too far, not saving'))
-      : TE.right({
-        latitude: gps.latitude,
-        longitude: gps.longitude,
-        rawPm25: api.shootISmoke.rawPm25,
-        station: api.attributions[0].name,
-        city: gps.city,
-        country: gps.country
-      }),
-    TE.chain(saveData)
-  );
+  return isStationTooFar(gps, api)
+    ? TE.left(new Error('Station too far, not saving'))
+    : saveData({
+      latitude: gps.latitude,
+      longitude: gps.longitude,
+      rawPm25: api.shootISmoke.rawPm25,
+      station: api.shootISmoke.station,
+      city: gps.city,
+      country: gps.country
+    });
 }

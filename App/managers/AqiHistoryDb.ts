@@ -40,7 +40,7 @@ type Transaction = any;
 
 interface AqiHistoryDbItemInput extends LatLng {
   rawPm25: number;
-  station: string;
+  station?: string;
   city?: string;
   country?: string;
 }
@@ -155,26 +155,13 @@ function isSaveNeeded () {
 }
 
 /**
- * Add a new row in the table
+ * Insert a new row in the table
  *
- * @param value - The entry to add.
+ * @param value - The value to insert
  */
-export function saveData (value: AqiHistoryDbItemInput) {
+function writeToDb (value: AqiHistoryDbItemInput) {
   return pipe(
-    isSaveNeeded(),
-    TE.chain(isNeeded =>
-      TE.rightIO(
-        sideEffect(
-          C.log(`<AqiHistoryDb> - saveData - isSaveNeeded=${isNeeded}`),
-          isNeeded
-        )
-      )
-    ),
-    TE.filterOrElse(
-      isNeeded => isNeeded,
-      () => new Error('Canceling saveData because isSaveNeeded=false')
-    ),
-    TE.chain(() => getDb()),
+    getDb(),
     TE.chain(db =>
       TE.tryCatch(
         () =>
@@ -188,10 +175,10 @@ export function saveData (value: AqiHistoryDbItemInput) {
 
               tx.executeSql(
                 `
-                  INSERT INTO ${AQI_HISTORY_TABLE}
-                  (latitude, longitude, rawPm25, station, city, country)
-                  VALUES (?, ?, ?, ?, ?, ?)
-                `,
+                    INSERT INTO ${AQI_HISTORY_TABLE}
+                    (latitude, longitude, rawPm25, station, city, country)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                  `,
                 [
                   value.latitude,
                   value.longitude,
@@ -207,6 +194,28 @@ export function saveData (value: AqiHistoryDbItemInput) {
           }) as Promise<void>,
         toError
       )
+    )
+  );
+}
+
+/**
+ * Add a new row in the table, if needed
+ *
+ * @param value - The entry to add.
+ */
+export function saveData (value: AqiHistoryDbItemInput) {
+  return pipe(
+    isSaveNeeded(),
+    TE.chain(isNeeded =>
+      TE.rightIO(
+        sideEffect(
+          C.log(`<AqiHistoryDb> - saveData - isSaveNeeded=${isNeeded}`),
+          isNeeded
+        )
+      )
+    ),
+    TE.chain(isNeeded =>
+      isNeeded ? writeToDb(value) : TE.right(undefined as void)
     )
   );
 }
