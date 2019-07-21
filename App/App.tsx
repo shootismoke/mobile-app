@@ -29,7 +29,6 @@ import {
 
 // Add sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
-  Sentry.enableInExpoDevelopment = true;
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
 }
 

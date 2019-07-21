@@ -109,17 +109,14 @@ export function fetchApi (gps: Location) {
 }
 
 export function saveApi (gps: Location, api: Api) {
-  return pipe(
-    isStationTooFar(gps, api)
-      ? TE.left(new Error('Station too far, not saving'))
-      : TE.right({
-        latitude: gps.latitude,
-        longitude: gps.longitude,
-        rawPm25: api.shootISmoke.rawPm25,
-        station: api.attributions[0].name,
-        city: gps.city,
-        country: gps.country
-      }),
-    TE.chain(saveData)
-  );
+  return isStationTooFar(gps, api)
+    ? TE.left(new Error('Station too far, not saving'))
+    : saveData({
+      latitude: gps.latitude,
+      longitude: gps.longitude,
+      rawPm25: api.shootISmoke.rawPm25,
+      station: api.attributions.length ? api.attributions[0].name : undefined,
+      city: gps.city,
+      country: gps.country
+    });
 }

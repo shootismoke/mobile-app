@@ -21,6 +21,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
+import Sentry from 'sentry-expo';
 
 import { noop } from './noop';
 
@@ -72,4 +73,13 @@ export function retry<A> (
  */
 export function toError (reason: unknown) {
   return new Error(String(reason));
+}
+
+/**
+ * Tasks and IOs can sometimes throw unexpectedly, so we catch and log here.
+ * This should realistically never happen.
+ */
+export function logFpError (error: Error) {
+  console.log(`<logFpError> - ${error.message}`);
+  Sentry.captureException(error);
 }

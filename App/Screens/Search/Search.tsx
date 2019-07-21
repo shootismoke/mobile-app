@@ -33,6 +33,7 @@ import {
   GpsLocationContext
 } from '../../stores';
 import { Location } from '../../stores/fetchGpsPosition';
+import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
 
 // Timeout to detect when user stops typing
@@ -86,7 +87,7 @@ export function Search (props: SearchProps) {
             return T.of(undefined as void);
           }
         )
-      )();
+      )().catch(logFpError);
     }, 500);
   }
 

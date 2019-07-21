@@ -34,6 +34,7 @@ import {
   AQI_HISTORY_LAST_FETCH_RESULT
 } from '../../../managers/AqiHistoryTask';
 import { getLastKnownGps, GPS_TASK } from '../../../managers/GpsTask';
+import { logFpError } from '../../../util/fp';
 import * as theme from '../../../util/theme';
 
 export function Dev () {
@@ -65,7 +66,7 @@ export function Dev () {
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
 
     // GPS_TASK status
     ExpoLocation.isBackgroundLocationAvailableAsync().then(setBgLocation);
@@ -85,7 +86,7 @@ export function Dev () {
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
 
     // AQI_HISTORY_TASK status
     BackgroundFetch.getStatusAsync().then(setAqiHistoryTask);
@@ -120,8 +121,10 @@ export function Dev () {
         All DB:{' '}
         {JSON.stringify(allData.map(({ creationTime }) => creationTime))}
       </Text>
-      <Button onPress={() => populateRandom()()}>Populate Random Data</Button>
-      <Button onPress={() => clearTable()()}>Clear DB</Button>
+      <Button onPress={() => populateRandom()().catch(logFpError)}>
+        Populate Random Data
+      </Button>
+      <Button onPress={() => clearTable()().catch(logFpError)}>Clear DB</Button>
     </View>
   );
 }

@@ -22,6 +22,7 @@ import { StyleSheet, Text, TextProps } from 'react-native';
 
 import { Api } from '../../stores/fetchApi';
 import { fetchReverseGeocode, Location } from '../../stores/fetchGpsPosition';
+import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
 
 interface CurrentLocationProps extends TextProps {
@@ -61,7 +62,7 @@ export function CurrentLocation (props: CurrentLocationProps) {
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
   }, []);
 
   return (

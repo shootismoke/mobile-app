@@ -26,6 +26,7 @@ import {
   LatLng,
   Location
 } from './fetchGpsPosition';
+import { logFpError } from '../util/fp';
 import { noop } from '../util/noop';
 
 const DEFAULT_LAT_LNG: LatLng = {
@@ -90,7 +91,7 @@ export function LocationContextProvider ({
           return T.of(undefined);
         }
       )
-    )();
+    )().catch(logFpError);
   }, []);
 
   return (
