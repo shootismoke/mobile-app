@@ -116,7 +116,7 @@ export function Home (props: HomeProps) {
     }
   }
 
-  const renderSmokeText = () => {
+  const renderCigarettesText = () => {
     // Round to 1 decimal
     const cigarettes = Math.round(cigaretteCount * 10) / 10;
 
@@ -149,7 +149,7 @@ export function Home (props: HomeProps) {
   function renderText () {
     switch (frequency) {
       case 'daily': {
-        return renderSmokeText();
+        return renderCigarettesText();
       }
       case 'weekly':
       case 'monthly': {
@@ -157,7 +157,7 @@ export function Home (props: HomeProps) {
           aqiHistory,
           O.map(history => history[frequency]),
           O.chain(({ daysToResults }) => daysToResults),
-          O.fold(renderSmokeText, days => (
+          O.fold(renderCigarettesText, days => (
             <Text adjustsFontSizeToFit style={styles.shit}>
               <Text style={styles.cigarettesCount}>
                 {i18n.t('home_wait_more_days', { days })}
