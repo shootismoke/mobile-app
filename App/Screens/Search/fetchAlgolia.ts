@@ -24,7 +24,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 
-import { LatLng } from '../../stores';
+import { LatLng } from '../../stores/fetchGpsPosition';
 import { retry, sideEffect, toError } from '../../util/fp';
 
 // As per https://community.algolia.com/places/rest.html

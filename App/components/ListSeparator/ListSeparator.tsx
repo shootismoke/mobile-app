@@ -14,28 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
-import { ListItem } from '../../../components';
-import { i18n } from '../../../localization';
-import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
-
-const LOADING_TEXT = 'Fetching...';
-
-export function GpsItem () {
-  const { setCurrentLocation } = useContext(CurrentLocationContext);
-  const gps = useContext(GpsLocationContext);
-
-  const handleClick = () => {
-    setCurrentLocation(gps);
-  };
-
-  return (
-    <ListItem
-      description={i18n.t('search_current_location')}
-      icon="gps"
-      onPress={handleClick}
-      title={gps!.name || LOADING_TEXT}
-    />
-  );
+export function ListSeparator () {
+  return <View style={styles.separator} />;
 }
+
+const styles = StyleSheet.create({
+  separator: {
+    backgroundColor: '#D2D2D2',
+    height: 1,
+    marginLeft: scale(17 + 22 + 17) // Margin + imgWidth + margin
+  }
+});

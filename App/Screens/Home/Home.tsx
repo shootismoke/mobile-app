@@ -198,7 +198,11 @@ export function Home (props: HomeProps) {
             </Text>
           )}
         </View>
-        <Footer frequency={frequency} navigation={props.navigation} />
+        <Footer
+          aqiHistory={aqiHistory}
+          frequency={frequency}
+          navigation={props.navigation}
+        />
       </ScrollView>
     </View>
   );

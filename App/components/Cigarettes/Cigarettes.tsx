@@ -66,7 +66,7 @@ export function Cigarettes (props: CigarettesProps) {
 function getSize (cigarettes: number): CigaretteSize {
   if (cigarettes <= 1) return 'big';
   if (cigarettes <= 4) return 'big';
-  if (cigarettes <= 20) return 'medium';
+  if (cigarettes <= 14) return 'medium';
   return 'small';
 }
 

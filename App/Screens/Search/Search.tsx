@@ -19,11 +19,10 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 import Sentry from 'sentry-expo';
 
-import { BackButton } from '../../components';
+import { BackButton, ListSeparator } from '../../components';
 import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
 import { AlgoliaItem } from './AlgoliaItem';
 import { GpsItem } from './GpsItem';
@@ -31,9 +30,9 @@ import { SearchHeader } from './SearchHeader';
 import {
   CurrentLocationContext,
   ErrorContext,
-  GpsLocationContext,
-  Location
+  GpsLocationContext
 } from '../../stores';
+import { Location } from '../../stores/fetchGpsPosition';
 import * as theme from '../../util/theme';
 
 // Timeout to detect when user stops typing
@@ -138,7 +137,9 @@ function renderEmptyList (
     return null;
   }
   if (!search) return <GpsItem />;
-  if (loading) { return <Text style={styles.noResults}>Waiting for results...</Text>; }
+  if (loading) {
+    return <Text style={styles.noResults}>Waiting for results...</Text>;
+  }
   if (algoliaError) {
     return (
       <Text style={styles.noResults}>
@@ -146,12 +147,14 @@ function renderEmptyList (
       </Text>
     );
   }
-  if (hits && hits.length === 0) { return <Text style={styles.noResults}>No results.</Text>; }
+  if (hits && hits.length === 0) {
+    return <Text style={styles.noResults}>No results.</Text>;
+  }
   return <Text style={styles.noResults}>Waiting for results.</Text>;
 }
 
 function renderSeparator () {
-  return <View style={styles.separator} />;
+  return <ListSeparator />;
 }
 
 const styles = StyleSheet.create({
@@ -169,10 +172,5 @@ const styles = StyleSheet.create({
     ...theme.text,
     ...theme.withPadding,
     marginTop: theme.spacing.normal
-  },
-  separator: {
-    backgroundColor: '#D2D2D2',
-    height: 1,
-    marginLeft: scale(17 + 22 + 17) // Margin + imgWidth + margin
   }
 });

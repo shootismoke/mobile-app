@@ -250,7 +250,8 @@ export function getData (date: Date) {
   );
 }
 
-interface AqiHistorySummary {
+export interface AqiHistorySummary {
+  data: AqiHistoryDbItem[];
   daysToResults: O.Option<number>;
   firstResult: Date;
   isCorrect: boolean;
@@ -293,6 +294,7 @@ function computeSummary (
   );
 
   return {
+    data: pastData,
     daysToResults,
     firstResult,
     lastResult: sqlToJsDate(pastData[0].creationTime),
