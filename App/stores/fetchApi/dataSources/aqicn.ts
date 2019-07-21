@@ -113,7 +113,13 @@ export async function aqicn ({ latitude, longitude }: LatLng) {
     time: response.data.time,
     shootISmoke: {
       cigarettes: pm25ToCigarettes(rawPm25),
-      rawPm25
+      rawPm25,
+      station:
+        response.data.attributions &&
+        response.data.attributions.length &&
+        response.data.attributions[0]
+          ? response.data.attributions[0].name
+          : undefined
     }
   };
 }

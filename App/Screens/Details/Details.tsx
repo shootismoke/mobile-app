@@ -62,11 +62,8 @@ export function Details (props: DetailsProps) {
   const currentLocation = { ..._currentLocation! };
 
   const station = {
-    description:
-      api!.attributions && api!.attributions.length
-        ? api!.attributions[0].name
-        : '',
-    title: api!.city.name,
+    description: api!.shootISmoke.station || '',
+    title: api!.shootISmoke.station,
     ...getCorrectLatLng(currentLocation, {
       latitude: api!.city.geo[0],
       longitude: api!.city.geo[1]

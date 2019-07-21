@@ -63,7 +63,7 @@ export async function windWaqi ({ latitude, longitude }: LatLng) {
     return {
       aqi: +data.v,
       attributions: [],
-      city: { geo: [+data.geo[0], +data.geo[1]], name: data.nlo },
+      city: { geo: [+data.geo[0], +data.geo[1]] },
       dominentpol: data.pol,
       iaqi: {
         [data.pol]: {
@@ -76,7 +76,8 @@ export async function windWaqi ({ latitude, longitude }: LatLng) {
       },
       shootISmoke: {
         cigarettes: pm25ToCigarettes(rawPm25),
-        rawPm25
+        rawPm25,
+        station: data.nlo
       }
     };
   } else {
