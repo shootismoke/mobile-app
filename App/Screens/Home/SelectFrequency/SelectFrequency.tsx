@@ -14,18 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as O from 'fp-ts/lib/Option';
 import React, { useRef, useState } from 'react';
 import { ScrollView, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import { BoxButton } from '../../../components';
-import { AqiHistory } from '../../../managers';
 import * as theme from '../../../util/theme';
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';
 
 interface SelectFrequencyProps {
-  aqiHistory: AqiHistory;
   frequency: Frequency;
   onChangeFrequency: (frequency: Frequency) => void;
   style?: StyleProp<ViewStyle>;
@@ -35,11 +32,16 @@ export function SelectFrequency (props: SelectFrequencyProps) {
   const scroll = useRef<ScrollView>(null);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
-  const { aqiHistory, frequency, onChangeFrequency, style } = props;
+  const { frequency, onChangeFrequency, style } = props;
+
+  function handleChangeFrequency (f: Frequency) {
+    setTimeout(() => {
+      onChangeFrequency(f);
+    }, 400);
+  }
 
   return (
     <ScrollView
-      bounces={O.isSome(aqiHistory.pastWeek) || O.isSome(aqiHistory.pastMonth)}
       contentContainerStyle={styles.content}
       horizontal
       ref={scroll}
@@ -55,46 +57,43 @@ export function SelectFrequency (props: SelectFrequencyProps) {
           }
 
           scroll.current!.scrollTo({ x: 0 });
-          onChangeFrequency('daily');
+          handleChangeFrequency('daily');
         }}
         style={styles.boxButton}
       >
         daily
       </BoxButton>
-      {O.isSome(aqiHistory.pastWeek) && (
-        <BoxButton
-          active={frequency === 'weekly'}
-          onPress={() => {
-            if (frequency === 'weekly') {
-              return;
-            }
+      <BoxButton
+        active={frequency === 'weekly'}
+        onPress={() => {
+          if (frequency === 'weekly') {
+            return;
+          }
 
-            scroll.current!.scrollTo({
-              x: dailyWidth + theme.spacing.tiny
-            });
-            onChangeFrequency('weekly');
-          }}
-          style={styles.boxButton}
-        >
-          weekly
-        </BoxButton>
-      )}
-      {O.isSome(aqiHistory.pastMonth) && (
-        <BoxButton
-          active={frequency === 'monthly'}
-          onPress={() => {
-            if (frequency === 'monthly') {
-              return;
-            }
+          scroll.current!.scrollTo({
+            x: dailyWidth + theme.spacing.tiny
+          });
+          handleChangeFrequency('weekly');
+        }}
+        style={styles.boxButton}
+      >
+        weekly
+      </BoxButton>
 
-            scroll.current!.scrollToEnd();
-            onChangeFrequency('monthly');
-          }}
-          style={styles.boxButton}
-        >
-          monthly
-        </BoxButton>
-      )}
+      <BoxButton
+        active={frequency === 'monthly'}
+        onPress={() => {
+          if (frequency === 'monthly') {
+            return;
+          }
+
+          scroll.current!.scrollToEnd();
+          handleChangeFrequency('monthly');
+        }}
+        style={styles.boxButton}
+      >
+        monthly
+      </BoxButton>
     </ScrollView>
   );
 }

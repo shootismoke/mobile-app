@@ -14,6 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import {
+  addDays,
+  differenceInCalendarDays,
+  differenceInSeconds
+} from 'date-fns';
 import { SQLite } from 'expo-sqlite';
 import { array, flatten } from 'fp-ts/lib/Array';
 import * as C from 'fp-ts/lib/Console';
@@ -24,7 +29,9 @@ import * as TE from 'fp-ts/lib/TaskEither';
 
 import { LatLng } from '../stores/fetchGpsPosition';
 import { pm25ToCigarettes } from '../stores/fetchApi/dataSources/pm25ToCigarettes';
+import { sqlToJsDate } from './util/sqlToJsDate';
 import { sideEffect, toError } from '../util/fp';
+import { ONE_WEEK_AGO, ONE_MONTH_AGO, NOW } from '../util/time';
 
 // FIXME correct types
 type Database = any;
@@ -33,6 +40,9 @@ type Transaction = any;
 
 interface AqiHistoryDbItemInput extends LatLng {
   rawPm25: number;
+  station: string;
+  city?: string;
+  country?: string;
 }
 
 export interface AqiHistoryDbItem extends AqiHistoryDbItemInput {
@@ -57,13 +67,17 @@ function initDb () {
             db.transaction((tx: Transaction) => {
               tx.executeSql(
                 `
-                  CREATE TABLE IF NOT EXISTS ${AQI_HISTORY_TABLE}(
-                  id INTEGER PRIMARY KEY,
-                  latitude REAL NOT NULL,
-                  longitude REAL NOT NULL,
-                  rawPm25 REAL NOT NULL,
-                  creationTime DATETIME DEFAULT CURRENT_TIMESTAMP
-                )`,
+                  CREATE TABLE IF NOT EXISTS ${AQI_HISTORY_TABLE} (
+                    id INTEGER PRIMARY KEY,
+                    latitude REAL NOT NULL,
+                    longitude REAL NOT NULL,
+                    rawPm25 REAL NOT NULL,
+                    station TEXT,
+                    city TEXT,
+                    country TEXT,
+                    creationTime DATETIME DEFAULT CURRENT_TIMESTAMP
+                  );
+                `,
                 [],
                 () => resolve(db),
                 (_transaction: Transaction, error: Error) => reject(error)
@@ -95,32 +109,39 @@ function isSaveNeeded () {
         () =>
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
-              // Get time of `SAVE_DATA_INTERVAL`ms before now
-              const now = new Date();
-              now.setMilliseconds(now.getMilliseconds() - SAVE_DATA_INTERVAL);
-
               tx.executeSql(
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
-                  WHERE creationTime > datetime(?)
+                  ORDER BY creationTime DESC
                   LIMIT 1
                 `,
-                [now.toISOString()],
+                [],
                 (_transaction: Transaction, resultSet: ResultSet) => {
-                  if (resultSet.rows.length > 0) {
-                    try {
+                  try {
+                    if (resultSet.rows.length === 0) {
+                      return resolve(true);
+                    }
+
+                    // Get the time difference (in ms) between now and last saved
+                    // item in the db
+                    const timeDiff = differenceInSeconds(
+                      NOW,
+                      sqlToJsDate(resultSet.rows.item(0).creationTime)
+                    );
+
+                    if (timeDiff <= SAVE_DATA_INTERVAL) {
                       console.log(
-                        `<AqiHistoryDb> - isSaveNeeded - false: last save happened at ${
+                        `<AqiHistoryDb> - last save happened at ${
                           resultSet.rows.item(0).creationTime
                         }`
                       );
-                    } catch (err) {
-                      // It shouldn't catch, but we're never too sure
-                      reject(err);
+                      resolve(false);
+                    } else {
+                      resolve(true);
                     }
-                    resolve(false);
-                  } else {
-                    resolve(true);
+                  } catch (err) {
+                    // It shouldn't throw, but we're never too sure
+                    reject(err);
                   }
                 },
                 (_transaction: Transaction, error: Error) => reject(error)
@@ -149,8 +170,9 @@ export function saveData (value: AqiHistoryDbItemInput) {
         )
       )
     ),
-    TE.chain(isNeeded =>
-      isNeeded ? TE.right(undefined) : TE.left(new Error('Canceling saveData'))
+    TE.filterOrElse(
+      isNeeded => isNeeded,
+      () => new Error('Canceling saveData because isSaveNeeded=false')
     ),
     TE.chain(() => getDb()),
     TE.chain(db =>
@@ -167,10 +189,17 @@ export function saveData (value: AqiHistoryDbItemInput) {
               tx.executeSql(
                 `
                   INSERT INTO ${AQI_HISTORY_TABLE}
-                  (latitude, longitude, rawPm25)
-                  VALUES (?, ?, ?)
+                  (latitude, longitude, rawPm25, station, city, country)
+                  VALUES (?, ?, ?, ?, ?, ?)
                 `,
-                [value.latitude, value.longitude, value.rawPm25],
+                [
+                  value.latitude,
+                  value.longitude,
+                  value.rawPm25,
+                  value.station,
+                  value.city,
+                  value.country
+                ],
                 () => resolve(),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
@@ -199,7 +228,7 @@ export function getData (date: Date) {
                 `
                   SELECT * FROM ${AQI_HISTORY_TABLE}
                   WHERE creationTime > datetime(?)
-                  ORDER BY id DESC
+                  ORDER BY creationTime DESC
                 `,
                 [date.toISOString()],
                 (_transaction: Transaction, resultSet: ResultSet) => {
@@ -221,71 +250,72 @@ export function getData (date: Date) {
   );
 }
 
+interface AqiHistorySummary {
+  daysToResults: O.Option<number>;
+  firstResult: Date;
+  isCorrect: boolean;
+  lastResult: Date;
+  numberOfResults: number;
+  sum: number;
+}
+
+export interface AqiHistory {
+  monthly: AqiHistorySummary;
+  weekly: AqiHistorySummary;
+}
+
+// TODO Calculate integral instead of sum
 function getSum (data: number[]) {
   return data.reduce((sum, current) => sum + current, 0);
 }
 
-export interface AqiHistory {
-  pastMonth: O.Option<number>;
-  pastWeek: O.Option<number>;
+/**
+ * From historical data, derive a summary
+ */
+function computeSummary (
+  pastData: AqiHistoryDbItem[],
+  weekOrMonth: keyof AqiHistory
+): AqiHistorySummary {
+  const firstResult = sqlToJsDate(pastData[pastData.length - 1].creationTime);
+
+  // We add some buffer to compute `daysUntilResults`. The idea is that we want
+  // the first result in our db to be really one week or one month ago, +/- 1
+  // day.
+  const oneWeekOrMonthAgo = addDays(
+    weekOrMonth === 'weekly' ? ONE_WEEK_AGO : ONE_MONTH_AGO,
+    1
+  );
+
+  // const firstResult.getTime() - oneWeekOrMonthAgo.getTime() <= 0
+  const daysToResults = pipe(
+    differenceInCalendarDays(firstResult, oneWeekOrMonthAgo),
+    O.fromPredicate(days => days >= 0)
+  );
+
+  return {
+    daysToResults,
+    firstResult,
+    lastResult: sqlToJsDate(pastData[0].creationTime),
+    isCorrect: O.isNone(daysToResults),
+    numberOfResults: pastData.length,
+    sum: pm25ToCigarettes(getSum(pastData.map(({ rawPm25 }) => rawPm25)))
+  };
 }
 
 /**
  * Get data from past week and past month
  */
 export function getAqiHistory () {
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setHours(oneWeekAgo.getHours() - 7 * 24);
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-  // Add a bit of buffer. The idea is that we take from the DB all data from the
-  // past week/month, but also require that the 1st sample falls inside the time
-  // buffers defined belowed, so that we don't only have too recent data.
-  const oneWeekAgoBuffer = new Date(oneWeekAgo);
-  oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
-  const oneMonthAgoBuffer = new Date(oneWeekAgo);
-  oneWeekAgoBuffer.setHours(oneWeekAgo.getHours() + 24);
-
   return pipe(
-    array.sequence(TE.taskEither)([getData(oneWeekAgo), getData(oneMonthAgo)]),
-    TE.map(([pastWeekData, pastMonthData]) => {
-      const weekOption =
-        pastWeekData[0] &&
-        new Date(pastWeekData[0].creationTime) <= oneWeekAgoBuffer
-          ? O.some(pastWeekData)
-          : O.none;
-      const monthOption =
-        pastMonthData[0] &&
-        new Date(pastMonthData[0].creationTime) <= oneMonthAgoBuffer
-          ? O.some(pastMonthData)
-          : O.none;
-
-      return [weekOption, monthOption];
-    }),
-    TE.map(([pastWeekData, pastMonthData]) => [
-      pipe(
-        pastWeekData,
-        O.map(v => v.map(({ rawPm25 }) => rawPm25))
-      ),
-      pipe(
-        pastMonthData,
-        O.map(v => v.map(({ rawPm25 }) => rawPm25))
-      )
-    ]),
-    TE.map(([pastWeekData, pastMonthData]) => [
-      O.map(getSum)(pastWeekData),
-      O.map(getSum)(pastMonthData)
-    ]),
-    TE.map(([pastWeekData, pastMonthData]) => [
-      O.map(pm25ToCigarettes)(pastWeekData),
-      O.map(pm25ToCigarettes)(pastMonthData)
+    array.sequence(TE.taskEither)([
+      getData(ONE_WEEK_AGO),
+      getData(ONE_MONTH_AGO)
     ]),
     TE.map(
-      ([pastWeek, pastMonth]) =>
+      ([pastWeekData, pastMonthData]) =>
         ({
-          pastWeek,
-          pastMonth
+          monthly: computeSummary(pastMonthData, 'monthly'),
+          weekly: computeSummary(pastWeekData, 'weekly')
         } as AqiHistory)
     )
   );
@@ -296,16 +326,19 @@ export function getAqiHistory () {
  */
 export function clearTable () {
   return pipe(
-    getDb(),
+    TE.rightIO(
+      C.log(`<AqiHistoryDb> - clearTable - Dropping table ${AQI_HISTORY_TABLE}`)
+    ),
+    TE.chain(getDb),
     TE.chain(db =>
       TE.tryCatch(
         () =>
           new Promise((resolve, reject) => {
             db.transaction((tx: Transaction) => {
               tx.executeSql(
-                `DROP TABLE ${AQI_HISTORY_TABLE}`,
+                `DROP TABLE ${AQI_HISTORY_TABLE};`,
                 [],
-                () => resolve(undefined as void),
+                () => resolve(),
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             }, reject);
@@ -322,6 +355,9 @@ export function populateRandom () {
       0,
       0,
       Math.floor(Math.random() * 20 + 1),
+      `some station ${Math.floor(Math.random() * 10 + 1)}`,
+      `some city ${Math.floor(Math.random() * 10 + 1)}`,
+      `some country ${Math.floor(Math.random() * 10 + 1)}`,
       new Date(new Date().setDate(new Date().getDate() - i - 1)).toISOString()
     ])
   );
@@ -336,41 +372,46 @@ export function populateRandom () {
               tx.executeSql(
                 `
                   INSERT INTO ${AQI_HISTORY_TABLE}
-                  (latitude, longitude, rawPm25, creationTime)
+                  (latitude, longitude, rawPm25, station, city, country, creationTime)
                   VALUES
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?),
-                  (?, ?, ?, ?)
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?),
+                  (?, ?, ?, ?, ?, ?, ?)
                 `,
                 randomValues,
-                () => resolve(),
+                () => {
+                  console.log(
+                    '<AqiHistoryDb> - populateRandom - Successfully populated random data'
+                  );
+                  resolve();
+                },
                 (_transaction: Transaction, error: Error) => reject(error)
               );
             }, reject);

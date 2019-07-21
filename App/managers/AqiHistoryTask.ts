@@ -23,7 +23,7 @@ import { AsyncStorage } from 'react-native';
 import Sentry from 'sentry-expo';
 
 import { getLastKnownGps } from './GpsTask';
-import { fetchApiAndSave } from '../stores/fetchApi';
+import { fetchApi, saveApi } from '../stores/fetchApi';
 
 export const AQI_HISTORY_TASK = 'AQI_HISTORY_TASK';
 export const AQI_HISTORY_LAST_FETCH_ATTEMPT = 'AQI_HISTORY_LAST_FETCH_ATTEMPT';
@@ -41,7 +41,12 @@ defineTask(AQI_HISTORY_TASK, () => {
 
   return pipe(
     getLastKnownGps(),
-    TE.chain(gps => fetchApiAndSave(gps)),
+    TE.chain(gps =>
+      pipe(
+        fetchApi(gps),
+        TE.chain(api => saveApi(gps, api))
+      )
+    ),
     TE.fold(
       err => {
         console.log(`<AqiHistoryTask> - defineTask - Error ${err.message}`);

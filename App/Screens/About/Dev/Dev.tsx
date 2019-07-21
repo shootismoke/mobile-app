@@ -116,7 +116,10 @@ export function Dev () {
       <Text style={theme.text}>
         Last BackgroundFetch Result: {lastBgFetchResult}
       </Text>
-      <Text style={theme.text}>All DB: {JSON.stringify(allData)}</Text>
+      <Text style={theme.text}>
+        All DB:{' '}
+        {JSON.stringify(allData.map(({ creationTime }) => creationTime))}
+      </Text>
       <Button onPress={() => populateRandom()()}>Populate Random Data</Button>
       <Button onPress={() => clearTable()()}>Clear DB</Button>
     </View>

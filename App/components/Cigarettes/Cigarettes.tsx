@@ -16,60 +16,69 @@
 
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
-import { Cigarette, CigaretteSize } from './Cigarette';
+import { CIGARETTES_HEIGHT, Cigarette, CigaretteSize } from './Cigarette';
 
 interface CigarettesProps {
   cigarettes: number;
   style?: StyleProp<ViewStyle>;
 }
 
+export { CIGARETTES_HEIGHT };
+
 export function Cigarettes (props: CigarettesProps) {
   const { cigarettes: realCigarettes } = props;
-  const cigarettes = Math.round(Math.min(realCigarettes, 63) * 10) / 10; // We don't show more than 63
-  // const cigarettes = 0.9; // Can change values here for testing
+  const cigarettes = Math.round(Math.min(realCigarettes, 50) * 10) / 10; // We don't show more than 50
+  // const cigarettes = 1.9; // Can change values here for testing
 
-  const count = Math.floor(cigarettes);
+  const count = Math.floor(cigarettes); // The cigarette count, without decimal
   const decimal = cigarettes - count;
 
-  const diagonal = cigarettes <= 1;
-  const vertical = cigarettes > 5;
+  const orientation =
+    cigarettes <= 1 ? 'diagonal' : cigarettes <= 4 ? 'horizontal' : 'vertical';
 
   return (
     <View style={[styles.container, props.style]}>
-      {cigarettes > 1 && count >= 1
-        ? Array.from(Array(count)).map((_, i) => (
-          <View key={i}>
+      <View style={styles.innerContainer}>
+        {cigarettes > 1 &&
+          count >= 1 &&
+          Array.from(Array(count)).map((_, i) => (
             <Cigarette
-              diagonal={false}
-              length={1}
+              key={i}
+              orientation={orientation}
+              percentage={1}
               size={getSize(cigarettes)}
-              vertical={vertical}
             />
-          </View>
-        ))
-        : null}
-      {cigarettes === 1 || decimal > 0 ? (
-        <Cigarette
-          diagonal={diagonal}
-          length={decimal || 1}
-          size={getSize(cigarettes)}
-          vertical={vertical}
-        />
-      ) : null}
+          ))}
+        {(cigarettes === 1 || decimal > 0) && (
+          <Cigarette
+            orientation={orientation}
+            percentage={decimal || 1}
+            size={getSize(cigarettes)}
+          />
+        )}
+      </View>
     </View>
   );
 }
 
 function getSize (cigarettes: number): CigaretteSize {
   if (cigarettes <= 1) return 'big';
-  if (cigarettes <= 5) return 'big';
-  if (cigarettes <= 14) return 'medium';
+  if (cigarettes <= 4) return 'big';
+  if (cigarettes <= 20) return 'medium';
   return 'small';
 }
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    height: scale(CIGARETTES_HEIGHT),
+    // width: '60%'
+    width: scale(250)
+  },
+  innerContainer: {
     alignItems: 'flex-end',
     flexDirection: 'row',
     flexWrap: 'wrap'

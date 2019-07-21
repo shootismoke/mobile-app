@@ -1,6 +1,6 @@
 {
   "error_screen_common_sorry": "Sorry!\n",
-  "error_screen_error_cannot_load_cigarettes": "We cannot\nload your\ncigarettes.",
+  "error_screen_error_cannot_load_cigarettes": "We cannot load your cigarettes.",
   "error_screen_choose_other_location": "Choose other location",
   "error_screen_error_description": "There's either a problem with our databases, or you don't have any Air Monitoring Stations near you. Try again later!",
   "error_screen_error_message": "Error: {{errorText}}",
@@ -23,6 +23,8 @@
   "home_common_cigarettes": "Cigarettes",
   "home_smoked_cigarette_title": "{{swearWord}}! {{presentPast}}\n<{{cigarettes}} {{singularPlural}}>",
   "home_smoked_there": "there today",
+  "home_wait_more_days": "{{days}} more days",
+  "home_wait_until_results": "to \nshow your results",
   "home_swear_word_dang": "Dang",
   "home_swear_word_shoot": "Shoot",
   "home_swear_word_darn": "Darn",

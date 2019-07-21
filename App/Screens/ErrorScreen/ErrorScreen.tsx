@@ -43,7 +43,7 @@ export function ErrorScreen (props: ErrorScreenProps) {
       </View>
       <TouchableOpacity onPress={() => props.navigation.navigate('Search')}>
         <View style={styles.chooseOther}>
-          <Button style={styles.chooseOther}>
+          <Button style={styles.chooseOther} type="primary">
             {i18n.t('error_screen_choose_other_location').toUpperCase()}
           </Button>
         </View>

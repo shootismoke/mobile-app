@@ -32,6 +32,7 @@ import { SmokeVideo } from './SmokeVideo';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
 import * as theme from '../../util/theme';
+import { Wait } from './Wait';
 
 interface HomeProps extends NavigationInjectedProps {}
 
@@ -46,26 +47,21 @@ export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { isGps } = useContext(CurrentLocationContext)!;
   const [frequency, setFrenquency] = useState<Frequency>('daily');
-  const [aqiHistory, setAqiHistory] = useState<AqiHistory>({
-    pastMonth: O.none,
-    pastWeek: O.none
-  });
-  const [cigaretteCount, setCigaretteCount] = useState(
-    api!.shootISmoke.cigarettes
-  );
-  const [swearWord, setSwearWord] = useState(i18n.t('home_common_oh'));
+  const [aqiHistory, setAqiHistory] = useState<O.Option<AqiHistory>>(O.none);
 
   useEffect(() => {
     pipe(
       getAqiHistory(),
       TE.fold(
         err => {
-          console.log(`<Home> - useEffect - ${err.message}`);
+          console.log(`<Home> - getAqiHistory - ${err.message}`);
 
           return T.of(undefined);
         },
         history => {
-          setAqiHistory(history);
+          console.log(`<Home> - getAqiHistory - ${JSON.stringify(history)}`);
+
+          setAqiHistory(O.some(history));
 
           return T.of(undefined);
         }
@@ -73,37 +69,62 @@ export function Home (props: HomeProps) {
     )();
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      let cigCount = 0;
-      if (frequency === 'monthly') {
-        cigCount = O.getOrElse(() => 0)(aqiHistory.pastMonth);
-      } else if (frequency === 'weekly') {
-        cigCount = O.getOrElse(() => 0)(aqiHistory.pastWeek);
-      } else {
-        cigCount = api!.shootISmoke.cigarettes;
+  function getCigaretteCount () {
+    switch (frequency) {
+      case 'daily': {
+        return api!.shootISmoke.cigarettes;
       }
-
-      setCigaretteCount(cigCount);
-      setSwearWord(getSwearWord(cigCount));
-    }, 200);
-  }, [frequency]);
-
-  function renderPresentPast () {
-    if (!isGps) {
-      return i18n.t('home_common_you_d_smoke');
+      case 'weekly':
+      case 'monthly': {
+        return pipe(
+          aqiHistory,
+          O.map(history => history[frequency]),
+          O.map(({ sum }) => sum),
+          O.getOrElse(() => 0)
+        );
+      }
     }
+  }
+  const cigaretteCount = getCigaretteCount();
 
-    return i18n.t('home_common_you_smoke');
+  function renderCigarettes () {
+    switch (frequency) {
+      case 'daily': {
+        return (
+          <Cigarettes cigarettes={cigaretteCount} style={theme.withPadding} />
+        );
+      }
+      case 'weekly':
+      case 'monthly': {
+        return pipe(
+          aqiHistory,
+          O.map(history => history[frequency]),
+          O.map(({ isCorrect }) => isCorrect),
+          O.map(isCorrect =>
+            isCorrect ? (
+              <Cigarettes
+                cigarettes={cigaretteCount}
+                style={theme.withPadding}
+              />
+            ) : (
+              <Wait style={theme.withPadding} />
+            )
+          ),
+          O.getOrElse<JSX.Element | null>(() => null)
+        );
+      }
+    }
   }
 
-  const renderText = () => {
+  const renderCigarettesText = () => {
     // Round to 1 decimal
     const cigarettes = Math.round(cigaretteCount * 10) / 10;
 
     const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord,
-      presentPast: renderPresentPast(),
+      swearWord: getSwearWord(cigaretteCount),
+      presentPast: isGps
+        ? i18n.t('home_common_you_smoke')
+        : i18n.t('home_common_you_d_smoke'),
       singularPlural:
         cigarettes === 1
           ? i18n.t('home_common_cigarette').toLowerCase()
@@ -125,6 +146,30 @@ export function Home (props: HomeProps) {
     );
   };
 
+  function renderText () {
+    switch (frequency) {
+      case 'daily': {
+        return renderCigarettesText();
+      }
+      case 'weekly':
+      case 'monthly': {
+        return pipe(
+          aqiHistory,
+          O.map(history => history[frequency]),
+          O.chain(({ daysToResults }) => daysToResults),
+          O.fold(renderCigarettesText, days => (
+            <Text adjustsFontSizeToFit style={styles.shit}>
+              <Text style={styles.cigarettesCount}>
+                {i18n.t('home_wait_more_days', { days })}
+              </Text>{' '}
+              {i18n.t('home_wait_until_results')}
+            </Text>
+          ))
+        );
+      }
+    }
+  }
+
   return (
     <View style={styles.container}>
       <SmokeVideo cigarettes={cigaretteCount} />
@@ -137,11 +182,10 @@ export function Home (props: HomeProps) {
         style={styles.scrollView}
       >
         <View style={styles.content}>
-          <Cigarettes cigarettes={cigaretteCount} style={theme.withPadding} />
+          {renderCigarettes()}
           <View style={styles.main}>{renderText()}</View>
           {isGps ? (
             <SelectFrequency
-              aqiHistory={aqiHistory}
               frequency={frequency}
               onChangeFrequency={freq => {
                 setFrenquency(freq);

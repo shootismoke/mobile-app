@@ -32,13 +32,9 @@ export interface LatLng {
 }
 
 export interface Location extends LatLng {
+  city?: string;
+  country?: string;
   name?: string;
-}
-
-interface LocationWithSetter {
-  currentLocation?: Location;
-  isGps: boolean;
-  setCurrentLocation: (location?: Location) => void;
 }
 
 export function fetchReverseGeocode (currentLocation: LatLng) {
@@ -52,6 +48,8 @@ export function fetchReverseGeocode (currentLocation: LatLng) {
       reverse =>
         ({
           ...currentLocation,
+          city: reverse.city,
+          country: reverse.country,
           name: [reverse.street, reverse.city, reverse.country].join(', ')
         } as Location)
     )
