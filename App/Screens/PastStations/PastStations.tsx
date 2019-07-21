@@ -51,7 +51,7 @@ export function PastStations (props: PastStationsProps) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <BackButton onPress={() => navigation.pop()} style={theme.withPadding} />
       <View style={theme.withPadding}>
         <Text style={styles.date}>
@@ -107,7 +107,6 @@ function renderSeparator () {
 
 const styles = StyleSheet.create({
   container: {
-    ...theme.withPadding,
     flexGrow: 1,
     marginTop: theme.spacing.normal
   },
