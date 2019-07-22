@@ -45,6 +45,7 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
 
   useEffect(() => {
     setApi(undefined);
+    setError(undefined);
 
     if (!currentLocation) {
       return;

@@ -26,6 +26,10 @@ export function GpsItem () {
   const { setCurrentLocation } = useContext(CurrentLocationContext);
   const gps = useContext(GpsLocationContext);
 
+  if (!gps) {
+    return null;
+  }
+
   const handleClick = () => {
     setCurrentLocation(gps);
   };
@@ -35,7 +39,7 @@ export function GpsItem () {
       description={i18n.t('search_current_location')}
       icon="gps"
       onPress={handleClick}
-      title={gps!.name || LOADING_TEXT}
+      title={gps.name || LOADING_TEXT}
     />
   );
 }

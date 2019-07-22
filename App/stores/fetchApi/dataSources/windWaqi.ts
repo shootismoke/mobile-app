@@ -25,7 +25,7 @@ import { pm25ToCigarettes } from './pm25ToCigarettes';
  */
 export async function windWaqi ({ latitude, longitude }: LatLng) {
   const { data: response } = await axios.get(
-    `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`,
+    `https://wind.waqi.info/ma2pq/nearest?geo=1/${latitude}/${longitude}`,
     { timeout: 6000 }
   );
 

@@ -61,7 +61,7 @@ export function elevationShadowStyle (
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: scale((position === 'bottom' ? 1 : -1) * 0.5 * elevation)
+      height: scale((position === 'bottom' ? 1 : -1) * elevation)
     },
     shadowOpacity: 0.3,
     shadowRadius: scale(0.8 * elevation)
