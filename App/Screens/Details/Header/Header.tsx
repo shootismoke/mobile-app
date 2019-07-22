@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     marginRight: theme.spacing.normal
   },
   container: {
-    ...theme.elevatedLevel1('bottom'),
+    ...theme.elevationShadowStyle(2, 'bottom'),
     ...theme.withPadding,
     backgroundColor: 'white',
     paddingBottom: theme.spacing.small,

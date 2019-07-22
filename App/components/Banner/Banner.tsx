@@ -51,8 +51,12 @@ export function Banner ({
       onPress={asTouchable ? onClick : undefined}
       style={[
         styles.container,
-        elevated === true ? theme.elevatedLevel1(shadowPosition) : null,
-        elevated === 'very' ? theme.elevatedLevel2(shadowPosition) : null
+        elevated === true
+          ? theme.elevationShadowStyle(2, shadowPosition)
+          : null,
+        elevated === 'very'
+          ? theme.elevationShadowStyle(10, shadowPosition)
+          : null
       ]}
       underlayColor={asTouchable ? theme.primaryColor : undefined} // https://github.com/facebook/react-native/issues/11834
     >
