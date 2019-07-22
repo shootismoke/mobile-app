@@ -58,7 +58,7 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
             saveApi(currentLocation, newApi),
             TE.map(() => newApi)
           )
-          : TE.right(undefined)
+          : TE.right(newApi)
       ),
       TE.fold(
         err => {

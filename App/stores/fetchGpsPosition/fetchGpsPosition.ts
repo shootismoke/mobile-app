@@ -42,6 +42,10 @@ export function fetchReverseGeocode (currentLocation: LatLng) {
     TE.tryCatch(async () => {
       const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
 
+      if (!reverse.length) {
+        throw new Error('Reverse geocoding returned no results');
+      }
+
       return reverse[0];
     }, toError),
     TE.map(
