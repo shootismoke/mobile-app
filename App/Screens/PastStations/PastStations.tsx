@@ -104,7 +104,10 @@ export function PastStations (props: PastStationsProps) {
 function renderItem ({ item }: { item: AqiHistoryDbItem }) {
   return (
     <ListItem
-      description={[item.city, item.country].join(', ')}
+      description={
+        [item.city, item.country].filter(x => x).join(', ') ||
+        i18n.t('past_stations_unknown_city')
+      }
       icon="pin"
       title={item.station || UNKNOWN_STATION}
     />
