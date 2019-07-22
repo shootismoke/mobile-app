@@ -56,14 +56,10 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: scale(12),
     borderWidth: 1,
-    elevation: 1,
     marginBottom: theme.spacing.tiny,
     paddingHorizontal: theme.spacing.small,
     paddingVertical: scale(4),
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4
+    ...theme.elevationShadowStyle(5)
   },
   boxButtonText: {
     ...theme.shitText,

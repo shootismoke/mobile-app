@@ -48,22 +48,25 @@ const fixTextMargin = {
   })
 };
 
-export const elevatedLevel1 = (position: ShadowPosition) => ({
-  elevation: 2,
-  shadowColor: 'black',
-  shadowOffset: { width: 0, height: position === 'top' ? -2 : 2 },
-  shadowOpacity: 0.2,
-  shadowRadius: 2
-});
-
-export const elevatedLevel2 = (position: ShadowPosition) => ({
-  elevation: 10,
-  shadowColor: 'black',
-  shadowOffset: { width: 0, height: position === 'top' ? -9 : 9 },
-  shadowOpacity: 0.4,
-  shadowRadius: 9,
-  zIndex: 100
-});
+/**
+ * Get consistent shadows between iOS and Android
+ * @see https://stenbeck.io/styling-shadows-in-react-native-ios-and-android/
+ */
+export function elevationShadowStyle (
+  elevation: number,
+  position: ShadowPosition = 'bottom'
+) {
+  return {
+    elevation,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: scale((position === 'bottom' ? 1 : -1) * 0.5 * elevation)
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: scale(0.8 * elevation)
+  };
+}
 
 export const fullScreen = {
   backgroundColor,
