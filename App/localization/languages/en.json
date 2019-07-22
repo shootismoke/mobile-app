@@ -48,6 +48,7 @@
   "past_stations_monitored_weekly": "Stations monitored from you during the week",
   "past_stations_monitored_monthly": "Stations monitored from you during the month",
   "past_stations_unknown_station": "Unknown AQI station",
+  "past_stations_unknown_city": "Unknown city",
   "about_how_do_you_calculate_the_number_of_cigarettes_title": "How do you calculate the number of cigarettes?",
   "about_how_do_you_calculate_the_number_of_cigarettes_message_1": "This app was inspired by Berkeley Earth’s findings about the",
   "about_how_do_you_calculate_the_number_of_cigarettes_link_1": "equivalence between air pollution and cigarette smoking",
@@ -71,6 +72,5 @@
   "about_credits_source_code": "Source code",
   "about_credits_available_github": "available on Github",
   "about_language": "Language",
-  "current_location_fetching": "Fetching",
   "current_location_unknown_station": "Unknown AQI station"
 }
