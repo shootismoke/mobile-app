@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 
@@ -41,13 +41,13 @@ export function ErrorScreen (props: ErrorScreenProps) {
           {i18n.t('error_screen_error_cannot_load_cigarettes')}
         </Text>
       </View>
-      <TouchableOpacity onPress={() => props.navigation.navigate('Search')}>
-        <View style={styles.chooseOther}>
-          <Button style={styles.chooseOther} type="primary">
-            {i18n.t('error_screen_choose_other_location').toUpperCase()}
-          </Button>
-        </View>
-      </TouchableOpacity>
+      <Button
+        onPress={() => props.navigation.navigate('Search')}
+        style={styles.chooseOther}
+        type="primary"
+      >
+        {i18n.t('error_screen_choose_other_location').toUpperCase()}
+      </Button>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
       <Text style={styles.errorMessage}>
         {i18n.t('error_screen_error_message', { errorText: error })}

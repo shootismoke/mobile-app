@@ -33,7 +33,7 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 
 export function Button (props: ButtonProps) {
-  const { children, icon, onPress, type, ...rest } = props;
+  const { children, icon, onPress, style, type, ...rest } = props;
 
   return (
     <TouchableOpacity
@@ -41,7 +41,7 @@ export function Button (props: ButtonProps) {
       style={[
         styles.bigButton,
         type && type === 'secondary' ? styles.secondary : styles.primary,
-        props.style
+        style
       ]}
       {...rest}
     >

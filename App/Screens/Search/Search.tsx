@@ -27,11 +27,7 @@ import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
 import { AlgoliaItem } from './AlgoliaItem';
 import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
-import {
-  CurrentLocationContext,
-  ErrorContext,
-  GpsLocationContext
-} from '../../stores';
+import { CurrentLocationContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/fetchGpsPosition';
 import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
@@ -43,7 +39,6 @@ interface SearchProps extends NavigationInjectedProps {}
 
 export function Search (props: SearchProps) {
   const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
-  const { setError } = useContext(ErrorContext);
   const gps = useContext(GpsLocationContext);
 
   const [algoliaError, setAlgoliaError] = useState<Error | undefined>(
@@ -92,9 +87,7 @@ export function Search (props: SearchProps) {
   }
 
   function handleItemClick (item: Location) {
-    // Reset everything when we choose a new location.
     setCurrentLocation(item);
-    setError(undefined);
   }
 
   function renderItem ({ item }: { item: AlgoliaHit }) {

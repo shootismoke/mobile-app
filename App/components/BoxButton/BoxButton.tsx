@@ -52,14 +52,15 @@ const styles = StyleSheet.create({
     opacity: 1
   },
   boxButton: {
+    ...theme.elevationShadowStyle(3),
     backgroundColor: 'white',
     borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: scale(12),
     borderWidth: 1,
     marginBottom: theme.spacing.tiny,
     paddingHorizontal: theme.spacing.small,
-    paddingVertical: scale(4),
-    ...theme.elevationShadowStyle(5)
+    paddingVertical: scale(4), // Padding for the shadow
+    shadowOpacity: 0.1
   },
   boxButtonText: {
     ...theme.shitText,
