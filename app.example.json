@@ -11,7 +11,7 @@
       "permissions": ["ACCESS_FINE_LOCATION"],
       "versionCode": 8
     },
-    "assetBundlePatterns": ["assets/fonts/*"],
+    "assetBundlePatterns": ["assets/**/*"],
     "extra": {
       "algoliaApiKey": "YOUR_KEY",
       "algoliaApplicationId": "YOUR_KEY",
