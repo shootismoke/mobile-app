@@ -24,6 +24,7 @@ import {
   Text,
   View
 } from 'react-native';
+import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
@@ -33,9 +34,28 @@ import { Dev } from './Dev';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 
-interface AboutProps extends NavigationInjectedProps {}
+const CustomScrollView = wrapScrollView(ScrollView);
+const scrollViewOptions = {
+  align: 'top' as 'top',
+  insets: {
+    bottom: 0,
+    top: scale(theme.spacing.normal)
+  }
+};
+
+export const aboutSections = {
+  about_how_results: 'about_how_results',
+  about_why_is_the_station_so_far_title: 'about_why_is_the_station_so_far_title'
+};
+
+interface AboutProps
+  extends NavigationInjectedProps<{
+    scrollInto?: keyof typeof aboutSections;
+  }> {}
 
 export function About (props: AboutProps) {
+  const { navigation } = props;
+
   const handleOpenAmaury = () =>
     Linking.openURL('https://twitter.com/amaurymartiny');
 
@@ -52,9 +72,11 @@ export function About (props: AboutProps) {
   const handleOpenMarcelo = () =>
     Linking.openURL('https://www.behance.net/marceloscoelho');
 
-  const { navigation } = props;
   return (
-    <ScrollView style={theme.withPadding}>
+    <CustomScrollView
+      scrollIntoViewOptions={scrollViewOptions}
+      style={theme.withPadding}
+    >
       <BackButton onPress={() => navigation.pop()} style={styles.backButton} />
 
       <View style={styles.section}>
@@ -101,14 +123,20 @@ export function About (props: AboutProps) {
         </Text>
       </View>
 
-      <View style={styles.section}>
+      <ScrollIntoView
+        onMount={
+          navigation.getParam('scrollInto') ===
+          'about_why_is_the_station_so_far_title'
+        }
+        style={styles.section}
+      >
         <Text style={styles.h2}>
           {i18n.t('about_why_is_the_station_so_far_title')}
         </Text>
         <Text style={theme.text}>
           {i18n.t('about_why_is_the_station_so_far_message')}
         </Text>
-      </View>
+      </ScrollIntoView>
 
       <View style={styles.section}>
         <Text style={styles.h2}>{i18n.t('about_weird_results_title')}</Text>
@@ -120,6 +148,14 @@ export function About (props: AboutProps) {
           {i18n.t('about_weird_results_message_2')}
         </Text>
       </View>
+
+      <ScrollIntoView
+        onMount={navigation.getParam('scrollInto') === 'about_how_results'}
+        style={styles.section}
+      >
+        <Text style={styles.h2}>HELLO</Text>
+        <Text style={theme.text}>TODO</Text>
+      </ScrollIntoView>
 
       <View style={styles.credits}>
         <Text style={styles.h2}>{i18n.t('about_credits_title')}</Text>
@@ -146,12 +182,12 @@ export function About (props: AboutProps) {
           </Text>
           .{'\n'}
           {'\n'}
-          Shoot! I Smoke v{Constants.manifest.version}.
+          Sh**t! I Smoke v{Constants.manifest.version}.
         </Text>
         {/* Add languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
       </View>
       <Dev />
-    </ScrollView>
+    </CustomScrollView>
   );
 }
 

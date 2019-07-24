@@ -38,6 +38,7 @@
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-maps": "^0.24.2",
+    "react-native-scroll-into-view": "^1.0.3",
     "react-native-size-matters": "^0.2.1",
     "react-navigation": "^3.11.0",
     "retry-ts": "^0.1.0",
