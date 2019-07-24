@@ -29,8 +29,9 @@ import * as TE from 'fp-ts/lib/TaskEither';
 
 import { LatLng } from '../stores/fetchGpsPosition';
 import { pm25ToCigarettes } from '../stores/fetchApi/dataSources/pm25ToCigarettes';
-import { sqlToJsDate } from './util/sqlToJsDate';
 import { sideEffect, toError } from '../util/fp';
+import { sqlToJsDate } from './util/sqlToJsDate';
+import { sumInDays } from './util/staircaseAverage';
 import { ONE_WEEK_AGO, ONE_MONTH_AGO, NOW } from '../util/time';
 
 // FIXME correct types
@@ -274,11 +275,6 @@ export interface AqiHistory {
   weekly: AqiHistorySummary;
 }
 
-// TODO Calculate integral instead of sum
-function getSum (data: number[]) {
-  return data.reduce((sum, current) => sum + current, 0);
-}
-
 /**
  * From historical data, derive a summary
  */
@@ -309,7 +305,14 @@ function computeSummary (
     lastResult: sqlToJsDate(pastData[0].creationTime),
     isCorrect: O.isNone(daysToResults),
     numberOfResults: pastData.length,
-    sum: pm25ToCigarettes(getSum(pastData.map(({ rawPm25 }) => rawPm25)))
+    sum: pm25ToCigarettes(
+      sumInDays(
+        pastData.map(({ creationTime, rawPm25 }) => ({
+          time: sqlToJsDate(creationTime),
+          value: rawPm25
+        }))
+      )
+    )
   };
 }
 
