@@ -22,7 +22,9 @@ interface Data {
 }
 
 /**
- * Calculate the integral of a staircase function (the base step is 1ms)
+ * Calculate the integral of a staircase function (the base step on the `x` axis
+ * is 1ms)
+ *
  * @param data - The data to calculate the integral on
  */
 function staircaseIntegral (data: Data[]): number {
@@ -44,6 +46,12 @@ function staircaseIntegral (data: Data[]): number {
   );
 }
 
+/**
+ * Calculate the sum of values of a staircase function, wich a base step on the
+ * `x` axis as 1day
+ *
+ * @param data - The data to calculate the sum on
+ */
 export function sumInDays (data: Data[]): number {
   return staircaseIntegral(data) / (24 * 3600 * 1000);
 }
