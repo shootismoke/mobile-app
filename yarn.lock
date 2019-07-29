@@ -3658,10 +3658,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-fp-ts@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.0.2.tgz#8f27d76e24097c3ab4e766ea7526872d6ba0555d"
-  integrity sha512-ZCeu5MkqNDBWe1ewjZQ9Q9JNcPKEKXpitYzJ4ygCWpfJ3skW3imZ45EqsZd+9N8rkBvmsb64ToZTI2xXNO9IcQ==
+fp-ts@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.0.3.tgz#b6af5481aa5df027de250bacefa19d36d79edd51"
+  integrity sha512-b/WPo5AVPDYbdye/AGOMST/tqudtgbpMjm3TJGkd36ROihD67UEKFeUH83V3iSdrIG4wwoFsd6lLpjtpek1oVw==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
