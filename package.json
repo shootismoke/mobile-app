@@ -31,7 +31,7 @@
     "expo-permissions": "~5.0.1",
     "expo-sqlite": "~5.0.1",
     "expo-task-manager": "~5.0.1",
-    "fp-ts": "^2.0.2",
+    "fp-ts": "^2.0.3",
     "haversine": "^1.1.1",
     "i18n-js": "^3.3.0",
     "io-ts": "^2.0.0",
