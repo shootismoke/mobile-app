@@ -62,7 +62,7 @@
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.8.0",
-    "jest-expo": "^33.0.2",
+    "jest-expo": "^34.0.0",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"
   }
