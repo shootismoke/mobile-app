@@ -4547,17 +4547,16 @@ jest-environment-node@^24.8.0:
     jest-mock "^24.8.0"
     jest-util "^24.8.0"
 
-jest-expo@^33.0.2:
-  version "33.0.2"
-  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-33.0.2.tgz#6e4c595162047eca2bbb9fcf214a067af3f21b0e"
-  integrity sha512-OSk8hVm9D8YSw8R7vOOjoERQIqlsAwNgQzqpFdNQROy2/TNzntGBy+8hLsic7y8h2CDXmKVsxvBtiKD4CTOZRg==
+jest-expo@^34.0.0:
+  version "34.0.0"
+  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-34.0.0.tgz#982e1d8a5cd913efaf2735bf2b8bae38e1d12d5b"
+  integrity sha512-XWgBVHuGZWX3o6uUpXuupCW9D5yN36DSnVsH51bM8sFuFkXVR2Z6Zo8a2QVci8TX2HBaUW7tniyXVf11v4S8TA==
   dependencies:
     babel-jest "^24.7.1"
     jest "^24.7.1"
     json5 "^2.1.0"
     lodash "^4.5.0"
     react-test-renderer "^16.8.6"
-    whatwg-fetch "^3.0.0"
 
 jest-get-type@^24.8.0:
   version "24.8.0"
@@ -8087,7 +8086,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
+whatwg-fetch@>=0.10.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
