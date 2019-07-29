@@ -23,7 +23,7 @@
     "date-fns": "^1.30.1",
     "expo": "^33.0.7",
     "expo-av": "~5.0.2",
-    "expo-background-fetch": "~5.0.1",
+    "expo-background-fetch": "~6.0.0",
     "expo-constants": "~5.0.1",
     "expo-font": "~5.0.1",
     "expo-localization": "~5.0.1",

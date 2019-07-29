@@ -3024,6 +3024,13 @@ expo-background-fetch@~5.0.1:
   dependencies:
     expo-task-manager "~5.0.1"
 
+expo-background-fetch@~6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/expo-background-fetch/-/expo-background-fetch-6.0.0.tgz#4a1d8ffeea73e5ff8113a8c8c57d689a6ddfb6c6"
+  integrity sha512-30JAE+MC/f1Gzfg9Zs40rHas0DCF0aTiF9V/YCRuPo2a08HE1CfEmMeEibuxKiYlAZp8C8Z35/UEcSY1UJHfFg==
+  dependencies:
+    expo-task-manager "~6.0.0"
+
 expo-barcode-scanner@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/expo-barcode-scanner/-/expo-barcode-scanner-5.0.1.tgz#4b35704e05ab61fa5d203ccc27045739072f84f7"
@@ -3253,6 +3260,11 @@ expo-task-manager@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/expo-task-manager/-/expo-task-manager-5.0.1.tgz#18e0a2a7539617d7731c3e4e9bedcf0a3574577b"
   integrity sha512-ManMdoYH++K2ZaRCYc2hfi1N33XTzjn1o1O8Qkj8JH49VssOzW9TF1URw2j+qRt3iN5Iba4+ECONoi++GoCiqw==
+
+expo-task-manager@~6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/expo-task-manager/-/expo-task-manager-6.0.0.tgz#acab77771ccdfaa7318df446542263e50aef46e2"
+  integrity sha512-7+zwpoSRrt1NnWqetnq51gSpFhecYafIONJyI6WebHqVvPuWNcBwp3+96nhFoKLnuBQdf0CTw3iJbbj2ujvf5A==
 
 expo-web-browser@~5.0.3:
   version "5.0.3"
