@@ -61,6 +61,9 @@ export function Details (props: DetailsProps) {
   // object` error. It's related to the MapView below.
   const currentLocation = { ..._currentLocation! };
 
+  const distanceUnit = i18n.t('distance_unit');
+  const distance = distanceToStation(currentLocation!, api!, distanceUnit === 'mi' ? 'mile' : 'km');
+
   const station = {
     description: api!.shootISmoke.station || '',
     title: api!.shootISmoke.station,
@@ -102,7 +105,7 @@ export function Details (props: DetailsProps) {
           </MapView>
         )}
       </View>
-      <Distance distance={distanceToStation(currentLocation!, api!)} />
+      <Distance distance={distance} />
     </View>
   );
 }

@@ -41,7 +41,8 @@ export function Header (props: HeaderProps) {
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { onChangeLocationClick } = props;
 
-  const distance = distanceToStation(currentLocation!, api!);
+  const distanceUnit = i18n.t('distance_unit');
+  const distance = distanceToStation(currentLocation!, api!, distanceUnit === 'mi' ? 'mile' : 'km');
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   return (
@@ -57,7 +58,8 @@ export function Header (props: HeaderProps) {
             {isTooFar && <Image source={alert} style={styles.warning} />}
             <Text style={theme.text}>
               {i18n.t('home_header_air_quality_station_distance', {
-                distanceToStation: distance
+                distanceToStation: distance,
+                distanceUnit
               })}{' '}
               {!isGps && i18n.t('home_header_from_search')}
             </Text>

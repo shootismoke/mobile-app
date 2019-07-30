@@ -26,11 +26,16 @@ interface DistanceProps {
 }
 
 export function Distance (props: DistanceProps) {
+  const distanceUnit = i18n.t('distance_unit');
+
   return (
     <Banner elevated shadowPosition="top" style={styles.banner}>
       <Text style={styles.distance}>
         {i18n
-          .t('details_distance_label', { distanceToStation: props.distance })
+          .t('details_distance_label', {
+            distanceToStation: props.distance,
+            distanceUnit
+          })
           .toUpperCase()}
       </Text>
     </Banner>
