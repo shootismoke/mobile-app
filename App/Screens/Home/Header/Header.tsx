@@ -29,7 +29,7 @@ import alert from '../../../../assets/images/alert.png';
 import { CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
-import { distanceToStation, isStationTooFar } from '../../../util/station';
+import { distanceToStation, isStationTooFar, DistanceUnit } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {
@@ -41,7 +41,9 @@ export function Header (props: HeaderProps) {
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { onChangeLocationClick } = props;
 
-  const distance = distanceToStation(currentLocation!, api!);
+  const distanceUnit = i18n.t('distance_unit');
+  const haversineDistanceUnit = i18n.t('haversine_distance_unit') as DistanceUnit;
+  const distance = distanceToStation(currentLocation!, api!, haversineDistanceUnit);
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   return (
@@ -57,7 +59,8 @@ export function Header (props: HeaderProps) {
             {isTooFar && <Image source={alert} style={styles.warning} />}
             <Text style={theme.text}>
               {i18n.t('home_header_air_quality_station_distance', {
-                distanceToStation: distance
+                distanceToStation: distance,
+                distanceUnit
               })}{' '}
               {!isGps && i18n.t('home_header_from_search')}
             </Text>
