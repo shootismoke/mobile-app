@@ -26,7 +26,7 @@ import { Distance } from './Distance';
 import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
-import { distanceToStation, getCorrectLatLng } from '../../util/station';
+import { distanceToStation, getCorrectLatLng, DistanceUnit } from '../../util/station';
 
 interface DetailsProps extends NavigationInjectedProps {}
 
@@ -61,8 +61,8 @@ export function Details (props: DetailsProps) {
   // object` error. It's related to the MapView below.
   const currentLocation = { ..._currentLocation! };
 
-  const distanceUnit = i18n.t('distance_unit');
-  const distance = distanceToStation(currentLocation!, api!, distanceUnit === 'mi' ? 'mile' : 'km');
+  const haversineDistanceUnit = i18n.t('haversine_distance_unit') as DistanceUnit;
+  const distance = distanceToStation(currentLocation!, api!, haversineDistanceUnit);
 
   const station = {
     description: api!.shootISmoke.station || '',

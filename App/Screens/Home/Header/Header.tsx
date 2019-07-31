@@ -29,7 +29,7 @@ import alert from '../../../../assets/images/alert.png';
 import { CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
-import { distanceToStation, isStationTooFar } from '../../../util/station';
+import { distanceToStation, isStationTooFar, DistanceUnit } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {
@@ -42,7 +42,8 @@ export function Header (props: HeaderProps) {
   const { onChangeLocationClick } = props;
 
   const distanceUnit = i18n.t('distance_unit');
-  const distance = distanceToStation(currentLocation!, api!, distanceUnit === 'mi' ? 'mile' : 'km');
+  const haversineDistanceUnit = i18n.t('haversine_distance_unit') as DistanceUnit;
+  const distance = distanceToStation(currentLocation!, api!, haversineDistanceUnit);
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   return (

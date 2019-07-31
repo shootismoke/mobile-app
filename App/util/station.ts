@@ -22,6 +22,8 @@ import { LatLng } from '../stores/fetchGpsPosition';
 // Above this distance (km), we consider the station too far from the user
 export const MAX_DISTANCE_TO_STATION = 10;
 
+export type DistanceUnit = 'km' | 'mile';
+
 /**
  * Get distance from current location to station.
  *
@@ -29,7 +31,7 @@ export const MAX_DISTANCE_TO_STATION = 10;
  * @param api - The api object returned by remote data.
  * @param unit - The unit of measure returned.
  */
-export function distanceToStation (currentLocation: LatLng, api: Api, unit: 'km' | 'mile' = 'km') {
+export function distanceToStation (currentLocation: LatLng, api: Api, unit: DistanceUnit = 'km') {
   return Math.round(
     haversine(
       currentLocation,

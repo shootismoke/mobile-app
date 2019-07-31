@@ -45,6 +45,7 @@
   "details_header_primary_pollutant_label": "Primary Pollutant:",
   "details_distance_label": "AQI Station: {{distanceToStation}}{{distanceUnit}} away",
   "distance_unit": "mi",
+  "haversine_distance_unit": "mile",
   "past_stations_loading": "Loading",
   "past_stations_date_from_to": "{{startDate}} to {{endDate}}",
   "past_stations_monitored_weekly": "Stations monitored from you during the week",
