@@ -161,7 +161,7 @@ export function Home (props: HomeProps) {
           O.fold(renderCigarettesText, days => (
             <Text adjustsFontSizeToFit style={styles.shit}>
               <Text style={styles.cigarettesCount}>
-                {i18n.t('home_wait_more_days', { days })}
+                {i18n.t('home_wait_more_days', { days: days + 1 })}
               </Text>{' '}
               {i18n.t('home_wait_until_results')}
             </Text>
