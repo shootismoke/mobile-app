@@ -81,14 +81,15 @@ export function fetchGpsPosition () {
     // Start the task to record periodically on the background the location
     const isAqiRegistered = await isTaskRegisteredAsync(AQI_HISTORY_TASK);
     if (!isAqiRegistered) {
-      BackgroundFetch.registerTaskAsync(AQI_HISTORY_TASK, {
+      await BackgroundFetch.registerTaskAsync(AQI_HISTORY_TASK, {
         minimumInterval: SAVE_DATA_INTERVAL, // in s
         startOnBoot: true,
         stopOnTerminate: false
       });
-      // Apparently this is needed on iOS
+      // Apparently this is needed
       // https://github.com/expo/expo/issues/3582#issuecomment-480924126
-      BackgroundFetch.setMinimumIntervalAsync(SAVE_DATA_INTERVAL);
+      // https://github.com/expo/expo/issues/3582#issuecomment-520035731
+      await BackgroundFetch.setMinimumIntervalAsync(SAVE_DATA_INTERVAL);
     }
 
     return ExpoLocation.getCurrentPositionAsync({
