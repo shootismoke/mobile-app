@@ -57,6 +57,7 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
         isGps
           ? pipe(
             saveApi(currentLocation, newApi),
+            TE.orElse(() => TE.right(undefined as void)), // Silently ignore if saveApi fails
             TE.map(() => newApi)
           )
           : TE.right(newApi)
