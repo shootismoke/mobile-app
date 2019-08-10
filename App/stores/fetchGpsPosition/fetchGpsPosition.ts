@@ -54,7 +54,12 @@ export function fetchReverseGeocode (currentLocation: LatLng) {
           ...currentLocation,
           city: reverse.city,
           country: reverse.country,
-          name: [reverse.street, reverse.city, reverse.country].join(', ')
+          name:
+            [reverse.street, reverse.city, reverse.country]
+              .filter(x => x)
+              .join(', ') ||
+            // This case happens when e.g. we're in the middle of the ocean
+            [reverse.name, reverse.country].filter(x => x).join(', ')
         } as Location)
     )
   );
