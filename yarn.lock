@@ -6265,10 +6265,10 @@ react-native-maps@^0.24.2:
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
   integrity sha512-1iNIDikp2dkCG+8DguaEviYZiMSYyvwqYT7pO2YTZvuFRDSc/P9jXMhTUnSh4wNDlEeQ47OJ09l0pwWVBZ7wxg==
 
-react-native-reanimated@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.1.0.tgz#ba6864055ec3a206cdd5209a293fe653ce276206"
-  integrity sha512-UGDVNfvuIkMqYUx6aytSzihuzv6sWubn0MQi8dRcw7BjgezhjJnVnJ/NSOcpL3cO+Ld7lFcRX6GKcskwkHdPkw==
+react-native-reanimated@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.2.0.tgz#9219227a52a5dfa4d34c324596d6726ccd874293"
+  integrity sha512-vkWRHrPK5qfHP/ZawlRoo38oeYe9NZaaOH/lmFxRcsKzaSK6x3H5ZPXI8lK6MfTLveqwo1QhJje3zIKXO4nQQw==
 
 react-native-safe-area-view@^0.14.1:
   version "0.14.6"
