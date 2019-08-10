@@ -39,7 +39,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-native-gesture-handler": "~1.3.0",
     "react-native-maps": "^0.24.2",
-    "react-native-reanimated": "1.1.0",
+    "react-native-reanimated": "1.2.0",
     "react-native-scroll-into-view": "^1.0.3",
     "react-native-size-matters": "^0.2.1",
     "react-navigation": "^3.11.1",
