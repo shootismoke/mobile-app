@@ -60,5 +60,8 @@ defineTask(AQI_HISTORY_TASK, () => {
       },
       () => T.of(Result.NewData)
     )
-  )().catch(logFpError);
+  )().catch(error => {
+    logFpError(error);
+    return Result.Failed;
+  });
 });
