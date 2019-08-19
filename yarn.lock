@@ -854,10 +854,10 @@
   dependencies:
     cross-spawn "^6.0.5"
 
-"@expo/vector-icons@^10.0.2", "@expo/vector-icons@^10.0.4":
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.0.4.tgz#61f8a41ef72d17c58e9175b864b02aec3b2b80b1"
-  integrity sha512-IZ9eM9CoSl2m+FtYJe/o+XFEAk6kq8YSjcxLsjDQImTz2IAfOx9QdT+Kwm0lBVBOqXdSZ/wi9gUFe7Fp9XuoTg==
+"@expo/vector-icons@^10.0.2", "@expo/vector-icons@^10.0.5":
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.0.5.tgz#2464fd262613ad11c9b2d5c4227e85c164fcccf4"
+  integrity sha512-SWdAx2Qzxp5TgT3hZEoF/KHnaDW7ajIFztrDdaDZl3nPo7ExK0YiQ03V0z0xMd+uQwl3SZO3JMwPZ7YnuxcMEg==
   dependencies:
     lodash "^4.17.4"
 
