@@ -42,7 +42,7 @@
     "react-native-reanimated": "1.2.0",
     "react-native-scroll-into-view": "^1.0.3",
     "react-native-size-matters": "^0.2.1",
-    "react-navigation": "^3.11.1",
+    "react-navigation": "^3.12.1",
     "retry-ts": "^0.1.0",
     "sentry-expo": "~1.13.0",
     "truncate": "^2.1.0"
