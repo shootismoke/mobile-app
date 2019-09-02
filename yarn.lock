@@ -2676,10 +2676,10 @@ eslint-config-prettier@^6.1.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-config-semistandard@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-semistandard/-/eslint-config-semistandard-14.0.0.tgz#e3e00d232768f2e76685959de640f22c207e74aa"
-  integrity sha512-m01m2BQzG7nrrLVIG2Wr+htnfhc5RjzeXFESvSsh24uE8uLSrxo8nbcu6RAShfulrsv7Gp850Gct/oMaLHXUkg==
+eslint-config-semistandard@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-semistandard/-/eslint-config-semistandard-15.0.0.tgz#d8eefccfac4ca9cbc508d38de6cb8fd5e7a72fa9"
+  integrity sha512-volIMnosUvzyxGkYUA5QvwkahZZLeUx7wcS0+7QumPn+MMEBbV6P7BY1yukamMst0w3Et3QZlCjQEwQ8tQ6nug==
 
 eslint-config-standard@^13.0.1:
   version "13.0.1"
