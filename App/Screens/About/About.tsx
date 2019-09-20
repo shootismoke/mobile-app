@@ -30,7 +30,6 @@ import { NavigationInjectedProps } from 'react-navigation';
 
 import { Box } from './Box';
 import { BackButton } from '../../components';
-import { Dev } from './Dev';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 
@@ -186,7 +185,6 @@ export function About (props: AboutProps) {
         </Text>
         {/* Add languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
       </View>
-      <Dev />
     </CustomScrollView>
   );
 }

@@ -14,16 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as BackgroundFetch from 'expo-background-fetch';
 import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import { isTaskRegisteredAsync } from 'expo-task-manager';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 
-import { SAVE_DATA_INTERVAL } from '../../managers/AqiHistoryDb';
-import { AQI_HISTORY_TASK } from '../../managers/AqiHistoryTask';
-import { GPS_TASK } from '../../managers/GpsTask';
 import { toError } from '../../util/fp';
 
 export interface LatLng {
@@ -71,25 +66,6 @@ export function fetchGpsPosition () {
 
     if (status !== 'granted') {
       throw new Error('Permission to access location was denied');
-    }
-
-    // Start the task to record periodically on the background the location
-    const isGpsRegistered = await isTaskRegisteredAsync(GPS_TASK);
-    if (!isGpsRegistered) {
-      ExpoLocation.startLocationUpdatesAsync(GPS_TASK);
-    }
-    // Start the task to record periodically on the background the location
-    const isAqiRegistered = await isTaskRegisteredAsync(AQI_HISTORY_TASK);
-    if (!isAqiRegistered) {
-      await BackgroundFetch.registerTaskAsync(AQI_HISTORY_TASK, {
-        minimumInterval: SAVE_DATA_INTERVAL, // in s
-        startOnBoot: true,
-        stopOnTerminate: false
-      });
-      // Apparently this is needed
-      // https://github.com/expo/expo/issues/3582#issuecomment-480924126
-      // https://github.com/expo/expo/issues/3582#issuecomment-520035731
-      await BackgroundFetch.setMinimumIntervalAsync(SAVE_DATA_INTERVAL);
     }
 
     return ExpoLocation.getCurrentPositionAsync({

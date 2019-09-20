@@ -24,9 +24,7 @@ import { failure } from 'io-ts/lib/PathReporter';
 
 import { Location } from '../fetchGpsPosition';
 import * as dataSources from './dataSources';
-import { saveData } from '../../managers/AqiHistoryDb';
 import { retry, sideEffect, toError } from '../../util/fp';
-import { isStationTooFar } from '../../util/station';
 
 const ApiT = t.type({
   aqi: t.number,
@@ -74,9 +72,7 @@ export function fetchApi (gps: Location) {
     pipe(
       TE.rightIO(
         C.log(
-          `<ApiContext> - fetchApi - Attempt #${status.iterNumber}: ${
-            sources[(status.iterNumber - 1) % sources.length].name
-          }`
+          `<ApiContext> - fetchApi - Attempt #${status.iterNumber}: ${sources[(status.iterNumber - 1) % sources.length].name}`
         )
       ),
       TE.chain(() =>
@@ -107,17 +103,4 @@ export function fetchApi (gps: Location) {
       )
     )
   );
-}
-
-export function saveApi (gps: Location, api: Api) {
-  return isStationTooFar(gps, api)
-    ? TE.left(new Error('Station too far, not saving'))
-    : saveData({
-      latitude: gps.latitude,
-      longitude: gps.longitude,
-      rawPm25: api.shootISmoke.rawPm25,
-      station: api.shootISmoke.station,
-      city: gps.city,
-      country: gps.country
-    });
 }
