@@ -38,6 +38,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                   |
 | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                   |
 | Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                  |
+| Amplitude Analytics     | https://amplitude.com                                                               | Optional. We do not track PII.             |
 
 Then run the following commands:
 
@@ -46,7 +47,9 @@ git clone https://github.com/amaurymartiny/shoot-i-smoke
 cd shoot-i-smoke
 yarn install
 
-cp app.example.json app.json # Replace the API keys placeholders with your own tokens in app.json
+# Replace the API keys placeholders with your own tokens in app.json
+# For the optional services you don't want to put an API key, put `undefined`
+cp app.example.json app.json
 
 yarn start
 ```

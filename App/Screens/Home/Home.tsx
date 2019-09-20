@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from 'react';
+import * as Amplitude from 'expo-analytics-amplitude';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
@@ -41,6 +42,10 @@ export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { isGps } = useContext(CurrentLocationContext)!;
   const [frequency, setFrenquency] = useState<Frequency>('daily');
+
+  useEffect(() => {
+    Amplitude.logEvent('TEST_Homepage');
+  }, []);
 
   function getCigaretteCount () {
     switch (frequency) {

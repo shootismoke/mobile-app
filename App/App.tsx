@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import * as Amplitude from 'expo-analytics-amplitude';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
@@ -30,6 +31,11 @@ import {
 // Add sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
+}
+
+// Add amplitude if available
+if (Constants.manifest.extra.amplitudeApiKey) {
+  Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey);
 }
 
 export function App () {

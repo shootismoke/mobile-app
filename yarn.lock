@@ -2982,6 +2982,11 @@ expect@^24.9.0:
     jest-message-util "^24.9.0"
     jest-regex-util "^24.9.0"
 
+expo-analytics-amplitude@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-7.0.0.tgz#0a1b7a211da0d150bdbd0ef0ef495bf7a3c338a6"
+  integrity sha512-xLyxzntSG78SDvJ0eyR8ceV2K7Emx3L9EeOSpqniK7q07w/MSBRI8QOBhHRvGyDh2WzOb4fWjEJ3hzbTqKAIHQ==
+
 expo-app-loader-provider@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-app-loader-provider/-/expo-app-loader-provider-6.0.0.tgz#c187a39942ac27cfaec3b394a5c9851d3f39678b"
