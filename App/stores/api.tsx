@@ -20,7 +20,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { ErrorContext } from './error';
-import { Api, fetchApi, saveApi } from './fetchApi';
+import { Api, fetchApi } from './fetchApi';
 import { CurrentLocationContext } from './location';
 import { logFpError } from '../util/fp';
 import { noop } from '../util/noop';
@@ -37,7 +37,7 @@ interface ApiContextProviderProps {
 }
 
 export function ApiContextProvider ({ children }: ApiContextProviderProps) {
-  const { currentLocation, isGps, setCurrentLocation } = useContext(
+  const { currentLocation, setCurrentLocation } = useContext(
     CurrentLocationContext
   );
   const { setError } = useContext(ErrorContext);
@@ -53,15 +53,6 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
 
     pipe(
       fetchApi(currentLocation),
-      TE.chain(newApi =>
-        isGps
-          ? pipe(
-            saveApi(currentLocation, newApi),
-            TE.orElse(() => TE.right(undefined as void)), // Silently ignore if saveApi fails
-            TE.map(() => newApi)
-          )
-          : TE.right(newApi)
-      ),
       TE.fold(
         err => {
           setError(err.message);
