@@ -21,18 +21,14 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { aboutSections } from '../../About';
 import { Button } from '../../../components';
 import { i18n } from '../../../localization';
-import { Frequency } from '../SelectFrequency';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
-interface FooterProps extends NavigationInjectedProps {
-  frequency: Frequency;
-}
+interface FooterProps extends NavigationInjectedProps {}
 
 export function Footer (props: FooterProps) {
-  const { frequency } = props;
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
 
@@ -98,7 +94,7 @@ export function Footer (props: FooterProps) {
 
   return (
     <View style={styles.container}>
-      {isTooFar && frequency === 'daily' && (
+      {isTooFar && (
         <Text style={styles.isStationTooFar}>
           {i18n.t('home_station_too_far_message')}
         </Text>

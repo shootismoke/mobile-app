@@ -127,7 +127,7 @@ export function Home (props: HomeProps) {
             style={styles.selectFrequency}
           />
         </View>
-        <Footer frequency={frequency} navigation={props.navigation} />
+        <Footer navigation={props.navigation} />
       </ScrollView>
     </View>
   );
