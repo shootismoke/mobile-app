@@ -22,6 +22,7 @@ import { i18n } from '../../localization';
 import { ApiContext, GpsLocationContext } from '../../stores';
 import { Api } from '../../stores/fetchApi';
 import { Location } from '../../stores/fetchGpsPosition';
+import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
 // The variable returned by setTimeout for longWaiting
@@ -39,6 +40,8 @@ export function Loading () {
   const gps = useContext(GpsLocationContext);
 
   const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time
+
+  trackScreen('LOADING');
 
   useEffect(() => {
     // Set a 2s timer that will set `longWaiting` to true. Used to show an

@@ -29,6 +29,7 @@ import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/fetchGpsPosition';
+import { trackScreen, track } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
 
@@ -48,6 +49,8 @@ export function Search (props: SearchProps) {
   const [search, setSearch] = useState('');
   const [hits, setHits] = useState<AlgoliaHit[]>([]);
 
+  trackScreen('SEARCH');
+
   function handleChangeSearch (s: string) {
     setSearch(s);
     setAlgoliaError(undefined);
@@ -63,6 +66,8 @@ export function Search (props: SearchProps) {
       clearTimeout(typingTimeout);
     }
     typingTimeout = setTimeout(() => {
+      track('SEARCH_SCREEN_SEARCH', { search: s });
+
       pipe(
         fetchAlgolia(s, gps),
         TE.fold(

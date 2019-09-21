@@ -31,6 +31,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { Box } from './Box';
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
+import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
 const CustomScrollView = wrapScrollView(ScrollView);
@@ -47,6 +48,22 @@ export const aboutSections = {
   about_why_is_the_station_so_far_title: 'about_why_is_the_station_so_far_title'
 };
 
+const handleOpenAmaury = () =>
+  Linking.openURL('https://twitter.com/amaurymartiny');
+
+const handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
+
+const handleOpenArticle = () =>
+  Linking.openURL(
+    'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
+  );
+
+const handleOpenGithub = () =>
+  Linking.openURL(Constants.manifest.extra.githubUrl);
+
+const handleOpenMarcelo = () =>
+  Linking.openURL('https://www.behance.net/marceloscoelho');
+
 interface AboutProps
   extends NavigationInjectedProps<{
     scrollInto?: keyof typeof aboutSections;
@@ -55,21 +72,7 @@ interface AboutProps
 export function About (props: AboutProps) {
   const { navigation } = props;
 
-  const handleOpenAmaury = () =>
-    Linking.openURL('https://twitter.com/amaurymartiny');
-
-  const handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
-
-  const handleOpenArticle = () =>
-    Linking.openURL(
-      'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
-    );
-
-  const handleOpenGithub = () =>
-    Linking.openURL(Constants.manifest.extra.githubUrl);
-
-  const handleOpenMarcelo = () =>
-    Linking.openURL('https://www.behance.net/marceloscoelho');
+  trackScreen('ABOUT');
 
   return (
     <CustomScrollView

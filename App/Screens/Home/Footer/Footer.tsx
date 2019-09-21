@@ -23,6 +23,7 @@ import { Button } from '../../../components';
 import { i18n } from '../../../localization';
 import { Frequency } from '../SelectFrequency';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
+import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
@@ -38,21 +39,25 @@ export function Footer (props: FooterProps) {
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   function goToAbout () {
+    track('HOME_SCREEN_ABOUT_CLICK');
     props.navigation.navigate('About');
   }
 
   function goToAboutWhySoFar () {
+    track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
     props.navigation.navigate('About', {
       scrollInto: aboutSections.about_why_is_the_station_so_far_title
     });
   }
 
   function goToDetails () {
+    track('HOME_SCREEN_DETAILS_CLICK');
     props.navigation.navigate('Details');
   }
 
   function handleShare () {
-    return Share.share({
+    track('HOME_SCREEN_SHARE_CLICK');
+    Share.share({
       title: i18n.t('home_share_title'),
       message: i18n.t('home_share_message', {
         cigarettes: api!.shootISmoke.cigarettes

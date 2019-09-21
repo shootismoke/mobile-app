@@ -28,14 +28,18 @@ import {
   LocationContextProvider
 } from './stores';
 
-// Add sentry if available
+// Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
 }
 
-// Add amplitude if available
+// Add Amplitude if available
 if (Constants.manifest.extra.amplitudeApiKey) {
   Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey);
+  Amplitude.setUserProperties({
+    sisReleaseChannel: Constants.manifest.releaseChannel || 'development',
+    sisVersion: Constants.manifest.version
+  });
 }
 
 export function App () {

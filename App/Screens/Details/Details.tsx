@@ -26,7 +26,12 @@ import { Distance } from './Distance';
 import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
-import { distanceToStation, getCorrectLatLng, DistanceUnit } from '../../util/station';
+import { trackScreen } from '../../util/amplitude';
+import {
+  distanceToStation,
+  getCorrectLatLng,
+  DistanceUnit
+} from '../../util/station';
 
 interface DetailsProps extends NavigationInjectedProps {}
 
@@ -41,6 +46,8 @@ export function Details (props: DetailsProps) {
   const { currentLocation: _currentLocation } = useContext(
     CurrentLocationContext
   );
+
+  trackScreen('DETAILS');
 
   useEffect(() => {
     // Show map after 200ms for smoother screen transition
@@ -61,8 +68,14 @@ export function Details (props: DetailsProps) {
   // object` error. It's related to the MapView below.
   const currentLocation = { ..._currentLocation! };
 
-  const haversineDistanceUnit = i18n.t('haversine_distance_unit') as DistanceUnit;
-  const distance = distanceToStation(currentLocation!, api!, haversineDistanceUnit);
+  const haversineDistanceUnit = i18n.t(
+    'haversine_distance_unit'
+  ) as DistanceUnit;
+  const distance = distanceToStation(
+    currentLocation!,
+    api!,
+    haversineDistanceUnit
+  );
 
   const station = {
     description: api!.shootISmoke.station || '',

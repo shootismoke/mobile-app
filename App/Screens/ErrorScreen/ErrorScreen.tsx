@@ -23,12 +23,15 @@ import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
+import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
 interface ErrorScreenProps extends NavigationInjectedProps {}
 
 export function ErrorScreen (props: ErrorScreenProps) {
   const { error } = useContext(ErrorContext);
+
+  trackScreen('ERROR');
 
   return (
     <View style={styles.container}>
@@ -42,7 +45,10 @@ export function ErrorScreen (props: ErrorScreenProps) {
         </Text>
       </View>
       <Button
-        onPress={() => props.navigation.navigate('Search')}
+        onPress={() => {
+          track('ERROR_SCREEN_CHANGE_LOCATION_CLICK');
+          props.navigation.navigate('Search');
+        }}
         style={styles.chooseOther}
         type="primary"
       >
