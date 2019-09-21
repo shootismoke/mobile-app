@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import * as Amplitude from 'expo-analytics-amplitude';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
@@ -27,9 +28,18 @@ import {
   LocationContextProvider
 } from './stores';
 
-// Add sentry if available
+// Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
+}
+
+// Add Amplitude if available
+if (Constants.manifest.extra.amplitudeApiKey) {
+  Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey);
+  Amplitude.setUserProperties({
+    sisReleaseChannel: Constants.manifest.releaseChannel || 'development',
+    sisVersion: Constants.manifest.version
+  });
 }
 
 export function App () {

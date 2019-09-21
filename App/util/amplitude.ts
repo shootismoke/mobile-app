@@ -1,0 +1,59 @@
+// Sh**t! I Smoke
+// Copyright (C) 2018-2019  Marcelo S. Coelho, Amaury Martiny
+
+// Sh**t! I Smoke is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Sh**t! I Smoke is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
+
+import * as Amplitude from 'expo-analytics-amplitude';
+import { useEffect } from 'react';
+
+type AmplitudeEvent =
+  | 'LOADING_SCREEN_OPEN'
+  | 'LOADING_SCREEN_CLOSE'
+  | 'HOME_SCREEN_OPEN'
+  | 'HOME_SCREEN_CLOSE'
+  | 'HOME_SCREEN_DAILY_CLICK'
+  | 'HOME_SCREEN_WEEKLY_CLICK'
+  | 'HOME_SCREEN_MONTHLY_CLICK'
+  | 'HOME_SCREEN_SHARE_CLICK'
+  | 'HOME_SCREEN_DETAILS_CLICK'
+  | 'HOME_SCREEN_ABOUT_CLICK'
+  | 'HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK'
+  | 'HOME_SCREEN_SHARE_CLICK'
+  | 'HOME_SCREEN_CHANGE_LOCATION_CLICK'
+  | 'ABOUT_SCREEN_OPEN'
+  | 'ABOUT_SCREEN_CLOSE'
+  | 'DETAILS_SCREEN_OPEN'
+  | 'DETAILS_SCREEN_CLOSE'
+  | 'SEARCH_SCREEN_OPEN'
+  | 'SEARCH_SCREEN_CLOSE'
+  | 'SEARCH_SCREEN_SEARCH'
+  | 'ERROR_SCREEN_OPEN'
+  | 'ERROR_SCREEN_CLOSE'
+  | 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
+
+export function track (event: AmplitudeEvent, properties?: Record<string, any>) {
+  properties
+    ? Amplitude.logEventWithProperties(event, properties)
+    : Amplitude.logEvent(event);
+}
+
+export function trackScreen (
+  screen: 'LOADING' | 'HOME' | 'ABOUT' | 'DETAILS' | 'SEARCH' | 'ERROR'
+) {
+  useEffect(() => {
+    track(`${screen}_SCREEN_OPEN` as AmplitudeEvent);
+
+    return () => track(`${screen}_SCREEN_CLOSE` as AmplitudeEvent);
+  }, []);
+}

@@ -26,6 +26,7 @@ import { Frequency, SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
+import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
@@ -41,6 +42,8 @@ export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext)!;
   const { isGps } = useContext(CurrentLocationContext)!;
   const [frequency, setFrenquency] = useState<Frequency>('daily');
+
+  trackScreen('HOME');
 
   function getCigaretteCount () {
     switch (frequency) {
@@ -95,7 +98,10 @@ export function Home (props: HomeProps) {
     <View style={styles.container}>
       <SmokeVideo cigarettes={cigaretteCount} />
       <Header
-        onChangeLocationClick={() => props.navigation.navigate('Search')}
+        onChangeLocationClick={() => {
+          track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
+          props.navigation.navigate('Search');
+        }}
       />
       <ScrollView
         bounces={false}
@@ -108,12 +114,20 @@ export function Home (props: HomeProps) {
           <SelectFrequency
             frequency={frequency}
             onChangeFrequency={freq => {
+              if (freq === 'daily') {
+                track('HOME_SCREEN_DAILY_CLICK');
+              } else if (freq === 'weekly') {
+                track('HOME_SCREEN_WEEKLY_CLICK');
+              } else if (freq === 'monthly') {
+                track('HOME_SCREEN_MONTHLY_CLICK');
+              }
+
               setFrenquency(freq);
             }}
             style={styles.selectFrequency}
           />
         </View>
-        <Footer frequency={frequency} navigation={props.navigation} />
+        <Footer navigation={props.navigation} />
       </ScrollView>
     </View>
   );
