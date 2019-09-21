@@ -38,7 +38,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                   |
 | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                   |
 | Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                  |
-| Amplitude Analytics     | https://amplitude.com                                                               | Optional. We do not track PII.             |
+| Amplitude Analytics     | https://amplitude.com                                                               | Optional. Note: we **never** not track PII.             |
 
 Then run the following commands:
 
