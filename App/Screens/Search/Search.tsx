@@ -102,14 +102,14 @@ export function Search (props: SearchProps) {
   return (
     <View style={styles.container}>
       <BackButton
-        onPress={() => props.navigation.pop()}
+        onPress={() => props.navigation.goBack()}
         style={styles.backButton}
       />
       <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
       <FlatList
         data={hits}
         ItemSeparatorComponent={renderSeparator}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps='always'
         keyExtractor={({ objectID }) => objectID}
         ListEmptyComponent={renderEmptyList(
           algoliaError,
