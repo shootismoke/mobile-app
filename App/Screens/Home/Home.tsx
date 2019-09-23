@@ -80,11 +80,10 @@ export function Home (props: HomeProps) {
       cigarettes
     });
 
-    const firstPartText = text.split('<')[0];
-    const secondPartText = text.split('<')[1];
+    const [firstPartText, secondPartText] = text.split('<');
 
     return (
-      <Text adjustsFontSizeToFit style={styles.shit}>
+      <Text style={styles.shit}>
         {firstPartText}
         <Text style={styles.cigarettesCount}>
           {secondPartText.split('>')[0]}

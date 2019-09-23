@@ -86,7 +86,7 @@ export const link = {
 export const shitText = {
   color: textColor,
   fontFamily: gothamBlack,
-  fontSize: scale(32),
+  fontSize: scale(31),
   letterSpacing: scale(-1),
   lineHeight: scale(36),
   ...fixTextMargin
