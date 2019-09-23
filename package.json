@@ -35,7 +35,7 @@
     "io-ts": "^2.0.1",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
-    "react-native-gesture-handler": "~1.3.0",
+    "react-native-gesture-handler": "~1.4.1",
     "react-native-maps": "^0.24.2",
     "react-native-reanimated": "~1.2.0",
     "react-native-scroll-into-view": "^1.0.3",
