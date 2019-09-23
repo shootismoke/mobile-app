@@ -15,6 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import * as Amplitude from 'expo-analytics-amplitude';
+import Constants from 'expo-constants';
 import { useEffect } from 'react';
 
 type AmplitudeEvent =
@@ -43,6 +44,10 @@ type AmplitudeEvent =
   | 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
 export function track (event: AmplitudeEvent, properties?: Record<string, any>) {
+  if (!Constants.manifest.extra.amplitudeApiKey) {
+    return;
+  }
+
   properties
     ? Amplitude.logEventWithProperties(event, properties)
     : Amplitude.logEvent(event);
