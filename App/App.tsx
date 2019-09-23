@@ -18,7 +18,7 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
-import Sentry from 'sentry-expo';
+import * as Sentry from 'sentry-expo';
 
 import { Screens } from './Screens';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
@@ -30,7 +30,14 @@ import {
 
 // Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
-  Sentry.config(Constants.manifest.extra.sentryPublicDsn).install();
+  Sentry.init({
+    dsn: Constants.manifest.extra.sentryPublicDsn,
+    debug: true
+  });
+
+  if (Constants.manifest.revisionId) {
+    Sentry.setRelease(Constants.manifest.revisionId);
+  }
 }
 
 // Add Amplitude if available

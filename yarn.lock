@@ -1078,29 +1078,39 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
-"@react-navigation/core@~3.4.1":
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.4.2.tgz#bec563e94fde40fbab3730cdc97f22afbb2a1498"
-  integrity sha512-7G+iDzLSTeOUU4vVZeRZKJ+Bd7ds7ZxYNqZcB8i0KlBeQEQfR74Ounfu/p0KIEq2RiNnaE3QT7WVP3C87sebzw==
+"@react-navigation/core@^3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.5.1.tgz#7a2339fca3496979305fb3a8ab88c2ca8d8c214d"
+  integrity sha512-q7NyhWVYOhVIWqL2GZKa6G78YarXaVTTtOlSDkvy4ZIggo40wZzamlnrJRvsaQX46gsgw45FAWb5SriHh8o7eA==
   dependencies:
     hoist-non-react-statics "^3.3.0"
     path-to-regexp "^1.7.0"
     query-string "^6.4.2"
     react-is "^16.8.6"
 
-"@react-navigation/native@~3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-3.5.0.tgz#f5d16e0845ac26d1147d1caa481f18a00740e7ae"
-  integrity sha512-TmGOis++ejEXG3sqNJhCSKqB0/qLu3FQgDtO959qpqif36R/diR8SQwJqeSdofoEiK3CepdhFlTCeHdS1/+MsQ==
+"@react-navigation/native@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-3.6.2.tgz#3634697b6350cc5189657ae4551f2d52b57fbbf0"
+  integrity sha512-Cybeou6N82ZeRmgnGlu+wzlV3z5BZQR2dmYaNFV1TNLUGHqtvv8E7oNw9uYcz9Ox5LFbiX+FdNTn2d6ZPlK0kg==
   dependencies:
     hoist-non-react-statics "^3.0.1"
     react-native-safe-area-view "^0.14.1"
     react-native-screens "^1.0.0 || ^1.0.0-alpha"
 
-"@sentry/cli@^1.36.1":
-  version "1.46.0"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.46.0.tgz#04d69be114e84620d13c9c8cc90b4842de16913c"
-  integrity sha512-pZFW9U6XsbnD2pJPO5IyzN43k9wvp4sqshus22clb65mkEpa+vQ1QhL9bVAVuH4VRnu1xiEc5l9MlVlU+aeMvg==
+"@sentry/browser@^5.6.3":
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.6.3.tgz#5cc37b0443eba55ad13c13d34d6b95ff30dfbfe3"
+  integrity sha512-bP1LTbcKPOkkmfJOAM6c7WZ0Ov0ZEW6B9keVZ9wH9fw/lBPd9UyDMDCwJ+FAYKz9M9S5pxQeJ4Ebd7WUUrGVAQ==
+  dependencies:
+    "@sentry/core" "5.6.2"
+    "@sentry/types" "5.6.1"
+    "@sentry/utils" "5.6.1"
+    tslib "^1.9.3"
+
+"@sentry/cli@^1.44.2":
+  version "1.47.1"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.47.1.tgz#6a3238e5bfa4f618867bc0bc145b8e2ba191ff46"
+  integrity sha512-WijaRu1lb99OL6rHee6uOSb1wDyNCbrWcTJoRCuZD83K2fw3U58p68nli/y8CoMwQ55Mrg6CgtY8pmBiuseG0A==
   dependencies:
     fs-copy-file-sync "^1.1.1"
     https-proxy-agent "^2.2.1"
@@ -1109,12 +1119,75 @@
     progress "2.0.0"
     proxy-from-env "^1.0.0"
 
-"@sentry/wizard@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-0.12.1.tgz#e63bb94c26479e958418dfdce6387ad39b31bdbc"
-  integrity sha512-kSqGcETUHR6n3DlyU/gcCwu+fcDVveEFXmLqGvib7c4nlV/ZwxT0J9TQi2u3Ux5EZQjYjTsdtvw6PYXvPXRPZA==
+"@sentry/core@5.6.2", "@sentry/core@^5.6.2":
+  version "5.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-5.6.2.tgz#8c5477654a83ebe41a72e86a79215deb5025e418"
+  integrity sha512-grbjvNmyxP5WSPR6UobN2q+Nss7Hvz+BClBT8QTr7VTEG5q89TwNddn6Ej3bGkaUVbct/GpVlI3XflWYDsnU6Q==
   dependencies:
-    "@sentry/cli" "^1.36.1"
+    "@sentry/hub" "5.6.1"
+    "@sentry/minimal" "5.6.1"
+    "@sentry/types" "5.6.1"
+    "@sentry/utils" "5.6.1"
+    tslib "^1.9.3"
+
+"@sentry/hub@5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-5.6.1.tgz#9f355c0abcc92327fbd10b9b939608aa4967bece"
+  integrity sha512-m+OhkIV5yTAL3R1+XfCwzUQka0UF/xG4py8sEfPXyYIcoOJ2ZTX+1kQJLy8QQJ4RzOBwZA+DzRKP0cgzPJ3+oQ==
+  dependencies:
+    "@sentry/types" "5.6.1"
+    "@sentry/utils" "5.6.1"
+    tslib "^1.9.3"
+
+"@sentry/integrations@^5.5.0", "@sentry/integrations@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.6.1.tgz#fcee1a6e5535a07fdefd365178662283279ce0d7"
+  integrity sha512-bPtJbmhLDH9Exy0luIKxjlfqmuyAjUPTHZ2CLIw6YlhA5WgK9aYyyjLHTmWK+E9baZBqSp0ShVPAgue2jfpQmQ==
+  dependencies:
+    "@sentry/types" "5.6.1"
+    "@sentry/utils" "5.6.1"
+    tslib "^1.9.3"
+
+"@sentry/minimal@5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-5.6.1.tgz#09d92b26de0b24555cd50c3c33ba4c3e566009a1"
+  integrity sha512-ercCKuBWHog6aS6SsJRuKhJwNdJ2oRQVWT2UAx1zqvsbHT9mSa8ZRjdPHYOtqY3DoXKk/pLUFW/fkmAnpdMqRw==
+  dependencies:
+    "@sentry/hub" "5.6.1"
+    "@sentry/types" "5.6.1"
+    tslib "^1.9.3"
+
+"@sentry/react-native@^1.0.0":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/react-native/-/react-native-1.0.6.tgz#c43d366f5f850044a852f680189b50515a6143f7"
+  integrity sha512-+haC2n9FSoCAxGmbZ813BeRnLdmDNZF6jhIN7cyPXnOlUte0x5TSrmgo+eY7RUR/jwQsZbvz2+8opuUawfVxrQ==
+  dependencies:
+    "@sentry/browser" "^5.6.3"
+    "@sentry/core" "^5.6.2"
+    "@sentry/integrations" "^5.6.1"
+    "@sentry/types" "^5.6.1"
+    "@sentry/utils" "^5.6.1"
+    "@sentry/wizard" "^1.0.0"
+
+"@sentry/types@5.6.1", "@sentry/types@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.6.1.tgz#5915e1ee4b7a678da3ac260c356b1cb91139a299"
+  integrity sha512-Kub8TETefHpdhvtnDj3kKfhCj0u/xn3Zi2zIC7PB11NJHvvPXENx97tciz4roJGp7cLRCJsFqCg4tHXniqDSnQ==
+
+"@sentry/utils@5.6.1", "@sentry/utils@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.6.1.tgz#69d9e151e50415bc91f2428e3bcca8beb9bc2815"
+  integrity sha512-rfgha+UsHW816GqlSRPlniKqAZylOmQWML2JsujoUP03nPu80zdN43DK9Poy/d9OxBxv0gd5K2n+bFdM2kqLQQ==
+  dependencies:
+    "@sentry/types" "5.6.1"
+    tslib "^1.9.3"
+
+"@sentry/wizard@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-1.0.0.tgz#6cfaf1d7622fedaba33ee3451bb0d01c4613d3bd"
+  integrity sha512-bxLuarABCtP1MO5dEzGBh+JH6PZenZBdnxc1neK2IKMIZ7wWsowpUzbjluECenbDqzOBPFlI2u6hAsw6dyyV6A==
+  dependencies:
+    "@sentry/cli" "^1.44.2"
     chalk "^2.4.1"
     glob "^7.1.3"
     inquirer "^6.2.0"
@@ -1122,7 +1195,7 @@
     opn "^5.4.0"
     r2 "^2.0.1"
     read-env "^1.3.0"
-    xcode "https://github.com/apache/cordova-node-xcode#e7646f0680d509b590b839e567c217590451505b"
+    xcode "2.0.0"
     yargs "^12.0.2"
 
 "@types/babel__core@^7.1.0":
@@ -1339,17 +1412,17 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@unimodules/core@~3.0.0":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@unimodules/core/-/core-3.0.2.tgz#a2b143fb1e743809ba17c60ae1848f82b8637901"
-  integrity sha512-EMZjVp+yrtoPKpDBPvj4+hyDWALl7gvpWeUsDz2Nb9MMBPLnhag1uNk3KC98StJdnjbSXKSdKrCMMidOXnyKcg==
+"@unimodules/core@~4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@unimodules/core/-/core-4.0.0.tgz#898dafa5a121e7d6d7d4acd9c0c38d12f7da5b19"
+  integrity sha512-lHxRmCG9DK3/aA2lnBKPS32K95NpYE10mZQRp5dycSptgN0DIeWWHuE01SndcSUACGyEP+tDO+DnGo8mhLlt4Q==
   dependencies:
     compare-versions "^3.4.0"
 
-"@unimodules/react-native-adapter@~3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-3.0.0.tgz#303b76c131fe6b5ceb220235ddd1fa2a0193403d"
-  integrity sha512-zkFFE0HQ2Flfx/aY3hBKDgMvQ1meUm3H6vMIacY1KywexCuKW8ivBobkOsHIet4jf7km0Eklt6WtB3LqQVw5yw==
+"@unimodules/react-native-adapter@~4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-4.0.0.tgz#2e02246f6450201d6cb0720f849c7059e8a9bc6d"
+  integrity sha512-zGAyDhqAEWvshdSxc523srP6OAZaSr95Cv5EuxLJbFGcJENHhK8o/qxhwS7/LYTF3LqtOlnSlwQta3v3y6kF4A==
   dependencies:
     invariant "^2.2.4"
     lodash "^4.5.0"
@@ -1442,10 +1515,17 @@ ansi-cyan@^0.1.1:
   dependencies:
     ansi-wrap "0.1.0"
 
-ansi-escapes@^3.0.0, ansi-escapes@^3.2.0:
+ansi-escapes@^3.0.0, ansi-escapes@^3.1.0, ansi-escapes@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-3.2.0.tgz#8780b98ff9dbf5638152d1f1fe5c1d7b4442976b"
   integrity sha512-cBhpre4ma+U0T1oM5fXg7Dy1Jw7zzwv7lt/GoCpr+hDQJoYnKVPLL4dCvSEFMmQurOQvSrwT7SL/DAlhBI97RQ==
+
+ansi-escapes@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-4.2.1.tgz#4dccdb846c3eee10f6d64dea66273eab90c37228"
+  integrity sha512-Cg3ymMAdN10wOk/VYfLV7KCQyv7EDirJ64500sU7n9UlmioEtDuU5Gd+hj73hXSU/ex7tHJSssmyftDdkMLO8Q==
+  dependencies:
+    type-fest "^0.5.2"
 
 ansi-gray@^0.1.1:
   version "0.1.1"
@@ -1763,10 +1843,10 @@ babel-preset-expo@^5.2.0:
     babel-plugin-react-native-web "^0.11.2"
     metro-react-native-babel-preset "^0.51.1"
 
-babel-preset-expo@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-6.0.0.tgz#acc4eb8343a2f703d5808916c051a6caefde8778"
-  integrity sha512-MvDy86afmCt4sFYkg7yXsZyGL0yONT5JQHZSK1r8cu26Zm1No0yQyll+w78e2OkkYwVFtC1u70GyBPdERG7BZg==
+babel-preset-expo@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-7.0.0.tgz#1d288e0efb17dcea84b0d30ce5f5ab99f781ae4a"
+  integrity sha512-lhQUlodOf1pJoDQ4X1SpLLiQQutvAJ3eB2xZtcqQFY0SAc7ifchtgWk/1T9SmI8lCOcllcPsFDyjbcPWav1FHQ==
   dependencies:
     "@babel/core" "^7.1.0"
     "@babel/plugin-proposal-decorators" "^7.1.0"
@@ -1774,7 +1854,7 @@ babel-preset-expo@^6.0.0:
     "@babel/preset-env" "^7.3.1"
     babel-plugin-module-resolver "^3.1.1"
     babel-plugin-react-native-web "^0.11.2"
-    metro-react-native-babel-preset "^0.51.1"
+    metro-react-native-babel-preset "^0.54.1"
 
 babel-preset-fbjs@^3.0.1, babel-preset-fbjs@^3.2.0:
   version "3.2.0"
@@ -1821,11 +1901,6 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
-
-base64-js@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.1.2.tgz#d6400cac1c4c660976d90d07a04351d89395f5e8"
-  integrity sha1-1kAMrBxMZgl22Q0HoENR2JOV9eg=
 
 base64-js@^1.1.2, base64-js@^1.2.3:
   version "1.3.0"
@@ -2987,15 +3062,15 @@ expo-analytics-amplitude@^7.0.0:
   resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-7.0.0.tgz#0a1b7a211da0d150bdbd0ef0ef495bf7a3c338a6"
   integrity sha512-xLyxzntSG78SDvJ0eyR8ceV2K7Emx3L9EeOSpqniK7q07w/MSBRI8QOBhHRvGyDh2WzOb4fWjEJ3hzbTqKAIHQ==
 
-expo-app-loader-provider@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-app-loader-provider/-/expo-app-loader-provider-6.0.0.tgz#c187a39942ac27cfaec3b394a5c9851d3f39678b"
-  integrity sha512-GtpztJVxOz+vVwdLyHskpzVzFWMXZPIFC/zczHZPsTwjS+wXj6n8MVaLxX6GaTyhNEtYjp0VIQUw3b7eP+vO6w==
+expo-app-loader-provider@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-app-loader-provider/-/expo-app-loader-provider-7.0.0.tgz#9bfff831a204d0a8896e0120bce2209c4304ef03"
+  integrity sha512-C+5zpZN2T7PCj7weLs/ZgAC+y9dvu0VdTXD00Jf9Wo7Pxu/lsLh6ljg9JL91c+2tYDzMEODPNmT+JOUIxAr5zQ==
 
-expo-asset@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-6.0.0.tgz#caa3f45e7a27d978f8055fc58df6e33a4e661937"
-  integrity sha512-M0sJphdCQ0mq+7kg6rQmq4rU5hbsL72AZCNrga565JchCLeevJhv6j72erh2viqDAPdvjZpGwc7pwI/dxu1+zg==
+expo-asset@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-7.0.0.tgz#6d2ba460dd43807f40580199c0b76c508eb1ca63"
+  integrity sha512-MwWrlpzaZqT0NU0V3Wn8oA1pMb7Al49aYAWMPEUZ2UV5NyVAbzYPuS2duIfwX55ivczjJZHpwrhd0hb/3l9ngQ==
   dependencies:
     blueimp-md5 "^2.10.0"
     path-browserify "^1.0.0"
@@ -3009,43 +3084,36 @@ expo-av@^7.0.0:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
 
-expo-constants@^7.0.0:
+expo-constants@*, expo-constants@^7.0.0, expo-constants@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.0.tgz#668c3ec0100e219522ffd9515ec47fadfccd443d"
   integrity sha512-oLINuMtGcAwfHGInSVhq6xGojp3atUpSIp7KImo9rqXhWwD5FNmqA5Jflo4J0ODPq590kN5ieiYCCqwls2/u0w==
   dependencies:
     ua-parser-js "^0.7.19"
 
-expo-constants@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-6.0.0.tgz#ff4598985ba006e24949be3f05be7429e5bedacf"
-  integrity sha512-O0yL3Ok0YUEWpAqsWjOdgFD/lMfg8PUGH/nq31CZ1s7cuFUlksD42i5YhIRlb0Pa/btK8X9LpfY3eWhx9eTmbg==
-  dependencies:
-    ua-parser-js "^0.7.19"
-
-expo-file-system@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-6.0.0.tgz#7fa5da4f5138f4efe488fd4d4d7b2f49863b25ea"
-  integrity sha512-SIVytgYHUm77bTXeHjNnS804KIPih3dEEcr8BGUOFxr1asbyaaf6/pFaWonrbLDRf5odjI1+daG0ktiQt2jZuw==
+expo-file-system@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-7.0.0.tgz#ac98233b18774cce299fffd9451f08f21b116564"
+  integrity sha512-ignf5Vf5cPDYO/4HgUkgnL574wMbCNxyazlOvBgV34rLGJzBbFsn++hqC7njr2VTpIIXh2G9vp1+8g6cvsQdqA==
   dependencies:
     uuid-js "^0.7.5"
 
-expo-font@~6.0.0, expo-font@~6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-6.0.1.tgz#239b0468edf90d441dca20253c00b334e812c5c5"
-  integrity sha512-zQwGFTKSrsTWmFzS0l87i6TyqM0YFDK4ui4sSzpbdQsUHXpeG7wfa67i09roLS0xtp85nrR9Vm2bUJp9njV8JQ==
+expo-font@^7.0.0, expo-font@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-7.0.0.tgz#0b36f5c91a77eb718fb20559b2c0c58d762ba535"
+  integrity sha512-OVlUydfexjq1u57Xlymcx5egfFF2WZ5MXkg3GGjHyiSMfp09inZ7OzAu+O/TXjxjlaq9d6vBXiwVxqQoUIlx1Q==
   dependencies:
     fontfaceobserver "^2.1.0"
 
-expo-keep-awake@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-6.0.0.tgz#e0d6d1263c6a73488272a62aef98312ab25cab1f"
-  integrity sha512-MAtZknf6FtIC0ipkDS2FVa87al8YBsrpsQ2qMf+H/cI6FOd6aahaggN4x75xGnt5UzozgWfjhGNCi1XCr14rJw==
+expo-keep-awake@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-7.0.0.tgz#131f56bc1ed8dd66e64a159afd7eaef26939d929"
+  integrity sha512-LjIudbftcZnoviujJUZEzLMdE3m9A2NOvxrRszYHUjySpNN1bAKKyx1gLJbg/yZIWcdEIQ+6uCYtLbuK74Wk2Q==
 
-expo-linear-gradient@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-6.0.0.tgz#5fb0fb955dd22ef4ab032e543cb1c249885bf0b5"
-  integrity sha512-TGHSK7MsoU1wZXx9uEivMggAR/KT4wTSE0xBfhB8qsziGXoHZdoT79/tZ3HyWtCG7+JVUEFXfUOBxtOlZOu5tg==
+expo-linear-gradient@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-7.0.0.tgz#91e86f3f4a70428c7ac5e43ee0d06215bca39afd"
+  integrity sha512-8VrFWR9tpXrDmk0kMyIpo6C5jKiDRzXPZN55JtyPhjuN1kF8Kle4d9ybNtV+bYd3Ql6PAZXY8Y/bhLAuWv0L9g==
 
 expo-localization@^7.0.0:
   version "7.0.0"
@@ -3054,48 +3122,36 @@ expo-localization@^7.0.0:
   dependencies:
     rtl-detect "^1.0.2"
 
-expo-location@^7.0.0:
+expo-location@^7.0.0, expo-location@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-7.0.0.tgz#de5818f828354c681a173471e4dc25ec795a9b42"
   integrity sha512-7iWg0j6+DXeO/bVLJEbGBmvebPSbIJNOewfHoyhvdo+13Q7L94SflcggT349WbqNsFJHVcAGC6Unr8VvXcUDbw==
   dependencies:
     invariant "^2.2.4"
 
-expo-location@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-6.0.0.tgz#da4e22ee5aa951d2c65d94f9916323eb4b3f8a01"
-  integrity sha512-5uSebmZos0DKJ/xpi+2e9myWVPUWk+fshFedi55wzlGqy2YpTG5MlDcCLlJlamgJ5Tm8+3ECdhbFX3g1pNRDVQ==
-  dependencies:
-    invariant "^2.2.4"
-
-expo-permissions@^7.0.0:
+expo-permissions@^7.0.0, expo-permissions@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-7.0.0.tgz#f4135c3cf8e49c673a9a714459a1eb2b40fe2092"
   integrity sha512-C+qyVz+pdZO4YpVR2HSC3gsBZg0Qb8brCFgzmDmWcAtgrOiHClaLPdhI2XtQuGh8ubXcKPUGZp++UCEGiG0Jxg==
 
-expo-permissions@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-6.0.0.tgz#2943f1aa98de833b88cea73cf03d18d08957cb68"
-  integrity sha512-O+RdyfGiq7i+5Vi9fE38DgKn436lNWiqhnS5/Z7CC00bmKahhjVMNDbZvNn/nrdRGyaPneJk1Co1s1sexSnv0A==
-
-expo-sqlite@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-6.0.0.tgz#e7fe36b493a2230afdc77bdaedeab5f031690390"
-  integrity sha512-M8heovLeJoq7tb4f7PipDu0dqHSklbI2EqNvDM8XLjSZdSv6CqCMHg5Kvx0L9CLYTchjzktDPClZKjgvtGOVug==
+expo-sqlite@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-7.0.0.tgz#f52585b342278b4034c06caac8384edb2531afa4"
+  integrity sha512-mUA+YiE42sD7jI64kP+Zmhwzk13KoLVSFGJz5HeuAuIoO1EwVlAH4g+RQQye5/NsFM6clVRvKhIxv2L2XIVEcw==
   dependencies:
     "@expo/websql" "^1.0.1"
     "@types/websql" "^0.0.27"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
 
-expo-web-browser@~6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-6.0.0.tgz#63a59d4c02cd7ba47faa6a2eb04decb1a1ab2a32"
-  integrity sha512-7XkFPd4PRlVP6FscTnn78c0tY6+yLzb2Eai/ed+l+LB+hZWuhyY3ONzYM7/IKAiPmfhZr4Qs80vIa7iiavti8A==
+expo-web-browser@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-7.0.0.tgz#97d72fe8389079c8da4208eaedfe85247b5bd704"
+  integrity sha512-zQ0mms8djq9mBcJlV3GxmlOkiCaJqQx+OZ8jk7s4SwCVTtvuCR4LMNHW8oG9tBUNhnvF7vYTE7m64WZf9fgJRA==
 
-expo@^34.0.4:
-  version "34.0.4"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-34.0.4.tgz#af6ef0da40c98981b5f3323c86fd815dfa417fff"
-  integrity sha512-sZQQoZnN5ASrkSA4qSsk7HPBewHB6b3k9VPZvchT0FBZ1fP5vpmzfIbVOqOLRXHf2VdjNnQVme617TnpPlruJg==
+expo@^35.0.0:
+  version "35.0.0"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-35.0.0.tgz#79649c9dbcc8bd2066d50642b30eebb55907ee4e"
+  integrity sha512-DnwcDiRds+y4C+XsfvFnyG8c/vJZWx9RYgcDn0yhu07LtQ2osxKnqSm5eko3uAU3jFYxGUxdlN1xs9p1u0MDXg==
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@expo/vector-icons" "^10.0.2"
@@ -3104,21 +3160,21 @@ expo@^34.0.4:
     "@types/lodash.zipobject" "^4.1.4"
     "@types/qs" "^6.5.1"
     "@types/uuid-js" "^0.7.1"
-    "@unimodules/core" "~3.0.0"
-    "@unimodules/react-native-adapter" "~3.0.0"
-    babel-preset-expo "^6.0.0"
+    "@unimodules/core" "~4.0.0"
+    "@unimodules/react-native-adapter" "~4.0.0"
+    babel-preset-expo "~7.0.0"
     cross-spawn "^6.0.5"
-    expo-app-loader-provider "~6.0.0"
-    expo-asset "~6.0.0"
-    expo-constants "~6.0.0"
-    expo-file-system "~6.0.0"
-    expo-font "~6.0.1"
-    expo-keep-awake "~6.0.0"
-    expo-linear-gradient "~6.0.0"
-    expo-location "~6.0.0"
-    expo-permissions "~6.0.0"
-    expo-sqlite "~6.0.0"
-    expo-web-browser "~6.0.0"
+    expo-app-loader-provider "~7.0.0"
+    expo-asset "~7.0.0"
+    expo-constants "~7.0.0"
+    expo-file-system "~7.0.0"
+    expo-font "~7.0.0"
+    expo-keep-awake "~7.0.0"
+    expo-linear-gradient "~7.0.0"
+    expo-location "~7.0.0"
+    expo-permissions "~7.0.0"
+    expo-sqlite "~7.0.0"
+    expo-web-browser "~7.0.0"
     fbemitter "^2.1.1"
     invariant "^2.2.2"
     lodash "^4.6.0"
@@ -3130,16 +3186,16 @@ expo@^34.0.4:
     react-native-branch "~3.0.1"
     react-native-view-shot "2.6.0"
     serialize-error "^2.1.0"
-    unimodules-barcode-scanner-interface "~3.0.0"
-    unimodules-camera-interface "~3.0.0"
-    unimodules-constants-interface "~3.0.0"
-    unimodules-face-detector-interface "~3.0.0"
-    unimodules-file-system-interface "~3.0.0"
-    unimodules-font-interface "~3.0.0"
-    unimodules-image-loader-interface "~3.0.0"
-    unimodules-permissions-interface "~3.0.0"
-    unimodules-sensors-interface "~3.0.0"
-    unimodules-task-manager-interface "~3.0.0"
+    unimodules-barcode-scanner-interface "~4.0.0"
+    unimodules-camera-interface "~4.0.0"
+    unimodules-constants-interface "~4.0.0"
+    unimodules-face-detector-interface "~4.0.0"
+    unimodules-file-system-interface "~4.0.0"
+    unimodules-font-interface "~4.0.0"
+    unimodules-image-loader-interface "~4.0.0"
+    unimodules-permissions-interface "~4.0.0"
+    unimodules-sensors-interface "~4.0.0"
+    unimodules-task-manager-interface "~4.0.0"
     uuid-js "^0.7.5"
 
 extend-shallow@^1.1.2:
@@ -3726,7 +3782,7 @@ haversine@^1.1.1:
   resolved "https://registry.yarnpkg.com/haversine/-/haversine-1.1.1.tgz#05b65e0445aca8f217b0db56877e4d637d3fc8ae"
   integrity sha512-KW4MS8+krLIeiw8bF5z532CptG0ZyGGFj0UbKMxx25lKnnJ1hMUbuzQl+PXQjNiDLnl1bOyz23U6hSK10r4guw==
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.3.1:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
@@ -4340,13 +4396,15 @@ jest-environment-node@^24.9.0:
     jest-mock "^24.9.0"
     jest-util "^24.9.0"
 
-jest-expo@^34.0.1:
-  version "34.0.1"
-  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-34.0.1.tgz#0711b35adb0fa3d543d13de66b0bcdd9b7c7bbc8"
-  integrity sha512-Ai1AJMx+cUlNFEx1w6Nu6veve9TKRq0+wr24UHCVbsjgZ+I5V2tg4//nHUKWEiOWYskw3ziCakpi4puDWUB9YQ==
+jest-expo@^35.0.0:
+  version "35.0.0"
+  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-35.0.0.tgz#42b7c17d565b0b401969b33cbac2a3e56777ab2b"
+  integrity sha512-EfjBcvj/5HCBzEXbr3FZLTJ+wZ2Bm/Jkoq8GueAsk5uFjwLqVXnvF0ZzCvNVPwCi5r1+NaKI590S+7Pew1CRTQ==
   dependencies:
     babel-jest "^24.7.1"
     jest "^24.7.1"
+    jest-watch-select-projects "^1.0.0"
+    jest-watch-typeahead "^0.4.0"
     json5 "^2.1.0"
     lodash "^4.5.0"
     react-test-renderer "~16.8.3"
@@ -4602,7 +4660,28 @@ jest-validate@^24.9.0:
     leven "^3.1.0"
     pretty-format "^24.9.0"
 
-jest-watcher@^24.9.0:
+jest-watch-select-projects@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jest-watch-select-projects/-/jest-watch-select-projects-1.0.0.tgz#c876d787006b42c52f1a7dad2cfca5e929eaa283"
+  integrity sha512-8zO2NNeTQG5+o9BYi4n6Idp8QZzCQdirpTel5iaed9911ktDKV0VTdiu0tYvDOoAbdfH4itTM4gR6lcJ2ATc/w==
+  dependencies:
+    ansi-escapes "^3.1.0"
+    chalk "^2.4.1"
+    prompts "^2.2.1"
+
+jest-watch-typeahead@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/jest-watch-typeahead/-/jest-watch-typeahead-0.4.0.tgz#4d5356839a85421588ce452d2440bf0d25308397"
+  integrity sha512-bJR/HPNgOQnkmttg1OkBIrYFAYuxFxExtgQh67N2qPvaWGVC8TCkedRNPKBfmZfVXFD3u2sCH+9OuS5ApBfCgA==
+  dependencies:
+    ansi-escapes "^4.2.1"
+    chalk "^2.4.1"
+    jest-watcher "^24.3.0"
+    slash "^3.0.0"
+    string-length "^3.1.0"
+    strip-ansi "^5.0.0"
+
+jest-watcher@^24.3.0, jest-watcher@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-watcher/-/jest-watcher-24.9.0.tgz#4b56e5d1ceff005f5b88e528dc9afc8dd4ed2b3b"
   integrity sha512-+/fLOfKPXXYJDYlks62/4R4GoT+GU1tYZed99JSCOsmzkkF7727RqKrjNAxtfO4YpGv11wybgRvCjR73lK2GZw==
@@ -4828,7 +4907,7 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
-kleur@^3.0.2:
+kleur@^3.0.2, kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
@@ -5081,6 +5160,13 @@ metro-babel7-plugin-react-transform@0.51.1:
   dependencies:
     "@babel/helper-module-imports" "^7.0.0"
 
+metro-babel7-plugin-react-transform@0.54.1:
+  version "0.54.1"
+  resolved "https://registry.yarnpkg.com/metro-babel7-plugin-react-transform/-/metro-babel7-plugin-react-transform-0.54.1.tgz#5335b810284789724886dc483d5bde9c149a1996"
+  integrity sha512-jWm5myuMoZAOhoPsa8ItfDxdTcOzKhTTzzhFlbZnRamE7i9qybeMdrZt8KHQpF7i2p/mKzE9Yhf4ouOz5K/jHg==
+  dependencies:
+    "@babel/helper-module-imports" "^7.0.0"
+
 metro-cache@0.51.1:
   version "0.51.1"
   resolved "https://registry.yarnpkg.com/metro-cache/-/metro-cache-0.51.1.tgz#d0b296eab8e009214413bba87e4eac3d9b44cd04"
@@ -5204,6 +5290,48 @@ metro-react-native-babel-preset@0.51.1, metro-react-native-babel-preset@^0.51.1:
     "@babel/plugin-transform-unicode-regex" "^7.0.0"
     "@babel/template" "^7.0.0"
     metro-babel7-plugin-react-transform "0.51.1"
+    react-transform-hmr "^1.0.4"
+
+metro-react-native-babel-preset@^0.54.1:
+  version "0.54.1"
+  resolved "https://registry.yarnpkg.com/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.54.1.tgz#b8f03865c381841d7f8912e7ba46804ea3a928b8"
+  integrity sha512-Hfr32+u5yYl3qhYQJU8NQ26g4kQlc3yFMg7keVR/3H8rwBIbFqXgsKt8oe0dOrv7WvrMqBHhDtVdU9ls3sSq8g==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.0.0"
+    "@babel/plugin-proposal-export-default-from" "^7.0.0"
+    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.0.0"
+    "@babel/plugin-proposal-object-rest-spread" "^7.0.0"
+    "@babel/plugin-proposal-optional-catch-binding" "^7.0.0"
+    "@babel/plugin-proposal-optional-chaining" "^7.0.0"
+    "@babel/plugin-syntax-dynamic-import" "^7.0.0"
+    "@babel/plugin-syntax-export-default-from" "^7.0.0"
+    "@babel/plugin-syntax-flow" "^7.2.0"
+    "@babel/plugin-transform-arrow-functions" "^7.0.0"
+    "@babel/plugin-transform-block-scoping" "^7.0.0"
+    "@babel/plugin-transform-classes" "^7.0.0"
+    "@babel/plugin-transform-computed-properties" "^7.0.0"
+    "@babel/plugin-transform-destructuring" "^7.0.0"
+    "@babel/plugin-transform-exponentiation-operator" "^7.0.0"
+    "@babel/plugin-transform-flow-strip-types" "^7.0.0"
+    "@babel/plugin-transform-for-of" "^7.0.0"
+    "@babel/plugin-transform-function-name" "^7.0.0"
+    "@babel/plugin-transform-literals" "^7.0.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.0.0"
+    "@babel/plugin-transform-object-assign" "^7.0.0"
+    "@babel/plugin-transform-parameters" "^7.0.0"
+    "@babel/plugin-transform-react-display-name" "^7.0.0"
+    "@babel/plugin-transform-react-jsx" "^7.0.0"
+    "@babel/plugin-transform-react-jsx-source" "^7.0.0"
+    "@babel/plugin-transform-regenerator" "^7.0.0"
+    "@babel/plugin-transform-runtime" "^7.0.0"
+    "@babel/plugin-transform-shorthand-properties" "^7.0.0"
+    "@babel/plugin-transform-spread" "^7.0.0"
+    "@babel/plugin-transform-sticky-regex" "^7.0.0"
+    "@babel/plugin-transform-template-literals" "^7.0.0"
+    "@babel/plugin-transform-typescript" "^7.0.0"
+    "@babel/plugin-transform-unicode-regex" "^7.0.0"
+    "@babel/template" "^7.0.0"
+    metro-babel7-plugin-react-transform "0.54.1"
     react-transform-hmr "^1.0.4"
 
 metro-react-native-babel-transformer@0.51.0:
@@ -6073,15 +6201,6 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-plist@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/plist/-/plist-2.0.1.tgz#0a32ca9481b1c364e92e18dc55c876de9d01da8b"
-  integrity sha1-CjLKlIGxw2TpLhjcVch23p0B2os=
-  dependencies:
-    base64-js "1.1.2"
-    xmlbuilder "8.2.2"
-    xmldom "0.1.x"
-
 plist@^3.0.0, plist@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.1.tgz#a9b931d17c304e8912ef0ba3bdd6182baf2e1f8c"
@@ -6200,6 +6319,14 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
+prompts@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.2.1.tgz#f901dd2a2dfee080359c0e20059b24188d75ad35"
+  integrity sha512-VObPvJiWPhpZI6C5m60XOzTfnYg/xc/an+r9VYymj9WJW3B/DIH+REzjpAACPf8brwPeP+7vz3bIim3S+AaMjw==
+  dependencies:
+    kleur "^3.0.3"
+    sisteransi "^1.0.3"
+
 prop-types@>=15.6.1, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
@@ -6289,11 +6416,6 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-raven-js@^3.24.2:
-  version "3.27.2"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.27.2.tgz#6c33df952026cd73820aa999122b7b7737a66775"
-  integrity sha512-mFWQcXnhRFEQe5HeFroPaEghlnqy7F5E2J3Fsab189ondqUzcjwSVi7el7F36cr6PvQYXoZ1P2F5CSF2/azeMQ==
-
 rc@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
@@ -6327,11 +6449,6 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-lifecycles-compat@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
-  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-
 react-native-branch@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-3.0.1.tgz#5b07b61cbd290168cd3c3662e017ebe0f356d2ca"
@@ -6356,7 +6473,7 @@ react-native-maps@^0.24.2:
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
   integrity sha512-1iNIDikp2dkCG+8DguaEviYZiMSYyvwqYT7pO2YTZvuFRDSc/P9jXMhTUnSh4wNDlEeQ47OJ09l0pwWVBZ7wxg==
 
-react-native-reanimated@1.2.0:
+react-native-reanimated@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.2.0.tgz#9219227a52a5dfa4d34c324596d6726ccd874293"
   integrity sha512-vkWRHrPK5qfHP/ZawlRoo38oeYe9NZaaOH/lmFxRcsKzaSK6x3H5ZPXI8lK6MfTLveqwo1QhJje3zIKXO4nQQw==
@@ -6382,14 +6499,6 @@ react-native-scroll-into-view@^1.0.3:
   dependencies:
     prop-types ">=15.6.1"
 
-react-native-sentry@^0.42.0:
-  version "0.42.0"
-  resolved "https://registry.yarnpkg.com/react-native-sentry/-/react-native-sentry-0.42.0.tgz#9cd59659d9b6cd36d6fc4c48f50613cd82cde25f"
-  integrity sha512-Nt3/yDSiK0QCtuWMEX04e4DJ3sWyMbjUPiiRNs3omD0rCzt51i4F5/fORDz7aMuYH2tSUw6RWCfJmxc3ILvx7Q==
-  dependencies:
-    "@sentry/wizard" "^0.12.1"
-    raven-js "^3.24.2"
-
 react-native-size-matters@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.2.1.tgz#036a139eb4257682a412cf33bb2089726fe636f3"
@@ -6400,21 +6509,14 @@ react-native-svg@*:
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.5.3.tgz#2389f3ffd700c6441166496a1aeade31ead89c59"
   integrity sha512-VUOe4TLz7RFdmm/XT9EH87VSwlRykx49qbwJMA+dh9eFM7KPY1qH3kEyN7uRCqJD2eE8toxt9NpjR6ByvtPNlA==
 
-react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-1.4.1.tgz#f113cd87485808f0c991abec937f70fa380478b9"
-  integrity sha512-Bke8KkDcDhvB/z0AS7MnQKMD2p6Kwfc1rSKlMOvg9CC5CnClQ2QEnhPSbwegKDYhUkBI92iH/BYy7hNSm5kbUQ==
-  dependencies:
-    prop-types "^15.6.1"
-
 react-native-view-shot@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"
   integrity sha512-yO9vWi/11m2hEJl8FrW1SMeVzFfPtMKh20MUInGqlsL0H8Ya2JGGlFfrBzx1KiFR2hFb5OdsTLYNtcVZtJ6pLQ==
 
-"react-native@https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz":
+"react-native@https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz":
   version "0.59.8"
-  resolved "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz#717c25bde6007a70e9f206ef4360999dae18e7b0"
+  resolved "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz#cf62758ae75b5df304836ad9971239abdb240587"
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^1.2.1"
@@ -6467,38 +6569,20 @@ react-native-view-shot@2.6.0:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation-drawer@~1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-1.2.1.tgz#7bd5efeee7d2f611d3ebb0933e0c8e8eb7cafe52"
-  integrity sha512-T2kaBjY2c4/3I6noWFnaf/c18ntNH5DsST38i+pdc2NPxn5Yi5lkK+ZZTeKuHSFD4a7G0jWY9OGf1iRkHWLMAQ==
+react-navigation-stack@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.8.1.tgz#88602596239b4a238285f3dd1860bb74f7aa2a74"
+  integrity sha512-XOkHuYlQjZKnD4jTU0Ml847sKjpwsJpQ6JX4ZfOq8D0e6fPWXbpYNhvUnzHMHMm+tnbhTqkqP1Umu40Hmx748Q==
   dependencies:
-    react-native-tab-view "^1.2.0"
+    prop-types "^15.7.2"
 
-react-navigation-stack@~1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.4.0.tgz#69cdb029ea4ee5877d7e933b3117dc90bc841eb2"
-  integrity sha512-zEe9wCA0Ot8agarYb//0nSWYW1GM+1R0tY/nydUV0EizeJ27At0EklYVWvYEuYU6C48va6cu8OPL7QD/CcJACw==
-
-react-navigation-tabs@~1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-1.1.4.tgz#00a312250df3c519c60b7815a523ace5ee11163a"
-  integrity sha512-py2hLCRxPwXOzmY1W9XcY1rWXxdK6RGW/aXh56G9gIf8cpHNDhy/bJV4e46/JrVcse3ybFaN0liT09/DM/NdwQ==
+react-navigation@^4.0.6:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-4.0.7.tgz#cc7ce334fef009242494d623e50e9cf79eb63ddd"
+  integrity sha512-0tTWanq870Hyr1VGHuj98+myRHNQnKgpRgjgzhAwVuLShyPIB9OnoLGIwIcqEdxgxGo+JMFmIGg8KCr7xapfgg==
   dependencies:
-    hoist-non-react-statics "^2.5.0"
-    prop-types "^15.6.1"
-    react-lifecycles-compat "^3.0.4"
-    react-native-tab-view "^1.4.1"
-
-react-navigation@^3.11.1:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-3.11.1.tgz#ba696ad6b512088a97a20cc7e6a250c53dbddd26"
-  integrity sha512-n64HxLG5s5ucVFo1Gs+D9ujChhHDd98lpQ1p27wL7gq8V1PaRJMvsBEIsguhtc2rTIL/TWDynOesXQDG+Eg6FQ==
-  dependencies:
-    "@react-navigation/core" "~3.4.1"
-    "@react-navigation/native" "~3.5.0"
-    react-navigation-drawer "~1.2.1"
-    react-navigation-stack "~1.4.0"
-    react-navigation-tabs "~1.1.4"
+    "@react-navigation/core" "^3.5.1"
+    "@react-navigation/native" "^3.6.2"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -6973,14 +7057,16 @@ send@0.17.1:
     range-parser "~1.2.1"
     statuses "~1.5.0"
 
-sentry-expo@~1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-1.13.0.tgz#83cc46a59305a8504bf3b8364895d941f8deba1c"
-  integrity sha512-dhudbX0DL4Bobi5mMoX7wz/DXLC9NOs6Wy2YpHDrBSfedygmx3KWvFsaXY3cn4bCZ1T+lEAAy0yaKUrj421Qkw==
+sentry-expo@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-2.0.0.tgz#e72e5e2cc85d5c7c3bfa3ace2564262e1f68a663"
+  integrity sha512-Cn7gyU2ApD1GR9QafwZ1WFiReQzqRA0xK2FEnGreyhD1cb5Xvbwz1zB9NwvPxiLqPypy1QMcgkA3Mxp3qMobKA==
   dependencies:
     "@expo/spawn-async" "^1.2.8"
+    "@sentry/integrations" "^5.5.0"
+    "@sentry/react-native" "^1.0.0"
+    expo-constants "*"
     mkdirp "^0.5.1"
-    react-native-sentry "^0.42.0"
     rimraf "^2.6.1"
 
 serialize-error@^2.1.0:
@@ -7055,15 +7141,6 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-simple-plist@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/simple-plist/-/simple-plist-0.2.1.tgz#71766db352326928cf3a807242ba762322636723"
-  integrity sha1-cXZts1IyaSjPOoByQrp2IyJjZyM=
-  dependencies:
-    bplist-creator "0.0.7"
-    bplist-parser "0.1.1"
-    plist "2.0.1"
-
 simple-plist@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/simple-plist/-/simple-plist-1.0.0.tgz#bed3085633b22f371e111f45d159a1ccf94b81eb"
@@ -7078,10 +7155,20 @@ sisteransi@^1.0.0:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.2.tgz#ec57d64b6f25c4f26c0e2c7dd23f2d7f12f7e418"
   integrity sha512-ZcYcZcT69nSLAR2oLN2JwNmLkJEKGooFMCdvOkFrToUt/WfcRWqhIg4P4KwY4dmLbuyXIx4o4YmPsvMRJYJd/w==
 
+sisteransi@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.3.tgz#98168d62b79e3a5e758e27ae63c4a053d748f4eb"
+  integrity sha512-SbEG75TzH8G7eVXFSN5f9EExILKfly7SUvVY5DhhYLvfhKqhDFY0OzevWa/zwak0RLRfWS5AvfMWpd9gJvr5Yg==
+
 slash@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
   integrity sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
+
+slash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
+  integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
 slice-ansi@^2.1.0:
   version "2.1.0"
@@ -7264,6 +7351,14 @@ string-length@^2.0.0:
   dependencies:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
+
+string-length@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/string-length/-/string-length-3.1.0.tgz#107ef8c23456e187a8abd4a61162ff4ac6e25837"
+  integrity sha512-Ttp5YvkGm5v9Ijagtaz1BnN+k9ObpvS0eIBblPMp2YWL8FBmi9qblQ9fexc2k/CXFgrTIteU3jAw3payCnwSTA==
+  dependencies:
+    astral-regex "^1.0.0"
+    strip-ansi "^5.2.0"
 
 string-width@^1.0.1:
   version "1.0.2"
@@ -7532,7 +7627,7 @@ ts-jest@^24.0.2:
     semver "^5.5"
     yargs-parser "10.x"
 
-tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
@@ -7562,6 +7657,11 @@ type-check@~0.3.2:
   integrity sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=
   dependencies:
     prelude-ls "~1.1.2"
+
+type-fest@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.5.2.tgz#d6ef42a0356c6cd45f49485c3b6281fc148e48a2"
+  integrity sha512-DWkS49EQKVX//Tbupb9TFa19c7+MK1XmzkrZUR8TAktmE/DizXoaoJV6TZ/tSIPXipqNiRI6CyAe7x69Jb6RSw==
 
 typedarray-to-buffer@^3.1.2:
   version "3.1.5"
@@ -7634,55 +7734,55 @@ unicode-property-aliases-ecmascript@^1.0.4:
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.0.5.tgz#a9cc6cc7ce63a0a3023fc99e341b94431d405a57"
   integrity sha512-L5RAqCfXqAwR3RriF8pM0lU0w4Ryf/GgzONwi6KnL1taJQa7x1TCxdJnILX59WIGOwR57IVxn7Nej0fz1Ny6fw==
 
-unimodules-barcode-scanner-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-barcode-scanner-interface/-/unimodules-barcode-scanner-interface-3.0.0.tgz#2ec52201ee1f0e10af3b03ed49862d6b6937cf10"
-  integrity sha512-EtJBfKU5VgZbyIfIZwyWfUo59pIgW6s7YGzlpj9jk4UWKyqqhYT/FoaZqudCJcPcfh2eYxkc9VxBGieRBpQrzg==
+unimodules-barcode-scanner-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-barcode-scanner-interface/-/unimodules-barcode-scanner-interface-4.0.0.tgz#69c54ef0d25448dc380de9ca3b0cba3daa2a94c4"
+  integrity sha512-XAW+8s7w/dQ514I/SPfBKHPmbaCOEpYAkdn1aaBoWocVfdvOKf8SqwHSIaP2W/SFUwWNRF4Wqv2HBt1dvuhSSg==
 
-unimodules-camera-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-camera-interface/-/unimodules-camera-interface-3.0.0.tgz#2869f0868a9e2c65bd2346f0a67d93bc96509676"
-  integrity sha512-STjf1FAdYlN27ilJSR4kIUYyHTPrkQSR/mEg4S4pZX6tazmcuG2KzLCXCoV+xMWsrwmsMBjgLzw6yzg87N5Ydw==
+unimodules-camera-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-camera-interface/-/unimodules-camera-interface-4.0.0.tgz#234c28f4d326ef3e30f15572c07e528557485619"
+  integrity sha512-rEYD3mKarxzgiWWL8J0mPAxzV4i1WI9DsNMRxyV2T7qC/WWIucroZX72O1BkYjUbIKerGmJWeGYbWHheP4/rsA==
 
-unimodules-constants-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-constants-interface/-/unimodules-constants-interface-3.0.0.tgz#991f823369da27362e8633a7dac680fb530e5569"
-  integrity sha512-S4ap11UJH7D+Y4fXC7DyMNAkqIWD8B7rNCTS30wAF9beHXMZa1Od66rkJgSHqFRURy06h+Jr7qfJm9H5mtMz8Q==
+unimodules-constants-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-constants-interface/-/unimodules-constants-interface-4.0.0.tgz#c71be663a442b43eed773451a4f366a1c47821ac"
+  integrity sha512-FTM64GP+uawURWhuExrsCMebpcu0DdREUCuUmes5qd3/uTM2gqmhbm/ZwSKviH/ar4h630Fdb6P6v9o4MDInbA==
 
-unimodules-face-detector-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-face-detector-interface/-/unimodules-face-detector-interface-3.0.0.tgz#5752a00156a6de470944161040b845a1f1ae84b0"
-  integrity sha512-fMQ3ZnhdOjbQ5ZXW62s/t1bbqBaenxzVIcgVEcwvLIFek0mx/EMHFkySgFkFjU11icUvaPEXW1yJtkK4QEpLhg==
+unimodules-face-detector-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-face-detector-interface/-/unimodules-face-detector-interface-4.0.0.tgz#c68e44d5363d3dfea6f697d983254ac199555074"
+  integrity sha512-ZFzqcNnJkBxvfdKCupvtQUj1yVJkzKivPGV6nydKZc9eJRLUgSXCUWtvXd0vaet1NSQqr2R3r6Ilvj0DzuCzUA==
 
-unimodules-file-system-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-file-system-interface/-/unimodules-file-system-interface-3.0.0.tgz#0ada7a89e3046d2fa4dd1853b867fe8ae3994561"
-  integrity sha512-LkLIKRE3CwsXLRFw8vx0++Cfjj+pAvvidVb7yhGWKFmNlVaWUW9Z8jkhFLBFXDsGFAOU69bUTrz25jmB2MRt0Q==
+unimodules-file-system-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-file-system-interface/-/unimodules-file-system-interface-4.0.0.tgz#e8514882a81cd350b69c6026fd52b6d99ba289c9"
+  integrity sha512-dDcKjArDwY3CXLlCL8tf9/JJG25K2lgtAL+560kqrftLu3pi0x5V7JmSDz52pJ4pLd5xL8s1Rzse+rIr5OpM3g==
 
-unimodules-font-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-font-interface/-/unimodules-font-interface-3.0.0.tgz#e38dfc0932e9a84c5b8091eeb6735170fa86d85e"
-  integrity sha512-DOQI0uTn7CGvA9lNUuiTWfQYuKQEM8LZKn6gNS8G+HVHVb+TZl/37qdhuoMBi5jkAZ4VOD/GpgnPv8qr0pJi1Q==
+unimodules-font-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-font-interface/-/unimodules-font-interface-4.0.0.tgz#a72d7c75d81dface00c48f523730c15ddf10fbce"
+  integrity sha512-RFD1H405kZy8oYcg7f9Krr+UTUn6EZTcqAb+wRL6Ex9TJmzmxJT6JZ0FsUMezOUEwrdvXRpArH4P1AadHlzzGA==
 
-unimodules-image-loader-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-image-loader-interface/-/unimodules-image-loader-interface-3.0.0.tgz#49e371fdf3fc4acf382f726cfac643d5c08b051f"
-  integrity sha512-hC/VWdT33GkOZ4FLaqPoKGNKxhw+miFhM+7Re57snWIWYewSv0lRvCqqwc/hbGLocvd2qF3YYrBx9woqPI8NzA==
+unimodules-image-loader-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-image-loader-interface/-/unimodules-image-loader-interface-4.0.0.tgz#92452bfcba5e95b4fc3aba657a5863946d1ccf93"
+  integrity sha512-tv7g1YmZq9ZnG/x9l3qSlpEn93ZuMD+FuQpOZj3/oGDkBlc27vtBSEi8lTySWb9U7UK+bNlHGFqf1lGZcFU1Ug==
 
-unimodules-permissions-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-permissions-interface/-/unimodules-permissions-interface-3.0.0.tgz#c8396a1b697b116801cfcb3b52466b87380a5b78"
-  integrity sha512-rfyGDBMtO8IOlk9hJN44EKz7vk6nt/PXByAumsptRdgsd+knokMlaWGYatrxKW2g/08WUbEkgKspvMxjJ0M1Tg==
+unimodules-permissions-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-permissions-interface/-/unimodules-permissions-interface-4.0.0.tgz#c5e044921f5d5867552c991100a5824962fd6b72"
+  integrity sha512-bVZ6JQMO12WvAv6YqcHaPV5KekV7WH606eRiMJq5Qwm2z9yGSM+KaOxOH/n2LVcYckForphsCLf58OGVUtM65Q==
 
-unimodules-sensors-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-sensors-interface/-/unimodules-sensors-interface-3.0.0.tgz#9591b7015fae5c2752652a4cdc294f7734489ea1"
-  integrity sha512-1JJT/lqCfxHqUSJc3o6b0WUply/lFOJjcuzN0QcAfmdAW8d+lEXA7BJ7DV/Nn/OKpMlHriEyxkM+FoGoXKJJcg==
+unimodules-sensors-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-sensors-interface/-/unimodules-sensors-interface-4.0.0.tgz#7f8250b732f7aa0560e04537bea547f304f45c0b"
+  integrity sha512-O7l+N2DLwviTc6gz/ptV7a930Sdo30AvzQLEJPHfqj4e9fCdbrHNrcPqiq0CLqHYYIsdpSDpC6wCWmepLaAgJQ==
 
-unimodules-task-manager-interface@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-task-manager-interface/-/unimodules-task-manager-interface-3.0.0.tgz#26f31786eb54dfa5839ca71bf9a77b9c2b4cf4cb"
-  integrity sha512-og4UiUOxc7PqT8uQQqXY+pOBvdS204xmgyUG2AjM2L3kVsw/6WH4pIW084WG8/e9M5SLsSXdrjecIUBQ/zLf8w==
+unimodules-task-manager-interface@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/unimodules-task-manager-interface/-/unimodules-task-manager-interface-4.0.0.tgz#2cf1949ef041ebbd6d9a32d799d1640e1d8f03d7"
+  integrity sha512-c7x5hgEtT+oIVd37TBn2jxlTw2+Bgb55XZ2Md0AV5NCjeRlKw2bIBPwUvSdI1iAziSQOIGOImNaaIUo3L3zW3w==
 
 union-value@^1.0.0:
   version "1.0.1"
@@ -7759,11 +7859,6 @@ uuid-js@^0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/uuid-js/-/uuid-js-0.7.5.tgz#6c886d02a53d2d40dcf25d91a170b4a7b25b94d0"
   integrity sha1-bIhtAqU9LUDc8l2RoXC0p7JblNA=
-
-uuid@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
-  integrity sha1-ZUS7ot/ajBzxfmKaOjBeK7H+5sE=
 
 uuid@^3.3.2:
   version "3.3.2"
@@ -7959,7 +8054,7 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-xcode@^2.0.0:
+xcode@2.0.0, xcode@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/xcode/-/xcode-2.0.0.tgz#134f1f94c26fbfe8a9aaa9724bfb2772419da1a2"
   integrity sha512-5xF6RCjAdDEiEsbbZaS/gBRt3jZ/177otZcpoLCjGN/u1LrfgH7/Sgeeavpr/jELpyDqN2im3AKosl2G2W8hfw==
@@ -7967,22 +8062,10 @@ xcode@^2.0.0:
     simple-plist "^1.0.0"
     uuid "^3.3.2"
 
-"xcode@https://github.com/apache/cordova-node-xcode#e7646f0680d509b590b839e567c217590451505b":
-  version "1.0.1-dev"
-  resolved "https://github.com/apache/cordova-node-xcode#e7646f0680d509b590b839e567c217590451505b"
-  dependencies:
-    simple-plist "^0.2.1"
-    uuid "3.0.1"
-
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
-
-xmlbuilder@8.2.2:
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
-  integrity sha1-aSSGc0ELS6QuGmE2VR0pIjNap3M=
 
 xmlbuilder@^9.0.7:
   version "9.0.7"

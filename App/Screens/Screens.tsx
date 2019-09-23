@@ -18,9 +18,16 @@ import React, { useContext } from 'react';
 import { View } from 'react-native';
 import {
   createAppContainer,
-  createStackNavigator,
-  StackNavigatorConfig
+  CreateNavigatorConfig,
+  NavigationRoute,
+  NavigationStackRouterConfig
 } from 'react-navigation';
+import {
+  createStackNavigator,
+  NavigationStackConfig,
+  NavigationStackOptions,
+  NavigationStackProp
+} from 'react-navigation-stack';
 
 import { About } from './About';
 import { Details } from './Details';
@@ -37,12 +44,17 @@ function stackNavigatorOptions (initialRouteName: string) {
     cardStyle: {
       backgroundColor: theme.backgroundColor
     },
-    headerMode: 'none' as 'none',
+    headerMode: 'none',
     initialRouteName,
     defaultNavigationOptions: {
       headerVisible: false
     }
-  } as StackNavigatorConfig;
+  } as CreateNavigatorConfig<
+    NavigationStackConfig,
+    NavigationStackRouterConfig,
+    NavigationStackOptions,
+    NavigationStackProp<NavigationRoute, any>
+  >;
 }
 
 /**
