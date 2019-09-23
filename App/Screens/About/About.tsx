@@ -79,7 +79,10 @@ export function About (props: AboutProps) {
       scrollIntoViewOptions={scrollViewOptions}
       style={theme.withPadding}
     >
-      <BackButton onPress={() => navigation.pop()} style={styles.backButton} />
+      <BackButton
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      />
 
       <View style={styles.section}>
         <Text style={styles.h2}>

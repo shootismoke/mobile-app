@@ -17,7 +17,6 @@
       "algoliaApplicationId": "YOUR_KEY",
       "amplitudeApiKey": "YOUR_KEY",
       "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
-      "locationIqKey": "YOUR_KEY",
       "sentryPublicDsn": "YOUR_KEY",
       "waqiToken": "YOUR_KEY"
     },

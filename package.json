@@ -17,7 +17,7 @@
     "@types/expo": "^32.0.13",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
-    "@types/node": "^12.7.2",
+    "@types/node": "^12.7.5",
     "@types/react-native": "^0.60.15",
     "axios": "^0.19.0",
     "date-fns": "^2.2.1",
@@ -35,7 +35,7 @@
     "io-ts": "^2.0.1",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
-    "react-native-gesture-handler": "~1.4.1",
+    "react-native-gesture-handler": "~1.3.0",
     "react-native-maps": "^0.24.2",
     "react-native-reanimated": "~1.2.0",
     "react-native-scroll-into-view": "^1.0.3",
@@ -64,7 +64,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
     "jest-expo": "^35.0.0",
-    "ts-jest": "^24.0.2",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.3"
   }
 }

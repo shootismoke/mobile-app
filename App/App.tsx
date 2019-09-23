@@ -40,27 +40,33 @@ if (Constants.manifest.extra.sentryPublicDsn) {
   }
 }
 
-// Add Amplitude if available
-if (Constants.manifest.extra.amplitudeApiKey) {
-  Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey);
-  Amplitude.setUserProperties({
-    sisReleaseChannel: Constants.manifest.releaseChannel || 'development',
-    sisVersion: Constants.manifest.version
-  });
-}
-
 export function App () {
-  const [fontLoaded, setFontLoaded] = useState(false);
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    Font.loadAsync({
-      'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
-      'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
-    })
-      .then(() => setFontLoaded(true))
+    Promise.all([
+      Font.loadAsync({
+        'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
+        'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
+      }),
+      // Add Amplitude if available
+      Constants.manifest.extra.amplitudeApiKey
+        ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
+          () => {
+            Amplitude.setUserProperties({
+              sisReleaseChannel:
+                  Constants.manifest.releaseChannel || 'development',
+              sisVersion: Constants.manifest.version
+            });
+          }
+        )
+        : Promise.resolve()
+    ])
+
+      .then(() => setReady(true))
       .catch(console.error);
   }, []);
 
-  return fontLoaded ? (
+  return ready ? (
     <ErrorContextProvider>
       <LocationContextProvider>
         <ApiContextProvider>

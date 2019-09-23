@@ -88,7 +88,7 @@ export function Details (props: DetailsProps) {
 
   return (
     <View style={styles.container}>
-      <Header onBackClick={() => navigation.pop()} />
+      <Header onBackClick={() => navigation.goBack()} />
       <View style={styles.mapContainer}>
         {showMap && (
           <MapView
