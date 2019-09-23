@@ -19,6 +19,8 @@ import Constants from 'expo-constants';
 import { useEffect } from 'react';
 
 type AmplitudeEvent =
+  | 'APP_REFOCUS'
+  | 'APP_EXIT'
   | 'LOADING_SCREEN_OPEN'
   | 'LOADING_SCREEN_CLOSE'
   | 'HOME_SCREEN_OPEN'
@@ -42,6 +44,20 @@ type AmplitudeEvent =
   | 'ERROR_SCREEN_OPEN'
   | 'ERROR_SCREEN_CLOSE'
   | 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
+
+export function setupAmplitude () {
+  return Constants.manifest.extra.amplitudeApiKey
+    ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
+      () => {
+        Amplitude.setUserProperties({
+          sisReleaseChannel:
+              Constants.manifest.releaseChannel || 'development',
+          sisVersion: Constants.manifest.version
+        });
+      }
+    )
+    : Promise.resolve();
+}
 
 export function track (event: AmplitudeEvent, properties?: Record<string, any>) {
   if (!Constants.manifest.extra.amplitudeApiKey) {

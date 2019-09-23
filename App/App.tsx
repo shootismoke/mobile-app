@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as Amplitude from 'expo-analytics-amplitude';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
+import { AppState } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
 import { Screens } from './Screens';
@@ -27,6 +27,7 @@ import {
   ErrorContextProvider,
   LocationContextProvider
 } from './stores';
+import { setupAmplitude, track } from './util/amplitude';
 
 // Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
@@ -49,21 +50,21 @@ export function App () {
         'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
       }),
       // Add Amplitude if available
-      Constants.manifest.extra.amplitudeApiKey
-        ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
-          () => {
-            Amplitude.setUserProperties({
-              sisReleaseChannel:
-                  Constants.manifest.releaseChannel || 'development',
-              sisVersion: Constants.manifest.version
-            });
-          }
-        )
-        : Promise.resolve()
+      setupAmplitude()
     ])
 
       .then(() => setReady(true))
       .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    AppState.addEventListener('change', state => {
+      if (state === 'active') {
+        track('APP_REFOCUS');
+      } else if (state === 'background') {
+        track('APP_EXIT');
+      }
+    });
   }, []);
 
   return ready ? (
