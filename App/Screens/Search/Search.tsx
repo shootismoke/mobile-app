@@ -109,7 +109,7 @@ export function Search (props: SearchProps) {
       <FlatList
         data={hits}
         ItemSeparatorComponent={renderSeparator}
-        keyboardShouldPersistTaps='always'
+        keyboardShouldPersistTaps="always"
         keyExtractor={({ objectID }) => objectID}
         ListEmptyComponent={renderEmptyList(
           algoliaError,
