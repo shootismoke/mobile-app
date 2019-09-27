@@ -26,7 +26,7 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 | Release Channel | Version | Description                                                                 | Url                                                                        |
 | --------------- | ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | Production      | v1.3.1  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
-| Staging         | v1.3.1  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
+| Staging         | v1.4.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
 ## :hammer: Build it yourself
 
@@ -39,7 +39,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                   |
 | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                   |
 | Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                  |
-| Amplitude Analytics     | https://amplitude.com                                                               | Optional. Note: we **never** not track PII.             |
+| Amplitude Analytics     | https://amplitude.com                                                               | Optional. Note: we **never** track PII.             |
 
 Then run the following commands:
 
