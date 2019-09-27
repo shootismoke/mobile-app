@@ -5,6 +5,7 @@ Know how many cigarettes you smoke based on the pollution of your location. :poo
 [![Travis (.org)](https://img.shields.io/travis/amaurymartiny/shoot-i-smoke.svg)](https://travis-ci.org/amaurymartiny/shoot-i-smoke)
 ![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
 [![David](https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg)](https://david-dm.org/amaurymartiny/shoot-i-smoke)
+[![](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen)](https://offset.earth/amaurymartiny)
 
 [![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
 
