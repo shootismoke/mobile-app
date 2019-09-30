@@ -8,6 +8,7 @@
   "home_share_title": "¿Sabías que por vivir en una gran ciudad puedes estar fumando hasta 20 cigarrillos al día?",
   "home_share_message": "Rayos! 'hoy fumé'' {{cigarettes}} cigarrillos respirando aire urbano. ¿Y tú? Encuentralo aquí: https://shootismoke.github.io",
   "home_header_air_quality_station_distance": "Estación de calidad del aire: a {{distanceToStation}}{{distanceUnit}}",
+  "home_header_change_location": "Cambiar locación",
   "home_btn_why_is_station_so_far": "¿Estación retirada?",
   "home_btn_see_detailed_info": "Ver detalles",
   "home_btn_more_details": "Más detalles",

@@ -20,13 +20,11 @@ import {
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View
 } from 'react-native';
 
-import changeLocation from '../../../../assets/images/changeLocation.png';
 import alert from '../../../../assets/images/alert.png';
-import { CurrentLocation } from '../../../components';
+import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { distanceToStation, isStationTooFar, DistanceUnit } from '../../../util/station';
@@ -67,9 +65,9 @@ export function Header (props: HeaderProps) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={onChangeLocationClick}>
-          <Image source={changeLocation} />
-        </TouchableOpacity>
+        <View style={styles.changeLocation}>
+          <ChangeLocation onPress={onChangeLocationClick} />
+        </View>
       </View>
     </View>
   );
@@ -79,22 +77,27 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: theme.spacing.normal
   },
-  changeLocation: {
-    marginRight: theme.spacing.tiny
-  },
+
   container: {
     paddingHorizontal: theme.spacing.normal,
     paddingTop: theme.spacing.normal
   },
   content: {
     alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    flexDirection: 'row'
   },
   currentLocation: {
     marginRight: theme.spacing.tiny,
-    maxWidth: '75%'
+    flex: 1
   },
+
+  changeLocation: {
+    alignSelf: 'stretch',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    maxWidth: 60
+  },
+
   distance: {
     alignItems: 'center',
     flexDirection: 'row',
