@@ -63,14 +63,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: theme.spacing.tiny
+    paddingVertical: theme.spacing.mini
   },
   bigButtonText: {
     ...theme.title,
     color: theme.primaryColor
   },
   icon: {
-    marginRight: theme.spacing.tiny
+    marginRight: theme.spacing.mini
   },
   primary: {
     borderColor: theme.primaryColor,

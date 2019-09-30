@@ -71,7 +71,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
           }
 
           scroll.current!.scrollTo({
-            x: dailyWidth + theme.spacing.tiny
+            x: dailyWidth + theme.spacing.mini
           });
           handleChangeFrequency('weekly');
         }}
@@ -100,7 +100,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
 
 const styles = StyleSheet.create({
   boxButton: {
-    marginRight: theme.spacing.tiny
+    marginRight: theme.spacing.mini
   },
   container: {
     flexDirection: 'row',

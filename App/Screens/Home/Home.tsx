@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   scrollView: { flex: 1 },
   selectFrequency: {
-    marginTop: theme.spacing.tiny
+    marginTop: theme.spacing.mini
   },
   shit: {
     ...theme.shitText,
