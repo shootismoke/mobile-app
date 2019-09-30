@@ -3076,10 +3076,10 @@ expo-asset@~7.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-av@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-7.0.0.tgz#0ecc622c98bae6e9d220de8c192074175573118a"
-  integrity sha512-iutq8PTXHKdkm+NIYI2G92OB5OXCke4IDyAD4Pbxi+HI5MxKT4wJfAuW9+CjjEO0UJfGy9MuRmZr4ReYkSZR6w==
+expo-av@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-7.0.1.tgz#c25cb66f20333157ae65110aa9faef68b34cc7a8"
+  integrity sha512-wsSMqvkvVvYMsqTrgCDO8xsDVsv201kg+LTO1j6/HfKRLLKcTapZZVSSl4rqMCEWRzdTP4L/hCyOo19jf8PdKQ==
   dependencies:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
