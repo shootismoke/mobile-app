@@ -43,7 +43,7 @@
     "react-navigation": "^4.0.6",
     "react-navigation-stack": "^1.8.1",
     "retry-ts": "^0.1.0",
-    "sentry-expo": "~2.0.0",
+    "sentry-expo": "~2.0.1",
     "truncate": "^2.1.0"
   },
   "devDependencies": {
