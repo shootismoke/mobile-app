@@ -27,7 +27,11 @@ import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
-import { distanceToStation, isStationTooFar, DistanceUnit } from '../../../util/station';
+import {
+  distanceToStation,
+  isStationTooFar,
+  DistanceUnit
+} from '../../../util/station';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {
@@ -40,8 +44,14 @@ export function Header (props: HeaderProps) {
   const { onChangeLocationClick } = props;
 
   const distanceUnit = i18n.t('distance_unit');
-  const haversineDistanceUnit = i18n.t('haversine_distance_unit') as DistanceUnit;
-  const distance = distanceToStation(currentLocation!, api!, haversineDistanceUnit);
+  const haversineDistanceUnit = i18n.t(
+    'haversine_distance_unit'
+  ) as DistanceUnit;
+  const distance = distanceToStation(
+    currentLocation!,
+    api!,
+    haversineDistanceUnit
+  );
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   return (
@@ -65,9 +75,7 @@ export function Header (props: HeaderProps) {
           </View>
         </View>
 
-        <View style={styles.changeLocation}>
-          <ChangeLocation onPress={onChangeLocationClick} />
-        </View>
+        <ChangeLocation onPress={onChangeLocationClick} />
       </View>
     </View>
   );
@@ -87,23 +95,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   currentLocation: {
-    marginRight: theme.spacing.tiny,
+    marginRight: theme.spacing.mini,
     flex: 1
   },
-
-  changeLocation: {
-    alignSelf: 'stretch',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-    maxWidth: 60
-  },
-
   distance: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: theme.spacing.tiny
+    marginTop: theme.spacing.mini
   },
   warning: {
-    marginRight: theme.spacing.tiny
+    marginRight: theme.spacing.mini
   }
 });

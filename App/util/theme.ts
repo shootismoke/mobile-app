@@ -28,7 +28,8 @@ export const primaryColor = '#F8A65D';
 export const textColor = '#44464A';
 export const secondaryTextColor = '#8B909A';
 export const spacing = {
-  tiny: scale(10),
+  tiny: scale(5),
+  mini: scale(10),
   small: scale(15),
   normal: scale(20),
   big: scale(36)

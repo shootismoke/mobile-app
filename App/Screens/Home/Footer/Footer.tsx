@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   container: {
     ...theme.withPadding,
     marginBottom: theme.spacing.normal,
-    marginTop: theme.spacing.tiny
+    marginTop: theme.spacing.mini
   },
   isStationTooFar: {
     ...theme.text,

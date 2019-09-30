@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: scale(12),
     borderWidth: 1,
-    marginBottom: theme.spacing.tiny,
+    marginBottom: theme.spacing.mini,
     paddingHorizontal: theme.spacing.small,
     paddingVertical: scale(4), // Padding for the shadow
     shadowOpacity: 0.1
