@@ -9,6 +9,7 @@
   "home_share_message": "Shoot! I 'smoked' {{cigarettes}} cigarettes today by breathing urban air. And you? Find out here: https://shootismoke.github.io",
   "home_header_air_quality_station_distance": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
   "home_header_from_search": "from search",
+  "home_header_change_location": "Change Location",
   "home_btn_why_is_station_so_far": "Why is the station so far?",
   "home_btn_see_detailed_info": "See detailed info",
   "home_btn_see_how_it_works": "See how it works",
