@@ -51,7 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-eslint": "^10.0.3",
-    "babel-preset-expo": "^5.2.0",
+    "babel-preset-expo": "^7.0.0",
     "eslint": "^6.5.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-semistandard": "^15.0.0",
