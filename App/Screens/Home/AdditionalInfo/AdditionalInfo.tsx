@@ -63,6 +63,10 @@ export function AdditionalInfo (props: AdditionalInfoProps) {
     );
   }
 
+  if (frequency === 'daily' && !isTooFar) {
+    return null;
+  }
+
   return (
     <View style={[theme.withPadding, style]} {...rest}>
       {frequency !== 'daily'
@@ -82,10 +86,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   tag: {
-    backgroundColor: theme.textColor,
+    backgroundColor: '#C4C4C4',
     borderRadius: scale(10),
     marginRight: theme.spacing.mini,
-    opacity: 0.3,
     paddingHorizontal: scale(6),
     paddingVertical: scale(3)
   },
