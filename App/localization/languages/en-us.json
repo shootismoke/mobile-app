@@ -64,7 +64,7 @@
   "about_box_per_day": "per day",
   "about_box_footnote": "*Atmospheric particulate matter (PM) that have a diameter of less than 2.5 micrometers, with increased chances of inhalation by living beings.",
   "about_beta_inaccurate_title": "Why is the feature of weekly and monthly cigarettes on beta?",
-  "about_beta_inaccurate_message": "The feature of displaying weekly and monthly cigarettes is in beta because the results may be highly inaccurate: we simply do a multiplication of the current level of PM2.5 to account for a week (7 days) and a month (30 days). For the full feature, we plan on regularly tracking the actual PM2.5 measurement at your location, to show an accurate estimation of the number of cigarettes you smoke in a week or in a month.",
+  "about_beta_inaccurate_message": "The feature of displaying weekly and monthly cigarettes is in beta because the results may be highly inaccurate: we simply multiply the current level of PM2.5 to account for a week (7 days) and a month (30 days). For the full feature, we plan on having access to a database that contains the history of PM2.5 of a location, so we can provide an accurate estimation of the number of cigarettes you smoke in a week or a month.",
   "about_where_does_data_come_from_title": "Where does the data come from?",
   "about_where_does_data_come_from_message_1": "Air quality data comes from",
   "about_where_does_data_come_from_link_1": "WAQI",
