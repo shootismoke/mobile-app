@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import { Share, StyleSheet, Text, View } from 'react-native';
+import { Share, StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { aboutSections } from '../../About';
@@ -26,29 +26,31 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
-interface FooterProps extends NavigationInjectedProps {}
+interface FooterProps extends NavigationInjectedProps, ViewProps {}
 
 export function Footer (props: FooterProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { navigation, style, ...rest } = props;
 
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   function goToAbout () {
     track('HOME_SCREEN_ABOUT_CLICK');
-    props.navigation.navigate('About');
+    navigation.navigate('About');
   }
 
   function goToAboutWhySoFar () {
     track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
-    props.navigation.navigate('About', {
-      scrollInto: aboutSections.about_why_is_the_station_so_far_title
+    navigation.navigate('About', {
+      scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle
     });
   }
 
   function goToDetails () {
     track('HOME_SCREEN_DETAILS_CLICK');
-    props.navigation.navigate('Details');
+    navigation.navigate('Details');
   }
 
   function handleShare () {
@@ -93,12 +95,7 @@ export function Footer (props: FooterProps) {
   };
 
   return (
-    <View style={styles.container}>
-      {isTooFar && (
-        <Text style={styles.isStationTooFar}>
-          {i18n.t('home_station_too_far_message')}
-        </Text>
-      )}
+    <View style={[theme.withPadding, style]} {...rest}>
       {renderBigButton()}
       {renderSmallButtons()}
     </View>
@@ -106,18 +103,9 @@ export function Footer (props: FooterProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding,
-    marginBottom: theme.spacing.normal,
-    marginTop: theme.spacing.mini
-  },
-  isStationTooFar: {
-    ...theme.text,
-    marginBottom: theme.spacing.normal
-  },
   smallButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: theme.spacing.small
+    marginTop: theme.spacing.mini
   }
 });

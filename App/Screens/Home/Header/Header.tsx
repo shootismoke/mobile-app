@@ -22,6 +22,7 @@ import {
   Text,
   View
 } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
@@ -56,54 +57,51 @@ export function Header (props: HeaderProps) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.currentLocation}>
-          <CurrentLocation
-            api={api!}
-            currentLocation={currentLocation!}
-            numberOfLines={2}
-          />
-          <View style={styles.distance}>
-            {isTooFar && <Image source={alert} style={styles.warning} />}
-            <Text style={theme.text}>
-              {i18n.t('home_header_air_quality_station_distance', {
-                distanceToStation: distance,
-                distanceUnit
-              })}{' '}
-              {!isGps && i18n.t('home_header_from_search')}
-            </Text>
-          </View>
+      <View style={styles.currentLocation}>
+        <CurrentLocation
+          api={api!}
+          currentLocation={currentLocation!}
+          numberOfLines={2}
+        />
+        <View style={styles.distance}>
+          {isTooFar && <Image source={alert} style={styles.warning} />}
+          <Text style={styles.distanceText}>
+            {i18n.t('home_header_air_quality_station_distance', {
+              distanceToStation: distance,
+              distanceUnit
+            })}{' '}
+            {!isGps && i18n.t('home_header_from_search')}
+          </Text>
         </View>
-
-        <ChangeLocation onPress={onChangeLocationClick} />
       </View>
+
+      <ChangeLocation onPress={onChangeLocationClick} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    marginBottom: theme.spacing.normal
-  },
-
   container: {
-    paddingHorizontal: theme.spacing.normal,
+    ...theme.withPadding,
+    alignItems: 'center',
+    flexDirection: 'row',
     paddingTop: theme.spacing.normal
   },
-  content: {
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
   currentLocation: {
-    marginRight: theme.spacing.mini,
-    flex: 1
+    flex: 1,
+    marginRight: theme.spacing.mini
   },
   distance: {
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: theme.spacing.mini
   },
+  distanceText: {
+    ...theme.text,
+    flex: 1
+  },
   warning: {
-    marginRight: theme.spacing.mini
+    marginRight: theme.spacing.mini,
+    marginTop: scale(-2) // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
   }
 });

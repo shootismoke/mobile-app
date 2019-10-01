@@ -45,17 +45,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'center',
-    width: 60
+    width: scale(60)
   },
   icon: {
     alignSelf: 'center',
     marginBottom: theme.spacing.tiny
   },
   label: {
+    ...theme.withLetterSpacing,
     color: theme.primaryColor,
     fontFamily: theme.gothamBlack,
     fontSize: scale(7),
-    letterSpacing: 2,
     lineHeight: scale(10),
     textAlign: 'center',
     textTransform: 'uppercase'

@@ -44,8 +44,8 @@ const scrollViewOptions = {
 };
 
 export const aboutSections = {
-  about_how_results: 'about_how_results',
-  about_why_is_the_station_so_far_title: 'about_why_is_the_station_so_far_title'
+  aboutBetaInaccurate: 'aboutBetaInaccurate',
+  aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
 };
 
 const handleOpenAmaury = () =>
@@ -115,6 +115,16 @@ export function About (props: AboutProps) {
         </Text>
       </View>
 
+      <ScrollIntoView
+        onMount={navigation.getParam('scrollInto') === 'aboutBetaInaccurate'}
+        style={styles.section}
+      >
+        <Text style={styles.h2}>{i18n.t('about_beta_inaccurate_title')}</Text>
+        <Text style={theme.text}>
+          {i18n.t('about_beta_inaccurate_message')}
+        </Text>
+      </ScrollIntoView>
+
       <View style={styles.section}>
         <Text style={styles.h2}>
           {i18n.t('about_where_does_data_come_from_title')}
@@ -130,8 +140,7 @@ export function About (props: AboutProps) {
 
       <ScrollIntoView
         onMount={
-          navigation.getParam('scrollInto') ===
-          'about_why_is_the_station_so_far_title'
+          navigation.getParam('scrollInto') === 'aboutWhyIsTheStationSoFarTitle'
         }
         style={styles.section}
       >
@@ -153,14 +162,6 @@ export function About (props: AboutProps) {
           {i18n.t('about_weird_results_message_2')}
         </Text>
       </View>
-
-      <ScrollIntoView
-        onMount={navigation.getParam('scrollInto') === 'about_how_results'}
-        style={styles.section}
-      >
-        <Text style={styles.h2}>HELLO</Text>
-        <Text style={theme.text}>TODO</Text>
-      </ScrollIntoView>
 
       <View style={styles.credits}>
         <Text style={styles.h2}>{i18n.t('about_credits_title')}</Text>

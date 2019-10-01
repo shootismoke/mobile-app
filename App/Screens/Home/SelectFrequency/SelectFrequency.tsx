@@ -15,24 +15,24 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useRef, useState } from 'react';
-import { ScrollView, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 
 import { BoxButton } from '../../../components';
+import { i18n } from '../../../localization';
 import * as theme from '../../../util/theme';
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';
 
-interface SelectFrequencyProps {
+interface SelectFrequencyProps extends ScrollViewProps {
   frequency: Frequency;
   onChangeFrequency: (frequency: Frequency) => void;
-  style?: StyleProp<ViewStyle>;
 }
 
 export function SelectFrequency (props: SelectFrequencyProps) {
   const scroll = useRef<ScrollView>(null);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
-  const { frequency, onChangeFrequency, style } = props;
+  const { frequency, onChangeFrequency, style, ...rest } = props;
 
   function handleChangeFrequency (f: Frequency) {
     setTimeout(() => {
@@ -47,6 +47,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
       ref={scroll}
       showsHorizontalScrollIndicator={false}
       style={[styles.container, style]}
+      {...rest}
     >
       <BoxButton
         active={frequency === 'daily'}
@@ -61,7 +62,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        daily
+        {i18n.t('home_frequency_daily')}
       </BoxButton>
       <BoxButton
         active={frequency === 'weekly'}
@@ -77,7 +78,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        weekly
+        {i18n.t('home_frequency_weekly')}
       </BoxButton>
 
       <BoxButton
@@ -92,7 +93,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        monthly
+        {i18n.t('home_frequency_monthly')}
       </BoxButton>
     </ScrollView>
   );
@@ -103,8 +104,7 @@ const styles = StyleSheet.create({
     marginRight: theme.spacing.mini
   },
   container: {
-    flexDirection: 'row',
-    paddingBottom: theme.spacing.normal
+    flexDirection: 'row'
   },
   content: {
     paddingHorizontal: theme.spacing.normal
