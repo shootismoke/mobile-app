@@ -28,7 +28,7 @@ import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 import changeLocation from '../../../assets/images/changeLocation.png';
 
-interface ChangeLocationProps extends TouchableOpacityProps { }
+interface ChangeLocationProps extends TouchableOpacityProps {}
 
 export function ChangeLocation (props: ChangeLocationProps) {
   const { onPress, ...rest } = props;
@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.tiny
   },
   label: {
+    ...theme.withLetterSpacing,
     color: theme.primaryColor,
     fontFamily: theme.gothamBlack,
     fontSize: scale(7),
-    letterSpacing: 2,
     lineHeight: scale(10),
     textAlign: 'center',
     textTransform: 'uppercase'

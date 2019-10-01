@@ -113,6 +113,10 @@ export const title = {
   ...fixTextMargin
 };
 
+export const withLetterSpacing = {
+  letterSpacing: scale(2)
+};
+
 export const withPadding = {
   paddingHorizontal: spacing.normal
 };

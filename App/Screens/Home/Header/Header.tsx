@@ -65,7 +65,7 @@ export function Header (props: HeaderProps) {
         />
         <View style={styles.distance}>
           {isTooFar && <Image source={alert} style={styles.warning} />}
-          <Text style={theme.text}>
+          <Text style={styles.distanceText}>
             {i18n.t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
               distanceUnit
@@ -88,13 +88,17 @@ const styles = StyleSheet.create({
     paddingTop: theme.spacing.normal
   },
   currentLocation: {
-    flexGrow: 1,
+    flex: 1,
     marginRight: theme.spacing.mini
   },
   distance: {
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: theme.spacing.mini
+  },
+  distanceText: {
+    ...theme.text,
+    flex: 1
   },
   warning: {
     marginRight: theme.spacing.mini,

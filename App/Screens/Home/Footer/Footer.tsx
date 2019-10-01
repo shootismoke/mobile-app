@@ -106,6 +106,6 @@ const styles = StyleSheet.create({
   smallButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: theme.spacing.small
+    marginTop: theme.spacing.mini
   }
 });

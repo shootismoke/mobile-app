@@ -18,6 +18,7 @@ import React, { useRef, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 
 import { BoxButton } from '../../../components';
+import { i18n } from '../../../localization';
 import * as theme from '../../../util/theme';
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';
@@ -61,7 +62,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        daily
+        {i18n.t('home_frequency_daily')}
       </BoxButton>
       <BoxButton
         active={frequency === 'weekly'}
@@ -77,7 +78,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        weekly
+        {i18n.t('home_frequency_weekly')}
       </BoxButton>
 
       <BoxButton
@@ -92,7 +93,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        monthly
+        {i18n.t('home_frequency_monthly')}
       </BoxButton>
     </ScrollView>
   );

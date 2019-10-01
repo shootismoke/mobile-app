@@ -22,6 +22,7 @@ import {
   View,
   ViewProps
 } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { aboutSections } from '../../About';
@@ -52,14 +53,18 @@ export function AdditionalInfo (props: AdditionalInfoProps) {
             scrollInto: aboutSections.aboutBetaInaccurate
           });
         }}
+        style={styles.linkToAbout}
       >
+        <View style={styles.tag}>
+          <Text style={styles.tagLabel}>BETA</Text>
+        </View>
         <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
       </TouchableOpacity>
     );
   }
 
   return (
-    <View style={[styles.container, style]} {...rest}>
+    <View style={[theme.withPadding, style]} {...rest}>
       {frequency !== 'daily'
         ? renderBeta()
         : isTooFar && (
@@ -72,7 +77,23 @@ export function AdditionalInfo (props: AdditionalInfoProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding
+  linkToAbout: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  tag: {
+    backgroundColor: theme.textColor,
+    borderRadius: scale(10),
+    marginRight: theme.spacing.mini,
+    opacity: 0.3,
+    paddingHorizontal: scale(6),
+    paddingVertical: scale(3)
+  },
+  tagLabel: {
+    color: 'white',
+    fontSize: scale(10),
+    letterSpacing: scale(1),
+    marginLeft: scale(2),
+    textAlign: 'center'
   }
 });

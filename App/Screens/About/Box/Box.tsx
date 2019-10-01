@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 import cigarette from '../../../../assets/images/cigarette.png';
 import { i18n } from '../../../localization';
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     color: theme.secondaryTextColor,
     fontSize: 12,
     fontWeight: '900',
-    letterSpacing: 0.5
+    letterSpacing: scale(0.5)
   },
   micro: {
     ...Platform.select({
