@@ -1,0 +1,78 @@
+// Sh**t! I Smoke
+// Copyright (C) 2018-2019  Marcelo S. Coelho, Amaury Martiny
+
+// Sh**t! I Smoke is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Sh**t! I Smoke is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
+
+import React, { useContext } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewProps
+} from 'react-native';
+import { NavigationInjectedProps } from 'react-navigation';
+
+import { aboutSections } from '../../About';
+import { i18n } from '../../../localization';
+import { Frequency } from '../SelectFrequency';
+import { ApiContext, CurrentLocationContext } from '../../../stores';
+import { track } from '../../../util/amplitude';
+import { isStationTooFar } from '../../../util/station';
+import * as theme from '../../../util/theme';
+
+interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
+  frequency: Frequency;
+}
+
+export function AdditionalInfo (props: AdditionalInfoProps) {
+  const { api } = useContext(ApiContext)!;
+  const { currentLocation } = useContext(CurrentLocationContext);
+  const { frequency, navigation, style, ...rest } = props;
+
+  const isTooFar = isStationTooFar(currentLocation!, api!);
+
+  function renderBeta () {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          track('HOME_SCREEN_BETA_INACCURATE_CLICK');
+          navigation.navigate('About', {
+            scrollInto: aboutSections.aboutBetaInaccurate
+          });
+        }}
+      >
+        <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View style={[styles.container, style]} {...rest}>
+      {frequency !== 'daily'
+        ? renderBeta()
+        : isTooFar && (
+          <Text style={theme.text}>
+            {i18n.t('home_station_too_far_message')}
+          </Text>
+        )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    ...theme.withPadding
+  }
+});

@@ -1,4 +1,3 @@
-// Sh**t! I Smoke
 // Copyright (C) 2018-2019  Marcelo S. Coelho, Amaury Martiny
 
 // Sh**t! I Smoke is free software: you can redistribute it and/or modify
@@ -14,27 +13,4 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { scale } from 'react-native-size-matters';
-
-import wait from '../../../../assets/images/wait.png';
-import { CIGARETTES_HEIGHT } from '../../../components/Cigarettes';
-
-interface WaitProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-export function Wait ({ style }: WaitProps) {
-  return (
-    <View style={[styles.container, style]}>
-      <Image resizeMode="contain" source={wait} />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    height: scale(CIGARETTES_HEIGHT)
-  }
-});
+export * from './AdditionalInfo';

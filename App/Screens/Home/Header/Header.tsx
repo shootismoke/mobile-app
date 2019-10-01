@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: theme.spacing.normal
   },
-
   container: {
     paddingHorizontal: theme.spacing.normal,
     paddingTop: theme.spacing.normal

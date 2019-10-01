@@ -17,9 +17,8 @@
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
-// languages
-const en = require('./languages/en');
-const enUS = require('./languages/en-us');
+import en from './languages/en.json';
+import enUS from './languages/en-us.json';
 
 i18n.fallbacks = true;
 i18n.translations = {

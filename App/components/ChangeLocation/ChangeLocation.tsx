@@ -28,7 +28,7 @@ import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 import changeLocation from '../../../assets/images/changeLocation.png';
 
-interface ChangeLocationProps extends TouchableOpacityProps {}
+interface ChangeLocationProps extends TouchableOpacityProps { }
 
 export function ChangeLocation (props: ChangeLocationProps) {
   const { onPress, ...rest } = props;
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'center',
-    width: 60
+    width: scale(60)
   },
   icon: {
     alignSelf: 'center',

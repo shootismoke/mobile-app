@@ -101,8 +101,7 @@ export const text = {
   fontFamily: gotham,
   fontSize: scale(11),
   letterSpacing: scale(0.85),
-  lineHeight: scale(15),
-  textAlign: 'justify' as 'justify'
+  lineHeight: scale(15)
 };
 
 export const title = {

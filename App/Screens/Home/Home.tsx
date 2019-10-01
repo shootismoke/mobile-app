@@ -15,83 +15,45 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { Cigarettes } from '../../components';
+import { AdditionalInfo } from './AdditionalInfo';
+import { CigaretteBlock } from './CigaretteBlock';
 import { Footer } from './Footer';
 import { Header } from './Header';
-import { i18n } from '../../localization';
 import { Frequency, SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
-import { ApiContext, CurrentLocationContext } from '../../stores';
-import swearWords from './swearWords';
+import { ApiContext } from '../../stores';
+import { Api } from '../../stores/fetchApi';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
 
-function getSwearWord (cigaretteCount: number) {
-  if (cigaretteCount <= 1) return i18n.t('home_common_oh');
-
-  // Return a random swear word
-  return swearWords[Math.floor(Math.random() * swearWords.length)];
+/**
+ * Compute the number of cigarettes to show
+ */
+function getCigaretteCount (frequency: Frequency, api: Api) {
+  switch (frequency) {
+    case 'daily': {
+      return api.shootISmoke.cigarettes;
+    }
+    case 'weekly':
+      return api.shootISmoke.cigarettes * 7;
+    case 'monthly': {
+      return api.shootISmoke.cigarettes * 30;
+    }
+  }
 }
 
 export function Home (props: HomeProps) {
-  const { api } = useContext(ApiContext)!;
-  const { isGps } = useContext(CurrentLocationContext)!;
+  const { api } = useContext(ApiContext);
   const [frequency, setFrenquency] = useState<Frequency>('daily');
 
+  const cigaretteCount = getCigaretteCount(frequency, api!);
+
   trackScreen('HOME');
-
-  function getCigaretteCount () {
-    switch (frequency) {
-      case 'daily': {
-        return api!.shootISmoke.cigarettes;
-      }
-      case 'weekly':
-        return api!.shootISmoke.cigarettes * 7;
-      case 'monthly': {
-        return api!.shootISmoke.cigarettes * 30;
-      }
-    }
-  }
-  const cigaretteCount = getCigaretteCount();
-
-  function renderCigarettes () {
-    return <Cigarettes cigarettes={cigaretteCount} style={theme.withPadding} />;
-  }
-
-  const renderCigarettesText = () => {
-    // Round to 1 decimal
-    const cigarettes = Math.round(cigaretteCount * 10) / 10;
-
-    const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord: getSwearWord(cigaretteCount),
-      presentPast:
-        isGps && frequency === 'daily'
-          ? i18n.t('home_common_you_smoke')
-          : i18n.t('home_common_you_d_smoke'),
-      singularPlural:
-        cigarettes === 1
-          ? i18n.t('home_common_cigarette').toLowerCase()
-          : i18n.t('home_common_cigarettes').toLowerCase(),
-      cigarettes
-    });
-
-    const [firstPartText, secondPartText] = text.split('<');
-
-    return (
-      <Text style={styles.shit}>
-        {firstPartText}
-        <Text style={styles.cigarettesCount}>
-          {secondPartText.split('>')[0]}
-        </Text>
-        {secondPartText.split('>')[1]}
-      </Text>
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -102,68 +64,43 @@ export function Home (props: HomeProps) {
           props.navigation.navigate('Search');
         }}
       />
-      <ScrollView
-        bounces={false}
-        contentContainerStyle={styles.scrollContainer}
-        style={styles.scrollView}
-      >
-        <View style={styles.content}>
-          {renderCigarettes()}
-          <View style={styles.main}>{renderCigarettesText()}</View>
-          <SelectFrequency
-            frequency={frequency}
-            onChangeFrequency={freq => {
-              if (freq === 'daily') {
-                track('HOME_SCREEN_DAILY_CLICK');
-              } else if (freq === 'weekly') {
-                track('HOME_SCREEN_WEEKLY_CLICK');
-              } else if (freq === 'monthly') {
-                track('HOME_SCREEN_MONTHLY_CLICK');
-              }
+      <ScrollView bounces={false}>
+        <CigaretteBlock
+          cigaretteCount={cigaretteCount}
+          frequency={frequency}
+          style={styles.withMargin}
+        />
+        <SelectFrequency
+          frequency={frequency}
+          onChangeFrequency={freq => {
+            if (freq === 'daily') {
+              track('HOME_SCREEN_DAILY_CLICK');
+            } else if (freq === 'weekly') {
+              track('HOME_SCREEN_WEEKLY_CLICK');
+            } else if (freq === 'monthly') {
+              track('HOME_SCREEN_MONTHLY_CLICK');
+            }
 
-              setFrenquency(freq);
-            }}
-            style={styles.selectFrequency}
-          />
-        </View>
-        <Footer navigation={props.navigation} />
+            setFrenquency(freq);
+          }}
+          style={styles.withMargin}
+        />
+        <AdditionalInfo
+          frequency={frequency}
+          navigation={props.navigation}
+          style={styles.withMargin}
+        />
+        <Footer navigation={props.navigation} style={styles.withMargin} />
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  cigarettesCount: {
-    color: theme.primaryColor
-  },
   container: {
-    flexGrow: 1,
-    justifyContent: 'space-between'
+    flexGrow: 1
   },
-  content: {
-    justifyContent: 'center',
+  withMargin: {
     marginTop: theme.spacing.normal
-  },
-  dots: {
-    color: theme.primaryColor
-  },
-  main: {
-    ...theme.withPadding
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'flex-start'
-  },
-  scrollView: { flex: 1 },
-  selectFrequency: {
-    marginTop: theme.spacing.mini
-  },
-  shit: {
-    ...theme.shitText,
-    marginTop: theme.spacing.normal
-  },
-  thereToday: {
-    ...theme.shitText,
-    ...theme.withPadding
   }
 });
