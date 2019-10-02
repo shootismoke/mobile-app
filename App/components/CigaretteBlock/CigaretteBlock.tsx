@@ -30,7 +30,7 @@ interface CigaretteBlockProps extends ViewProps {
   displayFrequency?: boolean
 }
 
-function getSwearWord(cigaretteCount: number) {
+function getSwearWord (cigaretteCount: number) {
   if (cigaretteCount <= 1) return i18n.t('home_common_oh');
 
   // Return a random swear word
@@ -40,7 +40,7 @@ function getSwearWord(cigaretteCount: number) {
 /**
  * Compute the number of cigarettes to show
  */
-export function getCigaretteCount(frequency: Frequency, cigarettePerDay: number) {
+export function getCigaretteCount (frequency: Frequency, cigarettePerDay: number) {
   switch (frequency) {
     case 'daily': {
       return cigarettePerDay;
@@ -53,11 +53,11 @@ export function getCigaretteCount(frequency: Frequency, cigarettePerDay: number)
   }
 }
 
-export function CigaretteBlock(props: CigaretteBlockProps) {
+export function CigaretteBlock (props: CigaretteBlockProps) {
   const { isGps } = useContext(CurrentLocationContext)!;
   const { cigarettesPerDay, frequency, style, displayFrequency, ...rest } = props;
 
-  const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay)
+  const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay);
 
   const renderCigarettesText = () => {
     // Round to 1 decimal
@@ -79,7 +79,7 @@ export function CigaretteBlock(props: CigaretteBlockProps) {
     console.log('text :', text);
     const [firstPartText, secondPartText] = text.split('<');
 
-    const frequencyText = displayFrequency ? (<Text>{i18n.t(`frequency_${frequency}`)}</Text>) : null
+    const frequencyText = displayFrequency ? (<Text>{i18n.t(`frequency_${frequency}`)}</Text>) : null;
 
     return (
       <Text style={styles.shit}>

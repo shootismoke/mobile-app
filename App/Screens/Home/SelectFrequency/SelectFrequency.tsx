@@ -28,13 +28,13 @@ interface SelectFrequencyProps extends ScrollViewProps {
   onChangeFrequency: (frequency: Frequency) => void;
 }
 
-export function SelectFrequency(props: SelectFrequencyProps) {
+export function SelectFrequency (props: SelectFrequencyProps) {
   const scroll = useRef<ScrollView>(null);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
   const { frequency, onChangeFrequency, style, ...rest } = props;
 
-  function handleChangeFrequency(f: Frequency) {
+  function handleChangeFrequency (f: Frequency) {
     setTimeout(() => {
       onChangeFrequency(f);
     }, 400);
