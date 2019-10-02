@@ -17,7 +17,7 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 
-import { Cigarettes } from '..';
+import { Cigarettes } from '../Cigarettes';
 import { i18n } from '../../localization';
 import { Frequency } from '../../Screens/Home/SelectFrequency';
 import { CurrentLocationContext } from '../../stores';
