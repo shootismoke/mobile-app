@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { i18n } from '../../../localization';
+import { i18n } from '../../localization';
 
 export default [
   i18n.t('home_swear_word_shoot'),

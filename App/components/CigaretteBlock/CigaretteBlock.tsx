@@ -17,12 +17,12 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 
-import { Cigarettes } from '../../../components';
-import { i18n } from '../../../localization';
-import { Frequency } from '../SelectFrequency';
-import { CurrentLocationContext } from '../../../stores';
+import { Cigarettes } from '..';
+import { i18n } from '../../localization';
+import { Frequency } from '../../Screens/Home/SelectFrequency';
+import { CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
-import * as theme from '../../../util/theme';
+import * as theme from '../../util/theme';
 
 interface CigaretteBlockProps extends ViewProps {
   cigaretteCount: number;
@@ -47,13 +47,13 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
     const text = i18n.t('home_smoked_cigarette_title', {
       swearWord: getSwearWord(cigaretteCount),
       presentPast:
-        isGps && frequency === 'daily'
-          ? i18n.t('home_common_you_smoke')
-          : i18n.t('home_common_you_d_smoke'),
+	isGps && frequency === 'daily'
+	  ? i18n.t('home_common_you_smoke')
+	  : i18n.t('home_common_you_d_smoke'),
       singularPlural:
-        cigarettes === 1
-          ? i18n.t('home_common_cigarette').toLowerCase()
-          : i18n.t('home_common_cigarettes').toLowerCase(),
+	cigarettes === 1
+	  ? i18n.t('home_common_cigarette').toLowerCase()
+	  : i18n.t('home_common_cigarettes').toLowerCase(),
       cigarettes
     });
 
@@ -61,11 +61,11 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
 
     return (
       <Text style={styles.shit}>
-        {firstPartText}
-        <Text style={styles.cigarettesCount}>
-          {secondPartText.split('>')[0]}
-        </Text>
-        {secondPartText.split('>')[1]}
+	{firstPartText}
+	<Text style={styles.cigarettesCount}>
+	  {secondPartText.split('>')[0]}
+	</Text>
+	{secondPartText.split('>')[1]}
       </Text>
     );
   };
