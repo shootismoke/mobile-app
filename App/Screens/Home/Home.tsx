@@ -19,7 +19,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { AdditionalInfo } from './AdditionalInfo';
-import { CigaretteBlock } from './CigaretteBlock';
+import { CigaretteBlock, getCigaretteCount } from '../../components';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { Frequency, SelectFrequency } from './SelectFrequency';
@@ -31,22 +31,6 @@ import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps {}
 
-/**
- * Compute the number of cigarettes to show
- */
-function getCigaretteCount (frequency: Frequency, api: Api) {
-  switch (frequency) {
-    case 'daily': {
-      return api.shootISmoke.cigarettes;
-    }
-    case 'weekly':
-      return api.shootISmoke.cigarettes * 7;
-    case 'monthly': {
-      return api.shootISmoke.cigarettes * 30;
-    }
-  }
-}
-
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext);
   const [frequency, setFrenquency] = useState<Frequency>('daily');
@@ -55,9 +39,11 @@ export function Home (props: HomeProps) {
 
   trackScreen('HOME');
 
+  const cigarettesPerDay = api!.shootISmoke.cigarettes
+
   return (
     <View style={styles.container}>
-      <SmokeVideo cigarettes={cigaretteCount} />
+      <SmokeVideo cigarettes={getCigaretteCount(frequency, cigarettesPerDay)} />
       <Header
         onChangeLocationClick={() => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
@@ -66,7 +52,7 @@ export function Home (props: HomeProps) {
       />
       <ScrollView bounces={false}>
         <CigaretteBlock
-          cigaretteCount={cigaretteCount}
+	  cigarettesPerDay={cigarettesPerDay}
           frequency={frequency}
           style={styles.withMargin}
         />
@@ -81,7 +67,7 @@ export function Home (props: HomeProps) {
               track('HOME_SCREEN_MONTHLY_CLICK');
             }
 
-            setFrenquency(freq);
+	    setFrequency(freq);
           }}
           style={styles.withMargin}
         />
