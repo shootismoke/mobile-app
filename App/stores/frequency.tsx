@@ -14,7 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './api';
-export * from './error';
-export * from './frequency';
-export * from './location';
+import React, { createContext, useState } from 'react';
+import { Frequency } from '../Screens/Home/SelectFrequency';
+
+export const FrequencyContext = createContext();
+
+export function FrequencyContextProvider ({
+  children
+}: {
+  children: JSX.Element;
+}) {
+  const [currentFrequency, setFrequency] = useState<Frequency>('daily');
+
+  return (
+    <FrequencyContext.Provider
+      value={{
+	currentFrequency,
+	setFrequency
+      }}
+    >
+      {children}
+    </FrequencyContext.Provider>
+  );
+}

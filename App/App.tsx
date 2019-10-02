@@ -25,6 +25,7 @@ import { Background as LoadingBackground } from './Screens/Loading/Background';
 import {
   ApiContextProvider,
   ErrorContextProvider,
+  FrequencyContextProvider,
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
@@ -71,7 +72,9 @@ export function App () {
     <ErrorContextProvider>
       <LocationContextProvider>
         <ApiContextProvider>
-          <Screens />
+	  <FrequencyContextProvider>
+	    <Screens />
+	  </FrequencyContextProvider>
         </ApiContextProvider>
       </LocationContextProvider>
     </ErrorContextProvider>

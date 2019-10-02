@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
@@ -22,24 +22,21 @@ import { AdditionalInfo } from './AdditionalInfo';
 import { CigaretteBlock, getCigaretteCount } from '../../components';
 import { Footer } from './Footer';
 import { Header } from './Header';
-import { Frequency, SelectFrequency } from './SelectFrequency';
+import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
-import { ApiContext } from '../../stores';
-import { Api } from '../../stores/fetchApi';
+import { ApiContext, FrequencyContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
-interface HomeProps extends NavigationInjectedProps {}
+interface HomeProps extends NavigationInjectedProps { }
 
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext);
-  const [frequency, setFrenquency] = useState<Frequency>('daily');
-
-  const cigaretteCount = getCigaretteCount(frequency, api!);
+  const { currentFrequency: frequency, setFrequency } = useContext(FrequencyContext);
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api!.shootISmoke.cigarettes
+  const cigarettesPerDay = api!.shootISmoke.cigarettes;
 
   return (
     <View style={styles.container}>
