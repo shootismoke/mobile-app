@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import { Share, StyleSheet, View, ViewProps } from 'react-native';
+import { StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { aboutSections } from '../../About';
@@ -26,7 +26,7 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
-interface FooterProps extends NavigationInjectedProps, ViewProps {}
+interface FooterProps extends NavigationInjectedProps, ViewProps { }
 
 export function Footer (props: FooterProps) {
   const { api } = useContext(ApiContext)!;
@@ -55,12 +55,7 @@ export function Footer (props: FooterProps) {
 
   function handleShare () {
     track('HOME_SCREEN_SHARE_CLICK');
-    Share.share({
-      title: i18n.t('home_share_title'),
-      message: i18n.t('home_share_message', {
-        cigarettes: parseFloat(api!.shootISmoke.cigarettes).toFixed(2)
-      })
-    });
+    props.navigation.navigate('ShareModal');
   }
 
   const renderBigButton = () => {

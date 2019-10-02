@@ -25,7 +25,7 @@ import * as theme from '../../util/theme';
 
 interface ShareScreenProps extends NavigationInjectedProps { }
 
-export function ShareScreen (props: ShareScreenProps) {
+export function ShareScreen(props: ShareScreenProps) {
   const refViewShot = createRef();
 
   useEffect(() => {
@@ -37,8 +37,6 @@ export function ShareScreen (props: ShareScreenProps) {
 	});
 
 	await Share.share({
-	  title: 'Text title',
-	  message: 'Text message',
 	  url: uri
 	});
       } catch (error) {
