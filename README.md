@@ -6,6 +6,7 @@ Know how many cigarettes you smoke based on the pollution of your location. :poo
 ![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
 [![David](https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg)](https://david-dm.org/amaurymartiny/shoot-i-smoke)
 [![](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen)](https://offset.earth/amaurymartiny)
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/shootismoke)
 
 [![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
 
@@ -25,7 +26,7 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 | Release Channel | Version | Description                                                                 | Url                                                                        |
 | --------------- | ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Production      | v1.3.1  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
+| Production      | v1.4.0  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
 | Staging         | v1.4.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
 
 ## :hammer: Build it yourself
@@ -48,12 +49,13 @@ git clone https://github.com/amaurymartiny/shoot-i-smoke
 cd shoot-i-smoke
 yarn install
 
-# Replace the API keys placeholders with your own tokens in app.json
-# For the optional services you don't want to put an API key, put `undefined`
+# Copy the file that contains secrets
 cp app.example.json app.json
 
 yarn start
 ```
+
+In `app.json`, replace all the placeholders for API keys and tokens with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
 
 This app is created with Expo, using React Native. When you run `yarn start`, the Expo packager will show, and you can either:
 
