@@ -48,21 +48,27 @@ export const aboutSections = {
   aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
 };
 
-const handleOpenAmaury = () =>
+const handleOpenAmaury = () => {
   Linking.openURL('https://twitter.com/amaurymartiny');
+};
 
-const handleOpenAqi = () => Linking.openURL('http://aqicn.org/');
+const handleOpenAqi = () => {
+  Linking.openURL('http://aqicn.org/');
+};
 
-const handleOpenArticle = () =>
+const handleOpenArticle = () => {
   Linking.openURL(
     'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
   );
+};
 
-const handleOpenGithub = () =>
-  Linking.openURL(Constants.manifest.extra.githubUrl);
+const handleOpenGithub = () => {
+  Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke');
+};
 
-const handleOpenMarcelo = () =>
+const handleOpenMarcelo = () => {
   Linking.openURL('https://www.behance.net/marceloscoelho');
+};
 
 interface AboutProps
   extends NavigationInjectedProps<{
