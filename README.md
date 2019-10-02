@@ -13,11 +13,11 @@ Know how many cigarettes you smoke based on the pollution of your location. :poo
 ## :camera: Screenshots
 
 <p float="left">
-  <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-1" width="150">
-  <img src="https://lh3.googleusercontent.com/LdpBxKgzW-1DjItGLXYZFoZWMTQ-kztkZ71Er17ccF2vH2tyAdmrQGUVoo8te6Irzwo=w2836-h1506" alt="screenshot-2" width="150">
-  <img src="https://lh3.googleusercontent.com/qfn2N3e2MzMzB1dow033ZhTzOOwlkleIrf7mHmzqjP31MoAhhbr9OL2NMJz0mPqcioDI=w2836-h1506" alt="screenshot-3" width="150">
-  <img src="https://lh3.googleusercontent.com/5195BJzKqOx70RHIUlevBoiAuDbYdTaL0c38khQynDNKQCpSc317lBHzatjH-F2dsQ=w2836-h1506" alt="screenshot-4" width="150">
-  <img src="https://lh3.googleusercontent.com/_5krR5h3Swz3rVYwIEX1xBI6rcKzqoagRkmHxk1gn3dyF8NAUO3CRLHyi9WrySf1Rd0=w2836-h1506" alt="screenshot-5" width="150">
+  <img src="./assets/screenshots/ios/iPhone-X-1.png" alt="screenshot-1" width="150">
+  <img src="./assets/screenshots/ios/iPhone-X-2.png" alt="screenshot-2" width="150">
+  <img src="./assets/screenshots/ios/iPhone-X-3.png" alt="screenshot-3" width="150">
+  <img src="./assets/screenshots/ios/iPhone-X-4.png" alt="screenshot-4" width="150">
+  <img src="./assets/screenshots/ios/iPhone-X-5.png" alt="screenshot-5" width="150">
 </p>
 
 ## :iphone: Try it on Expo
@@ -40,7 +40,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                   |
 | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                   |
 | Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                  |
-| Amplitude Analytics     | https://amplitude.com                                                               | Optional. Note: we **never** track PII.             |
+| Amplitude Analytics     | https://amplitude.com                                                               | Optional. Note: we **never** track PII.    |
 
 Then run the following commands:
 
