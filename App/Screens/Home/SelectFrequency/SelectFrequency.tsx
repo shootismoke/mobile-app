@@ -28,13 +28,13 @@ interface SelectFrequencyProps extends ScrollViewProps {
   onChangeFrequency: (frequency: Frequency) => void;
 }
 
-export function SelectFrequency (props: SelectFrequencyProps) {
+export function SelectFrequency(props: SelectFrequencyProps) {
   const scroll = useRef<ScrollView>(null);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
   const { frequency, onChangeFrequency, style, ...rest } = props;
 
-  function handleChangeFrequency (f: Frequency) {
+  function handleChangeFrequency(f: Frequency) {
     setTimeout(() => {
       onChangeFrequency(f);
     }, 400);
@@ -62,7 +62,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        {i18n.t('home_frequency_daily')}
+	{i18n.t('frequency_daily')}
       </BoxButton>
       <BoxButton
         active={frequency === 'weekly'}
@@ -78,7 +78,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        {i18n.t('home_frequency_weekly')}
+	{i18n.t('frequency_weekly')}
       </BoxButton>
 
       <BoxButton
@@ -93,7 +93,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         }}
         style={styles.boxButton}
       >
-        {i18n.t('home_frequency_monthly')}
+	{i18n.t('frequency_monthly')}
       </BoxButton>
     </ScrollView>
   );
