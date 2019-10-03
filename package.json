@@ -8,7 +8,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .ts,.tsx App",
+    "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
     "start": "expo start",
     "test": "jest"
   },
