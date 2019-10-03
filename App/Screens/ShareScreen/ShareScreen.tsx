@@ -18,6 +18,7 @@ import React, { useEffect, createRef } from 'react';
 import { Share, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { captureRef } from 'react-native-view-shot';
+
 import { ShareImage } from './ShareImage';
 import { i18n } from '../../localization';
 import { Button } from '../../components';
@@ -25,7 +26,7 @@ import * as theme from '../../util/theme';
 
 interface ShareScreenProps extends NavigationInjectedProps { }
 
-export function ShareScreen (props: ShareScreenProps) {
+export function ShareScreen(props: ShareScreenProps) {
   const refViewShot = createRef();
 
   useEffect(() => {
