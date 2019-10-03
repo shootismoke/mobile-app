@@ -14,29 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 
 import { BoxButton } from '../../../components';
 import { i18n } from '../../../localization';
+import { FrequencyContext } from '../../../stores';
+import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';
 
-interface SelectFrequencyProps extends ScrollViewProps {
-  frequency: Frequency;
-  onChangeFrequency: (frequency: Frequency) => void;
-}
-
-export function SelectFrequency (props: SelectFrequencyProps) {
+export function SelectFrequency (props: ScrollViewProps) {
   const scroll = useRef<ScrollView>(null);
+  const { frequency, setFrequency } = useContext(FrequencyContext);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
-  const { frequency, onChangeFrequency, style, ...rest } = props;
+  const { style, ...rest } = props;
 
   function handleChangeFrequency (f: Frequency) {
     setTimeout(() => {
-      onChangeFrequency(f);
+      setFrequency(f);
     }, 400);
   }
 
@@ -53,6 +51,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
         active={frequency === 'daily'}
         onLayout={event => setDailyWidth(event.nativeEvent.layout.width)}
         onPress={() => {
+          track('HOME_SCREEN_DAILY_CLICK');
           if (frequency === 'daily') {
             return;
           }
@@ -67,6 +66,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
       <BoxButton
         active={frequency === 'weekly'}
         onPress={() => {
+          track('HOME_SCREEN_WEEKLY_CLICK');
           if (frequency === 'weekly') {
             return;
           }
@@ -84,6 +84,7 @@ export function SelectFrequency (props: SelectFrequencyProps) {
       <BoxButton
         active={frequency === 'monthly'}
         onPress={() => {
+          track('HOME_SCREEN_MONTHLY_CLICK');
           if (frequency === 'monthly') {
             return;
           }

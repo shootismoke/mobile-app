@@ -16,15 +16,15 @@
 
 import React, { useEffect, createRef } from 'react';
 import { Share, StyleSheet, View } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
 import { captureRef } from 'react-native-view-shot';
+import { NavigationInjectedProps } from 'react-navigation';
 
 import { ShareImage } from './ShareImage';
 import { i18n } from '../../localization';
 import { Button } from '../../components';
 import * as theme from '../../util/theme';
 
-interface ShareScreenProps extends NavigationInjectedProps { }
+interface ShareScreenProps extends NavigationInjectedProps {}
 
 export function ShareScreen (props: ShareScreenProps) {
   const refViewShot = createRef();
@@ -40,8 +40,7 @@ export function ShareScreen (props: ShareScreenProps) {
         await Share.share({
           url: uri
         });
-      } catch (error) {
-      }
+      } catch (error) {}
 
       handleDismiss();
     }, 750);
@@ -57,7 +56,9 @@ export function ShareScreen (props: ShareScreenProps) {
           <ShareImage />
         </View>
         <View style={styles.buttonContainer}>
-          <Button onPress={handleDismiss} style={styles.button}>{i18n.t('close_button').toUpperCase()}</Button>
+          <Button onPress={handleDismiss} style={styles.button}>
+            {i18n.t('close_button').toUpperCase()}
+          </Button>
         </View>
       </View>
     </View>
@@ -84,8 +85,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    transform: [
-      { scale: 0.8 }
-    ]
+    transform: [{ scale: 0.8 }]
   }
 });

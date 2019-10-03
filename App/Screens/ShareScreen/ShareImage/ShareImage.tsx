@@ -15,15 +15,17 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { CigaretteBlock, CurrentLocation } from '../../../components';
-import { ApiContext, CurrentLocationContext, FrequencyContext } from '../../../stores';
+import {
+  ApiContext,
+  CurrentLocationContext,
+  FrequencyContext
+} from '../../../stores';
 import * as theme from '../../../util/theme';
+
+const LANDING_PAGE = 'https://shootismoke.github.io';
 
 export function ShareImage () {
   const { api } = useContext(ApiContext)!;
@@ -34,13 +36,21 @@ export function ShareImage () {
 
   return (
     <View style={styles.container}>
-      <CigaretteBlock cigarettesPerDay={cigarettesPerDay} frequency={frequency} displayFrequency style={{ paddingHorizontal: 0 }} />
+      <CigaretteBlock
+        cigarettesPerDay={cigarettesPerDay}
+        displayFrequency
+        frequency={frequency}
+        isGps={false}
+        style={{ paddingHorizontal: 0 }}
+      />
       <View>
-        <CurrentLocation api={api!} currentLocation={currentLocation!} numberOfLines={2} />
+        <CurrentLocation
+          api={api!}
+          currentLocation={currentLocation!}
+          numberOfLines={2}
+        />
       </View>
-
-      <Text style={styles.urlText}>https://shootismoke.github.io/</Text>
-
+      <Text style={styles.urlText}>{LANDING_PAGE}</Text>
     </View>
   );
 }
