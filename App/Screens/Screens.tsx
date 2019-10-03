@@ -28,6 +28,7 @@ import {
   NavigationStackOptions,
   NavigationStackProp
 } from 'react-navigation-stack';
+import { fadeIn } from 'react-navigation-transitions';
 
 import { About } from './About';
 import { Details } from './Details';
@@ -35,6 +36,7 @@ import { ErrorScreen } from './ErrorScreen';
 import { Home } from './Home';
 import { Loading } from './Loading';
 import { Search } from './Search';
+import { ShareScreen } from './ShareScreen';
 import { ApiContext, ErrorContext } from '../stores';
 import { Api } from '../stores/fetchApi';
 import * as theme from '../util/theme';
@@ -60,7 +62,7 @@ function stackNavigatorOptions (initialRouteName: string) {
 /**
  * The main stack navigator, for the app.
  */
-const RootStack = createAppContainer(
+const MainStack = createAppContainer(
   createStackNavigator(
     {
       About: {
@@ -80,6 +82,23 @@ const RootStack = createAppContainer(
   )
 );
 
+const RootStack = createAppContainer(
+  createStackNavigator(
+    {
+      Main: {
+        screen: MainStack
+      },
+      ShareModal: {
+        screen: ShareScreen
+      }
+    },
+    {
+      mode: 'modal',
+      headerMode: 'none',
+      transitionConfig: () => fadeIn()
+    }
+  )
+);
 /**
  * A stack navigator for the error case.
  */

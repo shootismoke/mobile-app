@@ -14,13 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './BackButton';
-export * from './Banner';
-export * from './BoxButton';
-export * from './Button';
-export * from './Cigarettes';
-export * from './CigaretteBlock';
-export * from './ChangeLocation';
-export * from './CurrentLocation';
-export * from './ListItem';
-export * from './ListSeparator';
+import React, { createContext, useState } from 'react';
+import { Frequency } from '../Screens/Home/SelectFrequency';
+
+import { noop } from '../util/noop';
+
+interface Context {
+  frequency: Frequency
+  setFrequency: (newFrequency: Frequency) => void;
+}
+
+export const FrequencyContext = createContext<Context>({ frequency: 'daily', setFrequency: noop });
+
+export function FrequencyContextProvider ({
+  children
+}: {
+  children: JSX.Element;
+}) {
+  const [frequency, setFrequency] = useState<Frequency>('daily');
+
+  return (
+    <FrequencyContext.Provider
+      value={{
+        frequency,
+        setFrequency
+      }}
+    >
+      {children}
+    </FrequencyContext.Provider>
+  );
+}

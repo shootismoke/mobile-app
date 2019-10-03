@@ -17,16 +17,17 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 
-import { Cigarettes } from '../../../components';
-import { i18n } from '../../../localization';
-import { Frequency } from '../SelectFrequency';
-import { CurrentLocationContext } from '../../../stores';
+import { Cigarettes } from '../Cigarettes';
+import { i18n } from '../../localization';
+import { Frequency } from '../../Screens/Home/SelectFrequency';
+import { CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
-import * as theme from '../../../util/theme';
+import * as theme from '../../util/theme';
 
 interface CigaretteBlockProps extends ViewProps {
-  cigaretteCount: number;
+  cigarettesPerDay: number;
   frequency: Frequency;
+  displayFrequency?: boolean
 }
 
 function getSwearWord (cigaretteCount: number) {
@@ -36,9 +37,27 @@ function getSwearWord (cigaretteCount: number) {
   return swearWords[Math.floor(Math.random() * swearWords.length)];
 }
 
+/**
+ * Compute the number of cigarettes to show
+ */
+export function getCigaretteCount (frequency: Frequency, cigarettePerDay: number) {
+  switch (frequency) {
+    case 'daily': {
+      return cigarettePerDay;
+    }
+    case 'weekly':
+      return cigarettePerDay * 7;
+    case 'monthly': {
+      return cigarettePerDay * 30;
+    }
+  }
+}
+
 export function CigaretteBlock (props: CigaretteBlockProps) {
   const { isGps } = useContext(CurrentLocationContext)!;
-  const { cigaretteCount, frequency, style, ...rest } = props;
+  const { cigarettesPerDay, frequency, style, displayFrequency, ...rest } = props;
+
+  const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay);
 
   const renderCigarettesText = () => {
     // Round to 1 decimal
@@ -59,13 +78,15 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
 
     const [firstPartText, secondPartText] = text.split('<');
 
+    const frequencyText = displayFrequency ? (<Text>{i18n.t(`frequency_${frequency}`)}</Text>) : null;
+
     return (
       <Text style={styles.shit}>
         {firstPartText}
         <Text style={styles.cigarettesCount}>
           {secondPartText.split('>')[0]}
         </Text>
-        {secondPartText.split('>')[1]}
+        {secondPartText.split('>')[1]} {frequencyText}
       </Text>
     );
   };

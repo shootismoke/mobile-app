@@ -14,50 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { AdditionalInfo } from './AdditionalInfo';
-import { CigaretteBlock } from './CigaretteBlock';
+import { CigaretteBlock, getCigaretteCount } from '../../components';
 import { Footer } from './Footer';
 import { Header } from './Header';
-import { Frequency, SelectFrequency } from './SelectFrequency';
+import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
-import { ApiContext } from '../../stores';
-import { Api } from '../../stores/fetchApi';
+import { ApiContext, FrequencyContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
-interface HomeProps extends NavigationInjectedProps {}
-
-/**
- * Compute the number of cigarettes to show
- */
-function getCigaretteCount (frequency: Frequency, api: Api) {
-  switch (frequency) {
-    case 'daily': {
-      return api.shootISmoke.cigarettes;
-    }
-    case 'weekly':
-      return api.shootISmoke.cigarettes * 7;
-    case 'monthly': {
-      return api.shootISmoke.cigarettes * 30;
-    }
-  }
-}
+interface HomeProps extends NavigationInjectedProps { }
 
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext);
-  const [frequency, setFrenquency] = useState<Frequency>('daily');
-
-  const cigaretteCount = getCigaretteCount(frequency, api!);
+  const { frequency, setFrequency } = useContext(FrequencyContext);
 
   trackScreen('HOME');
 
+  const cigarettesPerDay = api!.shootISmoke.cigarettes;
+
   return (
     <View style={styles.container}>
-      <SmokeVideo cigarettes={cigaretteCount} />
+      <SmokeVideo cigarettes={getCigaretteCount(frequency, cigarettesPerDay)} />
       <Header
         onChangeLocationClick={() => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
@@ -66,7 +49,7 @@ export function Home (props: HomeProps) {
       />
       <ScrollView bounces={false}>
         <CigaretteBlock
-          cigaretteCount={cigaretteCount}
+          cigarettesPerDay={cigarettesPerDay}
           frequency={frequency}
           style={styles.withMargin}
         />
@@ -81,7 +64,7 @@ export function Home (props: HomeProps) {
               track('HOME_SCREEN_MONTHLY_CLICK');
             }
 
-            setFrenquency(freq);
+            setFrequency(freq);
           }}
           style={styles.withMargin}
         />

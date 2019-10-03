@@ -16,4 +16,5 @@
 
 export * from './api';
 export * from './error';
+export * from './frequency';
 export * from './location';
