@@ -58,7 +58,7 @@ export function Footer (props: FooterProps) {
     Share.share({
       title: i18n.t('home_share_title'),
       message: i18n.t('home_share_message', {
-        cigarettes: api!.shootISmoke.cigarettes
+        cigarettes: parseFloat(api!.shootISmoke.cigarettes).toFixed(2)
       })
     });
   }
