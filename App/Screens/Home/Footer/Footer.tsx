@@ -28,7 +28,7 @@ import * as theme from '../../../util/theme';
 
 interface FooterProps extends NavigationInjectedProps, ViewProps { }
 
-export function Footer(props: FooterProps) {
+export function Footer (props: FooterProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,24 +36,24 @@ export function Footer(props: FooterProps) {
 
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
-  function goToAbout() {
+  function goToAbout () {
     track('HOME_SCREEN_ABOUT_CLICK');
     navigation.navigate('About');
   }
 
-  function goToAboutWhySoFar() {
+  function goToAboutWhySoFar () {
     track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
     navigation.navigate('About', {
       scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle
     });
   }
 
-  function goToDetails() {
+  function goToDetails () {
     track('HOME_SCREEN_DETAILS_CLICK');
     navigation.navigate('Details');
   }
 
-  function handleShare() {
+  function handleShare () {
     track('HOME_SCREEN_SHARE_CLICK');
 
     // Share doesn't currently support images on Android, so the text version
@@ -72,13 +72,13 @@ export function Footer(props: FooterProps) {
   const renderBigButton = () => {
     return isTooFar ? (
       <Button onPress={goToAboutWhySoFar}>
-        {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
+	{i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
       </Button>
     ) : (
-	<Button onPress={goToDetails}>
-	  {i18n.t('home_btn_see_detailed_info').toUpperCase()}
-	</Button>
-      );
+      <Button onPress={goToDetails}>
+	{i18n.t('home_btn_see_detailed_info').toUpperCase()}
+      </Button>
+    );
   };
 
   const renderSmallButtons = () => {
@@ -86,16 +86,16 @@ export function Footer(props: FooterProps) {
       <View style={styles.smallButtons}>
         {isTooFar ? (
           <Button icon="plus-circle" onPress={goToDetails} type="secondary">
-            {i18n.t('home_btn_more_details').toUpperCase()}
-          </Button>
-        ) : (
-	    <Button icon="question-circle" onPress={goToAbout} type="secondary">
-	      {i18n.t('home_btn_faq_about').toUpperCase()}
-	    </Button>
-	  )}
-        <Button icon="share-alt" onPress={handleShare} type="secondary">
-          {i18n.t('home_btn_share').toUpperCase()}
-        </Button>
+	    {i18n.t('home_btn_more_details').toUpperCase()}
+	  </Button>
+	) : (
+	  <Button icon="question-circle" onPress={goToAbout} type="secondary">
+	    {i18n.t('home_btn_faq_about').toUpperCase()}
+	  </Button>
+	)}
+	<Button icon="share-alt" onPress={handleShare} type="secondary">
+	  {i18n.t('home_btn_share').toUpperCase()}
+	</Button>
       </View>
     );
   };

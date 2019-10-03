@@ -76,7 +76,6 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
       cigarettes
     });
 
-    console.log('text :', text);
     const [firstPartText, secondPartText] = text.split('<');
 
     const frequencyText = displayFrequency ? (<Text>{i18n.t(`frequency_${frequency}`)}</Text>) : null;
