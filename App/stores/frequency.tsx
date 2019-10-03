@@ -29,8 +29,8 @@ export function FrequencyContextProvider ({
   return (
     <FrequencyContext.Provider
       value={{
-	currentFrequency,
-	setFrequency
+        currentFrequency,
+        setFrequency
       }}
     >
       {children}

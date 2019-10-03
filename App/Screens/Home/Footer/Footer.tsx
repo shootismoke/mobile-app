@@ -61,10 +61,10 @@ export function Footer (props: FooterProps) {
       props.navigation.navigate('ShareModal');
     } else {
       Share.share({
-	title: i18n.t('home_share_title'),
-	message: i18n.t('home_share_message', {
-	  cigarettes: api!.shootISmoke.cigarettes
-	})
+        title: i18n.t('home_share_title'),
+        message: i18n.t('home_share_message', {
+          cigarettes: parseFloat(api!.shootISmoke.cigarettes).toFixed(2)
+        })
       });
     }
   }
@@ -72,11 +72,11 @@ export function Footer (props: FooterProps) {
   const renderBigButton = () => {
     return isTooFar ? (
       <Button onPress={goToAboutWhySoFar}>
-	{i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
+        {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
       </Button>
     ) : (
       <Button onPress={goToDetails}>
-	{i18n.t('home_btn_see_detailed_info').toUpperCase()}
+        {i18n.t('home_btn_see_detailed_info').toUpperCase()}
       </Button>
     );
   };
@@ -86,16 +86,16 @@ export function Footer (props: FooterProps) {
       <View style={styles.smallButtons}>
         {isTooFar ? (
           <Button icon="plus-circle" onPress={goToDetails} type="secondary">
-	    {i18n.t('home_btn_more_details').toUpperCase()}
-	  </Button>
-	) : (
-	  <Button icon="question-circle" onPress={goToAbout} type="secondary">
-	    {i18n.t('home_btn_faq_about').toUpperCase()}
-	  </Button>
-	)}
-	<Button icon="share-alt" onPress={handleShare} type="secondary">
-	  {i18n.t('home_btn_share').toUpperCase()}
-	</Button>
+            {i18n.t('home_btn_more_details').toUpperCase()}
+          </Button>
+        ) : (
+          <Button icon="question-circle" onPress={goToAbout} type="secondary">
+            {i18n.t('home_btn_faq_about').toUpperCase()}
+          </Button>
+        )}
+        <Button icon="share-alt" onPress={handleShare} type="secondary">
+          {i18n.t('home_btn_share').toUpperCase()}
+        </Button>
       </View>
     );
   };

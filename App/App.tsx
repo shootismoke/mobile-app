@@ -72,9 +72,9 @@ export function App () {
     <ErrorContextProvider>
       <LocationContextProvider>
         <ApiContextProvider>
-	  <FrequencyContextProvider>
-	    <Screens />
-	  </FrequencyContextProvider>
+          <FrequencyContextProvider>
+            <Screens />
+          </FrequencyContextProvider>
         </ApiContextProvider>
       </LocationContextProvider>
     </ErrorContextProvider>

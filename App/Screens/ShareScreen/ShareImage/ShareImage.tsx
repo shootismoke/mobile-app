@@ -36,7 +36,7 @@ export function ShareImage () {
     <View style={styles.container}>
       <CigaretteBlock cigarettesPerDay={cigarettesPerDay} frequency={currentFrequency} displayFrequency style={{ paddingHorizontal: 0 }} />
       <View>
-	<CurrentLocation api={api!} currentLocation={currentLocation!} numberOfLines={2} />
+        <CurrentLocation api={api!} currentLocation={currentLocation!} numberOfLines={2} />
       </View>
 
       <Text style={styles.urlText}>https://shootismoke.github.io/</Text>

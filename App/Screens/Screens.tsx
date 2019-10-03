@@ -86,10 +86,10 @@ const RootStack = createAppContainer(
   createStackNavigator(
     {
       Main: {
-	screen: MainStack
+        screen: MainStack
       },
       ShareModal: {
-	screen: ShareScreen
+        screen: ShareScreen
       }
     },
     {

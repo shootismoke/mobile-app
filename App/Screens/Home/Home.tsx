@@ -49,7 +49,7 @@ export function Home (props: HomeProps) {
       />
       <ScrollView bounces={false}>
         <CigaretteBlock
-	  cigarettesPerDay={cigarettesPerDay}
+          cigarettesPerDay={cigarettesPerDay}
           frequency={frequency}
           style={styles.withMargin}
         />
@@ -64,7 +64,7 @@ export function Home (props: HomeProps) {
               track('HOME_SCREEN_MONTHLY_CLICK');
             }
 
-	    setFrequency(freq);
+            setFrequency(freq);
           }}
           style={styles.withMargin}
         />

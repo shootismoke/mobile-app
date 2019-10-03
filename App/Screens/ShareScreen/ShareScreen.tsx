@@ -31,14 +31,14 @@ export function ShareScreen (props: ShareScreenProps) {
   useEffect(() => {
     setTimeout(async () => {
       try {
-	const uri = await captureRef(refViewShot, {
-	  format: 'png',
-	  quality: 1
-	});
+        const uri = await captureRef(refViewShot, {
+          format: 'png',
+          quality: 1
+        });
 
-	await Share.share({
-	  url: uri
-	});
+        await Share.share({
+          url: uri
+        });
       } catch (error) {
       }
 
@@ -52,12 +52,12 @@ export function ShareScreen (props: ShareScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-	<View ref={refViewShot} collapsable={false}>
-	  <ShareImage />
-	</View>
-	<View style={styles.buttonContainer}>
-	  <Button onPress={handleDismiss} style={styles.button}>{i18n.t('close_button').toUpperCase()}</Button>
-	</View>
+        <View ref={refViewShot} collapsable={false}>
+          <ShareImage />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button onPress={handleDismiss} style={styles.button}>{i18n.t('close_button').toUpperCase()}</Button>
+        </View>
       </View>
     </View>
   );

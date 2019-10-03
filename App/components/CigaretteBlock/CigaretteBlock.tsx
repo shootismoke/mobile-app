@@ -66,13 +66,13 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
     const text = i18n.t('home_smoked_cigarette_title', {
       swearWord: getSwearWord(cigaretteCount),
       presentPast:
-	isGps && frequency === 'daily'
-	  ? i18n.t('home_common_you_smoke')
-	  : i18n.t('home_common_you_d_smoke'),
+        isGps && frequency === 'daily'
+          ? i18n.t('home_common_you_smoke')
+          : i18n.t('home_common_you_d_smoke'),
       singularPlural:
-	cigarettes === 1
-	  ? i18n.t('home_common_cigarette').toLowerCase()
-	  : i18n.t('home_common_cigarettes').toLowerCase(),
+        cigarettes === 1
+          ? i18n.t('home_common_cigarette').toLowerCase()
+          : i18n.t('home_common_cigarettes').toLowerCase(),
       cigarettes
     });
 
@@ -82,11 +82,11 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
 
     return (
       <Text style={styles.shit}>
-	{firstPartText}
-	<Text style={styles.cigarettesCount}>
-	  {secondPartText.split('>')[0]}
-	</Text>
-	{secondPartText.split('>')[1]} {frequencyText}
+        {firstPartText}
+        <Text style={styles.cigarettesCount}>
+          {secondPartText.split('>')[0]}
+        </Text>
+        {secondPartText.split('>')[1]} {frequencyText}
       </Text>
     );
   };
