@@ -30,7 +30,7 @@ import * as theme from '../../util/theme';
 
 interface HomeProps extends NavigationInjectedProps { }
 
-export function Home(props: HomeProps) {
+export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext);
   const { frequency, setFrequency } = useContext(FrequencyContext);
 

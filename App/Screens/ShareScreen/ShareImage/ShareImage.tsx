@@ -25,7 +25,7 @@ import { CigaretteBlock, CurrentLocation } from '../../../components';
 import { ApiContext, CurrentLocationContext, FrequencyContext } from '../../../stores';
 import * as theme from '../../../util/theme';
 
-export function ShareImage() {
+export function ShareImage () {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);

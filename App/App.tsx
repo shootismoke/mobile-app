@@ -42,10 +42,11 @@ if (Constants.manifest.extra.sentryPublicDsn) {
   }
 }
 
-export function App() {
+export function App () {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     Promise.all([
+
       Font.loadAsync({
         'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
         'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
@@ -79,6 +80,6 @@ export function App() {
       </LocationContextProvider>
     </ErrorContextProvider>
   ) : (
-      <LoadingBackground />
-    );
+    <LoadingBackground />
+  );
 }
