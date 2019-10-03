@@ -17,19 +17,26 @@
 import React, { createContext, useState } from 'react';
 import { Frequency } from '../Screens/Home/SelectFrequency';
 
-export const FrequencyContext = createContext();
+import { noop } from '../util/noop';
 
-export function FrequencyContextProvider ({
+interface Context {
+  frequency: Frequency
+  setFrequency: (newFrequency: Frequency) => void;
+}
+
+export const FrequencyContext = createContext<Context>({ frequency: "daily", setFrequency: noop });
+
+export function FrequencyContextProvider({
   children
 }: {
   children: JSX.Element;
 }) {
-  const [currentFrequency, setFrequency] = useState<Frequency>('daily');
+  const [frequency, setFrequency] = useState<Frequency>('daily');
 
   return (
     <FrequencyContext.Provider
       value={{
-        currentFrequency,
+        frequency,
         setFrequency
       }}
     >

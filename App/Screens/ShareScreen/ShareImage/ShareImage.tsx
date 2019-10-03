@@ -25,16 +25,16 @@ import { CigaretteBlock, CurrentLocation } from '../../../components';
 import { ApiContext, CurrentLocationContext, FrequencyContext } from '../../../stores';
 import * as theme from '../../../util/theme';
 
-export function ShareImage () {
+export function ShareImage() {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
-  const { currentFrequency } = useContext(FrequencyContext);
+  const { frequency } = useContext(FrequencyContext);
 
   const cigarettesPerDay = api!.shootISmoke.cigarettes;
 
   return (
     <View style={styles.container}>
-      <CigaretteBlock cigarettesPerDay={cigarettesPerDay} frequency={currentFrequency} displayFrequency style={{ paddingHorizontal: 0 }} />
+      <CigaretteBlock cigarettesPerDay={cigarettesPerDay} frequency={frequency} displayFrequency style={{ paddingHorizontal: 0 }} />
       <View>
         <CurrentLocation api={api!} currentLocation={currentLocation!} numberOfLines={2} />
       </View>
