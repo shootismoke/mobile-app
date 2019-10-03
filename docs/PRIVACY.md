@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Effective on November 21st, 2018.
+Effective on October 2nd, 2019.
 
 Marcelo S. Coelho & Amaury Martiny built the Sh\*\*t! I Smoke app as an Open Source app. This SERVICE is provided by Marcelo S. Coelho & Amaury Martiny at no cost and is intended for use as is.
 
@@ -20,6 +20,7 @@ The app does use third party services that may collect information used to ident
 - Google Maps API, for iOS and for Android: https://policies.google.com/privacy
 - Algolia: https://www.algolia.com/policies/privacy
 - Sentry: https://sentry.io/privacy/
+- Amplitude: https://amplitude.com/privacy
 
 ## Log Data
 
