@@ -26,7 +26,7 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
-interface FooterProps extends NavigationInjectedProps, ViewProps { }
+interface FooterProps extends NavigationInjectedProps, ViewProps {}
 
 export function Footer (props: FooterProps) {
   const { api } = useContext(ApiContext)!;
@@ -63,7 +63,7 @@ export function Footer (props: FooterProps) {
       Share.share({
         title: i18n.t('home_share_title'),
         message: i18n.t('home_share_message', {
-          cigarettes: parseFloat(api!.shootISmoke.cigarettes).toFixed(2)
+          cigarettes: api!.shootISmoke.cigarettes.toFixed(2)
         })
       });
     }

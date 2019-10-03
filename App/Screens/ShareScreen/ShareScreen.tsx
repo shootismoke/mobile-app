@@ -27,7 +27,7 @@ import * as theme from '../../util/theme';
 interface ShareScreenProps extends NavigationInjectedProps {}
 
 export function ShareScreen (props: ShareScreenProps) {
-  const refViewShot = createRef();
+  const refViewShot = createRef<View>();
 
   useEffect(() => {
     setTimeout(async () => {
