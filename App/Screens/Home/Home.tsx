@@ -28,11 +28,11 @@ import { ApiContext, FrequencyContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
-interface HomeProps extends NavigationInjectedProps { }
+interface HomeProps extends NavigationInjectedProps {}
 
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext);
-  const { frequency, setFrequency } = useContext(FrequencyContext);
+  const { frequency } = useContext(FrequencyContext);
 
   trackScreen('HOME');
 
@@ -53,21 +53,7 @@ export function Home (props: HomeProps) {
           frequency={frequency}
           style={styles.withMargin}
         />
-        <SelectFrequency
-          frequency={frequency}
-          onChangeFrequency={freq => {
-            if (freq === 'daily') {
-              track('HOME_SCREEN_DAILY_CLICK');
-            } else if (freq === 'weekly') {
-              track('HOME_SCREEN_WEEKLY_CLICK');
-            } else if (freq === 'monthly') {
-              track('HOME_SCREEN_MONTHLY_CLICK');
-            }
-
-            setFrequency(freq);
-          }}
-          style={styles.withMargin}
-        />
+        <SelectFrequency style={styles.withMargin} />
         <AdditionalInfo
           frequency={frequency}
           navigation={props.navigation}
