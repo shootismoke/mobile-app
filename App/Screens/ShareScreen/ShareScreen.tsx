@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    paddingVertical: 20
+    paddingVertical: theme.spacing.normal
   },
 
   button: {
-    paddingHorizontal: 10
+    paddingHorizontal: theme.spacing.mini
   },
 
   imageContainer: {
