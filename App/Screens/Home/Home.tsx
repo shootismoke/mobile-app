@@ -24,7 +24,11 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
-import { ApiContext, FrequencyContext } from '../../stores';
+import {
+  ApiContext,
+  CurrentLocationContext,
+  FrequencyContext
+} from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
@@ -32,6 +36,7 @@ interface HomeProps extends NavigationInjectedProps {}
 
 export function Home (props: HomeProps) {
   const { api } = useContext(ApiContext);
+  const { isGps } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
 
   trackScreen('HOME');
@@ -51,6 +56,7 @@ export function Home (props: HomeProps) {
         <CigaretteBlock
           cigarettesPerDay={cigarettesPerDay}
           frequency={frequency}
+          isGps={isGps}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />

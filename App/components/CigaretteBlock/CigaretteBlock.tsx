@@ -14,20 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 
 import { Cigarettes } from '../Cigarettes';
 import { i18n } from '../../localization';
 import { Frequency } from '../../Screens/Home/SelectFrequency';
-import { CurrentLocationContext } from '../../stores';
 import swearWords from './swearWords';
 import * as theme from '../../util/theme';
 
 interface CigaretteBlockProps extends ViewProps {
   cigarettesPerDay: number;
+  displayFrequency?: boolean;
   frequency: Frequency;
-  displayFrequency?: boolean
+  isGps: boolean;
 }
 
 function getSwearWord (cigaretteCount: number) {
@@ -40,7 +40,10 @@ function getSwearWord (cigaretteCount: number) {
 /**
  * Compute the number of cigarettes to show
  */
-export function getCigaretteCount (frequency: Frequency, cigarettePerDay: number) {
+export function getCigaretteCount (
+  frequency: Frequency,
+  cigarettePerDay: number
+) {
   switch (frequency) {
     case 'daily': {
       return cigarettePerDay;
@@ -54,8 +57,14 @@ export function getCigaretteCount (frequency: Frequency, cigarettePerDay: number
 }
 
 export function CigaretteBlock (props: CigaretteBlockProps) {
-  const { isGps } = useContext(CurrentLocationContext)!;
-  const { cigarettesPerDay, frequency, style, displayFrequency, ...rest } = props;
+  const {
+    cigarettesPerDay,
+    frequency,
+    isGps,
+    style,
+    displayFrequency,
+    ...rest
+  } = props;
 
   const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay);
 
@@ -78,7 +87,9 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
 
     const [firstPartText, secondPartText] = text.split('<');
 
-    const frequencyText = displayFrequency ? (<Text>{i18n.t(`frequency_${frequency}`)}</Text>) : null;
+    const frequencyText = displayFrequency ? (
+      <Text>{i18n.t(`frequency_${frequency}`)}</Text>
+    ) : null;
 
     return (
       <Text style={styles.shit}>

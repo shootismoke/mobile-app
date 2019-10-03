@@ -25,6 +25,8 @@ import {
 } from '../../../stores';
 import * as theme from '../../../util/theme';
 
+const LANDING_PAGE = 'https://shootismoke.github.io';
+
 export function ShareImage () {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
@@ -36,8 +38,9 @@ export function ShareImage () {
     <View style={styles.container}>
       <CigaretteBlock
         cigarettesPerDay={cigarettesPerDay}
-        frequency={frequency}
         displayFrequency
+        frequency={frequency}
+        isGps={false}
         style={{ paddingHorizontal: 0 }}
       />
       <View>
@@ -47,7 +50,7 @@ export function ShareImage () {
           numberOfLines={2}
         />
       </View>
-      <Text style={styles.urlText}>https://shootismoke.github.io/</Text>
+      <Text style={styles.urlText}>{LANDING_PAGE}</Text>
     </View>
   );
 }

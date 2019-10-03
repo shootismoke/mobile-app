@@ -32,6 +32,12 @@ export function SelectFrequency (props: ScrollViewProps) {
 
   const { style, ...rest } = props;
 
+  function handleChangeFrequency (f: Frequency) {
+    setTimeout(() => {
+      setFrequency(f);
+    }, 400);
+  }
+
   return (
     <ScrollView
       contentContainerStyle={styles.content}
@@ -51,7 +57,7 @@ export function SelectFrequency (props: ScrollViewProps) {
           }
 
           scroll.current!.scrollTo({ x: 0 });
-          setFrequency('daily');
+          handleChangeFrequency('daily');
         }}
         style={styles.boxButton}
       >
@@ -68,7 +74,7 @@ export function SelectFrequency (props: ScrollViewProps) {
           scroll.current!.scrollTo({
             x: dailyWidth + theme.spacing.mini
           });
-          setFrequency('weekly');
+          handleChangeFrequency('weekly');
         }}
         style={styles.boxButton}
       >
@@ -84,7 +90,7 @@ export function SelectFrequency (props: ScrollViewProps) {
           }
 
           scroll.current!.scrollToEnd();
-          setFrequency('monthly');
+          handleChangeFrequency('monthly');
         }}
         style={styles.boxButton}
       >
