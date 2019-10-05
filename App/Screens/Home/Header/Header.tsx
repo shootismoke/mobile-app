@@ -30,7 +30,7 @@ interface HeaderProps {
   onChangeLocationClick: (event: GestureResponderEvent) => void;
 }
 
-export function Header(props: HeaderProps) {
+export function Header (props: HeaderProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { localizedDistanceUnit, distanceUnit } = useDistanceUnit();

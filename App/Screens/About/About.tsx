@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Constants from 'expo-constants';
-import React, { useState } from 'react';
+import React from 'react';
 import { Linking, Platform, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
@@ -67,7 +67,7 @@ interface AboutProps
     scrollInto?: keyof typeof aboutSections;
   }> {}
 
-export function About(props: AboutProps) {
+export function About (props: AboutProps) {
   const { navigation } = props;
   const { distanceUnit, setDistanceUnit, localizedDistanceUnit } = useDistanceUnit();
 

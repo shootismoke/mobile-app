@@ -2,7 +2,6 @@ import { AsyncStorage } from 'react-native';
 import React, { useState, useEffect, createContext, FC, useContext } from 'react';
 
 import { i18n } from '../localization';
-import { noop } from '../util/noop';
 
 export type DistanceUnit = 'km' | 'mile';
 type DistanceUnitFormat = 'short' | 'long';
@@ -17,8 +16,8 @@ type ContextType = {
 
 const Context = createContext<ContextType>({
   distanceUnit: 'km',
-  localizedDistanceUnit: (format: DistanceUnitFormat) => '',
-  setDistanceUnit: (unit: DistanceUnit) => {}
+  localizedDistanceUnit: () => '',
+  setDistanceUnit: () => {}
 });
 
 export const DistanceUnitProvider: FC = ({ children }) => {

@@ -26,7 +26,7 @@ interface DistanceProps {
   distance: number;
 }
 
-export function Distance(props: DistanceProps) {
+export function Distance (props: DistanceProps) {
   const { localizedDistanceUnit } = useDistanceUnit();
   const distanceUnit = localizedDistanceUnit('short');
 

@@ -35,7 +35,7 @@ interface DetailsProps extends NavigationInjectedProps {}
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details(props: DetailsProps) {
+export function Details (props: DetailsProps) {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);
