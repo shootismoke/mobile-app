@@ -14,72 +14,75 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import Constants from 'expo-constants'
-import React, { useState } from 'react'
-import { Linking, Platform, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
-import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view'
-import { scale } from 'react-native-size-matters'
-import { NavigationInjectedProps } from 'react-navigation'
+import Constants from 'expo-constants';
+import React, { useState } from 'react';
+import { Linking, Platform, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
+import { scale } from 'react-native-size-matters';
+import { NavigationInjectedProps } from 'react-navigation';
 
-import { Box } from './Box'
-import { BackButton } from '../../components'
-import { i18n } from '../../localization'
-import { trackScreen } from '../../util/amplitude'
-import * as theme from '../../util/theme'
+import { Box } from './Box';
+import { BackButton } from '../../components';
+import { i18n } from '../../localization';
+import { trackScreen } from '../../util/amplitude';
+import * as theme from '../../util/theme';
+import { useDistanceUnit } from '../../stores/distanceUnit';
 
-const CustomScrollView = wrapScrollView(ScrollView)
+const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
   align: 'top' as 'top',
   insets: {
     bottom: 0,
-    top: scale(theme.spacing.normal),
-  },
-}
+    top: scale(theme.spacing.normal)
+  }
+};
 
 export const aboutSections = {
   aboutBetaInaccurate: 'aboutBetaInaccurate',
-  aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle',
-}
+  aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
+};
 
 const handleOpenAmaury = () => {
-  Linking.openURL('https://twitter.com/amaurymartiny')
-}
+  Linking.openURL('https://twitter.com/amaurymartiny');
+};
 
 const handleOpenAqi = () => {
-  Linking.openURL('http://aqicn.org/')
-}
+  Linking.openURL('http://aqicn.org/');
+};
 
 const handleOpenArticle = () => {
-  Linking.openURL('http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/')
-}
+  Linking.openURL('http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/');
+};
 
 const handleOpenGithub = () => {
-  Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke')
-}
+  Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke');
+};
 
 const handleOpenMarcelo = () => {
-  Linking.openURL('https://www.behance.net/marceloscoelho')
-}
+  Linking.openURL('https://www.behance.net/marceloscoelho');
+};
 
 interface AboutProps
   extends NavigationInjectedProps<{
-    scrollInto?: keyof typeof aboutSections
+    scrollInto?: keyof typeof aboutSections;
   }> {}
 
 export function About(props: AboutProps) {
-  const { navigation } = props
-  const [milesDistance, setMilesDistance] = useState<boolean>(false)
+  const { navigation } = props;
+  const { distanceUnit, setDistanceUnit, localizedDistanceUnit } = useDistanceUnit();
 
-  trackScreen('ABOUT')
+  trackScreen('ABOUT');
 
-  const toggleDistanceSwitch = (value: boolean) => setMilesDistance(value)
+  const toggleDistanceSwitch = (value: boolean) => setDistanceUnit(value ? 'km' : 'mile');
 
   return (
     <CustomScrollView scrollIntoViewOptions={scrollViewOptions} style={theme.withPadding}>
       <BackButton onPress={() => navigation.goBack()} style={styles.backButton} />
 
       <View style={styles.section}>
-        <Text style={styles.h2}>{i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}</Text>
+        <Text style={styles.h2}>
+          {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
+        </Text>
         <Text style={theme.text}>
           {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_1')}{' '}
           <Text onPress={handleOpenArticle} style={theme.link}>
@@ -101,7 +104,10 @@ export function About(props: AboutProps) {
         </Text>
       </View>
 
-      <ScrollIntoView onMount={navigation.getParam('scrollInto') === 'aboutBetaInaccurate'} style={styles.section}>
+      <ScrollIntoView
+        onMount={navigation.getParam('scrollInto') === 'aboutBetaInaccurate'}
+        style={styles.section}
+      >
         <Text style={styles.h2}>{i18n.t('about_beta_inaccurate_title')}</Text>
         <Text style={theme.text}>{i18n.t('about_beta_inaccurate_message')}</Text>
       </ScrollIntoView>
@@ -137,14 +143,14 @@ export function About(props: AboutProps) {
       </View>
 
       <View style={styles.distance}>
-        <Text style={styles.h2}>{i18n.t('about_distance_title')}</Text>
+        <Text style={styles.h2}>{i18n.t('about_distance_unit_title')}</Text>
         <View style={styles.distanceSwitchWrapper}>
           <Switch
             onValueChange={toggleDistanceSwitch}
-            value={milesDistance}
+            value={distanceUnit === 'km'}
             trackColor={{ true: theme.primaryColor, false: theme.iconBackgroundColor }}
           />
-          <Text style={styles.distanceText}>{milesDistance ? 'Mile' : 'Kilometer'}</Text>
+          <Text style={styles.distanceText}>{localizedDistanceUnit('long')}</Text>
         </View>
       </View>
 
@@ -178,58 +184,59 @@ export function About(props: AboutProps) {
         {/* Add languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
       </View>
     </CustomScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   articleLink: {
     ...theme.text,
-    fontSize: scale(8),
+    fontSize: scale(8)
   },
   backButton: {
     marginBottom: theme.spacing.normal,
-    marginTop: theme.spacing.normal,
+    marginTop: theme.spacing.normal
   },
   credits: {
     borderTopColor: theme.iconBackgroundColor,
     borderTopWidth: 1,
     marginBottom: theme.spacing.normal,
-    paddingTop: theme.spacing.big,
+    paddingTop: theme.spacing.big
   },
   distance: {
     borderTopColor: theme.iconBackgroundColor,
     borderTopWidth: 1,
     marginBottom: theme.spacing.big,
-    paddingTop: theme.spacing.big,
+    paddingTop: theme.spacing.big
   },
   distanceSwitchWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   distanceText: {
     ...theme.text,
     fontSize: scale(14),
     paddingLeft: theme.spacing.small,
+    textTransform: 'capitalize'
   },
   h2: {
     ...theme.title,
     fontSize: scale(20),
     letterSpacing: 0,
     lineHeight: scale(24),
-    marginBottom: theme.spacing.small,
+    marginBottom: theme.spacing.small
   },
   micro: {
     ...Platform.select({
       ios: {
-        fontFamily: 'Georgia',
+        fontFamily: 'Georgia'
       },
       android: {
-        fontFamily: 'normal',
-      },
-    }),
+        fontFamily: 'normal'
+      }
+    })
   },
   section: {
-    marginBottom: theme.spacing.big,
-  },
-})
+    marginBottom: theme.spacing.big
+  }
+});

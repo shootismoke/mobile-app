@@ -27,25 +27,21 @@ import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { trackScreen } from '../../util/amplitude';
-import {
-  distanceToStation,
-  getCorrectLatLng,
-  DistanceUnit
-} from '../../util/station';
+import { distanceToStation, getCorrectLatLng } from '../../util/station';
+import { useDistanceUnit } from '../../stores/distanceUnit';
 
 interface DetailsProps extends NavigationInjectedProps {}
 
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details (props: DetailsProps) {
+export function Details(props: DetailsProps) {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);
   const { api } = useContext(ApiContext);
-  const { currentLocation: _currentLocation } = useContext(
-    CurrentLocationContext
-  );
+  const { currentLocation: _currentLocation } = useContext(CurrentLocationContext);
+  const { distanceUnit } = useDistanceUnit();
 
   trackScreen('DETAILS');
 
@@ -68,14 +64,7 @@ export function Details (props: DetailsProps) {
   // object` error. It's related to the MapView below.
   const currentLocation = { ..._currentLocation! };
 
-  const haversineDistanceUnit = i18n.t(
-    'haversine_distance_unit'
-  ) as DistanceUnit;
-  const distance = distanceToStation(
-    currentLocation!,
-    api!,
-    haversineDistanceUnit
-  );
+  const distance = distanceToStation(currentLocation!, api!, distanceUnit);
 
   const station = {
     description: api!.shootISmoke.station || '',
@@ -94,11 +83,9 @@ export function Details (props: DetailsProps) {
           <MapView
             initialRegion={{
               latitude: (currentLocation.latitude + station.latitude) / 2,
-              latitudeDelta:
-                Math.abs(currentLocation.latitude - station.latitude) * 2,
+              latitudeDelta: Math.abs(currentLocation.latitude - station.latitude) * 2,
               longitude: (currentLocation.longitude + station.longitude) / 2,
-              longitudeDelta:
-                Math.abs(currentLocation.longitude - station.longitude) * 2
+              longitudeDelta: Math.abs(currentLocation.longitude - station.longitude) * 2
             }}
             onMapReady={handleMapReady}
             style={styles.map}
