@@ -25,7 +25,7 @@ export const DistanceUnitProvider: FC = ({ children }) => {
 
   const getDistanceUnit = async (): Promise<void> => {
     const unit = await AsyncStorage.getItem(STORAGE_KEY);
-    if ((unit && unit === 'km') || (unit && unit === 'mile')) {
+    if (unit === 'km' || unit === 'mile') {
       setDistanceUnit(unit);
     }
   };
