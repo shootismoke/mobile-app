@@ -48,6 +48,6 @@ export function DistanceUnitProvider ({ children }: { children: ReactNode }) {
       {children}
     </Context.Provider>
   );
-};
+}
 
 export const useDistanceUnit = () => useContext(Context);
