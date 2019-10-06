@@ -15,9 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useEffect, createRef } from 'react';
-import { Share, StyleSheet, View } from 'react-native';
+import { Share, StyleSheet, View, Platform } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { NavigationInjectedProps } from 'react-navigation';
+import * as Sharing from 'expo-sharing';
 
 import { ShareImage } from './ShareImage';
 import { i18n } from '../../localization';
@@ -37,9 +38,15 @@ export function ShareScreen (props: ShareScreenProps) {
           quality: 1
         });
 
-        await Share.share({
-          url: uri
-        });
+        if (Platform.OS === 'ios') {
+          await Share.share({
+            url: uri
+          });
+        } else {
+          await Sharing.shareAsync(uri, {
+            mimeType: 'image/png'
+          });
+        }
       } catch (error) {}
 
       handleDismiss();
