@@ -20,13 +20,15 @@ import { StyleSheet, Text } from 'react-native';
 import { Banner } from '../../../components';
 import { i18n } from '../../../localization';
 import * as theme from '../../../util/theme';
+import { useDistanceUnit } from '../../../stores/distanceUnit';
 
 interface DistanceProps {
   distance: number;
 }
 
 export function Distance (props: DistanceProps) {
-  const distanceUnit = i18n.t('distance_unit');
+  const { localizedDistanceUnit } = useDistanceUnit();
+  const distanceUnit = localizedDistanceUnit('short');
 
   return (
     <Banner elevated shadowPosition="top" style={styles.banner}>

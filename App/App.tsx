@@ -24,6 +24,7 @@ import { Screens } from './Screens';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
 import {
   ApiContextProvider,
+  DistanceUnitProvider,
   ErrorContextProvider,
   FrequencyContextProvider,
   LocationContextProvider
@@ -46,7 +47,6 @@ export function App () {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     Promise.all([
-
       Font.loadAsync({
         'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
         'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
@@ -74,7 +74,9 @@ export function App () {
       <LocationContextProvider>
         <ApiContextProvider>
           <FrequencyContextProvider>
-            <Screens />
+            <DistanceUnitProvider>
+              <Screens />
+            </DistanceUnitProvider>
           </FrequencyContextProvider>
         </ApiContextProvider>
       </LocationContextProvider>

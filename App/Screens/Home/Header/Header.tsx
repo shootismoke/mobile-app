@@ -15,60 +15,41 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import {
-  GestureResponderEvent,
-  Image,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { GestureResponderEvent, Image, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
-import {
-  distanceToStation,
-  isStationTooFar,
-  DistanceUnit
-} from '../../../util/station';
+import { distanceToStation, isStationTooFar } from '../../../util/station';
+import { useDistanceUnit } from '../../../stores/distanceUnit';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {
-  onChangeLocationClick: (event: GestureResponderEvent) => void;
+  onChangeLocationClick: (event: GestureResponderEvent) => void
 }
 
 export function Header (props: HeaderProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
+  const { distanceUnit, localizedDistanceUnit } = useDistanceUnit();
   const { onChangeLocationClick } = props;
 
-  const distanceUnit = i18n.t('distance_unit');
-  const haversineDistanceUnit = i18n.t(
-    'haversine_distance_unit'
-  ) as DistanceUnit;
-  const distance = distanceToStation(
-    currentLocation!,
-    api!,
-    haversineDistanceUnit
-  );
+  const shortDistanceUnit = localizedDistanceUnit('short');
+  const distance = distanceToStation(currentLocation!, api!, distanceUnit);
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
   return (
     <View style={styles.container}>
       <View style={styles.currentLocation}>
-        <CurrentLocation
-          api={api!}
-          currentLocation={currentLocation!}
-          numberOfLines={2}
-        />
+        <CurrentLocation api={api!} currentLocation={currentLocation!} numberOfLines={2} />
         <View style={styles.distance}>
           {isTooFar && <Image source={alert} style={styles.warning} />}
           <Text style={styles.distanceText}>
             {i18n.t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
-              distanceUnit
+              distanceUnit: shortDistanceUnit
             })}{' '}
             {!isGps && i18n.t('home_header_from_search')}
           </Text>

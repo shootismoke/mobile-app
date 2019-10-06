@@ -16,14 +16,7 @@
 
 import Constants from 'expo-constants';
 import React from 'react';
-import {
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Linking, Platform, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -33,6 +26,7 @@ import { BackButton } from '../../components';
 import { i18n } from '../../localization';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { useDistanceUnit } from '../../stores/distanceUnit';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -57,9 +51,7 @@ const handleOpenAqi = () => {
 };
 
 const handleOpenArticle = () => {
-  Linking.openURL(
-    'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
-  );
+  Linking.openURL('http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/');
 };
 
 const handleOpenGithub = () => {
@@ -77,35 +69,26 @@ interface AboutProps
 
 export function About (props: AboutProps) {
   const { navigation } = props;
+  const { distanceUnit, localizedDistanceUnit, setDistanceUnit } = useDistanceUnit();
 
   trackScreen('ABOUT');
 
+  const toggleDistanceSwitch = (value: boolean) => setDistanceUnit(value ? 'km' : 'mile');
+
   return (
-    <CustomScrollView
-      scrollIntoViewOptions={scrollViewOptions}
-      style={theme.withPadding}
-    >
-      <BackButton
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}
-      />
+    <CustomScrollView scrollIntoViewOptions={scrollViewOptions} style={theme.withPadding}>
+      <BackButton onPress={() => navigation.goBack()} style={styles.backButton} />
 
       <View style={styles.section}>
         <Text style={styles.h2}>
           {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
         </Text>
         <Text style={theme.text}>
-          {i18n.t(
-            'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
-          )}{' '}
+          {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_1')}{' '}
           <Text onPress={handleOpenArticle} style={theme.link}>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
-            )}
+            {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_link_1')}
           </Text>
-          {i18n.t(
-            'about_how_do_you_calculate_the_number_of_cigarettes_message_2'
-          )}
+          {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_message_2')}
           <Text style={styles.micro}>&micro;</Text>
           g/m&sup3;
           {' \u207D'}
@@ -126,15 +109,11 @@ export function About (props: AboutProps) {
         style={styles.section}
       >
         <Text style={styles.h2}>{i18n.t('about_beta_inaccurate_title')}</Text>
-        <Text style={theme.text}>
-          {i18n.t('about_beta_inaccurate_message')}
-        </Text>
+        <Text style={theme.text}>{i18n.t('about_beta_inaccurate_message')}</Text>
       </ScrollIntoView>
 
       <View style={styles.section}>
-        <Text style={styles.h2}>
-          {i18n.t('about_where_does_data_come_from_title')}
-        </Text>
+        <Text style={styles.h2}>{i18n.t('about_where_does_data_come_from_title')}</Text>
         <Text style={theme.text}>
           {i18n.t('about_where_does_data_come_from_message_1')}{' '}
           <Text onPress={handleOpenAqi} style={theme.link}>
@@ -145,17 +124,11 @@ export function About (props: AboutProps) {
       </View>
 
       <ScrollIntoView
-        onMount={
-          navigation.getParam('scrollInto') === 'aboutWhyIsTheStationSoFarTitle'
-        }
+        onMount={navigation.getParam('scrollInto') === 'aboutWhyIsTheStationSoFarTitle'}
         style={styles.section}
       >
-        <Text style={styles.h2}>
-          {i18n.t('about_why_is_the_station_so_far_title')}
-        </Text>
-        <Text style={theme.text}>
-          {i18n.t('about_why_is_the_station_so_far_message')}
-        </Text>
+        <Text style={styles.h2}>{i18n.t('about_why_is_the_station_so_far_title')}</Text>
+        <Text style={theme.text}>{i18n.t('about_why_is_the_station_so_far_message')}</Text>
       </ScrollIntoView>
 
       <View style={styles.section}>
@@ -167,6 +140,18 @@ export function About (props: AboutProps) {
           </Text>{' '}
           {i18n.t('about_weird_results_message_2')}
         </Text>
+      </View>
+
+      <View style={styles.distance}>
+        <Text style={styles.h2}>{i18n.t('about_distance_unit_title')}</Text>
+        <View style={styles.distanceSwitchWrapper}>
+          <Switch
+            onValueChange={toggleDistanceSwitch}
+            trackColor={{ true: theme.primaryColor, false: theme.iconBackgroundColor }}
+            value={distanceUnit === 'km'}
+          />
+          <Text style={styles.distanceText}>{localizedDistanceUnit('long')}</Text>
+        </View>
       </View>
 
       <View style={styles.credits}>
@@ -216,6 +201,23 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     marginBottom: theme.spacing.normal,
     paddingTop: theme.spacing.big
+  },
+  distance: {
+    borderTopColor: theme.iconBackgroundColor,
+    borderTopWidth: 1,
+    marginBottom: theme.spacing.big,
+    paddingTop: theme.spacing.big
+  },
+  distanceSwitchWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  distanceText: {
+    ...theme.text,
+    fontSize: scale(14),
+    paddingLeft: theme.spacing.small,
+    textTransform: 'capitalize'
   },
   h2: {
     ...theme.title,
