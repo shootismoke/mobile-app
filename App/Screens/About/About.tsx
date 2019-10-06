@@ -69,7 +69,7 @@ interface AboutProps
 
 export function About (props: AboutProps) {
   const { navigation } = props;
-  const { distanceUnit, setDistanceUnit, localizedDistanceUnit } = useDistanceUnit();
+  const { distanceUnit, localizedDistanceUnit, setDistanceUnit } = useDistanceUnit();
 
   trackScreen('ABOUT');
 
@@ -147,8 +147,8 @@ export function About (props: AboutProps) {
         <View style={styles.distanceSwitchWrapper}>
           <Switch
             onValueChange={toggleDistanceSwitch}
-            value={distanceUnit === 'km'}
             trackColor={{ true: theme.primaryColor, false: theme.iconBackgroundColor }}
+            value={distanceUnit === 'km'}
           />
           <Text style={styles.distanceText}>{localizedDistanceUnit('long')}</Text>
         </View>

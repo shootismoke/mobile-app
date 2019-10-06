@@ -27,8 +27,8 @@ import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { trackScreen } from '../../util/amplitude';
-import { distanceToStation, getCorrectLatLng } from '../../util/station';
 import { useDistanceUnit } from '../../stores/distanceUnit';
+import { distanceToStation, getCorrectLatLng } from '../../util/station';
 
 interface DetailsProps extends NavigationInjectedProps {}
 

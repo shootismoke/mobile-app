@@ -14,60 +14,60 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as Font from 'expo-font';
-import Constants from 'expo-constants';
-import React, { useEffect, useState } from 'react';
-import { AppState } from 'react-native';
-import * as Sentry from 'sentry-expo';
+import * as Font from 'expo-font'
+import Constants from 'expo-constants'
+import React, { useEffect, useState } from 'react'
+import { AppState } from 'react-native'
+import * as Sentry from 'sentry-expo'
 
-import { Screens } from './Screens';
-import { Background as LoadingBackground } from './Screens/Loading/Background';
+import { Screens } from './Screens'
+import { Background as LoadingBackground } from './Screens/Loading/Background'
 import {
   ApiContextProvider,
+  DistanceUnitProvider,
   ErrorContextProvider,
   FrequencyContextProvider,
   LocationContextProvider,
-  DistanceUnitProvider
-} from './stores';
-import { setupAmplitude, track } from './util/amplitude';
+} from './stores'
+import { setupAmplitude, track } from './util/amplitude'
 
 // Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
   Sentry.init({
     dsn: Constants.manifest.extra.sentryPublicDsn,
-    debug: true
-  });
+    debug: true,
+  })
 
   if (Constants.manifest.revisionId) {
-    Sentry.setRelease(Constants.manifest.revisionId);
+    Sentry.setRelease(Constants.manifest.revisionId)
   }
 }
 
 export function App () {
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(false)
   useEffect(() => {
     Promise.all([
       Font.loadAsync({
         'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
-        'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
+        'gotham-book': require('../assets/fonts/Gotham-Book.ttf'),
       }),
       // Add Amplitude if available
-      setupAmplitude()
+      setupAmplitude(),
     ])
 
       .then(() => setReady(true))
-      .catch(console.error);
-  }, []);
+      .catch(console.error)
+  }, [])
 
   useEffect(() => {
     AppState.addEventListener('change', state => {
       if (state === 'active') {
-        track('APP_REFOCUS');
+        track('APP_REFOCUS')
       } else if (state === 'background') {
-        track('APP_EXIT');
+        track('APP_EXIT')
       }
-    });
-  }, []);
+    })
+  }, [])
 
   return ready ? (
     <ErrorContextProvider>
@@ -83,5 +83,5 @@ export function App () {
     </ErrorContextProvider>
   ) : (
     <LoadingBackground />
-  );
+  )
 }

@@ -1,5 +1,5 @@
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
-import React, { useState, useEffect, createContext, FC, useContext } from 'react';
 
 import { i18n } from '../localization';
 
@@ -20,8 +20,8 @@ const Context = createContext<ContextType>({
   setDistanceUnit: () => {}
 });
 
-export const DistanceUnitProvider: FC = ({ children }) => {
-  const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>('km');
+export function DistanceUnitProvider ({ children }: { children: ReactNode }) {
+  const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>(i18n.locale === 'en-US' ? 'mile' : 'km');
 
   const getDistanceUnit = async (): Promise<void> => {
     const unit = await AsyncStorage.getItem(STORAGE_KEY);

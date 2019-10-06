@@ -14,32 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
-import { GestureResponderEvent, Image, StyleSheet, Text, View } from 'react-native';
-import { scale } from 'react-native-size-matters';
+import React, { useContext } from 'react'
+import { GestureResponderEvent, Image, StyleSheet, Text, View } from 'react-native'
+import { scale } from 'react-native-size-matters'
 
-import alert from '../../../../assets/images/alert.png';
-import { ChangeLocation, CurrentLocation } from '../../../components';
-import { i18n } from '../../../localization';
-import { ApiContext, CurrentLocationContext } from '../../../stores';
-import { distanceToStation, isStationTooFar } from '../../../util/station';
-import { useDistanceUnit } from '../../../stores/distanceUnit';
-import * as theme from '../../../util/theme';
+import alert from '../../../../assets/images/alert.png'
+import { ChangeLocation, CurrentLocation } from '../../../components'
+import { i18n } from '../../../localization'
+import { ApiContext, CurrentLocationContext } from '../../../stores'
+import { distanceToStation, isStationTooFar } from '../../../util/station'
+import { useDistanceUnit } from '../../../stores/distanceUnit'
+import * as theme from '../../../util/theme'
 
 interface HeaderProps {
-  onChangeLocationClick: (event: GestureResponderEvent) => void;
+  onChangeLocationClick: (event: GestureResponderEvent) => void
 }
 
 export function Header (props: HeaderProps) {
-  const { api } = useContext(ApiContext)!;
-  const { currentLocation, isGps } = useContext(CurrentLocationContext);
-  const { localizedDistanceUnit, distanceUnit } = useDistanceUnit();
-  const { onChangeLocationClick } = props;
+  const { api } = useContext(ApiContext)!
+  const { currentLocation, isGps } = useContext(CurrentLocationContext)
+  const { distanceUnit, localizedDistanceUnit } = useDistanceUnit()
+  const { onChangeLocationClick } = props
 
-  const shortDistanceUnit = localizedDistanceUnit('short');
-  const distance = distanceToStation(currentLocation!, api!, distanceUnit);
-  console.log('distance', distance + distanceUnit);
-  const isTooFar = isStationTooFar(currentLocation!, api!);
+  const shortDistanceUnit = localizedDistanceUnit('short')
+  const distance = distanceToStation(currentLocation!, api!, distanceUnit)
+  const isTooFar = isStationTooFar(currentLocation!, api!)
 
   return (
     <View style={styles.container}>
@@ -50,7 +49,7 @@ export function Header (props: HeaderProps) {
           <Text style={styles.distanceText}>
             {i18n.t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
-              distanceUnit: shortDistanceUnit
+              distanceUnit: shortDistanceUnit,
             })}{' '}
             {!isGps && i18n.t('home_header_from_search')}
           </Text>
@@ -59,7 +58,7 @@ export function Header (props: HeaderProps) {
 
       <ChangeLocation onPress={onChangeLocationClick} />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -67,23 +66,23 @@ const styles = StyleSheet.create({
     ...theme.withPadding,
     alignItems: 'center',
     flexDirection: 'row',
-    paddingTop: theme.spacing.normal
+    paddingTop: theme.spacing.normal,
   },
   currentLocation: {
     flex: 1,
-    marginRight: theme.spacing.mini
+    marginRight: theme.spacing.mini,
   },
   distance: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: theme.spacing.mini
+    marginTop: theme.spacing.mini,
   },
   distanceText: {
     ...theme.text,
-    flex: 1
+    flex: 1,
   },
   warning: {
     marginRight: theme.spacing.mini,
-    marginTop: scale(-2) // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
-  }
-});
+    marginTop: scale(-2), // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
+  },
+})
