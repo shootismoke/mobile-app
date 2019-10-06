@@ -3,18 +3,16 @@ module.exports = {
     jest: true
   },
   extends: [
-    'prettier',
-    'prettier/standard',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
-    'semistandard'
+    'plugin:prettier/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', '@typescript-eslint'],
-  rules: {
-    // https://stackoverflow.com/questions/55280555/typescript-eslint-eslint-plugin-error-route-is-defined-but-never-used-no-un
-    '@typescript-eslint/no-unused-vars': 'error',
-    'no-unused-vars': 'off',
-    'react/jsx-uses-react': 1,
-    'react/jsx-uses-vars': 1
+  plugins: ['react', '@typescript-eslint', 'prettier'],
+  settings: {
+    react: {
+      version: 'detect'
+    }
   }
 };
