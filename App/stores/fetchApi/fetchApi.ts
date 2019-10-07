@@ -67,7 +67,7 @@ const sources = [
   { name: 'windWaqi', run: dataSources.windWaqi }
 ];
 
-export function fetchApi (gps: Location) {
+export function fetchApi(gps: Location) {
   return retry(sources.length, status =>
     pipe(
       TE.rightIO(

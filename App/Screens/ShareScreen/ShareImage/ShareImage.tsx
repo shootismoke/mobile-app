@@ -16,7 +16,6 @@
 
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import { CigaretteBlock, CurrentLocation } from '../../../components';
 import {
   ApiContext,
@@ -27,7 +26,25 @@ import * as theme from '../../../util/theme';
 
 const LANDING_PAGE = 'https://shootismoke.github.io';
 
-export function ShareImage () {
+const styles = StyleSheet.create({
+  container: {
+    ...theme.withPadding,
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    paddingTop: theme.spacing.normal,
+    paddingBottom: theme.spacing.normal,
+    width: 400,
+    backgroundColor: 'white'
+  },
+
+  urlText: {
+    ...theme.text,
+    alignSelf: 'center',
+    marginTop: theme.spacing.mini
+  }
+});
+
+export function ShareImage() {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
@@ -54,21 +71,3 @@ export function ShareImage () {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding,
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    paddingTop: theme.spacing.normal,
-    paddingBottom: theme.spacing.normal,
-    width: 400,
-    backgroundColor: 'white'
-  },
-
-  urlText: {
-    ...theme.text,
-    alignSelf: 'center',
-    marginTop: theme.spacing.mini
-  }
-});

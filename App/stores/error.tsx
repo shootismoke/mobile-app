@@ -28,7 +28,7 @@ export const ErrorContext = createContext<Context>({
   setError: noop
 });
 
-export function ErrorContextProvider ({ children }: { children: JSX.Element }) {
+export function ErrorContextProvider({ children }: { children: JSX.Element }) {
   const [error, setError] = useState<string | undefined>(undefined);
 
   return (

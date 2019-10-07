@@ -24,27 +24,47 @@ import {
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
-
-import { aboutSections } from '../../About';
 import { i18n } from '../../../localization';
-import { Frequency } from '../SelectFrequency';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
+import { aboutSections } from '../../About';
+import { Frequency } from '../SelectFrequency';
 
 interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
   frequency: Frequency;
 }
 
-export function AdditionalInfo (props: AdditionalInfoProps) {
+const styles = StyleSheet.create({
+  linkToAbout: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  tag: {
+    backgroundColor: '#C4C4C4',
+    borderRadius: scale(10),
+    marginRight: theme.spacing.mini,
+    paddingHorizontal: scale(6),
+    paddingVertical: scale(3)
+  },
+  tagLabel: {
+    color: 'white',
+    fontSize: scale(10),
+    letterSpacing: scale(1),
+    marginLeft: scale(2),
+    textAlign: 'center'
+  }
+});
+
+export function AdditionalInfo(props: AdditionalInfoProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency, navigation, style, ...rest } = props;
 
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
-  function renderBeta () {
+  function renderBeta() {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -72,31 +92,10 @@ export function AdditionalInfo (props: AdditionalInfoProps) {
       {frequency !== 'daily'
         ? renderBeta()
         : isTooFar && (
-          <Text style={theme.text}>
-            {i18n.t('home_station_too_far_message')}
-          </Text>
-        )}
+            <Text style={theme.text}>
+              {i18n.t('home_station_too_far_message')}
+            </Text>
+          )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  linkToAbout: {
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
-  tag: {
-    backgroundColor: '#C4C4C4',
-    borderRadius: scale(10),
-    marginRight: theme.spacing.mini,
-    paddingHorizontal: scale(6),
-    paddingVertical: scale(3)
-  },
-  tagLabel: {
-    color: 'white',
-    fontSize: scale(10),
-    letterSpacing: scale(1),
-    marginLeft: scale(2),
-    textAlign: 'center'
-  }
-});

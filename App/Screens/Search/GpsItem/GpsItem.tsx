@@ -22,7 +22,7 @@ import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
 
 const LOADING_TEXT = 'Fetching...';
 
-export function GpsItem () {
+export function GpsItem() {
   const { setCurrentLocation } = useContext(CurrentLocationContext);
   const gps = useContext(GpsLocationContext);
 

@@ -61,7 +61,7 @@ const AxiosResponseT = t.type({
   })
 });
 
-export function fetchAlgolia (search: string, gps?: LatLng) {
+export function fetchAlgolia(search: string, gps?: LatLng) {
   return retry(algoliaUrls.length, status =>
     pipe(
       TE.rightIO(
@@ -91,11 +91,11 @@ export function fetchAlgolia (search: string, gps?: LatLng) {
                   Constants.manifest.extra.algoliaApplicationId &&
                   Constants.manifest.extra.algoliaApiKey
                     ? {
-                      'X-Algolia-Application-Id':
+                        'X-Algolia-Application-Id':
                           Constants.manifest.extra.algoliaApplicationId,
-                      'X-Algolia-API-Key':
+                        'X-Algolia-API-Key':
                           Constants.manifest.extra.algoliaApiKey
-                    }
+                      }
                     : undefined,
 
                 timeout: 3000

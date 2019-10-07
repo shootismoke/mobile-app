@@ -46,21 +46,21 @@ type AmplitudeEvent =
   | 'ERROR_SCREEN_CLOSE'
   | 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
-export function setupAmplitude () {
+export function setupAmplitude() {
   return Constants.manifest.extra.amplitudeApiKey
     ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
-      () => {
-        Amplitude.setUserProperties({
-          sisReleaseChannel:
+        () => {
+          Amplitude.setUserProperties({
+            sisReleaseChannel:
               Constants.manifest.releaseChannel || 'development',
-          sisVersion: Constants.manifest.version
-        });
-      }
-    )
+            sisVersion: Constants.manifest.version
+          });
+        }
+      )
     : Promise.resolve();
 }
 
-export function track (event: AmplitudeEvent, properties?: Record<string, any>) {
+export function track(event: AmplitudeEvent, properties?: Record<string, any>) {
   if (!Constants.manifest.extra.amplitudeApiKey) {
     return;
   }
@@ -70,7 +70,7 @@ export function track (event: AmplitudeEvent, properties?: Record<string, any>) 
     : Amplitude.logEvent(event);
 }
 
-export function trackScreen (
+export function trackScreen(
   screen: 'LOADING' | 'HOME' | 'ABOUT' | 'DETAILS' | 'SEARCH' | 'ERROR'
 ) {
   useEffect(() => {

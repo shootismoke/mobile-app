@@ -49,7 +49,7 @@ export const CurrentLocationContext = createContext<LocationWithSetter>({
   setCurrentLocation: noop
 });
 
-export function LocationContextProvider ({
+export function LocationContextProvider({
   children
 }: {
   children: JSX.Element;

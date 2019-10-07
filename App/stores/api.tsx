@@ -36,7 +36,7 @@ interface ApiContextProviderProps {
   children: JSX.Element;
 }
 
-export function ApiContextProvider ({ children }: ApiContextProviderProps) {
+export function ApiContextProvider({ children }: ApiContextProviderProps) {
   const { currentLocation, setCurrentLocation } = useContext(
     CurrentLocationContext
   );

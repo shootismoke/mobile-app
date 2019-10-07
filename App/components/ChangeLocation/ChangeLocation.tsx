@@ -23,23 +23,11 @@ import {
   TouchableOpacityProps
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
+import changeLocation from '../../../assets/images/changeLocation.png';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
-import changeLocation from '../../../assets/images/changeLocation.png';
 
-interface ChangeLocationProps extends TouchableOpacityProps {}
-
-export function ChangeLocation (props: ChangeLocationProps) {
-  const { onPress, ...rest } = props;
-
-  return (
-    <TouchableOpacity onPress={onPress} style={styles.container} {...rest}>
-      <Image source={changeLocation} style={styles.icon} />
-      <Text style={styles.label}>{i18n.t('home_header_change_location')}</Text>
-    </TouchableOpacity>
-  );
-}
+type ChangeLocationProps = TouchableOpacityProps;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,3 +49,14 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase'
   }
 });
+
+export function ChangeLocation(props: ChangeLocationProps) {
+  const { onPress, ...rest } = props;
+
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.container} {...rest}>
+      <Image source={changeLocation} style={styles.icon} />
+      <Text style={styles.label}>{i18n.t('home_header_change_location')}</Text>
+    </TouchableOpacity>
+  );
+}

@@ -23,15 +23,14 @@ import {
   View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import {
   distanceToStation,
-  isStationTooFar,
-  DistanceUnit
+  DistanceUnit,
+  isStationTooFar
 } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
@@ -39,7 +38,33 @@ interface HeaderProps {
   onChangeLocationClick: (event: GestureResponderEvent) => void;
 }
 
-export function Header (props: HeaderProps) {
+const styles = StyleSheet.create({
+  container: {
+    ...theme.withPadding,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingTop: theme.spacing.normal
+  },
+  currentLocation: {
+    flex: 1,
+    marginRight: theme.spacing.mini
+  },
+  distance: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: theme.spacing.mini
+  },
+  distanceText: {
+    ...theme.text,
+    flex: 1
+  },
+  warning: {
+    marginRight: theme.spacing.mini,
+    marginTop: scale(-2) // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
+  }
+});
+
+export function Header(props: HeaderProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { onChangeLocationClick } = props;
@@ -79,29 +104,3 @@ export function Header (props: HeaderProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingTop: theme.spacing.normal
-  },
-  currentLocation: {
-    flex: 1,
-    marginRight: theme.spacing.mini
-  },
-  distance: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: theme.spacing.mini
-  },
-  distanceText: {
-    ...theme.text,
-    flex: 1
-  },
-  warning: {
-    marginRight: theme.spacing.mini,
-    marginTop: scale(-2) // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
-  }
-});

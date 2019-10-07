@@ -17,18 +17,25 @@
 import React, { useContext } from 'react';
 import { Platform, Share, StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-
-import { aboutSections } from '../../About';
 import { Button } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
+import { aboutSections } from '../../About';
 
 interface FooterProps extends NavigationInjectedProps, ViewProps {}
 
-export function Footer (props: FooterProps) {
+const styles = StyleSheet.create({
+  smallButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: theme.spacing.mini
+  }
+});
+
+export function Footer(props: FooterProps) {
   const { api } = useContext(ApiContext)!;
   const { currentLocation } = useContext(CurrentLocationContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,24 +43,24 @@ export function Footer (props: FooterProps) {
 
   const isTooFar = isStationTooFar(currentLocation!, api!);
 
-  function goToAbout () {
+  function goToAbout() {
     track('HOME_SCREEN_ABOUT_CLICK');
     navigation.navigate('About');
   }
 
-  function goToAboutWhySoFar () {
+  function goToAboutWhySoFar() {
     track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
     navigation.navigate('About', {
       scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle
     });
   }
 
-  function goToDetails () {
+  function goToDetails() {
     track('HOME_SCREEN_DETAILS_CLICK');
     navigation.navigate('Details');
   }
 
-  function handleShare () {
+  function handleShare() {
     track('HOME_SCREEN_SHARE_CLICK');
 
     // Share doesn't currently support images on Android, so the text version
@@ -107,11 +114,3 @@ export function Footer (props: FooterProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  smallButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: theme.spacing.mini
-  }
-});

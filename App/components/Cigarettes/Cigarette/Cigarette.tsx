@@ -17,11 +17,10 @@
 import React from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
-import butt from '../../../../assets/images/butt.png';
 import buttVertical from '../../../../assets/images/butt-vertical.png';
-import head from '../../../../assets/images/head.png';
+import butt from '../../../../assets/images/butt.png';
 import headVertical from '../../../../assets/images/head-vertical.png';
+import head from '../../../../assets/images/head.png';
 
 export type CigaretteOrientation = 'diagonal' | 'horizontal' | 'vertical';
 export type CigaretteSize = 'small' | 'medium' | 'big';
@@ -38,7 +37,36 @@ interface CigaretteProps {
 
 const MIN_PERCENTAGE = 0.4; // The percentage of cigarette length when `percentage=0`
 
-function getCigaretteActualLength (length: number, percentage: number) {
+const styles = StyleSheet.create({
+  butt: {
+    bottom: 0,
+    position: 'absolute',
+    left: 0,
+    resizeMode: 'contain'
+  },
+  cigarette: {
+    flexGrow: 1
+  },
+  container: {
+    overflow: 'hidden'
+  },
+  diagonal: {
+    height: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2),
+    position: 'absolute',
+    transform: [{ rotate: '45deg' }, { scale: 1 }],
+    width: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2)
+  },
+  head: {
+    flexGrow: 1,
+    position: 'absolute',
+    resizeMode: 'contain',
+    right: 0,
+    top: 0,
+    zIndex: 1
+  }
+});
+
+function getCigaretteActualLength(length: number, percentage: number) {
   return Math.ceil(
     scale(((1 - MIN_PERCENTAGE) * percentage + MIN_PERCENTAGE) * length)
   );
@@ -50,7 +78,7 @@ function getCigaretteActualLength (length: number, percentage: number) {
  *
  * Measures come from Figma
  */
-function getMeasures (size: CigaretteSize, percentage: number) {
+function getMeasures(size: CigaretteSize, percentage: number) {
   switch (size) {
     case 'big': {
       return {
@@ -76,7 +104,7 @@ function getMeasures (size: CigaretteSize, percentage: number) {
   }
 }
 
-function getStyle (
+function getStyle(
   orientation: CigaretteOrientation,
   percentage: number,
   size: CigaretteSize
@@ -103,31 +131,7 @@ function getStyle (
   }
 }
 
-export function Cigarette (props: CigaretteProps) {
-  const { orientation, percentage, size, style } = props;
-
-  return orientation === 'diagonal' ? (
-    <View
-      style={[
-        styles.diagonal,
-        percentage >= 0.3
-          ? { paddingTop: -(30 / 0.7) * percentage + 30 / 0.7 } // very empirical
-          : undefined,
-        style
-      ]}
-    >
-      {renderCigarette(
-        'horizontal',
-        percentage,
-        percentage >= 0.3 ? 'medium' : 'big'
-      )}
-    </View>
-  ) : (
-    renderCigarette(orientation, percentage, size, style)
-  );
-}
-
-function renderCigarette (
+function renderCigarette(
   orientation: CigaretteOrientation,
   percentage: number,
   size: CigaretteSize,
@@ -165,31 +169,26 @@ function renderCigarette (
   );
 }
 
-const styles = StyleSheet.create({
-  butt: {
-    bottom: 0,
-    position: 'absolute',
-    left: 0,
-    resizeMode: 'contain'
-  },
-  cigarette: {
-    flexGrow: 1
-  },
-  container: {
-    overflow: 'hidden'
-  },
-  diagonal: {
-    height: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2),
-    position: 'absolute',
-    transform: [{ rotate: '45deg' }, { scale: 1 }],
-    width: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2)
-  },
-  head: {
-    flexGrow: 1,
-    position: 'absolute',
-    resizeMode: 'contain',
-    right: 0,
-    top: 0,
-    zIndex: 1
-  }
-});
+export function Cigarette(props: CigaretteProps) {
+  const { orientation, percentage, size, style } = props;
+
+  return orientation === 'diagonal' ? (
+    <View
+      style={[
+        styles.diagonal,
+        percentage >= 0.3
+          ? { paddingTop: -(30 / 0.7) * percentage + 30 / 0.7 } // very empirical
+          : undefined,
+        style
+      ]}
+    >
+      {renderCigarette(
+        'horizontal',
+        percentage,
+        percentage >= 0.3 ? 'medium' : 'big'
+      )}
+    </View>
+  ) : (
+    renderCigarette(orientation, percentage, size, style)
+  );
+}

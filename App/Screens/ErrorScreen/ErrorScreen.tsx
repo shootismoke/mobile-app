@@ -16,9 +16,8 @@
 
 import React, { useContext } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
-
+import { NavigationInjectedProps } from 'react-navigation';
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
 import { i18n } from '../../localization';
@@ -26,9 +25,33 @@ import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 
-interface ErrorScreenProps extends NavigationInjectedProps {}
+type ErrorScreenProps = NavigationInjectedProps;
 
-export function ErrorScreen (props: ErrorScreenProps) {
+const styles = StyleSheet.create({
+  chooseOther: {
+    marginVertical: theme.spacing.normal
+  },
+  container: {
+    ...theme.fullScreen,
+    ...theme.withPadding,
+    flexGrow: 1,
+    flexDirection: 'column'
+  },
+  errorMessage: {
+    ...theme.text,
+    fontSize: scale(10),
+    marginTop: theme.spacing.small
+  },
+  errorText: {
+    ...theme.shitText,
+    marginTop: theme.spacing.big
+  },
+  sorry: {
+    color: theme.primaryColor
+  }
+});
+
+export function ErrorScreen(props: ErrorScreenProps) {
   const { error } = useContext(ErrorContext);
 
   trackScreen('ERROR');
@@ -61,27 +84,3 @@ export function ErrorScreen (props: ErrorScreenProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  chooseOther: {
-    marginVertical: theme.spacing.normal
-  },
-  container: {
-    ...theme.fullScreen,
-    ...theme.withPadding,
-    flexGrow: 1,
-    flexDirection: 'column'
-  },
-  errorMessage: {
-    ...theme.text,
-    fontSize: scale(10),
-    marginTop: theme.spacing.small
-  },
-  errorText: {
-    ...theme.shitText,
-    marginTop: theme.spacing.big
-  },
-  sorry: {
-    color: theme.primaryColor
-  }
-});

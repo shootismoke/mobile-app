@@ -16,26 +16,63 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { Background } from './Background';
-
 import { i18n } from '../../localization';
 import { ApiContext, GpsLocationContext } from '../../stores';
 import { Api } from '../../stores/fetchApi';
 import { Location } from '../../stores/fetchGpsPosition';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { Background } from './Background';
 
 // The variable returned by setTimeout for longWaiting
 let longWaitingTimeout: NodeJS.Timeout | null = null;
 
-function clearLongWaiting () {
+const styles = StyleSheet.create({
+  dots: {
+    color: theme.primaryColor
+  },
+  text: {
+    ...theme.title,
+    fontSize: 18,
+    textAlign: 'center'
+  }
+});
+
+function renderCough(index: number) {
+  return (
+    <Text key={index}>
+      {i18n.t('loading_title_cough')}
+      <Text style={styles.dots}>...</Text>
+    </Text>
+  );
+}
+
+function renderText(longWaiting: boolean, gps?: Location, api?: Api) {
+  let coughs = 0; // Number of times to show "Cough..."
+  if (gps) ++coughs;
+  if (longWaiting) ++coughs;
+  if (api) ++coughs;
+
+  return (
+    <Text>
+      {i18n.t('loading_title_loading')}
+      <Text style={styles.dots}>...</Text>
+      {Array.from({ length: coughs }, (_, index) => index + 1).map(
+        // Create array 1..N and rendering Cough...
+        renderCough
+      )}
+    </Text>
+  );
+}
+
+function clearLongWaiting() {
   if (longWaitingTimeout) {
     clearTimeout(longWaitingTimeout);
     longWaitingTimeout = null;
   }
 }
 
-export function Loading () {
+export function Loading() {
   const { api } = useContext(ApiContext);
   const gps = useContext(GpsLocationContext);
 
@@ -66,41 +103,3 @@ export function Loading () {
     </Background>
   );
 }
-
-function renderCough (index: number) {
-  return (
-    <Text key={index}>
-      {i18n.t('loading_title_cough')}
-      <Text style={styles.dots}>...</Text>
-    </Text>
-  );
-}
-
-function renderText (longWaiting: boolean, gps?: Location, api?: Api) {
-  let coughs = 0; // Number of times to show "Cough..."
-  if (gps) ++coughs;
-  if (longWaiting) ++coughs;
-  if (api) ++coughs;
-
-  return (
-    <Text>
-      {i18n.t('loading_title_loading')}
-      <Text style={styles.dots}>...</Text>
-      {Array.from({ length: coughs }, (_, index) => index + 1).map(
-        // Create array 1..N and rendering Cough...
-        renderCough
-      )}
-    </Text>
-  );
-}
-
-const styles = StyleSheet.create({
-  dots: {
-    color: theme.primaryColor
-  },
-  text: {
-    ...theme.title,
-    fontSize: 18,
-    textAlign: 'center'
-  }
-});

@@ -25,7 +25,7 @@ interface ItemProps {
   onClick: (item: Location) => void;
 }
 
-export function AlgoliaItem (props: ItemProps) {
+export function AlgoliaItem(props: ItemProps) {
   const { item, onClick } = props;
 
   const { city, country, county, _geoloc, locale_names: localeNames } = item;

@@ -23,7 +23,6 @@ import {
   TouchableOpacityProps,
   View
 } from 'react-native';
-
 import gpsIcon from '../../../assets/images/location-big.png';
 import pinIcon from '../../../assets/images/location.png';
 import * as theme from '../../util/theme';
@@ -32,20 +31,6 @@ interface ListItemProps extends TouchableOpacityProps {
   description: string;
   icon: 'pin' | 'gps';
   title: string;
-}
-
-export function ListItem (props: ListItemProps) {
-  const { description, icon, title, ...rest } = props;
-
-  return (
-    <TouchableOpacity style={styles.container} {...rest}>
-      <Image source={icon === 'gps' ? gpsIcon : pinIcon} />
-      <View style={styles.result}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
-    </TouchableOpacity>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -65,3 +50,17 @@ const styles = StyleSheet.create({
     ...theme.title
   }
 });
+
+export function ListItem(props: ListItemProps) {
+  const { description, icon, title, ...rest } = props;
+
+  return (
+    <TouchableOpacity style={styles.container} {...rest}>
+      <Image source={icon === 'gps' ? gpsIcon : pinIcon} />
+      <View style={styles.result}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+}

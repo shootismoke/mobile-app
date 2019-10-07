@@ -16,10 +16,9 @@
 
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
-
+import { i18n } from '../../localization';
 import { Api } from '../../stores/fetchApi';
 import { Location } from '../../stores/fetchGpsPosition';
-import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 
 const UNKNOWN_STATION = i18n.t('current_location_unknown_station');
@@ -29,7 +28,13 @@ interface CurrentLocationProps extends TextProps {
   currentLocation: Location;
 }
 
-export function CurrentLocation (props: CurrentLocationProps) {
+const styles = StyleSheet.create({
+  title: {
+    ...theme.title
+  }
+});
+
+export function CurrentLocation(props: CurrentLocationProps) {
   const { api, currentLocation, style, ...rest } = props;
 
   return (
@@ -42,9 +47,3 @@ export function CurrentLocation (props: CurrentLocationProps) {
     </Text>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    ...theme.title
-  }
-});

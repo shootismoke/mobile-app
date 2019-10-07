@@ -19,26 +19,25 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { NavigationInjectedProps } from 'react-navigation';
 import truncate from 'truncate';
-
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
-import { Distance } from './Distance';
-import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { trackScreen } from '../../util/amplitude';
 import {
   distanceToStation,
-  getCorrectLatLng,
-  DistanceUnit
+  DistanceUnit,
+  getCorrectLatLng
 } from '../../util/station';
+import { Distance } from './Distance';
+import { Header } from './Header';
 
-interface DetailsProps extends NavigationInjectedProps {}
+type DetailsProps = NavigationInjectedProps;
 
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details (props: DetailsProps) {
+export function Details(props: DetailsProps) {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);
@@ -86,6 +85,18 @@ export function Details (props: DetailsProps) {
     })
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1
+    },
+    map: {
+      flexGrow: 1
+    },
+    mapContainer: {
+      flexGrow: 1
+    }
+  });
+
   return (
     <View style={styles.container}>
       <Header onBackClick={() => navigation.goBack()} />
@@ -122,15 +133,3 @@ export function Details (props: DetailsProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1
-  },
-  map: {
-    flexGrow: 1
-  },
-  mapContainer: {
-    flexGrow: 1
-  }
-});

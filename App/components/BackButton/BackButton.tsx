@@ -25,17 +25,27 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-
 import backIcon from '../../../assets/images/back.png';
-import * as theme from '../../util/theme';
 import { i18n } from '../../localization';
+import * as theme from '../../util/theme';
 
 interface BackButtonProps {
   onPress: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>; // FIXME any
 }
 
-export function BackButton (props: BackButtonProps) {
+const styles = StyleSheet.create({
+  backButton: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  backText: {
+    ...theme.text,
+    marginLeft: 9
+  }
+});
+
+export function BackButton(props: BackButtonProps) {
   const { style } = props;
 
   return (
@@ -51,14 +61,3 @@ export function BackButton (props: BackButtonProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  backButton: {
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
-  backText: {
-    ...theme.text,
-    marginLeft: 9
-  }
-});

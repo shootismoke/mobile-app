@@ -16,12 +16,7 @@
 
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-
 import * as theme from '../../util/theme';
-
-export function ListSeparator () {
-  return <View style={styles.separator} />;
-}
 
 const styles = StyleSheet.create({
   separator: {
@@ -30,3 +25,7 @@ const styles = StyleSheet.create({
     marginHorizontal: theme.spacing.normal
   }
 });
+
+export function ListSeparator() {
+  return <View style={styles.separator} />;
+}

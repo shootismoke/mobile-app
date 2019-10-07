@@ -23,7 +23,6 @@ import {
   TouchableOpacityProps
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
 import * as theme from '../../util/theme';
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -32,7 +31,29 @@ interface ButtonProps extends TouchableOpacityProps {
   type?: 'primary' | 'secondary';
 }
 
-export function Button (props: ButtonProps) {
+const styles = StyleSheet.create({
+  bigButton: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: theme.spacing.mini
+  },
+  bigButtonText: {
+    ...theme.title,
+    color: theme.primaryColor
+  },
+  icon: {
+    marginRight: theme.spacing.mini
+  },
+  primary: {
+    borderColor: theme.primaryColor,
+    borderRadius: scale(24),
+    borderWidth: scale(2)
+  },
+  secondary: {}
+});
+
+export function Button(props: ButtonProps) {
   const { children, icon, onPress, style, type, ...rest } = props;
 
   return (
@@ -57,25 +78,3 @@ export function Button (props: ButtonProps) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  bigButton: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: theme.spacing.mini
-  },
-  bigButtonText: {
-    ...theme.title,
-    color: theme.primaryColor
-  },
-  icon: {
-    marginRight: theme.spacing.mini
-  },
-  primary: {
-    borderColor: theme.primaryColor,
-    borderRadius: scale(24),
-    borderWidth: scale(2)
-  },
-  secondary: {}
-});

@@ -27,12 +27,11 @@ import {
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
-
-import { Box } from './Box';
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { Box } from './Box';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -70,12 +69,48 @@ const handleOpenMarcelo = () => {
   Linking.openURL('https://www.behance.net/marceloscoelho');
 };
 
-interface AboutProps
-  extends NavigationInjectedProps<{
-    scrollInto?: keyof typeof aboutSections;
-  }> {}
+type AboutProps = NavigationInjectedProps<{
+  scrollInto?: keyof typeof aboutSections;
+}>;
 
-export function About (props: AboutProps) {
+const styles = StyleSheet.create({
+  articleLink: {
+    ...theme.text,
+    fontSize: scale(8)
+  },
+  backButton: {
+    marginBottom: theme.spacing.normal,
+    marginTop: theme.spacing.normal
+  },
+  credits: {
+    borderTopColor: theme.iconBackgroundColor,
+    borderTopWidth: 1,
+    marginBottom: theme.spacing.normal,
+    paddingTop: theme.spacing.big
+  },
+  h2: {
+    ...theme.title,
+    fontSize: scale(20),
+    letterSpacing: 0,
+    lineHeight: scale(24),
+    marginBottom: theme.spacing.small
+  },
+  micro: {
+    ...Platform.select({
+      ios: {
+        fontFamily: 'Georgia'
+      },
+      android: {
+        fontFamily: 'normal'
+      }
+    })
+  },
+  section: {
+    marginBottom: theme.spacing.big
+  }
+});
+
+export function About(props: AboutProps) {
   const { navigation } = props;
 
   trackScreen('ABOUT');
@@ -201,40 +236,3 @@ export function About (props: AboutProps) {
     </CustomScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  articleLink: {
-    ...theme.text,
-    fontSize: scale(8)
-  },
-  backButton: {
-    marginBottom: theme.spacing.normal,
-    marginTop: theme.spacing.normal
-  },
-  credits: {
-    borderTopColor: theme.iconBackgroundColor,
-    borderTopWidth: 1,
-    marginBottom: theme.spacing.normal,
-    paddingTop: theme.spacing.big
-  },
-  h2: {
-    ...theme.title,
-    fontSize: scale(20),
-    letterSpacing: 0,
-    lineHeight: scale(24),
-    marginBottom: theme.spacing.small
-  },
-  micro: {
-    ...Platform.select({
-      ios: {
-        fontFamily: 'Georgia'
-      },
-      android: {
-        fontFamily: 'normal'
-      }
-    })
-  },
-  section: {
-    marginBottom: theme.spacing.big
-  }
-});

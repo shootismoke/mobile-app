@@ -32,7 +32,7 @@ export interface Location extends LatLng {
   name?: string;
 }
 
-export function fetchReverseGeocode (currentLocation: LatLng) {
+export function fetchReverseGeocode(currentLocation: LatLng) {
   return pipe(
     TE.tryCatch(async () => {
       const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
@@ -60,7 +60,7 @@ export function fetchReverseGeocode (currentLocation: LatLng) {
   );
 }
 
-export function fetchGpsPosition () {
+export function fetchGpsPosition() {
   return TE.tryCatch(async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
 

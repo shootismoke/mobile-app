@@ -17,8 +17,7 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
-import { CIGARETTES_HEIGHT, Cigarette, CigaretteSize } from './Cigarette';
+import { Cigarette, CigaretteSize, CIGARETTES_HEIGHT } from './Cigarette';
 
 interface CigarettesProps {
   cigarettes: number;
@@ -27,7 +26,29 @@ interface CigarettesProps {
 
 export { CIGARETTES_HEIGHT };
 
-export function Cigarettes (props: CigarettesProps) {
+function getSize(cigarettes: number): CigaretteSize {
+  if (cigarettes <= 1) return 'big';
+  if (cigarettes <= 4) return 'big';
+  if (cigarettes <= 14) return 'medium';
+  return 'small';
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    height: scale(CIGARETTES_HEIGHT),
+    // width: '60%'
+    width: scale(250)
+  },
+  innerContainer: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
+});
+
+export function Cigarettes(props: CigarettesProps) {
   const { cigarettes: realCigarettes } = props;
   const cigarettes = Math.round(Math.min(realCigarettes, 50) * 10) / 10; // We don't show more than 50
   // const cigarettes = 1.9; // Can change values here for testing
@@ -62,25 +83,3 @@ export function Cigarettes (props: CigarettesProps) {
     </View>
   );
 }
-
-function getSize (cigarettes: number): CigaretteSize {
-  if (cigarettes <= 1) return 'big';
-  if (cigarettes <= 4) return 'big';
-  if (cigarettes <= 14) return 'medium';
-  return 'small';
-}
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    height: scale(CIGARETTES_HEIGHT),
-    // width: '60%'
-    width: scale(250)
-  },
-  innerContainer: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  }
-});
