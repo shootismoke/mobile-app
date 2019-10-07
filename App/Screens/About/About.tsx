@@ -179,7 +179,7 @@ export function About (props: AboutProps) {
           </Text>
           .{'\n'}
           {'\n'}
-          Sh**t! I Smoke v{Constants.manifest.version}.
+          Sh**t! I Smoke v{Constants.manifest.version} (#{Constants.manifest.revisionId || 'development'}).
         </Text>
         {/* Add languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
       </View>
