@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
 import { NavigationInjectedProps } from 'react-navigation';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import * as Sentry from 'sentry-expo';
 
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
@@ -32,6 +33,12 @@ export function ErrorScreen (props: ErrorScreenProps) {
   const { error } = useContext(ErrorContext);
 
   trackScreen('ERROR');
+
+  useEffect(() => {
+    if (error) {
+      Sentry.captureException(new Error(error));
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
