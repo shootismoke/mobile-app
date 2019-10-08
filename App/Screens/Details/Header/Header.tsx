@@ -96,9 +96,19 @@ export function Header(props: HeaderProps) {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
 
+  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+    throw new Error(
+      'Details/Header/Header.tsx only render when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Details/Header/Header.tsx only render when `api` is defined.'
+    );
+  }
+
   const lastUpdated =
-    api!.time && api!.time.v ? new Date(api!.time.v * 1000) : null;
-  const { dominentpol, iaqi } = api!;
+    api.time && api.time.v ? new Date(api.time.v * 1000) : null;
+  const { dominentpol, iaqi } = api;
 
   return (
     <View style={styles.container}>
@@ -109,8 +119,8 @@ export function Header(props: HeaderProps) {
 
         <View style={styles.content}>
           <CurrentLocation
-            api={api!}
-            currentLocation={currentLocation!}
+            api={api}
+            currentLocation={currentLocation}
             style={styles.currentLocation}
           />
           {lastUpdated &&

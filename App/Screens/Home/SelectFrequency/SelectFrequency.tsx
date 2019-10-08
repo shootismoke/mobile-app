@@ -67,7 +67,9 @@ export function SelectFrequency(props: ScrollViewProps) {
             return;
           }
 
-          scroll.current!.scrollTo({ x: 0 });
+          if (scroll && scroll.current) {
+            scroll.current.scrollTo({ x: 0 });
+          }
           handleChangeFrequency('daily');
         }}
         style={styles.boxButton}
@@ -82,9 +84,11 @@ export function SelectFrequency(props: ScrollViewProps) {
             return;
           }
 
-          scroll.current!.scrollTo({
-            x: dailyWidth + theme.spacing.mini
-          });
+          if (scroll && scroll.current) {
+            scroll.current.scrollTo({
+              x: dailyWidth + theme.spacing.mini
+            });
+          }
           handleChangeFrequency('weekly');
         }}
         style={styles.boxButton}
@@ -100,7 +104,9 @@ export function SelectFrequency(props: ScrollViewProps) {
             return;
           }
 
-          scroll.current!.scrollToEnd();
+          if (scroll && scroll.current) {
+            scroll.current.scrollToEnd();
+          }
           handleChangeFrequency('monthly');
         }}
         style={styles.boxButton}

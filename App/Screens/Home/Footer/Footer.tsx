@@ -36,12 +36,22 @@ const styles = StyleSheet.create({
 });
 
 export function Footer(props: FooterProps) {
-  const { api } = useContext(ApiContext)!;
+  const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { navigation, style, ...rest } = props;
 
-  const isTooFar = isStationTooFar(currentLocation!, api!);
+  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+    throw new Error(
+      'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `api` is defined.'
+    );
+  }
+
+  const isTooFar = isStationTooFar(currentLocation, api);
 
   function goToAbout() {
     track('HOME_SCREEN_ABOUT_CLICK');
@@ -70,7 +80,7 @@ export function Footer(props: FooterProps) {
       Share.share({
         title: i18n.t('home_share_title'),
         message: i18n.t('home_share_message', {
-          cigarettes: api!.shootISmoke.cigarettes.toFixed(2)
+          cigarettes: (api && api.shootISmoke.cigarettes.toFixed(2)) || 0
         })
       });
     }

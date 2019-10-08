@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 });
 
 export function Header(props: HeaderProps) {
-  const { api } = useContext(ApiContext)!;
+  const { api } = useContext(ApiContext);
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { onChangeLocationClick } = props;
 
@@ -73,19 +73,31 @@ export function Header(props: HeaderProps) {
   const haversineDistanceUnit = i18n.t(
     'haversine_distance_unit'
   ) as DistanceUnit;
+
+  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+    throw new Error(
+      'Home/Header/Header.tsx only convert `distanceToStation` when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Home/Header/Header.tsx only convert `distanceToStation` when `api` is defined.'
+    );
+  }
+
   const distance = distanceToStation(
-    currentLocation!,
-    api!,
+    currentLocation,
+    api,
     haversineDistanceUnit
   );
-  const isTooFar = isStationTooFar(currentLocation!, api!);
+
+  const isTooFar = isStationTooFar(currentLocation, api);
 
   return (
     <View style={styles.container}>
       <View style={styles.currentLocation}>
         <CurrentLocation
-          api={api!}
-          currentLocation={currentLocation!}
+          api={api}
+          currentLocation={currentLocation}
           numberOfLines={2}
         />
         <View style={styles.distance}>

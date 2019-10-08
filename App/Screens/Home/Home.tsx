@@ -49,7 +49,7 @@ export function Home(props: HomeProps) {
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api!.shootISmoke.cigarettes;
+  const cigarettesPerDay = (api && api.shootISmoke.cigarettes) || 0;
 
   return (
     <View style={styles.container}>

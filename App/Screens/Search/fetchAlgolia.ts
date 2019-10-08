@@ -16,14 +16,13 @@
 
 import axios from 'axios';
 import Constants from 'expo-constants';
-import { pipe } from 'fp-ts/lib/pipeable';
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
+import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
-
 import { LatLng } from '../../stores/fetchGpsPosition';
 import { retry, sideEffect, toError } from '../../util/fp';
 
@@ -44,6 +43,7 @@ const AlgoliaHitT = t.exact(
         lng: t.number
       }),
       country: t.string,
+      // eslint-disable-next-line
       locale_names: t.array(t.string),
       objectID: t.string
     }),

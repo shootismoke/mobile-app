@@ -65,23 +65,37 @@ export function Details(props: DetailsProps) {
   // I have no idea why, but if we don't clone the object, and continue to
   // use `location.current` everywhere, we get a `setting key of frozen
   // object` error. It's related to the MapView below.
+  // eslint-disable-next-line
   const currentLocation = { ..._currentLocation! };
 
   const haversineDistanceUnit = i18n.t(
     'haversine_distance_unit'
   ) as DistanceUnit;
+
+  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+    throw new Error(
+      'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Details/Details.tsx only convert `distanceToStation` when `api` is defined.'
+    );
+  }
+
   const distance = distanceToStation(
-    currentLocation!,
-    api!,
+    currentLocation,
+    api,
     haversineDistanceUnit
   );
 
   const station = {
-    description: api!.shootISmoke.station || '',
-    title: api!.shootISmoke.station,
+    description: (api && api.shootISmoke && api.shootISmoke.station) || '',
+    title: (api && api.shootISmoke && api.shootISmoke.station) || '',
     ...getCorrectLatLng(currentLocation, {
-      latitude: api!.city.geo[0],
-      longitude: api!.city.geo[1]
+      latitude:
+        (api && api.city && api.city.geo.length && api.city.geo[0]) || 0,
+      longitude:
+        (api && api.city && api.city.geo.length > 1 && api.city.geo[1]) || 0
     })
   };
 

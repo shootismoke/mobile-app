@@ -45,11 +45,21 @@ const styles = StyleSheet.create({
 });
 
 export function ShareImage() {
-  const { api } = useContext(ApiContext)!;
+  const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
 
-  const cigarettesPerDay = api!.shootISmoke.cigarettes;
+  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+    throw new Error(
+      'ShareScreen/ShareImage/ShareImage.tsx only render when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'ShareScreen/ShareImage/ShareImage.tsx only render when `api` is defined.'
+    );
+  }
+
+  const cigarettesPerDay = (api && api.shootISmoke.cigarettes) || 0;
 
   return (
     <View style={styles.container}>
@@ -62,8 +72,8 @@ export function ShareImage() {
       />
       <View>
         <CurrentLocation
-          api={api!}
-          currentLocation={currentLocation!}
+          api={api}
+          currentLocation={currentLocation}
           numberOfLines={2}
         />
       </View>
