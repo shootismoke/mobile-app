@@ -72,7 +72,7 @@ export function Details(props: DetailsProps) {
     'haversine_distance_unit'
   ) as DistanceUnit;
 
-  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+  if (!currentLocation) {
     throw new Error(
       'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
     );
