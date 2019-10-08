@@ -22,13 +22,9 @@ import truncate from 'truncate';
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import { i18n } from '../../localization';
-import { ApiContext, CurrentLocationContext } from '../../stores';
+import { ApiContext, CurrentLocationContext, DistanceUnit } from '../../stores';
 import { trackScreen } from '../../util/amplitude';
-import {
-  distanceToStation,
-  DistanceUnit,
-  getCorrectLatLng
-} from '../../util/station';
+import { distanceToStation, getCorrectLatLng } from '../../util/station';
 import { Distance } from './Distance';
 import { Header } from './Header';
 

@@ -26,12 +26,12 @@ import { scale } from 'react-native-size-matters';
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
-import { ApiContext, CurrentLocationContext } from '../../../stores';
 import {
-  distanceToStation,
-  DistanceUnit,
-  isStationTooFar
-} from '../../../util/station';
+  ApiContext,
+  CurrentLocationContext,
+  DistanceUnit
+} from '../../../stores';
+import { distanceToStation, isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {
