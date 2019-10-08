@@ -96,7 +96,7 @@ export function Header(props: HeaderProps) {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
 
-  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+  if (!currentLocation) {
     throw new Error(
       'Details/Header/Header.tsx only render when `currentLocation` is defined.'
     );

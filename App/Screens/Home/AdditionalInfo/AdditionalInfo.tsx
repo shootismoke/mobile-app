@@ -62,7 +62,7 @@ export function AdditionalInfo(props: AdditionalInfoProps) {
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency, navigation, style, ...rest } = props;
 
-  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+  if (!currentLocation) {
     throw new Error(
       'Home/AdditionalInfo/AdditionalInfo.tsx only gets calculate the `distanceToStation` when `currentLocation` is defined.'
     );
@@ -79,6 +79,7 @@ export function AdditionalInfo(props: AdditionalInfoProps) {
       <TouchableOpacity
         onPress={() => {
           track('HOME_SCREEN_BETA_INACCURATE_CLICK');
+          // eslint-disable-next-line
           navigation.navigate('About', {
             scrollInto: aboutSections.aboutBetaInaccurate
           });

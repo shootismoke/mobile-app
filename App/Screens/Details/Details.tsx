@@ -89,13 +89,11 @@ export function Details(props: DetailsProps) {
   );
 
   const station = {
-    description: (api && api.shootISmoke && api.shootISmoke.station) || '',
-    title: (api && api.shootISmoke && api.shootISmoke.station) || '',
+    description: api.shootISmoke.station || '',
+    title: api.shootISmoke.station || '',
     ...getCorrectLatLng(currentLocation, {
-      latitude:
-        (api && api.city && api.city.geo.length && api.city.geo[0]) || 0,
-      longitude:
-        (api && api.city && api.city.geo.length > 1 && api.city.geo[1]) || 0
+      latitude: api.city.geo[0],
+      longitude: api.city.geo[1]
     })
   };
 

@@ -41,7 +41,7 @@ export function Footer(props: FooterProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { navigation, style, ...rest } = props;
 
-  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+  if (!currentLocation) {
     throw new Error(
       'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `currentLocation` is defined.'
     );

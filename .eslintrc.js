@@ -13,8 +13,7 @@ module.exports = {
   rules: {
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'react/prop-types': ['error', { ignore: ['navigation'] }]
+    '@typescript-eslint/no-explicit-any': 'off'
   },
   settings: {
     react: {

@@ -40,7 +40,14 @@ import { Loading } from './Loading';
 import { Search } from './Search';
 import { ShareScreen } from './ShareScreen';
 
-function stackNavigatorOptions(initialRouteName: string) {
+function stackNavigatorOptions(
+  initialRouteName: string
+): CreateNavigatorConfig<
+  NavigationStackConfig,
+  NavigationStackRouterConfig,
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> {
   return {
     cardStyle: {
       backgroundColor: theme.backgroundColor
@@ -48,14 +55,11 @@ function stackNavigatorOptions(initialRouteName: string) {
     headerMode: 'none',
     initialRouteName,
     defaultNavigationOptions: {
+      // FIXME the `headerVisible` field has been moved away from this config
+      // @ts-ignore
       headerVisible: false
     }
-  } as CreateNavigatorConfig<
-    NavigationStackConfig,
-    NavigationStackRouterConfig,
-    NavigationStackOptions,
-    NavigationStackProp<NavigationRoute, any>
-  >;
+  };
 }
 
 /**

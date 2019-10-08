@@ -74,7 +74,7 @@ export function Header(props: HeaderProps) {
     'haversine_distance_unit'
   ) as DistanceUnit;
 
-  if (currentLocation === undefined || !Object.keys(currentLocation).length) {
+  if (!currentLocation) {
     throw new Error(
       'Home/Header/Header.tsx only convert `distanceToStation` when `currentLocation` is defined.'
     );
