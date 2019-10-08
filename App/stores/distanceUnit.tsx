@@ -1,6 +1,11 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { AsyncStorage } from 'react-native';
-
 import { i18n } from '../localization';
 
 export type DistanceUnit = 'km' | 'mile';
@@ -8,11 +13,11 @@ type DistanceUnitFormat = 'short' | 'long';
 
 const STORAGE_KEY = 'DISTANCE_UNIT';
 
-type ContextType = {
+interface ContextType {
   distanceUnit: DistanceUnit;
   setDistanceUnit: (distanceUnit: DistanceUnit) => void;
   localizedDistanceUnit: (format: DistanceUnitFormat) => string;
-};
+}
 
 const Context = createContext<ContextType>({
   distanceUnit: 'km',
@@ -20,8 +25,10 @@ const Context = createContext<ContextType>({
   setDistanceUnit: () => {}
 });
 
-export function DistanceUnitProvider ({ children }: { children: ReactNode }) {
-  const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>(i18n.locale === 'en-US' ? 'mile' : 'km');
+export function DistanceUnitProvider({ children }: { children: ReactNode }) {
+  const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>(
+    i18n.locale === 'en-US' ? 'mile' : 'km'
+  );
 
   const getDistanceUnit = async (): Promise<void> => {
     const unit = await AsyncStorage.getItem(STORAGE_KEY);
@@ -44,7 +51,9 @@ export function DistanceUnitProvider ({ children }: { children: ReactNode }) {
   }, [distanceUnit]);
 
   return (
-    <Context.Provider value={{ distanceUnit, setDistanceUnit, localizedDistanceUnit }}>
+    <Context.Provider
+      value={{ distanceUnit, setDistanceUnit, localizedDistanceUnit }}
+    >
       {children}
     </Context.Provider>
   );
