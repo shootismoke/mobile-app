@@ -80,7 +80,7 @@ export function Footer(props: FooterProps) {
       Share.share({
         title: i18n.t('home_share_title'),
         message: i18n.t('home_share_message', {
-          cigarettes: (api && api.shootISmoke.cigarettes.toFixed(2)) || 0
+          cigarettes: api ? api.shootISmoke.cigarettes.toFixed(2) : 0
         })
       });
     }
