@@ -24,6 +24,7 @@ import { Screens } from './Screens';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
 import {
   ApiContextProvider,
+  DistanceUnitProvider,
   ErrorContextProvider,
   FrequencyContextProvider,
   LocationContextProvider
@@ -73,7 +74,9 @@ export function App() {
       <LocationContextProvider>
         <ApiContextProvider>
           <FrequencyContextProvider>
-            <Screens />
+            <DistanceUnitProvider>
+              <Screens />
+            </DistanceUnitProvider>
           </FrequencyContextProvider>
         </ApiContextProvider>
       </LocationContextProvider>

@@ -21,7 +21,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
-import Sentry from 'sentry-expo';
+import * as Sentry from 'sentry-expo';
 
 import { noop } from './noop';
 

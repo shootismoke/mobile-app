@@ -17,11 +17,10 @@
 import haversine from 'haversine';
 import { Api } from '../stores/fetchApi';
 import { LatLng } from '../stores/fetchGpsPosition';
+import { DistanceUnit } from '../stores/distanceUnit';
 
 // Above this distance (km), we consider the station too far from the user
 export const MAX_DISTANCE_TO_STATION = 10;
-
-export type DistanceUnit = 'km' | 'mile';
 
 /**
  * Station given by the Waqi API is fucked up. Sometimes it's [lat, lng],
