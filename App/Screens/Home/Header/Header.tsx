@@ -26,11 +26,8 @@ import { scale } from 'react-native-size-matters';
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
-import {
-  ApiContext,
-  CurrentLocationContext,
-  DistanceUnit
-} from '../../../stores';
+import { ApiContext, CurrentLocationContext } from '../../../stores';
+import { useDistanceUnit } from '../../../stores/distanceUnit';
 import { distanceToStation, isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
@@ -67,12 +64,10 @@ const styles = StyleSheet.create({
 export function Header(props: HeaderProps) {
   const { api } = useContext(ApiContext);
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
+  const { distanceUnit, localizedDistanceUnit } = useDistanceUnit();
   const { onChangeLocationClick } = props;
 
-  const distanceUnit = i18n.t('distance_unit');
-  const haversineDistanceUnit = i18n.t(
-    'haversine_distance_unit'
-  ) as DistanceUnit;
+  const shortDistanceUnit = localizedDistanceUnit('short');
 
   if (!currentLocation) {
     throw new Error(
@@ -84,12 +79,7 @@ export function Header(props: HeaderProps) {
     );
   }
 
-  const distance = distanceToStation(
-    currentLocation,
-    api,
-    haversineDistanceUnit
-  );
-
+  const distance = distanceToStation(currentLocation, api, distanceUnit);
   const isTooFar = isStationTooFar(currentLocation, api);
 
   return (
