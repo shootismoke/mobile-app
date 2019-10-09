@@ -105,7 +105,7 @@ export function Header(props: HeaderProps) {
           <Text style={styles.distanceText}>
             {i18n.t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
-              distanceUnit
+              distanceUnit: shortDistanceUnit
             })}{' '}
             {!isGps && i18n.t('home_header_from_search')}
           </Text>
