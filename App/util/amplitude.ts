@@ -53,6 +53,7 @@ export function setupAmplitude () {
         Amplitude.setUserProperties({
           sisReleaseChannel:
               Constants.manifest.releaseChannel || 'development',
+          sisRevisionId: Constants.manifest.revisionId || 'development',
           sisVersion: Constants.manifest.version
         });
       }
