@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import * as Sharing from 'expo-sharing';
 import React, { createRef, useEffect } from 'react';
-import { Share, StyleSheet, View } from 'react-native';
+import { Platform, Share, StyleSheet, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { NavigationInjectedProps } from 'react-navigation';
 import { Button } from '../../components';
@@ -64,9 +65,15 @@ export function ShareScreen(props: ShareScreenProps) {
           quality: 1
         });
 
-        await Share.share({
-          url: uri
-        });
+        if (Platform.OS === 'ios') {
+          await Share.share({
+            url: uri
+          });
+        } else {
+          await Sharing.shareAsync(uri, {
+            mimeType: 'image/png'
+          });
+        }
       } catch (error) {}
 
       handleDismiss();
