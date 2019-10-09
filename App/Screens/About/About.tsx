@@ -21,6 +21,7 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   View
 } from 'react-native';
@@ -29,6 +30,7 @@ import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
+import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Box } from './Box';
@@ -88,6 +90,23 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.normal,
     paddingTop: theme.spacing.big
   },
+  distance: {
+    borderTopColor: theme.iconBackgroundColor,
+    borderTopWidth: 1,
+    marginBottom: theme.spacing.big,
+    paddingTop: theme.spacing.big
+  },
+  distanceSwitchWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  distanceText: {
+    ...theme.text,
+    fontSize: scale(14),
+    paddingLeft: theme.spacing.small,
+    textTransform: 'capitalize'
+  },
   h2: {
     ...theme.title,
     fontSize: scale(20),
@@ -112,8 +131,16 @@ const styles = StyleSheet.create({
 
 export function About(props: AboutProps) {
   const { navigation } = props;
+  const {
+    distanceUnit,
+    localizedDistanceUnit,
+    setDistanceUnit
+  } = useDistanceUnit();
 
   trackScreen('ABOUT');
+
+  const toggleDistanceSwitch = (value: boolean) =>
+    setDistanceUnit(value ? 'km' : 'mile');
 
   return (
     <CustomScrollView
@@ -202,6 +229,23 @@ export function About(props: AboutProps) {
           </Text>{' '}
           {i18n.t('about_weird_results_message_2')}
         </Text>
+      </View>
+
+      <View style={styles.distance}>
+        <Text style={styles.h2}>{i18n.t('about_distance_unit_title')}</Text>
+        <View style={styles.distanceSwitchWrapper}>
+          <Switch
+            onValueChange={toggleDistanceSwitch}
+            trackColor={{
+              true: theme.primaryColor,
+              false: theme.iconBackgroundColor
+            }}
+            value={distanceUnit === 'km'}
+          />
+          <Text style={styles.distanceText}>
+            {localizedDistanceUnit('long')}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.credits}>
