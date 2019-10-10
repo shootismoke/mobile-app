@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.0.5",
+    "@expo/vector-icons": "^10.0.6",
     "@types/expo": "^32.0.13",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
