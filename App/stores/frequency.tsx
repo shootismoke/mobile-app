@@ -20,13 +20,16 @@ import { Frequency } from '../Screens/Home/SelectFrequency';
 import { noop } from '../util/noop';
 
 interface Context {
-  frequency: Frequency
+  frequency: Frequency;
   setFrequency: (newFrequency: Frequency) => void;
 }
 
-export const FrequencyContext = createContext<Context>({ frequency: 'daily', setFrequency: noop });
+export const FrequencyContext = createContext<Context>({
+  frequency: 'daily',
+  setFrequency: noop
+});
 
-export function FrequencyContextProvider ({
+export function FrequencyContextProvider({
   children
 }: {
   children: JSX.Element;

@@ -24,11 +24,9 @@ import { pm25ToCigarettes } from './pm25ToCigarettes';
 /**
  * Fetch the PM2.5 level from http://api.waqi.info.
  */
-export async function aqicn ({ latitude, longitude }: LatLng) {
+export async function aqicn({ latitude, longitude }: LatLng) {
   const { data: response } = await axios.get(
-    `http://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${
-      Constants.manifest.extra.waqiToken
-    }`,
+    `http://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${Constants.manifest.extra.waqiToken}`,
     { timeout: 6000 }
   );
 

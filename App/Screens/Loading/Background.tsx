@@ -16,16 +16,11 @@
 
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-
 import * as theme from '../../util/theme';
 
 interface BackgroundProps {
   children?: JSX.Element;
   style?: StyleProp<ViewStyle>;
-}
-
-export function Background (props: BackgroundProps) {
-  return <View style={[styles.container, props.style]}>{props.children}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -36,3 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
+
+export function Background(props: BackgroundProps) {
+  return <View style={[styles.container, props.style]}>{props.children}</View>;
+}

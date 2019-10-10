@@ -21,24 +21,45 @@ import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import Sentry from 'sentry-expo';
-
 import { BackButton, ListSeparator } from '../../components';
-import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
-import { AlgoliaItem } from './AlgoliaItem';
-import { GpsItem } from './GpsItem';
-import { SearchHeader } from './SearchHeader';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/fetchGpsPosition';
-import { trackScreen, track } from '../../util/amplitude';
+import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
+import { AlgoliaItem } from './AlgoliaItem';
+import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
+import { GpsItem } from './GpsItem';
+import { SearchHeader } from './SearchHeader';
 
 // Timeout to detect when user stops typing
 let typingTimeout: NodeJS.Timeout | null = null;
 
-interface SearchProps extends NavigationInjectedProps {}
+type SearchProps = NavigationInjectedProps;
 
-export function Search (props: SearchProps) {
+const styles = StyleSheet.create({
+  backButton: {
+    ...theme.withPadding,
+    marginVertical: theme.spacing.normal
+  },
+  container: {
+    flexGrow: 1
+  },
+  list: {
+    flex: 1
+  },
+  noResults: {
+    ...theme.text,
+    ...theme.withPadding,
+    marginTop: theme.spacing.normal
+  }
+});
+
+function renderSeparator() {
+  return <ListSeparator />;
+}
+
+export function Search(props: SearchProps) {
   const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
   const gps = useContext(GpsLocationContext);
 
@@ -51,7 +72,7 @@ export function Search (props: SearchProps) {
 
   trackScreen('SEARCH');
 
-  function handleChangeSearch (s: string) {
+  function handleChangeSearch(s: string) {
     setSearch(s);
     setAlgoliaError(undefined);
     setHits([]);
@@ -91,12 +112,39 @@ export function Search (props: SearchProps) {
     }, 500);
   }
 
-  function handleItemClick (item: Location) {
+  function handleItemClick(item: Location) {
     setCurrentLocation(item);
   }
 
-  function renderItem ({ item }: { item: AlgoliaHit }) {
+  function renderItem({ item }: { item: AlgoliaHit }) {
     return <AlgoliaItem item={item} onClick={handleItemClick} />;
+  }
+
+  function renderEmptyList(
+    algoliaError: Error | undefined,
+    hits: AlgoliaHit[],
+    loading: boolean,
+    search: string,
+    isGps: boolean
+  ) {
+    if (isGps && !search) {
+      return null;
+    }
+    if (!search) return <GpsItem />;
+    if (loading) {
+      return <Text style={styles.noResults}>Waiting for results...</Text>;
+    }
+    if (algoliaError) {
+      return (
+        <Text style={styles.noResults}>
+          Error fetching locations. Please try again later.
+        </Text>
+      );
+    }
+    if (hits && hits.length === 0) {
+      return <Text style={styles.noResults}>No results.</Text>;
+    }
+    return <Text style={styles.noResults}>Waiting for results.</Text>;
   }
 
   return (
@@ -124,52 +172,3 @@ export function Search (props: SearchProps) {
     </View>
   );
 }
-
-function renderEmptyList (
-  algoliaError: Error | undefined,
-  hits: AlgoliaHit[],
-  loading: boolean,
-  search: string,
-  isGps: boolean
-) {
-  if (isGps && !search) {
-    return null;
-  }
-  if (!search) return <GpsItem />;
-  if (loading) {
-    return <Text style={styles.noResults}>Waiting for results...</Text>;
-  }
-  if (algoliaError) {
-    return (
-      <Text style={styles.noResults}>
-        Error fetching locations. Please try again later.
-      </Text>
-    );
-  }
-  if (hits && hits.length === 0) {
-    return <Text style={styles.noResults}>No results.</Text>;
-  }
-  return <Text style={styles.noResults}>Waiting for results.</Text>;
-}
-
-function renderSeparator () {
-  return <ListSeparator />;
-}
-
-const styles = StyleSheet.create({
-  backButton: {
-    ...theme.withPadding,
-    marginVertical: theme.spacing.normal
-  },
-  container: {
-    flexGrow: 1
-  },
-  list: {
-    flex: 1
-  },
-  noResults: {
-    ...theme.text,
-    ...theme.withPadding,
-    marginTop: theme.spacing.normal
-  }
-});

@@ -3,7 +3,8 @@
   "version": "1.4.0",
   "author": "Amaury Martiny <amaury.martiny@protonmail.com>",
   "contributors": [
-    "Marcelo S. Coelho"
+    "Marcelo S. Coelho",
+    "ftonato <ademilsonft@outlook.com>"
   ],
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
@@ -57,17 +58,12 @@
     "babel-preset-expo": "^7.0.0",
     "eslint": "^6.5.0",
     "eslint-config-prettier": "^6.3.0",
-    "eslint-config-semistandard": "^15.0.0",
-    "eslint-config-standard": "^13.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-react": "^7.16.0",
     "jest": "^24.9.0",
     "jest-expo": "^35.0.0",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "prettier": "^1.18.2"
   }
 }

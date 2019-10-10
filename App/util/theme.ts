@@ -53,7 +53,7 @@ const fixTextMargin = {
  * Get consistent shadows between iOS and Android
  * @see https://stenbeck.io/styling-shadows-in-react-native-ios-and-android/
  */
-export function elevationShadowStyle (
+export function elevationShadowStyle(
   elevation: number,
   position: ShadowPosition = 'bottom'
 ) {

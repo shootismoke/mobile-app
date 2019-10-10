@@ -17,43 +17,60 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-
-import { aboutSections } from '../../About';
 import { Button } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
+import { aboutSections } from '../../About';
 
 interface FooterProps extends NavigationInjectedProps, ViewProps {}
 
-export function Footer (props: FooterProps) {
-  const { api } = useContext(ApiContext)!;
+const styles = StyleSheet.create({
+  smallButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: theme.spacing.mini
+  }
+});
+
+export function Footer(props: FooterProps) {
+  const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { navigation, style, ...rest } = props;
 
-  const isTooFar = isStationTooFar(currentLocation!, api!);
+  if (!currentLocation) {
+    throw new Error(
+      'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `api` is defined.'
+    );
+  }
 
-  function goToAbout () {
+  const isTooFar = isStationTooFar(currentLocation, api);
+
+  function goToAbout() {
     track('HOME_SCREEN_ABOUT_CLICK');
     navigation.navigate('About');
   }
 
-  function goToAboutWhySoFar () {
+  function goToAboutWhySoFar() {
     track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
     navigation.navigate('About', {
       scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle
     });
   }
 
-  function goToDetails () {
+  function goToDetails() {
     track('HOME_SCREEN_DETAILS_CLICK');
     navigation.navigate('Details');
   }
 
-  function handleShare () {
+  function handleShare() {
     track('HOME_SCREEN_SHARE_CLICK');
 
     props.navigation.navigate('ShareModal');
@@ -97,11 +114,3 @@ export function Footer (props: FooterProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  smallButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: theme.spacing.mini
-  }
-});

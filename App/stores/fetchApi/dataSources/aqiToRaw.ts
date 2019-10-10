@@ -16,9 +16,26 @@
 
 export type Pollutant = 'pm25'; // Only support this pollutant for now
 
-function roundTo1Decimal (n: number) {
+function roundTo1Decimal(n: number) {
   return Math.round(10 * n) / 10;
 }
+
+/**
+ * Pollutant AQI to raw concentration linear breakpoints.
+ *
+ * @see https://www3.epa.gov/airnow/aqi-technical-assistance-document-sept2018.pdf
+ */
+const breakPoints = {
+  pm25: [
+    [[0, 50], [0, 12]],
+    [[51, 100], [12.1, 35.4]],
+    [[101, 150], [35.5, 55.4]],
+    [[151, 200], [55.5, 150.4]],
+    [[201, 300], [150.5, 250.4]],
+    [[301, 400], [250.5, 350.4]],
+    [[401, 500], [350.5, 500]]
+  ]
+};
 
 /**
  * Converts a pollutant AQI into the raw PM25 level, in ug/m3, following the
@@ -28,7 +45,7 @@ function roundTo1Decimal (n: number) {
  * @see https://github.com/amaurymartiny/shoot-i-smoke/issues/46
  * @see https://www3.epa.gov/airnow/aqi-technical-assistance-document-sept2018.pdf
  */
-function aqiToRawFormula (pollutant: 'pm25', aqi: number) {
+function aqiToRawFormula(pollutant: 'pm25', aqi: number) {
   const segment = breakPoints[pollutant].find(
     ([[aqiLow, aqiHigh]]) => aqiLow <= aqi && aqi <= aqiHigh
   );
@@ -48,23 +65,6 @@ function aqiToRawFormula (pollutant: 'pm25', aqi: number) {
     ((aqi - aqiLow) / (aqiHigh - aqiLow)) * (rawHigh - rawLow) + rawLow
   );
 }
-
-/**
- * Pollutant AQI to raw concentration linear breakpoints.
- *
- * @see https://www3.epa.gov/airnow/aqi-technical-assistance-document-sept2018.pdf
- */
-const breakPoints = {
-  pm25: [
-    [[0, 50], [0, 12]],
-    [[51, 100], [12.1, 35.4]],
-    [[101, 150], [35.5, 55.4]],
-    [[151, 200], [55.5, 150.4]],
-    [[201, 300], [150.5, 250.4]],
-    [[301, 400], [250.5, 350.4]],
-    [[401, 500], [350.5, 500]]
-  ]
-};
 
 // For now we only track pm25 converions
 const pollutants = ['pm25'] as Pollutant[];

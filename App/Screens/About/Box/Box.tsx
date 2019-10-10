@@ -17,33 +17,9 @@
 import React from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
 import cigarette from '../../../../assets/images/cigarette.png';
 import { i18n } from '../../../localization';
 import * as theme from '../../../util/theme';
-
-export function Box () {
-  return (
-    <View style={styles.box}>
-      <View style={styles.equivalence}>
-        <View style={styles.statisticsLeft}>
-          <Image source={cigarette} style={styles.cigarette} />
-          <Text style={styles.value} />
-          <Text style={styles.label}>{i18n.t('about_box_per_day')}</Text>
-        </View>
-        <Text style={styles.equal}>=</Text>
-        <View style={styles.statisticsRight}>
-          <Text style={styles.value}>22</Text>
-          <Text style={styles.label}>
-            <Text style={styles.micro}>&micro;</Text>
-            g/m&sup3; PM2.5*
-          </Text>
-        </View>
-      </View>
-      <Text style={styles.boxDescription}>{i18n.t('about_box_footnote')}</Text>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   box: {
@@ -114,3 +90,26 @@ const styles = StyleSheet.create({
     lineHeight: 44
   }
 });
+
+export function Box() {
+  return (
+    <View style={styles.box}>
+      <View style={styles.equivalence}>
+        <View style={styles.statisticsLeft}>
+          <Image source={cigarette} style={styles.cigarette} />
+          <Text style={styles.value} />
+          <Text style={styles.label}>{i18n.t('about_box_per_day')}</Text>
+        </View>
+        <Text style={styles.equal}>=</Text>
+        <View style={styles.statisticsRight}>
+          <Text style={styles.value}>22</Text>
+          <Text style={styles.label}>
+            <Text style={styles.micro}>&micro;</Text>
+            g/m&sup3; PM2.5*
+          </Text>
+        </View>
+      </View>
+      <Text style={styles.boxDescription}>{i18n.t('about_box_footnote')}</Text>
+    </View>
+  );
+}

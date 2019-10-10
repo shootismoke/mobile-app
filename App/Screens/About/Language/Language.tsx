@@ -16,13 +16,24 @@
 
 import React, { useContext } from 'react';
 import { Picker, StyleSheet, Text, View } from 'react-native';
-
 import { i18n } from '../../../localization';
-import * as names from './names.json';
 import { ApiContext } from '../../../stores';
 import * as theme from '../../../util/theme';
+import * as names from './names.json';
 
-export function Language () {
+const styles = StyleSheet.create({
+  container: {
+    borderWidth: 0
+  },
+  picker: {
+    height: 1000,
+    position: 'absolute',
+    top: 0,
+    width: 1000
+  }
+});
+
+export function Language() {
   const { reloadApp } = useContext(ApiContext);
 
   const handleValueChange = (itemValue: string) => {
@@ -50,15 +61,3 @@ export function Language () {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 0
-  },
-  picker: {
-    height: 1000,
-    position: 'absolute',
-    top: 0,
-    width: 1000
-  }
-});

@@ -29,7 +29,9 @@ import {
   NavigationStackProp
 } from 'react-navigation-stack';
 import { fadeIn } from 'react-navigation-transitions';
-
+import { ApiContext, ErrorContext } from '../stores';
+import { Api } from '../stores/fetchApi';
+import * as theme from '../util/theme';
 import { About } from './About';
 import { Details } from './Details';
 import { ErrorScreen } from './ErrorScreen';
@@ -37,11 +39,15 @@ import { Home } from './Home';
 import { Loading } from './Loading';
 import { Search } from './Search';
 import { ShareScreen } from './ShareScreen';
-import { ApiContext, ErrorContext } from '../stores';
-import { Api } from '../stores/fetchApi';
-import * as theme from '../util/theme';
 
-function stackNavigatorOptions (initialRouteName: string) {
+function stackNavigatorOptions(
+  initialRouteName: string
+): CreateNavigatorConfig<
+  NavigationStackConfig,
+  NavigationStackRouterConfig,
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> {
   return {
     cardStyle: {
       backgroundColor: theme.backgroundColor
@@ -49,14 +55,11 @@ function stackNavigatorOptions (initialRouteName: string) {
     headerMode: 'none',
     initialRouteName,
     defaultNavigationOptions: {
+      // FIXME the `headerVisible` field has been moved away from this config
+      // @ts-ignore
       headerVisible: false
     }
-  } as CreateNavigatorConfig<
-    NavigationStackConfig,
-    NavigationStackRouterConfig,
-    NavigationStackOptions,
-    NavigationStackProp<NavigationRoute, any>
-  >;
+  };
 }
 
 /**
@@ -116,16 +119,7 @@ const ErrorStack = createAppContainer(
   )
 );
 
-export function Screens () {
-  const { api } = useContext(ApiContext);
-  const { error } = useContext(ErrorContext);
-
-  const stack = renderScreen(api, error);
-
-  return <View style={theme.fullScreen}>{stack}</View>;
-}
-
-function renderScreen (api?: Api, error?: string) {
+function renderScreen(api?: Api, error?: string) {
   if (error) {
     return <ErrorStack />;
   }
@@ -135,4 +129,13 @@ function renderScreen (api?: Api, error?: string) {
   }
 
   return <RootStack />;
+}
+
+export function Screens() {
+  const { api } = useContext(ApiContext);
+  const { error } = useContext(ErrorContext);
+
+  const stack = renderScreen(api, error);
+
+  return <View style={theme.fullScreen}>{stack}</View>;
 }

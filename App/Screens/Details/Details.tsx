@@ -19,28 +19,41 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { NavigationInjectedProps } from 'react-navigation';
 import truncate from 'truncate';
-
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
-import { Distance } from './Distance';
-import { Header } from './Header';
 import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
-import { trackScreen } from '../../util/amplitude';
 import { useDistanceUnit } from '../../stores/distanceUnit';
+import { trackScreen } from '../../util/amplitude';
 import { distanceToStation, getCorrectLatLng } from '../../util/station';
+import { Distance } from './Distance';
+import { Header } from './Header';
 
-interface DetailsProps extends NavigationInjectedProps {}
+type DetailsProps = NavigationInjectedProps;
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1
+  },
+  map: {
+    flexGrow: 1
+  },
+  mapContainer: {
+    flexGrow: 1
+  }
+});
 
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details (props: DetailsProps) {
+export function Details(props: DetailsProps) {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);
   const { api } = useContext(ApiContext);
-  const { currentLocation: _currentLocation } = useContext(CurrentLocationContext);
+  const { currentLocation: _currentLocation } = useContext(
+    CurrentLocationContext
+  );
   const { distanceUnit } = useDistanceUnit();
 
   trackScreen('DETAILS');
@@ -62,16 +75,27 @@ export function Details (props: DetailsProps) {
   // I have no idea why, but if we don't clone the object, and continue to
   // use `location.current` everywhere, we get a `setting key of frozen
   // object` error. It's related to the MapView below.
+  // eslint-disable-next-line
   const currentLocation = { ..._currentLocation! };
 
-  const distance = distanceToStation(currentLocation!, api!, distanceUnit);
+  if (!currentLocation) {
+    throw new Error(
+      'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Details/Details.tsx only convert `distanceToStation` when `api` is defined.'
+    );
+  }
+
+  const distance = distanceToStation(currentLocation, api, distanceUnit);
 
   const station = {
-    description: api!.shootISmoke.station || '',
-    title: api!.shootISmoke.station,
+    description: api.shootISmoke.station || '',
+    title: api.shootISmoke.station || '',
     ...getCorrectLatLng(currentLocation, {
-      latitude: api!.city.geo[0],
-      longitude: api!.city.geo[1]
+      latitude: api.city.geo[0],
+      longitude: api.city.geo[1]
     })
   };
 
@@ -83,9 +107,11 @@ export function Details (props: DetailsProps) {
           <MapView
             initialRegion={{
               latitude: (currentLocation.latitude + station.latitude) / 2,
-              latitudeDelta: Math.abs(currentLocation.latitude - station.latitude) * 2,
+              latitudeDelta:
+                Math.abs(currentLocation.latitude - station.latitude) * 2,
               longitude: (currentLocation.longitude + station.longitude) / 2,
-              longitudeDelta: Math.abs(currentLocation.longitude - station.longitude) * 2
+              longitudeDelta:
+                Math.abs(currentLocation.longitude - station.longitude) * 2
             }}
             onMapReady={handleMapReady}
             style={styles.map}
@@ -109,15 +135,3 @@ export function Details (props: DetailsProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1
-  },
-  map: {
-    flexGrow: 1
-  },
-  mapContainer: {
-    flexGrow: 1
-  }
-});

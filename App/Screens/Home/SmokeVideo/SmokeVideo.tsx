@@ -17,33 +17,10 @@
 import { Video } from 'expo-av';
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
 
 interface SmokeVideoProps {
   cigarettes: number;
-}
-
-export function SmokeVideo ({ cigarettes }: SmokeVideoProps) {
-  return (
-    <View style={styles.container}>
-      <View style={[styles.overlay, getVideoStyle(cigarettes)]} />
-      <Video
-        isLooping
-        resizeMode="cover"
-        shouldPlay
-        source={smokeVideo}
-        style={styles.video}
-      />
-    </View>
-  );
-}
-
-function getVideoStyle (cigarettes: number) {
-  if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
-  if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
-  if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };
-  return { backgroundColor: '#FFFFFF00' };
 }
 
 const styles = StyleSheet.create({
@@ -66,3 +43,25 @@ const styles = StyleSheet.create({
     zIndex: -1
   }
 });
+
+function getVideoStyle(cigarettes: number) {
+  if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
+  if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
+  if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };
+  return { backgroundColor: '#FFFFFF00' };
+}
+
+export function SmokeVideo({ cigarettes }: SmokeVideoProps) {
+  return (
+    <View style={styles.container}>
+      <View style={[styles.overlay, getVideoStyle(cigarettes)]} />
+      <Video
+        isLooping
+        resizeMode="cover"
+        shouldPlay
+        source={smokeVideo}
+        style={styles.video}
+      />
+    </View>
+  );
+}

@@ -16,17 +16,27 @@
 
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-
 import { Banner } from '../../../components';
 import { i18n } from '../../../localization';
-import * as theme from '../../../util/theme';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
+import * as theme from '../../../util/theme';
 
 interface DistanceProps {
   distance: number;
 }
 
-export function Distance (props: DistanceProps) {
+const styles = StyleSheet.create({
+  banner: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  distance: {
+    ...theme.title,
+    color: 'white'
+  }
+});
+
+export function Distance(props: DistanceProps) {
   const { localizedDistanceUnit } = useDistanceUnit();
   const distanceUnit = localizedDistanceUnit('short');
 
@@ -43,14 +53,3 @@ export function Distance (props: DistanceProps) {
     </Banner>
   );
 }
-
-const styles = StyleSheet.create({
-  banner: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  distance: {
-    ...theme.title,
-    color: 'white'
-  }
-});

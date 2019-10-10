@@ -23,7 +23,6 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-
 import * as theme from '../../util/theme';
 
 interface BannerProps {
@@ -35,7 +34,20 @@ interface BannerProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export function Banner ({
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: theme.primaryColor,
+    zIndex: 1
+  },
+  content: {
+    ...theme.withPadding,
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 48
+  }
+});
+
+export function Banner({
   asTouchable,
   children,
   elevated,
@@ -69,16 +81,3 @@ export function Banner ({
     </Wrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: theme.primaryColor,
-    zIndex: 1
-  },
-  content: {
-    ...theme.withPadding,
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: 48
-  }
-});

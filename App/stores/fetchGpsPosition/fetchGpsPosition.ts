@@ -16,9 +16,8 @@
 
 import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
-
+import * as TE from 'fp-ts/lib/TaskEither';
 import { toError } from '../../util/fp';
 
 export interface LatLng {
@@ -32,7 +31,7 @@ export interface Location extends LatLng {
   name?: string;
 }
 
-export function fetchReverseGeocode (currentLocation: LatLng) {
+export function fetchReverseGeocode(currentLocation: LatLng) {
   return pipe(
     TE.tryCatch(async () => {
       const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
@@ -43,24 +42,21 @@ export function fetchReverseGeocode (currentLocation: LatLng) {
 
       return reverse[0];
     }, toError),
-    TE.map(
-      reverse =>
-        ({
-          ...currentLocation,
-          city: reverse.city,
-          country: reverse.country,
-          name:
-            [reverse.street, reverse.city, reverse.country]
-              .filter(x => x)
-              .join(', ') ||
-            // This case happens when e.g. we're in the middle of the ocean
-            [reverse.name, reverse.country].filter(x => x).join(', ')
-        } as Location)
-    )
+    TE.map(reverse => ({
+      ...currentLocation,
+      city: reverse.city,
+      country: reverse.country,
+      name:
+        [reverse.street, reverse.city, reverse.country]
+          .filter(x => x)
+          .join(', ') ||
+        // This case happens when e.g. we're in the middle of the ocean
+        [reverse.name, reverse.country].filter(x => x).join(', ')
+    }))
   );
 }
 
-export function fetchGpsPosition () {
+export function fetchGpsPosition() {
   return TE.tryCatch(async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
 

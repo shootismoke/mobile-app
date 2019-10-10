@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useRef, useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
-
 import { BoxButton } from '../../../components';
 import { i18n } from '../../../localization';
 import { FrequencyContext } from '../../../stores';
@@ -25,14 +24,26 @@ import * as theme from '../../../util/theme';
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';
 
-export function SelectFrequency (props: ScrollViewProps) {
+const styles = StyleSheet.create({
+  boxButton: {
+    marginRight: theme.spacing.mini
+  },
+  container: {
+    flexDirection: 'row'
+  },
+  content: {
+    paddingHorizontal: theme.spacing.normal
+  }
+});
+
+export function SelectFrequency(props: ScrollViewProps) {
   const scroll = useRef<ScrollView>(null);
   const { frequency, setFrequency } = useContext(FrequencyContext);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
   const { style, ...rest } = props;
 
-  function handleChangeFrequency (f: Frequency) {
+  function handleChangeFrequency(f: Frequency) {
     setTimeout(() => {
       setFrequency(f);
     }, 400);
@@ -56,7 +67,9 @@ export function SelectFrequency (props: ScrollViewProps) {
             return;
           }
 
-          scroll.current!.scrollTo({ x: 0 });
+          if (scroll && scroll.current) {
+            scroll.current.scrollTo({ x: 0 });
+          }
           handleChangeFrequency('daily');
         }}
         style={styles.boxButton}
@@ -71,9 +84,11 @@ export function SelectFrequency (props: ScrollViewProps) {
             return;
           }
 
-          scroll.current!.scrollTo({
-            x: dailyWidth + theme.spacing.mini
-          });
+          if (scroll && scroll.current) {
+            scroll.current.scrollTo({
+              x: dailyWidth + theme.spacing.mini
+            });
+          }
           handleChangeFrequency('weekly');
         }}
         style={styles.boxButton}
@@ -89,7 +104,9 @@ export function SelectFrequency (props: ScrollViewProps) {
             return;
           }
 
-          scroll.current!.scrollToEnd();
+          if (scroll && scroll.current) {
+            scroll.current.scrollToEnd();
+          }
           handleChangeFrequency('monthly');
         }}
         style={styles.boxButton}
@@ -99,15 +116,3 @@ export function SelectFrequency (props: ScrollViewProps) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  boxButton: {
-    marginRight: theme.spacing.mini
-  },
-  container: {
-    flexDirection: 'row'
-  },
-  content: {
-    paddingHorizontal: theme.spacing.normal
-  }
-});

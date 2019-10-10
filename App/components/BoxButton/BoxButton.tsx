@@ -23,28 +23,11 @@ import {
   View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-
 import * as theme from '../../util/theme';
 
 interface BoxButtonProps extends TouchableWithoutFeedbackProps {
   active?: boolean;
   children: string;
-}
-
-export function BoxButton (props: BoxButtonProps) {
-  const { active, children, onPress, style, ...rest } = props;
-
-  return (
-    <TouchableWithoutFeedback onPress={onPress} {...rest}>
-      <View style={[styles.boxButton, style]}>
-        <Text
-          style={[styles.boxButtonText, active ? styles.activeText : undefined]}
-        >
-          {children}
-        </Text>
-      </View>
-    </TouchableWithoutFeedback>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -68,3 +51,19 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
+export function BoxButton(props: BoxButtonProps) {
+  const { active, children, onPress, style, ...rest } = props;
+
+  return (
+    <TouchableWithoutFeedback onPress={onPress} {...rest}>
+      <View style={[styles.boxButton, style]}>
+        <Text
+          style={[styles.boxButtonText, active ? styles.activeText : undefined]}
+        >
+          {children}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}

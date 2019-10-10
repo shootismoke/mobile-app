@@ -17,13 +17,7 @@
 import React, { useContext } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-
-import { AdditionalInfo } from './AdditionalInfo';
 import { CigaretteBlock, getCigaretteCount } from '../../components';
-import { Footer } from './Footer';
-import { Header } from './Header';
-import { SelectFrequency } from './SelectFrequency';
-import { SmokeVideo } from './SmokeVideo';
 import {
   ApiContext,
   CurrentLocationContext,
@@ -31,17 +25,31 @@ import {
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { AdditionalInfo } from './AdditionalInfo';
+import { Footer } from './Footer';
+import { Header } from './Header';
+import { SelectFrequency } from './SelectFrequency';
+import { SmokeVideo } from './SmokeVideo';
 
-interface HomeProps extends NavigationInjectedProps {}
+type HomeProps = NavigationInjectedProps;
 
-export function Home (props: HomeProps) {
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1
+  },
+  withMargin: {
+    marginTop: theme.spacing.normal
+  }
+});
+
+export function Home(props: HomeProps) {
   const { api } = useContext(ApiContext);
   const { isGps } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api!.shootISmoke.cigarettes;
+  const cigarettesPerDay = api ? api.shootISmoke.cigarettes : 0;
 
   return (
     <View style={styles.container}>
@@ -70,12 +78,3 @@ export function Home (props: HomeProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1
-  },
-  withMargin: {
-    marginTop: theme.spacing.normal
-  }
-});

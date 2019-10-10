@@ -16,12 +16,11 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
-
-import { Cigarettes } from '../Cigarettes';
 import { i18n } from '../../localization';
 import { Frequency } from '../../Screens/Home/SelectFrequency';
-import swearWords from './swearWords';
 import * as theme from '../../util/theme';
+import { Cigarettes } from '../Cigarettes';
+import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
   cigarettesPerDay: number;
@@ -30,7 +29,17 @@ interface CigaretteBlockProps extends ViewProps {
   isGps: boolean;
 }
 
-function getSwearWord (cigaretteCount: number) {
+const styles = StyleSheet.create({
+  cigarettesCount: {
+    color: theme.primaryColor
+  },
+  shit: {
+    ...theme.shitText,
+    marginTop: theme.spacing.normal
+  }
+});
+
+function getSwearWord(cigaretteCount: number) {
   if (cigaretteCount <= 1) return i18n.t('home_common_oh');
 
   // Return a random swear word
@@ -40,7 +49,7 @@ function getSwearWord (cigaretteCount: number) {
 /**
  * Compute the number of cigarettes to show
  */
-export function getCigaretteCount (
+export function getCigaretteCount(
   frequency: Frequency,
   cigarettePerDay: number
 ) {
@@ -56,7 +65,7 @@ export function getCigaretteCount (
   }
 }
 
-export function CigaretteBlock (props: CigaretteBlockProps) {
+export function CigaretteBlock(props: CigaretteBlockProps) {
   const {
     cigarettesPerDay,
     frequency,
@@ -109,13 +118,3 @@ export function CigaretteBlock (props: CigaretteBlockProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  cigarettesCount: {
-    color: theme.primaryColor
-  },
-  shit: {
-    ...theme.shitText,
-    marginTop: theme.spacing.normal
-  }
-});

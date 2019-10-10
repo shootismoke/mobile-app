@@ -16,7 +16,7 @@
 
 import { aqiToRaw, Pollutant } from './aqiToRaw';
 
-function testConversion (pollutant: Pollutant, aqi: number, raw: number) {
+function testConversion(pollutant: Pollutant, aqi: number, raw: number) {
   it(`should convert ${pollutant} AQI ${aqi} to ${raw}ug/m3`, () => {
     expect(aqiToRaw[pollutant](aqi)).toBe(raw);
   });

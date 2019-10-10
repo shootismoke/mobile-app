@@ -43,7 +43,7 @@ if (Constants.manifest.extra.sentryPublicDsn) {
   }
 }
 
-export function App () {
+export function App() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     Promise.all([

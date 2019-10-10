@@ -23,7 +23,7 @@ import { pm25ToCigarettes } from './pm25ToCigarettes';
 /**
  * Fetch the PM2.5 level from https://wind.waqi.info.
  */
-export async function windWaqi ({ latitude, longitude }: LatLng) {
+export async function windWaqi({ latitude, longitude }: LatLng) {
   const { data: response } = await axios.get(
     `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`,
     { timeout: 6000 }

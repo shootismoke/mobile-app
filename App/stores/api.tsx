@@ -18,12 +18,11 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
+import { logFpError } from '../util/fp';
+import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import { Api, fetchApi } from './fetchApi';
 import { CurrentLocationContext } from './location';
-import { logFpError } from '../util/fp';
-import { noop } from '../util/noop';
 
 interface Context {
   api?: Api;
@@ -36,7 +35,7 @@ interface ApiContextProviderProps {
   children: JSX.Element;
 }
 
-export function ApiContextProvider ({ children }: ApiContextProviderProps) {
+export function ApiContextProvider({ children }: ApiContextProviderProps) {
   const { currentLocation, setCurrentLocation } = useContext(
     CurrentLocationContext
   );
@@ -70,6 +69,7 @@ export function ApiContextProvider ({ children }: ApiContextProviderProps) {
     <ApiContext.Provider
       value={{
         api,
+        // eslint-disable-next-line
         reloadApp: () => setCurrentLocation({ ...currentLocation! }) // Small trick to re-run effect
       }}
     >

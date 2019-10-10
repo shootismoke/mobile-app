@@ -25,7 +25,6 @@ import {
   TextStyle,
   View
 } from 'react-native';
-
 import locationIcon from '../../../../assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
@@ -37,70 +36,6 @@ const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 interface HeaderProps {
   onBackClick: (event: GestureResponderEvent) => void;
 }
-
-export function Header (props: HeaderProps) {
-  const { onBackClick } = props;
-  const { api } = useContext(ApiContext);
-  const { currentLocation } = useContext(CurrentLocationContext);
-
-  const lastUpdated =
-    api!.time && api!.time.v ? new Date(api!.time.v * 1000) : null;
-  const { dominentpol, iaqi } = api!;
-
-  return (
-    <View style={styles.container}>
-      <BackButton onPress={onBackClick} style={styles.backButton} />
-
-      <View style={styles.layout}>
-        <Image source={locationIcon} style={styles.changeLocation} />
-
-        <View style={styles.content}>
-          <CurrentLocation
-            api={api!}
-            currentLocation={currentLocation!}
-            style={styles.currentLocation}
-          />
-          {lastUpdated &&
-            renderInfo(
-              i18n.t('details_header_latest_update_label'),
-              `${formatDistanceToNow(lastUpdated)} ${i18n.t(
-                'details_header_latest_update_ago'
-              )}`
-            )}
-          {dominentpol &&
-            renderInfo(
-              i18n.t('details_header_primary_pollutant_label'),
-              dominentpol.toUpperCase()
-            )}
-
-          <View style={styles.pollutants}>
-            {trackedPollutant.map(
-              pollutant =>
-                iaqi[pollutant] &&
-                renderInfo(
-                  `${pollutant.toUpperCase()} AQI:`,
-                  iaqi[pollutant].v.toString(),
-                  styles.pollutantItem
-                )
-            )}
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-}
-
-const renderInfo = (
-  label: string,
-  value: string,
-  style?: StyleProp<TextStyle>
-) => {
-  return (
-    <Text key={label} style={[styles.info, style]}>
-      <Text style={styles.label}>{label}</Text> {value}
-    </Text>
-  );
-};
 
 const styles = StyleSheet.create({
   backButton: {
@@ -143,3 +78,77 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.normal
   }
 });
+
+const renderInfo = (
+  label: string,
+  value: string,
+  style?: StyleProp<TextStyle>
+) => {
+  return (
+    <Text key={label} style={[styles.info, style]}>
+      <Text style={styles.label}>{label}</Text> {value}
+    </Text>
+  );
+};
+
+export function Header(props: HeaderProps) {
+  const { onBackClick } = props;
+  const { api } = useContext(ApiContext);
+  const { currentLocation } = useContext(CurrentLocationContext);
+
+  if (!currentLocation) {
+    throw new Error(
+      'Details/Header/Header.tsx only render when `currentLocation` is defined.'
+    );
+  } else if (!api) {
+    throw new Error(
+      'Details/Header/Header.tsx only render when `api` is defined.'
+    );
+  }
+
+  const lastUpdated =
+    api.time && api.time.v ? new Date(api.time.v * 1000) : null;
+  const { dominentpol, iaqi } = api;
+
+  return (
+    <View style={styles.container}>
+      <BackButton onPress={onBackClick} style={styles.backButton} />
+
+      <View style={styles.layout}>
+        <Image source={locationIcon} style={styles.changeLocation} />
+
+        <View style={styles.content}>
+          <CurrentLocation
+            api={api}
+            currentLocation={currentLocation}
+            style={styles.currentLocation}
+          />
+          {lastUpdated &&
+            renderInfo(
+              i18n.t('details_header_latest_update_label'),
+              `${formatDistanceToNow(lastUpdated)} ${i18n.t(
+                'details_header_latest_update_ago'
+              )}`
+            )}
+          {dominentpol &&
+            renderInfo(
+              i18n.t('details_header_primary_pollutant_label'),
+              dominentpol.toUpperCase()
+            )}
+
+          <View style={styles.pollutants}>
+            {trackedPollutant.map(
+              pollutant =>
+                iaqi[pollutant] &&
+                renderInfo(
+                  `${pollutant.toUpperCase()} AQI:`,
+                  iaqi[pollutant].v.toString(),
+                  styles.pollutantItem
+                )
+            )}
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
