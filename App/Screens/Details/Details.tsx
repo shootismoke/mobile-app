@@ -22,13 +22,26 @@ import truncate from 'truncate';
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import { i18n } from '../../localization';
-import { ApiContext, CurrentLocationContext, DistanceUnit } from '../../stores';
+import { ApiContext, CurrentLocationContext } from '../../stores';
+import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import { distanceToStation, getCorrectLatLng } from '../../util/station';
 import { Distance } from './Distance';
 import { Header } from './Header';
 
 type DetailsProps = NavigationInjectedProps;
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1
+  },
+  map: {
+    flexGrow: 1
+  },
+  mapContainer: {
+    flexGrow: 1
+  }
+});
 
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
@@ -41,6 +54,7 @@ export function Details(props: DetailsProps) {
   const { currentLocation: _currentLocation } = useContext(
     CurrentLocationContext
   );
+  const { distanceUnit } = useDistanceUnit();
 
   trackScreen('DETAILS');
 
@@ -64,10 +78,6 @@ export function Details(props: DetailsProps) {
   // eslint-disable-next-line
   const currentLocation = { ..._currentLocation! };
 
-  const haversineDistanceUnit = i18n.t(
-    'haversine_distance_unit'
-  ) as DistanceUnit;
-
   if (!currentLocation) {
     throw new Error(
       'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
@@ -78,11 +88,7 @@ export function Details(props: DetailsProps) {
     );
   }
 
-  const distance = distanceToStation(
-    currentLocation,
-    api,
-    haversineDistanceUnit
-  );
+  const distance = distanceToStation(currentLocation, api, distanceUnit);
 
   const station = {
     description: api.shootISmoke.station || '',
@@ -92,18 +98,6 @@ export function Details(props: DetailsProps) {
       longitude: api.city.geo[1]
     })
   };
-
-  const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1
-    },
-    map: {
-      flexGrow: 1
-    },
-    mapContainer: {
-      flexGrow: 1
-    }
-  });
 
   return (
     <View style={styles.container}>

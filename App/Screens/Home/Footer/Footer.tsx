@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import { Platform, Share, StyleSheet, View, ViewProps } from 'react-native';
+import { StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { Button } from '../../../components';
 import { i18n } from '../../../localization';
@@ -73,17 +73,7 @@ export function Footer(props: FooterProps) {
   function handleShare() {
     track('HOME_SCREEN_SHARE_CLICK');
 
-    // Share doesn't currently support images on Android, so the text version
-    if (Platform.OS === 'ios') {
-      props.navigation.navigate('ShareModal');
-    } else {
-      Share.share({
-        title: i18n.t('home_share_title'),
-        message: i18n.t('home_share_message', {
-          cigarettes: api ? api.shootISmoke.cigarettes.toFixed(2) : 0
-        })
-      });
-    }
+    props.navigation.navigate('ShareModal');
   }
 
   const renderBigButton = () => {
