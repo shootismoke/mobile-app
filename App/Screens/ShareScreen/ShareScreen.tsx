@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import * as Sharing from 'expo-sharing';
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useContext } from 'react';
 import { Platform, Share, StyleSheet, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -23,6 +23,7 @@ import { Button } from '../../components';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
 import { ShareImage } from './ShareImage';
+import { ApiContext } from '../../stores';
 
 type ShareScreenProps = NavigationInjectedProps;
 
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
 });
 
 export function ShareScreen(props: ShareScreenProps) {
+  const { api } = useContext(ApiContext);
   const refViewShot = createRef<View>();
 
   const handleDismiss = () => {
@@ -67,7 +69,11 @@ export function ShareScreen(props: ShareScreenProps) {
 
         if (Platform.OS === 'ios') {
           await Share.share({
-            url: uri
+            url: uri,
+            title: i18n.t('home_share_title'),
+            message: i18n.t('home_share_message', {
+              cigarettes: api ? api.shootISmoke.cigarettes.toFixed(2) : 0
+            })
           });
         } else {
           await Sharing.shareAsync(uri, {
