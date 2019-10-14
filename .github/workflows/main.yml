@@ -6,7 +6,8 @@ jobs:
   checkout:
     name: Checkout
     runs-on: ubuntu-latest
-    uses: actions/checkout@v1
+    steps:
+      uses: actions/checkout@v1
   setup:
     name: Setup
     needs: checkout
