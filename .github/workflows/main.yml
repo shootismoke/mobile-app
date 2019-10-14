@@ -4,16 +4,18 @@ on: [push, pull_request]
 
 jobs:
   checkout:
+    name: Checkout
     runs-on: ubuntu-latest
-    steps:
     - uses: actions/checkout@v1
   setup:
+    name: Setup
     needs: checkout
     steps:
       run: |
         yarn install
         yarn lint
   test:
+    name: Test
     needs: checkout
     steps:
       run: yarn test
