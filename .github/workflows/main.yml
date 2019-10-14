@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     uses: actions/checkout@v1
     steps:
-      run: Code checkout got executed.
+    - run: echo Code checkout got executed.
   setup:
     needs: checkout
     steps:
-      run: |
-        yarn install
-        yarn lint
+    - run: |
+      yarn install
+      yarn lint
