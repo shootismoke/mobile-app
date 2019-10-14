@@ -3,7 +3,7 @@
     "android": {
       "config": {
         "googleMaps": {
-          "apiKey": "YOUR_KEY"
+          "apiKey": "YOUR_OPTIONAL_KEY"
         }
       },
       "icon": "assets/logos/android/playstore-icon.png",
@@ -37,7 +37,7 @@
       "buildNumber": "1.5.0",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
-        "googleMapsApiKey": "YOUR_KEY"
+        "googleMapsApiKey": "YOUR_OPTIONAL_KEY"
       },
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
       "infoPlist": {
