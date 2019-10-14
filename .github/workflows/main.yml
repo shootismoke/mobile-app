@@ -12,7 +12,3 @@ jobs:
       run: |
         yarn install
         yarn lint
-  test:
-    needs: checkout
-    steps:
-      run: yarn test
