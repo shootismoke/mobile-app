@@ -16,3 +16,9 @@ jobs:
       run: |
         yarn install
         yarn lint
+  test:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+    - name: Test
+      run: yarn test
