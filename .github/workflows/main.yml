@@ -9,6 +9,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
   setup:
+    runs-on: ubuntu-latest
     needs: checkout
     steps:
     - name: Setup
