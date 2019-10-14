@@ -10,6 +10,7 @@ jobs:
     - name: Checkout
       run: echo Code checkout got executed.
   setup:
+    runs-on: ubuntu-latest
     needs: checkout
     steps:
     - name: Setup
