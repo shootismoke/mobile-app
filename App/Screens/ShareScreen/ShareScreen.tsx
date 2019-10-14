@@ -15,15 +15,15 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import * as Sharing from 'expo-sharing';
-import React, { createRef, useEffect, useContext } from 'react';
+import React, { createRef, useContext, useEffect } from 'react';
 import { Platform, Share, StyleSheet, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { NavigationInjectedProps } from 'react-navigation';
 import { Button } from '../../components';
 import { i18n } from '../../localization';
+import { ApiContext } from '../../stores';
 import * as theme from '../../util/theme';
 import { ShareImage } from './ShareImage';
-import { ApiContext } from '../../stores';
 
 type ShareScreenProps = NavigationInjectedProps;
 
