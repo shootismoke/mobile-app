@@ -2,7 +2,7 @@
 
 Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:
 
-[![Travis (.org)](https://img.shields.io/travis/amaurymartiny/shoot-i-smoke.svg)](https://travis-ci.org/amaurymartiny/shoot-i-smoke)
+[![Actions Status](https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg)](https://github.com/amaurymartiny/shoot-i-smoke/actions)
 ![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
 [![David](https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg)](https://david-dm.org/amaurymartiny/shoot-i-smoke)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability)](https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability)
