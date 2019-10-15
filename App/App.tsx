@@ -27,7 +27,8 @@ import {
   DistanceUnitProvider,
   ErrorContextProvider,
   FrequencyContextProvider,
-  LocationContextProvider
+  LocationContextProvider,
+  NotificationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
 
@@ -75,13 +76,15 @@ export function App() {
         <ApiContextProvider>
           <FrequencyContextProvider>
             <DistanceUnitProvider>
-              <Screens />
+              <NotificationContextProvider>
+                <Screens />
+              </NotificationContextProvider>
             </DistanceUnitProvider>
           </FrequencyContextProvider>
         </ApiContextProvider>
       </LocationContextProvider>
     </ErrorContextProvider>
   ) : (
-    <LoadingBackground />
-  );
+      <LoadingBackground />
+    );
 }

@@ -23,7 +23,8 @@ import {
   StyleSheet,
   Switch,
   Text,
-  View
+  View,
+  Picker
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
@@ -31,6 +32,8 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';
+import { useNotificationContext, NotificationPreferenceType } from '../../stores/notificationPreference';
+import { scheduleNotification } from '../../util/scheduleNotification';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Box } from './Box';
@@ -48,6 +51,8 @@ export const aboutSections = {
   aboutBetaInaccurate: 'aboutBetaInaccurate',
   aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
 };
+
+const notificationPrefrencesOptions: NotificationPreferenceType[] = ['None', 'Daily', 'Weekly', 'Monthly']
 
 const handleOpenAmaury = () => {
   Linking.openURL('https://twitter.com/amaurymartiny');
@@ -136,11 +141,20 @@ export function About(props: AboutProps) {
     localizedDistanceUnit,
     setDistanceUnit
   } = useDistanceUnit();
+  const {
+    notificationPreference,
+    setNotificationPreference
+  } = useNotificationContext();
 
   trackScreen('ABOUT');
 
   const toggleDistanceSwitch = (value: boolean) =>
     setDistanceUnit(value ? 'km' : 'mile');
+
+  const handleNotificationPrefrenceChange = (value: NotificationPreferenceType) => {
+    setNotificationPreference(value)
+    scheduleNotification(value)
+  }
 
   return (
     <CustomScrollView
@@ -245,6 +259,16 @@ export function About(props: AboutProps) {
           <Text style={styles.distanceText}>
             {localizedDistanceUnit('long')}
           </Text>
+        </View>
+      </View>
+
+      <View style={styles.distance}>
+        <Text style={styles.h2}>{i18n.t('about_notification_selection_title')}</Text>
+        <View>
+          <Picker selectedValue={notificationPreference} onValueChange={handleNotificationPrefrenceChange}>
+            {notificationPrefrencesOptions.map((option) =>
+              <Picker.Item key={option} label={option} value={option} />)}
+          </Picker>
         </View>
       </View>
 

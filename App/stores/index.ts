@@ -19,3 +19,4 @@ export * from './error';
 export * from './frequency';
 export * from './location';
 export * from './distanceUnit';
+export * from './notificationPreference';

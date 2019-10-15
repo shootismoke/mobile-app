@@ -86,5 +86,6 @@
   "about_credits_source_code": "Source code",
   "about_credits_available_github": "available on Github",
   "about_language": "Language",
-  "current_location_unknown_station": "Unknown AQI station"
+  "current_location_unknown_station": "Unknown AQI station",
+  "about_notification_selection_title": "Notification Preferences"
 }

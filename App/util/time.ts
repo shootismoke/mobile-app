@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { subMonths, subWeeks } from 'date-fns';
+import { subMonths, subWeeks, endOfWeek } from 'date-fns';
 
 export const NOW = new Date();
 export const ONE_WEEK_AGO = subWeeks(NOW, 1);
 export const ONE_MONTH_AGO = subMonths(NOW, 1);
+export const NEXT_SUNDAY = endOfWeek(new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate()), { weekStartsOn: 1 })
