@@ -58,8 +58,9 @@ const handleOpenArticle = () =>
     'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
   );
 
-const handleOpenGithub = () =>
-  Linking.openURL(Constants.manifest.extra.githubUrl);
+const handleOpenGithub = () => {
+  Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke');
+};
 
 const handleOpenMarcelo = () =>
   Linking.openURL('https://www.behance.net/marceloscoelho');
