@@ -7,7 +7,6 @@ Air pollution has dire implications on human health and well-being. It affects p
 There are various things we can do to eliminate the causes and minimize the effects of air pollution. There is a macro and a micro level to dealing with pollution. While the government and the private sector need to rethink policies for controlling air pollution on a broader scale, we as citizens can fight air pollution in our homes and offices by installing air quality monitors and air purification devices.
 
 
-introducing..........
 # Sh\*\*t! I Smoke
 
 Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:
