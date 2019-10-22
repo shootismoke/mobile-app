@@ -1,4 +1,4 @@
-# Air Polution
+# Air Pollution
 
 Air pollution is a burning issue facing our planet today. Rapid industrialization and urbanization has made the problem extremely difficult to contain. Cities around the world are witnessing rising levels of air contamination, with Beijing, Kanpur and New Delhi recording some of the worst figures in recent years.
 
