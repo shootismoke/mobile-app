@@ -19,6 +19,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 import * as Sentry from 'sentry-expo';
+
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
 import { i18n } from '../../localization';

@@ -15,8 +15,8 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { createContext, useState } from 'react';
-import { Frequency } from '../Screens/Home/SelectFrequency';
 
+import { Frequency } from '../Screens/Home/SelectFrequency';
 import { noop } from '../util/noop';
 
 interface Context {

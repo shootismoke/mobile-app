@@ -23,6 +23,7 @@ import {
   TouchableOpacityProps
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import changeLocation from '../../../assets/images/changeLocation.png';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';

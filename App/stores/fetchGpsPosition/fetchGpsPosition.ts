@@ -18,6 +18,7 @@ import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as TE from 'fp-ts/lib/TaskEither';
+
 import { toError } from '../../util/fp';
 
 export interface LatLng {

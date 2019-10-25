@@ -23,6 +23,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+
 import * as theme from '../../util/theme';
 
 interface BannerProps {

@@ -19,6 +19,7 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { NavigationInjectedProps } from 'react-navigation';
 import truncate from 'truncate';
+
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import { i18n } from '../../localization';

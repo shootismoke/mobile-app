@@ -19,6 +19,8 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+import { logFpError } from '../util/fp';
+import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import {
   fetchGpsPosition,
@@ -26,8 +28,6 @@ import {
   LatLng,
   Location
 } from './fetchGpsPosition';
-import { logFpError } from '../util/fp';
-import { noop } from '../util/noop';
 
 const DEFAULT_LAT_LNG: LatLng = {
   latitude: 0,

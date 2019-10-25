@@ -16,6 +16,7 @@
 
 import React, { useContext, useRef, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
+
 import { BoxButton } from '../../../components';
 import { i18n } from '../../../localization';
 import { FrequencyContext } from '../../../stores';

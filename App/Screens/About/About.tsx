@@ -28,6 +28,7 @@ import {
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';

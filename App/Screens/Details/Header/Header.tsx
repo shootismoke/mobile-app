@@ -25,6 +25,7 @@ import {
   TextStyle,
   View
 } from 'react-native';
+
 import locationIcon from '../../../../assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';

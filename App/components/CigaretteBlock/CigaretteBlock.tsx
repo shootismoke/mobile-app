@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
+
 import { i18n } from '../../localization';
 import { Frequency } from '../../Screens/Home/SelectFrequency';
 import * as theme from '../../util/theme';

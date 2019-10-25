@@ -9,8 +9,9 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'simple-import-sort'],
   rules: {
+    'simple-import-sort/sort': 'error',
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off'

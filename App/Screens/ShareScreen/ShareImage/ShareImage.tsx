@@ -16,6 +16,7 @@
 
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
 import { CigaretteBlock, CurrentLocation } from '../../../components';
 import {
   ApiContext,
