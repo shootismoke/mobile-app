@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+
 import { Banner } from '../../../components';
 import { i18n } from '../../../localization';
 import { useDistanceUnit } from '../../../stores/distanceUnit';

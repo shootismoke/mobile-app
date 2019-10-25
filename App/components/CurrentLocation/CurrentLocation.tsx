@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
+
 import { i18n } from '../../localization';
 import { Api } from '../../stores/fetchApi';
 import { Location } from '../../stores/fetchGpsPosition';

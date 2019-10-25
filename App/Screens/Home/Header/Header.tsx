@@ -23,6 +23,7 @@ import {
   View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';

@@ -17,7 +17,8 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { Cigarette, CigaretteSize, CIGARETTES_HEIGHT } from './Cigarette';
+
+import { Cigarette, CIGARETTES_HEIGHT, CigaretteSize } from './Cigarette';
 
 interface CigarettesProps {
   cigarettes: number;

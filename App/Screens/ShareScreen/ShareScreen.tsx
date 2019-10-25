@@ -19,6 +19,7 @@ import React, { createRef, useContext, useEffect } from 'react';
 import { Platform, Share, StyleSheet, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ApiContext } from '../../stores';

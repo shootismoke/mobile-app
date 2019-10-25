@@ -18,6 +18,7 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+
 import { logFpError } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';

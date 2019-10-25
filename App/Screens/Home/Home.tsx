@@ -17,6 +17,7 @@
 import React, { useContext } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { CigaretteBlock, getCigaretteCount } from '../../components';
 import {
   ApiContext,

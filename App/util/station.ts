@@ -15,9 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import haversine from 'haversine';
+
+import { DistanceUnit } from '../stores/distanceUnit';
 import { Api } from '../stores/fetchApi';
 import { LatLng } from '../stores/fetchGpsPosition';
-import { DistanceUnit } from '../stores/distanceUnit';
 
 // Above this distance (km), we consider the station too far from the user
 export const MAX_DISTANCE_TO_STATION = 10;

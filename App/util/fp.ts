@@ -17,8 +17,8 @@
 import * as E from 'fp-ts/lib/Either';
 import * as IO from 'fp-ts/lib/IO';
 import * as O from 'fp-ts/lib/Option';
-import * as TE from 'fp-ts/lib/TaskEither';
 import { pipe } from 'fp-ts/lib/pipeable';
+import * as TE from 'fp-ts/lib/TaskEither';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 import * as Sentry from 'sentry-expo';

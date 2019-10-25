@@ -17,6 +17,7 @@
 import React from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import buttVertical from '../../../../assets/images/butt-vertical.png';
 import butt from '../../../../assets/images/butt.png';
 import headVertical from '../../../../assets/images/head-vertical.png';

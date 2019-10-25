@@ -17,8 +17,8 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-import { aqiToRaw } from './aqiToRaw';
 import { LatLng } from '../../fetchGpsPosition';
+import { aqiToRaw } from './aqiToRaw';
 import { pm25ToCigarettes } from './pm25ToCigarettes';
 
 /**

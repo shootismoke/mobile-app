@@ -29,6 +29,7 @@ import {
   NavigationStackProp
 } from 'react-navigation-stack';
 import { fadeIn } from 'react-navigation-transitions';
+
 import { ApiContext, ErrorContext } from '../stores';
 import { Api } from '../stores/fetchApi';
 import * as theme from '../util/theme';

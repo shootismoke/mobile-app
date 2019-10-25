@@ -17,6 +17,7 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { Button } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';

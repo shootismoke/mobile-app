@@ -16,6 +16,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
+
 import { i18n } from '../../localization';
 import { ApiContext, GpsLocationContext } from '../../stores';
 import { Api } from '../../stores/fetchApi';

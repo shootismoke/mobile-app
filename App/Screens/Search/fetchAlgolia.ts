@@ -23,6 +23,7 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
+
 import { LatLng } from '../../stores/fetchGpsPosition';
 import { retry, sideEffect, toError } from '../../util/fp';
 

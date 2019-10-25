@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as Font from 'expo-font';
 import Constants from 'expo-constants';
+import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { AppState, Platform, StatusBar } from 'react-native';
 import * as Sentry from 'sentry-expo';

@@ -6,6 +6,7 @@ import React, {
   useState
 } from 'react';
 import { AsyncStorage } from 'react-native';
+
 import { i18n } from '../localization';
 
 export type DistanceUnit = 'km' | 'mile';
