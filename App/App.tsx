@@ -17,7 +17,7 @@
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform, StatusBar } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
 import { Screens } from './Screens';
@@ -75,6 +75,9 @@ export function App() {
         <ApiContextProvider>
           <FrequencyContextProvider>
             <DistanceUnitProvider>
+              {Platform.select({
+                ios: <StatusBar barStyle="dark-content" />
+              })}
               <Screens />
             </DistanceUnitProvider>
           </FrequencyContextProvider>
