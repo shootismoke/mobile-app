@@ -2997,10 +2997,10 @@ expo-av@^7.0.1:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
 
-expo-constants@*, expo-constants@^7.0.0, expo-constants@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.0.tgz#668c3ec0100e219522ffd9515ec47fadfccd443d"
-  integrity sha512-oLINuMtGcAwfHGInSVhq6xGojp3atUpSIp7KImo9rqXhWwD5FNmqA5Jflo4J0ODPq590kN5ieiYCCqwls2/u0w==
+expo-constants@*, expo-constants@^7.0.1, expo-constants@~7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.1.tgz#87be02b6dae5c44a3246537452a0d77af15d46bf"
+  integrity sha512-n9S6lsEfTAhLY+x/Yrtc1rvVUhuEF+CcSWr/reAIGtk35+PYrAKfV4pbetRtqX9tl947bJv7kBQX6jpwYpeIpQ==
   dependencies:
     ua-parser-js "^0.7.19"
 
