@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.6",
-    "@types/expo": "^32.0.13",
+    "@types/expo": "^33.0.1",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
     "@types/node": "^12.11.1",
