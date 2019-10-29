@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -25,7 +24,7 @@ import { logFpError } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { Api, fetchApi } from './util';
+import { Api, fetchApi, getOrCreateUser } from './util';
 
 interface Context {
   api?: Api;
@@ -33,38 +32,6 @@ interface Context {
 }
 
 export const ApiContext = createContext<Context>({ reloadApp: noop });
-
-const CREATE_USER = gql`
-  enum Notifications {
-    never
-    daily
-    weekly
-    monthly
-  }
-  type User {
-    _id: ID!
-    expoInstallationId: String!
-    expoPushToken: String!
-    history: [HistoryItem]!
-    notifications: Notifications!
-  }
-  input CreateUserInput {
-    expoInstallationId: String!
-    expoPushToken: String!
-    notifications: Notifications
-  }
-  input UpdateUserInput {
-    expoInstallationId: String
-    expoPushToken: String
-    notifications: Notifications
-  }
-
-  mutation createUser($input: CreateUserInput!) {
-    createUser(input: $input) {
-      _id
-    }
-  }
-`;
 
 interface ApiContextProviderProps {
   children: JSX.Element;
@@ -76,7 +43,6 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
   );
   const { setError } = useContext(ErrorContext);
   const [api, setApi] = useState<Api | undefined>(undefined);
-  const [createUser] = useMutation(CREATE_USER);
 
   useEffect(() => {
     setApi(undefined);
@@ -88,6 +54,21 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
 
     pipe(
       fetchApi(currentLocation),
+      TE.chain((api: Api) =>
+        TE.rightTask(
+          pipe(
+            getOrCreateUser(),
+            TE.fold(
+              error =>
+                pipe(
+                  T.fromIO(C.log(error)),
+                  T.chain(() => T.of(api))
+                ),
+              () => T.of(api)
+            )
+          )
+        )
+      ),
       TE.fold(
         err => {
           setError(err.message);
