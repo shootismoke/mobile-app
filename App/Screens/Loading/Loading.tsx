@@ -19,8 +19,8 @@ import { StyleSheet, Text } from 'react-native';
 
 import { i18n } from '../../localization';
 import { ApiContext, GpsLocationContext } from '../../stores';
-import { Api } from '../../stores/fetchApi';
-import { Location } from '../../stores/fetchGpsPosition';
+import { Api } from '../../stores/util/fetchApi';
+import { Location } from '../../stores/util/fetchGpsPosition';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Background } from './Background';

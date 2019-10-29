@@ -24,7 +24,7 @@ import Sentry from 'sentry-expo';
 
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
-import { Location } from '../../stores/fetchGpsPosition';
+import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';

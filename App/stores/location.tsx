@@ -27,7 +27,7 @@ import {
   fetchReverseGeocode,
   LatLng,
   Location
-} from './fetchGpsPosition';
+} from './util/fetchGpsPosition';
 
 const DEFAULT_LAT_LNG: LatLng = {
   latitude: 0,

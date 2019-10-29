@@ -22,7 +22,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 
-import { retry, sideEffect, toError } from '../../util/fp';
+import { retry, sideEffect, toError } from '../../../util/fp';
 import { Location } from '../fetchGpsPosition';
 import * as dataSources from './dataSources';
 
