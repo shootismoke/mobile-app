@@ -46,9 +46,10 @@ const ApiT = t.type({
       v: t.number
     })
   ),
-  idx: t.number,
+  idx: t.string,
   shootISmoke: t.type({
     cigarettes: t.number,
+    provider: t.union([t.literal('aqicn'), t.literal('waqi')]),
     rawPm25: t.number,
     station: t.union([t.string, t.undefined])
   }),

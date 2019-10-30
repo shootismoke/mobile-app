@@ -107,10 +107,11 @@ export async function aqicn({ latitude, longitude }: LatLng) {
     city: response.data.city,
     dominentpol: response.data.dominentpol,
     iaqi: response.data.iaqi,
-    idx: response.data.idx,
+    idx: `${response.data.idx}`,
     time: response.data.time,
     shootISmoke: {
       cigarettes: pm25ToCigarettes(rawPm25),
+      provider: 'aqicn',
       rawPm25,
       station:
         response.data.attributions &&

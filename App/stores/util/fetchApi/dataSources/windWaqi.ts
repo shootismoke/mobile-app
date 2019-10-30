@@ -70,12 +70,13 @@ export async function windWaqi({ latitude, longitude }: LatLng) {
           v: +data.v
         }
       },
-      idx: +data.x,
+      idx: `${data.x}`,
       time: {
         v: data.t
       },
       shootISmoke: {
         cigarettes: pm25ToCigarettes(rawPm25),
+        provider: 'waqi',
         rawPm25,
         station: data.nlo
       }

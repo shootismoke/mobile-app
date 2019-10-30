@@ -37,8 +37,9 @@ export function createHistoryItem(api: Api) {
   return pipe(
     getOrCreateUser(),
     TE.map(userId => ({
+      provider: api.shootISmoke.provider,
       rawPm25: api.shootISmoke.rawPm25,
-      stationId: `waqi|${api.shootISmoke.station}`, // For now, we only have waqi stations
+      stationId: api.idx,
       userId
     })),
     TE.chain(
