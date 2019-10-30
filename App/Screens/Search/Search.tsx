@@ -99,14 +99,14 @@ export function Search(props: SearchProps) {
             setAlgoliaError(err);
 
             Sentry.captureException(err);
-            return T.of(undefined as void);
+            return T.of(void undefined);
           },
           hits => {
             setLoading(false);
             setAlgoliaError(undefined);
             setHits(hits);
 
-            return T.of(undefined as void);
+            return T.of(void undefined);
           }
         )
       )().catch(logFpError);

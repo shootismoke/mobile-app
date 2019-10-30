@@ -53,7 +53,11 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
 
     pipe(
       fetchApi(currentLocation),
-      TE.chain(sideEffect(createHistoryItem)),
+      TE.chain(
+        sideEffect(api =>
+          isGps ? createHistoryItem(api) : TE.right(void undefined)
+        )
+      ),
       TE.fold(
         err => {
           setError(err.message);
