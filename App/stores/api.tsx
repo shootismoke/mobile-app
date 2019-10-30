@@ -14,17 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { logFpError } from '../util/fp';
+import { logFpError, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { Api, fetchApi, getOrCreateUser } from './util';
+import { Api, createHistoryItem, fetchApi } from './util';
 
 interface Context {
   api?: Api;
@@ -38,7 +37,7 @@ interface ApiContextProviderProps {
 }
 
 export function ApiContextProvider({ children }: ApiContextProviderProps) {
-  const { currentLocation, setCurrentLocation } = useContext(
+  const { currentLocation, isGps, setCurrentLocation } = useContext(
     CurrentLocationContext
   );
   const { setError } = useContext(ErrorContext);
@@ -54,21 +53,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
 
     pipe(
       fetchApi(currentLocation),
-      TE.chain((api: Api) =>
-        TE.rightTask(
-          pipe(
-            getOrCreateUser(),
-            TE.fold(
-              error =>
-                pipe(
-                  T.fromIO(C.log(error)),
-                  T.chain(() => T.of(api))
-                ),
-              () => T.of(api)
-            )
-          )
-        )
-      ),
+      TE.chain(sideEffect(createHistoryItem)),
       TE.fold(
         err => {
           setError(err.message);

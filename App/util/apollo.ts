@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 const BACKEND_URI =
   Constants.manifest.releaseChannel === 'production'
     ? 'https://google.com'
-    : 'https://backend-ldd9karvq.now.sh/api/graphql';
+    : 'https://staging.shootismoke.now.sh/api/graphql';
 
 /**
  * The Apollo client
@@ -22,6 +22,12 @@ export const client = new ApolloClient({
       expoInstallationId: String!
       expoPushToken: String
       notifications: Notifications
+    }
+
+    input CreateHistoryItemInput {
+      rawPm25: Int!
+      stationId: String!
+      userId: ID!
     }
   `,
   uri: BACKEND_URI

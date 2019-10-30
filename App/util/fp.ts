@@ -14,10 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
-import * as IO from 'fp-ts/lib/IO';
+import { Lazy } from 'fp-ts/lib/function';
 import * as O from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
@@ -26,11 +28,34 @@ import * as Sentry from 'sentry-expo';
 import { noop } from './noop';
 
 /**
- * Run function `fn()` as a side-effect, return `returnValue`
+ * A side-effect in a TaskEither chain: if the TaskEither fails, still return
+ * a TaskEither.RightTask
+ *
+ * @example
+ * ```
+ * function myTe(value: number) { // A TaskEither };
+ *
+ * pipe(
+ *   TE.of(1),
+ *   TE.chain(sideEffect(myTe)
+ * )
+ * ```
  */
-export function sideEffect<T>(fn: () => any, returnValue: T) {
-  fn();
-  return IO.of(returnValue);
+export function sideEffect<E, A>(fn: (input: A) => TE.TaskEither<E, void>) {
+  return (input: A) =>
+    TE.rightTask<E, A>(
+      pipe(
+        fn(input),
+        TE.fold(
+          error =>
+            pipe(
+              T.fromIO(C.log(error)),
+              T.map(() => input)
+            ),
+          () => T.of(input)
+        )
+      )
+    );
 }
 
 // This Error is always thrown at the beginning of a retry, we ignore it
@@ -67,12 +92,16 @@ export function retry<A>(
 }
 
 /**
- * Create an Error from an unknow error
- *
- * @param reason - An unknown error
+ * Convert a Promise<A> into a TaskEither<Error, A>
+ * @param fn - Function returning a Promise
  */
-export function toError(reason: unknown) {
-  return new Error(String(reason));
+export function promiseToTE<A>(fn: Lazy<Promise<A>>) {
+  return TE.tryCatch(fn, (reason: unknown) => {
+    const error = new Error(String(reason));
+    console.log(`<promiseToTE> - ${error}`);
+
+    return error;
+  });
 }
 
 /**

@@ -22,7 +22,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 
-import { retry, sideEffect, toError } from '../../../util/fp';
+import { promiseToTE, retry, sideEffect } from '../../../util/fp';
 import { Location } from '../fetchGpsPosition';
 import * as dataSources from './dataSources';
 
@@ -76,9 +76,8 @@ export function fetchApi(gps: Location) {
         )
       ),
       TE.chain(() =>
-        TE.tryCatch(
-          () => sources[(status.iterNumber - 1) % sources.length].run(gps),
-          toError
+        promiseToTE(() =>
+          sources[(status.iterNumber - 1) % sources.length].run(gps)
         )
       ),
       TE.chain(response =>
@@ -91,13 +90,10 @@ export function fetchApi(gps: Location) {
           )
         )
       ),
-      TE.chain((api: Api) =>
-        TE.rightIO(
-          sideEffect(
-            C.log(
-              `<ApiContext> - fetchApi - Got result ${JSON.stringify(api)}`
-            ),
-            api
+      TE.chain(
+        sideEffect((api: Api) =>
+          TE.rightIO(
+            C.log(`<ApiContext> - fetchApi - Got result ${JSON.stringify(api)}`)
           )
         )
       )
