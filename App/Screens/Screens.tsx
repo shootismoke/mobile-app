@@ -120,7 +120,7 @@ const ErrorStack = createAppContainer(
   )
 );
 
-function renderScreen(api?: Api, error?: string) {
+function renderScreen(api?: Api, error?: Error) {
   if (error) {
     return <ErrorStack />;
   }
