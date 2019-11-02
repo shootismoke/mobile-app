@@ -60,7 +60,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
       ),
       TE.fold(
         err => {
-          setError(err.message);
+          setError(err);
           return T.of(undefined);
         },
         newApi => {

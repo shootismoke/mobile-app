@@ -60,7 +60,7 @@ export function ErrorScreen(props: ErrorScreenProps) {
 
   useEffect(() => {
     if (error) {
-      Sentry.captureException(new Error(error));
+      Sentry.captureException(error);
     }
   }, []);
 
@@ -87,7 +87,9 @@ export function ErrorScreen(props: ErrorScreenProps) {
       </Button>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
       <Text style={styles.errorMessage}>
-        {i18n.t('error_screen_error_message', { errorText: error })}
+        {i18n.t('error_screen_error_message', {
+          errorText: error && error.message
+        })}
       </Text>
     </View>
   );

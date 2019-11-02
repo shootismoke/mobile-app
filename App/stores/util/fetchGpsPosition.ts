@@ -69,13 +69,17 @@ export function fetchGpsPosition() {
       timeout: 5000
     });
     // Uncomment to get other locations
-    // const coords = {
-    //   latitude: Math.random() * 90,
-    //   longitude: Math.random() * 90
+    // return {
+    //   coords: {
+    //     latitude: Math.random() * 90,
+    //     longitude: Math.random() * 90
+    //   }
     // };
-    // const coords = {
-    //   latitude: 48.4,
-    //   longitude: 2.34
+    // return {
+    //   coords: {
+    //     latitude: 48.4,
+    //     longitude: 2.34
+    //   }
     // };
   });
 }
