@@ -1,9 +1,14 @@
-import ApolloClient, { gql } from 'apollo-boost';
+import {
+  historyItemSchema,
+  stationSchema,
+  userSchema
+} from '@shootismoke/graphql/lib/schema';
+import ApolloClient from 'apollo-boost';
 import Constants from 'expo-constants';
 
 const BACKEND_URI =
   Constants.manifest.releaseChannel === 'production'
-    ? 'https://google.com'
+    ? 'https://shootismoke.now.sh/api/graphql'
     : 'https://staging.shootismoke.now.sh/api/graphql';
 
 /**
@@ -11,30 +16,6 @@ const BACKEND_URI =
  * TODO Copy this from @shootismoke/graphql
  */
 export const client = new ApolloClient({
-  typeDefs: gql`
-    enum Notifications {
-      never
-      daily
-      weekly
-      monthly
-    }
-
-    input CreateUserInput {
-      expoInstallationId: String!
-      expoPushToken: String
-      notifications: Notifications
-    }
-    input UpdateUserInput {
-      expoInstallationId: String
-      expoPushToken: String
-      notifications: Notifications
-    }
-
-    input CreateHistoryItemInput {
-      rawPm25: Float!
-      universalId: ID!
-      userId: ID!
-    }
-  `,
+  typeDefs: [historyItemSchema, stationSchema, userSchema],
   uri: BACKEND_URI
 });

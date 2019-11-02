@@ -35,7 +35,7 @@ const UPDATE_USER = gql`
 /**
  * Update notification setting
  */
-export function getOrupdateUser(notifications: Notifications) {
+export function updateNotifications(notifications: Notifications) {
   return pipe(
     getOrCreateUser(),
     TE.map<string, { userId: string; input: UpdateUserInput }>(userId => ({
@@ -50,12 +50,12 @@ export function getOrupdateUser(notifications: Notifications) {
       )
     ),
     TE.chain(data =>
-      promiseToTE(async () => {
-        await client.mutate({
+      promiseToTE(async () =>
+        client.mutate({
           mutation: UPDATE_USER,
           variables: data
-        });
-      })
+        })
+      )
     )
   );
 }

@@ -1216,10 +1216,10 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/graphql@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.1.tgz#b39b55f4b179cf3f16812a6d3b6f34c503763a0c"
-  integrity sha512-2JtpZpn9Htuf3pvpy9gHKu0Sho0X2NsvQZIGvyhEEFrq4sx0S8/Z+fbp4LXsMuFzzmOzbRqkh+P9knknLJ4B4Q==
+"@shootismoke/graphql@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.5.tgz#b1bb52d0968c7a0589114a15f54deda5afd7e92a"
+  integrity sha512-0mK95SwMTuOVKGG8gk+w8MVfAanq9K6sFHrqMaWZMr2ccVZIRyz+Smsky7IYxZDd5NuYXKvj/Jrc08iL8JavAw==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"

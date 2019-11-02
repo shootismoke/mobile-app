@@ -81,7 +81,6 @@ export function App() {
                 {Platform.select({
                   ios: <StatusBar barStyle="dark-content" />
                 })}
-
                 <Screens />
               </DistanceUnitProvider>
             </FrequencyContextProvider>
