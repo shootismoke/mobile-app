@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { CreateHistoryItemInput } from '@shootismoke/graphql';
 import { gql } from 'apollo-boost';
 import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
@@ -36,10 +37,9 @@ const CREATE_HISTORY_ITEM = gql`
 export function createHistoryItem(api: Api) {
   return pipe(
     getOrCreateUser(),
-    TE.map(userId => ({
-      provider: api.shootISmoke.provider,
+    TE.map<string, CreateHistoryItemInput>(userId => ({
       rawPm25: api.shootISmoke.rawPm25,
-      stationId: api.idx,
+      universalId: `${api.shootISmoke.provider}|${api.idx}`,
       userId
     })),
     TE.chain(
@@ -49,14 +49,11 @@ export function createHistoryItem(api: Api) {
     ),
     TE.chain(input =>
       promiseToTE(async () => {
-        const res = await client.mutate({
+        await client.mutate({
           mutation: CREATE_HISTORY_ITEM,
-          variables: { input }
+          variables: { input },
+          errorPolicy: 'all'
         });
-
-        if (res.errors) {
-          throw res.errors[0];
-        }
       })
     )
   );

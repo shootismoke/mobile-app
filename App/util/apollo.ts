@@ -8,6 +8,7 @@ const BACKEND_URI =
 
 /**
  * The Apollo client
+ * TODO Copy this from @shootismoke/graphql
  */
 export const client = new ApolloClient({
   typeDefs: gql`
@@ -23,10 +24,15 @@ export const client = new ApolloClient({
       expoPushToken: String
       notifications: Notifications
     }
+    input UpdateUserInput {
+      expoInstallationId: String
+      expoPushToken: String
+      notifications: Notifications
+    }
 
     input CreateHistoryItemInput {
-      rawPm25: Int!
-      stationId: String!
+      rawPm25: Float!
+      universalId: ID!
       userId: ID!
     }
   `,

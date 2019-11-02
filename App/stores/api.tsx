@@ -68,7 +68,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
           return T.of(undefined);
         }
       )
-    )().catch(logFpError);
+    )().catch(logFpError('ApiContextProvider'));
   }, [currentLocation]);
 
   return (

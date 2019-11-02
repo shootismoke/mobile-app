@@ -91,7 +91,7 @@ export function LocationContextProvider({
           return T.of(undefined);
         }
       )
-    )().catch(logFpError);
+    )().catch(logFpError('LocationContextProvider'));
   }, []);
 
   return (

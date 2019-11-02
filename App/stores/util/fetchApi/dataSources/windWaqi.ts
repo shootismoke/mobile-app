@@ -24,10 +24,8 @@ import { pm25ToCigarettes } from './pm25ToCigarettes';
  * Fetch the PM2.5 level from https://wind.waqi.info.
  */
 export async function windWaqi({ latitude, longitude }: LatLng) {
-  const { data: response } = await axios.get(
-    `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`,
-    { timeout: 6000 }
-  );
+  const baseUrl = `https://wind.waqi.info/mapq/nearest?geo=1/${latitude}/${longitude}`;
+  const { data: response } = await axios.get(baseUrl, { timeout: 6000 });
 
   // Example response:
   // Object {
@@ -55,7 +53,7 @@ export async function windWaqi({ latitude, longitude }: LatLng) {
     const data = response.d[0];
 
     if (data.pol !== 'pm25') {
-      throw new Error('PM2.5 not defined in response.');
+      throw new Error(`${baseUrl}: PM2.5 not defined in response.`);
     }
 
     const rawPm25 = aqiToRaw.pm25(+data.v);

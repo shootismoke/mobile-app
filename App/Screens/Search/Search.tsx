@@ -109,7 +109,7 @@ export function Search(props: SearchProps) {
             return T.of(void undefined);
           }
         )
-      )().catch(logFpError);
+      )().catch(logFpError('Search'));
     }, 500);
   }
 

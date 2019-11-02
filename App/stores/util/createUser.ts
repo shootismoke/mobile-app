@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { CreateUserInput } from '@shootismoke/graphql';
 import { gql } from 'apollo-boost';
 import Constants from 'expo-constants';
 import { AsyncStorage } from 'react-native';
@@ -45,7 +46,9 @@ export function getOrCreateUser() {
 
     let mongoId = await AsyncStorage.getItem(STORAGE_KEY);
     if (!mongoId) {
-      const input = { expoInstallationId: Constants.installationId };
+      const input: CreateUserInput = {
+        expoInstallationId: Constants.installationId
+      };
       console.log(
         `<getOrCreateUser> - No mongoId found in AsyncStorage, creating a new user ${JSON.stringify(
           input
@@ -56,10 +59,6 @@ export function getOrCreateUser() {
         mutation: CREATE_USER,
         variables: { input }
       });
-
-      if (res.errors) {
-        throw res.errors[0];
-      }
 
       mongoId = res.data.createUser._id as string;
 

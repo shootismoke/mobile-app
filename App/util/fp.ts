@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import Constants from 'expo-constants';
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
 import { Lazy } from 'fp-ts/lib/function';
@@ -24,8 +25,6 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 import * as Sentry from 'sentry-expo';
-
-import { noop } from './noop';
 
 /**
  * A side-effect in a TaskEither chain: if the TaskEither fails, still return
@@ -77,18 +76,22 @@ export function retry<A>(
         status.previousDelay,
         O.fold(() => TE.left(EMPTY_OPTION_ERROR), delay => teFn(status, delay))
       ),
-    either => {
-      E.fold<Error, unknown, void>(err => {
-        // Is there a better way to log errors?
-        // https://github.com/gcanti/retry-ts/issues/5#issuecomment-509005090
-        if (err !== EMPTY_OPTION_ERROR) {
-          console.log(`<retry> - Error ${err.message}`);
-        }
-      }, noop)(either);
-
-      return E.isLeft(either);
-    }
+    either => E.isLeft(either)
   );
+}
+
+/**
+ * Tasks and IOs can sometimes throw unexpectedly, so we catch and log here.
+ * This should realistically never happen.
+ */
+export function logFpError(namespace: string) {
+  return function(error: Error) {
+    console.log(`<${namespace}> - ${error.message}`);
+
+    if (Constants.manifest.releaseChannel === 'production') {
+      Sentry.captureException(error);
+    }
+  };
 }
 
 /**
@@ -96,19 +99,23 @@ export function retry<A>(
  * @param fn - Function returning a Promise
  */
 export function promiseToTE<A>(fn: Lazy<Promise<A>>) {
-  return TE.tryCatch(fn, (reason: unknown) => {
-    const error = new Error(String(reason));
-    console.log(`<promiseToTE> - ${error}`);
+  return TE.tryCatch(fn, (reason: any) => {
+    let error: Error | undefined;
+    // FIXME GraphQLError is empty
+    // https://github.com/apollographql/apollo-client/issues/2810#issuecomment-401738389
+    if (
+      reason.networkError &&
+      reason.networkError.result &&
+      reason.networkError.result.errors &&
+      reason.networkError.result.errors[0]
+    ) {
+      error = new Error(reason.networkError.result.errors[0].message);
+    } else {
+      error = reason instanceof Error ? reason : new Error(String(reason));
+    }
+
+    logFpError('promiseToTE')(error);
 
     return error;
   });
-}
-
-/**
- * Tasks and IOs can sometimes throw unexpectedly, so we catch and log here.
- * This should realistically never happen.
- */
-export function logFpError(error: Error) {
-  console.log(`<logFpError> - ${error.message}`);
-  Sentry.captureException(error);
 }
