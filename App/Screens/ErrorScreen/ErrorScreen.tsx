@@ -53,13 +53,21 @@ const styles = StyleSheet.create({
   }
 });
 
+// We don't send the following errors to Sentry
+const UNTRACKED_ERRORS = [
+  'Error: Permission to access location was denied',
+  'Error: Location provider is unavailable. Make sure that location services are enabled.',
+  'Error: Location request timed out.',
+  'Error: Location request failed due to unsatisfied device settings.'
+];
+
 export function ErrorScreen(props: ErrorScreenProps) {
   const { error } = useContext(ErrorContext);
 
   trackScreen('ERROR');
 
   useEffect(() => {
-    if (error) {
+    if (error && !UNTRACKED_ERRORS.includes(error)) {
       Sentry.captureException(new Error(error));
     }
   }, []);
