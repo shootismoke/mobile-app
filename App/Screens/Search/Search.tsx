@@ -20,7 +20,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import Sentry from 'sentry-expo';
+import * as Sentry from 'sentry-expo';
 
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
