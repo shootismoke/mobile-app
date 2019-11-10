@@ -43,11 +43,13 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
   const { setError } = useContext(ErrorContext);
   const [api, setApi] = useState<Api | undefined>(undefined);
 
+  const { latitude, longitude } = currentLocation || {};
+
   useEffect(() => {
     setApi(undefined);
     setError(undefined);
 
-    if (!currentLocation) {
+    if (!currentLocation || !latitude || !longitude) {
       return;
     }
 
@@ -59,17 +61,18 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
         )
       ),
       TE.fold(
-        err => {
-          setError(err);
-          return T.of(undefined);
+        error => {
+          setError(error);
+
+          return T.of(void undefined);
         },
         newApi => {
           setApi(newApi);
-          return T.of(undefined);
+          return T.of(void undefined);
         }
       )
     )().catch(logFpError('ApiContextProvider'));
-  }, [currentLocation]);
+  }, [latitude, longitude]);
 
   return (
     <ApiContext.Provider
