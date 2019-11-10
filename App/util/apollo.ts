@@ -2,18 +2,18 @@ import {
   historyItemSchema,
   stationSchema,
   userSchema
-} from '@shootismoke/graphql/lib/schema';
+} from '@shootismoke/graphql';
 import ApolloClient from 'apollo-boost';
 import Constants from 'expo-constants';
 
 const BACKEND_URI =
-  Constants.manifest.releaseChannel === 'production'
+  Constants.manifest.releaseChannel ===
+  `production-v${Constants.manifest.version}`
     ? 'https://shootismoke.now.sh/api/graphql'
     : 'https://staging.shootismoke.now.sh/api/graphql';
 
 /**
  * The Apollo client
- * TODO Copy this from @shootismoke/graphql
  */
 export const client = new ApolloClient({
   typeDefs: [historyItemSchema, stationSchema, userSchema],
