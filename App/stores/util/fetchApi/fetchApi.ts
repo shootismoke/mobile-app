@@ -73,7 +73,9 @@ export function fetchApi(gps: Location) {
     pipe(
       TE.rightIO(
         C.log(
-          `<ApiContext> - fetchApi - Attempt #${status.iterNumber}: ${sources[(status.iterNumber - 1) % sources.length].name}`
+          `<ApiContext> - fetchApi - Attempt #${status.iterNumber}: ${
+            sources[(status.iterNumber - 1) % sources.length].name
+          }`
         )
       ),
       TE.chain(() =>

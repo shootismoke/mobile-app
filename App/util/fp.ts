@@ -74,7 +74,10 @@ export function retry<A>(
     status =>
       pipe(
         status.previousDelay,
-        O.fold(() => TE.left(EMPTY_OPTION_ERROR), delay => teFn(status, delay))
+        O.fold(
+          () => TE.left(EMPTY_OPTION_ERROR),
+          delay => teFn(status, delay)
+        )
       ),
     either => E.isLeft(either)
   );

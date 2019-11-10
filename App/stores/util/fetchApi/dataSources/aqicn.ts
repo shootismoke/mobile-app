@@ -26,7 +26,9 @@ import { pm25ToCigarettes } from './pm25ToCigarettes';
  */
 export async function aqicn({ latitude, longitude }: LatLng) {
   const baseUrl = `http://api.waqi.info/feed/geo:${latitude};${longitude}`;
-  const { data: response } = await axios.get(
+  const {
+    data: response
+  } = await axios.get(
     `${baseUrl}/?token=${Constants.manifest.extra.waqiToken}`,
     { timeout: 6000 }
   );

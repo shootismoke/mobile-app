@@ -57,6 +57,7 @@ function stackNavigatorOptions(
     initialRouteName,
     defaultNavigationOptions: {
       // FIXME the `headerVisible` field has been moved away from this config
+      // eslint-disable-next-line
       // @ts-ignore
       headerVisible: false
     }
