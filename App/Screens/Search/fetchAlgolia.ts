@@ -24,8 +24,8 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 
-import { LatLng } from '../../stores/fetchGpsPosition';
-import { retry, sideEffect, toError } from '../../util/fp';
+import { LatLng } from '../../stores/util/fetchGpsPosition';
+import { promiseToTE, retry, sideEffect } from '../../util/fp';
 
 // As per https://community.algolia.com/places/rest.html
 const algoliaUrls = [
@@ -73,36 +73,34 @@ export function fetchAlgolia(search: string, gps?: LatLng) {
         )
       ),
       TE.chain(() =>
-        TE.tryCatch(
-          () =>
-            axios.post(
-              `${
-                algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-              }/1/places/query`,
-              {
-                aroundLatLng: gps
-                  ? `${gps.latitude},${gps.longitude}`
+        promiseToTE(() =>
+          axios.post(
+            `${
+              algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+            }/1/places/query`,
+            {
+              aroundLatLng: gps
+                ? `${gps.latitude},${gps.longitude}`
+                : undefined,
+              hitsPerPage: 10,
+              language: 'en',
+              query: search
+            },
+            {
+              headers:
+                Constants.manifest.extra.algoliaApplicationId &&
+                Constants.manifest.extra.algoliaApiKey
+                  ? {
+                      'X-Algolia-Application-Id':
+                        Constants.manifest.extra.algoliaApplicationId,
+                      'X-Algolia-API-Key':
+                        Constants.manifest.extra.algoliaApiKey
+                    }
                   : undefined,
-                hitsPerPage: 10,
-                language: 'en',
-                query: search
-              },
-              {
-                headers:
-                  Constants.manifest.extra.algoliaApplicationId &&
-                  Constants.manifest.extra.algoliaApiKey
-                    ? {
-                        'X-Algolia-Application-Id':
-                          Constants.manifest.extra.algoliaApplicationId,
-                        'X-Algolia-API-Key':
-                          Constants.manifest.extra.algoliaApiKey
-                      }
-                    : undefined,
 
-                timeout: 3000
-              }
-            ),
-          toError
+              timeout: 3000
+            }
+          )
         )
       ),
       TE.chain(response =>
@@ -116,11 +114,10 @@ export function fetchAlgolia(search: string, gps?: LatLng) {
         )
       ),
       TE.map(response => response.data.hits),
-      TE.chain((hits: AlgoliaHit[]) =>
-        TE.rightIO(
-          sideEffect(
-            C.log(`<Search> - fetchAlgolia - Got ${hits.length} results`),
-            hits
+      TE.chain(
+        sideEffect((hits: AlgoliaHit[]) =>
+          TE.rightIO(
+            C.log(`<Search> - fetchAlgolia - Got ${hits.length} results`)
           )
         )
       )

@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { ApolloProvider } from '@apollo/react-hooks';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
@@ -30,6 +31,7 @@ import {
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
+import { client } from './util/apollo';
 
 // Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
@@ -72,16 +74,18 @@ export function App() {
   return ready ? (
     <ErrorContextProvider>
       <LocationContextProvider>
-        <ApiContextProvider>
-          <FrequencyContextProvider>
-            <DistanceUnitProvider>
-              {Platform.select({
-                ios: <StatusBar barStyle="dark-content" />
-              })}
-              <Screens />
-            </DistanceUnitProvider>
-          </FrequencyContextProvider>
-        </ApiContextProvider>
+        <ApolloProvider client={client}>
+          <ApiContextProvider>
+            <FrequencyContextProvider>
+              <DistanceUnitProvider>
+                {Platform.select({
+                  ios: <StatusBar barStyle="dark-content" />
+                })}
+                <Screens />
+              </DistanceUnitProvider>
+            </FrequencyContextProvider>
+          </ApiContextProvider>
+        </ApolloProvider>
       </LocationContextProvider>
     </ErrorContextProvider>
   ) : (

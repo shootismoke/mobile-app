@@ -14,19 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { aqiToRaw } from '@shootismoke/aqi';
 import axios from 'axios';
 import Constants from 'expo-constants';
 
 import { LatLng } from '../../fetchGpsPosition';
-import { aqiToRaw } from './aqiToRaw';
 import { pm25ToCigarettes } from './pm25ToCigarettes';
 
 /**
  * Fetch the PM2.5 level from http://api.waqi.info.
  */
 export async function aqicn({ latitude, longitude }: LatLng) {
+  const baseUrl = `http://api.waqi.info/feed/geo:${latitude};${longitude}`;
   const { data: response } = await axios.get(
-    `http://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${Constants.manifest.extra.waqiToken}`,
+    `${baseUrl}/?token=${Constants.manifest.extra.waqiToken}`,
     { timeout: 6000 }
   );
 
@@ -96,10 +97,10 @@ export async function aqicn({ latitude, longitude }: LatLng) {
     !response.data.iaqi.pm25 ||
     response.data.iaqi.pm25.v === undefined
   ) {
-    throw new Error('PM2.5 not defined in response.');
+    throw new Error(`${baseUrl}: PM2.5 not defined in response.`);
   }
 
-  const rawPm25 = aqiToRaw.pm25(response.data.iaqi.pm25.v);
+  const rawPm25 = aqiToRaw('pm25', response.data.iaqi.pm25.v);
 
   return {
     aqi: response.data.aqi,
@@ -107,10 +108,11 @@ export async function aqicn({ latitude, longitude }: LatLng) {
     city: response.data.city,
     dominentpol: response.data.dominentpol,
     iaqi: response.data.iaqi,
-    idx: response.data.idx,
+    idx: `${response.data.idx}`,
     time: response.data.time,
     shootISmoke: {
       cigarettes: pm25ToCigarettes(rawPm25),
+      provider: 'waqi',
       rawPm25,
       station:
         response.data.attributions &&

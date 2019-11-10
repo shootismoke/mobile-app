@@ -31,7 +31,7 @@ import {
 import { fadeIn } from 'react-navigation-transitions';
 
 import { ApiContext, ErrorContext } from '../stores';
-import { Api } from '../stores/fetchApi';
+import { Api } from '../stores/util/fetchApi';
 import * as theme from '../util/theme';
 import { About } from './About';
 import { Details } from './Details';
@@ -120,7 +120,7 @@ const ErrorStack = createAppContainer(
   )
 );
 
-function renderScreen(api?: Api, error?: string) {
+function renderScreen(api?: Api, error?: Error) {
   if (error) {
     return <ErrorStack />;
   }

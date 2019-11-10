@@ -18,8 +18,8 @@ import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
 import { i18n } from '../../localization';
-import { Api } from '../../stores/fetchApi';
-import { Location } from '../../stores/fetchGpsPosition';
+import { Api } from '../../stores/util/fetchApi';
+import { Location } from '../../stores/util/fetchGpsPosition';
 import * as theme from '../../util/theme';
 
 const UNKNOWN_STATION = i18n.t('current_location_unknown_station');
