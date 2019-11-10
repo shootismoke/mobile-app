@@ -20,11 +20,10 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import * as Sentry from 'sentry-expo';
 
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
-import { Location } from '../../stores/fetchGpsPosition';
+import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
@@ -98,18 +97,17 @@ export function Search(props: SearchProps) {
             setLoading(false);
             setAlgoliaError(err);
 
-            Sentry.captureException(err);
-            return T.of(undefined as void);
+            return T.of(void undefined);
           },
           hits => {
             setLoading(false);
             setAlgoliaError(undefined);
             setHits(hits);
 
-            return T.of(undefined as void);
+            return T.of(void undefined);
           }
         )
-      )().catch(logFpError);
+      )().catch(logFpError('Search'));
     }, 500);
   }
 

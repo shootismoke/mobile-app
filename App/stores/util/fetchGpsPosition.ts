@@ -19,7 +19,7 @@ import * as Permissions from 'expo-permissions';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as TE from 'fp-ts/lib/TaskEither';
 
-import { toError } from '../../util/fp';
+import { promiseToTE } from '../../util/fp';
 
 export interface LatLng {
   latitude: number;
@@ -34,7 +34,7 @@ export interface Location extends LatLng {
 
 export function fetchReverseGeocode(currentLocation: LatLng) {
   return pipe(
-    TE.tryCatch(async () => {
+    promiseToTE(async () => {
       const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
 
       if (!reverse.length) {
@@ -42,7 +42,7 @@ export function fetchReverseGeocode(currentLocation: LatLng) {
       }
 
       return reverse[0];
-    }, toError),
+    }),
     TE.map(reverse => ({
       ...currentLocation,
       city: reverse.city,
@@ -58,7 +58,7 @@ export function fetchReverseGeocode(currentLocation: LatLng) {
 }
 
 export function fetchGpsPosition() {
-  return TE.tryCatch(async () => {
+  return promiseToTE(async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
     if (status !== 'granted') {
@@ -69,13 +69,17 @@ export function fetchGpsPosition() {
       timeout: 5000
     });
     // Uncomment to get other locations
-    // const coords = {
-    //   latitude: Math.random() * 90,
-    //   longitude: Math.random() * 90
+    // return {
+    //   coords: {
+    //     latitude: Math.random() * 90,
+    //     longitude: Math.random() * 90
+    //   }
     // };
-    // const coords = {
-    //   latitude: 48.4,
-    //   longitude: 2.34
+    // return {
+    //   coords: {
+    //     latitude: 48.4,
+    //     longitude: 2.34
+    //   }
     // };
-  }, toError);
+  });
 }

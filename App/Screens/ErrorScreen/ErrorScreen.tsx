@@ -55,10 +55,10 @@ const styles = StyleSheet.create({
 
 // We don't send the following errors to Sentry
 const UNTRACKED_ERRORS = [
-  'Error: Permission to access location was denied',
-  'Error: Location provider is unavailable. Make sure that location services are enabled.',
-  'Error: Location request timed out.',
-  'Error: Location request failed due to unsatisfied device settings.'
+  'Permission to access location was denied',
+  'Location provider is unavailable. Make sure that location services are enabled.',
+  'Location request timed out.',
+  'Location request failed due to unsatisfied device settings.'
 ];
 
 export function ErrorScreen(props: ErrorScreenProps) {
@@ -67,8 +67,8 @@ export function ErrorScreen(props: ErrorScreenProps) {
   trackScreen('ERROR');
 
   useEffect(() => {
-    if (error && !UNTRACKED_ERRORS.includes(error)) {
-      Sentry.captureException(new Error(error));
+    if (error && !UNTRACKED_ERRORS.includes(error.message)) {
+      Sentry.captureException(error);
     }
   }, []);
 
@@ -95,7 +95,9 @@ export function ErrorScreen(props: ErrorScreenProps) {
       </Button>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
       <Text style={styles.errorMessage}>
-        {i18n.t('error_screen_error_message', { errorText: error })}
+        {i18n.t('error_screen_error_message', {
+          errorText: error && error.message
+        })}
       </Text>
     </View>
   );

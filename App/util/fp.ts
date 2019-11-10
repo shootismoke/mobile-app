@@ -14,23 +14,47 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import Constants from 'expo-constants';
+import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
-import * as IO from 'fp-ts/lib/IO';
+import { Lazy } from 'fp-ts/lib/function';
 import * as O from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 import * as Sentry from 'sentry-expo';
 
-import { noop } from './noop';
-
 /**
- * Run function `fn()` as a side-effect, return `returnValue`
+ * A side-effect in a TaskEither chain: if the TaskEither fails, still return
+ * a TaskEither.RightTask
+ *
+ * @example
+ * ```
+ * function myTe(value: number) { // A TaskEither };
+ *
+ * pipe(
+ *   TE.of(1),
+ *   TE.chain(sideEffect(myTe)
+ * )
+ * ```
  */
-export function sideEffect<T>(fn: () => any, returnValue: T) {
-  fn();
-  return IO.of(returnValue);
+export function sideEffect<E, A>(fn: (input: A) => TE.TaskEither<E, void>) {
+  return (input: A) =>
+    TE.rightTask<E, A>(
+      pipe(
+        fn(input),
+        TE.fold(
+          error =>
+            pipe(
+              T.fromIO(C.log(error)),
+              T.map(() => input)
+            ),
+          () => T.of(input)
+        )
+      )
+    );
 }
 
 // This Error is always thrown at the beginning of a retry, we ignore it
@@ -52,34 +76,46 @@ export function retry<A>(
         status.previousDelay,
         O.fold(() => TE.left(EMPTY_OPTION_ERROR), delay => teFn(status, delay))
       ),
-    either => {
-      E.fold<Error, unknown, void>(err => {
-        // Is there a better way to log errors?
-        // https://github.com/gcanti/retry-ts/issues/5#issuecomment-509005090
-        if (err !== EMPTY_OPTION_ERROR) {
-          console.log(`<retry> - Error ${err.message}`);
-        }
-      }, noop)(either);
-
-      return E.isLeft(either);
-    }
+    either => E.isLeft(either)
   );
-}
-
-/**
- * Create an Error from an unknow error
- *
- * @param reason - An unknown error
- */
-export function toError(reason: unknown) {
-  return new Error(String(reason));
 }
 
 /**
  * Tasks and IOs can sometimes throw unexpectedly, so we catch and log here.
  * This should realistically never happen.
  */
-export function logFpError(error: Error) {
-  console.log(`<logFpError> - ${error.message}`);
-  Sentry.captureException(error);
+export function logFpError(namespace: string) {
+  return function(error: Error) {
+    console.log(`<${namespace}> - ${error.message}`);
+
+    if (Constants.manifest.releaseChannel === 'production') {
+      Sentry.captureException(error);
+    }
+  };
+}
+
+/**
+ * Convert a Promise<A> into a TaskEither<Error, A>
+ * @param fn - Function returning a Promise
+ */
+export function promiseToTE<A>(fn: Lazy<Promise<A>>) {
+  return TE.tryCatch(fn, (reason: any) => {
+    let error: Error | undefined;
+    // FIXME GraphQLError is empty
+    // https://github.com/apollographql/apollo-client/issues/2810#issuecomment-401738389
+    if (
+      reason.networkError &&
+      reason.networkError.result &&
+      reason.networkError.result.errors &&
+      reason.networkError.result.errors[0]
+    ) {
+      error = new Error(reason.networkError.result.errors[0].message);
+    } else {
+      error = reason instanceof Error ? reason : new Error(String(reason));
+    }
+
+    logFpError('promiseToTE')(error);
+
+    return error;
+  });
 }

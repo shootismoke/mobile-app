@@ -17,7 +17,7 @@
 import React from 'react';
 
 import { ListItem } from '../../../components';
-import { Location } from '../../../stores/fetchGpsPosition';
+import { Location } from '../../../stores/util/fetchGpsPosition';
 import { AlgoliaHit } from '../fetchAlgolia';
 
 interface ItemProps {

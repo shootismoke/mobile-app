@@ -27,7 +27,7 @@ import {
   fetchReverseGeocode,
   LatLng,
   Location
-} from './fetchGpsPosition';
+} from './util/fetchGpsPosition';
 
 const DEFAULT_LAT_LNG: LatLng = {
   latitude: 0,
@@ -75,7 +75,7 @@ export function LocationContextProvider({
       TE.fold(
         err => {
           console.log('<LocationContext> - fetchGpsPosition - Error', err);
-          setError(err.message);
+          setError(err);
 
           return T.of(undefined);
         },
@@ -91,7 +91,7 @@ export function LocationContextProvider({
           return T.of(undefined);
         }
       )
-    )().catch(logFpError);
+    )().catch(logFpError('LocationContextProvider'));
   }, []);
 
   return (

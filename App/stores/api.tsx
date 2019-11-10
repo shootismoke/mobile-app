@@ -19,11 +19,11 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { logFpError } from '../util/fp';
+import { logFpError, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
-import { Api, fetchApi } from './fetchApi';
 import { CurrentLocationContext } from './location';
+import { Api, createHistoryItem, fetchApi } from './util';
 
 interface Context {
   api?: Api;
@@ -37,7 +37,7 @@ interface ApiContextProviderProps {
 }
 
 export function ApiContextProvider({ children }: ApiContextProviderProps) {
-  const { currentLocation, setCurrentLocation } = useContext(
+  const { currentLocation, isGps, setCurrentLocation } = useContext(
     CurrentLocationContext
   );
   const { setError } = useContext(ErrorContext);
@@ -53,9 +53,14 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
 
     pipe(
       fetchApi(currentLocation),
+      TE.chain(
+        sideEffect(api =>
+          isGps ? createHistoryItem(api) : TE.right(void undefined)
+        )
+      ),
       TE.fold(
         err => {
-          setError(err.message);
+          setError(err);
           return T.of(undefined);
         },
         newApi => {
@@ -63,7 +68,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
           return T.of(undefined);
         }
       )
-    )().catch(logFpError);
+    )().catch(logFpError('ApiContextProvider'));
   }, [currentLocation]);
 
   return (

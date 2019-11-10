@@ -17,8 +17,8 @@
 import haversine from 'haversine';
 
 import { DistanceUnit } from '../stores/distanceUnit';
-import { Api } from '../stores/fetchApi';
-import { LatLng } from '../stores/fetchGpsPosition';
+import { Api } from '../stores/util/fetchApi';
+import { LatLng } from '../stores/util/fetchGpsPosition';
 
 // Above this distance (km), we consider the station too far from the user
 export const MAX_DISTANCE_TO_STATION = 10;
