@@ -24,3 +24,4 @@ export * from './ChangeLocation';
 export * from './CurrentLocation';
 export * from './ListItem';
 export * from './ListSeparator';
+export * from './SmokeVideo';

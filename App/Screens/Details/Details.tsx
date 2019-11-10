@@ -26,6 +26,7 @@ import { i18n } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
+import { assertIsDefined } from '../../util/assert';
 import { distanceToStation, getCorrectLatLng } from '../../util/station';
 import { Distance } from './Distance';
 import { Header } from './Header';
@@ -79,15 +80,11 @@ export function Details(props: DetailsProps) {
   // eslint-disable-next-line
   const currentLocation = { ..._currentLocation! };
 
-  if (!currentLocation) {
-    throw new Error(
-      'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Details/Details.tsx only convert `distanceToStation` when `api` is defined.'
-    );
-  }
+  assertIsDefined(
+    currentLocation,
+    'Details is rendered when `currentLocation` is defined'
+  );
+  assertIsDefined(api, 'Details is rendered when `api` is defined');
 
   const distance = distanceToStation(currentLocation, api, distanceUnit);
 

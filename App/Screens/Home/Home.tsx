@@ -18,19 +18,23 @@ import React, { useContext } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { CigaretteBlock, getCigaretteCount } from '../../components';
+import {
+  CigaretteBlock,
+  getCigaretteCount,
+  SmokeVideo
+} from '../../components';
 import {
   ApiContext,
   CurrentLocationContext,
   FrequencyContext
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
+import { assertIsDefined } from '../../util/assert';
 import * as theme from '../../util/theme';
 import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
-import { SmokeVideo } from './SmokeVideo';
 
 type HomeProps = NavigationInjectedProps;
 
@@ -50,7 +54,9 @@ export function Home(props: HomeProps) {
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api ? api.shootISmoke.cigarettes : 0;
+  assertIsDefined(api, 'Home is shown when api is defined. qed.');
+
+  const cigarettesPerDay = api.shootISmoke.cigarettes;
 
   return (
     <View style={styles.container}>

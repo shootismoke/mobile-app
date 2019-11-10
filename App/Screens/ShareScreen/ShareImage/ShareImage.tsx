@@ -23,6 +23,7 @@ import {
   CurrentLocationContext,
   FrequencyContext
 } from '../../../stores';
+import { assertIsDefined } from '../../../util/assert';
 import * as theme from '../../../util/theme';
 
 const LANDING_PAGE = 'https://shootismoke.github.io';
@@ -50,15 +51,11 @@ export function ShareImage() {
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
 
-  if (!currentLocation) {
-    throw new Error(
-      'ShareScreen/ShareImage/ShareImage.tsx only render when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'ShareScreen/ShareImage/ShareImage.tsx only render when `api` is defined.'
-    );
-  }
+  assertIsDefined(
+    currentLocation,
+    'ShareImage is rendered when `currentLocation` is defined'
+  );
+  assertIsDefined(api, 'ShareImage is rendered when `api` is defined');
 
   const cigarettesPerDay = api ? api.shootISmoke.cigarettes : 0;
 

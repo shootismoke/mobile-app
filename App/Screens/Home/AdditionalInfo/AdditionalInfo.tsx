@@ -28,6 +28,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
+import { assertIsDefined } from '../../../util/assert';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
@@ -63,15 +64,11 @@ export function AdditionalInfo(props: AdditionalInfoProps) {
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency, navigation, style, ...rest } = props;
 
-  if (!currentLocation) {
-    throw new Error(
-      'Home/AdditionalInfo/AdditionalInfo.tsx only gets calculate the `distanceToStation` when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Home/AdditionalInfo/AdditionalInfo.tsx only gets calculate the `distanceToStation` when `api` is defined.'
-    );
-  }
+  assertIsDefined(
+    currentLocation,
+    'AdditionalInfo is rendered when `currentLocation` is defined'
+  );
+  assertIsDefined(api, 'AdditionalInfo is rendered when `api` is defined');
 
   const isTooFar = isStationTooFar(currentLocation, api);
 

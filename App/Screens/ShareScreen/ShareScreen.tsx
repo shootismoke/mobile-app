@@ -23,6 +23,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ApiContext } from '../../stores';
+import { assertIsDefined } from '../../util/assert';
 import * as theme from '../../util/theme';
 import { ShareImage } from './ShareImage';
 
@@ -68,12 +69,17 @@ export function ShareScreen(props: ShareScreenProps) {
           quality: 1
         });
 
+        assertIsDefined(
+          api,
+          'ShareScreen is rendered when `api` is defined. qed.'
+        );
+
         if (Platform.OS === 'ios') {
           await Share.share({
             url: uri,
             title: i18n.t('home_share_title'),
             message: i18n.t('home_share_message', {
-              cigarettes: api ? api.shootISmoke.cigarettes.toFixed(2) : 0
+              cigarettes: api.shootISmoke.cigarettes.toFixed(2)
             })
           });
         } else {

@@ -25,6 +25,7 @@ import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
+import { assertIsDefined } from '../../util/assert';
 import * as theme from '../../util/theme';
 
 type ErrorScreenProps = NavigationInjectedProps;
@@ -66,8 +67,10 @@ export function ErrorScreen(props: ErrorScreenProps) {
 
   trackScreen('ERROR');
 
+  assertIsDefined(error, 'ErrorScreen is rendered when `error` is defined');
+
   useEffect(() => {
-    if (error && !UNTRACKED_ERRORS.includes(error.message)) {
+    if (!UNTRACKED_ERRORS.includes(error.message)) {
       Sentry.captureException(error);
     }
   }, []);

@@ -22,6 +22,7 @@ import { Button } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
+import { assertIsDefined } from '../../../util/assert';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
@@ -42,15 +43,11 @@ export function Footer(props: FooterProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { navigation, style, ...rest } = props;
 
-  if (!currentLocation) {
-    throw new Error(
-      'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Home/Footer/Footer.tsx only gets calculate the `distanceToStation` when `api` is defined.'
-    );
-  }
+  assertIsDefined(
+    currentLocation,
+    'Footer is rendered when `currentLocation` is defined'
+  );
+  assertIsDefined(api, 'Footer is rendered when `api` is defined');
 
   const isTooFar = isStationTooFar(currentLocation, api);
 

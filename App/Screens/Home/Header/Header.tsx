@@ -29,6 +29,7 @@ import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
+import { assertIsDefined } from '../../../util/assert';
 import { distanceToStation, isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
@@ -70,15 +71,11 @@ export function Header(props: HeaderProps) {
 
   const shortDistanceUnit = localizedDistanceUnit('short');
 
-  if (!currentLocation) {
-    throw new Error(
-      'Home/Header/Header.tsx only convert `distanceToStation` when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Home/Header/Header.tsx only convert `distanceToStation` when `api` is defined.'
-    );
-  }
+  assertIsDefined(
+    currentLocation,
+    'Header is rendered when `currentLocation` is defined'
+  );
+  assertIsDefined(api, 'Header is rendered when `api` is defined');
 
   const distance = distanceToStation(currentLocation, api, distanceUnit);
   const isTooFar = isStationTooFar(currentLocation, api);

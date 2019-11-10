@@ -30,6 +30,7 @@ import locationIcon from '../../../../assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
+import { assertIsDefined } from '../../../util/assert';
 import * as theme from '../../../util/theme';
 
 const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
@@ -97,15 +98,11 @@ export function Header(props: HeaderProps) {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
 
-  if (!currentLocation) {
-    throw new Error(
-      'Details/Header/Header.tsx only render when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Details/Header/Header.tsx only render when `api` is defined.'
-    );
-  }
+  assertIsDefined(
+    currentLocation,
+    'Header is rendered when `currentLocation` is defined'
+  );
+  assertIsDefined(api, 'Header is rendered when `api` is defined');
 
   const lastUpdated =
     api.time && api.time.v ? new Date(api.time.v * 1000) : null;
