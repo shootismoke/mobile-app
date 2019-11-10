@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Notifications } from '@shootismoke/graphql';
+import { Frequency } from '@shootismoke/graphql';
 import React, { useEffect, useRef, useState } from 'react';
 import { AsyncStorage, Picker } from 'react-native';
 
@@ -26,7 +26,7 @@ const STORAGE_KEY = 'NOTIFICATIONS';
 const notificationsValues = ['never', 'daily', 'weekly', 'monthly'];
 
 export function SelectNotifications(): React.ReactElement {
-  const [notif, setNotif] = useState<Notifications>('never');
+  const [notif, setNotif] = useState<Frequency>('never');
 
   // We only want to run the [notif] useEffect when the user changes value
   const isUserSelection = useRef(false);
@@ -35,7 +35,7 @@ export function SelectNotifications(): React.ReactElement {
     const value = await AsyncStorage.getItem(STORAGE_KEY);
 
     if (value && notificationsValues.includes(value)) {
-      setNotif(value as Notifications);
+      setNotif(value as Frequency);
     }
   }
 

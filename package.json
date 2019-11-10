@@ -3,8 +3,7 @@
   "version": "1.4.0",
   "author": "Amaury Martiny <amaury.martiny@protonmail.com>",
   "contributors": [
-    "Marcelo S. Coelho",
-    "ftonato <ademilsonft@outlook.com>"
+    "Marcelo S. Coelho"
   ],
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
@@ -16,7 +15,8 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@expo/vector-icons": "^10.0.6",
-    "@shootismoke/graphql": "^0.1.5",
+    "@shootismoke/aqi": "^0.1.6",
+    "@shootismoke/graphql": "^0.1.6",
     "@types/expo": "^33.0.1",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",

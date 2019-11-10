@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { aqiToRaw } from '@shootismoke/aqi';
 import axios from 'axios';
 import Constants from 'expo-constants';
 
 import { LatLng } from '../../fetchGpsPosition';
-import { aqiToRaw } from './aqiToRaw';
 import { pm25ToCigarettes } from './pm25ToCigarettes';
 
 /**
@@ -100,7 +100,7 @@ export async function aqicn({ latitude, longitude }: LatLng) {
     throw new Error(`${baseUrl}: PM2.5 not defined in response.`);
   }
 
-  const rawPm25 = aqiToRaw.pm25(response.data.iaqi.pm25.v);
+  const rawPm25 = aqiToRaw('pm25', response.data.iaqi.pm25.v);
 
   return {
     aqi: response.data.aqi,
