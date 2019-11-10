@@ -19,7 +19,7 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { logFpError } from '../util/fp';
+import { logFpError, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import {
@@ -64,6 +64,21 @@ export function LocationContextProvider({
     pipe(
       fetchGpsPosition(),
       TE.map(({ coords }) => coords),
+      TE.chain(
+        sideEffect(gps => {
+          // Set lat/lng for now, set the reverse location later
+          // @see https://github.com/amaurymartiny/shoot-i-smoke/issues/323
+          console.log(
+            `<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
+              gps
+            )}`
+          );
+          setGpsLocation(gps);
+          setCurrentLocation(gps);
+
+          return TE.right(void undefined);
+        })
+      ),
       TE.chain(gps =>
         TE.rightTask(
           pipe(
@@ -79,14 +94,14 @@ export function LocationContextProvider({
 
           return T.of(undefined);
         },
-        gps => {
+        location => {
           console.log(
-            `<LocationContext> - fetchGpsPosition - Got location ${JSON.stringify(
-              gps
+            `<LocationContext> - fetchGpsPosition - Got reverse location ${JSON.stringify(
+              location
             )}`
           );
-          setGpsLocation(gps);
-          setCurrentLocation(gps);
+          setGpsLocation(location);
+          setCurrentLocation(location);
 
           return T.of(undefined);
         }
