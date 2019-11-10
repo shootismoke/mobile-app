@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
     "start": "expo start",
-    "test": "jest"
+    "test": "echo \"Skipped for now. See https://github.com/amaurymartiny/shoot-i-smoke/issues/19.\""
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
