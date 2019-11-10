@@ -18,7 +18,7 @@ import { Video } from 'expo-av';
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 
-import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
+import smokeVideo from '../../../assets/video/smoke_bg_fafafc.mp4';
 
 interface SmokeVideoProps {
   cigarettes: number;
