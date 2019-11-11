@@ -55,7 +55,7 @@
     "truncate": "^2.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.20",
+    "@types/jest": "^24.0.22",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-eslint": "^10.0.3",
