@@ -1969,10 +1969,10 @@ babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0.tgz#aa213c1435e2bffeb6fca842287ef534ad05d5cf"
   integrity sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==
 
-babel-preset-expo@^7.0.0, babel-preset-expo@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-7.0.0.tgz#1d288e0efb17dcea84b0d30ce5f5ab99f781ae4a"
-  integrity sha512-lhQUlodOf1pJoDQ4X1SpLLiQQutvAJ3eB2xZtcqQFY0SAc7ifchtgWk/1T9SmI8lCOcllcPsFDyjbcPWav1FHQ==
+babel-preset-expo@^7.0.0, babel-preset-expo@~7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-7.1.0.tgz#d53ee28fa88c207ba12575f5c3f7753bcb01994e"
+  integrity sha512-bdhU3qlivFB3/4SEdVuaKrwUZnLyCD+iFm0M8rRkgOC0EqhJJ/ayFz0Hg/LlS1BiCmdjM1g9rVzBd1KOUv1xJw==
   dependencies:
     "@babel/core" "^7.1.0"
     "@babel/plugin-proposal-decorators" "^7.1.0"
@@ -3212,15 +3212,15 @@ expo-sqlite@~7.0.0:
     "@types/websql" "^0.0.27"
     lodash "^4.17.15"
 
-expo-web-browser@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-7.0.0.tgz#97d72fe8389079c8da4208eaedfe85247b5bd704"
-  integrity sha512-zQ0mms8djq9mBcJlV3GxmlOkiCaJqQx+OZ8jk7s4SwCVTtvuCR4LMNHW8oG9tBUNhnvF7vYTE7m64WZf9fgJRA==
+expo-web-browser@~7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-7.0.1.tgz#b64ef895b5c0604f312b64b085f7a2f1da630e20"
+  integrity sha512-THjqlMitUsjHUGYEfag2ybdhgZpp0C4ATixfNpWlS/8vTM4Sw/KGfwB0VuqtqLUMT2q2MTJSrlrWY8Boi4yvTg==
 
-expo@*, expo@^35.0.0:
-  version "35.0.0"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-35.0.0.tgz#79649c9dbcc8bd2066d50642b30eebb55907ee4e"
-  integrity sha512-DnwcDiRds+y4C+XsfvFnyG8c/vJZWx9RYgcDn0yhu07LtQ2osxKnqSm5eko3uAU3jFYxGUxdlN1xs9p1u0MDXg==
+expo@*, expo@^35.0.1:
+  version "35.0.1"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-35.0.1.tgz#a7897e8b8ff57a114c68fc946b85a702522c315f"
+  integrity sha512-aNARBYekZNNM5NApESktGUBWqY+XJsjlQUAL0jeLvYOH/hCNO2rgGzsV8g8d6pM5NeUdtMwkvtc632itY9+dIQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@expo/vector-icons" "^10.0.2"
@@ -3231,7 +3231,7 @@ expo@*, expo@^35.0.0:
     "@types/uuid-js" "^0.7.1"
     "@unimodules/core" "~4.0.0"
     "@unimodules/react-native-adapter" "~4.0.0"
-    babel-preset-expo "~7.0.0"
+    babel-preset-expo "~7.1.0"
     cross-spawn "^6.0.5"
     expo-app-loader-provider "~7.0.0"
     expo-asset "~7.0.0"
@@ -3243,7 +3243,7 @@ expo@*, expo@^35.0.0:
     expo-location "~7.0.0"
     expo-permissions "~7.0.0"
     expo-sqlite "~7.0.0"
-    expo-web-browser "~7.0.0"
+    expo-web-browser "~7.0.1"
     fbemitter "^2.1.1"
     invariant "^2.2.2"
     lodash "^4.6.0"
