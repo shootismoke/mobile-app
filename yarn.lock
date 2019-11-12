@@ -1221,6 +1221,17 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.6.tgz#41143ed6649c50f64644a2b3d606cd0a6e281264"
   integrity sha512-MydWYtm18sn2y2d3g9JZnhmpVVx/xENstLi/ZjM3hObQr/bPcTx/PXn3qQv3Y+PsekvVu5Mn0wgyamhSfu2Stw==
 
+"@shootismoke/dataproviders@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.1.7.tgz#2a4a7607fe0a371a9bc9326fc093ebf2f3fc77e1"
+  integrity sha512-WyraXi42/tzB1uZlNyvgZBppO6C74K9D/iYxooLSmgxPs7Sd/pjB64SNkTLa/Tnejui2ijzTRCjC9CG6VUm+bg==
+  dependencies:
+    "@shootismoke/aqi" "^0.1.6"
+    fp-ts "^2.1.1"
+    io-ts "^2.0.1"
+    isomorphic-fetch "^2.2.1"
+    whatwg-fetch "^3.0.0"
+
 "@shootismoke/graphql@^0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.6.tgz#a756452d940f0f508bbc8bfa15cbc96484ed4711"
@@ -4343,7 +4354,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
-isomorphic-fetch@^2.1.1:
+isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   integrity sha1-YRrhrPFPXoH3KVB0coGf6XM1WKk=
@@ -8087,7 +8098,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
