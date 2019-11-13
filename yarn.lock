@@ -1216,26 +1216,27 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/aqi@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.6.tgz#41143ed6649c50f64644a2b3d606cd0a6e281264"
-  integrity sha512-MydWYtm18sn2y2d3g9JZnhmpVVx/xENstLi/ZjM3hObQr/bPcTx/PXn3qQv3Y+PsekvVu5Mn0wgyamhSfu2Stw==
+"@shootismoke/aqi@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.9.tgz#909f1328942f5f3292be6932586d465bf86e0446"
+  integrity sha512-ZZAphU8kN93S6yqc27RmjNU+1U0K9rdvclN+Pg8sErilxet73WCfIFG8a4KG/wZ9e+5Xew6pnJKQZkuwc7mL9w==
 
-"@shootismoke/dataproviders@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.1.7.tgz#2a4a7607fe0a371a9bc9326fc093ebf2f3fc77e1"
-  integrity sha512-WyraXi42/tzB1uZlNyvgZBppO6C74K9D/iYxooLSmgxPs7Sd/pjB64SNkTLa/Tnejui2ijzTRCjC9CG6VUm+bg==
+"@shootismoke/dataproviders@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.1.10.tgz#86125985741f31c1d1448abdd7b9963cba9142fa"
+  integrity sha512-EOCJ2RXvlmecFP1bvwZv4VcEcC1slYzKPy+rYi7ICUt5hXx7nS+KkrAdN1ZotRpDNgv+7BPzRL5GzkO7TrralA==
   dependencies:
-    "@shootismoke/aqi" "^0.1.6"
+    "@shootismoke/aqi" "^0.1.9"
+    "@shootismoke/graphql" "^0.1.9"
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
     isomorphic-fetch "^2.2.1"
     whatwg-fetch "^3.0.0"
 
-"@shootismoke/graphql@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.6.tgz#a756452d940f0f508bbc8bfa15cbc96484ed4711"
-  integrity sha512-jE1PMRs9kZ1zdOaV6fv+cNANg2Ul0om1ck/evA5Wyeyk52Gqrd3IGWLowGHAoRDokaTxXsZA2vOhSSOxpqMcaA==
+"@shootismoke/graphql@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.9.tgz#0e9430487203fe98a40226d6a729d700676f9dec"
+  integrity sha512-QdCTywkAcy7TeWaUyopKE487Rn7or+rYqhAgbhq0isXlMoMZdyVm7hkfbn+ByBhFdeT0Hru9qS0hK/g07LtwBQ==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"

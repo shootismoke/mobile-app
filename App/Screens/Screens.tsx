@@ -30,8 +30,7 @@ import {
 } from 'react-navigation-stack';
 import { fadeIn } from 'react-navigation-transitions';
 
-import { ApiContext, ErrorContext } from '../stores';
-import { Api } from '../stores/util/fetchApi';
+import { Api, ApiContext, ErrorContext } from '../stores';
 import * as theme from '../util/theme';
 import { About } from './About';
 import { Details } from './Details';

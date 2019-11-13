@@ -73,7 +73,7 @@ export function ShareScreen(props: ShareScreenProps) {
             url: uri,
             title: i18n.t('home_share_title'),
             message: i18n.t('home_share_message', {
-              cigarettes: api ? api.shootISmoke.cigarettes.toFixed(2) : 0
+              cigarettes: api ? api.dailyCigarettes.toFixed(2) : 0
             })
           });
         } else {

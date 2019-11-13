@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '@shootismoke/dataproviders';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -25,7 +26,6 @@ import { ErrorContext } from './error';
 import {
   fetchGpsPosition,
   fetchReverseGeocode,
-  LatLng,
   Location
 } from './util/fetchGpsPosition';
 
