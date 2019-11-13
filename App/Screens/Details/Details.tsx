@@ -92,8 +92,8 @@ export function Details(props: DetailsProps) {
   const distance = distanceToStation(currentLocation, api, distanceUnit);
 
   const station = {
-    description: api.shootISmoke.station || '',
-    title: api.shootISmoke.station || '',
+    description: api.stations[0].name,
+    title: api.stations[0].name,
     ...getCorrectLatLng(currentLocation, {
       latitude: api.city.geo[0],
       longitude: api.city.geo[1]
