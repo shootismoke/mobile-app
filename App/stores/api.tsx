@@ -76,7 +76,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
           ? TE.right(response as Api)
           : TE.left(
               new Error(
-                `${JSON.stringify({
+                `Normalized data for ${JSON.stringify({
                   latitude,
                   longitude
                 })}: PM2.5 not defined in response`
