@@ -36,7 +36,7 @@ import { createHistoryItem } from './util';
  */
 export interface Api extends NormalizedByGps {
   dailyCigarettes: number;
-  pollutants: {
+  pollutants: NormalizedByGps['pollutants'] & {
     pm25: PollutantValue;
   };
 }
