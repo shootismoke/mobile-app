@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 
 const renderInfo = (
   label: string,
-  value: string,
+  value: string | number,
   style?: StyleProp<TextStyle>
 ) => {
   return (
@@ -106,8 +106,6 @@ export function Header(props: HeaderProps) {
     );
   }
 
-  const lastUpdated = api.updatedAt;
-
   return (
     <View style={styles.container}>
       <BackButton onPress={onBackClick} style={styles.backButton} />
@@ -121,10 +119,10 @@ export function Header(props: HeaderProps) {
             currentLocation={currentLocation}
             style={styles.currentLocation}
           />
-          {lastUpdated &&
+          {api.updatedAt &&
             renderInfo(
               i18n.t('details_header_latest_update_label'),
-              `${formatDistanceToNow(lastUpdated)} ${i18n.t(
+              `${formatDistanceToNow(api.updatedAt * 1000)} ${i18n.t(
                 'details_header_latest_update_ago'
               )}`
             )}
@@ -142,7 +140,7 @@ export function Header(props: HeaderProps) {
                 value &&
                 renderInfo(
                   `${pollutant.toUpperCase()} AQI:`,
-                  value.toString(),
+                  value.aqiUS,
                   styles.pollutantItem
                 )
               );

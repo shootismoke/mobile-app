@@ -42,7 +42,7 @@ export function CurrentLocation(props: CurrentLocationProps) {
     <Text style={[styles.title, style]} {...rest}>
       {(
         currentLocation.name ||
-        api.stations[0].name ||
+        api.closestStation.name ||
         UNKNOWN_STATION
       ).toUpperCase()}
     </Text>

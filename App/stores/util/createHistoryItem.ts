@@ -39,7 +39,7 @@ export function createHistoryItem(api: Api) {
     getOrCreateUser(),
     TE.map<string, CreateHistoryItemInput>(userId => ({
       rawPm25: api.pollutants.pm25.raw,
-      universalId: `${api.stations[0].provider}|${api.idx}`,
+      universalId: api.closestStation.universalId,
       userId
     })),
     TE.chain(

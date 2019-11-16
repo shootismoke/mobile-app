@@ -66,10 +66,7 @@ export function distanceToStation(
   return Math.round(
     haversine(
       currentLocation,
-      getCorrectLatLng(currentLocation, {
-        latitude: api.city.geo[0],
-        longitude: api.city.geo[1]
-      }),
+      getCorrectLatLng(currentLocation, api.closestStation.gps),
       { unit }
     )
   );

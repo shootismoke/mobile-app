@@ -19,6 +19,7 @@ import {
   normalizedByGps,
   PollutantValue
 } from '@shootismoke/dataproviders';
+import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -70,7 +71,11 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
     }
 
     pipe(
-      normalizedByGps(currentLocation),
+      normalizedByGps(currentLocation, {
+        aqicn: {
+          token: Constants.manifest.extra.waqiToken
+        }
+      }),
       TE.chain(response =>
         response.pollutants.pm25 && response.dailyCigarettes !== undefined
           ? TE.right(response as Api)
