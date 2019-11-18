@@ -1221,10 +1221,10 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.6.tgz#41143ed6649c50f64644a2b3d606cd0a6e281264"
   integrity sha512-MydWYtm18sn2y2d3g9JZnhmpVVx/xENstLi/ZjM3hObQr/bPcTx/PXn3qQv3Y+PsekvVu5Mn0wgyamhSfu2Stw==
 
-"@shootismoke/graphql@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.6.tgz#a756452d940f0f508bbc8bfa15cbc96484ed4711"
-  integrity sha512-jE1PMRs9kZ1zdOaV6fv+cNANg2Ul0om1ck/evA5Wyeyk52Gqrd3IGWLowGHAoRDokaTxXsZA2vOhSSOxpqMcaA==
+"@shootismoke/graphql@^0.1.15":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.15.tgz#faaa2f5222d52b4a0d63db5b78eebd5a33561c0f"
+  integrity sha512-6c5Ya8CyynEQrP29r8BihB73yuHYvuxusQFFBbkdWrftQar7DQum3TRRkPJ2Wvflm7pnvdYrMRs7XDHtia8hVg==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
