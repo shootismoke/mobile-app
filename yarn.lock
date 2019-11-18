@@ -1216,15 +1216,26 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/aqi@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.6.tgz#41143ed6649c50f64644a2b3d606cd0a6e281264"
-  integrity sha512-MydWYtm18sn2y2d3g9JZnhmpVVx/xENstLi/ZjM3hObQr/bPcTx/PXn3qQv3Y+PsekvVu5Mn0wgyamhSfu2Stw==
+"@shootismoke/aqi@^0.1.15":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.15.tgz#1f6fb66cb5b27e4e6471901674c90a15a45a385c"
+  integrity sha512-nz3k9PqMDpyMZPsboBofVQphrWQuV6nE3eo0+tewDXIt85RpTHvZpkpfbwTFxUC14MbXKc5h+K5k1boCO/W8mw==
 
-"@shootismoke/graphql@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.6.tgz#a756452d940f0f508bbc8bfa15cbc96484ed4711"
-  integrity sha512-jE1PMRs9kZ1zdOaV6fv+cNANg2Ul0om1ck/evA5Wyeyk52Gqrd3IGWLowGHAoRDokaTxXsZA2vOhSSOxpqMcaA==
+"@shootismoke/dataproviders@^0.1.17":
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.1.17.tgz#dce4aa6e842cdf1500739b9169c9ff1b3db49112"
+  integrity sha512-tiR3xKloCdm2nNWluZLpevvd9C7e3TLH0yBFBlbdHjAOYh+BK5pa/SREukuwYd5t2oi9L0SGzT/GKwDyDOO+QQ==
+  dependencies:
+    "@shootismoke/aqi" "^0.1.15"
+    "@shootismoke/graphql" "^0.1.15"
+    axios "^0.19.0"
+    fp-ts "^2.1.1"
+    io-ts "^2.0.1"
+
+"@shootismoke/graphql@^0.1.15":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.15.tgz#faaa2f5222d52b4a0d63db5b78eebd5a33561c0f"
+  integrity sha512-6c5Ya8CyynEQrP29r8BihB73yuHYvuxusQFFBbkdWrftQar7DQum3TRRkPJ2Wvflm7pnvdYrMRs7XDHtia8hVg==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
@@ -1263,13 +1274,6 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
-
-"@types/expo@^33.0.1":
-  version "33.0.1"
-  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-33.0.1.tgz#e9da2e0754e988906b54837a612d11011bee1bd6"
-  integrity sha512-0ka6bRIgfhkq3whAv3mOE/jMEGJFhbFYPA9ADS/nak/nDyaUoCIhD6bWf0yt+a5m0IKK9x0FeUkFkDVHY7+O4w==
-  dependencies:
-    expo "*"
 
 "@types/fbemitter@^2.0.32":
   version "2.0.32"
@@ -3217,7 +3221,7 @@ expo-web-browser@~7.0.1:
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-7.0.1.tgz#b64ef895b5c0604f312b64b085f7a2f1da630e20"
   integrity sha512-THjqlMitUsjHUGYEfag2ybdhgZpp0C4ATixfNpWlS/8vTM4Sw/KGfwB0VuqtqLUMT2q2MTJSrlrWY8Boi4yvTg==
 
-expo@*, expo@^35.0.1:
+expo@^35.0.1:
   version "35.0.1"
   resolved "https://registry.yarnpkg.com/expo/-/expo-35.0.1.tgz#a7897e8b8ff57a114c68fc946b85a702522c315f"
   integrity sha512-aNARBYekZNNM5NApESktGUBWqY+XJsjlQUAL0jeLvYOH/hCNO2rgGzsV8g8d6pM5NeUdtMwkvtc632itY9+dIQ==
@@ -8087,7 +8091,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==

@@ -22,8 +22,8 @@ import * as TE from 'fp-ts/lib/TaskEither';
 
 import { client } from '../../util/apollo';
 import { promiseToTE, sideEffect } from '../../util/fp';
+import { Api } from '../api';
 import { getOrCreateUser } from './createUser';
-import { Api } from './fetchApi';
 
 const CREATE_HISTORY_ITEM = gql`
   mutation createHistoryItem($input: CreateHistoryItemInput!) {
@@ -38,8 +38,8 @@ export function createHistoryItem(api: Api) {
   return pipe(
     getOrCreateUser(),
     TE.map<string, CreateHistoryItemInput>(userId => ({
-      rawPm25: api.shootISmoke.rawPm25,
-      universalId: `${api.shootISmoke.provider}|${api.idx}`,
+      rawPm25: api.pollutants.pm25.raw,
+      universalId: api.closestStation.universalId,
       userId
     })),
     TE.chain(

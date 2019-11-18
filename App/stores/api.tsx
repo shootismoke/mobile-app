@@ -14,6 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import {
+  NormalizedByGps,
+  normalizedByGps,
+  PollutantValue
+} from '@shootismoke/dataproviders';
+import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -23,7 +29,18 @@ import { logFpError, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { Api, createHistoryItem, fetchApi } from './util';
+import { createHistoryItem } from './util';
+
+/**
+ * Api is basically the normalized data from '@shootismoke/dataproviders',
+ * where we make sure dailyCigarettes and pm25 values are set.
+ */
+export interface Api extends NormalizedByGps {
+  dailyCigarettes: number;
+  pollutants: NormalizedByGps['pollutants'] & {
+    pm25: PollutantValue;
+  };
+}
 
 interface Context {
   api?: Api;
@@ -54,7 +71,23 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
     }
 
     pipe(
-      fetchApi(currentLocation),
+      normalizedByGps(currentLocation, {
+        aqicn: {
+          token: Constants.manifest.extra.waqiToken
+        }
+      }),
+      TE.chain(response =>
+        response.pollutants.pm25 && response.dailyCigarettes !== undefined
+          ? TE.right(response as Api)
+          : TE.left(
+              new Error(
+                `Normalized data for ${JSON.stringify({
+                  latitude,
+                  longitude
+                })}: PM2.5 not defined in response`
+              )
+            )
+      ),
       TE.chain(
         sideEffect(api =>
           isGps ? createHistoryItem(api) : TE.right(void undefined)
@@ -68,6 +101,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
         },
         newApi => {
           setApi(newApi);
+
           return T.of(void undefined);
         }
       )

@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '@shootismoke/dataproviders';
 import haversine from 'haversine';
 
+import { Api } from '../stores/api';
 import { DistanceUnit } from '../stores/distanceUnit';
-import { Api } from '../stores/util/fetchApi';
-import { LatLng } from '../stores/util/fetchGpsPosition';
 
 // Above this distance (km), we consider the station too far from the user
 export const MAX_DISTANCE_TO_STATION = 10;
@@ -66,10 +66,7 @@ export function distanceToStation(
   return Math.round(
     haversine(
       currentLocation,
-      getCorrectLatLng(currentLocation, {
-        latitude: api.city.geo[0],
-        longitude: api.city.geo[1]
-      }),
+      getCorrectLatLng(currentLocation, api.closestStation.gps),
       { unit }
     )
   );

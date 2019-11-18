@@ -18,8 +18,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { i18n } from '../../localization';
-import { ApiContext, GpsLocationContext } from '../../stores';
-import { Api } from '../../stores/util/fetchApi';
+import { Api, ApiContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';

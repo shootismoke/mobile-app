@@ -60,7 +60,7 @@ export function ShareImage() {
     );
   }
 
-  const cigarettesPerDay = api ? api.shootISmoke.cigarettes : 0;
+  const cigarettesPerDay = api ? api.dailyCigarettes : 0;
 
   return (
     <View style={styles.container}>

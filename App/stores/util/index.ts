@@ -16,5 +16,4 @@
 
 export * from './createHistoryItem';
 export * from './createUser';
-export * from './fetchApi';
 export * from './fetchGpsPosition';

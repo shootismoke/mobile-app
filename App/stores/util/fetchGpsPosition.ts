@@ -14,17 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '@shootismoke/dataproviders/lib/types';
 import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as TE from 'fp-ts/lib/TaskEither';
 
 import { promiseToTE } from '../../util/fp';
-
-export interface LatLng {
-  latitude: number;
-  longitude: number;
-}
 
 export interface Location extends LatLng {
   city?: string;

@@ -18,7 +18,7 @@ import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
 import { i18n } from '../../localization';
-import { Api } from '../../stores/util/fetchApi';
+import { Api } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import * as theme from '../../util/theme';
 
@@ -42,7 +42,7 @@ export function CurrentLocation(props: CurrentLocationProps) {
     <Text style={[styles.title, style]} {...rest}>
       {(
         currentLocation.name ||
-        api.shootISmoke.station ||
+        api.closestStation.name ||
         UNKNOWN_STATION
       ).toUpperCase()}
     </Text>

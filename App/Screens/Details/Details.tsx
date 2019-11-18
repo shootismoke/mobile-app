@@ -92,12 +92,9 @@ export function Details(props: DetailsProps) {
   const distance = distanceToStation(currentLocation, api, distanceUnit);
 
   const station = {
-    description: api.shootISmoke.station || '',
-    title: api.shootISmoke.station || '',
-    ...getCorrectLatLng(currentLocation, {
-      latitude: api.city.geo[0],
-      longitude: api.city.geo[1]
-    })
+    description: api.closestStation.name,
+    title: api.closestStation.name,
+    ...getCorrectLatLng(currentLocation, api.closestStation.gps)
   };
 
   return (
