@@ -37,7 +37,7 @@
     "fp-ts": "^2.1.2",
     "graphql": "^14.5.8",
     "haversine": "^1.1.1",
-    "i18n-js": "^3.3.0",
+    "i18n-js": "^3.5.0",
     "io-ts": "^2.0.1",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
