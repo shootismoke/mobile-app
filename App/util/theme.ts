@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
+import { Platform, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 export type ShadowPosition = 'top' | 'bottom';
@@ -56,7 +56,7 @@ const fixTextMargin = {
 export function elevationShadowStyle(
   elevation: number,
   position: ShadowPosition = 'bottom'
-) {
+): ViewStyle {
   return {
     elevation,
     shadowColor: 'black',

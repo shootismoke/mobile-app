@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ChangeLocation(props: ChangeLocationProps) {
+export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {
   const { onPress, ...rest } = props;
 
   return (

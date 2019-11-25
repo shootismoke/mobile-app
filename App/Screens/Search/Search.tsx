@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
   }
 });
 
-function renderSeparator() {
+function renderSeparator(): React.ReactElement {
   return <ListSeparator />;
 }
 
-export function Search(props: SearchProps) {
+export function Search(props: SearchProps): React.ReactElement {
   const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
   const gps = useContext(GpsLocationContext);
 
@@ -72,7 +72,7 @@ export function Search(props: SearchProps) {
 
   trackScreen('SEARCH');
 
-  function handleChangeSearch(s: string) {
+  function handleChangeSearch(s: string): void {
     setSearch(s);
     setAlgoliaError(undefined);
     setHits([]);
@@ -111,11 +111,11 @@ export function Search(props: SearchProps) {
     }, 500);
   }
 
-  function handleItemClick(item: Location) {
+  function handleItemClick(item: Location): void {
     setCurrentLocation(item);
   }
 
-  function renderItem({ item }: { item: AlgoliaHit }) {
+  function renderItem({ item }: { item: AlgoliaHit }): React.ReactElement {
     return <AlgoliaItem item={item} onClick={handleItemClick} />;
   }
 
@@ -125,7 +125,7 @@ export function Search(props: SearchProps) {
     loading: boolean,
     search: string,
     isGps: boolean
-  ) {
+  ): React.ReactElement | null {
     if (isGps && !search) {
       return null;
     }
@@ -149,7 +149,9 @@ export function Search(props: SearchProps) {
   return (
     <View style={styles.container}>
       <BackButton
-        onPress={() => props.navigation.goBack()}
+        onPress={(): void => {
+          props.navigation.goBack();
+        }}
         style={styles.backButton}
       />
       <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
@@ -157,7 +159,7 @@ export function Search(props: SearchProps) {
         data={hits}
         ItemSeparatorComponent={renderSeparator}
         keyboardShouldPersistTaps="always"
-        keyExtractor={({ objectID }) => objectID}
+        keyExtractor={({ objectID }): string => objectID}
         ListEmptyComponent={renderEmptyList(
           algoliaError,
           hits,

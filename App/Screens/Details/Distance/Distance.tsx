@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Distance(props: DistanceProps) {
+export function Distance(props: DistanceProps): React.ReactElement {
   const { localizedDistanceUnit } = useDistanceUnit();
   const distanceUnit = localizedDistanceUnit('short');
 

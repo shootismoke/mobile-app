@@ -34,7 +34,10 @@ export const MAX_DISTANCE_TO_STATION = 10;
  * @param station - An object containing {latitude, longitude} representing
  * the station's location.
  */
-export const getCorrectLatLng = (currentLocation: LatLng, station: LatLng) => {
+export function getCorrectLatLng(
+  currentLocation: LatLng,
+  station: LatLng
+): LatLng {
   const d1 =
     Math.abs(currentLocation.latitude - station.latitude) +
     Math.abs(currentLocation.longitude - station.longitude);
@@ -49,7 +52,7 @@ export const getCorrectLatLng = (currentLocation: LatLng, station: LatLng) => {
     latitude: station.longitude,
     longitude: station.latitude
   };
-};
+}
 
 /**
  * Get distance from current location to station.
@@ -62,7 +65,7 @@ export function distanceToStation(
   currentLocation: LatLng,
   api: Api,
   unit: DistanceUnit = 'km'
-) {
+): number {
   return Math.round(
     haversine(
       currentLocation,
@@ -79,6 +82,6 @@ export function distanceToStation(
  * @param currentLocation - The current location of the user.
  * @param api - The api object returned by remote data.
  */
-export function isStationTooFar(currentLocation: LatLng, api: Api) {
+export function isStationTooFar(currentLocation: LatLng, api: Api): boolean {
   return distanceToStation(currentLocation, api) > MAX_DISTANCE_TO_STATION;
 }

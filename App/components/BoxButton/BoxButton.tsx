@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function BoxButton(props: BoxButtonProps) {
+export function BoxButton(props: BoxButtonProps): React.ReactElement {
   const { active, children, onPress, style, ...rest } = props;
 
   return (

@@ -41,7 +41,7 @@ import * as Sentry from 'sentry-expo';
  * ```
  */
 export function sideEffect<E, A>(fn: (input: A) => TE.TaskEither<E, void>) {
-  return (input: A) =>
+  return (input: A): TE.TaskEither<E, A> =>
     TE.rightTask<E, A>(
       pipe(
         fn(input),
@@ -68,13 +68,16 @@ const EMPTY_OPTION_ERROR = new Error('Empty Option<delay>');
 export function retry<A>(
   retries: number,
   teFn: (status: RetryStatus, delay: number) => TE.TaskEither<Error, A>
-) {
+): TE.TaskEither<Error, A> {
   return retrying(
     capDelay(2000, limitRetries(retries)), // Do `retries` times max, and set limit to 2s
     status =>
       pipe(
         status.previousDelay,
-        O.fold(() => TE.left(EMPTY_OPTION_ERROR), delay => teFn(status, delay))
+        O.fold(
+          () => TE.left(EMPTY_OPTION_ERROR),
+          delay => teFn(status, delay)
+        )
       ),
     either => E.isLeft(either)
   );
@@ -85,7 +88,7 @@ export function retry<A>(
  * This should realistically never happen.
  */
 export function logFpError(namespace: string) {
-  return function(error: Error) {
+  return function(error: Error): void {
     console.log(`<${namespace}> - ${error.message}`);
 
     if (Constants.manifest.releaseChannel === 'production') {
@@ -98,7 +101,8 @@ export function logFpError(namespace: string) {
  * Convert a Promise<A> into a TaskEither<Error, A>
  * @param fn - Function returning a Promise
  */
-export function promiseToTE<A>(fn: Lazy<Promise<A>>) {
+export function promiseToTE<A>(fn: Lazy<Promise<A>>): TE.TaskEither<Error, A> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return TE.tryCatch(fn, (reason: any) => {
     let error: Error | undefined;
     // FIXME GraphQLError is empty

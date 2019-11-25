@@ -62,7 +62,10 @@ const AxiosResponseT = t.type({
   })
 });
 
-export function fetchAlgolia(search: string, gps?: LatLng) {
+export function fetchAlgolia(
+  search: string,
+  gps?: LatLng
+): TE.TaskEither<Error, AlgoliaHit[]> {
   return retry(algoliaUrls.length, status =>
     pipe(
       TE.rightIO(

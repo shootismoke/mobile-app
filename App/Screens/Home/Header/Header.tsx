@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Header(props: HeaderProps) {
+export function Header(props: HeaderProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { distanceUnit, localizedDistanceUnit } = useDistanceUnit();

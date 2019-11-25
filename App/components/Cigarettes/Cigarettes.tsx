@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Cigarettes(props: CigarettesProps) {
+export function Cigarettes(props: CigarettesProps): React.ReactElement {
   const { cigarettes: realCigarettes } = props;
   const cigarettes =
     Math.round(Math.max(0.1, Math.min(realCigarettes, 50)) * 10) / 10; // We don't show more than 50

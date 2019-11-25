@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Footer(props: FooterProps) {
+export function Footer(props: FooterProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -54,30 +54,30 @@ export function Footer(props: FooterProps) {
 
   const isTooFar = isStationTooFar(currentLocation, api);
 
-  function goToAbout() {
+  function goToAbout(): void {
     track('HOME_SCREEN_ABOUT_CLICK');
     navigation.navigate('About');
   }
 
-  function goToAboutWhySoFar() {
+  function goToAboutWhySoFar(): void {
     track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
     navigation.navigate('About', {
       scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle
     });
   }
 
-  function goToDetails() {
+  function goToDetails(): void {
     track('HOME_SCREEN_DETAILS_CLICK');
     navigation.navigate('Details');
   }
 
-  function handleShare() {
+  function handleShare(): void {
     track('HOME_SCREEN_SHARE_CLICK');
 
     props.navigation.navigate('ShareModal');
   }
 
-  const renderBigButton = () => {
+  function renderBigButton(): React.ReactElement {
     return isTooFar ? (
       <Button onPress={goToAboutWhySoFar}>
         {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
@@ -87,9 +87,9 @@ export function Footer(props: FooterProps) {
         {i18n.t('home_btn_see_detailed_info').toUpperCase()}
       </Button>
     );
-  };
+  }
 
-  const renderSmallButtons = () => {
+  function renderSmallButtons(): React.ReactElement {
     return (
       <View style={styles.smallButtons}>
         {isTooFar ? (
@@ -106,7 +106,7 @@ export function Footer(props: FooterProps) {
         </Button>
       </View>
     );
-  };
+  }
 
   return (
     <View style={[theme.withPadding, style]} {...rest}>

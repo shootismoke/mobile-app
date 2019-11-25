@@ -35,7 +35,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export function CurrentLocation(props: CurrentLocationProps) {
+export function CurrentLocation(
+  props: CurrentLocationProps
+): React.ReactElement {
   const { api, currentLocation, style, ...rest } = props;
 
   return (

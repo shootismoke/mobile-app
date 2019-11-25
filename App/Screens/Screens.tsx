@@ -46,6 +46,7 @@ function stackNavigatorOptions(
   NavigationStackConfig,
   NavigationStackRouterConfig,
   NavigationStackOptions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   NavigationStackProp<NavigationRoute, any>
 > {
   return {
@@ -56,6 +57,7 @@ function stackNavigatorOptions(
     initialRouteName,
     defaultNavigationOptions: {
       // FIXME the `headerVisible` field has been moved away from this config
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       headerVisible: false
     }
@@ -119,7 +121,7 @@ const ErrorStack = createAppContainer(
   )
 );
 
-function renderScreen(api?: Api, error?: Error) {
+function renderScreen(api?: Api, error?: Error): React.ReactElement {
   if (error) {
     return <ErrorStack />;
   }
@@ -131,7 +133,7 @@ function renderScreen(api?: Api, error?: Error) {
   return <RootStack />;
 }
 
-export function Screens() {
+export function Screens(): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { error } = useContext(ErrorContext);
 

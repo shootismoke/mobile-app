@@ -16,7 +16,7 @@
 
 import { Video } from 'expo-av';
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
 
@@ -45,14 +45,16 @@ const styles = StyleSheet.create({
   }
 });
 
-function getVideoStyle(cigarettes: number) {
+function getVideoStyle(cigarettes: number): ViewStyle {
   if (cigarettes <= 1) return { backgroundColor: '#FFFFFFCC' };
   if (cigarettes < 5) return { backgroundColor: '#FFFFFFAA' };
   if (cigarettes < 15) return { backgroundColor: '#FFFFFF22' };
   return { backgroundColor: '#FFFFFF00' };
 }
 
-export function SmokeVideo({ cigarettes }: SmokeVideoProps) {
+export function SmokeVideo({
+  cigarettes
+}: SmokeVideoProps): React.ReactElement {
   return (
     <View style={styles.container}>
       <View style={[styles.overlay, getVideoStyle(cigarettes)]} />

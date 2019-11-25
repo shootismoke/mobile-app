@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function BackButton(props: BackButtonProps) {
+export function BackButton(props: BackButtonProps): React.ReactElement {
   const { style } = props;
 
   return (

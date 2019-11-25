@@ -28,7 +28,9 @@ export interface Location extends LatLng {
   name?: string;
 }
 
-export function fetchReverseGeocode(currentLocation: LatLng) {
+export function fetchReverseGeocode(
+  currentLocation: LatLng
+): TE.TaskEither<Error, Location> {
   return pipe(
     promiseToTE(async () => {
       const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
@@ -53,7 +55,10 @@ export function fetchReverseGeocode(currentLocation: LatLng) {
   );
 }
 
-export function fetchGpsPosition() {
+export function fetchGpsPosition(): TE.TaskEither<
+  Error,
+  ExpoLocation.LocationData
+> {
   return promiseToTE(async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
 

@@ -45,7 +45,7 @@ if (Constants.manifest.extra.sentryPublicDsn) {
   }
 }
 
-export function App() {
+export function App(): React.ReactElement {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     Promise.all([
@@ -58,7 +58,7 @@ export function App() {
     ])
 
       .then(() => setReady(true))
-      .catch(console.error);
+      .catch(error => console.error(error));
   }, []);
 
   useEffect(() => {

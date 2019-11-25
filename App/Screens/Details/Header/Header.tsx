@@ -83,7 +83,7 @@ const renderInfo = (
   label: string,
   value: string | number,
   style?: StyleProp<TextStyle>
-) => {
+): React.ReactElement => {
   return (
     <Text key={label} style={[styles.info, style]}>
       <Text style={styles.label}>{label}</Text> {value}
@@ -91,7 +91,7 @@ const renderInfo = (
   );
 };
 
-export function Header(props: HeaderProps) {
+export function Header(props: HeaderProps): React.ReactElement {
   const { onBackClick } = props;
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);

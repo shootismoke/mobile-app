@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Language() {
+export function Language(): React.ReactElement {
   const { reloadApp } = useContext(ApiContext);
 
-  const handleValueChange = (itemValue: string) => {
+  const handleValueChange = (itemValue: string): void => {
     i18n.locale = itemValue;
 
     // Reload app for changes to take effect

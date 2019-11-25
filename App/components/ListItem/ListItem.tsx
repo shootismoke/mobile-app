@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ListItem(props: ListItemProps) {
+export function ListItem(props: ListItemProps): React.ReactElement {
   const { description, icon, title, ...rest } = props;
 
   return (

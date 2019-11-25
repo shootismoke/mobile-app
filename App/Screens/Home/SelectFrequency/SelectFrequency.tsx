@@ -37,14 +37,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export function SelectFrequency(props: ScrollViewProps) {
+export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
   const scroll = useRef<ScrollView>(null);
   const { frequency, setFrequency } = useContext(FrequencyContext);
   const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
   const { style, ...rest } = props;
 
-  function handleChangeFrequency(f: Frequency) {
+  function handleChangeFrequency(f: Frequency): void {
     setTimeout(() => {
       setFrequency(f);
     }, 400);
@@ -61,8 +61,10 @@ export function SelectFrequency(props: ScrollViewProps) {
     >
       <BoxButton
         active={frequency === 'daily'}
-        onLayout={event => setDailyWidth(event.nativeEvent.layout.width)}
-        onPress={() => {
+        onLayout={(event): void =>
+          setDailyWidth(event.nativeEvent.layout.width)
+        }
+        onPress={(): void => {
           track('HOME_SCREEN_DAILY_CLICK');
           if (frequency === 'daily') {
             return;
@@ -79,7 +81,7 @@ export function SelectFrequency(props: ScrollViewProps) {
       </BoxButton>
       <BoxButton
         active={frequency === 'weekly'}
-        onPress={() => {
+        onPress={(): void => {
           track('HOME_SCREEN_WEEKLY_CLICK');
           if (frequency === 'weekly') {
             return;
@@ -99,7 +101,7 @@ export function SelectFrequency(props: ScrollViewProps) {
 
       <BoxButton
         active={frequency === 'monthly'}
-        onPress={() => {
+        onPress={(): void => {
           track('HOME_SCREEN_MONTHLY_CLICK');
           if (frequency === 'monthly') {
             return;

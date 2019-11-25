@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details(props: DetailsProps) {
+export function Details(props: DetailsProps): React.ReactElement {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);
@@ -64,11 +64,11 @@ export function Details(props: DetailsProps) {
     setTimeout(() => setShowMap(true), 500);
   }, []);
 
-  const handleMapReady = () => {
+  const handleMapReady = (): void => {
     stationMarker && stationMarker.showCallout && stationMarker.showCallout();
   };
 
-  const handleStationRef = (ref: Marker) => {
+  const handleStationRef = (ref: Marker): void => {
     stationMarker = ref;
   };
 
@@ -99,7 +99,11 @@ export function Details(props: DetailsProps) {
 
   return (
     <View style={styles.container}>
-      <Header onBackClick={() => navigation.goBack()} />
+      <Header
+        onBackClick={(): void => {
+          navigation.goBack();
+        }}
+      />
       <View style={styles.mapContainer}>
         {showMap && (
           <MapView

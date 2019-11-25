@@ -51,25 +51,25 @@ export const aboutSections = {
   aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
 };
 
-const handleOpenAmaury = () => {
+const handleOpenAmaury = (): void => {
   Linking.openURL('https://twitter.com/amaurymartiny');
 };
 
-const handleOpenAqi = () => {
+const handleOpenAqi = (): void => {
   Linking.openURL('http://aqicn.org/');
 };
 
-const handleOpenArticle = () => {
+const handleOpenArticle = (): void => {
   Linking.openURL(
     'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
   );
 };
 
-const handleOpenGithub = () => {
+const handleOpenGithub = (): void => {
   Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke');
 };
 
-const handleOpenMarcelo = () => {
+const handleOpenMarcelo = (): void => {
   Linking.openURL('https://www.behance.net/marceloscoelho');
 };
 
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function About(props: AboutProps) {
+export function About(props: AboutProps): React.ReactElement {
   const { navigation } = props;
   const {
     distanceUnit,
@@ -141,7 +141,7 @@ export function About(props: AboutProps) {
 
   trackScreen('ABOUT');
 
-  const toggleDistanceSwitch = (value: boolean) =>
+  const toggleDistanceSwitch = (value: boolean): void =>
     setDistanceUnit(value ? 'km' : 'mile');
 
   return (
@@ -150,7 +150,9 @@ export function About(props: AboutProps) {
       style={theme.withPadding}
     >
       <BackButton
-        onPress={() => navigation.goBack()}
+        onPress={(): void => {
+          navigation.goBack();
+        }}
         style={styles.backButton}
       />
 

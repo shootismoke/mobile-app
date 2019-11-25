@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ListSeparator() {
+export function ListSeparator(): React.ReactElement {
   return <View style={styles.separator} />;
 }

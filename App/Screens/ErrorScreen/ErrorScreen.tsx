@@ -61,7 +61,7 @@ const UNTRACKED_ERRORS = [
   'Location request failed due to unsatisfied device settings.'
 ];
 
-export function ErrorScreen(props: ErrorScreenProps) {
+export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
   const { error } = useContext(ErrorContext);
 
   trackScreen('ERROR');
@@ -70,7 +70,7 @@ export function ErrorScreen(props: ErrorScreenProps) {
     if (error && !UNTRACKED_ERRORS.includes(error.message)) {
       Sentry.captureException(error);
     }
-  }, []);
+  }, [error]);
 
   return (
     <View style={styles.container}>
@@ -84,7 +84,7 @@ export function ErrorScreen(props: ErrorScreenProps) {
         </Text>
       </View>
       <Button
-        onPress={() => {
+        onPress={(): void => {
           track('ERROR_SCREEN_CHANGE_LOCATION_CLICK');
           props.navigation.navigate('Search');
         }}

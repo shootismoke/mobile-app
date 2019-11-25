@@ -22,7 +22,7 @@ import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
 
 const LOADING_TEXT = 'Fetching...';
 
-export function GpsItem() {
+export function GpsItem(): React.ReactElement | null {
   const { setCurrentLocation } = useContext(CurrentLocationContext);
   const gps = useContext(GpsLocationContext);
 
@@ -30,7 +30,7 @@ export function GpsItem() {
     return null;
   }
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setCurrentLocation(gps);
   };
 
