@@ -107,7 +107,7 @@ export function LocationContextProvider({
         }
       )
     )().catch(logFpError('LocationContextProvider'));
-  }, [setError]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <GpsLocationContext.Provider value={gpsLocation}>

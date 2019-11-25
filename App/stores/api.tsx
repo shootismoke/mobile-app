@@ -108,7 +108,7 @@ export function ApiContextProvider({
         }
       )
     )().catch(logFpError('ApiContextProvider'));
-  }, [currentLocation, isGps, latitude, longitude, setError]);
+  }, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ApiContext.Provider

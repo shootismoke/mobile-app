@@ -91,7 +91,7 @@ export function ShareScreen(props: ShareScreenProps): React.ReactElement {
 
       share();
     }, 750);
-  });
+  }, [api, refViewShot]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <View style={styles.container}>
