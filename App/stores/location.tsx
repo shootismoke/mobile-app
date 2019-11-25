@@ -53,7 +53,7 @@ export function LocationContextProvider({
   children
 }: {
   children: JSX.Element;
-}) {
+}): React.ReactElement {
   const { setError } = useContext(ErrorContext);
 
   const [gpsLocation, setGpsLocation] = useState<Location>();
@@ -107,7 +107,7 @@ export function LocationContextProvider({
         }
       )
     )().catch(logFpError('LocationContextProvider'));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <GpsLocationContext.Provider value={gpsLocation}>

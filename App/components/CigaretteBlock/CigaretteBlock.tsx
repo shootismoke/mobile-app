@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function getSwearWord(cigaretteCount: number) {
+function getSwearWord(cigaretteCount: number): string {
   if (cigaretteCount <= 1) return i18n.t('home_common_oh');
 
   // Return a random swear word
@@ -53,7 +53,7 @@ function getSwearWord(cigaretteCount: number) {
 export function getCigaretteCount(
   frequency: Frequency,
   cigarettePerDay: number
-) {
+): number {
   switch (frequency) {
     case 'daily': {
       return cigarettePerDay;
@@ -66,7 +66,7 @@ export function getCigaretteCount(
   }
 }
 
-export function CigaretteBlock(props: CigaretteBlockProps) {
+export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
   const {
     cigarettesPerDay,
     frequency,
@@ -78,7 +78,7 @@ export function CigaretteBlock(props: CigaretteBlockProps) {
 
   const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay);
 
-  const renderCigarettesText = () => {
+  const renderCigarettesText = (): React.ReactElement => {
     // Round to 1 decimal
     const cigarettes = Math.round(cigaretteCount * 10) / 10;
 

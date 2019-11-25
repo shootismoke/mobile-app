@@ -46,7 +46,7 @@ type AmplitudeEvent =
   | 'ERROR_SCREEN_CLOSE'
   | 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
-export function setupAmplitude() {
+export function setupAmplitude(): Promise<void> {
   return Constants.manifest.extra.amplitudeApiKey
     ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
         () => {
@@ -61,7 +61,19 @@ export function setupAmplitude() {
     : Promise.resolve();
 }
 
-export function track(event: AmplitudeEvent, properties?: Record<string, any>) {
+type Json = string | number | boolean | null | JsonObject | JsonArray;
+
+interface JsonObject {
+  [property: string]: Json;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface JsonArray extends Array<Json> {}
+
+export function track(
+  event: AmplitudeEvent,
+  properties?: Record<string, Json>
+): void {
   if (!Constants.manifest.extra.amplitudeApiKey) {
     return;
   }
@@ -73,10 +85,11 @@ export function track(event: AmplitudeEvent, properties?: Record<string, any>) {
 
 export function trackScreen(
   screen: 'LOADING' | 'HOME' | 'ABOUT' | 'DETAILS' | 'SEARCH' | 'ERROR'
-) {
+): void {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     track(`${screen}_SCREEN_OPEN` as AmplitudeEvent);
 
-    return () => track(`${screen}_SCREEN_CLOSE` as AmplitudeEvent);
-  }, []);
+    return (): void => track(`${screen}_SCREEN_CLOSE` as AmplitudeEvent);
+  }, [screen]);
 }

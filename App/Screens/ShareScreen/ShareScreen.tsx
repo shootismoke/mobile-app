@@ -52,40 +52,46 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ShareScreen(props: ShareScreenProps) {
+export function ShareScreen(props: ShareScreenProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const refViewShot = createRef<View>();
 
-  const handleDismiss = () => {
+  const handleDismiss = (): void => {
     props.navigation.goBack();
   };
 
   useEffect(() => {
-    setTimeout(async () => {
-      try {
-        const uri = await captureRef(refViewShot, {
-          format: 'png',
-          quality: 1
-        });
+    setTimeout(() => {
+      async function share(): Promise<void> {
+        try {
+          const uri = await captureRef(refViewShot, {
+            format: 'png',
+            quality: 1
+          });
 
-        if (Platform.OS === 'ios') {
-          await Share.share({
-            url: uri,
-            title: i18n.t('home_share_title'),
-            message: i18n.t('home_share_message', {
-              cigarettes: api ? api.dailyCigarettes.toFixed(2) : 0
-            })
-          });
-        } else {
-          await Sharing.shareAsync(uri, {
-            mimeType: 'image/png'
-          });
+          if (Platform.OS === 'ios') {
+            await Share.share({
+              url: uri,
+              title: i18n.t('home_share_title'),
+              message: i18n.t('home_share_message', {
+                cigarettes: api ? api.dailyCigarettes.toFixed(2) : 0
+              })
+            });
+          } else {
+            await Sharing.shareAsync(uri, {
+              mimeType: 'image/png'
+            });
+          }
+        } catch (error) {
+          /* Do nothing */
         }
-      } catch (error) {}
 
-      handleDismiss();
+        handleDismiss();
+      }
+
+      share();
     }, 750);
-  });
+  }, [api, refViewShot]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <View style={styles.container}>

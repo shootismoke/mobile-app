@@ -33,7 +33,7 @@ export function FrequencyContextProvider({
   children
 }: {
   children: JSX.Element;
-}) {
+}): React.ReactElement {
   const [frequency, setFrequency] = useState<Frequency>('daily');
 
   return (

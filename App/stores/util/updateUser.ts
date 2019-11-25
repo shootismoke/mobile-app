@@ -35,7 +35,9 @@ const UPDATE_USER = gql`
 /**
  * Update notification setting
  */
-export function updateNotifications(frequency: Frequency) {
+export function updateNotifications(
+  frequency: Frequency
+): TE.TaskEither<Error, true> {
   return pipe(
     getOrCreateUser(),
     TE.map<string, { userId: string; input: UpdateUserInput }>(userId => ({
@@ -58,6 +60,7 @@ export function updateNotifications(frequency: Frequency) {
           variables: data
         })
       )
-    )
+    ),
+    TE.map(() => true)
   );
 }

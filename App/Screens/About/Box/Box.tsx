@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Box() {
+export function Box(): React.ReactElement {
   return (
     <View style={styles.box}>
       <View style={styles.equivalence}>

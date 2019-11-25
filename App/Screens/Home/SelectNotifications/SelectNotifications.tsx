@@ -56,7 +56,7 @@ export function SelectNotifications(): React.ReactElement {
   return (
     <Picker
       selectedValue={notif}
-      onValueChange={value => {
+      onValueChange={(value): void => {
         isUserSelection.current = true;
         setNotif(value);
       }}

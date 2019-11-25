@@ -14,13 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState
-} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
 import { i18n } from '../localization';
@@ -42,7 +36,11 @@ const Context = createContext<ContextType>({
   setDistanceUnit: () => {}
 });
 
-export function DistanceUnitProvider({ children }: { children: ReactNode }) {
+export function DistanceUnitProvider({
+  children
+}: {
+  children: React.ReactNode;
+}): React.ReactElement {
   const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>(
     i18n.locale === 'en-US' ? 'mile' : 'km'
   );
@@ -76,4 +74,4 @@ export function DistanceUnitProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export const useDistanceUnit = () => useContext(Context);
+export const useDistanceUnit = (): ContextType => useContext(Context);

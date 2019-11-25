@@ -17,6 +17,7 @@
 import { CreateUserInput } from '@shootismoke/graphql';
 import { gql } from 'apollo-boost';
 import Constants from 'expo-constants';
+import * as TE from 'fp-ts/lib/TaskEither';
 import { AsyncStorage } from 'react-native';
 
 import { client } from '../../util/apollo';
@@ -38,7 +39,7 @@ let cachedMongoId: string | undefined;
 /**
  * Get or create a user
  */
-export function getOrCreateUser() {
+export function getOrCreateUser(): TE.TaskEither<Error, string> {
   return promiseToTE(async () => {
     if (cachedMongoId) {
       return cachedMongoId;
@@ -65,6 +66,7 @@ export function getOrCreateUser() {
       await AsyncStorage.setItem(STORAGE_KEY, mongoId);
     }
 
+    // eslint-disable-next-line require-atomic-updates
     cachedMongoId = mongoId;
 
     return mongoId;

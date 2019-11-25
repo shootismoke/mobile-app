@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function SearchHeader(props: SearchHeaderProps) {
+export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
   const { onChangeSearch, search } = props;
 
   return (

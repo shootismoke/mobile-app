@@ -53,7 +53,9 @@ interface ApiContextProviderProps {
   children: JSX.Element;
 }
 
-export function ApiContextProvider({ children }: ApiContextProviderProps) {
+export function ApiContextProvider({
+  children
+}: ApiContextProviderProps): React.ReactElement {
   const { currentLocation, isGps, setCurrentLocation } = useContext(
     CurrentLocationContext
   );
@@ -106,7 +108,7 @@ export function ApiContextProvider({ children }: ApiContextProviderProps) {
         }
       )
     )().catch(logFpError('ApiContextProvider'));
-  }, [latitude, longitude]);
+  }, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ApiContext.Provider

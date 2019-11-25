@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Home(props: HomeProps) {
+export function Home(props: HomeProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { isGps } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
@@ -56,7 +56,7 @@ export function Home(props: HomeProps) {
     <View style={styles.container}>
       <SmokeVideo cigarettes={getCigaretteCount(frequency, cigarettesPerDay)} />
       <Header
-        onChangeLocationClick={() => {
+        onChangeLocationClick={(): void => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
           props.navigation.navigate('Search');
         }}

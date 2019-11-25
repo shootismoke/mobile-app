@@ -55,8 +55,8 @@ export function Banner({
   onClick,
   shadowPosition = 'bottom',
   style
-}: BannerProps) {
-  // FIXME any
+}: BannerProps): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Wrapper: any = asTouchable ? TouchableHighlight : View;
 
   return (

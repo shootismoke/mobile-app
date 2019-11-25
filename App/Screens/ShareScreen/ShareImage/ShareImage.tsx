@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ShareImage() {
+export function ShareImage(): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);

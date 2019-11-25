@@ -34,7 +34,7 @@ const CREATE_HISTORY_ITEM = gql`
 /**
  * Get or create a user
  */
-export function createHistoryItem(api: Api) {
+export function createHistoryItem(api: Api): TE.TaskEither<Error, void> {
   return pipe(
     getOrCreateUser(),
     TE.map<string, CreateHistoryItemInput>(userId => ({
