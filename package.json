@@ -60,6 +60,6 @@
     "jest": "^24.9.0",
     "jest-expo": "^35.0.0",
     "ts-jest": "^24.2.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.3"
   }
 }
