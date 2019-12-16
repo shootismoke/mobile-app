@@ -28,7 +28,7 @@
     "expo-analytics-amplitude": "^7.0.0",
     "expo-av": "^7.0.1",
     "expo-constants": "^7.0.1",
-    "expo-font": "^7.0.0",
+    "expo-font": "^8.0.0",
     "expo-localization": "^7.0.0",
     "expo-location": "^7.0.0",
     "expo-permissions": "^7.0.0",
