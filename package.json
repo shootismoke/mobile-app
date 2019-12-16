@@ -25,7 +25,7 @@
     "axios": "^0.19.0",
     "date-fns": "^2.8.1",
     "expo": "^35.0.1",
-    "expo-analytics-amplitude": "^7.0.0",
+    "expo-analytics-amplitude": "^8.0.0",
     "expo-av": "^7.0.1",
     "expo-constants": "^7.0.1",
     "expo-font": "^7.0.0",
