@@ -26,7 +26,7 @@
     "date-fns": "^2.8.1",
     "expo": "^35.0.1",
     "expo-analytics-amplitude": "^7.0.0",
-    "expo-av": "^7.0.1",
+    "expo-av": "^8.0.0",
     "expo-constants": "^7.0.1",
     "expo-font": "^7.0.0",
     "expo-localization": "^7.0.0",
