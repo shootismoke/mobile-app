@@ -16,6 +16,6 @@
 
 export * from './api';
 export * from './error';
+export * from './distanceUnit';
 export * from './frequency';
 export * from './location';
-export * from './distanceUnit';

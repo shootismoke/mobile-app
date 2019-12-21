@@ -23,6 +23,7 @@ import {
   TouchableOpacityProps,
   View
 } from 'react-native';
+
 import gpsIcon from '../../../assets/images/location-big.png';
 import pinIcon from '../../../assets/images/location.png';
 import * as theme from '../../util/theme';
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ListItem(props: ListItemProps) {
+export function ListItem(props: ListItemProps): React.ReactElement {
   const { description, icon, title, ...rest } = props;
 
   return (

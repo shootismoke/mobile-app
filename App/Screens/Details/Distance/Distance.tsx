@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+
 import { Banner } from '../../../components';
 import { i18n } from '../../../localization';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Distance(props: DistanceProps) {
+export function Distance(props: DistanceProps): React.ReactElement {
   const { localizedDistanceUnit } = useDistanceUnit();
   const distanceUnit = localizedDistanceUnit('short');
 

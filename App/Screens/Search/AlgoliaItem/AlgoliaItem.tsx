@@ -17,20 +17,20 @@
 import React from 'react';
 
 import { ListItem } from '../../../components';
+import { Location } from '../../../stores/util/fetchGpsPosition';
 import { AlgoliaHit } from '../fetchAlgolia';
-import { Location } from '../../../stores/fetchGpsPosition';
 
 interface ItemProps {
   item: AlgoliaHit;
   onClick: (item: Location) => void;
 }
 
-export function AlgoliaItem(props: ItemProps) {
+export function AlgoliaItem(props: ItemProps): React.ReactElement {
   const { item, onClick } = props;
 
   const { city, country, county, _geoloc, locale_names: localeNames } = item;
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     onClick({
       latitude: _geoloc.lat,
       longitude: _geoloc.lng,

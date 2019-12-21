@@ -19,6 +19,7 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { NavigationInjectedProps } from 'react-navigation';
 import truncate from 'truncate';
+
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
 import { i18n } from '../../localization';
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
-export function Details(props: DetailsProps) {
+export function Details(props: DetailsProps): React.ReactElement {
   const { navigation } = props;
 
   const [showMap, setShowMap] = useState(false);
@@ -63,11 +64,11 @@ export function Details(props: DetailsProps) {
     setTimeout(() => setShowMap(true), 500);
   }, []);
 
-  const handleMapReady = () => {
+  const handleMapReady = (): void => {
     stationMarker && stationMarker.showCallout && stationMarker.showCallout();
   };
 
-  const handleStationRef = (ref: Marker) => {
+  const handleStationRef = (ref: Marker): void => {
     stationMarker = ref;
   };
 
@@ -91,17 +92,18 @@ export function Details(props: DetailsProps) {
   const distance = distanceToStation(currentLocation, api, distanceUnit);
 
   const station = {
-    description: api.shootISmoke.station || '',
-    title: api.shootISmoke.station || '',
-    ...getCorrectLatLng(currentLocation, {
-      latitude: api.city.geo[0],
-      longitude: api.city.geo[1]
-    })
+    description: api.closestStation.name,
+    title: api.closestStation.name,
+    ...getCorrectLatLng(currentLocation, api.closestStation.gps)
   };
 
   return (
     <View style={styles.container}>
-      <Header onBackClick={() => navigation.goBack()} />
+      <Header
+        onBackClick={(): void => {
+          navigation.goBack();
+        }}
+      />
       <View style={styles.mapContainer}>
         {showMap && (
           <MapView

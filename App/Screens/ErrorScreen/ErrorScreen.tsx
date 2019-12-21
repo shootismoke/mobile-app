@@ -19,6 +19,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 import * as Sentry from 'sentry-expo';
+
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
 import { i18n } from '../../localization';
@@ -52,16 +53,24 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ErrorScreen(props: ErrorScreenProps) {
+// We don't send the following errors to Sentry
+const UNTRACKED_ERRORS = [
+  'Permission to access location was denied',
+  'Location provider is unavailable. Make sure that location services are enabled.',
+  'Location request timed out.',
+  'Location request failed due to unsatisfied device settings.'
+];
+
+export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
   const { error } = useContext(ErrorContext);
 
   trackScreen('ERROR');
 
   useEffect(() => {
-    if (error) {
-      Sentry.captureException(new Error(error));
+    if (error && !UNTRACKED_ERRORS.includes(error.message)) {
+      Sentry.captureException(error);
     }
-  }, []);
+  }, [error]);
 
   return (
     <View style={styles.container}>
@@ -75,7 +84,7 @@ export function ErrorScreen(props: ErrorScreenProps) {
         </Text>
       </View>
       <Button
-        onPress={() => {
+        onPress={(): void => {
           track('ERROR_SCREEN_CHANGE_LOCATION_CLICK');
           props.navigation.navigate('Search');
         }}
@@ -86,7 +95,9 @@ export function ErrorScreen(props: ErrorScreenProps) {
       </Button>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
       <Text style={styles.errorMessage}>
-        {i18n.t('error_screen_error_message', { errorText: error })}
+        {i18n.t('error_screen_error_message', {
+          errorText: error && error.message
+        })}
       </Text>
     </View>
   );

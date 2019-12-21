@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
 import * as theme from '../../util/theme';
 
 interface BackgroundProps {
@@ -32,6 +33,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Background(props: BackgroundProps) {
+export function Background(props: BackgroundProps): React.ReactElement {
   return <View style={[styles.container, props.style]}>{props.children}</View>;
 }

@@ -16,10 +16,10 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
+
 import { i18n } from '../../localization';
-import { ApiContext, GpsLocationContext } from '../../stores';
-import { Api } from '../../stores/fetchApi';
-import { Location } from '../../stores/fetchGpsPosition';
+import { Api, ApiContext, GpsLocationContext } from '../../stores';
+import { Location } from '../../stores/util/fetchGpsPosition';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Background } from './Background';
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function renderCough(index: number) {
+function renderCough(index: number): React.ReactElement {
   return (
     <Text key={index}>
       {i18n.t('loading_title_cough')}
@@ -47,7 +47,11 @@ function renderCough(index: number) {
   );
 }
 
-function renderText(longWaiting: boolean, gps?: Location, api?: Api) {
+function renderText(
+  longWaiting: boolean,
+  gps?: Location,
+  api?: Api
+): React.ReactElement {
   let coughs = 0; // Number of times to show "Cough..."
   if (gps) ++coughs;
   if (longWaiting) ++coughs;
@@ -65,14 +69,14 @@ function renderText(longWaiting: boolean, gps?: Location, api?: Api) {
   );
 }
 
-function clearLongWaiting() {
+function clearLongWaiting(): void {
   if (longWaitingTimeout) {
     clearTimeout(longWaitingTimeout);
     longWaitingTimeout = null;
   }
 }
 
-export function Loading() {
+export function Loading(): React.ReactElement {
   const { api } = useContext(ApiContext);
   const gps = useContext(GpsLocationContext);
 

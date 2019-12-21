@@ -25,6 +25,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+
 import backIcon from '../../../assets/images/back.png';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function BackButton(props: BackButtonProps) {
+export function BackButton(props: BackButtonProps): React.ReactElement {
   const { style } = props;
 
   return (

@@ -20,10 +20,10 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import Sentry from 'sentry-expo';
+
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
-import { Location } from '../../stores/fetchGpsPosition';
+import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
   }
 });
 
-function renderSeparator() {
+function renderSeparator(): React.ReactElement {
   return <ListSeparator />;
 }
 
-export function Search(props: SearchProps) {
+export function Search(props: SearchProps): React.ReactElement {
   const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
   const gps = useContext(GpsLocationContext);
 
@@ -72,7 +72,7 @@ export function Search(props: SearchProps) {
 
   trackScreen('SEARCH');
 
-  function handleChangeSearch(s: string) {
+  function handleChangeSearch(s: string): void {
     setSearch(s);
     setAlgoliaError(undefined);
     setHits([]);
@@ -97,26 +97,25 @@ export function Search(props: SearchProps) {
             setLoading(false);
             setAlgoliaError(err);
 
-            Sentry.captureException(err);
-            return T.of(undefined as void);
+            return T.of(void undefined);
           },
           hits => {
             setLoading(false);
             setAlgoliaError(undefined);
             setHits(hits);
 
-            return T.of(undefined as void);
+            return T.of(void undefined);
           }
         )
-      )().catch(logFpError);
+      )().catch(logFpError('Search'));
     }, 500);
   }
 
-  function handleItemClick(item: Location) {
+  function handleItemClick(item: Location): void {
     setCurrentLocation(item);
   }
 
-  function renderItem({ item }: { item: AlgoliaHit }) {
+  function renderItem({ item }: { item: AlgoliaHit }): React.ReactElement {
     return <AlgoliaItem item={item} onClick={handleItemClick} />;
   }
 
@@ -126,7 +125,7 @@ export function Search(props: SearchProps) {
     loading: boolean,
     search: string,
     isGps: boolean
-  ) {
+  ): React.ReactElement | null {
     if (isGps && !search) {
       return null;
     }
@@ -150,7 +149,9 @@ export function Search(props: SearchProps) {
   return (
     <View style={styles.container}>
       <BackButton
-        onPress={() => props.navigation.goBack()}
+        onPress={(): void => {
+          props.navigation.goBack();
+        }}
         style={styles.backButton}
       />
       <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
@@ -158,7 +159,7 @@ export function Search(props: SearchProps) {
         data={hits}
         ItemSeparatorComponent={renderSeparator}
         keyboardShouldPersistTaps="always"
-        keyExtractor={({ objectID }) => objectID}
+        keyExtractor={({ objectID }): string => objectID}
         ListEmptyComponent={renderEmptyList(
           algoliaError,
           hits,

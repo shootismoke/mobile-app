@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '@shootismoke/dataproviders';
 import haversine from 'haversine';
-import { Api } from '../stores/fetchApi';
-import { LatLng } from '../stores/fetchGpsPosition';
+
+import { Api } from '../stores/api';
 import { DistanceUnit } from '../stores/distanceUnit';
 
 // Above this distance (km), we consider the station too far from the user
@@ -33,7 +34,10 @@ export const MAX_DISTANCE_TO_STATION = 10;
  * @param station - An object containing {latitude, longitude} representing
  * the station's location.
  */
-export const getCorrectLatLng = (currentLocation: LatLng, station: LatLng) => {
+export function getCorrectLatLng(
+  currentLocation: LatLng,
+  station: LatLng
+): LatLng {
   const d1 =
     Math.abs(currentLocation.latitude - station.latitude) +
     Math.abs(currentLocation.longitude - station.longitude);
@@ -48,7 +52,7 @@ export const getCorrectLatLng = (currentLocation: LatLng, station: LatLng) => {
     latitude: station.longitude,
     longitude: station.latitude
   };
-};
+}
 
 /**
  * Get distance from current location to station.
@@ -61,14 +65,11 @@ export function distanceToStation(
   currentLocation: LatLng,
   api: Api,
   unit: DistanceUnit = 'km'
-) {
+): number {
   return Math.round(
     haversine(
       currentLocation,
-      getCorrectLatLng(currentLocation, {
-        latitude: api.city.geo[0],
-        longitude: api.city.geo[1]
-      }),
+      getCorrectLatLng(currentLocation, api.closestStation.gps),
       { unit }
     )
   );
@@ -81,6 +82,6 @@ export function distanceToStation(
  * @param currentLocation - The current location of the user.
  * @param api - The api object returned by remote data.
  */
-export function isStationTooFar(currentLocation: LatLng, api: Api) {
+export function isStationTooFar(currentLocation: LatLng, api: Api): boolean {
   return distanceToStation(currentLocation, api) > MAX_DISTANCE_TO_STATION;
 }

@@ -17,6 +17,7 @@
 import React, { useContext } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { CigaretteBlock, getCigaretteCount } from '../../components';
 import {
   ApiContext,
@@ -42,20 +43,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Home(props: HomeProps) {
+export function Home(props: HomeProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { isGps } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api ? api.shootISmoke.cigarettes : 0;
+  const cigarettesPerDay = api ? api.dailyCigarettes : 0;
 
   return (
     <View style={styles.container}>
       <SmokeVideo cigarettes={getCigaretteCount(frequency, cigarettesPerDay)} />
       <Header
-        onChangeLocationClick={() => {
+        onChangeLocationClick={(): void => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
           props.navigation.navigate('Search');
         }}

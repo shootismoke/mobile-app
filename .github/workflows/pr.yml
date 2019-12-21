@@ -1,0 +1,21 @@
+name: pr
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Lint
+        run: |
+          yarn install
+          yarn lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test
+        run: |
+          yarn install
+          yarn test

@@ -3,7 +3,7 @@
     "android": {
       "config": {
         "googleMaps": {
-          "apiKey": "YOUR_KEY"
+          "apiKey": "YOUR_OPTIONAL_KEY"
         }
       },
       "icon": "assets/logos/android/playstore-icon.png",
@@ -13,11 +13,11 @@
     },
     "assetBundlePatterns": ["assets/**/*"],
     "extra": {
-      "algoliaApiKey": "YOUR_KEY",
-      "algoliaApplicationId": "YOUR_KEY",
-      "amplitudeApiKey": "YOUR_KEY",
-      "sentryPublicDsn": "YOUR_KEY",
-      "waqiToken": "YOUR_KEY"
+      "algoliaApiKey": null,
+      "algoliaApplicationId": null,
+      "amplitudeApiKey": null,
+      "sentryPublicDsn": null,
+      "waqiToken": "6bb4237574756ba29f05cea553bd22576596c11e"
     },
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
     "hooks": {
@@ -25,9 +25,9 @@
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "YOUR_SENTRY_ORG",
-            "project": "YOUR_SENTRY_PROJECT",
-            "authToken": "YOUR_KEY"
+            "organization": null,
+            "project": null,
+            "authToken": null
           }
         }
       ]
@@ -37,7 +37,7 @@
       "buildNumber": "1.5.0",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
-        "googleMapsApiKey": "YOUR_KEY"
+        "googleMapsApiKey": "YOUR_OPTIONAL_KEY"
       },
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
       "infoPlist": {

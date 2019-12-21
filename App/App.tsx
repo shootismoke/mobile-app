@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as Font from 'expo-font';
+import { ApolloProvider } from '@apollo/react-hooks';
 import Constants from 'expo-constants';
+import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform, StatusBar } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
 import { Screens } from './Screens';
@@ -30,6 +31,7 @@ import {
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
+import { client } from './util/apollo';
 
 // Add Sentry if available
 if (Constants.manifest.extra.sentryPublicDsn) {
@@ -43,7 +45,7 @@ if (Constants.manifest.extra.sentryPublicDsn) {
   }
 }
 
-export function App() {
+export function App(): React.ReactElement {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     Promise.all([
@@ -56,7 +58,7 @@ export function App() {
     ])
 
       .then(() => setReady(true))
-      .catch(console.error);
+      .catch(error => console.error(error));
   }, []);
 
   useEffect(() => {
@@ -72,13 +74,18 @@ export function App() {
   return ready ? (
     <ErrorContextProvider>
       <LocationContextProvider>
-        <ApiContextProvider>
-          <FrequencyContextProvider>
-            <DistanceUnitProvider>
-              <Screens />
-            </DistanceUnitProvider>
-          </FrequencyContextProvider>
-        </ApiContextProvider>
+        <ApolloProvider client={client}>
+          <ApiContextProvider>
+            <FrequencyContextProvider>
+              <DistanceUnitProvider>
+                {Platform.select({
+                  ios: <StatusBar barStyle="dark-content" />
+                })}
+                <Screens />
+              </DistanceUnitProvider>
+            </FrequencyContextProvider>
+          </ApiContextProvider>
+        </ApolloProvider>
       </LocationContextProvider>
     </ErrorContextProvider>
   ) : (

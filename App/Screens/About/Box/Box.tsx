@@ -17,6 +17,7 @@
 import React from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import cigarette from '../../../../assets/images/cigarette.png';
 import { i18n } from '../../../localization';
 import * as theme from '../../../util/theme';
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Box() {
+export function Box(): React.ReactElement {
   return (
     <View style={styles.box}>
       <View style={styles.equivalence}>

@@ -15,8 +15,8 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { createContext, useState } from 'react';
-import { Frequency } from '../Screens/Home/SelectFrequency';
 
+import { Frequency } from '../Screens/Home/SelectFrequency';
 import { noop } from '../util/noop';
 
 interface Context {
@@ -33,7 +33,7 @@ export function FrequencyContextProvider({
   children
 }: {
   children: JSX.Element;
-}) {
+}): React.ReactElement {
   const [frequency, setFrequency] = useState<Frequency>('daily');
 
   return (

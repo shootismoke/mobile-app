@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { POLLUTANTS } from '@shootismoke/aqi';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
 import {
@@ -25,13 +26,12 @@ import {
   TextStyle,
   View
 } from 'react-native';
+
 import locationIcon from '../../../../assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import * as theme from '../../../util/theme';
-
-const trackedPollutant = ['pm25', 'pm10', 'co', 'o3', 'no2', 'so2'];
 
 interface HeaderProps {
   onBackClick: (event: GestureResponderEvent) => void;
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
 
 const renderInfo = (
   label: string,
-  value: string,
+  value: string | number,
   style?: StyleProp<TextStyle>
-) => {
+): React.ReactElement => {
   return (
     <Text key={label} style={[styles.info, style]}>
       <Text style={styles.label}>{label}</Text> {value}
@@ -91,7 +91,7 @@ const renderInfo = (
   );
 };
 
-export function Header(props: HeaderProps) {
+export function Header(props: HeaderProps): React.ReactElement {
   const { onBackClick } = props;
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
@@ -106,10 +106,6 @@ export function Header(props: HeaderProps) {
     );
   }
 
-  const lastUpdated =
-    api.time && api.time.v ? new Date(api.time.v * 1000) : null;
-  const { dominentpol, iaqi } = api;
-
   return (
     <View style={styles.container}>
       <BackButton onPress={onBackClick} style={styles.backButton} />
@@ -123,29 +119,32 @@ export function Header(props: HeaderProps) {
             currentLocation={currentLocation}
             style={styles.currentLocation}
           />
-          {lastUpdated &&
+          {api.updatedAt &&
             renderInfo(
               i18n.t('details_header_latest_update_label'),
-              `${formatDistanceToNow(lastUpdated)} ${i18n.t(
+              `${formatDistanceToNow(api.updatedAt * 1000)} ${i18n.t(
                 'details_header_latest_update_ago'
               )}`
             )}
-          {dominentpol &&
+          {api.dominant &&
             renderInfo(
               i18n.t('details_header_primary_pollutant_label'),
-              dominentpol.toUpperCase()
+              api.dominant.toUpperCase()
             )}
 
           <View style={styles.pollutants}>
-            {trackedPollutant.map(
-              pollutant =>
-                iaqi[pollutant] &&
+            {POLLUTANTS.map(pollutant => {
+              const value = api.pollutants[pollutant];
+
+              return (
+                value &&
                 renderInfo(
                   `${pollutant.toUpperCase()} AQI:`,
-                  iaqi[pollutant].v.toString(),
+                  value.aqiUS,
                   styles.pollutantItem
                 )
-            )}
+              );
+            })}
           </View>
         </View>
       </View>

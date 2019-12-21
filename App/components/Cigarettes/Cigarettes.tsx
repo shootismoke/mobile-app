@@ -17,7 +17,8 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { Cigarette, CigaretteSize, CIGARETTES_HEIGHT } from './Cigarette';
+
+import { Cigarette, CIGARETTES_HEIGHT, CigaretteSize } from './Cigarette';
 
 interface CigarettesProps {
   cigarettes: number;
@@ -48,9 +49,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Cigarettes(props: CigarettesProps) {
+export function Cigarettes(props: CigarettesProps): React.ReactElement {
   const { cigarettes: realCigarettes } = props;
-  const cigarettes = Math.round(Math.min(realCigarettes, 50) * 10) / 10; // We don't show more than 50
+  const cigarettes =
+    Math.round(Math.max(0.1, Math.min(realCigarettes, 50)) * 10) / 10; // We don't show more than 50
   // const cigarettes = 1.9; // Can change values here for testing
 
   const count = Math.floor(cigarettes); // The cigarette count, without decimal

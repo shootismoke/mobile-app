@@ -23,6 +23,7 @@ import {
   View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import * as theme from '../../util/theme';
 
 interface BoxButtonProps extends TouchableWithoutFeedbackProps {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function BoxButton(props: BoxButtonProps) {
+export function BoxButton(props: BoxButtonProps): React.ReactElement {
   const { active, children, onPress, style, ...rest } = props;
 
   return (

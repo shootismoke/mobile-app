@@ -16,6 +16,7 @@
 
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
 import { CigaretteBlock, CurrentLocation } from '../../../components';
 import {
   ApiContext,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ShareImage() {
+export function ShareImage(): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
@@ -59,7 +60,7 @@ export function ShareImage() {
     );
   }
 
-  const cigarettesPerDay = api ? api.shootISmoke.cigarettes : 0;
+  const cigarettesPerDay = api ? api.dailyCigarettes : 0;
 
   return (
     <View style={styles.container}>

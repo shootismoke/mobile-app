@@ -28,11 +28,13 @@ import {
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { SelectNotifications } from '../Home/SelectNotifications';
 import { Box } from './Box';
 
 const CustomScrollView = wrapScrollView(ScrollView);
@@ -49,25 +51,25 @@ export const aboutSections = {
   aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
 };
 
-const handleOpenAmaury = () => {
+const handleOpenAmaury = (): void => {
   Linking.openURL('https://twitter.com/amaurymartiny');
 };
 
-const handleOpenAqi = () => {
+const handleOpenAqi = (): void => {
   Linking.openURL('http://aqicn.org/');
 };
 
-const handleOpenArticle = () => {
+const handleOpenArticle = (): void => {
   Linking.openURL(
     'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
   );
 };
 
-const handleOpenGithub = () => {
+const handleOpenGithub = (): void => {
   Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke');
 };
 
-const handleOpenMarcelo = () => {
+const handleOpenMarcelo = (): void => {
   Linking.openURL('https://www.behance.net/marceloscoelho');
 };
 
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function About(props: AboutProps) {
+export function About(props: AboutProps): React.ReactElement {
   const { navigation } = props;
   const {
     distanceUnit,
@@ -139,7 +141,7 @@ export function About(props: AboutProps) {
 
   trackScreen('ABOUT');
 
-  const toggleDistanceSwitch = (value: boolean) =>
+  const toggleDistanceSwitch = (value: boolean): void =>
     setDistanceUnit(value ? 'km' : 'mile');
 
   return (
@@ -148,7 +150,9 @@ export function About(props: AboutProps) {
       style={theme.withPadding}
     >
       <BackButton
-        onPress={() => navigation.goBack()}
+        onPress={(): void => {
+          navigation.goBack();
+        }}
         style={styles.backButton}
       />
 
@@ -229,6 +233,15 @@ export function About(props: AboutProps) {
           </Text>{' '}
           {i18n.t('about_weird_results_message_2')}
         </Text>
+      </View>
+
+      <View style={styles.distance}>
+        <Text style={styles.h2}>Notifications (alpha)</Text>
+        <Text style={theme.text}>
+          This section is an alpha testing stage of the new notifications
+          feature.
+        </Text>
+        <SelectNotifications />
       </View>
 
       <View style={styles.distance}>

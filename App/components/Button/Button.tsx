@@ -23,6 +23,7 @@ import {
   TouchableOpacityProps
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import * as theme from '../../util/theme';
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   secondary: {}
 });
 
-export function Button(props: ButtonProps) {
+export function Button(props: ButtonProps): React.ReactElement {
   const { children, icon, onPress, style, type, ...rest } = props;
 
   return (

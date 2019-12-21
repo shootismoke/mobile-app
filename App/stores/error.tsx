@@ -19,8 +19,8 @@ import React, { createContext, useState } from 'react';
 import { noop } from '../util/noop';
 
 interface Context {
-  error?: string;
-  setError: (error?: string) => void;
+  error?: Error;
+  setError: (error?: Error) => void;
 }
 
 export const ErrorContext = createContext<Context>({
@@ -28,8 +28,12 @@ export const ErrorContext = createContext<Context>({
   setError: noop
 });
 
-export function ErrorContextProvider({ children }: { children: JSX.Element }) {
-  const [error, setError] = useState<string | undefined>(undefined);
+export function ErrorContextProvider({
+  children
+}: {
+  children: JSX.Element;
+}): React.ReactElement {
+  const [error, setError] = useState<Error | undefined>(undefined);
 
   return (
     <ErrorContext.Provider value={{ error, setError }}>

@@ -2,7 +2,7 @@
 
 Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:
 
-[![Travis (.org)](https://img.shields.io/travis/amaurymartiny/shoot-i-smoke.svg)](https://travis-ci.org/amaurymartiny/shoot-i-smoke)
+[![Actions Status](https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg)](https://github.com/amaurymartiny/shoot-i-smoke/actions)
 ![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
 [![David](https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg)](https://david-dm.org/amaurymartiny/shoot-i-smoke)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability)](https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability)
@@ -21,27 +21,35 @@ Know how many cigarettes you smoke based on the pollution of your location. :poo
   <img src="./assets/screenshots/ios/iPhone-X-5.png" alt="screenshot-5" width="150">
 </p>
 
+## 😷 Air Pollution
+
+Air pollution is a burning issue facing our planet today. Rapid industrialization and urbanization has made the problem extremely difficult to contain. Cities around the world are witnessing rising levels of air contamination, with Beijing, Kanpur and New Delhi recording some of the worst figures in recent years.
+
+Air pollution has dire implications on human health and well-being. It affects plant and animal life, and also disrupts the ecosystem. It changes our environment irreversibly, often leaving it beyond repair. This calls for an urgent need to curb air pollution.
+
+There are various things we can do to eliminate the causes and minimize the effects of air pollution. There is a macro and a micro level to dealing with pollution. While the government and the private sector need to rethink policies for controlling air pollution on a broader scale, we as citizens can fight air pollution in our homes and offices by installing air quality monitors and air purification devices.
+
 ## :iphone: Try it on Expo
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
-| Release Channel | Version | Description                                                                 | Url                                                                        |
-| --------------- | ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Production      | v1.4.0  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production` |
-| Staging         | v1.5.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                            |
+| Release Channel                                                                               | Version | Description                                                                 | Url                                                                               |
+| --------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [Production](https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.4.2) | v1.4.2  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.4.2` |
+| [Staging](https://exp.host/@amaurymartiny/shoot-i-smoke)                                      | v1.5.0  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                                   |
 
 ## :hammer: Build it yourself
 
 Before developing the app, you need to fetch your own API tokens for the following services:
 
-| Service                 | Url                                                                                 | Comments                                   |
-| ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------ |
-| World Air Quality Index | http://aqicn.org/api/                                                               | Required.                                  |
-| Algolia Places          | https://community.algolia.com/places/rest.html (`Get Started` button on the bottom) | Optional, lower API rates if not provided. |
-| Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start                      | Optional in development.                   |
-| Google Maps for Android | https://developers.google.com/maps/documentation/android-api/                       | Optional in development.                   |
-| Sentry Bug Tracking     | https://sentry.io                                                                   | Optional.                                  |
-| Amplitude Analytics     | https://amplitude.com                                                               | Optional. Note: we **never** track PII.    |
+| Service                 | Url                                                                        | Comments                                                                   |
+| ----------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| World Air Quality Index | http://aqicn.org/api/                                                      | Required. You can use the dummy one in `app.example.json` for development. |
+| Algolia Places          | https://community.algolia.com/places/ (`Get Started` button on the bottom) | Optional, lower API rates if not provided.                                 |
+| Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start             | Optional in development.                                                   |
+| Google Maps for Android | https://developers.google.com/maps/documentation/android-api/              | Optional in development.                                                   |
+| Sentry Bug Tracking     | https://sentry.io                                                          | Optional.                                                                  |
+| Amplitude Analytics     | https://amplitude.com                                                      | Optional. Note: we **never** track PII.                                    |
 
 Then run the following commands:
 

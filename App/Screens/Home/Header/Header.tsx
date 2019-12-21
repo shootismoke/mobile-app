@@ -23,6 +23,7 @@ import {
   View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { i18n } from '../../../localization';
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Header(props: HeaderProps) {
+export function Header(props: HeaderProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
   const { distanceUnit, localizedDistanceUnit } = useDistanceUnit();

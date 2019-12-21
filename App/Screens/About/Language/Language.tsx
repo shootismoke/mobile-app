@@ -16,6 +16,7 @@
 
 import React, { useContext } from 'react';
 import { Picker, StyleSheet, Text, View } from 'react-native';
+
 import { i18n } from '../../../localization';
 import { ApiContext } from '../../../stores';
 import * as theme from '../../../util/theme';
@@ -33,10 +34,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export function Language() {
+export function Language(): React.ReactElement {
   const { reloadApp } = useContext(ApiContext);
 
-  const handleValueChange = (itemValue: string) => {
+  const handleValueChange = (itemValue: string): void => {
     i18n.locale = itemValue;
 
     // Reload app for changes to take effect

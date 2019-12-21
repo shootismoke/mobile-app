@@ -17,6 +17,7 @@
 import React from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
+
 import buttVertical from '../../../../assets/images/butt-vertical.png';
 import butt from '../../../../assets/images/butt.png';
 import headVertical from '../../../../assets/images/head-vertical.png';
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function getCigaretteActualLength(length: number, percentage: number) {
+function getCigaretteActualLength(length: number, percentage: number): number {
   return Math.ceil(
     scale(((1 - MIN_PERCENTAGE) * percentage + MIN_PERCENTAGE) * length)
   );
@@ -78,7 +79,7 @@ function getCigaretteActualLength(length: number, percentage: number) {
  *
  * Measures come from Figma
  */
-function getMeasures(size: CigaretteSize, percentage: number) {
+function getMeasures(size: CigaretteSize, percentage: number): ViewStyle {
   switch (size) {
     case 'big': {
       return {
@@ -108,7 +109,7 @@ function getStyle(
   orientation: CigaretteOrientation,
   percentage: number,
   size: CigaretteSize
-) {
+): ViewStyle {
   const { height, width, margin } = getMeasures(size, percentage);
 
   switch (orientation) {
@@ -128,6 +129,8 @@ function getStyle(
         width: height
       };
     }
+    default:
+      return {};
   }
 }
 
@@ -136,7 +139,7 @@ function renderCigarette(
   percentage: number,
   size: CigaretteSize,
   additionalStyle?: StyleProp<ViewStyle>
-) {
+): React.ReactElement {
   return (
     <View
       style={[
@@ -169,7 +172,7 @@ function renderCigarette(
   );
 }
 
-export function Cigarette(props: CigaretteProps) {
+export function Cigarette(props: CigaretteProps): React.ReactElement {
   const { orientation, percentage, size, style } = props;
 
   return orientation === 'diagonal' ? (

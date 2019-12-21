@@ -24,6 +24,7 @@ import {
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
+
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
@@ -57,7 +58,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export function AdditionalInfo(props: AdditionalInfoProps) {
+export function AdditionalInfo(
+  props: AdditionalInfoProps
+): React.ReactElement | null {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency, navigation, style, ...rest } = props;
@@ -74,10 +77,10 @@ export function AdditionalInfo(props: AdditionalInfoProps) {
 
   const isTooFar = isStationTooFar(currentLocation, api);
 
-  function renderBeta() {
+  function renderBeta(): React.ReactElement {
     return (
       <TouchableOpacity
-        onPress={() => {
+        onPress={(): void => {
           track('HOME_SCREEN_BETA_INACCURATE_CLICK');
           // eslint-disable-next-line
           navigation.navigate('About', {

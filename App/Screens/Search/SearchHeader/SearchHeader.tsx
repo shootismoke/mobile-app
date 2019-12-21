@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
+
 import searchIcon from '../../../../assets/images/search.png';
 import { Banner } from '../../../components';
 import { i18n } from '../../../localization';
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function SearchHeader(props: SearchHeaderProps) {
+export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
   const { onChangeSearch, search } = props;
 
   return (
