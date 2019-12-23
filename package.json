@@ -17,7 +17,7 @@
     "@expo/vector-icons": "^10.0.0",
     "@shootismoke/aqi": "^0.1.15",
     "@shootismoke/dataproviders": "^0.1.17",
-    "@shootismoke/graphql": "^0.1.15",
+    "@shootismoke/graphql": "^0.2.0",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
     "@types/react-native": "^0.60.25",

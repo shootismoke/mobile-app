@@ -1775,6 +1775,11 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.1.15.tgz#faaa2f5222d52b4a0d63db5b78eebd5a33561c0f"
   integrity sha512-6c5Ya8CyynEQrP29r8BihB73yuHYvuxusQFFBbkdWrftQar7DQum3TRRkPJ2Wvflm7pnvdYrMRs7XDHtia8hVg==
 
+"@shootismoke/graphql@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.0.tgz#1f06a12801d8182187284a020f45fd42e5c8b3d6"
+  integrity sha512-67ZKV7ciCGxgLMLCaPHL582s+GNj+yzBUV31+qmE1/dPkyaZLii4dhUyVoQ4uFhAkIdUTonVso3bDfWY633AOg==
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
