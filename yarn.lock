@@ -1759,13 +1759,17 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/aqi/-/aqi-0.1.15.tgz#1f6fb66cb5b27e4e6471901674c90a15a45a385c"
   integrity sha512-nz3k9PqMDpyMZPsboBofVQphrWQuV6nE3eo0+tewDXIt85RpTHvZpkpfbwTFxUC14MbXKc5h+K5k1boCO/W8mw==
 
-"@shootismoke/dataproviders@^0.1.17":
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.1.17.tgz#dce4aa6e842cdf1500739b9169c9ff1b3db49112"
-  integrity sha512-tiR3xKloCdm2nNWluZLpevvd9C7e3TLH0yBFBlbdHjAOYh+BK5pa/SREukuwYd5t2oi9L0SGzT/GKwDyDOO+QQ==
+"@shootismoke/convert@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.0.tgz#d2cc547ec2c66b377957d0be7b626ce0e55f0065"
+  integrity sha512-+sktsQwh0IBcFQdJP5uuR3LDLh7fcuQFy4yxdRq5liVCZ9cRzAHl+ckB+4uALoS4qdvZA7h9dmFMkgjyQpt47w==
+
+"@shootismoke/dataproviders@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.0.tgz#88f2fc014828a2162365812c0235bb363f4e4c76"
+  integrity sha512-BxELveEIOW+uIKzasIVqSFP5jkSPCj56chvG0jDUbShkRxAAUvudyUBXb0dOsSA6t1vBFmn0onDbfvRCbgLP3A==
   dependencies:
-    "@shootismoke/aqi" "^0.1.15"
-    "@shootismoke/graphql" "^0.1.15"
+    "@shootismoke/convert" "^0.2.0"
     axios "^0.19.0"
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
