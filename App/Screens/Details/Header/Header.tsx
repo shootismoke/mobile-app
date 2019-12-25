@@ -15,6 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { convert } from '@shootismoke/convert';
+import { dominantPol } from '@shootismoke/dataproviders';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
 import {
@@ -125,11 +126,10 @@ export function Header(props: HeaderProps): React.ReactElement {
               'details_header_latest_update_ago'
             )}`
           )}
-          {api.dominant &&
-            renderInfo(
-              i18n.t('details_header_primary_pollutant_label'),
-              api.dominant.toUpperCase()
-            )}
+          {renderInfo(
+            i18n.t('details_header_primary_pollutant_label'),
+            dominantPol(api.normalized)
+          )}
 
           <View style={styles.pollutants}>
             {api.normalized.map(normalized => {

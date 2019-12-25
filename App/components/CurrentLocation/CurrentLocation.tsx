@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { stationName } from '@shootismoke/dataproviders';
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
@@ -44,7 +45,7 @@ export function CurrentLocation(
     <Text style={[styles.title, style]} {...rest}>
       {(
         currentLocation.name ||
-        api.closestStation.name ||
+        stationName(api.pm25) ||
         UNKNOWN_STATION
       ).toUpperCase()}
     </Text>

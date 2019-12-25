@@ -87,17 +87,17 @@ function race(gps: LatLng): TE.TaskEither<Error, Api> {
       aqicn.fetchByGps(gps, {
         token: Constants.manifest.extra.aqicnToken
       }),
-      TE.map(aqicn.normalizeByGps),
+      TE.chain(data => TE.fromEither(aqicn.normalizeByGps(data))),
       TE.chain(filterPm25)
     ),
     pipe(
       openaq.fetchByGps(gps),
-      TE.map(openaq.normalizeByGps),
+      TE.chain(data => TE.fromEither(openaq.normalizeByGps(data))),
       TE.chain(filterPm25)
     ),
     pipe(
       waqi.fetchByGps(gps),
-      TE.map(waqi.normalizeByGps),
+      TE.chain(data => TE.fromEither(waqi.normalizeByGps(data))),
       TE.chain(filterPm25)
     )
   ];

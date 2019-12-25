@@ -1759,10 +1759,10 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.0.tgz#d2cc547ec2c66b377957d0be7b626ce0e55f0065"
   integrity sha512-+sktsQwh0IBcFQdJP5uuR3LDLh7fcuQFy4yxdRq5liVCZ9cRzAHl+ckB+4uALoS4qdvZA7h9dmFMkgjyQpt47w==
 
-"@shootismoke/dataproviders@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.0.tgz#88f2fc014828a2162365812c0235bb363f4e4c76"
-  integrity sha512-BxELveEIOW+uIKzasIVqSFP5jkSPCj56chvG0jDUbShkRxAAUvudyUBXb0dOsSA6t1vBFmn0onDbfvRCbgLP3A==
+"@shootismoke/dataproviders@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.2.tgz#8d2a89f4059281e7d36c62a7bedae246aafac791"
+  integrity sha512-FPLtm0z7PRiqLdoOK7Twyet0CoIeBRRPs9SW8zLyCcWURy3dFUmcRrg/KIk9n1L2pD4qpf3vPrSANheI4XoKHQ==
   dependencies:
     "@shootismoke/convert" "^0.2.0"
     axios "^0.19.0"
