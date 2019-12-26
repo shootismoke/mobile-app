@@ -128,7 +128,7 @@ export function Header(props: HeaderProps): React.ReactElement {
           )}
           {renderInfo(
             i18n.t('details_header_primary_pollutant_label'),
-            dominantPol(api.normalized)
+            dominantPol(api.normalized).toUpperCase()
           )}
 
           <View style={styles.pollutants}>

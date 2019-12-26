@@ -22,6 +22,7 @@ import {
   waqi
 } from '@shootismoke/dataproviders';
 import Constants from 'expo-constants';
+import * as C from 'fp-ts/lib/Console';
 import * as M from 'fp-ts/lib/Monoid';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
@@ -32,7 +33,7 @@ import { logFpError, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { createHistoryItem } from './util';
+import { createHistoryItem, pm25ToCigarettes } from './util';
 
 // FIXME Import from @shootismoke/convert
 type OpenAQFormat = Normalized[0];
@@ -64,7 +65,7 @@ function filterPm25(normalized: Normalized): TE.TaskEither<Error, Api> {
       normalized,
       pm25: pm25[0],
       shootismoke: {
-        dailyCigarettes: 24
+        dailyCigarettes: pm25ToCigarettes(pm25[0].value)
       }
     });
   } else {
@@ -88,16 +89,35 @@ function race(gps: LatLng): TE.TaskEither<Error, Api> {
         token: Constants.manifest.extra.aqicnToken
       }),
       TE.chain(data => TE.fromEither(aqicn.normalizeByGps(data))),
+      TE.chain(
+        sideEffect(normalized =>
+          TE.rightIO(
+            C.log(`Got data from aqicn: ${JSON.stringify(normalized)}`)
+          )
+        )
+      ),
       TE.chain(filterPm25)
     ),
     pipe(
       openaq.fetchByGps(gps),
       TE.chain(data => TE.fromEither(openaq.normalizeByGps(data))),
+      TE.chain(
+        sideEffect(normalized =>
+          TE.rightIO(
+            C.log(`Got data from openaq: ${JSON.stringify(normalized)}`)
+          )
+        )
+      ),
       TE.chain(filterPm25)
     ),
     pipe(
       waqi.fetchByGps(gps),
       TE.chain(data => TE.fromEither(waqi.normalizeByGps(data))),
+      TE.chain(
+        sideEffect(normalized =>
+          TE.rightIO(C.log(`Got data from waqi: ${JSON.stringify(normalized)}`))
+        )
+      ),
       TE.chain(filterPm25)
     )
   ];
