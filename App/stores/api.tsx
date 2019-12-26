@@ -19,6 +19,7 @@ import {
   LatLng,
   Normalized,
   openaq,
+  Provider,
   waqi
 } from '@shootismoke/dataproviders';
 import Constants from 'expo-constants';
@@ -82,44 +83,34 @@ function filterPm25(normalized: Normalized): TE.TaskEither<Error, Api> {
  * @param gps - The GPS coordinates to fetch data for
  */
 function race(gps: LatLng): TE.TaskEither<Error, Api> {
+  // Helper function to fetch & normalize data for 1 provider
+  function fetchForProvider<DataByGps, DataByStation, Options>(
+    provider: Provider<DataByGps, DataByStation, Options>,
+    options?: Options
+  ): TE.TaskEither<Error, Api> {
+    return pipe(
+      provider.fetchByGps(gps, options),
+      TE.chain(data => TE.fromEither(provider.normalizeByGps(data))),
+      TE.chain(
+        sideEffect(normalized =>
+          TE.rightIO(
+            C.log(
+              `Got data from ${provider.name}: ${JSON.stringify(normalized)}`
+            )
+          )
+        )
+      ),
+      TE.chain(filterPm25)
+    );
+  }
+
   // Run these tasks parallely
   const tasks = [
-    pipe(
-      aqicn.fetchByGps(gps, {
-        token: Constants.manifest.extra.aqicnToken
-      }),
-      TE.chain(data => TE.fromEither(aqicn.normalizeByGps(data))),
-      TE.chain(
-        sideEffect(normalized =>
-          TE.rightIO(
-            C.log(`Got data from aqicn: ${JSON.stringify(normalized)}`)
-          )
-        )
-      ),
-      TE.chain(filterPm25)
-    ),
-    pipe(
-      openaq.fetchByGps(gps),
-      TE.chain(data => TE.fromEither(openaq.normalizeByGps(data))),
-      TE.chain(
-        sideEffect(normalized =>
-          TE.rightIO(
-            C.log(`Got data from openaq: ${JSON.stringify(normalized)}`)
-          )
-        )
-      ),
-      TE.chain(filterPm25)
-    ),
-    pipe(
-      waqi.fetchByGps(gps),
-      TE.chain(data => TE.fromEither(waqi.normalizeByGps(data))),
-      TE.chain(
-        sideEffect(normalized =>
-          TE.rightIO(C.log(`Got data from waqi: ${JSON.stringify(normalized)}`))
-        )
-      ),
-      TE.chain(filterPm25)
-    )
+    fetchForProvider(aqicn, {
+      token: Constants.manifest.extra.aqicnToken
+    }),
+    fetchForProvider(openaq),
+    fetchForProvider(waqi)
   ];
 
   // Return a race behavior between the tasks
