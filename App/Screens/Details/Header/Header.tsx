@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { POLLUTANTS } from '@shootismoke/aqi';
+import { convert } from '@shootismoke/convert';
+import { dominantPol } from '@shootismoke/dataproviders';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
 import {
@@ -119,30 +120,28 @@ export function Header(props: HeaderProps): React.ReactElement {
             currentLocation={currentLocation}
             style={styles.currentLocation}
           />
-          {api.updatedAt &&
-            renderInfo(
-              i18n.t('details_header_latest_update_label'),
-              `${formatDistanceToNow(api.updatedAt * 1000)} ${i18n.t(
-                'details_header_latest_update_ago'
-              )}`
-            )}
-          {api.dominant &&
-            renderInfo(
-              i18n.t('details_header_primary_pollutant_label'),
-              api.dominant.toUpperCase()
-            )}
+          {renderInfo(
+            i18n.t('details_header_latest_update_label'),
+            `${formatDistanceToNow(new Date(api.pm25.date.local))} ${i18n.t(
+              'details_header_latest_update_ago'
+            )}`
+          )}
+          {renderInfo(
+            i18n.t('details_header_primary_pollutant_label'),
+            dominantPol(api.normalized).toUpperCase()
+          )}
 
           <View style={styles.pollutants}>
-            {POLLUTANTS.map(pollutant => {
-              const value = api.pollutants[pollutant];
-
-              return (
-                value &&
-                renderInfo(
-                  `${pollutant.toUpperCase()} AQI:`,
-                  value.aqiUS,
-                  styles.pollutantItem
-                )
+            {api.normalized.map(normalized => {
+              return renderInfo(
+                `${normalized.parameter.toUpperCase()} AQI:`,
+                convert(
+                  normalized.parameter,
+                  'raw',
+                  'usaEpa',
+                  normalized.value
+                ),
+                styles.pollutantItem
               );
             })}
           </View>

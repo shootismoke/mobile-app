@@ -15,9 +15,9 @@
     "extra": {
       "algoliaApiKey": null,
       "algoliaApplicationId": null,
+      "aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
       "amplitudeApiKey": null,
-      "sentryPublicDsn": null,
-      "waqiToken": "6bb4237574756ba29f05cea553bd22576596c11e"
+      "sentryPublicDsn": null
     },
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
     "hooks": {

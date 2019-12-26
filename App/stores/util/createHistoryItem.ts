@@ -38,8 +38,8 @@ export function createHistoryItem(api: Api): TE.TaskEither<Error, void> {
   return pipe(
     getOrCreateUser(),
     TE.map<string, CreateHistoryItemInput>(userId => ({
-      rawPm25: api.pollutants.pm25.raw,
-      universalId: api.closestStation.universalId,
+      rawPm25: api.pm25.value,
+      universalId: api.pm25.location,
       userId
     })),
     TE.chain(

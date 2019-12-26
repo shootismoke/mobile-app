@@ -50,7 +50,7 @@ export function Home(props: HomeProps): React.ReactElement {
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api ? api.dailyCigarettes : 0;
+  const cigarettesPerDay = api ? api.shootismoke.dailyCigarettes : 0;
 
   return (
     <View style={styles.container}>

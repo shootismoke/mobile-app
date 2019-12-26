@@ -15,11 +15,16 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import {
-  NormalizedByGps,
-  normalizedByGps,
-  PollutantValue
+  aqicn,
+  LatLng,
+  Normalized,
+  openaq,
+  Provider,
+  waqi
 } from '@shootismoke/dataproviders';
 import Constants from 'expo-constants';
+import * as C from 'fp-ts/lib/Console';
+import * as M from 'fp-ts/lib/Monoid';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -29,17 +34,85 @@ import { logFpError, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { createHistoryItem } from './util';
+import { createHistoryItem, pm25ToCigarettes } from './util';
+
+// FIXME Import from @shootismoke/convert
+type OpenAQFormat = Normalized[0];
 
 /**
  * Api is basically the normalized data from '@shootismoke/dataproviders',
- * where we make sure dailyCigarettes and pm25 values are set.
+ * where we make sure to add cigarette conversion
  */
-export interface Api extends NormalizedByGps {
-  dailyCigarettes: number;
-  pollutants: NormalizedByGps['pollutants'] & {
-    pm25: PollutantValue;
+export interface Api {
+  normalized: Normalized;
+  pm25: OpenAQFormat;
+  shootismoke: {
+    dailyCigarettes: number;
   };
+}
+
+/**
+ * Given some normalized data points, filter out the first one that contains
+ * pm25 data. Returns a TaskEither left is none is found, or format the data
+ * into the Api interface
+ *
+ * @param normalized - The normalized data to process
+ */
+function filterPm25(normalized: Normalized): TE.TaskEither<Error, Api> {
+  const pm25 = normalized.filter(({ parameter }) => parameter === 'pm25');
+
+  if (pm25.length) {
+    return TE.right({
+      normalized,
+      pm25: pm25[0],
+      shootismoke: {
+        dailyCigarettes: pm25ToCigarettes(pm25[0].value)
+      }
+    });
+  } else {
+    return TE.left(
+      new Error('PM2.5 has not been measured by this station right now')
+    );
+  }
+}
+
+/**
+ * Fetch data parallely from difference data sources, and return the first
+ * response
+ *
+ * @param gps - The GPS coordinates to fetch data for
+ */
+function race(gps: LatLng): TE.TaskEither<Error, Api> {
+  // Helper function to fetch & normalize data for 1 provider
+  function fetchForProvider<DataByGps, DataByStation, Options>(
+    provider: Provider<DataByGps, DataByStation, Options>,
+    options?: Options
+  ): TE.TaskEither<Error, Api> {
+    return pipe(
+      provider.fetchByGps(gps, options),
+      TE.chain(data => TE.fromEither(provider.normalizeByGps(data))),
+      TE.chain(
+        sideEffect(normalized =>
+          TE.rightIO(
+            C.log(`Got data from ${provider.id}: ${JSON.stringify(normalized)}`)
+          )
+        )
+      ),
+      TE.chain(filterPm25)
+    );
+  }
+
+  // Run these tasks parallely
+  const tasks = [
+    fetchForProvider(aqicn, {
+      token: Constants.manifest.extra.aqicnToken
+    }),
+    fetchForProvider(openaq),
+    fetchForProvider(waqi)
+  ];
+
+  // Return a race behavior between the tasks
+  return pipe(tasks, M.fold(T.getRaceMonoid()));
 }
 
 interface Context {
@@ -73,23 +146,7 @@ export function ApiContextProvider({
     }
 
     pipe(
-      normalizedByGps(currentLocation, {
-        aqicn: {
-          token: Constants.manifest.extra.waqiToken
-        }
-      }),
-      TE.chain(response =>
-        response.pollutants.pm25 && response.dailyCigarettes !== undefined
-          ? TE.right(response as Api)
-          : TE.left(
-              new Error(
-                `Normalized data for ${JSON.stringify({
-                  latitude,
-                  longitude
-                })}: PM2.5 not defined in response`
-              )
-            )
-      ),
+      race(currentLocation),
       TE.chain(
         sideEffect(api =>
           isGps ? createHistoryItem(api) : TE.right(void undefined)
