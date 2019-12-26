@@ -94,9 +94,7 @@ function race(gps: LatLng): TE.TaskEither<Error, Api> {
       TE.chain(
         sideEffect(normalized =>
           TE.rightIO(
-            C.log(
-              `Got data from ${provider.name}: ${JSON.stringify(normalized)}`
-            )
+            C.log(`Got data from ${provider.id}: ${JSON.stringify(normalized)}`)
           )
         )
       ),
