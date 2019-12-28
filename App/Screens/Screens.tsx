@@ -141,7 +141,7 @@ export function Screens(): React.ReactElement {
 
   return (
     <View style={theme.fullScreen}>
-      <StatusBar translucent={false} />
+      <StatusBar barStyle="dark-content" />
       {stack}
     </View>
   );
