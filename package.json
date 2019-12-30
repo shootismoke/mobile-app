@@ -20,7 +20,7 @@
     "@shootismoke/graphql": "^0.2.0",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
-    "@types/react-native": "^0.60.25",
+    "@types/react-native": "^0.60.26",
     "apollo-boost": "^0.4.7",
     "date-fns": "^2.8.1",
     "expo": "^36.0.0",
