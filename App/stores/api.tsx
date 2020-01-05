@@ -15,26 +15,24 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import {
-  aqicn,
   LatLng,
   Normalized,
-  openaq,
-  Provider,
-  waqi
+  ProviderPromise
 } from '@shootismoke/dataproviders';
+import { aqicn, openaq, waqi } from '@shootismoke/dataproviders/lib/promise';
 import Constants from 'expo-constants';
-import * as C from 'fp-ts/lib/Console';
-import * as M from 'fp-ts/lib/Monoid';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
+import promiseAny from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { logFpError, sideEffect } from '../util/fp';
+import { logFpError, promiseToTE, sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
+import { pm25ToCigarettes } from '../util/secretSauce';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { createHistoryItem, pm25ToCigarettes } from './util';
+import { createHistoryItem } from './util';
 
 // FIXME Import from @shootismoke/convert
 type OpenAQFormat = Normalized[0];
@@ -58,21 +56,19 @@ export interface Api {
  *
  * @param normalized - The normalized data to process
  */
-function filterPm25(normalized: Normalized): TE.TaskEither<Error, Api> {
+function filterPm25(normalized: Normalized): Api {
   const pm25 = normalized.filter(({ parameter }) => parameter === 'pm25');
 
   if (pm25.length) {
-    return TE.right({
+    return {
       normalized,
       pm25: pm25[0],
       shootismoke: {
         dailyCigarettes: pm25ToCigarettes(pm25[0].value)
       }
-    });
+    };
   } else {
-    return TE.left(
-      new Error('PM2.5 has not been measured by this station right now')
-    );
+    throw new Error('PM2.5 has not been measured by this station right now');
   }
 }
 
@@ -84,22 +80,15 @@ function filterPm25(normalized: Normalized): TE.TaskEither<Error, Api> {
  */
 function race(gps: LatLng): TE.TaskEither<Error, Api> {
   // Helper function to fetch & normalize data for 1 provider
-  function fetchForProvider<DataByGps, DataByStation, Options>(
-    provider: Provider<DataByGps, DataByStation, Options>,
+  async function fetchForProvider<DataByGps, DataByStation, Options>(
+    provider: ProviderPromise<DataByGps, DataByStation, Options>,
     options?: Options
-  ): TE.TaskEither<Error, Api> {
-    return pipe(
-      provider.fetchByGps(gps, options),
-      TE.chain(data => TE.fromEither(provider.normalizeByGps(data))),
-      TE.chain(
-        sideEffect(normalized =>
-          TE.rightIO(
-            C.log(`Got data from ${provider.id}: ${JSON.stringify(normalized)}`)
-          )
-        )
-      ),
-      TE.chain(filterPm25)
-    );
+  ): Promise<Api> {
+    const data = await provider.fetchByGps(gps, options);
+    const normalized = provider.normalizeByGps(data);
+    console.log(`Got data from ${provider.id}: ${JSON.stringify(normalized)}`);
+
+    return filterPm25(normalized);
   }
 
   // Run these tasks parallely
@@ -111,8 +100,10 @@ function race(gps: LatLng): TE.TaskEither<Error, Api> {
     fetchForProvider(waqi)
   ];
 
-  // Return a race behavior between the tasks
-  return pipe(tasks, M.fold(T.getRaceMonoid()));
+  // Return a Promise.any behavior between the tasks
+  // FIXME How can one implement a Promise.any behavior with fp-ts?
+  // @see https://github.com/amaurymartiny/shoot-i-smoke/issues/324
+  return promiseToTE(() => promiseAny(tasks));
 }
 
 interface Context {

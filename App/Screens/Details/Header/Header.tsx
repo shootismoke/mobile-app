@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { convert } from '@shootismoke/convert';
-import { dominantPol } from '@shootismoke/dataproviders';
+import { getDominantPol } from '@shootismoke/dataproviders';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
 import {
@@ -128,7 +128,7 @@ export function Header(props: HeaderProps): React.ReactElement {
           )}
           {renderInfo(
             i18n.t('details_header_primary_pollutant_label'),
-            dominantPol(api.normalized).toUpperCase()
+            getDominantPol(api.normalized).toUpperCase()
           )}
 
           <View style={styles.pollutants}>
