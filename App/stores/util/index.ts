@@ -17,4 +17,3 @@
 export * from './createHistoryItem';
 export * from './createUser';
 export * from './fetchGpsPosition';
-export * from './secretSauce';

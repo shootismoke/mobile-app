@@ -14,24 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import {
-  historyItemSchema,
-  measurementSchema,
-  userSchema
-} from '@shootismoke/graphql';
-import ApolloClient from 'apollo-boost';
-import Constants from 'expo-constants';
-
-const BACKEND_URI =
-  Constants.manifest.releaseChannel ===
-  `production-v${Constants.manifest.version}`
-    ? 'https://shootismoke.now.sh/api/graphql'
-    : 'https://staging.shootismoke.now.sh/api/graphql';
-
 /**
- * The Apollo client
+ * Convert raw pm25 level to number of cigarettes. 1 cigarette is equivalent of
+ * a PM2.5 level of 22ug/m3.
+ *
+ * @see http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
+ * @param rawPm25 - The raw PM2.5 level, in ug/m3
  */
-export const client = new ApolloClient({
-  typeDefs: [historyItemSchema, measurementSchema, userSchema],
-  uri: BACKEND_URI
-});
+export function pm25ToCigarettes(rawPm25: number): number {
+  return rawPm25 / 22;
+}

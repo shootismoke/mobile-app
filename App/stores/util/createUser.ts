@@ -51,7 +51,7 @@ export function getOrCreateUser(): TE.TaskEither<Error, string> {
         expoInstallationId: Constants.installationId
       };
       console.log(
-        `<getOrCreateUser> - No mongoId found in AsyncStorage, creating a new user ${JSON.stringify(
+        `<createUser> - No mongoId found in AsyncStorage, creating a new user ${JSON.stringify(
           input
         )}`
       );
