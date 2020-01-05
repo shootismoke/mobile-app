@@ -26,7 +26,7 @@ const BACKEND_URI =
   Constants.manifest.releaseChannel ===
   `production-v${Constants.manifest.version}`
     ? 'https://shootismoke.now.sh/api/graphql'
-    : 'https://backend-git-am-better-api.shootismoke.now.sh/api/graphql';
+    : 'https://staging.shootismoke.now.sh/api/graphql';
 
 /**
  * The Apollo client
