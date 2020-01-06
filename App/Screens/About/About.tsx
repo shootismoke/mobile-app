@@ -34,7 +34,6 @@ import { i18n } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
-import { SelectNotifications } from '../Home/SelectNotifications';
 import { Box } from './Box';
 
 const CustomScrollView = wrapScrollView(ScrollView);
@@ -233,15 +232,6 @@ export function About(props: AboutProps): React.ReactElement {
           </Text>{' '}
           {i18n.t('about_weird_results_message_2')}
         </Text>
-      </View>
-
-      <View style={styles.distance}>
-        <Text style={styles.h2}>Notifications (alpha)</Text>
-        <Text style={theme.text}>
-          This section is an alpha testing stage of the new notifications
-          feature.
-        </Text>
-        <SelectNotifications />
       </View>
 
       <View style={styles.distance}>
