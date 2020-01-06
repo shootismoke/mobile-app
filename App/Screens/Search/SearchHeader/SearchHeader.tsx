@@ -1,5 +1,5 @@
 // Sh**t! I Smoke
-// Copyright (C) 2018-2019  Marcelo S. Coelho, Amaury Martiny
+// Copyright (C) 2018-2020  Marcelo S. Coelho, Amaury Martiny
 
 // Sh**t! I Smoke is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
