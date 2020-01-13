@@ -4684,10 +4684,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-io-ts@^2.0.1, io-ts@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.3.tgz#1921e82a9f77d8a3ed191b4b82b33ac74c09b4bb"
-  integrity sha512-PLSW+/QELUEmt68jmS+1JOxDzK3jrNlfiCTb62mQYV7RfixuUHga+Up4gszLqLAtNOUSjv9UmqNX0n/tgpzniA==
+io-ts@^2.0.1, io-ts@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.4.tgz#5e07ce63a1ee484dc680e9e2a2414e0a6c503c93"
+  integrity sha512-GqCi13q6FFWbHZa6a+Aza6pJ66OqfYvEQwZyvKbKs21bez207NEQWhXH43JvwYIFk6R7rYidG8p/xqTYzvX2tQ==
 
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
