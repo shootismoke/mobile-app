@@ -17,6 +17,7 @@
       "algoliaApplicationId": null,
       "aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
       "amplitudeApiKey": null,
+      "hawkKey": null,
       "sentryPublicDsn": null
     },
     "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
@@ -49,7 +50,7 @@
     "primaryColor": "#EBE7DD",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "slug": "shoot-i-smoke",
+    "slug": "shootismoke",
     "splash": {
       "backgroundColor": "#ebe7dd",
       "image": "assets/logos/splash.png"

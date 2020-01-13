@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import Hawk from '@hapi/hawk';
 import {
   historyItemSchema,
   measurementSchema,
@@ -24,14 +25,26 @@ import Constants from 'expo-constants';
 
 const BACKEND_URI =
   Constants.manifest.releaseChannel ===
-  `production-v${Constants.manifest.version}`
+    `production-v${Constants.manifest.version}`
     ? 'https://shootismoke.now.sh/api/graphql'
     : 'https://staging.shootismoke.now.sh/api/graphql';
+
+const credentials = {
+  id: `${Constants.manifest.slug}-${Constants.manifest.releaseChannel}`,
+  key: Constants.manifest.extra.hawkKey,
+  algorithm: 'sha256'
+};
+const { header } = Hawk.client.header(BACKEND_URI, 'GET', { credentials });
+
+console.log(credentials, header);
 
 /**
  * The Apollo client
  */
 export const client = new ApolloClient({
+  headers: {
+    authorization: header
+  },
   typeDefs: [historyItemSchema, measurementSchema, userSchema],
   uri: BACKEND_URI
 });
