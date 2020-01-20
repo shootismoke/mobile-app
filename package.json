@@ -37,7 +37,7 @@
     "graphql": "^14.5.8",
     "haversine": "^1.1.1",
     "i18n-js": "^3.5.1",
-    "io-ts": "^2.0.4",
+    "io-ts": "^2.0.5",
     "p-any": "^2.1.0",
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
