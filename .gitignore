@@ -22,6 +22,7 @@ yarn-error.log*
 
 # secrets
 app.json
+app.prod.json
 
 # ide files
 .idea/

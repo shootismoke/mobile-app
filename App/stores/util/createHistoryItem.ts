@@ -24,7 +24,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { client } from '../../util/apollo';
 import { promiseToTE, sideEffect } from '../../util/fp';
 import { Api } from '../api';
-import { getOrCreateUser } from './createUser';
+import { getOrCreateUser } from './getOrCreateUser';
 
 const CREATE_HISTORY_ITEM = gql`
   mutation createHistoryItem($input: CreateHistoryItemInput!) {
