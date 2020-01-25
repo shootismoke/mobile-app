@@ -44,7 +44,7 @@ Before developing the app, you need to fetch your own API tokens for the followi
 
 | Service                  | Url                                                                        | Comments                                                                   |
 | ------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                                     | Required. Pre-filled with Sh\*\*t! I Smoke staging token.                  |
+| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                                     | Required. Pre-filled with a staging token.                                 |
 | World Air Quality Index  | http://aqicn.org/api/                                                      | Required. You can use the dummy one in `app.example.json` for development. |
 | Algolia Places           | https://community.algolia.com/places/ (`Get Started` button on the bottom) | Optional, lower API rates if not provided.                                 |
 | Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start             | Optional in development.                                                   |
