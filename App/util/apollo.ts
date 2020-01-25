@@ -27,7 +27,7 @@ const BACKEND_URI =
   Constants.manifest.releaseChannel ===
   `production-v${Constants.manifest.version}`
     ? 'https://shootismoke.now.sh/api/graphql'
-    : 'https://backend-ggsiukveq.now.sh/api/graphql';
+    : 'https://staging.shootismoke.now.sh/api/graphql';
 
 const credentials = {
   id: `${Constants.manifest.slug}-${Constants.manifest.releaseChannel ||
