@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
 // We don't send the following errors to Sentry
 const UNTRACKED_ERRORS = [
   'Permission to access location was denied',
-  'Location provider is unavailable. Make sure that location services are enabled.',
-  'Location request timed out.',
-  'Location request failed due to unsatisfied device settings.'
+  'Location provider is unavailable. Make sure that location services are enabled',
+  'Location request timed out',
+  'Location request failed due to unsatisfied device settings'
 ];
 
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
@@ -71,7 +71,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
     if (
       IS_SENTRY_SET_UP &&
       error &&
-      !UNTRACKED_ERRORS.includes(error.message)
+      !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
     ) {
       Sentry.captureException(error);
     }
