@@ -23,6 +23,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 
 import { client } from '../../util/apollo';
 import { promiseToTE, sideEffect } from '../../util/fp';
+import { noop } from '../../util/noop';
 import { Api } from '../api';
 import { getOrCreateUser } from './getOrCreateUser';
 
@@ -61,8 +62,6 @@ export function createHistoryItem(api: Api): TE.TaskEither<Error, void> {
         )
       )
     ),
-    TE.map(() => {
-      /* Do nothing, just have return type void */
-    })
+    TE.map(noop) // Just to return type void
   );
 }
