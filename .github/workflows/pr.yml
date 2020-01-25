@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Lint
+      - name: Run yarn lint
         run: |
           yarn install
           yarn lint
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Test
+      - name: Run yarn test
         run: |
           yarn install
           yarn test

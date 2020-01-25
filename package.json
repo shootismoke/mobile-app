@@ -15,6 +15,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@expo/vector-icons": "^10.0.0",
+    "@hapi/hawk": "^8.0.0",
     "@shootismoke/convert": "^0.2.6",
     "@shootismoke/dataproviders": "^0.2.6",
     "@shootismoke/graphql": "^0.2.6",
