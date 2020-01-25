@@ -42,14 +42,14 @@ const credentials = {
  * The Apollo client
  */
 export const client = new ApolloClient({
-  onError: (error: ErrorResponse): void => {
+  onError: ({ graphQLErrors, networkError }: ErrorResponse): void => {
     // Send errors to Sentry
-    if (error.networkError) {
-      Sentry.captureException(error.networkError);
+    if (networkError) {
+      Sentry.captureException(networkError);
     }
 
-    if (error.graphQLErrors) {
-      error.graphQLErrors.forEach(e => Sentry.captureException(e));
+    if (graphQLErrors) {
+      graphQLErrors.forEach(error => Sentry.captureException(error));
     }
   },
   request: (operation): void => {
