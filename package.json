@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
-    "start": "expo start",
+    "start": "expo start --config app.staging.json",
     "test": "echo \"Skipped for now. See https://github.com/amaurymartiny/shoot-i-smoke/issues/19.\""
   },
   "dependencies": {
