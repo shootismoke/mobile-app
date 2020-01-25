@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import Constants from 'expo-constants';
 import React, { useContext, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -26,6 +25,7 @@ import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
+import { IS_SENTRY_SET_UP } from '../../util/constants';
 import * as theme from '../../util/theme';
 
 type ErrorScreenProps = NavigationInjectedProps;
@@ -69,7 +69,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 
   useEffect(() => {
     if (
-      Constants.manifest.releaseChannel === 'production' &&
+      IS_SENTRY_SET_UP &&
       error &&
       !UNTRACKED_ERRORS.includes(error.message)
     ) {

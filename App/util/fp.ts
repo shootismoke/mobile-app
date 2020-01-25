@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import Constants from 'expo-constants';
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
 import { Lazy } from 'fp-ts/lib/function';
@@ -25,6 +24,8 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 import * as Sentry from 'sentry-expo';
+
+import { IS_SENTRY_SET_UP } from './constants';
 
 /**
  * A side-effect in a TaskEither chain: if the TaskEither fails, still return
@@ -91,7 +92,7 @@ export function logFpError(namespace: string) {
   return function(error: Error): void {
     console.log(`<${namespace}> - ${error.message}`);
 
-    if (Constants.manifest.releaseChannel === 'production') {
+    if (IS_SENTRY_SET_UP) {
       Sentry.captureException(error);
     }
   };
