@@ -56,7 +56,7 @@
     "truncate": "^2.1.0"
   },
   "devDependencies": {
-    "@amaurymartiny/config": "^1.0.10",
+    "@amaurymartiny/config": "^1.0.11",
     "@types/jest": "^24.9.0",
     "jest": "^24.9.0",
     "jest-expo": "^36.0.0",

@@ -18,6 +18,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
 import { i18n } from '../localization';
+import { noop } from '../util/noop';
 
 export type DistanceUnit = 'km' | 'mile';
 type DistanceUnitFormat = 'short' | 'long';
@@ -33,7 +34,7 @@ interface ContextType {
 const Context = createContext<ContextType>({
   distanceUnit: 'km',
   localizedDistanceUnit: () => '',
-  setDistanceUnit: () => {}
+  setDistanceUnit: noop
 });
 
 export function DistanceUnitProvider({
