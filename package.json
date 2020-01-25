@@ -53,8 +53,7 @@
     "react-navigation-transitions": "^1.0.12",
     "retry-ts": "^0.1.1",
     "sentry-expo": "~2.0.1",
-    "truncate": "^2.1.0",
-    "url": "^0.11.0"
+    "truncate": "^2.1.0"
   },
   "devDependencies": {
     "@amaurymartiny/config": "^1.0.10",
