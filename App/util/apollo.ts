@@ -21,13 +21,15 @@ import {
   userSchema
 } from '@shootismoke/graphql';
 import ApolloClient from 'apollo-boost';
+import { ErrorResponse } from 'apollo-link-error';
 import Constants from 'expo-constants';
+import * as Sentry from 'sentry-expo';
 
-const BACKEND_URI =
-  Constants.manifest.releaseChannel ===
-  `production-v${Constants.manifest.version}`
-    ? 'https://shootismoke.now.sh/api/graphql'
-    : 'https://staging.shootismoke.now.sh/api/graphql';
+import { IS_PROD } from '../util/constants';
+
+const BACKEND_URI = IS_PROD
+  ? 'https://shootismoke.now.sh/api/graphql'
+  : 'https://staging.shootismoke.now.sh/api/graphql';
 
 const credentials = {
   id: `${Constants.manifest.slug}-${Constants.manifest.releaseChannel ||
@@ -40,6 +42,16 @@ const credentials = {
  * The Apollo client
  */
 export const client = new ApolloClient({
+  onError: ({ graphQLErrors, networkError }: ErrorResponse): void => {
+    // Send errors to Sentry
+    if (networkError) {
+      Sentry.captureException(networkError);
+    }
+
+    if (graphQLErrors) {
+      graphQLErrors.forEach(error => Sentry.captureException(error));
+    }
+  },
   request: (operation): void => {
     // Set Hawk authorization header on each request
     const { header } = Hawk.client.header(BACKEND_URI, 'POST', { credentials });

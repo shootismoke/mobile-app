@@ -55,7 +55,11 @@ const handleOpenAmaury = (): void => {
 };
 
 const handleOpenAqi = (): void => {
-  Linking.openURL('http://aqicn.org/');
+  Linking.openURL('http://aqicn.org');
+};
+
+const handleOpenOpenAQ = (): void => {
+  Linking.openURL('https://openaq.org');
 };
 
 const handleOpenArticle = (): void => {
@@ -268,6 +272,10 @@ export function About(props: AboutProps): React.ReactElement {
           {i18n.t('about_credits_data_from')}{' '}
           <Text onPress={handleOpenAqi} style={theme.link}>
             WAQI
+          </Text>{' '}
+          and{' '}
+          <Text onPress={handleOpenOpenAQ} style={theme.link}>
+            OpenAQ
           </Text>
           .{'\n'}
           {i18n.t('about_credits_source_code')}{' '}

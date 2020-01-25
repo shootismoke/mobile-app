@@ -62,7 +62,7 @@ yarn install
 # Copy the file that contains secrets
 cp app.example.json app.json
 
-yarn start
+yarn start --config app.json
 ```
 
 In `app.json`, replace all the placeholders for API keys and tokens with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
