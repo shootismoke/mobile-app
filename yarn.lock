@@ -1814,17 +1814,17 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.6.tgz#2ea3c8da8359cadc8c8ff15300c41ed8279f3187"
-  integrity sha512-jxZ4wteXt0Pi+NFK+0nbtaA8D5m/KrZg1bzoMnxKEjEQlRlHsmUXqF84ypcJG3uPH4oI46e1LJqAFApf1SXH8w==
+"@shootismoke/convert@^0.2.6", "@shootismoke/convert@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.7.tgz#332aa2f3a0c9a55e2f8eeeea78030f703d40c56e"
+  integrity sha512-Wo/jvMTM1fm4acWxSBUbmu2K/OvTA7YOrBRmmZL19p326rYtLz4EwGkeHVUMe0FPiwzNQkedz4zl2d18syJcMg==
 
-"@shootismoke/dataproviders@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.6.tgz#27569c3a789fb90643fdcec1d6cb3c7a23f61f07"
-  integrity sha512-YOM+g/1NsFvO8oFro2whSi0cBOdlhqc7437HedxqAfvXp5mmk9bKe+D+tvoHP7IC2OZmWvGic8wMcw2lVh5hXg==
+"@shootismoke/dataproviders@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.7.tgz#0cd508d9b7735d7858f4ff9af61e3830fdf6c39d"
+  integrity sha512-O1SQTyjxoO0uK9IxwqozQvZ0+MWxo3ridMS4nR0gEqnnk7+zslt59pGxJQjpHCW4OOm/DZqc6M65I3+CW7+23A==
   dependencies:
-    "@shootismoke/convert" "^0.2.6"
+    "@shootismoke/convert" "^0.2.7"
     axios "^0.19.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
