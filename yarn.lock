@@ -7167,6 +7167,11 @@ react-native-view-shot@3.0.2:
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.0.2.tgz#daccaec5b8038a680b17533ff7e72876e68c7d0d"
   integrity sha512-JZOkGo2jzSX2b7N6N2uDr0wQjSz+QmBtY8jzeo0XJY6bLOfaY5nmWyYxDmDRoSpKiFkGTCkyhUqNnjo6lXOtEw==
 
+react-native-view-shot@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.1.tgz#d21ed5414c696f7bfd7544f81eab6a430d6d68f9"
+  integrity sha512-Wx/bxvmcpoqX5u/CTK6PDQoU2Oq8zYdPx9o076Btq7SGHLAhlD6TBNQYG/sWIZ+GualHSbfJHRkWLGLh9pfS9w==
+
 "react-native@https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz":
   version "0.61.4"
   resolved "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz#d98e5d0a80cc264b0d900a750a20d0ee27aa3f14"
