@@ -15,6 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { openaq } from '@shootismoke/dataproviders';
+import { subDays } from 'date-fns';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -30,6 +31,8 @@ import {
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
+import { pm25ToCigarettes } from '../../util/secretSauce';
+import { sumInDays } from '../../util/staircaseAverage';
 import * as theme from '../../util/theme';
 import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
@@ -70,30 +73,43 @@ export function Home(props: HomeProps): React.ReactElement {
     if (frequency === 'daily') {
       setCigarettes(api.shootismoke.dailyCigarettes);
     } else {
-      const dateFrom = new Date();
-      if (frequency === 'weekly') {
-        dateFrom.setDate(dateFrom.getDate() - 7);
-      }
-      if (frequency === 'monthly') {
-        dateFrom.setDate(dateFrom.getDate() - 30);
-      }
-
       pipe(
         openaq.fetchByGps(currentLocation, {
-          dateFrom,
+          dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
           limit: 100,
           parameter: ['pm25']
         }),
+        TE.chain(({ results }) =>
+          results.length
+            ? TE.right(results)
+            : TE.left(
+                new Error(`Empty data found for ${frequency} measurements`)
+              )
+        ),
+        TE.map(results => {
+          console.log(
+            results.map(({ date: { utc }, value }) => ({
+              time: new Date(utc),
+              value
+            }))
+          );
+          return results.map(({ date: { utc }, value }) => ({
+            time: new Date(utc),
+            value
+          }));
+        }),
+        TE.map(sumInDays),
+        TE.map(pm25ToCigarettes),
         TE.fold(
-          () => {
+          error => {
+            console.log(`<Home> - ${error.message}`);
             // Fallback to daily if there's an error
             setFrequency('daily');
 
             return T.of(void undefined);
           },
-          results => {
-            console.log(results);
-            setCigarettes(2);
+          totalCigarettes => {
+            setCigarettes(totalCigarettes);
 
             return T.of(void undefined);
           }
