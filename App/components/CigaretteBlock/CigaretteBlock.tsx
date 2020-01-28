@@ -71,7 +71,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
         cigarettesRounded === 1
           ? i18n.t('home_common_cigarette').toLowerCase()
           : i18n.t('home_common_cigarettes').toLowerCase(),
-      cigarettesRounded
+      cigarettes: cigarettesRounded
     });
 
     const [firstPartText, secondPartText] = text.split('<');
