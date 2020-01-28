@@ -14,17 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
+import { openaq } from '@shootismoke/dataproviders';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { CigaretteBlock, getCigaretteCount } from '../../components';
+import { CigaretteBlock } from '../../components';
 import {
   ApiContext,
   CurrentLocationContext,
   FrequencyContext
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
+import { logFpError } from '../../util/fp';
 import * as theme from '../../util/theme';
 import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
@@ -45,16 +50,66 @@ const styles = StyleSheet.create({
 
 export function Home(props: HomeProps): React.ReactElement {
   const { api } = useContext(ApiContext);
-  const { isGps } = useContext(CurrentLocationContext);
-  const { frequency } = useContext(FrequencyContext);
+  const { currentLocation, isGps } = useContext(CurrentLocationContext);
+  const { frequency, setFrequency } = useContext(FrequencyContext);
+
+  if (!api) {
+    throw new Error('Home/Home.tsx only gets displayed when `api` is defined.');
+  } else if (!currentLocation) {
+    throw new Error(
+      'Home/Home.tsx only gets displayed when `currentLocation` is defined.'
+    );
+  }
+
+  const [cigarettes, setCigarettes] = useState(api.shootismoke.dailyCigarettes);
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api ? api.shootismoke.dailyCigarettes : 0;
+  useEffect(() => {
+    // We don't fetch historical data on daily frequency
+    if (frequency === 'daily') {
+      setCigarettes(api.shootismoke.dailyCigarettes);
+    } else {
+      const dateFrom = new Date();
+      if (frequency === 'weekly') {
+        dateFrom.setDate(dateFrom.getDate() - 7);
+      }
+      if (frequency === 'monthly') {
+        dateFrom.setDate(dateFrom.getDate() - 30);
+      }
+
+      pipe(
+        openaq.fetchByGps(currentLocation, {
+          dateFrom,
+          limit: 100,
+          parameter: ['pm25']
+        }),
+        TE.fold(
+          () => {
+            // Fallback to daily if there's an error
+            setFrequency('daily');
+
+            return T.of(void undefined);
+          },
+          results => {
+            console.log(results);
+            setCigarettes(2);
+
+            return T.of(void undefined);
+          }
+        )
+      )().catch(logFpError('Home'));
+    }
+  }, [
+    api.shootismoke.dailyCigarettes,
+    currentLocation,
+    frequency,
+    setFrequency
+  ]);
 
   return (
     <View style={styles.container}>
-      <SmokeVideo cigarettes={getCigaretteCount(frequency, cigarettesPerDay)} />
+      <SmokeVideo cigarettes={cigarettes} />
       <Header
         onChangeLocationClick={(): void => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
@@ -63,7 +118,7 @@ export function Home(props: HomeProps): React.ReactElement {
       />
       <ScrollView bounces={false}>
         <CigaretteBlock
-          cigarettesPerDay={cigarettesPerDay}
+          cigarettes={cigarettes}
           frequency={frequency}
           isGps={isGps}
           style={styles.withMargin}

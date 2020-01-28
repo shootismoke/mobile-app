@@ -24,7 +24,7 @@ import { Cigarettes } from '../Cigarettes';
 import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
-  cigarettesPerDay: number;
+  cigarettes: number;
   displayFrequency?: boolean;
   frequency: Frequency;
   isGps: boolean;
@@ -47,28 +47,9 @@ function getSwearWord(cigaretteCount: number): string {
   return swearWords[Math.floor(Math.random() * swearWords.length)];
 }
 
-/**
- * Compute the number of cigarettes to show
- */
-export function getCigaretteCount(
-  frequency: Frequency,
-  cigarettePerDay: number
-): number {
-  switch (frequency) {
-    case 'daily': {
-      return cigarettePerDay;
-    }
-    case 'weekly':
-      return cigarettePerDay * 7;
-    case 'monthly': {
-      return cigarettePerDay * 30;
-    }
-  }
-}
-
 export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
   const {
-    cigarettesPerDay,
+    cigarettes,
     frequency,
     isGps,
     style,
@@ -76,23 +57,21 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
     ...rest
   } = props;
 
-  const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay);
-
   const renderCigarettesText = (): React.ReactElement => {
     // Round to 1 decimal
-    const cigarettes = Math.round(cigaretteCount * 10) / 10;
+    const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
     const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord: getSwearWord(cigaretteCount),
+      swearWord: getSwearWord(cigarettes),
       presentPast:
         isGps && frequency === 'daily'
           ? i18n.t('home_common_you_smoke')
           : i18n.t('home_common_you_d_smoke'),
       singularPlural:
-        cigarettes === 1
+        cigarettesRounded === 1
           ? i18n.t('home_common_cigarette').toLowerCase()
           : i18n.t('home_common_cigarettes').toLowerCase(),
-      cigarettes
+      cigarettesRounded
     });
 
     const [firstPartText, secondPartText] = text.split('<');
@@ -114,7 +93,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
 
   return (
     <View style={[theme.withPadding, style]} {...rest}>
-      <Cigarettes cigarettes={cigaretteCount} />
+      <Cigarettes cigarettes={cigarettes} />
       {renderCigarettesText()}
     </View>
   );

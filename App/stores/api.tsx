@@ -86,7 +86,9 @@ function race(gps: LatLng): TE.TaskEither<Error, Api> {
   ): Promise<Api> {
     const data = await provider.fetchByGps(gps, options);
     const normalized = provider.normalizeByGps(data);
-    console.log(`Got data from ${provider.id}: ${JSON.stringify(normalized)}`);
+    console.log(
+      `<ApiContext> Got data from ${provider.id}: ${JSON.stringify(normalized)}`
+    );
 
     return filterPm25(normalized);
   }
@@ -96,13 +98,13 @@ function race(gps: LatLng): TE.TaskEither<Error, Api> {
     fetchForProvider(aqicn, {
       token: Constants.manifest.extra.aqicnToken
     }),
-    fetchForProvider(openaq),
+    fetchForProvider(openaq, {
+      limit: 1,
+      parameter: ['pm25']
+    }),
     fetchForProvider(waqi)
   ];
 
-  // Return a Promise.any behavior between the tasks
-  // FIXME How can one implement a Promise.any behavior with fp-ts?
-  // @see https://github.com/amaurymartiny/shoot-i-smoke/issues/324
   return promiseToTE(() => promiseAny(tasks));
 }
 
