@@ -80,46 +80,37 @@ export function AdditionalInfo(
 
   const isTooFar = isStationTooFar(currentLocation, api);
 
-  function renderBeta(): React.ReactElement {
+  // Render a "beta" tag
+  if (frequency !== 'daily' && !exactCount) {
     return (
-      <TouchableOpacity
-        onPress={(): void => {
-          track('HOME_SCREEN_BETA_INACCURATE_CLICK');
-          // eslint-disable-next-line
-          navigation.navigate('About', {
-            scrollInto: aboutSections.aboutBetaInaccurate
-          });
-        }}
-        style={styles.linkToAbout}
-      >
-        <View style={styles.tag}>
-          <Text style={styles.tagLabel}>BETA</Text>
-        </View>
-        <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
-      </TouchableOpacity>
+      <View style={[theme.withPadding, style]} {...rest}>
+        <TouchableOpacity
+          onPress={(): void => {
+            track('HOME_SCREEN_BETA_INACCURATE_CLICK');
+            // eslint-disable-next-line
+            navigation.navigate('About', {
+              scrollInto: aboutSections.aboutBetaInaccurate
+            });
+          }}
+          style={styles.linkToAbout}
+        >
+          <View style={styles.tag}>
+            <Text style={styles.tagLabel}>BETA</Text>
+          </View>
+          <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 
-  if (frequency === 'daily' && !isTooFar) {
-    return null;
+  // Render a "station too far" warning
+  if (frequency === 'daily' && isTooFar) {
+    return (
+      <View style={[theme.withPadding, style]} {...rest}>
+        <Text style={theme.text}>{i18n.t('home_station_too_far_message')}</Text>
+      </View>
+    );
   }
 
-  if (frequency !== 'daily' && exactCount) {
-    return null;
-  }
-
-  // Only two cases left:
-  // - frequency === 'daily' && isTooFar
-  // - frequency !== 'daily' && !exactCount
-  return (
-    <View style={[theme.withPadding, style]} {...rest}>
-      {frequency !== 'daily' && !exactCount
-        ? renderBeta()
-        : isTooFar && (
-            <Text style={theme.text}>
-              {i18n.t('home_station_too_far_message')}
-            </Text>
-          )}
-    </View>
-  );
+  return null;
 }

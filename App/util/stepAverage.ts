@@ -16,7 +16,7 @@
 
 import { compareAsc, differenceInMilliseconds, subDays } from 'date-fns';
 
-import { Frequency } from '../Screens/Home/SelectFrequency';
+import { Frequency } from '../stores';
 
 interface Data {
   time: Date;
@@ -43,7 +43,7 @@ function stepIntegral(data: Data[], start: Date): number {
         currentValue.time,
         index === 0 ? start : sortedData[index - 1].time
       ) *
-      currentValue.value,
+        currentValue.value,
     0
   );
 }
