@@ -19,11 +19,9 @@ import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 
 import { BoxButton } from '../../../components';
 import { i18n } from '../../../localization';
-import { FrequencyContext } from '../../../stores';
+import { Frequency, FrequencyContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
-
-export type Frequency = 'daily' | 'weekly' | 'monthly';
 
 const styles = StyleSheet.create({
   boxButton: {

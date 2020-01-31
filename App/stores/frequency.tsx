@@ -16,8 +16,9 @@
 
 import React, { createContext, useState } from 'react';
 
-import { Frequency } from '../Screens/Home/SelectFrequency';
 import { noop } from '../util/noop';
+
+export type Frequency = 'daily' | 'weekly' | 'monthly';
 
 interface Context {
   frequency: Frequency;

@@ -26,12 +26,11 @@ import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { i18n } from '../../../localization';
-import { ApiContext, CurrentLocationContext } from '../../../stores';
+import { ApiContext, CurrentLocationContext, Frequency } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
-import { Frequency } from '../SelectFrequency';
 
 interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
   /**

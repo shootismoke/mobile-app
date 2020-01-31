@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { openaq } from '@shootismoke/dataproviders';
+import { openaq } from '@shootismoke/dataproviders/lib/promise';
+import { LatLng } from '@shootismoke/graphql';
 import { subDays } from 'date-fns';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
+import pMemoize from 'p-memoize';
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -27,10 +29,11 @@ import { CigaretteBlock } from '../../components';
 import {
   ApiContext,
   CurrentLocationContext,
+  Frequency,
   FrequencyContext
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
-import { logFpError } from '../../util/fp';
+import { logFpError, promiseToTE } from '../../util/fp';
 import { pm25ToCigarettes } from '../../util/secretSauce';
 import { sumInDays } from '../../util/stepAverage';
 import * as theme from '../../util/theme';
@@ -51,6 +54,37 @@ const styles = StyleSheet.create({
   }
 });
 
+interface Cigarettes {
+  /**
+   * The current number of cigarettes shown on this Home screen
+   */
+  count: number;
+  /**
+   * Denotes whether the cigarette count is exact or not. It's usually exact.
+   * The only case where it's not exact, it's when we fetch weekly/monthly
+   * cigarettes count, and the backend doesn't give us data back, then we
+   * just multiply the daily count by 7 or 30, and put exact=false.
+   */
+  exact: boolean;
+}
+
+/**
+ * Memoize the function that fetches historical weekly/monthly cigarettes.
+ */
+const memoHistoricalCigarettes = pMemoize(
+  (frequency: Frequency, currentLocation: LatLng) => {
+    return openaq.fetchByGps(currentLocation, {
+      dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
+      dateTo: new Date(),
+      limit: 100,
+      parameter: ['pm25']
+    });
+  },
+  {
+    cacheKey: args => JSON.stringify(args)
+  }
+);
+
 export function Home(props: HomeProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation, isGps } = useContext(CurrentLocationContext);
@@ -64,14 +98,8 @@ export function Home(props: HomeProps): React.ReactElement {
     );
   }
 
-  const [cigarettes, setCigarettes] = useState({
+  const [cigarettes, setCigarettes] = useState<Cigarettes>({
     count: api.shootismoke.dailyCigarettes,
-    /**
-     * Denotes whether the cigarette count is exact or not. It's usually exact.
-     * The only case where it's not exact, it's when we fetch weekly/monthly
-     * cigarettes count, and the backend doesn't give us data back, then we
-     * just multiply the daily count by 7 or 30, and put exact=false.
-     */
     exact: true
   });
 
@@ -85,13 +113,10 @@ export function Home(props: HomeProps): React.ReactElement {
         exact: true
       });
     } else {
+      // Fetch weekly/monthly number of cigarettes depending on the current
+      // location.
       pipe(
-        openaq.fetchByGps(currentLocation, {
-          dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
-          dateTo: new Date(),
-          limit: 100,
-          parameter: ['pm25']
-        }),
+        promiseToTE(() => memoHistoricalCigarettes(frequency, currentLocation)),
         TE.chain(({ results }) =>
           results.length
             ? TE.right(results)
@@ -112,7 +137,7 @@ export function Home(props: HomeProps): React.ReactElement {
         TE.fold(
           error => {
             console.log(`<Home> - ${error.message}`);
-            // Fallback to daily if there's an error
+            // Fallback to daily cigarettes * 7 or * 30 if there's an error
             setCigarettes({
               count:
                 api.shootismoke.dailyCigarettes *
