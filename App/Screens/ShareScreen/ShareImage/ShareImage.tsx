@@ -65,7 +65,7 @@ export function ShareImage(): React.ReactElement {
   return (
     <View style={styles.container}>
       <CigaretteBlock
-        cigarettesPerDay={cigarettesPerDay}
+        cigarettes={cigarettesPerDay}
         displayFrequency
         frequency={frequency}
         isGps={false}

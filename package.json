@@ -10,14 +10,14 @@
   "scripts": {
     "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
     "start": "expo start --config app.staging.json",
-    "test": "echo \"Skipped for now. See https://github.com/amaurymartiny/shoot-i-smoke/issues/19.\""
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@expo/vector-icons": "^10.0.0",
     "@hapi/hawk": "^8.0.0",
-    "@shootismoke/convert": "^0.2.6",
-    "@shootismoke/dataproviders": "^0.2.7",
+    "@shootismoke/convert": "^0.2.8",
+    "@shootismoke/dataproviders": "^0.2.8",
     "@shootismoke/graphql": "^0.2.7",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
@@ -40,6 +40,7 @@
     "i18n-js": "^3.5.1",
     "io-ts": "^2.0.6",
     "p-any": "^2.1.0",
+    "p-memoize": "^3.1.0",
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-gesture-handler": "~1.5.0",

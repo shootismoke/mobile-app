@@ -1814,17 +1814,17 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.2.6", "@shootismoke/convert@^0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.7.tgz#332aa2f3a0c9a55e2f8eeeea78030f703d40c56e"
-  integrity sha512-Wo/jvMTM1fm4acWxSBUbmu2K/OvTA7YOrBRmmZL19p326rYtLz4EwGkeHVUMe0FPiwzNQkedz4zl2d18syJcMg==
+"@shootismoke/convert@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.8.tgz#328eb9d32aff370020f1ba17c1badc340c102300"
+  integrity sha512-fa8PdUZOCbEjrRAgteXBIywMNMaXriFcaiy+2PTqBLZKBhi/EkHm4BsdTO1WyYEQwj61YgGzkMYRrlA+1yX4kw==
 
-"@shootismoke/dataproviders@^0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.7.tgz#0cd508d9b7735d7858f4ff9af61e3830fdf6c39d"
-  integrity sha512-O1SQTyjxoO0uK9IxwqozQvZ0+MWxo3ridMS4nR0gEqnnk7+zslt59pGxJQjpHCW4OOm/DZqc6M65I3+CW7+23A==
+"@shootismoke/dataproviders@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.8.tgz#be3bdc93a38c4ee3fb4d95c0e76eaa23c3124c58"
+  integrity sha512-99JWgHf6JodEGhvMBTzAjs22SDrm/suUuhbeKGuerzzlOszVjzr5PjbRVqqtW/aSnN2pjFYj6duVWfuRQgJrQw==
   dependencies:
-    "@shootismoke/convert" "^0.2.7"
+    "@shootismoke/convert" "^0.2.8"
     axios "^0.19.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
@@ -5845,7 +5845,7 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-mem@^4.0.0:
+mem@^4.0.0, mem@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/mem/-/mem-4.3.0.tgz#461af497bc4ae09608cdb2e60eefb69bff744178"
   integrity sha512-qX2bG48pTqYRVmDB37rn/6PT7LcR8T7oAX3bf99u1Tt1nzxYfxkgqDwUwolPlXweM0XzBOBFzSx4kfp7KP1s/w==
@@ -6736,6 +6736,14 @@ p-locate@^4.1.0:
   integrity sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==
   dependencies:
     p-limit "^2.2.0"
+
+p-memoize@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/p-memoize/-/p-memoize-3.1.0.tgz#ac7587983c9e530139f969ca7b41ef40e93659aa"
+  integrity sha512-e5tIvrsr7ydUUnxb534iQWtXxWgk/86IsH+H+nV4FHouIggBt4coXboKBt26o4lTu7JbEnGSeXdEsYR8BhAHFA==
+  dependencies:
+    mem "^4.3.0"
+    mimic-fn "^2.1.0"
 
 p-reduce@^1.0.0:
   version "1.0.0"

@@ -14,17 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from 'react';
+import { openaq } from '@shootismoke/dataproviders/lib/promise';
+import { LatLng } from '@shootismoke/graphql';
+import { subDays } from 'date-fns';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
+import pMemoize from 'p-memoize';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { CigaretteBlock, getCigaretteCount } from '../../components';
+import { CigaretteBlock } from '../../components';
 import {
   ApiContext,
   CurrentLocationContext,
+  Frequency,
   FrequencyContext
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
+import { logFpError, promiseToTE } from '../../util/fp';
+import { pm25ToCigarettes } from '../../util/secretSauce';
+import { sumInDays } from '../../util/stepAverage';
 import * as theme from '../../util/theme';
 import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
@@ -43,18 +54,123 @@ const styles = StyleSheet.create({
   }
 });
 
+interface Cigarettes {
+  /**
+   * The current number of cigarettes shown on this Home screen
+   */
+  count: number;
+  /**
+   * Denotes whether the cigarette count is exact or not. It's usually exact.
+   * The only case where it's not exact, it's when we fetch weekly/monthly
+   * cigarettes count, and the backend doesn't give us data back, then we
+   * just multiply the daily count by 7 or 30, and put exact=false.
+   */
+  exact: boolean;
+  /**
+   * The frequency on this cigarettes number
+   */
+  frequency: Frequency;
+}
+
+/**
+ * Memoize the function that fetches historical weekly/monthly cigarettes.
+ */
+const memoHistoricalCigarettes = pMemoize(
+  (frequency: Frequency, currentLocation: LatLng) => {
+    return openaq.fetchByGps(currentLocation, {
+      dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
+      dateTo: new Date(),
+      limit: 100,
+      parameter: ['pm25']
+    });
+  },
+  {
+    cacheKey: args => JSON.stringify(args)
+  }
+);
+
 export function Home(props: HomeProps): React.ReactElement {
   const { api } = useContext(ApiContext);
-  const { isGps } = useContext(CurrentLocationContext);
-  const { frequency } = useContext(FrequencyContext);
+  const { currentLocation, isGps } = useContext(CurrentLocationContext);
+  const { frequency, setFrequency } = useContext(FrequencyContext);
+
+  if (!api) {
+    throw new Error('Home/Home.tsx only gets displayed when `api` is defined.');
+  } else if (!currentLocation) {
+    throw new Error(
+      'Home/Home.tsx only gets displayed when `currentLocation` is defined.'
+    );
+  }
 
   trackScreen('HOME');
 
-  const cigarettesPerDay = api ? api.shootismoke.dailyCigarettes : 0;
+  // Decide on how many cigarettes we want to show on the Home screen.
+  const [cigarettes, setCigarettes] = useState<Cigarettes>({
+    count: api.shootismoke.dailyCigarettes,
+    exact: true,
+    frequency
+  });
+  useEffect(() => {
+    // We don't fetch historical data on daily frequency
+    if (frequency === 'daily') {
+      setCigarettes({
+        count: api.shootismoke.dailyCigarettes,
+        exact: true,
+        frequency
+      });
+    } else {
+      // Fetch weekly/monthly number of cigarettes depending on the current
+      // location.
+      pipe(
+        promiseToTE(() => memoHistoricalCigarettes(frequency, currentLocation)),
+        TE.chain(({ results }) =>
+          results.length
+            ? TE.right(results)
+            : TE.left(
+                new Error(
+                  `Data for ${frequency} measurements has ${results.length} items`
+                )
+              )
+        ),
+        TE.map(results => {
+          return results.map(({ date: { utc }, value }) => ({
+            time: new Date(utc),
+            value
+          }));
+        }),
+        TE.map(data => sumInDays(data, frequency)),
+        TE.map(pm25ToCigarettes),
+        TE.fold(
+          error => {
+            console.log(`<Home> - ${error.message}`);
+            // Fallback to daily cigarettes * 7 or * 30 if there's an error
+            setCigarettes({
+              count:
+                api.shootismoke.dailyCigarettes *
+                (frequency === 'weekly' ? 7 : 30),
+              exact: false,
+              frequency
+            });
+
+            return T.of(void undefined);
+          },
+          totalCigarettes => {
+            setCigarettes({
+              count: totalCigarettes,
+              exact: true,
+              frequency
+            });
+
+            return T.of(void undefined);
+          }
+        )
+      )().catch(logFpError('Home'));
+    }
+  }, [api, currentLocation, frequency, setFrequency]);
 
   return (
     <View style={styles.container}>
-      <SmokeVideo cigarettes={getCigaretteCount(frequency, cigarettesPerDay)} />
+      <SmokeVideo cigarettes={cigarettes.count} />
       <Header
         onChangeLocationClick={(): void => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
@@ -63,13 +179,14 @@ export function Home(props: HomeProps): React.ReactElement {
       />
       <ScrollView bounces={false}>
         <CigaretteBlock
-          cigarettesPerDay={cigarettesPerDay}
-          frequency={frequency}
+          cigarettes={cigarettes.count}
+          frequency={cigarettes.frequency}
           isGps={isGps}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />
         <AdditionalInfo
+          exactCount={cigarettes.exact}
           frequency={frequency}
           navigation={props.navigation}
           style={styles.withMargin}

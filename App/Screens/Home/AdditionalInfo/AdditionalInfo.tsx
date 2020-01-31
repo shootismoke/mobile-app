@@ -26,14 +26,17 @@ import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { i18n } from '../../../localization';
-import { ApiContext, CurrentLocationContext } from '../../../stores';
+import { ApiContext, CurrentLocationContext, Frequency } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
-import { Frequency } from '../SelectFrequency';
 
 interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
+  /**
+   * Whether the currently shown cigarettes are caculated exactly
+   */
+  exactCount: boolean;
   frequency: Frequency;
 }
 
@@ -63,7 +66,7 @@ export function AdditionalInfo(
 ): React.ReactElement | null {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
-  const { frequency, navigation, style, ...rest } = props;
+  const { exactCount, frequency, navigation, style, ...rest } = props;
 
   if (!currentLocation) {
     throw new Error(
@@ -77,39 +80,37 @@ export function AdditionalInfo(
 
   const isTooFar = isStationTooFar(currentLocation, api);
 
-  function renderBeta(): React.ReactElement {
+  // Render a "beta" tag
+  if (frequency !== 'daily' && !exactCount) {
     return (
-      <TouchableOpacity
-        onPress={(): void => {
-          track('HOME_SCREEN_BETA_INACCURATE_CLICK');
-          // eslint-disable-next-line
-          navigation.navigate('About', {
-            scrollInto: aboutSections.aboutBetaInaccurate
-          });
-        }}
-        style={styles.linkToAbout}
-      >
-        <View style={styles.tag}>
-          <Text style={styles.tagLabel}>BETA</Text>
-        </View>
-        <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
-      </TouchableOpacity>
+      <View style={[theme.withPadding, style]} {...rest}>
+        <TouchableOpacity
+          onPress={(): void => {
+            track('HOME_SCREEN_BETA_INACCURATE_CLICK');
+            // eslint-disable-next-line
+            navigation.navigate('About', {
+              scrollInto: aboutSections.aboutBetaInaccurate
+            });
+          }}
+          style={styles.linkToAbout}
+        >
+          <View style={styles.tag}>
+            <Text style={styles.tagLabel}>BETA</Text>
+          </View>
+          <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 
-  if (frequency === 'daily' && !isTooFar) {
-    return null;
+  // Render a "station too far" warning
+  if (frequency === 'daily' && isTooFar) {
+    return (
+      <View style={[theme.withPadding, style]} {...rest}>
+        <Text style={theme.text}>{i18n.t('home_station_too_far_message')}</Text>
+      </View>
+    );
   }
 
-  return (
-    <View style={[theme.withPadding, style]} {...rest}>
-      {frequency !== 'daily'
-        ? renderBeta()
-        : isTooFar && (
-            <Text style={theme.text}>
-              {i18n.t('home_station_too_far_message')}
-            </Text>
-          )}
-    </View>
-  );
+  return null;
 }

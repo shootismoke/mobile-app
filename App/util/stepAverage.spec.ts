@@ -14,37 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { createContext, useState } from 'react';
+import { subDays } from 'date-fns';
 
-import { noop } from '../util/noop';
+import { sumInDays } from './stepAverage';
 
-export type Frequency = 'daily' | 'weekly' | 'monthly';
+describe('stepAverage', () => {
+  it('should compute correct values', () => {
+    const data = [
+      { time: new Date(), value: 3 },
+      { time: subDays(new Date(), 1), value: 2 },
+      { time: subDays(new Date(), 2), value: 1 }
+    ];
 
-interface Context {
-  frequency: Frequency;
-  setFrequency: (newFrequency: Frequency) => void;
-}
-
-export const FrequencyContext = createContext<Context>({
-  frequency: 'daily',
-  setFrequency: noop
+    // value=1 for 5 days => 5
+    // value=2 for 1 day  => 2
+    // value=3 for 1 day  => 3
+    // Sum is 10
+    expect(sumInDays(data, 'weekly').toFixed(2)).toBe('10.00');
+  });
 });
-
-export function FrequencyContextProvider({
-  children
-}: {
-  children: JSX.Element;
-}): React.ReactElement {
-  const [frequency, setFrequency] = useState<Frequency>('daily');
-
-  return (
-    <FrequencyContext.Provider
-      value={{
-        frequency,
-        setFrequency
-      }}
-    >
-      {children}
-    </FrequencyContext.Provider>
-  );
-}

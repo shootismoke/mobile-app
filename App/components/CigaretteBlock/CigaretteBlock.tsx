@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 
 import { i18n } from '../../localization';
-import { Frequency } from '../../Screens/Home/SelectFrequency';
+import { Frequency } from '../../stores';
 import * as theme from '../../util/theme';
 import { Cigarettes } from '../Cigarettes';
 import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
-  cigarettesPerDay: number;
+  cigarettes: number;
   displayFrequency?: boolean;
   frequency: Frequency;
   isGps: boolean;
@@ -47,28 +47,9 @@ function getSwearWord(cigaretteCount: number): string {
   return swearWords[Math.floor(Math.random() * swearWords.length)];
 }
 
-/**
- * Compute the number of cigarettes to show
- */
-export function getCigaretteCount(
-  frequency: Frequency,
-  cigarettePerDay: number
-): number {
-  switch (frequency) {
-    case 'daily': {
-      return cigarettePerDay;
-    }
-    case 'weekly':
-      return cigarettePerDay * 7;
-    case 'monthly': {
-      return cigarettePerDay * 30;
-    }
-  }
-}
-
 export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
   const {
-    cigarettesPerDay,
+    cigarettes,
     frequency,
     isGps,
     style,
@@ -76,23 +57,28 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
     ...rest
   } = props;
 
-  const cigaretteCount = getCigaretteCount(frequency, cigarettesPerDay);
+  // Decide on a swear word. The effect says that the swear word only changes
+  // when the cigarettes count changes.
+  const [swearWord, setSwearWord] = useState(getSwearWord(cigarettes));
+  useEffect(() => {
+    setSwearWord(getSwearWord(cigarettes));
+  }, [cigarettes]);
 
   const renderCigarettesText = (): React.ReactElement => {
     // Round to 1 decimal
-    const cigarettes = Math.round(cigaretteCount * 10) / 10;
+    const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
     const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord: getSwearWord(cigaretteCount),
+      swearWord,
       presentPast:
         isGps && frequency === 'daily'
           ? i18n.t('home_common_you_smoke')
-          : i18n.t('home_common_you_d_smoke'),
+          : i18n.t('home_common_you_smoked'),
       singularPlural:
-        cigarettes === 1
+        cigarettesRounded === 1
           ? i18n.t('home_common_cigarette').toLowerCase()
           : i18n.t('home_common_cigarettes').toLowerCase(),
-      cigarettes
+      cigarettes: cigarettesRounded
     });
 
     const [firstPartText, secondPartText] = text.split('<');
@@ -114,7 +100,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
 
   return (
     <View style={[theme.withPadding, style]} {...rest}>
-      <Cigarettes cigarettes={cigaretteCount} />
+      <Cigarettes cigarettes={cigarettes} />
       {renderCigarettesText()}
     </View>
   );
