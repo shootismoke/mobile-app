@@ -104,7 +104,7 @@ export function AdditionalInfo(
   }
 
   // Render a "station too far" warning
-  if (frequency === 'daily' && isTooFar) {
+  if (isTooFar) {
     return (
       <View style={[theme.withPadding, style]} {...rest}>
         <Text style={theme.text}>{i18n.t('home_station_too_far_message')}</Text>
