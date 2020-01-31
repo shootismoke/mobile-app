@@ -34,6 +34,10 @@ import { aboutSections } from '../../About';
 import { Frequency } from '../SelectFrequency';
 
 interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
+  /**
+   * Whether the currently shown cigarettes are caculated exactly
+   */
+  exactCount: boolean;
   frequency: Frequency;
 }
 
@@ -63,7 +67,7 @@ export function AdditionalInfo(
 ): React.ReactElement | null {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
-  const { frequency, navigation, style, ...rest } = props;
+  const { exactCount, frequency, navigation, style, ...rest } = props;
 
   if (!currentLocation) {
     throw new Error(
@@ -101,9 +105,16 @@ export function AdditionalInfo(
     return null;
   }
 
+  if (frequency !== 'daily' && exactCount) {
+    return null;
+  }
+
+  // Only two cases left:
+  // - frequency === 'daily' && isTooFar
+  // - frequency !== 'daily' && !exactCount
   return (
     <View style={[theme.withPadding, style]} {...rest}>
-      {frequency !== 'daily'
+      {frequency !== 'daily' && !exactCount
         ? renderBeta()
         : isTooFar && (
             <Text style={theme.text}>

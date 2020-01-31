@@ -16,9 +16,9 @@
 
 import { subDays } from 'date-fns';
 
-import { sumInDays } from './staircaseAverage';
+import { sumInDays } from './stepAverage';
 
-describe('staircaseAverage', () => {
+describe('stepAverage', () => {
   it('should compute correct values', () => {
     const data = [
       { time: new Date(), value: 3 },
@@ -26,6 +26,10 @@ describe('staircaseAverage', () => {
       { time: subDays(new Date(), 2), value: 1 }
     ];
 
-    expect(sumInDays(data).toFixed(2)).toBe('3.00'); // 1+2, the value=3 is too short to be taken into the sum
+    // value=1 for 5 days => 5
+    // value=2 for 1 day  => 2
+    // value=3 for 1 day  => 3
+    // Sum is 10
+    expect(sumInDays(data, 'weekly').toFixed(2)).toBe('10.00');
   });
 });

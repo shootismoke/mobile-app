@@ -66,7 +66,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
       presentPast:
         isGps && frequency === 'daily'
           ? i18n.t('home_common_you_smoke')
-          : i18n.t('home_common_you_d_smoke'),
+          : i18n.t('home_common_you_smoked'),
       singularPlural:
         cigarettesRounded === 1
           ? i18n.t('home_common_cigarette').toLowerCase()

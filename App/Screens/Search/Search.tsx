@@ -22,7 +22,11 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { BackButton, ListSeparator } from '../../components';
-import { CurrentLocationContext, GpsLocationContext } from '../../stores';
+import {
+  CurrentLocationContext,
+  FrequencyContext,
+  GpsLocationContext
+} from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
@@ -61,6 +65,7 @@ function renderSeparator(): React.ReactElement {
 
 export function Search(props: SearchProps): React.ReactElement {
   const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
+  const { setFrequency } = useContext(FrequencyContext);
   const gps = useContext(GpsLocationContext);
 
   const [algoliaError, setAlgoliaError] = useState<Error | undefined>(
@@ -103,6 +108,7 @@ export function Search(props: SearchProps): React.ReactElement {
             setLoading(false);
             setAlgoliaError(undefined);
             setHits(hits);
+            setFrequency('daily');
 
             return T.of(void undefined);
           }

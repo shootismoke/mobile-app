@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { compareAsc, differenceInMilliseconds } from 'date-fns';
+import { compareAsc, differenceInMilliseconds, subDays } from 'date-fns';
+
+import { Frequency } from '../Screens/Home/SelectFrequency';
 
 interface Data {
   time: Date;
@@ -22,12 +24,12 @@ interface Data {
 }
 
 /**
- * Calculate the integral of a staircase function (the base step on the `x` axis
+ * Calculate the integral of a step function (the base step on the `x` axis
  * is 1ms)
  *
  * @param data - The data to calculate the integral on
  */
-function staircaseIntegral(data: Data[]): number {
+function stepIntegral(data: Data[], start: Date): number {
   if (!data.length) {
     return 0;
   }
@@ -38,8 +40,8 @@ function staircaseIntegral(data: Data[]): number {
     (sum, currentValue, index) =>
       sum +
       differenceInMilliseconds(
-        sortedData[index + 1] ? sortedData[index + 1].time : new Date(),
-        currentValue.time
+        currentValue.time,
+        index === 0 ? start : sortedData[index - 1].time
       ) *
       currentValue.value,
     0
@@ -47,11 +49,14 @@ function staircaseIntegral(data: Data[]): number {
 }
 
 /**
- * Calculate the sum of values of a staircase function, wich a base step on the
- * `x` axis as 1day
+ * Calculate the sum of values of a step function, with a base step on the
+ * `x` axis as 1 day
  *
  * @param data - The data to calculate the sum on
  */
-export function sumInDays(data: Data[]): number {
-  return staircaseIntegral(data) / (24 * 3600 * 1000);
+export function sumInDays(data: Data[], frequency: Frequency): number {
+  return (
+    stepIntegral(data, subDays(Date.now(), frequency === 'monthly' ? 30 : 7)) /
+    (24 * 3600 * 1000)
+  );
 }

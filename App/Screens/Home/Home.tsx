@@ -32,7 +32,7 @@ import {
 import { track, trackScreen } from '../../util/amplitude';
 import { logFpError } from '../../util/fp';
 import { pm25ToCigarettes } from '../../util/secretSauce';
-import { sumInDays } from '../../util/staircaseAverage';
+import { sumInDays } from '../../util/stepAverage';
 import * as theme from '../../util/theme';
 import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
@@ -64,18 +64,31 @@ export function Home(props: HomeProps): React.ReactElement {
     );
   }
 
-  const [cigarettes, setCigarettes] = useState(api.shootismoke.dailyCigarettes);
+  const [cigarettes, setCigarettes] = useState({
+    count: api.shootismoke.dailyCigarettes,
+    /**
+     * Denotes whether the cigarette count is exact or not. It's usually exact.
+     * The only case where it's not exact, it's when we fetch weekly/monthly
+     * cigarettes count, and the backend doesn't give us data back, then we
+     * just multiply the daily count by 7 or 30, and put exact=false.
+     */
+    exact: true
+  });
 
   trackScreen('HOME');
 
   useEffect(() => {
     // We don't fetch historical data on daily frequency
     if (frequency === 'daily') {
-      setCigarettes(api.shootismoke.dailyCigarettes);
+      setCigarettes({
+        count: api.shootismoke.dailyCigarettes,
+        exact: true
+      });
     } else {
       pipe(
         openaq.fetchByGps(currentLocation, {
           dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
+          dateTo: new Date(),
           limit: 100,
           parameter: ['pm25']
         }),
@@ -83,49 +96,48 @@ export function Home(props: HomeProps): React.ReactElement {
           results.length
             ? TE.right(results)
             : TE.left(
-                new Error(`Empty data found for ${frequency} measurements`)
+                new Error(
+                  `Data for ${frequency} measurements has ${results.length} items`
+                )
               )
         ),
         TE.map(results => {
-          console.log(
-            results.map(({ date: { utc }, value }) => ({
-              time: new Date(utc),
-              value
-            }))
-          );
           return results.map(({ date: { utc }, value }) => ({
             time: new Date(utc),
             value
           }));
         }),
-        TE.map(sumInDays),
+        TE.map(data => sumInDays(data, frequency)),
         TE.map(pm25ToCigarettes),
         TE.fold(
           error => {
             console.log(`<Home> - ${error.message}`);
             // Fallback to daily if there's an error
-            setFrequency('daily');
+            setCigarettes({
+              count:
+                api.shootismoke.dailyCigarettes *
+                (frequency === 'weekly' ? 7 : 30),
+              exact: false
+            });
 
             return T.of(void undefined);
           },
           totalCigarettes => {
-            setCigarettes(totalCigarettes);
+            setCigarettes({
+              count: totalCigarettes,
+              exact: true
+            });
 
             return T.of(void undefined);
           }
         )
       )().catch(logFpError('Home'));
     }
-  }, [
-    api.shootismoke.dailyCigarettes,
-    currentLocation,
-    frequency,
-    setFrequency
-  ]);
+  }, [api, currentLocation, frequency, setFrequency]);
 
   return (
     <View style={styles.container}>
-      <SmokeVideo cigarettes={cigarettes} />
+      <SmokeVideo cigarettes={cigarettes.count} />
       <Header
         onChangeLocationClick={(): void => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
@@ -134,13 +146,14 @@ export function Home(props: HomeProps): React.ReactElement {
       />
       <ScrollView bounces={false}>
         <CigaretteBlock
-          cigarettes={cigarettes}
+          cigarettes={cigarettes.count}
           frequency={frequency}
           isGps={isGps}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />
         <AdditionalInfo
+          exactCount={cigarettes.exact}
           frequency={frequency}
           navigation={props.navigation}
           style={styles.withMargin}
