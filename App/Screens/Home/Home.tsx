@@ -66,6 +66,10 @@ interface Cigarettes {
    * just multiply the daily count by 7 or 30, and put exact=false.
    */
   exact: boolean;
+  /**
+   * The frequency on this cigarettes number
+   */
+  frequency: Frequency;
 }
 
 /**
@@ -98,19 +102,21 @@ export function Home(props: HomeProps): React.ReactElement {
     );
   }
 
-  const [cigarettes, setCigarettes] = useState<Cigarettes>({
-    count: api.shootismoke.dailyCigarettes,
-    exact: true
-  });
-
   trackScreen('HOME');
 
+  // Decide on how many cigarettes we want to show on the Home screen.
+  const [cigarettes, setCigarettes] = useState<Cigarettes>({
+    count: api.shootismoke.dailyCigarettes,
+    exact: true,
+    frequency
+  });
   useEffect(() => {
     // We don't fetch historical data on daily frequency
     if (frequency === 'daily') {
       setCigarettes({
         count: api.shootismoke.dailyCigarettes,
-        exact: true
+        exact: true,
+        frequency
       });
     } else {
       // Fetch weekly/monthly number of cigarettes depending on the current
@@ -142,7 +148,8 @@ export function Home(props: HomeProps): React.ReactElement {
               count:
                 api.shootismoke.dailyCigarettes *
                 (frequency === 'weekly' ? 7 : 30),
-              exact: false
+              exact: false,
+              frequency
             });
 
             return T.of(void undefined);
@@ -150,7 +157,8 @@ export function Home(props: HomeProps): React.ReactElement {
           totalCigarettes => {
             setCigarettes({
               count: totalCigarettes,
-              exact: true
+              exact: true,
+              frequency
             });
 
             return T.of(void undefined);
@@ -172,7 +180,7 @@ export function Home(props: HomeProps): React.ReactElement {
       <ScrollView bounces={false}>
         <CigaretteBlock
           cigarettes={cigarettes.count}
-          frequency={frequency}
+          frequency={cigarettes.frequency}
           isGps={isGps}
           style={styles.withMargin}
         />

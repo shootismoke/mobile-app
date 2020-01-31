@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 
 import { i18n } from '../../localization';
@@ -57,12 +57,19 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
     ...rest
   } = props;
 
+  // Decide on a swear word. The effect says that the swear word only changes
+  // when the cigarettes count changes.
+  const [swearWord, setSwearWord] = useState(getSwearWord(cigarettes));
+  useEffect(() => {
+    setSwearWord(getSwearWord(cigarettes));
+  }, [cigarettes]);
+
   const renderCigarettesText = (): React.ReactElement => {
     // Round to 1 decimal
     const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
     const text = i18n.t('home_smoked_cigarette_title', {
-      swearWord: getSwearWord(cigarettes),
+      swearWord,
       presentPast:
         isGps && frequency === 'daily'
           ? i18n.t('home_common_you_smoke')
