@@ -85,7 +85,10 @@ const memoHistoricalCigarettes = pMemoize(
     });
   },
   {
-    cacheKey: args => JSON.stringify(args)
+    cacheKey: (frequency: Frequency, { latitude, longitude }: LatLng) => {
+      // We cache this function with the following cache key
+      return `${frequency}${latitude}${longitude}`;
+    }
   }
 );
 
