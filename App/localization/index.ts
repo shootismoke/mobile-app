@@ -17,7 +17,7 @@
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
-import enUS from './languages/en-us.json';
+import enUS from './languages/en-us';
 import en from './languages/en.json';
 
 i18n.fallbacks = true;

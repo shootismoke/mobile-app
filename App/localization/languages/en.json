@@ -85,6 +85,10 @@
   "about_credits_data_from": "Air quality data from",
   "about_credits_source_code": "Source code",
   "about_credits_available_github": "available on Github",
+  "about_settings_title": "Settings",
+  "about_settings_distance_unit": "Show distances in:",
+  "about_settings_distance_unit_km": "Kilometers",
+  "about_settings_distance_unit_mile": "Miles",
   "about_language": "Language",
   "current_location_unknown_station": "Unknown AQI station"
 }
