@@ -25,6 +25,7 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
+import { Notifications } from './Notifications';
 import { ShareButton } from './ShareButton';
 
 interface FooterProps extends NavigationInjectedProps, ViewProps {}
