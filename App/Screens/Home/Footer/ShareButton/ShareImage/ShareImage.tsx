@@ -15,17 +15,11 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { CigaretteBlock, CurrentLocation } from '../../../../../components';
-import {
-  ApiContext,
-  CurrentLocationContext,
-  FrequencyContext
-} from '../../../../../stores';
+import { ApiContext, CurrentLocationContext } from '../../../../../stores';
 import * as theme from '../../../../../util/theme';
-
-const LANDING_PAGE = 'https://shootismoke.github.io';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +42,6 @@ const styles = StyleSheet.create({
 export function ShareImage(): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
-  const { frequency } = useContext(FrequencyContext);
 
   if (!currentLocation) {
     throw new Error(
@@ -60,25 +53,14 @@ export function ShareImage(): React.ReactElement {
     );
   }
 
-  const cigarettesPerDay = api ? api.shootismoke.dailyCigarettes : 0;
-
   return (
     <View style={styles.container}>
-      <CigaretteBlock
-        cigarettes={cigarettesPerDay}
-        displayFrequency
-        frequency={frequency}
-        isGps={false}
-        style={{ paddingHorizontal: 0 }}
+      <CigaretteBlock cigarettes={api.shootismoke.dailyCigarettes} />
+      <CurrentLocation
+        currentLocation={currentLocation}
+        measurement={api.pm25}
+        numberOfLines={2}
       />
-      <View>
-        <CurrentLocation
-          api={api}
-          currentLocation={currentLocation}
-          numberOfLines={2}
-        />
-      </View>
-      <Text style={styles.urlText}>{LANDING_PAGE}</Text>
     </View>
   );
 }

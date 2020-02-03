@@ -87,8 +87,8 @@ export function Header(props: HeaderProps): React.ReactElement {
     <View style={styles.container}>
       <View style={styles.currentLocation}>
         <CurrentLocation
-          api={api}
           currentLocation={currentLocation}
+          measurement={api.pm25}
           numberOfLines={2}
         />
         <View style={styles.distance}>

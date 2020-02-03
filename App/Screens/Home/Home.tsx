@@ -94,7 +94,7 @@ const memoHistoricalCigarettes = pMemoize(
 
 export function Home(props: HomeProps): React.ReactElement {
   const { api } = useContext(ApiContext);
-  const { currentLocation, isGps } = useContext(CurrentLocationContext);
+  const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency, setFrequency } = useContext(FrequencyContext);
 
   if (!api) {
@@ -191,7 +191,6 @@ export function Home(props: HomeProps): React.ReactElement {
         <CigaretteBlock
           cigarettes={cigarettes.count}
           frequency={cigarettes.frequency}
-          isGps={isGps}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />
