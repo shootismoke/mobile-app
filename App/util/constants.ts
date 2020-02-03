@@ -20,7 +20,7 @@ import Constants from 'expo-constants';
  * The current release channel. Can be one of `development`, `default` or
  * `production-v{version}`.
  */
-export const RELEASE_CHANNEL =
+export const RELEASE_CHANNEL: string =
   Constants.manifest.releaseChannel || 'development';
 
 /**
