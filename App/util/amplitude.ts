@@ -18,6 +18,8 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Constants from 'expo-constants';
 import { useEffect } from 'react';
 
+import { RELEASE_CHANNEL } from '../util/constants';
+
 type AmplitudeEvent =
   | 'APP_REFOCUS'
   | 'APP_EXIT'
@@ -51,8 +53,7 @@ export function setupAmplitude(): Promise<void> {
     ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
         () => {
           Amplitude.setUserProperties({
-            sisReleaseChannel:
-              Constants.manifest.releaseChannel || 'development',
+            sisReleaseChannel: RELEASE_CHANNEL,
             sisRevisionId: Constants.manifest.revisionId || 'development',
             sisVersion: Constants.manifest.version
           });

@@ -18,10 +18,10 @@ import Constants from 'expo-constants';
 import React from 'react';
 import {
   Linking,
+  Picker,
   Platform,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   View
 } from 'react-native';
@@ -31,7 +31,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
-import { useDistanceUnit } from '../../stores/distanceUnit';
+import { DistanceUnit, useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Box } from './Box';
@@ -101,10 +101,13 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.big,
     paddingTop: theme.spacing.big
   },
-  distanceSwitchWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
+  distancePicker: {
+    ...Platform.select({
+      ios: {
+        marginBottom: scale(-60),
+        marginTop: scale(-40)
+      }
+    })
   },
   distanceText: {
     ...theme.text,
@@ -136,16 +139,9 @@ const styles = StyleSheet.create({
 
 export function About(props: AboutProps): React.ReactElement {
   const { navigation } = props;
-  const {
-    distanceUnit,
-    localizedDistanceUnit,
-    setDistanceUnit
-  } = useDistanceUnit();
+  const { distanceUnit, setDistanceUnit } = useDistanceUnit();
 
   trackScreen('ABOUT');
-
-  const toggleDistanceSwitch = (value: boolean): void =>
-    setDistanceUnit(value ? 'km' : 'mile');
 
   return (
     <CustomScrollView
@@ -239,20 +235,22 @@ export function About(props: AboutProps): React.ReactElement {
       </View>
 
       <View style={styles.distance}>
-        <Text style={styles.h2}>{i18n.t('about_distance_unit_title')}</Text>
-        <View style={styles.distanceSwitchWrapper}>
-          <Switch
-            onValueChange={toggleDistanceSwitch}
-            trackColor={{
-              true: theme.primaryColor,
-              false: theme.iconBackgroundColor
-            }}
-            value={distanceUnit === 'km'}
+        <Text style={styles.h2}>{i18n.t('about_settings_title')}</Text>
+        <Text style={theme.text}>{i18n.t('about_settings_distance_unit')}</Text>
+        <Picker
+          onValueChange={(value: DistanceUnit): void => setDistanceUnit(value)}
+          selectedValue={distanceUnit}
+          style={styles.distancePicker}
+        >
+          <Picker.Item
+            label={i18n.t('about_settings_distance_unit_km')}
+            value="km"
           />
-          <Text style={styles.distanceText}>
-            {localizedDistanceUnit('long')}
-          </Text>
-        </View>
+          <Picker.Item
+            label={i18n.t('about_settings_distance_unit_mile')}
+            value="mile"
+          />
+        </Picker>
       </View>
 
       <View style={styles.credits}>

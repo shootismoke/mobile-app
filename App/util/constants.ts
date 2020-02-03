@@ -17,13 +17,26 @@
 import Constants from 'expo-constants';
 
 /**
+ * The current release channel. Can be one of `development`, `default` or
+ * `production-v{version}`.
+ */
+export const RELEASE_CHANNEL: string =
+  Constants.manifest.releaseChannel || 'development';
+
+/**
+ * Whether we're running a staging version of the app
+ */
+export const IS_STAGING = RELEASE_CHANNEL === 'default';
+
+/**
  * Whether we're running a production version of the app
  */
 export const IS_PROD =
-  Constants.manifest.releaseChannel ===
-  `production-v${Constants.manifest.version}`;
+  RELEASE_CHANNEL === `production-v${Constants.manifest.version}`;
 
 /**
- * Whether Sentry bug tracking is set up
+ * Whether or not we should set up Sentry bug tracking
  */
-export const IS_SENTRY_SET_UP = !!Constants.manifest.extra.sentryPublicDsn;
+export const IS_SENTRY_SET_UP =
+  // We also added sentry on staging btw
+  (IS_PROD || IS_STAGING) && !!Constants.manifest.extra.sentryPublicDsn;
