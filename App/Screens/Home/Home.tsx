@@ -127,13 +127,11 @@ export function Home(props: HomeProps): React.ReactElement {
       pipe(
         promiseToTE(() => memoHistoricalCigarettes(frequency, currentLocation)),
         TE.chain(({ results }) =>
-          // We consider that if there's <=5 items, it's too less to make a sum
-          // over a week/month. It's arbitrary, i'm sure there's a better way.
-          results.length > 5
+          results.length
             ? TE.right(results)
             : TE.left(
                 new Error(
-                  `Data for ${frequency} measurements has only ${results.length} items`
+                  `Data for ${frequency} measurements on [${currentLocation.latitude},${currentLocation.longitude}] has no items`
                 )
               )
         ),
@@ -143,8 +141,16 @@ export function Home(props: HomeProps): React.ReactElement {
             value
           }));
         }),
-        TE.map(data => sumInDays(data, frequency)),
-        TE.map(pm25ToCigarettes),
+        TE.map(data => ({
+          // Convert the PM2.5 sum to a cigarettes sum
+          count: pm25ToCigarettes(sumInDays(data, frequency)),
+          exact:
+            // We consider that the calculated sums are "exact", if there's at
+            // least 60 data points (for monthly sum) or 14 data points (for
+            // weekly sums), These 2 numbers are highly arbirtrary, I'm sure
+            // there's a more scientific way to find them.
+            frequency === 'monthly' ? data.length >= 60 : data.length >= 14
+        })),
         TE.fold(
           error => {
             console.log(`<Home> - ${error.message}`);
@@ -159,10 +165,9 @@ export function Home(props: HomeProps): React.ReactElement {
 
             return T.of(void undefined);
           },
-          totalCigarettes => {
+          data => {
             setCigarettes({
-              count: totalCigarettes,
-              exact: true,
+              ...data,
               frequency
             });
 
