@@ -48,14 +48,7 @@ function getSwearWord(cigaretteCount: number): string {
 }
 
 export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
-  const {
-    cigarettes,
-    frequency,
-    isGps,
-    style,
-    displayFrequency,
-    ...rest
-  } = props;
+  const { cigarettes, frequency, style, displayFrequency, ...rest } = props;
 
   // Decide on a swear word. The effect says that the swear word only changes
   // when the cigarettes count changes.
@@ -70,10 +63,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
 
     const text = i18n.t('home_smoked_cigarette_title', {
       swearWord,
-      presentPast:
-        isGps && frequency === 'daily'
-          ? i18n.t('home_common_you_smoke')
-          : i18n.t('home_common_you_smoked'),
+      presentPast: i18n.t('home_common_you_smoke'),
       singularPlural:
         cigarettesRounded === 1
           ? i18n.t('home_common_cigarette').toLowerCase()
