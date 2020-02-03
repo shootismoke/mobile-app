@@ -80,6 +80,15 @@ export function AdditionalInfo(
 
   const isTooFar = isStationTooFar(currentLocation, api);
 
+  // Render a "station too far" warning
+  if (isTooFar) {
+    return (
+      <View style={[theme.withPadding, style]} {...rest}>
+        <Text style={theme.text}>{i18n.t('home_station_too_far_message')}</Text>
+      </View>
+    );
+  }
+
   // Render a "beta" tag
   if (frequency !== 'daily' && !exactCount) {
     return (
@@ -99,15 +108,6 @@ export function AdditionalInfo(
           </View>
           <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
         </TouchableOpacity>
-      </View>
-    );
-  }
-
-  // Render a "station too far" warning
-  if (frequency === 'daily' && isTooFar) {
-    return (
-      <View style={[theme.withPadding, style]} {...rest}>
-        <Text style={theme.text}>{i18n.t('home_station_too_far_message')}</Text>
       </View>
     );
   }
