@@ -17,6 +17,7 @@
 import {
   LatLng,
   Normalized,
+  OpenAQFormat,
   ProviderPromise
 } from '@shootismoke/dataproviders';
 import { aqicn, openaq, waqi } from '@shootismoke/dataproviders/lib/promise';
@@ -32,9 +33,6 @@ import { noop } from '../util/noop';
 import { pm25ToCigarettes } from '../util/secretSauce';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-
-// FIXME Import from @shootismoke/convert
-type OpenAQFormat = Normalized[0];
 
 /**
  * Api is basically the normalized data from '@shootismoke/dataproviders',

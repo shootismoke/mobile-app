@@ -15,40 +15,31 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { CigaretteBlock, CurrentLocation } from '../../../components';
-import {
-  ApiContext,
-  CurrentLocationContext,
-  FrequencyContext
-} from '../../../stores';
-import * as theme from '../../../util/theme';
-
-const LANDING_PAGE = 'https://shootismoke.github.io';
+import { CigaretteBlock, CurrentLocation } from '../../../../../components';
+import { ApiContext, CurrentLocationContext } from '../../../../../stores';
+import * as theme from '../../../../../util/theme';
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding,
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    paddingTop: theme.spacing.normal,
-    paddingBottom: theme.spacing.normal,
-    width: 400,
-    backgroundColor: 'white'
+  cigaretteBlock: {
+    marginBottom: theme.spacing.normal
   },
-
-  urlText: {
-    ...theme.text,
-    alignSelf: 'center',
-    marginTop: theme.spacing.mini
+  container: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    paddingBottom: theme.spacing.big,
+    paddingTop: theme.spacing.normal,
+    width: 480
+  },
+  currentLocation: {
+    textAlign: 'center'
   }
 });
 
 export function ShareImage(): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
-  const { frequency } = useContext(FrequencyContext);
 
   if (!currentLocation) {
     throw new Error(
@@ -60,25 +51,19 @@ export function ShareImage(): React.ReactElement {
     );
   }
 
-  const cigarettesPerDay = api ? api.shootismoke.dailyCigarettes : 0;
-
   return (
     <View style={styles.container}>
       <CigaretteBlock
-        cigarettes={cigarettesPerDay}
-        displayFrequency
-        frequency={frequency}
-        isGps={false}
-        style={{ paddingHorizontal: 0 }}
+        cigarettes={api.shootismoke.dailyCigarettes}
+        frequency="daily"
+        style={styles.cigaretteBlock}
       />
-      <View>
-        <CurrentLocation
-          api={api}
-          currentLocation={currentLocation}
-          numberOfLines={2}
-        />
-      </View>
-      <Text style={styles.urlText}>{LANDING_PAGE}</Text>
+      <CurrentLocation
+        currentLocation={currentLocation}
+        measurement={api.pm25}
+        numberOfLines={2}
+        style={styles.currentLocation}
+      />
     </View>
   );
 }

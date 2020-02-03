@@ -25,9 +25,7 @@ import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
   cigarettes: number;
-  displayFrequency?: boolean;
-  frequency: Frequency;
-  isGps: boolean;
+  frequency?: Frequency;
 }
 
 const styles = StyleSheet.create({
@@ -48,7 +46,7 @@ function getSwearWord(cigaretteCount: number): string {
 }
 
 export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
-  const { cigarettes, frequency, style, displayFrequency, ...rest } = props;
+  const { cigarettes, frequency, style, ...rest } = props;
 
   // Decide on a swear word. The effect says that the swear word only changes
   // when the cigarettes count changes.
@@ -73,17 +71,13 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
 
     const [firstPartText, secondPartText] = text.split('<');
 
-    const frequencyText = displayFrequency ? (
-      <Text>{i18n.t(`frequency_${frequency}`)}</Text>
-    ) : null;
-
     return (
       <Text style={styles.shit}>
         {firstPartText}
         <Text style={styles.cigarettesCount}>
           {secondPartText.split('>')[0]}
         </Text>
-        {secondPartText.split('>')[1]} {frequencyText}
+        {secondPartText.split('>')[1]} {frequency}
       </Text>
     );
   };
