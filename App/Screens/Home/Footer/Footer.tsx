@@ -25,6 +25,7 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
+import { ShareButton } from './ShareButton';
 
 interface FooterProps extends NavigationInjectedProps, ViewProps {}
 
@@ -71,12 +72,6 @@ export function Footer(props: FooterProps): React.ReactElement {
     navigation.navigate('Details');
   }
 
-  function handleShare(): void {
-    track('HOME_SCREEN_SHARE_CLICK');
-
-    props.navigation.navigate('ShareModal');
-  }
-
   function renderBigButton(): React.ReactElement {
     return isTooFar ? (
       <Button onPress={goToAboutWhySoFar}>
@@ -101,9 +96,7 @@ export function Footer(props: FooterProps): React.ReactElement {
             {i18n.t('home_btn_faq_about').toUpperCase()}
           </Button>
         )}
-        <Button icon="share-alt" onPress={handleShare} type="secondary">
-          {i18n.t('home_btn_share').toUpperCase()}
-        </Button>
+        <ShareButton />
       </View>
     );
   }

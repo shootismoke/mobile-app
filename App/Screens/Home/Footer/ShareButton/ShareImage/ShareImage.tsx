@@ -17,13 +17,13 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { CigaretteBlock, CurrentLocation } from '../../../components';
+import { CigaretteBlock, CurrentLocation } from '../../../../../components';
 import {
   ApiContext,
   CurrentLocationContext,
   FrequencyContext
-} from '../../../stores';
-import * as theme from '../../../util/theme';
+} from '../../../../../stores';
+import * as theme from '../../../../../util/theme';
 
 const LANDING_PAGE = 'https://shootismoke.github.io';
 
