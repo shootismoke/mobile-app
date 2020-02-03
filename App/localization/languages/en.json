@@ -11,6 +11,7 @@
   "home_beta_not_accurate": "Numbers may not be 100% accurate.",
   "home_share_title": "Did you know that you may be smoking up to 20 cigarettes per day, just for living in a big city?",
   "home_share_message": "Shoot! People {{city}} \"smoke\" {{cigarettes}} cigarettes daily just by breathing urban air. Try it out yourself: https://shootismoke.github.io",
+  "home_share_message_here": "here",
   "home_header_air_quality_station_distance": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
   "home_header_from_search": "from search",
   "home_header_change_location": "Change Location",

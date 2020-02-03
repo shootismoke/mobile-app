@@ -22,20 +22,18 @@ import { ApiContext, CurrentLocationContext } from '../../../../../stores';
 import * as theme from '../../../../../util/theme';
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding,
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    paddingTop: theme.spacing.normal,
-    paddingBottom: theme.spacing.normal,
-    width: 400,
-    backgroundColor: 'white'
+  cigaretteBlock: {
+    marginBottom: theme.spacing.normal
   },
-
-  urlText: {
-    ...theme.text,
-    alignSelf: 'center',
-    marginTop: theme.spacing.mini
+  container: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    paddingBottom: theme.spacing.big,
+    paddingTop: theme.spacing.normal,
+    width: 480
+  },
+  currentLocation: {
+    textAlign: 'center'
   }
 });
 
@@ -55,11 +53,16 @@ export function ShareImage(): React.ReactElement {
 
   return (
     <View style={styles.container}>
-      <CigaretteBlock cigarettes={api.shootismoke.dailyCigarettes} />
+      <CigaretteBlock
+        cigarettes={api.shootismoke.dailyCigarettes}
+        frequency="daily"
+        style={styles.cigaretteBlock}
+      />
       <CurrentLocation
         currentLocation={currentLocation}
         measurement={api.pm25}
         numberOfLines={2}
+        style={styles.currentLocation}
       />
     </View>
   );

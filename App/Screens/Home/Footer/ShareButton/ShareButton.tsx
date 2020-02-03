@@ -20,7 +20,7 @@ import { captureRef } from 'react-native-view-shot';
 
 import { Button } from '../../../../components';
 import { i18n } from '../../../../localization';
-import { ApiContext } from '../../../../stores';
+import { ApiContext, CurrentLocationContext } from '../../../../stores';
 import { ShareImage } from './ShareImage';
 
 const styles = StyleSheet.create({
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
 
 export function ShareButton(): React.ReactElement {
   const { api } = useContext(ApiContext);
+  const { currentLocation } = useContext(CurrentLocationContext);
   const refViewShot = createRef<View>();
 
   async function handleShare(): Promise<void> {
@@ -43,6 +44,10 @@ export function ShareButton(): React.ReactElement {
         throw new Error(
           'Home/Footer/ShareButton.tsx only renders when `api` is defined.'
         );
+      } else if (!currentLocation) {
+        throw new Error(
+          'Home/Footer/ShareButton.tsx only renders when `currentLocation` is defined.'
+        );
       }
 
       const imageUrl = await captureRef(refViewShot, {
@@ -50,6 +55,9 @@ export function ShareButton(): React.ReactElement {
         quality: 1
       });
       const message = i18n.t('home_share_message', {
+        city: currentLocation.city
+          ? `in ${currentLocation.city}`
+          : i18n.t('home_share_message_here'),
         cigarettes: Math.ceil(api.shootismoke.dailyCigarettes)
       });
       const title = i18n.t('home_share_title');

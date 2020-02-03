@@ -190,7 +190,6 @@ export function Home(props: HomeProps): React.ReactElement {
       <ScrollView bounces={false}>
         <CigaretteBlock
           cigarettes={cigarettes.count}
-          frequency={cigarettes.frequency}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />
