@@ -127,11 +127,13 @@ export function Home(props: HomeProps): React.ReactElement {
       pipe(
         promiseToTE(() => memoHistoricalCigarettes(frequency, currentLocation)),
         TE.chain(({ results }) =>
-          results.length
+          // We consider that if there's <=5 items, it's too less to make a sum
+          // over a week/month. It's arbitrary, i'm sure there's a better way.
+          results.length > 5
             ? TE.right(results)
             : TE.left(
                 new Error(
-                  `Data for ${frequency} measurements has ${results.length} items`
+                  `Data for ${frequency} measurements has only ${results.length} items`
                 )
               )
         ),

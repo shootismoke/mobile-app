@@ -27,12 +27,11 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import promiseAny from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { logFpError, promiseToTE, sideEffect } from '../util/fp';
+import { logFpError, promiseToTE } from '../util/fp';
 import { noop } from '../util/noop';
 import { pm25ToCigarettes } from '../util/secretSauce';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-import { createHistoryItem } from './util';
 
 // FIXME Import from @shootismoke/convert
 type OpenAQFormat = Normalized[0];
@@ -68,7 +67,9 @@ function filterPm25(normalized: Normalized): Api {
       }
     };
   } else {
-    throw new Error('PM2.5 has not been measured by this station right now');
+    throw new Error(
+      `PM2.5 has not been measured by station ${normalized[0].location} right now`
+    );
   }
 }
 
@@ -78,7 +79,7 @@ function filterPm25(normalized: Normalized): Api {
  *
  * @param gps - The GPS coordinates to fetch data for
  */
-function race(gps: LatLng): TE.TaskEither<Error, Api> {
+function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
   // Helper function to fetch & normalize data for 1 provider
   async function fetchForProvider<DataByGps, DataByStation, Options>(
     provider: ProviderPromise<DataByGps, DataByStation, Options>,
@@ -122,7 +123,7 @@ interface ApiContextProviderProps {
 export function ApiContextProvider({
   children
 }: ApiContextProviderProps): React.ReactElement {
-  const { currentLocation, isGps, setCurrentLocation } = useContext(
+  const { currentLocation, setCurrentLocation } = useContext(
     CurrentLocationContext
   );
   const { setError } = useContext(ErrorContext);
@@ -139,12 +140,7 @@ export function ApiContextProvider({
     }
 
     pipe(
-      race(currentLocation),
-      TE.chain(
-        sideEffect(api =>
-          isGps ? createHistoryItem(api) : TE.right(void undefined)
-        )
-      ),
+      raceApi(currentLocation),
       TE.fold(
         error => {
           setError(error);
