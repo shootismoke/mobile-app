@@ -18,6 +18,8 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Constants from 'expo-constants';
 import { useEffect } from 'react';
 
+import { RELEASE_CHANNEL } from '../util/constants';
+
 type AmplitudeEvent =
   | 'APP_REFOCUS'
   | 'APP_EXIT'
@@ -49,15 +51,14 @@ type AmplitudeEvent =
 export function setupAmplitude(): Promise<void> {
   return Constants.manifest.extra.amplitudeApiKey
     ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
-        () => {
-          Amplitude.setUserProperties({
-            sisReleaseChannel:
-              Constants.manifest.releaseChannel || 'development',
-            sisRevisionId: Constants.manifest.revisionId || 'development',
-            sisVersion: Constants.manifest.version
-          });
-        }
-      )
+      () => {
+        Amplitude.setUserProperties({
+          sisReleaseChannel: RELEASE_CHANNEL,
+          sisRevisionId: Constants.manifest.revisionId || 'development',
+          sisVersion: Constants.manifest.version
+        });
+      }
+    )
     : Promise.resolve();
 }
 
@@ -68,7 +69,7 @@ interface JsonObject {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface JsonArray extends Array<Json> {}
+interface JsonArray extends Array<Json> { }
 
 export function track(
   event: AmplitudeEvent,

@@ -32,9 +32,10 @@ import {
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
 import { client } from './util/apollo';
+import { IS_SENTRY_SET_UP } from './util/constants';
 
 // Add Sentry if available
-if (Constants.manifest.extra.sentryPublicDsn) {
+if (IS_SENTRY_SET_UP) {
   Sentry.init({
     dsn: Constants.manifest.extra.sentryPublicDsn,
     debug: true

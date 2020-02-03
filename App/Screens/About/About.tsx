@@ -102,8 +102,12 @@ const styles = StyleSheet.create({
     paddingTop: theme.spacing.big
   },
   distancePicker: {
-    marginBottom: scale(-60),
-    marginTop: scale(-40)
+    ...Platform.select({
+      ios: {
+        marginBottom: scale(-60),
+        marginTop: scale(-40)
+      }
+    })
   },
   distanceText: {
     ...theme.text,

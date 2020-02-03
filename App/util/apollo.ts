@@ -25,15 +25,14 @@ import { ErrorResponse } from 'apollo-link-error';
 import Constants from 'expo-constants';
 import * as Sentry from 'sentry-expo';
 
-import { IS_PROD } from '../util/constants';
+import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
 
 const BACKEND_URI = IS_PROD
   ? 'https://shootismoke.now.sh/api/graphql'
   : 'https://staging.shootismoke.now.sh/api/graphql';
 
 const credentials = {
-  id: `${Constants.manifest.slug}-${Constants.manifest.releaseChannel ||
-    'development'}`,
+  id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
   key: Constants.manifest.extra.hawkKey,
   algorithm: 'sha256'
 };
