@@ -23,7 +23,7 @@ import { i18n } from '../../localization';
 import { Frequency } from '../../stores';
 import * as theme from '../../util/theme';
 import { Cigarettes, CIGARETTES_HEIGHT } from '../Cigarettes';
-import loadingAnimation from './loading.json';
+import loadingAnimation from './animation.json';
 import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
@@ -35,7 +35,6 @@ interface CigaretteBlockProps extends ViewProps {
 const styles = StyleSheet.create({
   animationContainer: {
     display: 'flex',
-    flexDirection: 'column',
     height: scale(CIGARETTES_HEIGHT),
     justifyContent: 'flex-end'
   },
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   lottie: {
-    width: '100%'
+    backgroundColor: 'white'
   },
   shit: {
     ...theme.shitText,
@@ -61,7 +60,12 @@ function getSwearWord(cigaretteCount: number): string {
 function renderAnimation(): React.ReactElement {
   return (
     <View style={styles.animationContainer}>
-      <LottieView autoPlay source={loadingAnimation} style={styles.lottie} />
+      <LottieView
+        autoPlay
+        autoSize
+        source={loadingAnimation}
+        style={styles.lottie}
+      />
     </View>
   );
 }
@@ -78,6 +82,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
 
   const renderCigarettesText = (): React.ReactElement => {
     if (loading) {
+      // FIXME i18n
       return (
         <Text style={styles.shit}>
           Loading<Text style={styles.cigarettesCount}>...{'\n'}</Text>
