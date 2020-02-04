@@ -113,6 +113,7 @@ export function Home(props: HomeProps): React.ReactElement {
     exact: true,
     frequency
   });
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     // We don't fetch historical data on daily frequency
     if (frequency === 'daily') {
@@ -122,6 +123,8 @@ export function Home(props: HomeProps): React.ReactElement {
         frequency
       });
     } else {
+      setIsLoading(true);
+
       // Fetch weekly/monthly number of cigarettes depending on the current
       // location.
       pipe(
@@ -154,6 +157,7 @@ export function Home(props: HomeProps): React.ReactElement {
         TE.fold(
           error => {
             console.log(`<Home> - ${error.message}`);
+            setIsLoading(false);
             // Fallback to daily cigarettes * 7 or * 30 if there's an error
             setCigarettes({
               count:
@@ -166,6 +170,7 @@ export function Home(props: HomeProps): React.ReactElement {
             return T.of(void undefined);
           },
           data => {
+            setIsLoading(false);
             setCigarettes({
               ...data,
               frequency
@@ -190,6 +195,7 @@ export function Home(props: HomeProps): React.ReactElement {
       <ScrollView bounces={false}>
         <CigaretteBlock
           cigarettes={cigarettes.count}
+          loading={isLoading}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />

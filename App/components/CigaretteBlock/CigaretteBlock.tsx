@@ -14,23 +14,36 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import LottieView from 'lottie-react-native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 import { i18n } from '../../localization';
 import { Frequency } from '../../stores';
 import * as theme from '../../util/theme';
-import { Cigarettes } from '../Cigarettes';
+import { Cigarettes, CIGARETTES_HEIGHT } from '../Cigarettes';
+import loadingAnimation from './loading.json';
 import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
   cigarettes: number;
   frequency?: Frequency;
+  loading?: boolean;
 }
 
 const styles = StyleSheet.create({
+  animationContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: scale(CIGARETTES_HEIGHT),
+    justifyContent: 'flex-end'
+  },
   cigarettesCount: {
     color: theme.primaryColor
+  },
+  lottie: {
+    width: '100%'
   },
   shit: {
     ...theme.shitText,
@@ -45,8 +58,16 @@ function getSwearWord(cigaretteCount: number): string {
   return swearWords[Math.floor(Math.random() * swearWords.length)];
 }
 
+function renderAnimation(): React.ReactElement {
+  return (
+    <View style={styles.animationContainer}>
+      <LottieView autoPlay source={loadingAnimation} style={styles.lottie} />
+    </View>
+  );
+}
+
 export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
-  const { cigarettes, frequency, style, ...rest } = props;
+  const { cigarettes, frequency, loading, style, ...rest } = props;
 
   // Decide on a swear word. The effect says that the swear word only changes
   // when the cigarettes count changes.
@@ -56,6 +77,14 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
   }, [cigarettes]);
 
   const renderCigarettesText = (): React.ReactElement => {
+    if (loading) {
+      return (
+        <Text style={styles.shit}>
+          Loading<Text style={styles.cigarettesCount}>...{'\n'}</Text>
+        </Text>
+      );
+    }
+
     // Round to 1 decimal
     const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
@@ -84,7 +113,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
 
   return (
     <View style={[theme.withPadding, style]} {...rest}>
-      <Cigarettes cigarettes={cigarettes} />
+      {loading ? renderAnimation() : <Cigarettes cigarettes={cigarettes} />}
       {renderCigarettesText()}
     </View>
   );
