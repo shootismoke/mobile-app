@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 export function Cigarettes(props: CigarettesProps): React.ReactElement {
   const { cigarettes: realCigarettes } = props;
   const cigarettes =
-    Math.round(Math.max(0.1, Math.min(realCigarettes, 50)) * 10) / 10; // We don't show more than 50
+    Math.round(Math.max(0.1, Math.min(realCigarettes, 64)) * 10) / 10; // We don't show more than 64
   // const cigarettes = 1.9; // Can change values here for testing
 
   const count = Math.floor(cigarettes); // The cigarette count, without decimal
