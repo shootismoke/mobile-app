@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: theme.primaryColor
   },
   lottie: {
-    backgroundColor: 'white'
+    backgroundColor: theme.backgroundColor
   },
   shit: {
     ...theme.shitText,

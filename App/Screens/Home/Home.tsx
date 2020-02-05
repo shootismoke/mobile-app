@@ -157,7 +157,6 @@ export function Home(props: HomeProps): React.ReactElement {
         TE.fold(
           error => {
             console.log(`<Home> - ${error.message}`);
-            setIsLoading(false);
             // Fallback to daily cigarettes * 7 or * 30 if there's an error
             setCigarettes({
               count:
@@ -166,15 +165,16 @@ export function Home(props: HomeProps): React.ReactElement {
               exact: false,
               frequency
             });
+            setIsLoading(false);
 
             return T.of(void undefined);
           },
           data => {
-            setIsLoading(false);
             setCigarettes({
               ...data,
               frequency
             });
+            setIsLoading(false);
 
             return T.of(void undefined);
           }
