@@ -81,7 +81,7 @@ If you find a bug, or if you have an idea for this app, please file an issue [he
 
 🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX).
 
-For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along.
+For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along. You can start with these [easy tasks](https://github.com/amaurymartiny/shoot-i-smoke/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 More information on contributing [here](./CONTRIBUTING.md).
 
