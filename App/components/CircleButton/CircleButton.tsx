@@ -14,22 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps
-} from 'react-native';
+import { StyleSheet, TouchableOpacityProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
+import { Button } from '../Button';
 
-interface ButtonProps extends TouchableOpacityProps {
-  children?: string;
+interface CircleButtonProps extends TouchableOpacityProps {
   icon?: string;
-  type?: 'primary' | 'secondary';
+  text?: string;
 }
 
 const styles = StyleSheet.create({
@@ -54,28 +48,12 @@ const styles = StyleSheet.create({
   secondary: {}
 });
 
-export function Button(props: ButtonProps): React.ReactElement {
-  const { children, icon, onPress, style, type, ...rest } = props;
+export function CircleButton(props: CircleButtonProps): React.ReactElement {
+  const { icon, text, ...rest } = props;
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[
-        styles.bigButton,
-        type && type === 'secondary' ? styles.secondary : styles.primary,
-        style
-      ]}
-      {...rest}
-    >
-      {icon && (
-        <FontAwesome
-          color={theme.primaryColor}
-          name={icon}
-          size={15}
-          style={styles.icon}
-        />
-      )}
-      <Text style={styles.bigButtonText}>{children}</Text>
-    </TouchableOpacity>
+    <Button icon={icon} {...rest}>
+      {text}
+    </Button>
   );
 }

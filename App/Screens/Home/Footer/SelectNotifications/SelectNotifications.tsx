@@ -15,23 +15,47 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Frequency } from '@shootismoke/graphql';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AsyncStorage, Picker } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+  ViewProps
+} from 'react-native';
 
-import { ApiContext } from '../../../stores';
-import { updateNotifications } from '../../../stores/util';
-import { logFpError } from '../../../util/fp';
+import { ApiContext } from '../../../../stores';
+import { updateNotifications } from '../../../../stores/util';
+import { logFpError } from '../../../../util/fp';
+import * as theme from '../../../../util/theme';
 
 const STORAGE_KEY = 'NOTIFICATIONS';
 
 const notificationsValues = ['never', 'daily', 'weekly', 'monthly'];
 
-export function SelectNotifications(): React.ReactElement {
+type SelectNotificationsProps = ViewProps;
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  label: {
+    ...theme.text,
+    textTransform: 'uppercase'
+  },
+  switch: {
+    marginRight: theme.spacing.small
+  }
+});
+
+export function SelectNotifications(
+  props: SelectNotificationsProps
+): React.ReactElement {
+  const { style, ...rest } = props;
   const [notif, setNotif] = useState<Frequency>('never');
   const { api } = useContext(ApiContext);
-
-  // We only want to run the [notif] useEffect when the user changes value
-  const isUserSelection = useRef(false);
 
   async function getNotifications(): Promise<void> {
     const value = await AsyncStorage.getItem(STORAGE_KEY);
@@ -46,10 +70,6 @@ export function SelectNotifications(): React.ReactElement {
   }, []);
 
   useEffect(() => {
-    if (isUserSelection.current === false) {
-      return;
-    }
-
     if (!api) {
       throw new Error(
         'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
@@ -64,16 +84,29 @@ export function SelectNotifications(): React.ReactElement {
   }, [api, notif]);
 
   return (
-    <Picker
-      selectedValue={notif}
-      onValueChange={(value): void => {
-        isUserSelection.current = true;
-        setNotif(value);
-      }}
-    >
-      {notificationsValues.map(key => (
-        <Picker.Item key={key} label={key} value={key}></Picker.Item>
-      ))}
-    </Picker>
+    <View style={[styles.container, style]} {...rest}>
+      <Switch
+        onValueChange={(on): void => {
+          if (on) {
+            setNotif('weekly');
+          } else {
+            setNotif('never');
+          }
+        }}
+        trackColor={{
+          false: theme.textColor,
+          true: theme.primaryColor
+        }}
+        style={styles.switch}
+        value={notif !== 'never'}
+      />
+      {notif === 'never' ? (
+        <Text style={styles.label}>Allow{'\n'}notifications?</Text>
+      ) : (
+        <View>
+          <Text>Notify me weekly</Text>
+        </View>
+      )}
+    </View>
   );
 }

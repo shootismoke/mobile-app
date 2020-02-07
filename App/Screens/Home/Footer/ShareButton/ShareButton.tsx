@@ -18,7 +18,7 @@ import React, { createRef, useContext } from 'react';
 import { Share, StyleSheet, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 
-import { Button } from '../../../../components';
+import { CircleButton } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../../stores';
 import { ShareImage } from './ShareImage';
@@ -71,13 +71,11 @@ export function ShareButton(): React.ReactElement {
   }
 
   return (
-    <View>
+    <>
       <View collapsable={false} ref={refViewShot} style={styles.viewShot}>
         <ShareImage />
       </View>
-      <Button icon="share-alt" onPress={handleShare} type="secondary">
-        {i18n.t('home_btn_share').toUpperCase()}
-      </Button>
-    </View>
+      <CircleButton icon="share-alt" onPress={handleShare} />
+    </>
   );
 }

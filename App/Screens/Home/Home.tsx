@@ -41,7 +41,6 @@ import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
-import { SelectNotifications } from './SelectNotifications';
 import { SmokeVideo } from './SmokeVideo';
 
 type HomeProps = NavigationInjectedProps;
@@ -207,7 +206,6 @@ export function Home(props: HomeProps): React.ReactElement {
           style={styles.withMargin}
         />
         <Footer navigation={props.navigation} style={styles.withMargin} />
-        <SelectNotifications />
       </ScrollView>
     </View>
   );
