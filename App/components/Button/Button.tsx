@@ -20,13 +20,15 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableOpacityProps
+  TouchableOpacityProps,
+  View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
 
-interface ButtonProps extends TouchableOpacityProps {
+export interface ButtonProps extends TouchableOpacityProps {
+  as?: typeof View; // Give a possibility to show the Button as View instead of TouchableOpacity
   children?: string | React.ReactElement;
   icon?: string;
   type?: 'primary' | 'secondary';
@@ -50,19 +52,28 @@ const styles = StyleSheet.create({
     borderColor: theme.primaryColor,
     borderRadius: scale(24),
     borderWidth: scale(2)
-  },
-  secondary: {}
+  }
 });
 
 export function Button(props: ButtonProps): React.ReactElement {
-  const { children, icon, onPress, style, type, ...rest } = props;
+  const {
+    as: Wrapper = TouchableOpacity,
+    children,
+    icon,
+    onPress,
+    style,
+    type = 'primary',
+    ...rest
+  } = props;
 
   return (
-    <TouchableOpacity
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore FIXME TS doesn't seem to like this construct
+    <Wrapper
       onPress={onPress}
       style={[
         styles.button,
-        type && type === 'secondary' ? styles.secondary : styles.primary,
+        type === 'primary' ? styles.primary : undefined,
         style
       ]}
       {...rest}
@@ -76,6 +87,6 @@ export function Button(props: ButtonProps): React.ReactElement {
         />
       )}
       {children && <Text style={styles.buttonText}>{children}</Text>}
-    </TouchableOpacity>
+    </Wrapper>
   );
 }

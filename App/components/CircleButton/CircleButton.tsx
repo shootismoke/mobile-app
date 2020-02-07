@@ -16,23 +16,30 @@
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacityProps } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
-import { Button } from '../Button';
+import { Button, ButtonProps } from '../Button';
 
-interface CircleButtonProps extends TouchableOpacityProps {
+interface CircleButtonProps extends ButtonProps {
   icon?: string;
+  inverted?: boolean;
   text?: string;
 }
 
 const styles = StyleSheet.create({
   circle: {
     height: scale(36),
-
     paddingVertical: 0,
     width: scale(36)
+  },
+  iconWrapper: {
+    lineHeight: scale(20)
+  },
+  invertedCircle: {
+    backgroundColor: theme.primaryColor,
+    borderWidth: 0
   },
   label: {
     letterSpacing: 0,
@@ -42,18 +49,30 @@ const styles = StyleSheet.create({
   },
   withIcon: {
     // Empirical offset to make icons look more centered
-    paddingLeft: scale(3),
-    paddingTop: scale(3)
+    paddingLeft: scale(3)
   }
 });
 
 export function CircleButton(props: CircleButtonProps): React.ReactElement {
-  const { icon, style, text, ...rest } = props;
+  const { icon, inverted, style, text, ...rest } = props;
 
   return (
-    <Button style={[styles.circle, icon && styles.withIcon, style]} {...rest}>
+    <Button
+      style={[
+        styles.circle,
+        icon ? styles.withIcon : undefined,
+        inverted ? styles.invertedCircle : undefined,
+        style
+      ]}
+      {...rest}
+    >
       {icon ? (
-        <Ionicons color={theme.primaryColor} name={icon} size={28} />
+        <Ionicons
+          color={inverted ? 'white' : theme.primaryColor}
+          name={icon}
+          size={scale(22)}
+          style={styles.iconWrapper}
+        />
       ) : (
         text && <Text style={styles.label}>{text}</Text>
       )}

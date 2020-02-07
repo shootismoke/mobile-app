@@ -16,25 +16,24 @@
 
 import React from 'react';
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableOpacityProps
+  TouchableOpacityProps,
+  View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import changeLocation from '../../../assets/images/changeLocation.png';
 import { i18n } from '../../localization';
 import * as theme from '../../util/theme';
+import { CircleButton } from '../CircleButton';
 
 type ChangeLocationProps = TouchableOpacityProps;
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    justifyContent: 'center',
-    width: scale(60)
+    justifyContent: 'center'
   },
   icon: {
     alignSelf: 'center',
@@ -52,11 +51,10 @@ const styles = StyleSheet.create({
 });
 
 export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {
-  const { onPress, ...rest } = props;
-
+  const { style, ...rest } = props;
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container} {...rest}>
-      <Image source={changeLocation} style={styles.icon} />
+    <TouchableOpacity style={[styles.container, style]} {...rest}>
+      <CircleButton as={View} icon="md-pin" inverted style={styles.icon} />
       <Text style={styles.label}>{i18n.t('home_header_change_location')}</Text>
     </TouchableOpacity>
   );
