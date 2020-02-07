@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, TouchableOpacityProps } from 'react-native';
+import { StyleSheet, Text, TouchableOpacityProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
@@ -27,33 +28,35 @@ interface CircleButtonProps extends TouchableOpacityProps {
 }
 
 const styles = StyleSheet.create({
-  bigButton: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: theme.spacing.mini
+  circle: {
+    height: scale(36),
+
+    paddingVertical: 0,
+    width: scale(36)
   },
-  bigButtonText: {
-    ...theme.title,
-    color: theme.primaryColor
+  label: {
+    letterSpacing: 0,
+    fontSize: scale(9),
+    lineHeight: scale(10),
+    marginTop: 0
   },
-  icon: {
-    marginRight: theme.spacing.mini
-  },
-  primary: {
-    borderColor: theme.primaryColor,
-    borderRadius: scale(24),
-    borderWidth: scale(2)
-  },
-  secondary: {}
+  withIcon: {
+    // Empirical offset to make icons look more centered
+    paddingLeft: scale(3),
+    paddingTop: scale(3)
+  }
 });
 
 export function CircleButton(props: CircleButtonProps): React.ReactElement {
-  const { icon, text, ...rest } = props;
+  const { icon, style, text, ...rest } = props;
 
   return (
-    <Button icon={icon} {...rest}>
-      {text}
+    <Button style={[styles.circle, icon && styles.withIcon, style]} {...rest}>
+      {icon ? (
+        <Ionicons color={theme.primaryColor} name={icon} size={28} />
+      ) : (
+        text && <Text style={styles.label}>{text}</Text>
+      )}
     </Button>
   );
 }

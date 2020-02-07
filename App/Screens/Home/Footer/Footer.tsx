@@ -35,7 +35,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: theme.spacing.mini
+    marginTop: theme.spacing.small
+  },
+  share: {
+    marginRight: theme.spacing.small
   }
 });
 
@@ -88,14 +91,14 @@ export function Footer(props: FooterProps): React.ReactElement {
 
   function renderSmallButtons(): React.ReactElement {
     return (
-      <View style={{ flexGrow: 1 }}>
-        <ShareButton />
+      <>
+        <ShareButton style={styles.share} />
         {isTooFar ? (
           <CircleButton onPress={goToDetails} text="DET" />
         ) : (
           <CircleButton onPress={goToAbout} text="FAQ" />
         )}
-      </View>
+      </>
     );
   }
 
@@ -103,7 +106,8 @@ export function Footer(props: FooterProps): React.ReactElement {
     <View style={[theme.withPadding, style]} {...rest}>
       {renderBigButton()}
       <View style={styles.secondLine}>
-        <SelectNotifications style={{ flexGrow: 1 }} />
+        <SelectNotifications />
+        <View style={{ flexGrow: 1 }} />
         {renderSmallButtons()}
       </View>
     </View>

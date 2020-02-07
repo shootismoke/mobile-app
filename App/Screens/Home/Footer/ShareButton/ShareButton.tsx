@@ -15,13 +15,15 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { createRef, useContext } from 'react';
-import { Share, StyleSheet, View } from 'react-native';
+import { Share, StyleSheet, View, ViewProps } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 
 import { CircleButton } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../../stores';
 import { ShareImage } from './ShareImage';
+
+type ShareButtonProps = ViewProps;
 
 const styles = StyleSheet.create({
   viewShot: {
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export function ShareButton(): React.ReactElement {
+export function ShareButton(props: ShareButtonProps): React.ReactElement {
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   const refViewShot = createRef<View>();
@@ -71,11 +73,11 @@ export function ShareButton(): React.ReactElement {
   }
 
   return (
-    <>
+    <View {...props}>
       <View collapsable={false} ref={refViewShot} style={styles.viewShot}>
         <ShareImage />
       </View>
-      <CircleButton icon="share-alt" onPress={handleShare} />
-    </>
+      <CircleButton icon="ios-share-alt" onPress={handleShare} />
+    </View>
   );
 }

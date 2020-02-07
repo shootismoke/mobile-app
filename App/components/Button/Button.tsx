@@ -27,19 +27,19 @@ import { scale } from 'react-native-size-matters';
 import * as theme from '../../util/theme';
 
 interface ButtonProps extends TouchableOpacityProps {
-  children?: string;
+  children?: string | React.ReactElement;
   icon?: string;
   type?: 'primary' | 'secondary';
 }
 
 const styles = StyleSheet.create({
-  bigButton: {
+  button: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: theme.spacing.mini
   },
-  bigButtonText: {
+  buttonText: {
     ...theme.title,
     color: theme.primaryColor
   },
@@ -61,7 +61,7 @@ export function Button(props: ButtonProps): React.ReactElement {
     <TouchableOpacity
       onPress={onPress}
       style={[
-        styles.bigButton,
+        styles.button,
         type && type === 'secondary' ? styles.secondary : styles.primary,
         style
       ]}
@@ -72,10 +72,10 @@ export function Button(props: ButtonProps): React.ReactElement {
           color={theme.primaryColor}
           name={icon}
           size={15}
-          style={styles.icon}
+          style={children && styles.icon}
         />
       )}
-      <Text style={styles.bigButtonText}>{children}</Text>
+      {children && <Text style={styles.buttonText}>{children}</Text>}
     </TouchableOpacity>
   );
 }

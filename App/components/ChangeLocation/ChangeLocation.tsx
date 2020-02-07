@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.tiny
   },
   label: {
-    ...theme.withLetterSpacing,
     color: theme.primaryColor,
     fontFamily: theme.gothamBlack,
-    fontSize: scale(7),
+    fontSize: scale(8),
+    letterSpacing: 0,
     lineHeight: scale(10),
     textAlign: 'center',
     textTransform: 'uppercase'
