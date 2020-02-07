@@ -15,11 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Hawk from '@hapi/hawk/lib/browser';
-import {
-  historyItemSchema,
-  measurementSchema,
-  userSchema
-} from '@shootismoke/graphql';
+import { userSchema } from '@shootismoke/graphql';
 import ApolloClient from 'apollo-boost';
 import { ErrorResponse } from 'apollo-link-error';
 import Constants from 'expo-constants';
@@ -61,6 +57,6 @@ export const client = new ApolloClient({
       }
     });
   },
-  typeDefs: [historyItemSchema, measurementSchema, userSchema],
+  typeDefs: [userSchema],
   uri: BACKEND_URI
 });

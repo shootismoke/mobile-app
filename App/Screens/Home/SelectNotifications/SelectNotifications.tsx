@@ -15,10 +15,11 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Frequency } from '@shootismoke/graphql';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AsyncStorage, Picker } from 'react-native';
 
-import { updateNotifications } from '../../../stores/util/updateUser';
+import { ApiContext } from '../../../stores';
+import { updateNotifications } from '../../../stores/util';
 import { logFpError } from '../../../util/fp';
 
 const STORAGE_KEY = 'NOTIFICATIONS';
@@ -27,6 +28,7 @@ const notificationsValues = ['never', 'daily', 'weekly', 'monthly'];
 
 export function SelectNotifications(): React.ReactElement {
   const [notif, setNotif] = useState<Frequency>('never');
+  const { api } = useContext(ApiContext);
 
   // We only want to run the [notif] useEffect when the user changes value
   const isUserSelection = useRef(false);
@@ -48,10 +50,18 @@ export function SelectNotifications(): React.ReactElement {
       return;
     }
 
+    if (!api) {
+      throw new Error(
+        'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
+      );
+    }
+
     AsyncStorage.setItem(STORAGE_KEY, notif);
 
-    updateNotifications(notif)().catch(logFpError('SelectNotifications'));
-  }, [notif]);
+    updateNotifications(notif, api.pm25.location)().catch(
+      logFpError('SelectNotifications')
+    );
+  }, [api, notif]);
 
   return (
     <Picker

@@ -36,7 +36,8 @@ const UPDATE_USER = gql`
  * Update notification setting
  */
 export function updateNotifications(
-  frequency: Frequency
+  frequency: Frequency,
+  station: string
 ): TE.TaskEither<Error, true> {
   return pipe(
     getOrCreateUser(),
@@ -44,7 +45,8 @@ export function updateNotifications(
       userId,
       input: {
         notifications: {
-          frequency
+          frequency,
+          station
         }
       }
     })),

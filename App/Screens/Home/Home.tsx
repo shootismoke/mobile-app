@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '@shootismoke/dataproviders';
 import { openaq } from '@shootismoke/dataproviders/lib/promise';
-import { LatLng } from '@shootismoke/graphql';
 import { subDays } from 'date-fns';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
@@ -41,6 +41,7 @@ import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
+import { SelectNotifications } from './SelectNotifications';
 import { SmokeVideo } from './SmokeVideo';
 
 type HomeProps = NavigationInjectedProps;
@@ -206,6 +207,7 @@ export function Home(props: HomeProps): React.ReactElement {
           style={styles.withMargin}
         />
         <Footer navigation={props.navigation} style={styles.withMargin} />
+        <SelectNotifications />
       </ScrollView>
     </View>
   );
