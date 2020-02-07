@@ -53,8 +53,30 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Decide whether we show an icon or a text
+ */
+function renderIconOrText(
+  props: CircleButtonProps
+): React.ReactElement | undefined {
+  const { icon, inverted, text } = props;
+
+  return icon ? (
+    <Ionicons
+      color={inverted ? 'white' : theme.primaryColor}
+      name={icon}
+      size={scale(22)}
+      style={styles.iconWrapper}
+    />
+  ) : text ? (
+    <Text style={styles.label}>{text}</Text>
+  ) : (
+    undefined
+  );
+}
+
 export function CircleButton(props: CircleButtonProps): React.ReactElement {
-  const { icon, inverted, style, text, ...rest } = props;
+  const { icon, inverted, style, ...rest } = props;
 
   return (
     <Button
@@ -66,16 +88,7 @@ export function CircleButton(props: CircleButtonProps): React.ReactElement {
       ]}
       {...rest}
     >
-      {icon ? (
-        <Ionicons
-          color={inverted ? 'white' : theme.primaryColor}
-          name={icon}
-          size={scale(22)}
-          style={styles.iconWrapper}
-        />
-      ) : (
-        text && <Text style={styles.label}>{text}</Text>
-      )}
+      {renderIconOrText(props)}
     </Button>
   );
 }
