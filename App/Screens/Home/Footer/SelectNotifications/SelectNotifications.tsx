@@ -14,23 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { useActionSheet } from '@expo/react-native-action-sheet';
 import { FontAwesome } from '@expo/vector-icons';
 import { Frequency } from '@shootismoke/graphql';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewProps
-} from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Switch from 'react-native-switch-pro';
 
+import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { updateNotifications } from '../../../../stores/util';
@@ -94,7 +87,6 @@ export function SelectNotifications(
   const { style, ...rest } = props;
   const [notif, setNotif] = useState<Frequency>('never');
   const { api } = useContext(ApiContext);
-  const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
     async function getNotifications(): Promise<void> {
@@ -122,26 +114,6 @@ export function SelectNotifications(
       )
     )().catch(logFpError('SelectNotifications'));
   }, [api, notif]);
-
-  function handleActionSheet(): void {
-    showActionSheetWithOptions(
-      {
-        cancelButtonIndex: 3,
-        options: notificationsValues
-          .filter(f => f !== 'never') // Don't show never in options
-          .map(f => i18n.t(`home_frequency_${f}`)) // Translate
-          .map(capitalize)
-          .concat(i18n.t('home_frequency_cancel'))
-      },
-      buttonIndex => {
-        if (buttonIndex === 3) {
-          // 3 is cancel
-          return;
-        }
-        setNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
-      }
-    );
-  }
 
   // Is the switch on or off?
   const isSwitchOn = notif !== 'never';
@@ -172,13 +144,33 @@ export function SelectNotifications(
         width={scale(48)}
       />
       {isSwitchOn ? (
-        <TouchableOpacity onPress={handleActionSheet}>
-          <Text style={styles.label}>{i18n.t('home_frequency_notify_me')}</Text>
-          <Text style={styles.labelFrequency}>
-            {i18n.t(`home_frequency_${notif}`)}{' '}
-            <FontAwesome name="caret-down" />
-          </Text>
-        </TouchableOpacity>
+        <ActionPicker
+          actionSheetOptions={{
+            cancelButtonIndex: 3,
+            options: notificationsValues
+              .filter(f => f !== 'never') // Don't show never in options
+              .map(f => i18n.t(`home_frequency_${f}`)) // Translate
+              .map(capitalize)
+              .concat(i18n.t('home_frequency_cancel'))
+          }}
+          callback={(buttonIndex): void => {
+            if (buttonIndex === 3) {
+              // 3 is cancel
+              return;
+            }
+            setNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
+          }}
+        >
+          <>
+            <Text style={styles.label}>
+              {i18n.t('home_frequency_notify_me')}
+            </Text>
+            <Text style={styles.labelFrequency}>
+              {i18n.t(`home_frequency_${notif}`)}{' '}
+              <FontAwesome name="caret-down" />
+            </Text>
+          </>
+        </ActionPicker>
       ) : (
         <Text style={styles.label}>
           {i18n.t('home_frequency_allow_notifications')}
