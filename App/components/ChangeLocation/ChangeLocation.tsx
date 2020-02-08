@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignSelf: 'center',
+    paddingTop: scale(2), // Empirically looks most centered
     marginBottom: theme.spacing.tiny
   },
   label: {

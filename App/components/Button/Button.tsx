@@ -86,7 +86,12 @@ export function Button(props: ButtonProps): React.ReactElement {
           style={children && styles.icon}
         />
       )}
-      {children && <Text style={styles.buttonText}>{children}</Text>}
+      {children &&
+        (typeof children === 'string' ? (
+          <Text style={styles.buttonText}>{children}</Text>
+        ) : (
+          children
+        ))}
     </Wrapper>
   );
 }

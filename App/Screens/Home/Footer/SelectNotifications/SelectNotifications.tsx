@@ -126,12 +126,18 @@ export function SelectNotifications(
   function handleActionSheet(): void {
     showActionSheetWithOptions(
       {
+        cancelButtonIndex: 3,
         options: notificationsValues
           .filter(f => f !== 'never') // Don't show never in options
           .map(f => i18n.t(`home_frequency_${f}`)) // Translate
           .map(capitalize)
+          .concat(i18n.t('home_frequency_cancel'))
       },
       buttonIndex => {
+        if (buttonIndex === 3) {
+          // 3 is cancel
+          return;
+        }
         setNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
       }
     );

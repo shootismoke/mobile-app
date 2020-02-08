@@ -16,7 +16,7 @@
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Platform, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
@@ -34,26 +34,15 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     width: scale(36)
   },
-  iconWrapper: {
-    lineHeight: scale(20)
-  },
   invertedCircle: {
     backgroundColor: theme.primaryColor,
     borderWidth: 0
   },
   label: {
-    letterSpacing: 0,
+    ...theme.title,
+    color: theme.primaryColor,
     fontSize: scale(9),
-    lineHeight: scale(10),
-    marginTop: 0
-  },
-  withIcon: {
-    ...Platform.select({
-      ios: {
-        // Empirical offset to make icons look more centered
-        paddingLeft: scale(3)
-      }
-    })
+    letterSpacing: 0
   }
 });
 
@@ -61,16 +50,15 @@ const styles = StyleSheet.create({
  * Decide whether we show an icon or a text
  */
 function renderIconOrText(
-  props: CircleButtonProps
+  icon?: string,
+  inverted?: boolean,
+  text?: string
 ): React.ReactElement | undefined {
-  const { icon, inverted, text } = props;
-
   return icon ? (
     <Ionicons
       color={inverted ? 'white' : theme.primaryColor}
       name={icon}
       size={scale(22)}
-      style={styles.iconWrapper}
     />
   ) : text ? (
     <Text style={styles.label}>{text}</Text>
@@ -80,19 +68,18 @@ function renderIconOrText(
 }
 
 export function CircleButton(props: CircleButtonProps): React.ReactElement {
-  const { icon, inverted, style, ...rest } = props;
+  const { icon, inverted, style, text, ...rest } = props;
 
   return (
     <Button
       style={[
         styles.circle,
-        icon ? styles.withIcon : undefined,
         inverted ? styles.invertedCircle : undefined,
         style
       ]}
       {...rest}
     >
-      {renderIconOrText(props)}
+      {renderIconOrText(icon, inverted, text)}
     </Button>
   );
 }
