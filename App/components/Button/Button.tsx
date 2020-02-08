@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
   StyleSheet,
@@ -79,7 +79,7 @@ export function Button(props: ButtonProps): React.ReactElement {
       {...rest}
     >
       {icon && (
-        <FontAwesome
+        <Ionicons
           color={theme.primaryColor}
           name={icon}
           size={15}

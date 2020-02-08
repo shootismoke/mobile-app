@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   boxButtonText: {
     ...theme.shitText,
-    opacity: 0.3,
+    opacity: theme.disabledOpacity,
     textAlign: 'center'
   }
 });

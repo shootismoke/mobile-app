@@ -3974,11 +3974,6 @@ expo-permissions@~8.0.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0.tgz#5a45e8451dd7ff37c9e6ce5e2447818372547813"
   integrity sha512-GHTRmwh1rd1b0FcibluPFu93NNQyl9b1anBBDVPmomoo9Prz7kDcO5p2hFqM99r896yvAUSe0fPloPKUq4g/1A==
 
-expo-sharing@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-8.0.0.tgz#71195e6a24d6e36839e80d15581017d9cf02099c"
-  integrity sha512-pucK9IaO7ZgKumUlQtmiKENP1zfZeh6TDyWF9Nlt37GJDBl+j9pPW+fS6dYfhF7UoPGEjactpYCtozoMu2fF2A==
-
 expo-sqlite@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-8.0.0.tgz#293b45c78d612ab25400c8c579bd7d73f06ccb6f"
@@ -7281,6 +7276,13 @@ react-native-size-matters@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.0.tgz#0692e324a189884819b570c4cab24d27ecd4311d"
   integrity sha512-PuwA07mr3woQPFJXo3FwlFwpe6bb2LCb20sDZ4JWMpGBtmppq4sKH4GLgS6Sw+GkN0sSOEXGZLaOsHZYFY9hJg==
+
+react-native-switch-pro@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-switch-pro/-/react-native-switch-pro-1.0.4.tgz#9007628e4b8721b44fa0d6ecd07013f6afd0031a"
+  integrity sha512-HCuvKVrCbN/wO6rFfwCS9ds4CbqldUMdtINosbVVrR72Zf9YiG/rLrsDC/8ezJSc1Q2P03vCF89odaS81bJyow==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-view-shot@3.0.2:
   version "3.0.2"

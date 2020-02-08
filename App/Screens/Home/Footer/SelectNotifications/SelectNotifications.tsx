@@ -14,25 +14,56 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { FontAwesome } from '@expo/vector-icons';
 import { Frequency } from '@shootismoke/graphql';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import {
+  ActionSheetIOS,
   AsyncStorage,
   StyleSheet,
-  Switch,
   Text,
+  TouchableOpacity,
   View,
   ViewProps
 } from 'react-native';
+import { scale } from 'react-native-size-matters';
+import Switch from 'react-native-switch-pro';
 
+import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { updateNotifications } from '../../../../stores/util';
-import { logFpError } from '../../../../util/fp';
+import { logFpError, promiseToTE } from '../../../../util/fp';
 import * as theme from '../../../../util/theme';
 
 const STORAGE_KEY = 'NOTIFICATIONS';
 
-const notificationsValues = ['never', 'daily', 'weekly', 'monthly'];
+const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
+
+/**
+ * Capitalize a string.
+ *
+ * @param s - String to capitalize
+ */
+function capitalize(s: string): string {
+  return s[0].toUpperCase() + s.slice(1);
+}
+
+/**
+ * Convert hex to rgba.
+ * @see https://stackoverflow.com/questions/21646738/convert-hex-to-rgba#answer-51564734
+ */
+function hex2rgba(hex: string, alpha = 1): string {
+  const matches = hex.match(/\w\w/g);
+  if (!matches) {
+    throw new Error(`Invalid hex: ${hex}`);
+  }
+
+  const [r, g, b] = matches.map(x => parseInt(x, 16));
+
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 
 type SelectNotificationsProps = ViewProps;
 
@@ -43,6 +74,13 @@ const styles = StyleSheet.create({
   },
   label: {
     ...theme.text,
+    textTransform: 'uppercase'
+  },
+  labelFrequency: {
+    ...theme.text,
+    color: theme.primaryColor,
+    fontFamily: theme.gothamBlack,
+    fontWeight: '900',
     textTransform: 'uppercase'
   },
   switch: {
@@ -57,15 +95,15 @@ export function SelectNotifications(
   const [notif, setNotif] = useState<Frequency>('never');
   const { api } = useContext(ApiContext);
 
-  async function getNotifications(): Promise<void> {
-    const value = await AsyncStorage.getItem(STORAGE_KEY);
-
-    if (value && notificationsValues.includes(value)) {
-      setNotif(value as Frequency);
-    }
-  }
-
   useEffect(() => {
+    async function getNotifications(): Promise<void> {
+      const value = await AsyncStorage.getItem(STORAGE_KEY);
+
+      if (value && notificationsValues.includes(value as Frequency)) {
+        setNotif(value as Frequency);
+      }
+    }
+
     getNotifications();
   }, []);
 
@@ -76,36 +114,74 @@ export function SelectNotifications(
       );
     }
 
-    AsyncStorage.setItem(STORAGE_KEY, notif);
-
-    updateNotifications(notif, api.pm25.location)().catch(
-      logFpError('SelectNotifications')
-    );
+    pipe(
+      updateNotifications(notif, api.pm25.location),
+      TE.chain(() =>
+        promiseToTE(() => AsyncStorage.setItem(STORAGE_KEY, notif))
+      )
+    )().catch(logFpError('SelectNotifications'));
   }, [api, notif]);
+
+  function handleActionSheetIOS(): void {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: [
+          i18n.t('home_frequency_cancel'),
+          ...notificationsValues
+            .filter(f => f !== 'never') // Don't show never in options
+            .map(f => i18n.t(`home_frequency_${f}`)) // Translate
+            .map(capitalize)
+        ],
+        cancelButtonIndex: 0
+      },
+      buttonIndex => {
+        if (buttonIndex >= 1) {
+          setNotif(notificationsValues[buttonIndex]);
+        }
+      }
+    );
+  }
+
+  // Is the switch on or off?
+  const isSwitchOn = notif !== 'never';
 
   return (
     <View style={[styles.container, style]} {...rest}>
       <Switch
-        onValueChange={(on): void => {
+        backgroundActive={theme.primaryColor}
+        backgroundInactive={hex2rgba(
+          theme.secondaryTextColor,
+          theme.disabledOpacity
+        )}
+        circleStyle={{
+          height: scale(22),
+          marginHorizontal: scale(3),
+          width: scale(22)
+        }}
+        height={scale(28)}
+        onSyncPress={(on: boolean): void => {
           if (on) {
             setNotif('weekly');
           } else {
             setNotif('never');
           }
         }}
-        trackColor={{
-          false: theme.textColor,
-          true: theme.primaryColor
-        }}
         style={styles.switch}
-        value={notif !== 'never'}
+        value={isSwitchOn}
+        width={scale(48)}
       />
       {notif === 'never' ? (
-        <Text style={styles.label}>Allow{'\n'}notifications?</Text>
+        <Text style={styles.label}>
+          {i18n.t('home_frequency_allow_notifications')}
+        </Text>
       ) : (
-        <View>
-          <Text>Notify me weekly</Text>
-        </View>
+        <TouchableOpacity onPress={handleActionSheetIOS}>
+          <Text style={styles.label}>{i18n.t('home_frequency_notify_me')}</Text>
+          <Text style={styles.labelFrequency}>
+            {i18n.t(`home_frequency_${notif}`)}{' '}
+            <FontAwesome name="caret-down" />
+          </Text>
+        </TouchableOpacity>
       )}
     </View>
   );

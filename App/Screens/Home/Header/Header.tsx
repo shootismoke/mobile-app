@@ -52,10 +52,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: theme.spacing.mini
   },
-  distanceText: {
-    ...theme.text,
-    flex: 1
-  },
   warning: {
     marginRight: theme.spacing.mini,
     marginTop: scale(-2) // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
@@ -93,7 +89,7 @@ export function Header(props: HeaderProps): React.ReactElement {
         />
         <View style={styles.distance}>
           {isTooFar && <Image source={alert} style={styles.warning} />}
-          <Text style={styles.distanceText}>
+          <Text style={theme.text}>
             {i18n.t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
               distanceUnit: shortDistanceUnit

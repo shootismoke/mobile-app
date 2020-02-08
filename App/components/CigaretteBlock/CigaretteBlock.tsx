@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 });
 
 function getSwearWord(cigaretteCount: number): string {
-  if (cigaretteCount <= 1) return i18n.t('home_common_oh');
+  if (cigaretteCount <= 1) return i18n.t('home_cigarettes_oh');
 
   // Return a random swear word
   return swearWords[Math.floor(Math.random() * swearWords.length)];
@@ -93,13 +93,13 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
     // Round to 1 decimal
     const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
-    const text = i18n.t('home_smoked_cigarette_title', {
+    const text = i18n.t('home_cigarettes_smoked_cigarette_title', {
       swearWord,
-      presentPast: i18n.t('home_common_you_smoke'),
+      presentPast: i18n.t('home_cigarettes_you_smoke'),
       singularPlural:
         cigarettesRounded === 1
-          ? i18n.t('home_common_cigarette').toLowerCase()
-          : i18n.t('home_common_cigarettes').toLowerCase(),
+          ? i18n.t('home_cigarettes_cigarette').toLowerCase()
+          : i18n.t('home_cigarettes_cigarettes').toLowerCase(),
       cigarettes: cigarettesRounded
     });
 
