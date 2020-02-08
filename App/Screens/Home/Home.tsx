@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1
   },
+  footer: {
+    marginBottom: theme.spacing.big
+  },
+  scroll: {
+    flex: 1
+  },
   withMargin: {
     marginTop: theme.spacing.normal
   }
@@ -192,7 +198,7 @@ export function Home(props: HomeProps): React.ReactElement {
           props.navigation.navigate('Search');
         }}
       />
-      <ScrollView bounces={false}>
+      <ScrollView bounces={false} style={styles.scroll}>
         <CigaretteBlock
           cigarettes={cigarettes.count}
           loading={isLoading}
@@ -205,7 +211,10 @@ export function Home(props: HomeProps): React.ReactElement {
           navigation={props.navigation}
           style={styles.withMargin}
         />
-        <Footer navigation={props.navigation} style={styles.withMargin} />
+        <Footer
+          navigation={props.navigation}
+          style={[styles.withMargin, styles.footer]}
+        />
       </ScrollView>
     </View>
   );
