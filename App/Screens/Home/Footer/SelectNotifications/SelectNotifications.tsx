@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import { FontAwesome } from '@expo/vector-icons';
 import { Frequency } from '@shootismoke/graphql';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  ActionSheetIOS,
   AsyncStorage,
   StyleSheet,
   Text,
@@ -94,6 +94,7 @@ export function SelectNotifications(
   const { style, ...rest } = props;
   const [notif, setNotif] = useState<Frequency>('never');
   const { api } = useContext(ApiContext);
+  const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
     async function getNotifications(): Promise<void> {
@@ -122,22 +123,16 @@ export function SelectNotifications(
     )().catch(logFpError('SelectNotifications'));
   }, [api, notif]);
 
-  function handleActionSheetIOS(): void {
-    ActionSheetIOS.showActionSheetWithOptions(
+  function handleActionSheet(): void {
+    showActionSheetWithOptions(
       {
-        options: [
-          i18n.t('home_frequency_cancel'),
-          ...notificationsValues
-            .filter(f => f !== 'never') // Don't show never in options
-            .map(f => i18n.t(`home_frequency_${f}`)) // Translate
-            .map(capitalize)
-        ],
-        cancelButtonIndex: 0
+        options: notificationsValues
+          .filter(f => f !== 'never') // Don't show never in options
+          .map(f => i18n.t(`home_frequency_${f}`)) // Translate
+          .map(capitalize)
       },
       buttonIndex => {
-        if (buttonIndex >= 1) {
-          setNotif(notificationsValues[buttonIndex]);
-        }
+        setNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
       }
     );
   }
@@ -170,18 +165,18 @@ export function SelectNotifications(
         value={isSwitchOn}
         width={scale(48)}
       />
-      {notif === 'never' ? (
-        <Text style={styles.label}>
-          {i18n.t('home_frequency_allow_notifications')}
-        </Text>
-      ) : (
-        <TouchableOpacity onPress={handleActionSheetIOS}>
+      {isSwitchOn ? (
+        <TouchableOpacity onPress={handleActionSheet}>
           <Text style={styles.label}>{i18n.t('home_frequency_notify_me')}</Text>
           <Text style={styles.labelFrequency}>
             {i18n.t(`home_frequency_${notif}`)}{' '}
             <FontAwesome name="caret-down" />
           </Text>
         </TouchableOpacity>
+      ) : (
+        <Text style={styles.label}>
+          {i18n.t('home_frequency_allow_notifications')}
+        </Text>
       )}
     </View>
   );

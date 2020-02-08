@@ -16,7 +16,7 @@
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Platform, StyleSheet, Text } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
@@ -48,8 +48,12 @@ const styles = StyleSheet.create({
     marginTop: 0
   },
   withIcon: {
-    // Empirical offset to make icons look more centered
-    paddingLeft: scale(3)
+    ...Platform.select({
+      ios: {
+        // Empirical offset to make icons look more centered
+        paddingLeft: scale(3)
+      }
+    })
   }
 });
 
