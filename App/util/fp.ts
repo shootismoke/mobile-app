@@ -88,7 +88,7 @@ export function retry<A>(
  * This should realistically never happen.
  */
 export function logFpError(namespace: string) {
-  return function (error: Error): void {
+  return function(error: Error): void {
     console.log(`<${namespace}> - ${error.message}`);
 
     sentryError(error);
