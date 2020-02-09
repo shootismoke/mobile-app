@@ -28,6 +28,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import promiseAny from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+import { track } from '../util/amplitude';
 import { logFpError, promiseToTE } from '../util/fp';
 import { noop } from '../util/noop';
 import { pm25ToCigarettes } from '../util/secretSauce';
@@ -137,16 +138,19 @@ export function ApiContextProvider({
       return;
     }
 
+    track('API_DAILY_REQUEST');
     pipe(
       raceApi(currentLocation),
       TE.fold(
         error => {
           setError(error);
+          track('API_DAILY_ERROR');
 
           return T.of(void undefined);
         },
         newApi => {
           setApi(newApi);
+          track('API_DAILY_RESPONSE');
 
           return T.of(void undefined);
         }

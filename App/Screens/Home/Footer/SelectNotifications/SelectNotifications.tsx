@@ -31,6 +31,7 @@ import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { updateNotifications } from '../../../../stores/util';
+import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { logFpError, promiseToTE } from '../../../../util/fp';
 import * as theme from '../../../../util/theme';
 
@@ -111,6 +112,10 @@ export function SelectNotifications(
    */
   function handleChangeNotif(frequency: Frequency): void {
     setNotif(frequency);
+
+    track(
+      `HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
+    );
 
     if (!api) {
       throw new Error(

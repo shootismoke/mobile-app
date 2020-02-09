@@ -23,9 +23,8 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
-import * as Sentry from 'sentry-expo';
 
-import { IS_SENTRY_SET_UP } from './constants';
+import { sentryError } from './sentry';
 
 /**
  * A side-effect in a TaskEither chain: if the TaskEither fails, still return
@@ -92,9 +91,7 @@ export function logFpError(namespace: string) {
   return function(error: Error): void {
     console.log(`<${namespace}> - ${error.message}`);
 
-    if (IS_SENTRY_SET_UP) {
-      Sentry.captureException(error);
-    }
+    sentryError(error);
   };
 }
 

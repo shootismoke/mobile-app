@@ -98,7 +98,6 @@ export function Search(props: SearchProps): React.ReactElement {
         fetchAlgolia(s, gps),
         TE.fold(
           err => {
-            console.log('<Search> - handleChangeSearch -', err.message);
             setLoading(false);
             setAlgoliaError(err);
 

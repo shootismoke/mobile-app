@@ -32,7 +32,7 @@ import {
   Frequency,
   FrequencyContext
 } from '../../stores';
-import { track, trackScreen } from '../../util/amplitude';
+import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import { logFpError, promiseToTE } from '../../util/fp';
 import { pm25ToCigarettes } from '../../util/secretSauce';
 import { sumInDays } from '../../util/stepAverage';
@@ -83,12 +83,24 @@ interface Cigarettes {
  */
 const memoHistoricalCigarettes = pMemoize(
   (frequency: Frequency, currentLocation: LatLng) => {
-    return openaq.fetchByGps(currentLocation, {
-      dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
-      dateTo: new Date(),
-      limit: 100,
-      parameter: ['pm25']
-    });
+    track(`API_${frequency.toUpperCase()}_REQUEST` as AmplitudeEvent);
+    return openaq
+      .fetchByGps(currentLocation, {
+        dateFrom: subDays(new Date(), frequency === 'weekly' ? 7 : 30),
+        dateTo: new Date(),
+        limit: 100,
+        parameter: ['pm25']
+      })
+      .then(data => {
+        track(`API_${frequency.toUpperCase()}_RESPONSE` as AmplitudeEvent);
+
+        return data;
+      })
+      .catch(error => {
+        track(`API_${frequency.toUpperCase()}_ERROR` as AmplitudeEvent);
+
+        throw error;
+      });
   },
   {
     cacheKey: (frequency: Frequency, { latitude, longitude }: LatLng) => {
@@ -164,8 +176,7 @@ export function Home(props: HomeProps): React.ReactElement {
             frequency === 'monthly' ? data.length >= 60 : data.length >= 14
         })),
         TE.fold(
-          error => {
-            console.log(`<Home> - ${error.message}`);
+          () => {
             // Fallback to daily cigarettes * 7 or * 30 if there's an error
             setCigarettes({
               count:
