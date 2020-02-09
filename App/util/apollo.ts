@@ -25,7 +25,7 @@ import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
 
 const BACKEND_URI = IS_PROD
   ? 'https://shootismoke.now.sh/api/graphql'
-  : 'https://staging.shootismoke.now.sh/api/graphql';
+  : 'https://backend-5rd8p7zau.now.shapi/graphql';
 
 const credentials = {
   id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,

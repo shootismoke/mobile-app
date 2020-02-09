@@ -16,7 +16,11 @@
 
 import { FontAwesome } from '@expo/vector-icons';
 import { Frequency } from '@shootismoke/graphql';
+import { Notifications } from 'expo';
+import * as Localization from 'expo-localization';
+import * as Permissions from 'expo-permissions';
 import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import { AsyncStorage, StyleSheet, Text, View, ViewProps } from 'react-native';
@@ -100,7 +104,14 @@ export function SelectNotifications(
     getNotifications();
   }, []);
 
-  useEffect(() => {
+  /**
+   * Handler for changing notification frequency
+   *
+   * @param buttonIndex - The button index in the ActionSheet
+   */
+  function handleChangeNotif(frequency: Frequency): void {
+    setNotif(frequency);
+
     if (!api) {
       throw new Error(
         'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
@@ -108,12 +119,41 @@ export function SelectNotifications(
     }
 
     pipe(
-      updateNotifications(notif, api.pm25.location),
+      promiseToTE(async () => {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+
+        console.log('STATUS', status);
+
+        if (status !== 'granted') {
+          throw new Error('Permission to access notifications was denied');
+        }
+
+        return await Notifications.getExpoPushTokenAsync();
+      }),
+      TE.chain(expoPushToken =>
+        updateNotifications({
+          expoPushToken,
+          frequency: notif,
+          station: api.pm25.location,
+          timezone: Localization.timezone
+        })
+      ),
       TE.chain(() =>
         promiseToTE(() => AsyncStorage.setItem(STORAGE_KEY, notif))
+      ),
+      TE.fold(
+        e => {
+          console.log(`<SelectNotifications> - ${e.message}`);
+          setNotif('never');
+
+          return T.of(void undefined);
+        },
+        () => T.of(void undefined)
       )
     )().catch(logFpError('SelectNotifications'));
-  }, [api, notif]);
+  }
 
   // Is the switch on or off?
   const isSwitchOn = notif !== 'never';
@@ -134,9 +174,9 @@ export function SelectNotifications(
         height={scale(28)}
         onSyncPress={(on: boolean): void => {
           if (on) {
-            setNotif('weekly');
+            handleChangeNotif('weekly');
           } else {
-            setNotif('never');
+            handleChangeNotif('never');
           }
         }}
         style={styles.switch}
@@ -158,7 +198,8 @@ export function SelectNotifications(
               // 3 is cancel
               return;
             }
-            setNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
+
+            handleChangeNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
           }}
         >
           <>

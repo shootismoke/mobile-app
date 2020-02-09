@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Frequency, UpdateUserInput } from '@shootismoke/graphql';
+import { NotificationsInput } from '@shootismoke/graphql';
 import { gql } from 'apollo-boost';
 import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
@@ -36,18 +36,14 @@ const UPDATE_USER = gql`
  * Update notification setting
  */
 export function updateNotifications(
-  frequency: Frequency,
-  station: string
+  notifications: NotificationsInput
 ): TE.TaskEither<Error, true> {
   return pipe(
     getOrCreateUser(),
-    TE.map<string, { userId: string; input: UpdateUserInput }>(userId => ({
-      userId,
+    TE.map(expoInstallationId => ({
+      expoInstallationId,
       input: {
-        notifications: {
-          frequency,
-          station
-        }
+        notifications
       }
     })),
     TE.chain(

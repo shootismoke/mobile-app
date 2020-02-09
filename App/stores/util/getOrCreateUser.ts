@@ -33,7 +33,8 @@ const CREATE_USER = gql`
   }
 `;
 
-// The mongo id of the user, stored here in memory, but also in AsyncStorage
+// The mongo id of the user, stored here in memory, but also in AsyncStorage.
+// If this string is set, it means that we created our user on the backend
 let cachedMongoId: string | undefined;
 
 /**
@@ -69,6 +70,6 @@ export function getOrCreateUser(): TE.TaskEither<Error, string> {
     // eslint-disable-next-line require-atomic-updates
     cachedMongoId = mongoId;
 
-    return mongoId;
+    return Constants.installationId;
   });
 }
