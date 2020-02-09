@@ -102,7 +102,10 @@ export function logFpError(namespace: string) {
  * Convert a Promise<A> into a TaskEither<Error, A>
  * @param fn - Function returning a Promise
  */
-export function promiseToTE<A>(fn: Lazy<Promise<A>>): TE.TaskEither<Error, A> {
+export function promiseToTE<A>(
+  fn: Lazy<Promise<A>>,
+  namespace: string
+): TE.TaskEither<Error, A> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return TE.tryCatch(fn, (reason: any) => {
     let error: Error | undefined;
@@ -119,7 +122,7 @@ export function promiseToTE<A>(fn: Lazy<Promise<A>>): TE.TaskEither<Error, A> {
       error = reason instanceof Error ? reason : new Error(String(reason));
     }
 
-    logFpError('promiseToTE')(error);
+    logFpError(namespace)(error);
 
     return error;
   });

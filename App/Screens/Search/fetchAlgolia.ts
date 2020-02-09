@@ -76,34 +76,36 @@ export function fetchAlgolia(
         )
       ),
       TE.chain(() =>
-        promiseToTE(() =>
-          axios.post(
-            `${
-              algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-            }/1/places/query`,
-            {
-              aroundLatLng: gps
-                ? `${gps.latitude},${gps.longitude}`
-                : undefined,
-              hitsPerPage: 10,
-              language: 'en',
-              query: search
-            },
-            {
-              headers:
-                Constants.manifest.extra.algoliaApplicationId &&
-                Constants.manifest.extra.algoliaApiKey
-                  ? {
-                      'X-Algolia-Application-Id':
-                        Constants.manifest.extra.algoliaApplicationId,
-                      'X-Algolia-API-Key':
-                        Constants.manifest.extra.algoliaApiKey
-                    }
+        promiseToTE(
+          () =>
+            axios.post(
+              `${
+                algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+              }/1/places/query`,
+              {
+                aroundLatLng: gps
+                  ? `${gps.latitude},${gps.longitude}`
                   : undefined,
+                hitsPerPage: 10,
+                language: 'en',
+                query: search
+              },
+              {
+                headers:
+                  Constants.manifest.extra.algoliaApplicationId &&
+                  Constants.manifest.extra.algoliaApiKey
+                    ? {
+                        'X-Algolia-Application-Id':
+                          Constants.manifest.extra.algoliaApplicationId,
+                        'X-Algolia-API-Key':
+                          Constants.manifest.extra.algoliaApiKey
+                      }
+                    : undefined,
 
-              timeout: 3000
-            }
-          )
+                timeout: 3000
+              }
+            ),
+          'fetchAlgolia'
         )
       ),
       TE.chain(response =>

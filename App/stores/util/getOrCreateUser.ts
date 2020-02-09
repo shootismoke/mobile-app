@@ -42,34 +42,31 @@ let cachedMongoId: string | undefined;
  */
 export function getOrCreateUser(): TE.TaskEither<Error, string> {
   return promiseToTE(async () => {
-    if (cachedMongoId) {
-      return cachedMongoId;
+    if (!cachedMongoId) {
+      let mongoId = await AsyncStorage.getItem(STORAGE_KEY);
+      if (!mongoId) {
+        const input: CreateUserInput = {
+          expoInstallationId: Constants.installationId
+        };
+        console.log(
+          `<createUser> - No mongoId found in AsyncStorage, creating a new user ${JSON.stringify(
+            input
+          )}`
+        );
+
+        const res = await client.mutate({
+          mutation: CREATE_USER,
+          variables: { input }
+        });
+
+        mongoId = res.data.createUser._id as string;
+
+        await AsyncStorage.setItem(STORAGE_KEY, mongoId);
+      }
+
+      cachedMongoId = mongoId;
     }
-
-    let mongoId = await AsyncStorage.getItem(STORAGE_KEY);
-    if (!mongoId) {
-      const input: CreateUserInput = {
-        expoInstallationId: Constants.installationId
-      };
-      console.log(
-        `<createUser> - No mongoId found in AsyncStorage, creating a new user ${JSON.stringify(
-          input
-        )}`
-      );
-
-      const res = await client.mutate({
-        mutation: CREATE_USER,
-        variables: { input }
-      });
-
-      mongoId = res.data.createUser._id as string;
-
-      await AsyncStorage.setItem(STORAGE_KEY, mongoId);
-    }
-
-    // eslint-disable-next-line require-atomic-updates
-    cachedMongoId = mongoId;
 
     return Constants.installationId;
-  });
+  }, 'getOrCreateUser');
 }

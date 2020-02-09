@@ -134,7 +134,10 @@ export function Home(props: HomeProps): React.ReactElement {
       // Fetch weekly/monthly number of cigarettes depending on the current
       // location.
       pipe(
-        promiseToTE(() => memoHistoricalCigarettes(frequency, currentLocation)),
+        promiseToTE(
+          () => memoHistoricalCigarettes(frequency, currentLocation),
+          'memoHistoricalCigarettes'
+        ),
         TE.chain(({ results }) =>
           results.length
             ? TE.right(results)

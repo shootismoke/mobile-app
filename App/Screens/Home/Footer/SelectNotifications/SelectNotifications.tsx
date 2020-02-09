@@ -124,29 +124,30 @@ export function SelectNotifications(
           Permissions.NOTIFICATIONS
         );
 
-        console.log('STATUS', status);
-
         if (status !== 'granted') {
           throw new Error('Permission to access notifications was denied');
         }
 
         return await Notifications.getExpoPushTokenAsync();
-      }),
+      }, 'SelectNotifications'),
       TE.chain(expoPushToken =>
         updateNotifications({
           expoPushToken,
-          frequency: notif,
+          frequency,
           station: api.pm25.location,
           timezone: Localization.timezone
         })
       ),
       TE.chain(() =>
-        promiseToTE(() => AsyncStorage.setItem(STORAGE_KEY, notif))
+        promiseToTE(
+          () => AsyncStorage.setItem(STORAGE_KEY, frequency),
+          'SelectNotifications'
+        )
       ),
       TE.fold(
-        e => {
-          console.log(`<SelectNotifications> - ${e.message}`);
+        () => {
           setNotif('never');
+          AsyncStorage.setItem(STORAGE_KEY, 'never');
 
           return T.of(void undefined);
         },

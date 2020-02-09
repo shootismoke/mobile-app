@@ -25,8 +25,8 @@ import { promiseToTE, sideEffect } from '../../util/fp';
 import { getOrCreateUser } from './getOrCreateUser';
 
 const UPDATE_USER = gql`
-  mutation updateUser($userId: ID!, $input: UpdateUserInput!) {
-    updateUser(userId: $userId, input: $input) {
+  mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
+    updateUser(expoInstallationId: $expoInstallationId, input: $input) {
       _id
     }
   }
@@ -52,11 +52,13 @@ export function updateNotifications(
       )
     ),
     TE.chain(data =>
-      promiseToTE(async () =>
-        client.mutate({
-          mutation: UPDATE_USER,
-          variables: data
-        })
+      promiseToTE(
+        async () =>
+          client.mutate({
+            mutation: UPDATE_USER,
+            variables: data
+          }),
+        'updateNotifications'
       )
     ),
     TE.map(() => true)
