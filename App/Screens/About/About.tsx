@@ -32,7 +32,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { BackButton } from '../../components';
 import { i18n } from '../../localization';
 import { DistanceUnit, useDistanceUnit } from '../../stores/distanceUnit';
-import { trackScreen } from '../../util/amplitude';
+import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Box } from './Box';
 
@@ -238,7 +238,12 @@ export function About(props: AboutProps): React.ReactElement {
         <Text style={styles.h2}>{i18n.t('about_settings_title')}</Text>
         <Text style={theme.text}>{i18n.t('about_settings_distance_unit')}</Text>
         <Picker
-          onValueChange={(value: DistanceUnit): void => setDistanceUnit(value)}
+          onValueChange={(value: DistanceUnit): void => {
+            track(
+              `ABOUT_SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
+            );
+            setDistanceUnit(value);
+          }}
           selectedValue={distanceUnit}
           style={styles.distancePicker}
         >

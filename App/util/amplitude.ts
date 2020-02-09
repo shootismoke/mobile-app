@@ -20,7 +20,16 @@ import { useEffect } from 'react';
 
 import { RELEASE_CHANNEL } from '../util/constants';
 
-type AmplitudeEvent =
+export type AmplitudeEvent =
+  | 'API_DAILY_REQUEST'
+  | 'API_DAILY_RESPONSE'
+  | 'API_DAILY_ERROR'
+  | 'API_WEEKLY_REQUEST'
+  | 'API_WEEKLY_RESPONSE'
+  | 'API_WEEKLY_ERROR'
+  | 'API_MONTHLY_REQUEST'
+  | 'API_MONTHLY_RESPONSE'
+  | 'API_MONTHLY_ERROR'
   | 'APP_REFOCUS'
   | 'APP_EXIT'
   | 'LOADING_SCREEN_OPEN'
@@ -37,8 +46,14 @@ type AmplitudeEvent =
   | 'HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK'
   | 'HOME_SCREEN_SHARE_CLICK'
   | 'HOME_SCREEN_CHANGE_LOCATION_CLICK'
+  | 'HOME_SCREEN_NOTIFICATIONS_NEVER'
+  | 'HOME_SCREEN_NOTIFICATIONS_DAILY'
+  | 'HOME_SCREEN_NOTIFICATIONS_WEEKLY'
+  | 'HOME_SCREEN_NOTIFICATIONS_MONTHLY'
   | 'ABOUT_SCREEN_OPEN'
   | 'ABOUT_SCREEN_CLOSE'
+  | 'ABOUT_SCREEN_SETTINGS_KM'
+  | 'ABOUT_SCREEN_SETTINGS_MILE'
   | 'DETAILS_SCREEN_OPEN'
   | 'DETAILS_SCREEN_CLOSE'
   | 'SEARCH_SCREEN_OPEN'
@@ -50,14 +65,12 @@ type AmplitudeEvent =
 
 export function setupAmplitude(): Promise<void> {
   return Constants.manifest.extra.amplitudeApiKey
-    ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
-        () => {
-          Amplitude.setUserProperties({
-            sisReleaseChannel: RELEASE_CHANNEL,
-            sisRevisionId: Constants.manifest.revisionId || 'development',
-            sisVersion: Constants.manifest.version
-          });
-        }
+    ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(() =>
+        Amplitude.setUserProperties({
+          sisReleaseChannel: RELEASE_CHANNEL,
+          sisRevisionId: Constants.manifest.revisionId || 'development',
+          sisVersion: Constants.manifest.version
+        })
       )
     : Promise.resolve();
 }
