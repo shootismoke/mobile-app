@@ -14,32 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableOpacityProps
+  TouchableOpacityProps,
+  View
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
 
-interface ButtonProps extends TouchableOpacityProps {
-  children: string;
+export interface ButtonProps extends TouchableOpacityProps {
+  as?: typeof View; // Give a possibility to show the Button as View instead of TouchableOpacity
+  children?: string | React.ReactElement;
   icon?: string;
   type?: 'primary' | 'secondary';
 }
 
 const styles = StyleSheet.create({
-  bigButton: {
+  button: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: theme.spacing.mini
   },
-  bigButtonText: {
+  buttonText: {
     ...theme.title,
     color: theme.primaryColor
   },
@@ -50,32 +52,46 @@ const styles = StyleSheet.create({
     borderColor: theme.primaryColor,
     borderRadius: scale(24),
     borderWidth: scale(2)
-  },
-  secondary: {}
+  }
 });
 
 export function Button(props: ButtonProps): React.ReactElement {
-  const { children, icon, onPress, style, type, ...rest } = props;
+  const {
+    as: Wrapper = TouchableOpacity,
+    children,
+    icon,
+    onPress,
+    style,
+    type = 'primary',
+    ...rest
+  } = props;
 
   return (
-    <TouchableOpacity
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore FIXME TS doesn't seem to like this construct
+    <Wrapper
       onPress={onPress}
       style={[
-        styles.bigButton,
-        type && type === 'secondary' ? styles.secondary : styles.primary,
+        styles.button,
+        type === 'primary' ? styles.primary : undefined,
         style
       ]}
       {...rest}
     >
       {icon && (
-        <FontAwesome
+        <Ionicons
           color={theme.primaryColor}
           name={icon}
           size={15}
-          style={styles.icon}
+          style={children && styles.icon}
         />
       )}
-      <Text style={styles.bigButtonText}>{children}</Text>
-    </TouchableOpacity>
+      {children &&
+        (typeof children === 'string' ? (
+          <Text style={styles.buttonText}>{children}</Text>
+        ) : (
+          children
+        ))}
+    </Wrapper>
   );
 }

@@ -15,6 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { ApolloProvider } from '@apollo/react-hooks';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
@@ -76,16 +77,18 @@ export function App(): React.ReactElement {
     <ErrorContextProvider>
       <LocationContextProvider>
         <ApolloProvider client={client}>
-          <ApiContextProvider>
-            <FrequencyContextProvider>
-              <DistanceUnitProvider>
-                {Platform.select({
-                  ios: <StatusBar barStyle="dark-content" />
-                })}
-                <Screens />
-              </DistanceUnitProvider>
-            </FrequencyContextProvider>
-          </ApiContextProvider>
+          <ActionSheetProvider>
+            <ApiContextProvider>
+              <FrequencyContextProvider>
+                <DistanceUnitProvider>
+                  {Platform.select({
+                    ios: <StatusBar barStyle="dark-content" />
+                  })}
+                  <Screens />
+                </DistanceUnitProvider>
+              </FrequencyContextProvider>
+            </ApiContextProvider>
+          </ActionSheetProvider>
         </ApolloProvider>
       </LocationContextProvider>
     </ErrorContextProvider>

@@ -104,7 +104,7 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
     fetchForProvider(waqi)
   ];
 
-  return promiseToTE(() => promiseAny(tasks));
+  return promiseToTE(() => promiseAny(tasks), 'raceApi');
 }
 
 interface Context {

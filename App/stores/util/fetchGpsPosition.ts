@@ -40,7 +40,7 @@ export function fetchReverseGeocode(
       }
 
       return reverse[0];
-    }),
+    }, 'fetchReverseGeocode'),
     TE.map(reverse => ({
       ...currentLocation,
       city: reverse.city,
@@ -82,5 +82,5 @@ export function fetchGpsPosition(): TE.TaskEither<
     //     longitude: 2.34
     //   }
     // };
-  });
+  }, 'fetchGpsPosition');
 }

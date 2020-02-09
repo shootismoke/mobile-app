@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row',
     height: scale(CIGARETTES_HEIGHT),
-    // width: '60%'
     width: scale(250)
   },
   innerContainer: {

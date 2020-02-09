@@ -32,7 +32,7 @@ import * as theme from '../../util/theme';
 
 interface BackButtonProps {
   onPress: (event: GestureResponderEvent) => void;
-  style?: StyleProp<ViewStyle>; // FIXME any
+  style?: StyleProp<ViewStyle>;
 }
 
 const styles = StyleSheet.create({

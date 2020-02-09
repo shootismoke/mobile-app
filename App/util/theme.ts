@@ -50,6 +50,11 @@ const fixTextMargin = {
 };
 
 /**
+ * Opacity for views that are disabled.
+ */
+export const disabledOpacity = 0.3;
+
+/**
  * Get consistent shadows between iOS and Android
  * @see https://stenbeck.io/styling-shadows-in-react-native-ios-and-android/
  */
@@ -64,7 +69,7 @@ export function elevationShadowStyle(
       width: 0,
       height: scale((position === 'bottom' ? 1 : -1) * elevation)
     },
-    shadowOpacity: 0.3,
+    shadowOpacity: disabledOpacity,
     shadowRadius: scale(0.8 * elevation)
   };
 }

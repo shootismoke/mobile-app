@@ -18,22 +18,27 @@ import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { Button } from '../../../components';
+import { Button, CircleButton } from '../../../components';
 import { i18n } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
+import { SelectNotifications } from './SelectNotifications';
 import { ShareButton } from './ShareButton';
 
 interface FooterProps extends NavigationInjectedProps, ViewProps {}
 
 const styles = StyleSheet.create({
-  smallButtons: {
+  secondLine: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: theme.spacing.mini
+    justifyContent: 'space-between',
+    marginTop: theme.spacing.small
+  },
+  share: {
+    marginRight: theme.spacing.small
   }
 });
 
@@ -86,25 +91,25 @@ export function Footer(props: FooterProps): React.ReactElement {
 
   function renderSmallButtons(): React.ReactElement {
     return (
-      <View style={styles.smallButtons}>
+      <>
+        <ShareButton style={styles.share} />
         {isTooFar ? (
-          <Button icon="plus-circle" onPress={goToDetails} type="secondary">
-            {i18n.t('home_btn_more_details').toUpperCase()}
-          </Button>
+          <CircleButton onPress={goToDetails} text="DET" />
         ) : (
-          <Button icon="question-circle" onPress={goToAbout} type="secondary">
-            {i18n.t('home_btn_faq_about').toUpperCase()}
-          </Button>
+          <CircleButton onPress={goToAbout} text="FAQ" />
         )}
-        <ShareButton />
-      </View>
+      </>
     );
   }
 
   return (
     <View style={[theme.withPadding, style]} {...rest}>
       {renderBigButton()}
-      {renderSmallButtons()}
+      <View style={styles.secondLine}>
+        <SelectNotifications />
+        <View style={{ flexGrow: 1 }} />
+        {renderSmallButtons()}
+      </View>
     </View>
   );
 }

@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LatLng } from '@shootismoke/dataproviders';
 import { openaq } from '@shootismoke/dataproviders/lib/promise';
-import { LatLng } from '@shootismoke/graphql';
 import { subDays } from 'date-fns';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
@@ -48,6 +48,12 @@ type HomeProps = NavigationInjectedProps;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1
+  },
+  footer: {
+    marginBottom: theme.spacing.big
+  },
+  scroll: {
+    flex: 1
   },
   withMargin: {
     marginTop: theme.spacing.normal
@@ -113,6 +119,7 @@ export function Home(props: HomeProps): React.ReactElement {
     exact: true,
     frequency
   });
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     // We don't fetch historical data on daily frequency
     if (frequency === 'daily') {
@@ -122,10 +129,15 @@ export function Home(props: HomeProps): React.ReactElement {
         frequency
       });
     } else {
+      setIsLoading(true);
+
       // Fetch weekly/monthly number of cigarettes depending on the current
       // location.
       pipe(
-        promiseToTE(() => memoHistoricalCigarettes(frequency, currentLocation)),
+        promiseToTE(
+          () => memoHistoricalCigarettes(frequency, currentLocation),
+          'memoHistoricalCigarettes'
+        ),
         TE.chain(({ results }) =>
           results.length
             ? TE.right(results)
@@ -162,6 +174,7 @@ export function Home(props: HomeProps): React.ReactElement {
               exact: false,
               frequency
             });
+            setIsLoading(false);
 
             return T.of(void undefined);
           },
@@ -170,6 +183,7 @@ export function Home(props: HomeProps): React.ReactElement {
               ...data,
               frequency
             });
+            setIsLoading(false);
 
             return T.of(void undefined);
           }
@@ -187,9 +201,10 @@ export function Home(props: HomeProps): React.ReactElement {
           props.navigation.navigate('Search');
         }}
       />
-      <ScrollView bounces={false}>
+      <ScrollView bounces={false} style={styles.scroll}>
         <CigaretteBlock
           cigarettes={cigarettes.count}
+          loading={isLoading}
           style={styles.withMargin}
         />
         <SelectFrequency style={styles.withMargin} />
@@ -199,7 +214,10 @@ export function Home(props: HomeProps): React.ReactElement {
           navigation={props.navigation}
           style={styles.withMargin}
         />
-        <Footer navigation={props.navigation} style={styles.withMargin} />
+        <Footer
+          navigation={props.navigation}
+          style={[styles.withMargin, styles.footer]}
+        />
       </ScrollView>
     </View>
   );

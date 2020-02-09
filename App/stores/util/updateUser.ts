@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Frequency, UpdateUserInput } from '@shootismoke/graphql';
+import { NotificationsInput } from '@shootismoke/graphql';
 import { gql } from 'apollo-boost';
 import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
@@ -25,8 +25,8 @@ import { promiseToTE, sideEffect } from '../../util/fp';
 import { getOrCreateUser } from './getOrCreateUser';
 
 const UPDATE_USER = gql`
-  mutation updateUser($userId: ID!, $input: UpdateUserInput!) {
-    updateUser(userId: $userId, input: $input) {
+  mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
+    updateUser(expoInstallationId: $expoInstallationId, input: $input) {
       _id
     }
   }
@@ -36,16 +36,14 @@ const UPDATE_USER = gql`
  * Update notification setting
  */
 export function updateNotifications(
-  frequency: Frequency
+  notifications: NotificationsInput
 ): TE.TaskEither<Error, true> {
   return pipe(
     getOrCreateUser(),
-    TE.map<string, { userId: string; input: UpdateUserInput }>(userId => ({
-      userId,
+    TE.map(expoInstallationId => ({
+      expoInstallationId,
       input: {
-        notifications: {
-          frequency
-        }
+        notifications
       }
     })),
     TE.chain(
@@ -54,11 +52,13 @@ export function updateNotifications(
       )
     ),
     TE.chain(data =>
-      promiseToTE(async () =>
-        client.mutate({
-          mutation: UPDATE_USER,
-          variables: data
-        })
+      promiseToTE(
+        async () =>
+          client.mutate({
+            mutation: UPDATE_USER,
+            variables: data
+          }),
+        'updateNotifications'
       )
     ),
     TE.map(() => true)

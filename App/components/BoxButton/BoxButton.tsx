@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: theme.spacing.mini,
     paddingHorizontal: theme.spacing.small,
-    paddingVertical: scale(4), // Padding for the shadow
+    paddingVertical: scale(6), // Padding for the shadow
     shadowOpacity: 0.1
   },
   boxButtonText: {
     ...theme.shitText,
-    opacity: 0.3,
+    opacity: theme.disabledOpacity,
     textAlign: 'center'
   }
 });
