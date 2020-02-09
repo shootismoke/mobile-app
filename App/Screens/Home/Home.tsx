@@ -176,8 +176,7 @@ export function Home(props: HomeProps): React.ReactElement {
             frequency === 'monthly' ? data.length >= 60 : data.length >= 14
         })),
         TE.fold(
-          error => {
-            console.log(`<Home> - ${error.message}`);
+          () => {
             // Fallback to daily cigarettes * 7 or * 30 if there's an error
             setCigarettes({
               count:

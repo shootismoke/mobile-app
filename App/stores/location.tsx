@@ -89,7 +89,6 @@ export function LocationContextProvider({
       ),
       TE.fold(
         err => {
-          console.log('<LocationContext> - fetchGpsPosition - Error', err);
           setError(err);
 
           return T.of(undefined);

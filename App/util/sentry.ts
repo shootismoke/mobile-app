@@ -1,0 +1,42 @@
+// Sh**t! I Smoke
+// Copyright (C) 2018-2020  Marcelo S. Coelho, Amaury Martiny
+
+// Sh**t! I Smoke is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Sh**t! I Smoke is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
+
+import * as Sentry from 'sentry-expo';
+
+import { IS_SENTRY_SET_UP } from './constants';
+
+// We don't send the following errors to Sentry
+const UNTRACKED_ERRORS = [
+  'Permission to access location was denied',
+  'Location provider is unavailable. Make sure that location services are enabled',
+  'Location request timed out',
+  'Location request failed due to unsatisfied device settings'
+];
+
+/**
+ * Send an error to Sentry.
+ *
+ * @see https://sentry.io
+ * @param error - The error to send
+ */
+export function sentryError(error: Error): void {
+  if (
+    IS_SENTRY_SET_UP &&
+    !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
+  ) {
+    Sentry.captureException(error);
+  }
+}

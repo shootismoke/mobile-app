@@ -19,9 +19,9 @@ import { userSchema } from '@shootismoke/graphql';
 import ApolloClient from 'apollo-boost';
 import { ErrorResponse } from 'apollo-link-error';
 import Constants from 'expo-constants';
-import * as Sentry from 'sentry-expo';
 
 import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
+import { sentryError } from './sentry';
 
 const BACKEND_URI = IS_PROD
   ? 'https://shootismoke.now.sh/api/graphql'
@@ -40,11 +40,11 @@ export const client = new ApolloClient({
   onError: ({ graphQLErrors, networkError }: ErrorResponse): void => {
     // Send errors to Sentry
     if (networkError) {
-      Sentry.captureException(networkError);
+      sentryError(networkError);
     }
 
     if (graphQLErrors) {
-      graphQLErrors.forEach(error => Sentry.captureException(error));
+      graphQLErrors.forEach(sentryError);
     }
   },
   request: (operation): void => {

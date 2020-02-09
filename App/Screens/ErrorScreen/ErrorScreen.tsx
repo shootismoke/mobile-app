@@ -18,14 +18,13 @@ import React, { useContext, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
-import * as Sentry from 'sentry-expo';
 
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
 import { i18n } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
-import { IS_SENTRY_SET_UP } from '../../util/constants';
+import { sentryError } from '../../util/sentry';
 import * as theme from '../../util/theme';
 
 type ErrorScreenProps = NavigationInjectedProps;
@@ -54,26 +53,14 @@ const styles = StyleSheet.create({
   }
 });
 
-// We don't send the following errors to Sentry
-const UNTRACKED_ERRORS = [
-  'Permission to access location was denied',
-  'Location provider is unavailable. Make sure that location services are enabled',
-  'Location request timed out',
-  'Location request failed due to unsatisfied device settings'
-];
-
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
   const { error } = useContext(ErrorContext);
 
   trackScreen('ERROR');
 
   useEffect(() => {
-    if (
-      IS_SENTRY_SET_UP &&
-      error &&
-      !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
-    ) {
-      Sentry.captureException(error);
+    if (error) {
+      sentryError(error);
     }
   }, [error]);
 
