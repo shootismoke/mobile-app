@@ -7666,10 +7666,10 @@ ret@~0.1.10:
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
 
-retry-ts@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/retry-ts/-/retry-ts-0.1.1.tgz#69d9e8d8e1e5cde8e1cbe9adab57f0ab59cd4791"
-  integrity sha512-yBVEnHUjJDqwcQ+XVLoI2th2+n/FNJV3h0WfY1jZS0Ewxt7kzZnmm1cxHIeLCQx66uOx3ngJh33PAp8RKTpDVA==
+retry-ts@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/retry-ts/-/retry-ts-0.1.2.tgz#83164521ba17b447053fae08d6adaff01c617306"
+  integrity sha512-SwG8UL3V/SdGybVvLlb+GpIJTSY1t5SRzGUqZcEBejXJW5la3SUdglrWpyVSquL5Il+uYskaQfkgUn6zHy6rBA==
 
 rimraf@2.6.3, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.3:
   version "2.6.3"
