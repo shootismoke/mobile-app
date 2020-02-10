@@ -39,7 +39,7 @@
     "haversine": "^1.1.1",
     "i18n-js": "^3.5.1",
     "io-ts": "^2.0.6",
-    "lottie-react-native": "~2.6.1",
+    "lottie-react-native": "~3.3.2",
     "p-any": "^2.1.0",
     "p-memoize": "^3.1.0",
     "react": "16.9.0",
