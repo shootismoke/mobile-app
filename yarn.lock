@@ -4343,10 +4343,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-fp-ts@^2.1.1, fp-ts@^2.4.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.4.3.tgz#6a8be95df8be34caf7a4243802d85c31d65ff1ba"
-  integrity sha512-R/QwlxnRlboZIObqKjOUf8rkXz36uSWfJO2M5o2cqf7UiHoHlNMojr/PiUyj8j3l1fOP62dR6nsKvFaRSJBIaQ==
+fp-ts@^2.1.1, fp-ts@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.4.4.tgz#d1ffe3e62ee4fa789562242d5a3f9b957740b783"
+  integrity sha512-J5wFa/BzT57A+DIvwAYS5LTsbRiXsvF9hsefP3ZfzsHLuWGjtHAheG1WscG1tX3og1PDZyv6mZAUTlpH1MmHhA==
 
 fragment-cache@^0.2.1:
   version "0.2.1"

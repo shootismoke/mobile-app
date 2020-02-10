@@ -34,7 +34,7 @@
     "expo-localization": "~8.0.0",
     "expo-location": "~8.0.0",
     "expo-permissions": "~8.0.0",
-    "fp-ts": "^2.4.3",
+    "fp-ts": "^2.4.4",
     "graphql": "^14.6.0",
     "haversine": "^1.1.1",
     "i18n-js": "^3.5.1",
