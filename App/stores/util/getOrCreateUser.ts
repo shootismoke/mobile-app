@@ -15,9 +15,9 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { CreateUserInput } from '@shootismoke/graphql';
-import { gql } from 'apollo-boost';
 import Constants from 'expo-constants';
 import * as TE from 'fp-ts/lib/TaskEither';
+import gql from 'graphql-tag';
 import { AsyncStorage } from 'react-native';
 
 import { client } from '../../util/apollo';

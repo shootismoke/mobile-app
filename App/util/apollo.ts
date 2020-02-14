@@ -15,10 +15,20 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Hawk from '@hapi/hawk/lib/browser';
+import NetInfo from '@react-native-community/netinfo';
 import { userSchema } from '@shootismoke/graphql';
-import ApolloClient from 'apollo-boost';
-import { ErrorResponse } from 'apollo-link-error';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { setContext } from 'apollo-link-context';
+import { ErrorResponse, onError } from 'apollo-link-error';
+import { createHttpLink } from 'apollo-link-http';
 import Constants from 'expo-constants';
+import {
+  ApolloOfflineClient,
+  NetworkStatus,
+  PersistedData
+} from 'offix-client';
+import { AsyncStorage } from 'react-native';
 
 import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
 import { sentryError } from './sentry';
@@ -27,36 +37,82 @@ const BACKEND_URI = IS_PROD
   ? 'https://shootismoke.now.sh/api/graphql'
   : 'https://staging.shootismoke.now.sh/api/graphql';
 
+// Hawk credentials
 const credentials = {
   id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
   key: Constants.manifest.extra.hawkKey,
   algorithm: 'sha256'
 };
 
+// Create cache wrapper
+const cacheStorage = {
+  async getItem(key: string): Promise<PersistedData> {
+    const data = await AsyncStorage.getItem(key);
+    if (typeof data === 'string') {
+      return JSON.parse(data);
+    }
+
+    return data;
+  },
+  async removeItem(key: string): Promise<void> {
+    return AsyncStorage.removeItem(key);
+  },
+  async setItem(key: string, value: PersistedData): Promise<void> {
+    const valueStr = typeof value === 'object' ? JSON.stringify(value) : value;
+
+    return AsyncStorage.setItem(key, valueStr);
+  }
+};
+
+// Create network interface
+const networkStatus: NetworkStatus = {
+  onStatusChangeListener(callback) {
+    NetInfo.addEventListener(state =>
+      callback.onStatusChange({ online: state.isConnected })
+    );
+  },
+  async isOffline() {
+    const state = await NetInfo.fetch();
+
+    return !state.isConnected;
+  }
+};
+
 /**
  * The Apollo client
  */
-export const client = new ApolloClient({
-  onError: ({ graphQLErrors, networkError }: ErrorResponse): void => {
-    // Send errors to Sentry
-    if (networkError) {
-      sentryError(networkError);
-    }
+export const client = new ApolloOfflineClient({
+  cache: new InMemoryCache(),
+  cacheStorage,
+  link: ApolloLink.from([
+    // Add Hawk authentication in header
+    setContext(() => {
+      // Set Hawk authorization header on each request
+      const { header } = Hawk.client.header(BACKEND_URI, 'POST', {
+        credentials
+      });
 
-    if (graphQLErrors) {
-      graphQLErrors.forEach(sentryError);
-    }
-  },
-  request: (operation): void => {
-    // Set Hawk authorization header on each request
-    const { header } = Hawk.client.header(BACKEND_URI, 'POST', { credentials });
-
-    operation.setContext({
-      headers: {
-        authorization: header
+      return {
+        headers: {
+          authorization: header
+        }
+      };
+    }),
+    // Error handling
+    onError(({ graphQLErrors, networkError }: ErrorResponse): void => {
+      // Send errors to Sentry
+      if (networkError) {
+        sentryError(networkError);
       }
-    });
-  },
-  typeDefs: [userSchema],
-  uri: BACKEND_URI
+
+      if (graphQLErrors) {
+        graphQLErrors.forEach(sentryError);
+      }
+    }),
+    // Classic HTTP link
+    createHttpLink({ uri: BACKEND_URI })
+  ]),
+  offlineStorage: cacheStorage,
+  networkStatus,
+  typeDefs: [userSchema]
 });

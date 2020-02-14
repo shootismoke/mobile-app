@@ -15,10 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { NotificationsInput } from '@shootismoke/graphql';
-import { gql } from 'apollo-boost';
 import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as TE from 'fp-ts/lib/TaskEither';
+import gql from 'graphql-tag';
 
 import { client } from '../../util/apollo';
 import { promiseToTE, sideEffect } from '../../util/fp';
