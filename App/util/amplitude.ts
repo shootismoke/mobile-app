@@ -24,12 +24,6 @@ export type AmplitudeEvent =
   | 'API_DAILY_REQUEST'
   | 'API_DAILY_RESPONSE'
   | 'API_DAILY_ERROR'
-  | 'API_WEEKLY_REQUEST'
-  | 'API_WEEKLY_RESPONSE'
-  | 'API_WEEKLY_ERROR'
-  | 'API_MONTHLY_REQUEST'
-  | 'API_MONTHLY_RESPONSE'
-  | 'API_MONTHLY_ERROR'
   | 'APP_REFOCUS'
   | 'APP_EXIT'
   | 'LOADING_SCREEN_OPEN'
@@ -66,12 +60,12 @@ export type AmplitudeEvent =
 export function setupAmplitude(): Promise<void> {
   return Constants.manifest.extra.amplitudeApiKey
     ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(() =>
-        Amplitude.setUserProperties({
-          sisReleaseChannel: RELEASE_CHANNEL,
-          sisRevisionId: Constants.manifest.revisionId || 'development',
-          sisVersion: Constants.manifest.version
-        })
-      )
+      Amplitude.setUserProperties({
+        sisReleaseChannel: RELEASE_CHANNEL,
+        sisRevisionId: Constants.manifest.revisionId || 'development',
+        sisVersion: Constants.manifest.version
+      })
+    )
     : Promise.resolve();
 }
 
@@ -82,7 +76,7 @@ interface JsonObject {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface JsonArray extends Array<Json> {}
+interface JsonArray extends Array<Json> { }
 
 export function track(
   event: AmplitudeEvent,
