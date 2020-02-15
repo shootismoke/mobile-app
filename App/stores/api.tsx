@@ -29,9 +29,10 @@ import promiseAny, { AggregateError } from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
-import { logFpError, promiseToTE } from '../util/fp';
+import { promiseToTE } from '../util/fp';
 import { noop } from '../util/noop';
 import { pm25ToCigarettes } from '../util/secretSauce';
+import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
 
@@ -109,11 +110,11 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
       promiseAny(tasks).catch((errors: AggregateError) => {
         const aggregateMessage = [...errors]
           .map(({ message }, index) => `${index + 1}. ${message}`)
-          .join('\n');
+          .join('. ');
 
         throw new Error(aggregateMessage);
       }),
-    'raceApi'
+    'ApiContext'
   );
 }
 
@@ -152,7 +153,6 @@ export function ApiContextProvider({
       raceApi(currentLocation),
       TE.fold(
         error => {
-          console.log('SET ERROR', error);
           setError(error);
           track('API_DAILY_ERROR');
 
@@ -165,7 +165,7 @@ export function ApiContextProvider({
           return T.of(void undefined);
         }
       )
-    )().catch(logFpError('ApiContextProvider'));
+    )().catch(sentryError('ApiContextProvider'));
   }, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

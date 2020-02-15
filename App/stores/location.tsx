@@ -20,8 +20,9 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { logFpError, sideEffect } from '../util/fp';
+import { sideEffect } from '../util/fp';
 import { noop } from '../util/noop';
+import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import {
   fetchGpsPosition,
@@ -95,7 +96,7 @@ export function LocationContextProvider({
         },
         location => {
           console.log(
-            `<LocationContext> - fetchGpsPosition - Got reverse location ${JSON.stringify(
+            `<LocationContext> - Got reverse location ${JSON.stringify(
               location
             )}`
           );
@@ -105,7 +106,7 @@ export function LocationContextProvider({
           return T.of(undefined);
         }
       )
-    )().catch(logFpError('LocationContextProvider'));
+    )().catch(sentryError('LocationContextProvider'));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

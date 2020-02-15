@@ -38,7 +38,8 @@ import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { createUser, GET_USER, UPDATE_USER } from '../../../../stores/graphql';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
-import { logFpError, promiseToTE } from '../../../../util/fp';
+import { promiseToTE } from '../../../../util/fp';
+import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
 /**
@@ -114,12 +115,11 @@ export function SelectNotifications(
       }
     }
   );
-  const [updateUser, { loading, data: mutationData }] = useMutation<
+  const [updateUser, { data: mutationData }] = useMutation<
     { __typename: 'Mutation'; updateUser: DeepPartial<User> },
     MutationUpdateUserArgs
   >(UPDATE_USER);
 
-  console.log('loading', loading, mutationData);
   const notif =
     (mutationData?.updateUser || queryData?.getUser)?.notifications
       ?.frequency || 'never';
@@ -169,10 +169,11 @@ export function SelectNotifications(
             optimisticResponse: {
               __typename: 'Mutation',
               updateUser: {
-                expoInstallationId,
                 __typename: 'User',
+                _id: queryData?.getUser._id,
                 notifications: {
                   __typename: 'Notifications',
+                  _id: queryData?.getUser.notifications?._id,
                   frequency
                 }
               }
@@ -184,7 +185,7 @@ export function SelectNotifications(
           });
         }, 'SelectNotifications')
       )
-    )().catch(logFpError('SelectNotifications'));
+    )().catch(sentryError('SelectNotifications'));
   }
 
   // Is the switch on or off?

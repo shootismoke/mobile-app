@@ -69,7 +69,7 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
       // https://github.com/amaurymartiny/shoot-i-smoke/issues/250
       await Share.share({ message, title, url: imageUrl });
     } catch (error) {
-      sentryError(error);
+      sentryError('ShareButton')(error);
     }
   }
 

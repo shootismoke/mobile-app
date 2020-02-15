@@ -29,7 +29,7 @@ import {
 } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
-import { logFpError } from '../../util/fp';
+import { sentryError } from '../../util/sentry';
 import * as theme from '../../util/theme';
 import { AlgoliaItem } from './AlgoliaItem';
 import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
@@ -112,7 +112,7 @@ export function Search(props: SearchProps): React.ReactElement {
             return T.of(void undefined);
           }
         )
-      )().catch(logFpError('Search'));
+      )().catch(sentryError('Search'));
     }, 500);
   }
 

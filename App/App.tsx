@@ -34,6 +34,7 @@ import {
 import { setupAmplitude, track } from './util/amplitude';
 import { client } from './util/apollo';
 import { IS_SENTRY_SET_UP } from './util/constants';
+import { sentryError } from './util/sentry';
 
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
@@ -60,7 +61,7 @@ export function App(): React.ReactElement {
     ])
 
       .then(() => setReady(true))
-      .catch(error => console.error(error));
+      .catch(sentryError('App'));
   }, []);
 
   useEffect(() => {

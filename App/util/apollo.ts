@@ -102,11 +102,11 @@ export const client = new ApolloOfflineClient({
     onError(({ graphQLErrors, networkError }: ErrorResponse): void => {
       // Send errors to Sentry
       if (networkError) {
-        sentryError(networkError);
+        sentryError('Apollo')(networkError);
       }
 
       if (graphQLErrors) {
-        graphQLErrors.forEach(sentryError);
+        graphQLErrors.forEach(sentryError('Apollo'));
       }
     }),
     // Classic HTTP link

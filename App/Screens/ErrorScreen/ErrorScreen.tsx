@@ -64,7 +64,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 
   useEffect(() => {
     if (error) {
-      sentryError(error);
+      sentryError('ErrorScreen')(error);
     }
   }, [error]);
 

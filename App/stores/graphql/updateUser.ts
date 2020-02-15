@@ -18,12 +18,9 @@ import gql from 'graphql-tag';
 
 export const UPDATE_USER = gql`
   mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
-    __typename
     updateUser(expoInstallationId: $expoInstallationId, input: $input) {
-      __typename
       _id
       notifications {
-        __typename
         _id
         frequency
       }
