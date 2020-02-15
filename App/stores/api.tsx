@@ -20,7 +20,7 @@ import {
   OpenAQFormat,
   ProviderPromise
 } from '@shootismoke/dataproviders';
-import { aqicn, openaq, waqi } from '@shootismoke/dataproviders/lib/promise';
+import { aqicn, openaq } from '@shootismoke/dataproviders/lib/promise';
 import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
@@ -101,8 +101,7 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
     fetchForProvider(openaq, {
       limit: 1,
       parameter: ['pm25']
-    }),
-    fetchForProvider(waqi)
+    })
   ];
 
   return promiseToTE(() => promiseAny(tasks), 'raceApi');
