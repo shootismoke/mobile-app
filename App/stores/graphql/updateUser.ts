@@ -14,4 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './fetchGpsPosition';
+import gql from 'graphql-tag';
+
+export const UPDATE_USER = gql`
+  mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
+    __typename
+    updateUser(expoInstallationId: $expoInstallationId, input: $input) {
+      __typename
+      _id
+      notifications {
+        __typename
+        _id
+        frequency
+      }
+    }
+  }
+`;

@@ -34,13 +34,14 @@ const CREATE_USER = gql`
 `;
 
 // The mongo id of the user, stored here in memory, but also in AsyncStorage.
-// If this string is set, it means that we created our user on the backend
+// If this string is set, it means that we created our user on the backend. We
+// don't actually use the mongodb id for now, but we store it, just in case.
 let cachedMongoId: string | undefined;
 
 /**
  * Get or create a user
  */
-export function getOrCreateUser(): TE.TaskEither<Error, string> {
+export function createUser(): TE.TaskEither<Error, string> {
   return promiseToTE(async () => {
     if (!cachedMongoId) {
       let mongoId = await AsyncStorage.getItem(STORAGE_KEY);
@@ -68,5 +69,5 @@ export function getOrCreateUser(): TE.TaskEither<Error, string> {
     }
 
     return Constants.installationId;
-  }, 'getOrCreateUser');
+  }, 'createUser');
 }
