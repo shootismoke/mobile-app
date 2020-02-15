@@ -25,7 +25,7 @@ import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import promiseAny from 'p-any';
+import promiseAny, { AggregateError } from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
@@ -67,7 +67,7 @@ function filterPm25(normalized: Normalized): Api {
     };
   } else {
     throw new Error(
-      `PM2.5 has not been measured by station ${normalized[0].location} right now`
+      `Station ${normalized[0].location} does not have PM2.5 measurings right now`
     );
   }
 }
@@ -104,7 +104,17 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
     })
   ];
 
-  return promiseToTE(() => promiseAny(tasks), 'raceApi');
+  return promiseToTE(
+    () =>
+      promiseAny(tasks).catch((errors: AggregateError) => {
+        const aggregateMessage = [...errors]
+          .map(({ message }, index) => `${index + 1}. ${message}`)
+          .join('\n');
+
+        throw new Error(aggregateMessage);
+      }),
+    'raceApi'
+  );
 }
 
 interface Context {
@@ -142,6 +152,7 @@ export function ApiContextProvider({
       raceApi(currentLocation),
       TE.fold(
         error => {
+          console.log('SET ERROR', error);
           setError(error);
           track('API_DAILY_ERROR');
 
