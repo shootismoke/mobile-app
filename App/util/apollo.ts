@@ -45,7 +45,11 @@ const credentials = {
   algorithm: 'sha256'
 };
 
-// Create cache wrapper
+/**
+ * Create cache wrapper.
+ *
+ * @see https://offix.dev/docs/react-native
+ */
 const cacheStorage = {
   async getItem(key: string): Promise<PersistedData> {
     const data = await AsyncStorage.getItem(key);
@@ -65,7 +69,11 @@ const cacheStorage = {
   }
 };
 
-// Create network interface
+/**
+ * Create network interface.
+ *
+ * @see https://offix.dev/docs/react-native
+ */
 const networkStatus: NetworkStatus = {
   onStatusChangeListener(callback) {
     NetInfo.addEventListener(state =>
@@ -83,7 +91,7 @@ const networkStatus: NetworkStatus = {
 let _client: ApolloOfflineClient;
 
 /**
- * Create  Apollo client
+ * Create an Apollo client (via Offix).
  */
 export async function getApolloClient(): Promise<ApolloOfflineClient> {
   if (_client) {

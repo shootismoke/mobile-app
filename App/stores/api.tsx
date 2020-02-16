@@ -108,6 +108,7 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
   return promiseToTE(
     () =>
       promiseAny(tasks).catch((errors: AggregateError) => {
+        // Transform an AggregateError into a JS Error
         const aggregateMessage = [...errors]
           .map(({ message }, index) => `${index + 1}. ${message}`)
           .join('. ');
