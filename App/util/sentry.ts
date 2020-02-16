@@ -25,6 +25,7 @@ const UNTRACKED_ERRORS = [
   'Location provider is unavailable. Make sure that location services are enabled',
   'Location request timed out',
   'Location request failed due to unsatisfied device settings',
+  'Reverse geocoding returned no results',
   // No results from data providers
   'does not have PM2.5 measurings right now',
   'Cannot normalize, got 0 result'
