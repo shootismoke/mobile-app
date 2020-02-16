@@ -79,10 +79,17 @@ const networkStatus: NetworkStatus = {
   }
 };
 
+// Cache Apollo client
+let _client: ApolloOfflineClient;
+
 /**
  * Create  Apollo client
  */
-export async function createClient(): Promise<ApolloOfflineClient> {
+export async function getApolloClient(): Promise<ApolloOfflineClient> {
+  if (_client) {
+    return _client;
+  }
+
   const cache = new InMemoryCache();
 
   // await before instantiating ApolloClient, else queries might run before the cache is persisted
@@ -128,6 +135,8 @@ export async function createClient(): Promise<ApolloOfflineClient> {
     networkStatus,
     typeDefs: [userSchema]
   });
+
+  _client = client;
 
   return client;
 }

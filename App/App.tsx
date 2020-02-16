@@ -33,7 +33,7 @@ import {
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { createClient } from './util/apollo';
+import { getApolloClient } from './util/apollo';
 import { IS_SENTRY_SET_UP } from './util/constants';
 import { sentryError } from './util/sentry';
 
@@ -68,7 +68,7 @@ export function App(): React.ReactElement {
 
   useEffect(() => {
     // Load the Offix client
-    createClient()
+    getApolloClient()
       .then(setClient)
       .catch(sentryError('App'));
   }, []);

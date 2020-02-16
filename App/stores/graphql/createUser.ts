@@ -20,7 +20,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import gql from 'graphql-tag';
 import { AsyncStorage } from 'react-native';
 
-import { client } from '../../util/apollo';
+import { getApolloClient } from '../../util/apollo';
 import { promiseToTE } from '../../util/fp';
 
 const STORAGE_KEY = 'MONGO_ID';
@@ -55,6 +55,7 @@ export function createUser(): TE.TaskEither<Error, string> {
           )}`
         );
 
+        const client = await getApolloClient();
         const res = await client.mutate({
           mutation: CREATE_USER,
           variables: { input }
