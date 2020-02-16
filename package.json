@@ -37,6 +37,7 @@
     "expo-localization": "~8.0.0",
     "expo-location": "~8.0.0",
     "expo-permissions": "~8.0.0",
+    "graphql": "^14.6.0",
     "haversine": "^1.1.1",
     "i18n-js": "^3.5.1",
     "lottie-react-native": "~2.6.1",
