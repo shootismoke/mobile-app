@@ -18,6 +18,7 @@ import Hawk from '@hapi/hawk/lib/browser';
 import NetInfo from '@react-native-community/netinfo';
 import { userSchema } from '@shootismoke/graphql';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { persistCache } from 'apollo-cache-persist';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { ErrorResponse, onError } from 'apollo-link-error';
@@ -79,40 +80,54 @@ const networkStatus: NetworkStatus = {
 };
 
 /**
- * The Apollo client
+ * Create  Apollo client
  */
-export const client = new ApolloOfflineClient({
-  cache: new InMemoryCache(),
-  cacheStorage,
-  link: ApolloLink.from([
-    // Add Hawk authentication in header
-    setContext(() => {
-      // Set Hawk authorization header on each request
-      const { header } = Hawk.client.header(BACKEND_URI, 'POST', {
-        credentials
-      });
+export async function createClient(): Promise<ApolloOfflineClient> {
+  const cache = new InMemoryCache();
 
-      return {
-        headers: {
-          authorization: header
+  // await before instantiating ApolloClient, else queries might run before the cache is persisted
+  await persistCache({
+    cache,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore FIXME, I don't know how to fix here
+    storage: AsyncStorage
+  });
+
+  const client = new ApolloOfflineClient({
+    cache,
+    cacheStorage,
+    link: ApolloLink.from([
+      // Add Hawk authentication in header
+      setContext(() => {
+        // Set Hawk authorization header on each request
+        const { header } = Hawk.client.header(BACKEND_URI, 'POST', {
+          credentials
+        });
+
+        return {
+          headers: {
+            authorization: header
+          }
+        };
+      }),
+      // Error handling
+      onError(({ graphQLErrors, networkError }: ErrorResponse): void => {
+        // Send errors to Sentry
+        if (networkError) {
+          sentryError('Apollo')(networkError);
         }
-      };
-    }),
-    // Error handling
-    onError(({ graphQLErrors, networkError }: ErrorResponse): void => {
-      // Send errors to Sentry
-      if (networkError) {
-        sentryError('Apollo')(networkError);
-      }
 
-      if (graphQLErrors) {
-        graphQLErrors.forEach(sentryError('Apollo'));
-      }
-    }),
-    // Classic HTTP link
-    createHttpLink({ uri: BACKEND_URI })
-  ]),
-  offlineStorage: cacheStorage,
-  networkStatus,
-  typeDefs: [userSchema]
-});
+        if (graphQLErrors) {
+          graphQLErrors.forEach(sentryError('Apollo'));
+        }
+      }),
+      // Classic HTTP link
+      createHttpLink({ uri: BACKEND_URI })
+    ]),
+    offlineStorage: cacheStorage,
+    networkStatus,
+    typeDefs: [userSchema]
+  });
+
+  return client;
+}
