@@ -20,18 +20,19 @@ import {
   OpenAQFormat,
   ProviderPromise
 } from '@shootismoke/dataproviders';
-import { aqicn, openaq, waqi } from '@shootismoke/dataproviders/lib/promise';
+import { aqicn, openaq } from '@shootismoke/dataproviders/lib/promise';
 import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import promiseAny from 'p-any';
+import promiseAny, { AggregateError } from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
-import { logFpError, promiseToTE } from '../util/fp';
+import { promiseToTE } from '../util/fp';
 import { noop } from '../util/noop';
 import { pm25ToCigarettes } from '../util/secretSauce';
+import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
 
@@ -67,7 +68,7 @@ function filterPm25(normalized: Normalized): Api {
     };
   } else {
     throw new Error(
-      `PM2.5 has not been measured by station ${normalized[0].location} right now`
+      `Station ${normalized[0].location} does not have PM2.5 measurings right now`
     );
   }
 }
@@ -101,11 +102,21 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
     fetchForProvider(openaq, {
       limit: 1,
       parameter: ['pm25']
-    }),
-    fetchForProvider(waqi)
+    })
   ];
 
-  return promiseToTE(() => promiseAny(tasks), 'raceApi');
+  return promiseToTE(
+    () =>
+      promiseAny(tasks).catch((errors: AggregateError) => {
+        // Transform an AggregateError into a JS Error
+        const aggregateMessage = [...errors]
+          .map(({ message }, index) => `${index + 1}. ${message}`)
+          .join('. ');
+
+        throw new Error(aggregateMessage);
+      }),
+    'ApiContext'
+  );
 }
 
 interface Context {
@@ -155,7 +166,7 @@ export function ApiContextProvider({
           return T.of(void undefined);
         }
       )
-    )().catch(logFpError('ApiContextProvider'));
+    )().catch(sentryError('ApiContextProvider'));
   }, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

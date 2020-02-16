@@ -15,12 +15,12 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { CreateUserInput } from '@shootismoke/graphql';
-import { gql } from 'apollo-boost';
 import Constants from 'expo-constants';
 import * as TE from 'fp-ts/lib/TaskEither';
+import gql from 'graphql-tag';
 import { AsyncStorage } from 'react-native';
 
-import { client } from '../../util/apollo';
+import { getApolloClient } from '../../util/apollo';
 import { promiseToTE } from '../../util/fp';
 
 const STORAGE_KEY = 'MONGO_ID';
@@ -34,13 +34,14 @@ const CREATE_USER = gql`
 `;
 
 // The mongo id of the user, stored here in memory, but also in AsyncStorage.
-// If this string is set, it means that we created our user on the backend
+// If this string is set, it means that we created our user on the backend. We
+// don't actually use the mongodb id for now, but we store it, just in case.
 let cachedMongoId: string | undefined;
 
 /**
  * Get or create a user
  */
-export function getOrCreateUser(): TE.TaskEither<Error, string> {
+export function createUser(): TE.TaskEither<Error, string> {
   return promiseToTE(async () => {
     if (!cachedMongoId) {
       let mongoId = await AsyncStorage.getItem(STORAGE_KEY);
@@ -54,6 +55,7 @@ export function getOrCreateUser(): TE.TaskEither<Error, string> {
           )}`
         );
 
+        const client = await getApolloClient();
         const res = await client.mutate({
           mutation: CREATE_USER,
           variables: { input }
@@ -68,5 +70,5 @@ export function getOrCreateUser(): TE.TaskEither<Error, string> {
     }
 
     return Constants.installationId;
-  }, 'getOrCreateUser');
+  }, 'createUser');
 }

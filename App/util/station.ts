@@ -24,7 +24,7 @@ import { DistanceUnit } from '../stores/distanceUnit';
 export const MAX_DISTANCE_TO_STATION = 10;
 
 /**
- * Station given by the Waqi API is fucked up. Sometimes it's [lat, lng],
+ * Station given by the AQICN API is fucked up. Sometimes it's [lat, lng],
  * sometimes it's [lng, lat].
  * We check here with the user's real currentLocation coordinates, and take the
  * "closest" one.

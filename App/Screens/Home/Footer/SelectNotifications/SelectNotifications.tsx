@@ -14,28 +14,44 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { FontAwesome } from '@expo/vector-icons';
-import { Frequency } from '@shootismoke/graphql';
+import {
+  Frequency,
+  MutationUpdateUserArgs,
+  QueryGetUserArgs,
+  User
+} from '@shootismoke/graphql';
 import { Notifications } from 'expo';
+import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
 import { pipe } from 'fp-ts/lib/pipeable';
-import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import React, { useContext, useEffect, useState } from 'react';
-import { AsyncStorage, StyleSheet, Text, View, ViewProps } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Switch from 'react-native-switch-pro';
 
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import { updateNotifications } from '../../../../stores/util';
+import { createUser, GET_USER, UPDATE_USER } from '../../../../stores/graphql';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
-import { logFpError, promiseToTE } from '../../../../util/fp';
+import { promiseToTE } from '../../../../util/fp';
+import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
-const STORAGE_KEY = 'NOTIFICATIONS';
+/**
+ * https://gist.github.com/navix/6c25c15e0a2d3cd0e5bce999e0086fc9
+ */
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends Array<infer U>
+    ? Array<DeepPartial<U>>
+    : T[P] extends ReadonlyArray<infer U>
+    ? ReadonlyArray<DeepPartial<U>>
+    : DeepPartial<T[P]>;
+};
 
 const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
 
@@ -90,20 +106,23 @@ export function SelectNotifications(
   props: SelectNotificationsProps
 ): React.ReactElement {
   const { style, ...rest } = props;
-  const [notif, setNotif] = useState<Frequency>('never');
   const { api } = useContext(ApiContext);
-
-  useEffect(() => {
-    async function getNotifications(): Promise<void> {
-      const value = await AsyncStorage.getItem(STORAGE_KEY);
-
-      if (value && notificationsValues.includes(value as Frequency)) {
-        setNotif(value as Frequency);
+  const { data: queryData } = useQuery<{ getUser: User }, QueryGetUserArgs>(
+    GET_USER,
+    {
+      variables: {
+        expoInstallationId: Constants.installationId
       }
     }
+  );
+  const [updateUser, { data: mutationData }] = useMutation<
+    { __typename: 'Mutation'; updateUser: DeepPartial<User> },
+    MutationUpdateUserArgs
+  >(UPDATE_USER);
 
-    getNotifications();
-  }, []);
+  const notif =
+    (mutationData?.updateUser || queryData?.getUser)?.notifications
+      ?.frequency || 'never';
 
   /**
    * Handler for changing notification frequency
@@ -111,8 +130,6 @@ export function SelectNotifications(
    * @param buttonIndex - The button index in the ActionSheet
    */
   function handleChangeNotif(frequency: Frequency): void {
-    setNotif(frequency);
-
     track(
       `HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
     );
@@ -124,41 +141,51 @@ export function SelectNotifications(
     }
 
     pipe(
-      promiseToTE(async () => {
-        const { status } = await Permissions.askAsync(
-          Permissions.NOTIFICATIONS
-        );
+      createUser(),
+      TE.chain(expoInstallationId =>
+        promiseToTE(async () => {
+          const { status } = await Permissions.askAsync(
+            Permissions.NOTIFICATIONS
+          );
 
-        if (status !== 'granted') {
-          throw new Error('Permission to access notifications was denied');
-        }
+          if (status !== 'granted') {
+            throw new Error('Permission to access notifications was denied');
+          }
 
-        return await Notifications.getExpoPushTokenAsync();
-      }, 'SelectNotifications'),
-      TE.chain(expoPushToken =>
-        updateNotifications({
-          expoPushToken,
-          frequency,
-          timezone: Localization.timezone,
-          universalId: api.pm25.location
-        })
-      ),
-      TE.chain(() =>
-        promiseToTE(
-          () => AsyncStorage.setItem(STORAGE_KEY, frequency),
-          'SelectNotifications'
-        )
-      ),
-      TE.fold(
-        () => {
-          setNotif('never');
-          AsyncStorage.setItem(STORAGE_KEY, 'never');
+          const expoPushToken = await Notifications.getExpoPushTokenAsync();
+          const notifications = {
+            expoPushToken,
+            frequency,
+            timezone: Localization.timezone,
+            universalId: api.pm25.location
+          };
+          console.log(
+            `<SelectNotifications> - Update user ${JSON.stringify(
+              notifications
+            )}`
+          );
 
-          return T.of(void undefined);
-        },
-        () => T.of(void undefined)
+          await updateUser({
+            optimisticResponse: {
+              __typename: 'Mutation',
+              updateUser: {
+                __typename: 'User',
+                _id: queryData?.getUser._id,
+                notifications: {
+                  __typename: 'Notifications',
+                  _id: queryData?.getUser.notifications?._id,
+                  frequency
+                }
+              }
+            },
+            variables: {
+              expoInstallationId,
+              input: { notifications }
+            }
+          });
+        }, 'SelectNotifications')
       )
-    )().catch(logFpError('SelectNotifications'));
+    )().catch(sentryError('SelectNotifications'));
   }
 
   // Is the switch on or off?

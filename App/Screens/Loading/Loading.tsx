@@ -88,7 +88,6 @@ export function Loading(): React.ReactElement {
     // Set a 2s timer that will set `longWaiting` to true. Used to show an
     // additional "cough" message on the loading screen
     longWaitingTimeout = setTimeout(() => {
-      console.log('<Loading> - Long waiting');
       setLongWaiting(true);
     }, 2000);
 

@@ -84,18 +84,6 @@ export function retry<A>(
 }
 
 /**
- * Tasks and IOs can sometimes throw unexpectedly, so we catch and log here.
- * This should realistically never happen.
- */
-export function logFpError(namespace: string) {
-  return function(error: Error): void {
-    console.log(`<${namespace}> - ${error.message}`);
-
-    sentryError(error);
-  };
-}
-
-/**
  * Convert a Promise<A> into a TaskEither<Error, A>
  * @param fn - Function returning a Promise
  */
@@ -119,7 +107,7 @@ export function promiseToTE<A>(
       error = reason instanceof Error ? reason : new Error(String(reason));
     }
 
-    logFpError(namespace)(error);
+    sentryError(namespace)(error);
 
     return error;
   });

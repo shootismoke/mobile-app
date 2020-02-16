@@ -18,6 +18,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
+import { ApolloOfflineClient } from 'offix-client';
 import React, { useEffect, useState } from 'react';
 import { AppState, Platform, StatusBar } from 'react-native';
 import * as Sentry from 'sentry-expo';
@@ -32,8 +33,9 @@ import {
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { client } from './util/apollo';
+import { getApolloClient } from './util/apollo';
 import { IS_SENTRY_SET_UP } from './util/constants';
+import { sentryError } from './util/sentry';
 
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
@@ -49,6 +51,8 @@ if (IS_SENTRY_SET_UP) {
 
 export function App(): React.ReactElement {
   const [ready, setReady] = useState(false);
+  const [client, setClient] = useState<ApolloOfflineClient>();
+
   useEffect(() => {
     Promise.all([
       Font.loadAsync({
@@ -58,12 +62,19 @@ export function App(): React.ReactElement {
       // Add Amplitude if available
       setupAmplitude()
     ])
-
       .then(() => setReady(true))
-      .catch(error => console.error(error));
+      .catch(sentryError('App'));
   }, []);
 
   useEffect(() => {
+    // Load the Offix client
+    getApolloClient()
+      .then(setClient)
+      .catch(sentryError('App'));
+  }, []);
+
+  useEffect(() => {
+    // Track user closing/re-opening the app
     AppState.addEventListener('change', state => {
       if (state === 'active') {
         track('APP_REFOCUS');
@@ -73,7 +84,7 @@ export function App(): React.ReactElement {
     });
   }, []);
 
-  return ready ? (
+  return ready && client ? (
     <ErrorContextProvider>
       <LocationContextProvider>
         <ApolloProvider client={client}>

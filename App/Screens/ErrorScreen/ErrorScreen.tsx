@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import React, { useContext, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { scale } from 'react-native-size-matters';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import errorPicture from '../../../assets/images/error.png';
@@ -40,9 +41,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   errorMessage: {
-    ...theme.text,
-    fontSize: scale(10),
-    marginTop: theme.spacing.small
+    ...theme.text
+  },
+  errorScrollView: {
+    flex: 1,
+    marginVertical: theme.spacing.small
   },
   errorText: {
     ...theme.shitText,
@@ -55,12 +58,13 @@ const styles = StyleSheet.create({
 
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
   const { error } = useContext(ErrorContext);
+  const [showDetails, setShowDetails] = useState(false);
 
   trackScreen('ERROR');
 
   useEffect(() => {
     if (error) {
-      sentryError(error);
+      sentryError('ErrorScreen')(error);
     }
   }, [error]);
 
@@ -86,11 +90,22 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
         {i18n.t('error_screen_choose_other_location').toUpperCase()}
       </Button>
       <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
-      <Text style={styles.errorMessage}>
-        {i18n.t('error_screen_error_message', {
-          errorText: error && error.message
-        })}
-      </Text>
+      <ScrollView style={styles.errorScrollView}>
+        <TouchableOpacity onPress={(): void => setShowDetails(!showDetails)}>
+          {showDetails ? (
+            <Text style={styles.errorMessage}>
+              {i18n.t('error_screen_error_message', {
+                errorText: error && error.message
+              })}
+            </Text>
+          ) : (
+            <Text style={styles.errorMessage}>
+              {i18n.t('error_screen_show_details')}{' '}
+              <Ionicons name="ios-arrow-forward" />
+            </Text>
+          )}
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
