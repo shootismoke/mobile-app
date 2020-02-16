@@ -37,7 +37,7 @@ import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
 
 // Timeout to detect when user stops typing
-let typingTimeout: NodeJS.Timeout | null = null;
+let typingTimeout: number | null = null;
 
 type SearchProps = NavigationInjectedProps;
 

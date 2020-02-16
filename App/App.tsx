@@ -14,11 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
-import { ApolloOfflineClient } from 'offix-client';
 import React, { useEffect, useState } from 'react';
 import { AppState, Platform, StatusBar } from 'react-native';
 import * as Sentry from 'sentry-expo';
@@ -33,7 +32,7 @@ import {
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { getApolloClient } from './util/apollo';
+import { getApolloClient, TCacheShape } from './util/apollo';
 import { IS_SENTRY_SET_UP } from './util/constants';
 import { sentryError } from './util/sentry';
 
@@ -51,7 +50,7 @@ if (IS_SENTRY_SET_UP) {
 
 export function App(): React.ReactElement {
   const [ready, setReady] = useState(false);
-  const [client, setClient] = useState<ApolloOfflineClient>();
+  const [client, setClient] = useState<ApolloClient<TCacheShape>>();
 
   useEffect(() => {
     Promise.all([

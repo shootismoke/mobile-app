@@ -14,21 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import Hawk from '@hapi/hawk/lib/browser';
-import NetInfo from '@react-native-community/netinfo';
-import { userSchema } from '@shootismoke/graphql';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { persistCache } from 'apollo-cache-persist';
-import { ApolloLink } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
-import { ErrorResponse, onError } from 'apollo-link-error';
-import { createHttpLink } from 'apollo-link-http';
-import Constants from 'expo-constants';
 import {
-  ApolloOfflineClient,
-  NetworkStatus,
-  PersistedData
-} from 'offix-client';
+  ApolloClient,
+  createHttpLink,
+  from,
+  InMemoryCache
+} from '@apollo/client';
+import { ErrorResponse, onError } from '@apollo/link-error';
+import { RetryLink } from '@apollo/link-retry';
+import Hawk from '@hapi/hawk/lib/browser';
+import { userSchema } from '@shootismoke/graphql';
+import { persistCache } from 'apollo-cache-persist';
+import Constants from 'expo-constants';
 import { AsyncStorage } from 'react-native';
 
 import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
@@ -45,55 +42,38 @@ const credentials = {
   algorithm: 'sha256'
 };
 
-/**
- * Create cache wrapper.
- *
- * @see https://offix.dev/docs/react-native
- */
-const cacheStorage = {
-  async getItem(key: string): Promise<PersistedData> {
-    const data = await AsyncStorage.getItem(key);
-    if (typeof data === 'string') {
-      return JSON.parse(data);
-    }
-
-    return data;
-  },
-  async removeItem(key: string): Promise<void> {
-    return AsyncStorage.removeItem(key);
-  },
-  async setItem(key: string, value: PersistedData): Promise<void> {
-    const valueStr = typeof value === 'object' ? JSON.stringify(value) : value;
-
-    return AsyncStorage.setItem(key, valueStr);
-  }
-};
-
-/**
- * Create network interface.
- *
- * @see https://offix.dev/docs/react-native
- */
-const networkStatus: NetworkStatus = {
-  onStatusChangeListener(callback) {
-    NetInfo.addEventListener(state =>
-      callback.onStatusChange({ online: state.isConnected })
-    );
-  },
-  async isOffline() {
-    const state = await NetInfo.fetch();
-
-    return !state.isConnected;
-  }
-};
+// FIXME Which type should this have?
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TCacheShape = any;
 
 // Cache Apollo client
-let _client: ApolloOfflineClient;
+let _client: ApolloClient<TCacheShape>;
+
+/**
+ * Custom fetch for Hawk. Like `fetch`, but adds Hawk authentication on each
+ * network call.
+ *
+ * @see https://www.apollographql.com/docs/react/v3.0-beta/networking/advanced-http-networking/#custom-fetching
+ */
+function hawkFetch(
+  input: RequestInfo,
+  init: RequestInit = {}
+): Promise<Response> {
+  // Set Hawk authorization header on each request
+  const { header } = Hawk.client.header(BACKEND_URI, 'POST', {
+    credentials
+  });
+
+  return fetch(input, {
+    ...init,
+    headers: { authorization: header, ...init.headers }
+  });
+}
 
 /**
  * Create an Apollo client (via Offix).
  */
-export async function getApolloClient(): Promise<ApolloOfflineClient> {
+export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
   if (_client) {
     return _client;
   }
@@ -108,23 +88,9 @@ export async function getApolloClient(): Promise<ApolloOfflineClient> {
     storage: AsyncStorage
   });
 
-  const client = new ApolloOfflineClient({
+  const client = new ApolloClient({
     cache,
-    cacheStorage,
-    link: ApolloLink.from([
-      // Add Hawk authentication in header
-      setContext(() => {
-        // Set Hawk authorization header on each request
-        const { header } = Hawk.client.header(BACKEND_URI, 'POST', {
-          credentials
-        });
-
-        return {
-          headers: {
-            authorization: header
-          }
-        };
-      }),
+    link: from([
       // Error handling
       onError(({ graphQLErrors, networkError }: ErrorResponse): void => {
         // Send errors to Sentry
@@ -136,11 +102,11 @@ export async function getApolloClient(): Promise<ApolloOfflineClient> {
           graphQLErrors.forEach(sentryError('Apollo'));
         }
       }),
+      // Retry on error
+      new RetryLink(),
       // Classic HTTP link
-      createHttpLink({ uri: BACKEND_URI })
+      createHttpLink({ fetch: hawkFetch, uri: BACKEND_URI })
     ]),
-    offlineStorage: cacheStorage,
-    networkStatus,
     typeDefs: [userSchema]
   });
 
