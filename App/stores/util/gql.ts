@@ -20,6 +20,10 @@ export const GET_OR_CREATE_USER = gql`
   mutation getOrCreateUser($input: GetOrCreateUserInput!) {
     getOrCreateUser(input: $input) {
       _id
+      notifications {
+        _id
+        frequency
+      }
     }
   }
 `;
