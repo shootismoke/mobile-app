@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { gql } from '@apollo/client';
 import { CreateUserInput } from '@shootismoke/graphql';
 import Constants from 'expo-constants';
 import * as TE from 'fp-ts/lib/TaskEither';
-import gql from 'graphql-tag';
 import { AsyncStorage } from 'react-native';
 
 import { getApolloClient } from '../../util/apollo';

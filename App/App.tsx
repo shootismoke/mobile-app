@@ -14,11 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
-import { ApolloOfflineClient } from 'offix-client';
 import React, { useEffect, useState } from 'react';
 import { AppState, Platform, StatusBar } from 'react-native';
 import * as Sentry from 'sentry-expo';
@@ -33,8 +32,8 @@ import {
   LocationContextProvider
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { getApolloClient } from './util/apollo';
-import { IS_SENTRY_SET_UP } from './util/constants';
+import { getApolloClient, TCacheShape } from './util/apollo';
+import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 import { sentryError } from './util/sentry';
 
 // Add Sentry if available
@@ -44,14 +43,15 @@ if (IS_SENTRY_SET_UP) {
     debug: true
   });
 
+  Sentry.setRelease(RELEASE_CHANNEL);
   if (Constants.manifest.revisionId) {
-    Sentry.setRelease(Constants.manifest.revisionId);
+    Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
   }
 }
 
 export function App(): React.ReactElement {
   const [ready, setReady] = useState(false);
-  const [client, setClient] = useState<ApolloOfflineClient>();
+  const [client, setClient] = useState<ApolloClient<TCacheShape>>();
 
   useEffect(() => {
     Promise.all([
@@ -84,26 +84,28 @@ export function App(): React.ReactElement {
     });
   }, []);
 
-  return ready && client ? (
+  return (
     <ErrorContextProvider>
       <LocationContextProvider>
-        <ApolloProvider client={client}>
-          <ActionSheetProvider>
-            <ApiContextProvider>
-              <FrequencyContextProvider>
-                <DistanceUnitProvider>
-                  {Platform.select({
-                    ios: <StatusBar barStyle="dark-content" />
-                  })}
-                  <Screens />
-                </DistanceUnitProvider>
-              </FrequencyContextProvider>
-            </ApiContextProvider>
-          </ActionSheetProvider>
-        </ApolloProvider>
+        <ActionSheetProvider>
+          <ApiContextProvider>
+            <FrequencyContextProvider>
+              <DistanceUnitProvider>
+                {ready && client ? (
+                  <ApolloProvider client={client}>
+                    <Screens />
+                  </ApolloProvider>
+                ) : (
+                  <LoadingBackground />
+                )}
+                {Platform.select({
+                  ios: <StatusBar barStyle="dark-content" />
+                })}
+              </DistanceUnitProvider>
+            </FrequencyContextProvider>
+          </ApiContextProvider>
+        </ActionSheetProvider>
       </LocationContextProvider>
     </ErrorContextProvider>
-  ) : (
-    <LoadingBackground />
   );
 }

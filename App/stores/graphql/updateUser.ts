@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const UPDATE_USER = gql`
   mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
