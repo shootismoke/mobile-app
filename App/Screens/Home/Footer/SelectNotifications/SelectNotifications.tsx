@@ -193,50 +193,42 @@ export function SelectNotifications(
   const isSwitchOn = notif !== 'never';
 
   return (
-    <View style={[styles.container, style]} {...rest}>
-      <Switch
-        backgroundActive={theme.primaryColor}
-        backgroundInactive={hex2rgba(
-          theme.secondaryTextColor,
-          theme.disabledOpacity
-        )}
-        circleStyle={{
-          height: scale(22),
-          marginHorizontal: scale(3),
-          width: scale(22)
-        }}
-        height={scale(28)}
-        onSyncPress={(on: boolean): void => {
-          if (on) {
-            handleChangeNotif('weekly');
-          } else {
-            handleChangeNotif('never');
-          }
-        }}
-        style={styles.switch}
-        value={isSwitchOn}
-        width={scale(48)}
-      />
-      {isSwitchOn ? (
-        <ActionPicker
-          actionSheetOptions={{
-            cancelButtonIndex: 3,
-            options: notificationsValues
-              .filter(f => f !== 'never') // Don't show never in options
-              .map(f => i18n.t(`home_frequency_${f}`)) // Translate
-              .map(capitalize)
-              .concat(i18n.t('home_frequency_cancel'))
-          }}
-          callback={(buttonIndex): void => {
-            if (buttonIndex === 3) {
-              // 3 is cancel
-              return;
-            }
+    <ActionPicker
+      actionSheetOptions={{
+        cancelButtonIndex: 4,
+        options: notificationsValues
+          .map(f => i18n.t(`home_frequency_${f}`)) // Translate
+          .map(capitalize)
+      }}
+      callback={(buttonIndex): void => {
+        if (buttonIndex === 4) {
+          // 4 is cancel
+          return;
+        }
 
-            handleChangeNotif(notificationsValues[buttonIndex + 1]); // +1 because we skipped neve
+        handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
+      }}
+    >
+      <View style={[styles.container, style]} {...rest}>
+        <Switch
+          backgroundActive={theme.primaryColor}
+          backgroundInactive={hex2rgba(
+            theme.secondaryTextColor,
+            theme.disabledOpacity
+          )}
+          circleStyle={{
+            height: scale(22),
+            marginHorizontal: scale(3),
+            width: scale(22)
           }}
-        >
-          <>
+          height={scale(28)}
+          style={styles.switch}
+          value={isSwitchOn}
+          width={scale(48)}
+        />
+
+        {isSwitchOn ? (
+          <View>
             <Text style={styles.label}>
               {i18n.t('home_frequency_notify_me')}
             </Text>
@@ -244,13 +236,13 @@ export function SelectNotifications(
               {i18n.t(`home_frequency_${notif}`)}{' '}
               <FontAwesome name="caret-down" />
             </Text>
-          </>
-        </ActionPicker>
-      ) : (
-        <Text style={styles.label}>
-          {i18n.t('home_frequency_allow_notifications')}
-        </Text>
-      )}
-    </View>
+          </View>
+        ) : (
+          <Text style={styles.label}>
+            {i18n.t('home_frequency_allow_notifications')}
+          </Text>
+        )}
+      </View>
+    </ActionPicker>
   );
 }
