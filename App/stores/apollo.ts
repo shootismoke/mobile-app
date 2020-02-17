@@ -29,7 +29,7 @@ import Constants from 'expo-constants';
 import { AsyncStorage } from 'react-native';
 
 import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
-import { sentryError } from './sentry';
+import { sentryError } from '../util/sentry';
 
 const BACKEND_URI = IS_PROD
   ? 'https://shootismoke.now.sh/api/graphql'
@@ -71,7 +71,7 @@ function hawkFetch(
 }
 
 /**
- * Create an Apollo client (via Offix).
+ * Create an Apollo client.
  */
 export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
   if (_client) {

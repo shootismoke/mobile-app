@@ -1880,10 +1880,10 @@
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
 
-"@shootismoke/graphql@^0.2.16":
-  version "0.2.16"
-  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.16.tgz#e257a3ac7ded16a4885e0aa096f1951b318fb054"
-  integrity sha512-bbxkL1qo8+FHXnz4UWEXhwFJbXvlMueGhChbIwImKQ+AJjhHd6h1+9RfDc+rtBFM6a7YDwfXxVGDIgN2VWfI4A==
+"@shootismoke/graphql@^0.2.18":
+  version "0.2.18"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.18.tgz#7d551a920147d985e7a1e4af3bfdd8f727c8d438"
+  integrity sha512-bIyegbsAytNT0mWYMC5XeJX85SHPTjmX8tO/PTBvhOKW8US00H6pSAZWHvQyv9ajo719uQBACL2STMWuWDdrnA==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
@@ -2018,10 +2018,10 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.5.3.tgz#1c3b71b091eaeaf5924538006b7f70603ce63d38"
   integrity sha512-Jugo5V/1bS0fRhy2z8+cUAHEyWOATaz4rbyLVvcFs7+dXp5HfwpEwzF1Q11bB10ApUqHf+yTauxI0UXQDwGrbA==
 
-"@types/react-native@^0.61.12":
-  version "0.61.12"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.61.12.tgz#058c80f5aadb99b6cac1cf648e996b7795ca0fab"
-  integrity sha512-9Do0pTN9H3hnon0LUCTqIC5fCmFpKU5V8rJEH2iAAsCRm8+2Q7zPUMKuCaSRbO5zhXMW5oC8IE0nCfg1kqyXvw==
+"@types/react-native@^0.61.15":
+  version "0.61.15"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.61.15.tgz#3b2032a9abd5e37c8a8cb0fc6a724d57811d4dbc"
+  integrity sha512-+lOUYk3yOfpyMy2HcVbR5bZnbExiVahMr3AqWNPh/01N0quH7nBzlou+/rpbvmDXSGwCh3QjWWfEkLNRfvbiiA==
   dependencies:
     "@types/react" "*"
 

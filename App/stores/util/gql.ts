@@ -14,6 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './getUser';
-export * from './createUser';
-export * from './updateUser';
+import { gql } from '@apollo/client';
+
+export const GET_OR_CREATE_USER = gql`
+  mutation getOrCreateUser($input: GetOrCreateUserInput!) {
+    getOrCreateUser(input: $input) {
+      _id
+      notifications {
+        _id
+        frequency
+      }
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
+    updateUser(expoInstallationId: $expoInstallationId, input: $input) {
+      _id
+      notifications {
+        _id
+        frequency
+      }
+    }
+  }
+`;
