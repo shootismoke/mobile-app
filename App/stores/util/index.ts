@@ -15,3 +15,4 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 export * from './fetchGpsPosition';
+export * from './gql';

@@ -26,8 +26,6 @@ import { Notifications } from 'expo';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
-import { pipe } from 'fp-ts/lib/pipeable';
-import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -36,7 +34,7 @@ import Switch from 'react-native-switch-pro';
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import { createUser, GET_USER, UPDATE_USER } from '../../../../stores/graphql';
+import { GET_OR_CREATE_USER, UPDATE_USER } from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
@@ -107,21 +105,21 @@ export function SelectNotifications(
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const { data: queryData } = useQuery<{ getUser: User }, QueryGetUserArgs>(
-    GET_USER,
-    {
-      variables: {
-        expoInstallationId: Constants.installationId
-      }
+  const { data: queryData } = useQuery<
+    { getOrCreateUser: User },
+    QueryGetUserArgs
+  >(GET_OR_CREATE_USER, {
+    variables: {
+      expoInstallationId: Constants.installationId
     }
-  );
+  });
   const [updateUser, { data: mutationData }] = useMutation<
     { __typename: 'Mutation'; updateUser: DeepPartial<User> },
     MutationUpdateUserArgs
   >(UPDATE_USER);
 
   const notif =
-    (mutationData?.updateUser || queryData?.getUser)?.notifications
+    (mutationData?.updateUser || queryData?.getOrCreateUser)?.notifications
       ?.frequency || 'never';
 
   /**
@@ -140,52 +138,43 @@ export function SelectNotifications(
       );
     }
 
-    pipe(
-      createUser(),
-      TE.chain(expoInstallationId =>
-        promiseToTE(async () => {
-          const { status } = await Permissions.askAsync(
-            Permissions.NOTIFICATIONS
-          );
+    promiseToTE(async () => {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
 
-          if (status !== 'granted') {
-            throw new Error('Permission to access notifications was denied');
-          }
+      if (status !== 'granted') {
+        throw new Error('Permission to access notifications was denied');
+      }
 
-          const expoPushToken = await Notifications.getExpoPushTokenAsync();
-          const notifications = {
-            expoPushToken,
-            frequency,
-            timezone: Localization.timezone,
-            universalId: api.pm25.location
-          };
-          console.log(
-            `<SelectNotifications> - Update user ${JSON.stringify(
-              notifications
-            )}`
-          );
+      const expoPushToken = await Notifications.getExpoPushTokenAsync();
+      const notifications = {
+        expoPushToken,
+        frequency,
+        timezone: Localization.timezone,
+        universalId: api.pm25.location
+      };
+      console.log(
+        `<SelectNotifications> - Update user ${JSON.stringify(notifications)}`
+      );
 
-          await updateUser({
-            optimisticResponse: {
-              __typename: 'Mutation',
-              updateUser: {
-                __typename: 'User',
-                _id: queryData?.getUser._id,
-                notifications: {
-                  __typename: 'Notifications',
-                  _id: queryData?.getUser.notifications?._id,
-                  frequency
-                }
-              }
-            },
-            variables: {
-              expoInstallationId,
-              input: { notifications }
+      await updateUser({
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateUser: {
+            __typename: 'User',
+            _id: queryData?.getOrCreateUser._id,
+            notifications: {
+              __typename: 'Notifications',
+              _id: queryData?.getOrCreateUser.notifications?._id,
+              frequency
             }
-          });
-        }, 'SelectNotifications')
-      )
-    )().catch(sentryError('SelectNotifications'));
+          }
+        },
+        variables: {
+          expoInstallationId: Constants.installationId,
+          input: { notifications }
+        }
+      });
+    }, 'SelectNotifications')().catch(sentryError('SelectNotifications'));
   }
 
   // Is the switch on or off?
