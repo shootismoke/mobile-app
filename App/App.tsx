@@ -29,10 +29,11 @@ import {
   DistanceUnitProvider,
   ErrorContextProvider,
   FrequencyContextProvider,
-  LocationContextProvider
+  getApolloClient,
+  LocationContextProvider,
+  TCacheShape
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { getApolloClient, TCacheShape } from './util/apollo';
 import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 import { sentryError } from './util/sentry';
 
