@@ -148,7 +148,6 @@ export function SelectNotifications(
    * @param buttonIndex - The button index in the ActionSheet
    */
   function handleChangeNotif(frequency: Frequency): void {
-    console.log('CHAINGING TO', frequency);
     setOptimisticNotif(frequency);
 
     track(
