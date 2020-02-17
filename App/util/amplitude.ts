@@ -59,12 +59,14 @@ export type AmplitudeEvent =
 
 export function setupAmplitude(): Promise<void> {
   return Constants.manifest.extra.amplitudeApiKey
-    ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(() =>
-        Amplitude.setUserProperties({
-          sisReleaseChannel: RELEASE_CHANNEL,
-          sisRevisionId: Constants.manifest.revisionId || 'development',
-          sisVersion: Constants.manifest.version
-        })
+    ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
+        () => {
+          Amplitude.setUserProperties({
+            sisReleaseChannel: RELEASE_CHANNEL,
+            sisRevisionId: Constants.manifest.revisionId || 'development',
+            sisVersion: Constants.manifest.version
+          });
+        }
       )
     : Promise.resolve();
 }

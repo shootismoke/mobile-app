@@ -33,7 +33,7 @@ import {
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
 import { getApolloClient, TCacheShape } from './util/apollo';
-import { IS_SENTRY_SET_UP } from './util/constants';
+import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 import { sentryError } from './util/sentry';
 
 // Add Sentry if available
@@ -43,8 +43,9 @@ if (IS_SENTRY_SET_UP) {
     debug: true
   });
 
+  Sentry.setRelease(RELEASE_CHANNEL);
   if (Constants.manifest.revisionId) {
-    Sentry.setRelease(Constants.manifest.revisionId);
+    Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
   }
 }
 
@@ -83,26 +84,28 @@ export function App(): React.ReactElement {
     });
   }, []);
 
-  return ready && client ? (
+  return (
     <ErrorContextProvider>
       <LocationContextProvider>
-        <ApolloProvider client={client}>
-          <ActionSheetProvider>
-            <ApiContextProvider>
-              <FrequencyContextProvider>
-                <DistanceUnitProvider>
-                  {Platform.select({
-                    ios: <StatusBar barStyle="dark-content" />
-                  })}
-                  <Screens />
-                </DistanceUnitProvider>
-              </FrequencyContextProvider>
-            </ApiContextProvider>
-          </ActionSheetProvider>
-        </ApolloProvider>
+        <ActionSheetProvider>
+          <ApiContextProvider>
+            <FrequencyContextProvider>
+              <DistanceUnitProvider>
+                {ready && client ? (
+                  <ApolloProvider client={client}>
+                    <Screens />
+                  </ApolloProvider>
+                ) : (
+                  <LoadingBackground />
+                )}
+                {Platform.select({
+                  ios: <StatusBar barStyle="dark-content" />
+                })}
+              </DistanceUnitProvider>
+            </FrequencyContextProvider>
+          </ApiContextProvider>
+        </ActionSheetProvider>
       </LocationContextProvider>
     </ErrorContextProvider>
-  ) : (
-    <LoadingBackground />
   );
 }
