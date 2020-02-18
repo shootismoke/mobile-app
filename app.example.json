@@ -12,6 +12,7 @@
       "versionCode": 10
     },
     "assetBundlePatterns": ["assets/**/*"],
+    "backgroundColor": "#FAFAFC",
     "extra": {
       "algoliaApiKey": null,
       "algoliaApplicationId": null,
@@ -43,8 +44,7 @@
       "icon": "assets/logos/ios/iTunesArtwork@3x.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses your location to find the air quality level near you."
-      },
-      "loadJSInBackgroundExperimental": true
+      }
     },
     "name": "Sh**t! I Smoke",
     "notification": {
@@ -55,7 +55,7 @@
     "sdkVersion": "36.0.0",
     "slug": "shootismoke",
     "splash": {
-      "backgroundColor": "#ebe7dd",
+      "backgroundColor": "#EBE7DD",
       "image": "assets/logos/splash.png"
     },
     "version": "1.5.0"
