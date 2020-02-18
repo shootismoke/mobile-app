@@ -47,6 +47,9 @@
       "loadJSInBackgroundExperimental": true
     },
     "name": "Sh**t! I Smoke",
+    "notification": {
+      "icon": "assets/logos/ios/iTunesArtwork@1x.png"
+    },
     "primaryColor": "#EBE7DD",
     "privacy": "public",
     "sdkVersion": "36.0.0",
