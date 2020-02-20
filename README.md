@@ -27,6 +27,8 @@
   </a>
 </p>
 
+---
+
 <p align="center">
   <img src="./assets/screenshots/ios/iPhone-X-1.png" alt="screenshot-1" width="150">
   <img src="./assets/screenshots/ios/iPhone-X-2.png" alt="screenshot-2" width="150">
@@ -34,14 +36,6 @@
   <img src="./assets/screenshots/ios/iPhone-X-4.png" alt="screenshot-4" width="150">
   <img src="./assets/screenshots/ios/iPhone-X-5.png" alt="screenshot-5" width="150">
 </p>
-
-## 😷 Air Pollution
-
-Air pollution is a burning issue facing our planet today. Rapid industrialization and urbanization has made the problem extremely difficult to contain. Cities around the world are witnessing rising levels of air contamination, with Beijing, Kanpur and New Delhi recording some of the worst figures in recent years.
-
-Air pollution has dire implications on human health and well-being. It affects plant and animal life, and also disrupts the ecosystem. It changes our environment irreversibly, often leaving it beyond repair. This calls for an urgent need to curb air pollution.
-
-There are various things we can do to eliminate the causes and minimize the effects of air pollution. There is a macro and a micro level to dealing with pollution. While the government and the private sector need to rethink policies for controlling air pollution on a broader scale, we as citizens can fight air pollution in our homes and offices by installing air quality monitors and air purification devices.
 
 ## :iphone: Try it on Expo
 
