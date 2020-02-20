@@ -38,6 +38,8 @@
   <img src="./assets/screenshots/ios/iPhone-X-5.png" alt="screenshot-5" width="150">
 </p>
 
+---
+
 ## :iphone: Try it on Expo
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
