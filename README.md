@@ -1,5 +1,5 @@
 <p align="center" style="background-color: #F8A65D;">
-    <img alt="oss image" src="./assets/logos/transparent/transparent@3x.png" width="200px">
+    <img alt="oss image" src="./assets/logos/transparent/transparent@3x.png" width="100px">
     <h1 align="center">Sh**t! I Smoke</h1>
 </p>
 <h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
