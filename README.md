@@ -1,16 +1,21 @@
 <p align="center" style="background-color: #F8A65D;">
-    <img alt="oss image" src="./assets/logos/title.png" height="200px" width="200px">
+    <img alt="oss image" src="./assets/logos/title.png" width="200px">
 </p>
-
-<h4 align="center">Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:</h4>
+<h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
 
 <p align="center">
-[![Actions Status](https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg)](https://github.com/amaurymartiny/shoot-i-smoke/actions)
-![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
-[![David](https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg)](https://david-dm.org/amaurymartiny/shoot-i-smoke)
-[![Maintainability](https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability)](https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability)
-[![](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen)](https://offset.earth/amaurymartiny)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/shootismoke)
+  <a href="https://github.com/amaurymartiny/shoot-i-smoke/actions">
+    <img alt="Github Actions" src="https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg" />
+  </a>
+    <a href="https://david-dm.org/amaurymartiny/shoot-i-smoke">
+    <img alt="Github Actions" src="https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg" />
+  </a>
+    <a href="https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability">
+    <img alt="Github Actions" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
+  </a>
+    <a href="https://spectrum.chat/shootismoke">
+    <img alt="Github Actions" src="https://withspectrum.github.io/badge/badge.svg" />
+  </a>
 </p>
 
 [![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
