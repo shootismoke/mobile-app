@@ -51,7 +51,32 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 ## :hammer: Build it yourself
 
-Before developing the app, you need to fetch your own API tokens for the following services:
+Before developing the app, you might want to fetch your own API tokens for the following services:
+
+Then run the following commands:
+
+```bash
+# Clone this repo
+git clone https://github.com/amaurymartiny/shoot-i-smoke && cd shoot-i-smoke
+# Install dependencies
+yarn install
+
+# Copy the file that contains secrets
+cp app.example.json app.json
+
+# Run the app with Expo
+yarn start --config app.json
+```
+
+The Expo packager will show, and you can either:
+
+- install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
+- open the Android simulator.
+- open the iOS simulator.
+
+### Use your own API tokens
+
+All required API tokens are already pre-filled in `app.example.json`. If you want to use your own API tokens, then in `app.json`, replace all the placeholders with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
 
 | Service                  | Url                                                                        | Comments                                                                   |
 | ------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -62,29 +87,6 @@ Before developing the app, you need to fetch your own API tokens for the followi
 | Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/              | Optional in development.                                                   |
 | Sentry Bug Tracking      | https://sentry.io                                                          | Optional.                                                                  |
 | Amplitude Analytics      | https://amplitude.com                                                      | Optional. Note: we **never** track PII.                                    |
-
-Then run the following commands:
-
-```bash
-git clone https://github.com/amaurymartiny/shoot-i-smoke
-cd shoot-i-smoke
-yarn install
-
-# Copy the file that contains secrets
-cp app.example.json app.json
-
-yarn start --config app.json
-```
-
-In `app.json`, replace all the placeholders for API keys and tokens with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
-
-This app is created with Expo, using React Native. When you run `yarn start`, the Expo packager will show, and you can either:
-
-- install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
-- open the Android simulator.
-- open the iOS simulator.
-
-All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
 
 ## :raising_hand: Contribute
 
@@ -106,7 +108,7 @@ GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 
 ## :star: Credits
 
-Created with ❤ by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
+Created with pride by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
 
 A **huge** thanks to the following contributors for their amazing work:
 
