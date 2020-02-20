@@ -1,5 +1,5 @@
 <p align="center" style="background-color: #F8A65D;">
-    <img alt="oss image" src="./assets/logos/title.png" width="200px">
+    <img alt="oss image" src="./assets/logos/title.png" width="500px">
 </p>
 <h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
 
@@ -7,20 +7,27 @@
   <a href="https://github.com/amaurymartiny/shoot-i-smoke/actions">
     <img alt="Github Actions" src="https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg" />
   </a>
-    <a href="https://david-dm.org/amaurymartiny/shoot-i-smoke">
-    <img alt="Github Actions" src="https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg" />
+  <a href="https://david-dm.org/amaurymartiny/shoot-i-smoke">
+    <img alt="david-dm" src="https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg" />
   </a>
-    <a href="https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability">
-    <img alt="Github Actions" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
+  <a href="https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability">
+    <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
   </a>
-    <a href="https://spectrum.chat/shootismoke">
-    <img alt="Github Actions" src="https://withspectrum.github.io/badge/badge.svg" />
+  <a href="https://spectrum.chat/shootismoke">
+    <img alt="spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
   </a>
 </p>
 
-[![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
+<p align="center">
+  <a href="https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8">
+    <img alt="app-store" src="https://shootismoke.github.io/assets/images/app-store.png" />
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.shitismoke.app">
+    <img alt="google-play" src="https://shootismoke.github.io/assets/images/play-store.png" />
+  </a>
+</p>
 
-<p float="left">
+<p align="center">
   <img src="./assets/screenshots/ios/iPhone-X-1.png" alt="screenshot-1" width="150">
   <img src="./assets/screenshots/ios/iPhone-X-2.png" alt="screenshot-2" width="150">
   <img src="./assets/screenshots/ios/iPhone-X-3.png" alt="screenshot-3" width="150">
