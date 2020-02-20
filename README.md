@@ -1,19 +1,40 @@
-# Sh\*\*t! I Smoke
+<p align="center" style="background-color: #F8A65D;">
+    <img alt="oss image" src="./assets/logos/transparent/transparent@3x.png" width="100px">
+    <h1 align="center">Sh**t! I Smoke</h1>
+</p>
+<h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
 
-Know how many cigarettes you smoke based on the pollution of your location. :poop::smoking:
+<p align="center">
+  <a href="https://github.com/amaurymartiny/shoot-i-smoke/actions">
+    <img alt="Github Actions" src="https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg" />
+  </a>
+  <a href="https://david-dm.org/amaurymartiny/shoot-i-smoke">
+    <img alt="david-dm" src="https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg" />
+  </a>
+  <a href="https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability">
+    <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
+  </a>
+  <a href="https://spectrum.chat/shootismoke">
+    <img alt="spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
+  </a>
+</p>
 
-[![Actions Status](https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg)](https://github.com/amaurymartiny/shoot-i-smoke/actions)
-![GitHub](https://img.shields.io/github/license/amaurymartiny/shoot-i-smoke.svg)
-[![David](https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg)](https://david-dm.org/amaurymartiny/shoot-i-smoke)
-[![Maintainability](https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability)](https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability)
-[![](https://img.shields.io/badge/Buy%20me%20a%20tree-%F0%9F%8C%B3-lightgreen)](https://offset.earth/amaurymartiny)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/shootismoke)
+<br />
 
-[![app-store](https://shootismoke.github.io/assets/images/app-store.png)](https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8) [![google-play](https://shootismoke.github.io/assets/images/play-store.png)](https://play.google.com/store/apps/details?id=com.shitismoke.app)
+<p align="center">
+  <a href="https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8">
+    <img alt="app-store" src="https://shootismoke.github.io/assets/images/app-store.png" />
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.shitismoke.app">
+    <img alt="google-play" src="https://shootismoke.github.io/assets/images/play-store.png" />
+  </a>
+</p>
 
-## :camera: Screenshots
+<br />
 
-<p float="left">
+---
+
+<p align="center">
   <img src="./assets/screenshots/ios/iPhone-X-1.png" alt="screenshot-1" width="150">
   <img src="./assets/screenshots/ios/iPhone-X-2.png" alt="screenshot-2" width="150">
   <img src="./assets/screenshots/ios/iPhone-X-3.png" alt="screenshot-3" width="150">
@@ -21,13 +42,7 @@ Know how many cigarettes you smoke based on the pollution of your location. :poo
   <img src="./assets/screenshots/ios/iPhone-X-5.png" alt="screenshot-5" width="150">
 </p>
 
-## 😷 Air Pollution
-
-Air pollution is a burning issue facing our planet today. Rapid industrialization and urbanization has made the problem extremely difficult to contain. Cities around the world are witnessing rising levels of air contamination, with Beijing, Kanpur and New Delhi recording some of the worst figures in recent years.
-
-Air pollution has dire implications on human health and well-being. It affects plant and animal life, and also disrupts the ecosystem. It changes our environment irreversibly, often leaving it beyond repair. This calls for an urgent need to curb air pollution.
-
-There are various things we can do to eliminate the causes and minimize the effects of air pollution. There is a macro and a micro level to dealing with pollution. While the government and the private sector need to rethink policies for controlling air pollution on a broader scale, we as citizens can fight air pollution in our homes and offices by installing air quality monitors and air purification devices.
+---
 
 ## :iphone: Try it on Expo
 
@@ -40,44 +55,44 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 ## :hammer: Build it yourself
 
-Before developing the app, you need to fetch your own API tokens for the following services:
-
-| Service                  | Url                                                                        | Comments                                                                   |
-| ------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                                     | Required. Pre-filled with a staging token.                                 |
-| World Air Quality Index  | http://aqicn.org/api/                                                      | Required. You can use the dummy one in `app.example.json` for development. |
-| Algolia Places           | https://community.algolia.com/places/ (`Get Started` button on the bottom) | Optional, lower API rates if not provided.                                 |
-| Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start             | Optional in development.                                                   |
-| Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/              | Optional in development.                                                   |
-| Sentry Bug Tracking      | https://sentry.io                                                          | Optional.                                                                  |
-| Amplitude Analytics      | https://amplitude.com                                                      | Optional. Note: we **never** track PII.                                    |
-
-Then run the following commands:
+Run the following commands:
 
 ```bash
-git clone https://github.com/amaurymartiny/shoot-i-smoke
-cd shoot-i-smoke
+# Clone this repo
+git clone https://github.com/amaurymartiny/shoot-i-smoke && cd shoot-i-smoke
+# Install dependencies
 yarn install
 
 # Copy the file that contains secrets
 cp app.example.json app.json
 
+# Run the app with Expo
 yarn start --config app.json
 ```
 
-In `app.json`, replace all the placeholders for API keys and tokens with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
-
-This app is created with Expo, using React Native. When you run `yarn start`, the Expo packager will show, and you can either:
+The [Expo](https://expo.io) packager will show, and you can either:
 
 - install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
 - open the Android simulator.
 - open the iOS simulator.
 
-All the code lives in the `App/` folder. The app itself is pretty small, so it should be fairly easy to navigate through the files.
+#### Use your own API tokens
+
+All required API tokens are already pre-filled in `app.example.json`. If you want to use your own API tokens, then in `app.json`, replace all the placeholders with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
+
+| Service                  | Url                                                                        | Comments                                                                    |
+| ------------------------ | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                                     | Required. Pre-filled with a staging token.                                  |
+| World Air Quality Index  | http://aqicn.org/api/                                                      | Required. You can use the public one in `app.example.json` for development. |
+| Algolia Places           | https://community.algolia.com/places/ (`Get Started` button on the bottom) | Optional, lower API rates if not provided.                                  |
+| Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start             | Optional in development.                                                    |
+| Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/              | Optional in development.                                                    |
+| Sentry Bug Tracking      | https://sentry.io                                                          | Optional.                                                                   |
+| Amplitude Analytics      | https://amplitude.com                                                      | Optional. Note: we **never** track PII.                                     |
 
 ## :raising_hand: Contribute
 
-If you find a bug, or if you have an idea for this app, please file an issue [here](https://github.com/amaurymartiny/shoot-i-smoke/issues). We really appreciate feedback and inputs!
+If you find a bug, or if you have an idea for this app, please [file an issue here](https://github.com/amaurymartiny/shoot-i-smoke/issues). We really appreciate feedback and inputs!
 
 🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX).
 
@@ -87,7 +102,7 @@ More information on contributing [here](./CONTRIBUTING.md).
 
 ## :microscope: Tests
 
-The codebase unfortunately isn't much covered by tests. Check out the `*.spec.js` files in the project for tests. If you're interested to help out, have a look at [#19](https://github.com/amaurymartiny/shoot-i-smoke/issues/19).
+The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts` files in the project for tests. If you're interested to help out, have a look at [issue #19](https://github.com/amaurymartiny/shoot-i-smoke/issues/19).
 
 ## :newspaper: License
 
@@ -95,7 +110,7 @@ GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 
 ## :star: Credits
 
-Created with ❤ by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
+Created with pride by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
 
 A **huge** thanks to the following contributors for their amazing work:
 
