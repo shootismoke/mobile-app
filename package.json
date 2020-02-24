@@ -41,7 +41,7 @@
     "haversine": "^1.1.1",
     "i18n-js": "^3.5.1",
     "lottie-react-native": "~2.6.1",
-    "p-any": "^2.1.0",
+    "p-any": "^3.0.0",
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-gesture-handler": "~1.5.0",
