@@ -33,7 +33,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import Switch from 'react-native-switch-pro';
+import { Switch } from 'react-native-switch';
 
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   },
   label: {
     ...theme.text,
+    marginLeft: theme.spacing.small,
     textTransform: 'uppercase'
   },
   labelFrequency: {
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     textTransform: 'uppercase'
   },
-  switch: {
-    marginRight: theme.spacing.small
+  switchCircle: {
+    marginHorizontal: scale(3)
   }
 });
 
@@ -119,7 +120,7 @@ export function SelectNotifications(
     { __typename: 'Mutation'; updateUser: DeepPartial<User> },
     MutationUpdateUserArgs
   >(UPDATE_USER);
-  // This state is used of optimistic UI: right after the user clicks, we set
+  // This state is used for optimistic UI: right after the user clicks, we set
   // this state to what the user clicked. When the actual mutation resolves, we
   // populate with the real data.
   const [optimisticNotif, setOptimisticNotif] = useState<Frequency>();
@@ -133,6 +134,14 @@ export function SelectNotifications(
     queryData?.getOrCreateUser.notifications?.frequency ||
     // If the queryData is still loading, just show `never`
     'never';
+
+  console.log(
+    optimisticNotif,
+    mutationData?.updateUser.notifications?.frequency,
+    queryData?.getOrCreateUser.notifications?.frequency,
+    'so notif=',
+    notif
+  );
 
   useEffect(() => {
     getOrCreateUser({
@@ -221,6 +230,7 @@ export function SelectNotifications(
       TE.fold(
         error => {
           sentryError('SelectNotifications')(error);
+          setOptimisticNotif('never');
 
           return T.of(undefined);
         },
@@ -239,6 +249,7 @@ export function SelectNotifications(
         options: notificationsValues
           .map(f => i18n.t(`home_frequency_${f}`)) // Translate
           .map(capitalize)
+          .concat(i18n.t('home_frequency_notifications_cancel'))
       }}
       callback={(buttonIndex): void => {
         if (buttonIndex === 4) {
@@ -256,13 +267,15 @@ export function SelectNotifications(
             theme.secondaryTextColor,
             theme.disabledOpacity
           )}
-          circleStyle={{
-            height: scale(22),
-            marginHorizontal: scale(3),
-            width: scale(22)
-          }}
+          barHeight={0}
+          circleBorderWidth={0}
+          circleSize={scale(22)}
           height={scale(28)}
-          style={styles.switch}
+          onValueChange={(): void =>
+            handleChangeNotif(isSwitchOn ? 'never' : 'weekly')
+          }
+          switchLeftPx={scale(3)}
+          switchRightPx={scale(3)}
           value={isSwitchOn}
           width={scale(48)}
         />
