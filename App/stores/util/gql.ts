@@ -31,7 +31,7 @@ export const GET_USER = gql`
   }
 `;
 
-export const GET_OR_CREATE_USER = gql`
+export const CREATE_USER = gql`
   mutation createUser($input: CreateUserInput!) {
     __typename
     createUser(input: $input) {

@@ -39,11 +39,7 @@ import { scale } from 'react-native-size-matters';
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import {
-  GET_OR_CREATE_USER,
-  GET_USER,
-  UPDATE_USER
-} from '../../../../stores/util';
+import { CREATE_USER, GET_USER, UPDATE_USER } from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
@@ -127,6 +123,7 @@ export function SelectNotifications(
     { getUser: DeepPartial<User> },
     QueryGetUserArgs
   >(GET_USER, {
+    fetchPolicy: 'cache-and-network',
     variables: {
       expoInstallationId: Constants.installationId
     }
@@ -134,7 +131,7 @@ export function SelectNotifications(
   const [createUser, { data: createUserData }] = useMutation<
     { createUser: DeepPartial<User> },
     MutationCreateUserArgs
-  >(GET_OR_CREATE_USER, {
+  >(CREATE_USER, {
     variables: { input: { expoInstallationId: Constants.installationId } }
   });
   const [updateUser, { data: updateUserData }] = useMutation<

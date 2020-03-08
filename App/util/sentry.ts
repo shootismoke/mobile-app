@@ -40,7 +40,7 @@ const UNTRACKED_ERRORS = [
  * @param error - The error to send
  */
 export function sentryError(namespace: string) {
-  return function (error: Error): void {
+  return function(error: Error): void {
     if (
       IS_SENTRY_SET_UP &&
       !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
