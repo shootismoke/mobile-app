@@ -19,32 +19,25 @@ import {
   useActionSheet
 } from '@expo/react-native-action-sheet';
 import React from 'react';
-import {
-  GestureResponderEvent,
-  TouchableOpacity,
-  TouchableOpacityProps
-} from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 interface ActionPickerProps extends TouchableOpacityProps {
   actionSheetOptions: ActionSheetOptions;
   callback: (i: number) => void;
-  children: React.ReactElement;
+  children: (open: () => void) => React.ReactElement;
 }
 
 export function ActionPicker(props: ActionPickerProps): React.ReactElement {
   const { actionSheetOptions, callback, children, ...rest } = props;
   const { showActionSheetWithOptions } = useActionSheet();
 
-  function handleActionSheet(event: GestureResponderEvent): void {
-    console.log('handleActionSheet');
-    event.stopPropagation();
-
+  function handleActionSheet(): void {
     showActionSheetWithOptions(actionSheetOptions, callback);
   }
 
   return (
     <TouchableOpacity onPress={handleActionSheet} {...rest}>
-      {children}
+      {children(handleActionSheet)}
     </TouchableOpacity>
   );
 }

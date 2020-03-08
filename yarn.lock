@@ -1353,6 +1353,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dooboo-ui/native-switch-toggle@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@dooboo-ui/native-switch-toggle/-/native-switch-toggle-0.4.0.tgz#147b552cc96daeefb473382857da8efa5c402033"
+  integrity sha512-LlFqVEp5FOedHOmjztnQWLcZa42i6Aj6Xu+71K0LVbkeWui2CeW3zgr8VPXAIaye7zBhkWei4QTGR/10/2v8Kg==
+  dependencies:
+    dooboolab-welcome "^1.1.1"
+
 "@expo/react-native-action-sheet@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-3.5.0.tgz#243ef101b47d9d438ba17883ff816252c5d5b7dc"
@@ -3430,6 +3437,11 @@ domexception@^1.0.1:
   integrity sha512-raigMkn7CJNNo6Ihro1fzG7wr3fHuYVytzquZKX5n0yizGsTcYgzdIUwj1X9pK0VvjeihV+XiclP+DjwbsSKug==
   dependencies:
     webidl-conversions "^4.0.2"
+
+dooboolab-welcome@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.1.1.tgz#ca2184f6e1f568865d707a6ce3bda7e003550f54"
+  integrity sha512-tQ/9NBCGnalHwKOBjDqTD4t4wQpDfSSbxQGctzkzaLHR3AhN0wCBkIs05JciVtvl/jfLZ+DgAndktAMk3Bu7Vw==
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -7208,13 +7220,6 @@ react-native-size-matters@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.0.tgz#0692e324a189884819b570c4cab24d27ecd4311d"
   integrity sha512-PuwA07mr3woQPFJXo3FwlFwpe6bb2LCb20sDZ4JWMpGBtmppq4sKH4GLgS6Sw+GkN0sSOEXGZLaOsHZYFY9hJg==
-
-react-native-switch@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-switch/-/react-native-switch-1.5.0.tgz#a5c8e72f87def649d1c9de027c5ae27e2037ea40"
-  integrity sha1-pcjnL4fe9knRyd4CfFrifiA36kA=
-  dependencies:
-    prop-types "^15.6.0"
 
 react-native-view-shot@3.0.2:
   version "3.0.2"

@@ -15,6 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useMutation } from '@apollo/client';
+import Switch from '@dooboo-ui/native-switch-toggle';
 import { FontAwesome } from '@expo/vector-icons';
 import {
   Frequency,
@@ -33,7 +34,6 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { Switch } from 'react-native-switch';
 
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   label: {
     ...theme.text,
-    marginLeft: theme.spacing.small,
     textTransform: 'uppercase'
   },
   labelFrequency: {
@@ -101,7 +100,16 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase'
   },
   switchCircle: {
-    marginHorizontal: scale(3)
+    borderRadius: scale(11),
+    height: scale(22),
+    width: scale(22)
+  },
+  switchContainer: {
+    borderRadius: scale(14),
+    height: scale(28),
+    marginRight: theme.spacing.small,
+    padding: scale(3),
+    width: scale(48)
   }
 });
 
@@ -260,42 +268,38 @@ export function SelectNotifications(
         handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
       }}
     >
-      <View style={[styles.container, style]} {...rest}>
-        <Switch
-          backgroundActive={theme.primaryColor}
-          backgroundInactive={hex2rgba(
-            theme.secondaryTextColor,
-            theme.disabledOpacity
-          )}
-          barHeight={0}
-          circleBorderWidth={0}
-          circleSize={scale(22)}
-          height={scale(28)}
-          onValueChange={(): void =>
-            handleChangeNotif(isSwitchOn ? 'never' : 'weekly')
-          }
-          switchLeftPx={scale(3)}
-          switchRightPx={scale(3)}
-          value={isSwitchOn}
-          width={scale(48)}
-        />
+      {(open): React.ReactElement => (
+        <View style={[styles.container, style]} {...rest}>
+          <Switch
+            backgroundColorOn={theme.primaryColor}
+            backgroundColorOff={hex2rgba(
+              theme.secondaryTextColor,
+              theme.disabledOpacity
+            )}
+            circleStyle={styles.switchCircle}
+            containerStyle={styles.switchContainer}
+            switchOn={isSwitchOn}
+            onPress={open}
+            duration={500}
+          />
 
-        {isSwitchOn ? (
-          <View>
+          {isSwitchOn ? (
+            <View>
+              <Text style={styles.label}>
+                {i18n.t('home_frequency_notify_me')}
+              </Text>
+              <Text style={styles.labelFrequency}>
+                {i18n.t(`home_frequency_${notif}`)}{' '}
+                <FontAwesome name="caret-down" />
+              </Text>
+            </View>
+          ) : (
             <Text style={styles.label}>
-              {i18n.t('home_frequency_notify_me')}
+              {i18n.t('home_frequency_allow_notifications')}
             </Text>
-            <Text style={styles.labelFrequency}>
-              {i18n.t(`home_frequency_${notif}`)}{' '}
-              <FontAwesome name="caret-down" />
-            </Text>
-          </View>
-        ) : (
-          <Text style={styles.label}>
-            {i18n.t('home_frequency_allow_notifications')}
-          </Text>
-        )}
-      </View>
+          )}
+        </View>
+      )}
     </ActionPicker>
   );
 }
