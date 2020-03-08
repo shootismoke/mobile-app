@@ -59,8 +59,6 @@ export function DistanceUnitProvider({
 
       if (unit === 'km' || unit === 'mile') {
         setDistanceUnit(unit);
-      } else {
-        throw new Error(`Got unit ${unit} in AsyncStorage ${STORAGE_KEY}`);
       }
     }
 
