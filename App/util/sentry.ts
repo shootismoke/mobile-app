@@ -28,7 +28,9 @@ const UNTRACKED_ERRORS = [
   'Reverse geocoding returned no results',
   // No results from data providers
   'does not have PM2.5 measurings right now',
-  'Cannot normalize, got 0 result'
+  'Cannot normalize, got 0 result',
+  // User not created yet on backend
+  'No user with expoInstallationId'
 ];
 
 /**
@@ -38,7 +40,7 @@ const UNTRACKED_ERRORS = [
  * @param error - The error to send
  */
 export function sentryError(namespace: string) {
-  return function(error: Error): void {
+  return function (error: Error): void {
     if (
       IS_SENTRY_SET_UP &&
       !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))

@@ -284,6 +284,8 @@ export function SelectNotifications(
               theme.secondaryTextColor,
               theme.disabledOpacity
             )}
+            circleColorOff="white"
+            circleColorOn="white"
             circleStyle={styles.switchCircle}
             containerStyle={styles.switchContainer}
             switchOn={isSwitchOn}
