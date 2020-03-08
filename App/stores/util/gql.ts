@@ -16,6 +16,18 @@
 
 import { gql } from '@apollo/client';
 
+export const GET_USER = gql`
+  query getUser($expoInstallationId: ID!) {
+    getUser(expoInstallationId: $expoInstallationId) {
+      _id
+      notifications {
+        _id
+        frequency
+      }
+    }
+  }
+`;
+
 export const GET_OR_CREATE_USER = gql`
   mutation getOrCreateUser($input: GetOrCreateUserInput!) {
     getOrCreateUser(input: $input) {

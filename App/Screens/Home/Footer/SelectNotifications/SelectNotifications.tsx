@@ -14,13 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Switch from '@dooboo-ui/native-switch-toggle';
 import { FontAwesome } from '@expo/vector-icons';
 import {
   Frequency,
   MutationGetOrCreateUserArgs,
   MutationUpdateUserArgs,
+  QueryGetUserArgs,
   User
 } from '@shootismoke/graphql';
 import { Notifications } from 'expo';
@@ -38,7 +39,11 @@ import { scale } from 'react-native-size-matters';
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import { GET_OR_CREATE_USER, UPDATE_USER } from '../../../../stores/util';
+import {
+  GET_OR_CREATE_USER,
+  GET_USER,
+  UPDATE_USER
+} from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
@@ -118,13 +123,21 @@ export function SelectNotifications(
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const [getOrCreateUser, { data: queryData }] = useMutation<
+  const { data: getUserData, error: queryError } = useQuery<
+    { __typename: 'Query'; getUser: DeepPartial<User> },
+    QueryGetUserArgs
+  >(GET_USER, {
+    variables: {
+      expoInstallationId: Constants.installationId
+    }
+  });
+  const [getOrCreateUser, { data: getOrCreateUserData }] = useMutation<
     { getOrCreateUser: User },
     MutationGetOrCreateUserArgs
   >(GET_OR_CREATE_USER, {
     variables: { input: { expoInstallationId: Constants.installationId } }
   });
-  const [updateUser, { data: mutationData }] = useMutation<
+  const [updateUser, { data: updateUserData }] = useMutation<
     { __typename: 'Mutation'; updateUser: DeepPartial<User> },
     MutationUpdateUserArgs
   >(UPDATE_USER);
@@ -137,32 +150,27 @@ export function SelectNotifications(
     // If we have optimistic UI, show it
     optimisticNotif ||
     // If we have up-to-date data from backend, take that
-    mutationData?.updateUser.notifications?.frequency ||
+    updateUserData?.updateUser.notifications?.frequency ||
+    getOrCreateUserData?.getOrCreateUser.notifications?.frequency ||
     // At the beginning, before anything happens, query from backend
-    queryData?.getOrCreateUser.notifications?.frequency ||
-    // If the queryData is still loading, just show `never`
+    getUserData?.getUser.notifications?.frequency ||
+    // If the getUserData is still loading, just show `never`
     'never';
 
-  console.log(
-    optimisticNotif,
-    mutationData?.updateUser.notifications?.frequency,
-    queryData?.getOrCreateUser.notifications?.frequency,
-    'so notif=',
-    notif
-  );
+  useEffect(() => {
+    if (queryError?.message.includes('No user with expoInstallationId')) {
+      getOrCreateUser({
+        variables: { input: { expoInstallationId: Constants.installationId } }
+      }).catch(sentryError('SelectNotifications'));
+    }
+  }, [getOrCreateUser, queryError]);
 
   useEffect(() => {
-    getOrCreateUser({
-      variables: { input: { expoInstallationId: Constants.installationId } }
-    }).catch(sentryError('SelectNotifications'));
-  }, [getOrCreateUser]);
-
-  useEffect(() => {
-    // If we receive new mutationData, then our optimistic UI is obsolete
-    if (mutationData) {
+    // If we receive new updateUserData, then our optimistic UI is obsolete
+    if (updateUserData) {
       setOptimisticNotif(undefined);
     }
-  }, [mutationData]);
+  }, [updateUserData]);
 
   /**
    * Handler for changing notification frequency
