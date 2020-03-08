@@ -19,7 +19,7 @@ import Switch from '@dooboo-ui/native-switch-toggle';
 import { FontAwesome } from '@expo/vector-icons';
 import {
   Frequency,
-  MutationGetOrCreateUserArgs,
+  MutationCreateUserArgs,
   MutationUpdateUserArgs,
   QueryGetUserArgs,
   User
@@ -124,21 +124,21 @@ export function SelectNotifications(
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
   const { data: getUserData, error: queryError } = useQuery<
-    { __typename: 'Query'; getUser: DeepPartial<User> },
+    { getUser: DeepPartial<User> },
     QueryGetUserArgs
   >(GET_USER, {
     variables: {
       expoInstallationId: Constants.installationId
     }
   });
-  const [getOrCreateUser, { data: getOrCreateUserData }] = useMutation<
-    { getOrCreateUser: User },
-    MutationGetOrCreateUserArgs
+  const [createUser, { data: createUserData }] = useMutation<
+    { createUser: DeepPartial<User> },
+    MutationCreateUserArgs
   >(GET_OR_CREATE_USER, {
     variables: { input: { expoInstallationId: Constants.installationId } }
   });
   const [updateUser, { data: updateUserData }] = useMutation<
-    { __typename: 'Mutation'; updateUser: DeepPartial<User> },
+    { updateUser: DeepPartial<User> },
     MutationUpdateUserArgs
   >(UPDATE_USER);
   // This state is used for optimistic UI: right after the user clicks, we set
@@ -151,7 +151,7 @@ export function SelectNotifications(
     optimisticNotif ||
     // If we have up-to-date data from backend, take that
     updateUserData?.updateUser.notifications?.frequency ||
-    getOrCreateUserData?.getOrCreateUser.notifications?.frequency ||
+    createUserData?.createUser.notifications?.frequency ||
     // At the beginning, before anything happens, query from backend
     getUserData?.getUser.notifications?.frequency ||
     // If the getUserData is still loading, just show `never`
@@ -159,11 +159,11 @@ export function SelectNotifications(
 
   useEffect(() => {
     if (queryError?.message.includes('No user with expoInstallationId')) {
-      getOrCreateUser({
+      createUser({
         variables: { input: { expoInstallationId: Constants.installationId } }
       }).catch(sentryError('SelectNotifications'));
     }
-  }, [getOrCreateUser, queryError]);
+  }, [createUser, queryError]);
 
   useEffect(() => {
     // If we receive new updateUserData, then our optimistic UI is obsolete

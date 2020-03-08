@@ -29,8 +29,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_OR_CREATE_USER = gql`
-  mutation getOrCreateUser($input: GetOrCreateUserInput!) {
-    getOrCreateUser(input: $input) {
+  mutation createUser($input: CreateUserInput!) {
+    createUser(input: $input) {
       _id
       notifications {
         _id
