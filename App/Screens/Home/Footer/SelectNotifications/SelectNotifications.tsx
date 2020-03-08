@@ -26,6 +26,10 @@ import { Notifications } from 'expo';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
+import * as C from 'fp-ts/lib/Console';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -36,6 +40,7 @@ import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { GET_OR_CREATE_USER, UPDATE_USER } from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
+import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
@@ -154,39 +159,74 @@ export function SelectNotifications(
       `HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
     );
 
-    async function updateNotification(): Promise<void> {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (!api) {
+      throw new Error(
+        'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
+      );
+    }
 
-      if (status !== 'granted') {
-        throw new Error('Permission to access notifications was denied');
-      }
-
-      if (!api) {
-        throw new Error(
-          'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
-        );
-      }
-
-      const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      const notifications = {
+    pipe(
+      promiseToTE(
+        () => Permissions.askAsync(Permissions.NOTIFICATIONS),
+        'SelectNotifications'
+      ),
+      TE.chain(({ status }) =>
+        status === 'granted'
+          ? TE.right(undefined)
+          : TE.left(new Error('Permission to access notifications was denied'))
+      ),
+      TE.chain(() =>
+        // Retry 3 times to get the Expo push token, sometimes we get an Error
+        // "Couldn't get GCM token for device" on 1st try
+        retry(
+          () =>
+            promiseToTE(
+              () => Notifications.getExpoPushTokenAsync(),
+              'SelectNotifications'
+            ),
+          {
+            retries: 3
+          }
+        )
+      ),
+      TE.map(expoPushToken => ({
         expoPushToken,
         frequency,
         timezone: Localization.timezone,
         universalId: api.pm25.location
-      };
-      console.log(
-        `<SelectNotifications> - Update user ${JSON.stringify(notifications)}`
-      );
+      })),
+      TE.chain(
+        sideEffect(notifications =>
+          TE.rightIO(
+            C.log(
+              `<SelectNotifications> - Update user ${JSON.stringify(
+                notifications
+              )}`
+            )
+          )
+        )
+      ),
+      TE.chain(notifications =>
+        promiseToTE(
+          () =>
+            updateUser({
+              variables: {
+                expoInstallationId: Constants.installationId,
+                input: { notifications }
+              }
+            }),
+          'SelectNotifications'
+        )
+      ),
+      TE.fold(
+        error => {
+          sentryError('SelectNotifications')(error);
 
-      await updateUser({
-        variables: {
-          expoInstallationId: Constants.installationId,
-          input: { notifications }
-        }
-      });
-    }
-
-    updateNotification().catch(sentryError('SelectNotifications'));
+          return T.of(undefined);
+        },
+        () => T.of(undefined)
+      )
+    )().catch(sentryError('SelectNotifications'));
   }
 
   // Is the switch on or off?

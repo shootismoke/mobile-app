@@ -101,7 +101,7 @@ export function Search(props: SearchProps): React.ReactElement {
             setLoading(false);
             setAlgoliaError(err);
 
-            return T.of(void undefined);
+            return T.of(undefined);
           },
           hits => {
             setLoading(false);
@@ -109,7 +109,7 @@ export function Search(props: SearchProps): React.ReactElement {
             setHits(hits);
             setFrequency('daily');
 
-            return T.of(void undefined);
+            return T.of(undefined);
           }
         )
       )().catch(sentryError('Search'));
