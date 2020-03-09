@@ -24,7 +24,7 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 interface ActionPickerProps extends TouchableOpacityProps {
   actionSheetOptions: ActionSheetOptions;
   callback: (i: number) => void;
-  children: React.ReactElement;
+  children: (open: () => void) => React.ReactElement;
 }
 
 export function ActionPicker(props: ActionPickerProps): React.ReactElement {
@@ -37,7 +37,7 @@ export function ActionPicker(props: ActionPickerProps): React.ReactElement {
 
   return (
     <TouchableOpacity onPress={handleActionSheet} {...rest}>
-      {children}
+      {children(handleActionSheet)}
     </TouchableOpacity>
   );
 }

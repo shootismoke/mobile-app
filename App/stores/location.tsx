@@ -77,7 +77,7 @@ export function LocationContextProvider({
           setGpsLocation(gps);
           setCurrentLocation(gps);
 
-          return TE.right(void undefined);
+          return TE.right(undefined);
         })
       ),
       TE.chain(gps =>

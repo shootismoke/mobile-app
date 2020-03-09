@@ -66,66 +66,70 @@ export function fetchAlgolia(
   search: string,
   gps?: LatLng
 ): TE.TaskEither<Error, AlgoliaHit[]> {
-  return retry(algoliaUrls.length, status =>
-    pipe(
-      TE.rightIO(
-        C.log(
-          `<Search> - fetchAlgolia - Attempt #${status.iterNumber}: ${
-            algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-          }/1/places/query`
-        )
-      ),
-      TE.chain(() =>
-        promiseToTE(
-          () =>
-            axios.post(
-              `${
-                algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
-              }/1/places/query`,
-              {
-                aroundLatLng: gps
-                  ? `${gps.latitude},${gps.longitude}`
-                  : undefined,
-                hitsPerPage: 10,
-                language: 'en',
-                query: search
-              },
-              {
-                headers:
-                  Constants.manifest.extra.algoliaApplicationId &&
-                  Constants.manifest.extra.algoliaApiKey
-                    ? {
-                        'X-Algolia-Application-Id':
-                          Constants.manifest.extra.algoliaApplicationId,
-                        'X-Algolia-API-Key':
-                          Constants.manifest.extra.algoliaApiKey
-                      }
+  return retry(
+    status =>
+      pipe(
+        TE.rightIO(
+          C.log(
+            `<Search> - fetchAlgolia - Attempt #${status.iterNumber}: ${
+              algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+            }/1/places/query`
+          )
+        ),
+        TE.chain(() =>
+          promiseToTE(
+            () =>
+              axios.post(
+                `${
+                  algoliaUrls[(status.iterNumber - 1) % algoliaUrls.length]
+                }/1/places/query`,
+                {
+                  aroundLatLng: gps
+                    ? `${gps.latitude},${gps.longitude}`
                     : undefined,
+                  hitsPerPage: 10,
+                  language: 'en',
+                  query: search
+                },
+                {
+                  headers:
+                    Constants.manifest.extra.algoliaApplicationId &&
+                    Constants.manifest.extra.algoliaApiKey
+                      ? {
+                          'X-Algolia-Application-Id':
+                            Constants.manifest.extra.algoliaApplicationId,
+                          'X-Algolia-API-Key':
+                            Constants.manifest.extra.algoliaApiKey
+                        }
+                      : undefined,
 
-                timeout: 3000
-              }
-            ),
-          'fetchAlgolia'
-        )
-      ),
-      TE.chain(response =>
-        T.of(
-          pipe(
-            AxiosResponseT.decode(response),
-            E.mapLeft(failure),
-            E.mapLeft(errs => errs[0]), // Only show 1st error
-            E.mapLeft(Error)
+                  timeout: 3000
+                }
+              ),
+            'fetchAlgolia'
+          )
+        ),
+        TE.chain(response =>
+          T.of(
+            pipe(
+              AxiosResponseT.decode(response),
+              E.mapLeft(failure),
+              E.mapLeft(errs => errs[0]), // Only show 1st error
+              E.mapLeft(Error)
+            )
+          )
+        ),
+        TE.map(response => response.data.hits),
+        TE.chain(
+          sideEffect((hits: AlgoliaHit[]) =>
+            TE.rightIO(
+              C.log(`<Search> - fetchAlgolia - Got ${hits.length} results`)
+            )
           )
         )
       ),
-      TE.map(response => response.data.hits),
-      TE.chain(
-        sideEffect((hits: AlgoliaHit[]) =>
-          TE.rightIO(
-            C.log(`<Search> - fetchAlgolia - Got ${hits.length} results`)
-          )
-        )
-      )
-    )
+    {
+      retries: algoliaUrls.length
+    }
   );
 }

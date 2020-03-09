@@ -65,6 +65,7 @@
   "home_frequency_weekly": "weekly",
   "home_frequency_monthly": "monthly",
   "home_frequency_allow_notifications": "Allow\nnotifications?",
+  "home_frequency_notifications_cancel": "Cancel",
   "home_frequency_notify_me": "Notify me",
   "loading_title_cough": "Cough",
   "loading_title_loading": "Loading",

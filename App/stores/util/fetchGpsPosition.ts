@@ -32,15 +32,15 @@ export function fetchReverseGeocode(
   currentLocation: LatLng
 ): TE.TaskEither<Error, Location> {
   return pipe(
-    promiseToTE(async () => {
-      const reverse = await ExpoLocation.reverseGeocodeAsync(currentLocation);
-
-      if (!reverse.length) {
-        throw new Error('Reverse geocoding returned no results');
-      }
-
-      return reverse[0];
-    }, 'fetchReverseGeocode'),
+    promiseToTE(
+      () => ExpoLocation.reverseGeocodeAsync(currentLocation),
+      'fetchReverseGeocode'
+    ),
+    TE.chain(reverse =>
+      reverse.length
+        ? TE.right(reverse[0])
+        : TE.left(new Error('Reverse geocoding returned no results'))
+    ),
     TE.map(reverse => ({
       ...currentLocation,
       city: reverse.city,
@@ -59,28 +59,37 @@ export function fetchGpsPosition(): TE.TaskEither<
   Error,
   ExpoLocation.LocationData
 > {
-  return promiseToTE(async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-    if (status !== 'granted') {
-      throw new Error('Permission to access location was denied');
-    }
-
-    return ExpoLocation.getCurrentPositionAsync({
-      timeout: 5000
-    });
-    // Uncomment to get other locations
-    // return {
-    //   coords: {
-    //     latitude: Math.random() * 90,
-    //     longitude: Math.random() * 90
-    //   }
-    // };
-    // return {
-    //   coords: {
-    //     latitude: 48.4,
-    //     longitude: 2.34
-    //   }
-    // };
-  }, 'fetchGpsPosition');
+  return pipe(
+    promiseToTE(
+      () => Permissions.askAsync(Permissions.LOCATION),
+      'fetchGpsPosition'
+    ),
+    TE.chain(({ status }) =>
+      status === 'granted'
+        ? TE.right(undefined)
+        : TE.left(new Error('Permission to access location was denied'))
+    ),
+    TE.chain(() =>
+      promiseToTE(
+        () =>
+          ExpoLocation.getCurrentPositionAsync({
+            timeout: 5000
+          }),
+        // Uncomment to get other locations
+        // Promise.resolve({
+        //   coords: {
+        //     latitude: Math.random() * 90,
+        //     longitude: Math.random() * 90
+        //   }
+        // });
+        // Promise.resolve({
+        //   coords: {
+        //     latitude: 48.4,
+        //     longitude: 2.34
+        //   }
+        // });
+        'fetchGpsPosition'
+      )
+    )
+  );
 }

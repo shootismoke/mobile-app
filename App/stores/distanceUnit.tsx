@@ -19,6 +19,7 @@ import { AsyncStorage } from 'react-native';
 
 import { i18n } from '../localization';
 import { noop } from '../util/noop';
+import { sentryError } from '../util/sentry';
 
 export type DistanceUnit = 'km' | 'mile';
 type DistanceUnitFormat = 'short' | 'long';
@@ -46,24 +47,28 @@ export function DistanceUnitProvider({
     i18n.locale === 'en-US' ? 'mile' : 'km'
   );
 
-  const getDistanceUnit = async (): Promise<void> => {
-    const unit = await AsyncStorage.getItem(STORAGE_KEY);
-    if (unit === 'km' || unit === 'mile') {
-      setDistanceUnit(unit);
-    }
-  };
-
-  const localizedDistanceUnit = (format: 'short' | 'long'): string =>
-    distanceUnit === 'km'
+  function localizedDistanceUnit(format: 'short' | 'long'): string {
+    return distanceUnit === 'km'
       ? i18n.t(`distance_unit_${format}_km`)
       : i18n.t(`distance_unit_${format}_mi`);
+  }
 
   useEffect(() => {
-    getDistanceUnit();
+    async function getDistanceUnit(): Promise<void> {
+      const unit = await AsyncStorage.getItem(STORAGE_KEY);
+
+      if (unit === 'km' || unit === 'mile') {
+        setDistanceUnit(unit);
+      }
+    }
+
+    getDistanceUnit().catch(sentryError('DistanceUnitProvider'));
   }, []);
 
   useEffect(() => {
-    AsyncStorage.setItem(STORAGE_KEY, distanceUnit);
+    AsyncStorage.setItem(STORAGE_KEY, distanceUnit).catch(
+      sentryError('DistanceUnitProvider')
+    );
   }, [distanceUnit]);
 
   return (

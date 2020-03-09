@@ -14,28 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import Switch from '@dooboo-ui/native-switch-toggle';
 import { FontAwesome } from '@expo/vector-icons';
 import {
   Frequency,
-  MutationGetOrCreateUserArgs,
+  MutationCreateUserArgs,
   MutationUpdateUserArgs,
+  QueryGetUserArgs,
   User
 } from '@shootismoke/graphql';
 import { Notifications } from 'expo';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
+import * as C from 'fp-ts/lib/Console';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as T from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import Switch from 'react-native-switch-pro';
 
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import { GET_OR_CREATE_USER, UPDATE_USER } from '../../../../stores/util';
+import { CREATE_USER, GET_USER, UPDATE_USER } from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
+import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
@@ -94,8 +100,17 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     textTransform: 'uppercase'
   },
-  switch: {
-    marginRight: theme.spacing.small
+  switchCircle: {
+    borderRadius: scale(11),
+    height: scale(22),
+    width: scale(22)
+  },
+  switchContainer: {
+    borderRadius: scale(14),
+    height: scale(28),
+    marginRight: theme.spacing.small,
+    padding: scale(3),
+    width: scale(48)
   }
 });
 
@@ -104,17 +119,26 @@ export function SelectNotifications(
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const [getOrCreateUser, { data: queryData }] = useMutation<
-    { getOrCreateUser: User },
-    MutationGetOrCreateUserArgs
-  >(GET_OR_CREATE_USER, {
+  const { data: getUserData, error: queryError } = useQuery<
+    { getUser: DeepPartial<User> },
+    QueryGetUserArgs
+  >(GET_USER, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      expoInstallationId: Constants.installationId
+    }
+  });
+  const [createUser, { data: createUserData }] = useMutation<
+    { createUser: DeepPartial<User> },
+    MutationCreateUserArgs
+  >(CREATE_USER, {
     variables: { input: { expoInstallationId: Constants.installationId } }
   });
-  const [updateUser, { data: mutationData }] = useMutation<
-    { __typename: 'Mutation'; updateUser: DeepPartial<User> },
+  const [updateUser, { data: updateUserData }] = useMutation<
+    { updateUser: DeepPartial<User> },
     MutationUpdateUserArgs
   >(UPDATE_USER);
-  // This state is used of optimistic UI: right after the user clicks, we set
+  // This state is used for optimistic UI: right after the user clicks, we set
   // this state to what the user clicked. When the actual mutation resolves, we
   // populate with the real data.
   const [optimisticNotif, setOptimisticNotif] = useState<Frequency>();
@@ -123,24 +147,27 @@ export function SelectNotifications(
     // If we have optimistic UI, show it
     optimisticNotif ||
     // If we have up-to-date data from backend, take that
-    mutationData?.updateUser.notifications?.frequency ||
+    updateUserData?.updateUser.notifications?.frequency ||
+    createUserData?.createUser.notifications?.frequency ||
     // At the beginning, before anything happens, query from backend
-    queryData?.getOrCreateUser.notifications?.frequency ||
-    // If the queryData is still loading, just show `never`
+    getUserData?.getUser.notifications?.frequency ||
+    // If the getUserData is still loading, just show `never`
     'never';
 
   useEffect(() => {
-    getOrCreateUser({
-      variables: { input: { expoInstallationId: Constants.installationId } }
-    }).catch(sentryError('SelectNotifications'));
-  }, [getOrCreateUser]);
+    if (queryError?.message.includes('No user with expoInstallationId')) {
+      createUser({
+        variables: { input: { expoInstallationId: Constants.installationId } }
+      }).catch(sentryError('SelectNotifications'));
+    }
+  }, [createUser, queryError]);
 
   useEffect(() => {
-    // If we receive new mutationData, then our optimistic UI is obsolete
-    if (mutationData) {
+    // If we receive new updateUserData, then our optimistic UI is obsolete
+    if (updateUserData) {
       setOptimisticNotif(undefined);
     }
-  }, [mutationData]);
+  }, [updateUserData]);
 
   /**
    * Handler for changing notification frequency
@@ -154,39 +181,75 @@ export function SelectNotifications(
       `HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
     );
 
-    async function updateNotification(): Promise<void> {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (!api) {
+      throw new Error(
+        'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
+      );
+    }
 
-      if (status !== 'granted') {
-        throw new Error('Permission to access notifications was denied');
-      }
-
-      if (!api) {
-        throw new Error(
-          'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
-        );
-      }
-
-      const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      const notifications = {
+    pipe(
+      promiseToTE(
+        () => Permissions.askAsync(Permissions.NOTIFICATIONS),
+        'SelectNotifications'
+      ),
+      TE.chain(({ status }) =>
+        status === 'granted'
+          ? TE.right(undefined)
+          : TE.left(new Error('Permission to access notifications was denied'))
+      ),
+      TE.chain(() =>
+        // Retry 3 times to get the Expo push token, sometimes we get an Error
+        // "Couldn't get GCM token for device" on 1st try
+        retry(
+          () =>
+            promiseToTE(
+              () => Notifications.getExpoPushTokenAsync(),
+              'SelectNotifications'
+            ),
+          {
+            retries: 3
+          }
+        )
+      ),
+      TE.map(expoPushToken => ({
         expoPushToken,
         frequency,
         timezone: Localization.timezone,
         universalId: api.pm25.location
-      };
-      console.log(
-        `<SelectNotifications> - Update user ${JSON.stringify(notifications)}`
-      );
+      })),
+      TE.chain(
+        sideEffect(notifications =>
+          TE.rightIO(
+            C.log(
+              `<SelectNotifications> - Update user ${JSON.stringify(
+                notifications
+              )}`
+            )
+          )
+        )
+      ),
+      TE.chain(notifications =>
+        promiseToTE(
+          () =>
+            updateUser({
+              variables: {
+                expoInstallationId: Constants.installationId,
+                input: { notifications }
+              }
+            }),
+          'SelectNotifications'
+        )
+      ),
+      TE.fold(
+        error => {
+          sentryError('SelectNotifications')(error);
+          setOptimisticNotif('never');
 
-      await updateUser({
-        variables: {
-          expoInstallationId: Constants.installationId,
-          input: { notifications }
-        }
-      });
-    }
-
-    updateNotification().catch(sentryError('SelectNotifications'));
+          return T.of(undefined);
+        },
+        () => T.of(undefined)
+      )
+    )().catch(sentryError('SelectNotifications'));
   }
 
   // Is the switch on or off?
@@ -199,6 +262,7 @@ export function SelectNotifications(
         options: notificationsValues
           .map(f => i18n.t(`home_frequency_${f}`)) // Translate
           .map(capitalize)
+          .concat(i18n.t('home_frequency_notifications_cancel'))
       }}
       callback={(buttonIndex): void => {
         if (buttonIndex === 4) {
@@ -209,40 +273,40 @@ export function SelectNotifications(
         handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
       }}
     >
-      <View style={[styles.container, style]} {...rest}>
-        <Switch
-          backgroundActive={theme.primaryColor}
-          backgroundInactive={hex2rgba(
-            theme.secondaryTextColor,
-            theme.disabledOpacity
-          )}
-          circleStyle={{
-            height: scale(22),
-            marginHorizontal: scale(3),
-            width: scale(22)
-          }}
-          height={scale(28)}
-          style={styles.switch}
-          value={isSwitchOn}
-          width={scale(48)}
-        />
+      {(open): React.ReactElement => (
+        <View style={[styles.container, style]} {...rest}>
+          <Switch
+            backgroundColorOn={theme.primaryColor}
+            backgroundColorOff={hex2rgba(
+              theme.secondaryTextColor,
+              theme.disabledOpacity
+            )}
+            circleColorOff="white"
+            circleColorOn="white"
+            circleStyle={styles.switchCircle}
+            containerStyle={styles.switchContainer}
+            switchOn={isSwitchOn}
+            onPress={open}
+            duration={500}
+          />
 
-        {isSwitchOn ? (
-          <View>
+          {isSwitchOn ? (
+            <View>
+              <Text style={styles.label}>
+                {i18n.t('home_frequency_notify_me')}
+              </Text>
+              <Text style={styles.labelFrequency}>
+                {i18n.t(`home_frequency_${notif}`)}{' '}
+                <FontAwesome name="caret-down" />
+              </Text>
+            </View>
+          ) : (
             <Text style={styles.label}>
-              {i18n.t('home_frequency_notify_me')}
+              {i18n.t('home_frequency_allow_notifications')}
             </Text>
-            <Text style={styles.labelFrequency}>
-              {i18n.t(`home_frequency_${notif}`)}{' '}
-              <FontAwesome name="caret-down" />
-            </Text>
-          </View>
-        ) : (
-          <Text style={styles.label}>
-            {i18n.t('home_frequency_allow_notifications')}
-          </Text>
-        )}
-      </View>
+          )}
+        </View>
+      )}
     </ActionPicker>
   );
 }

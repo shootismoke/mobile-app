@@ -21,14 +21,20 @@ import * as O from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import { capDelay, limitRetries, RetryStatus } from 'retry-ts';
+import {
+  capDelay,
+  exponentialBackoff,
+  limitRetries,
+  monoidRetryPolicy,
+  RetryStatus
+} from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 
 import { sentryError } from './sentry';
 
 /**
  * A side-effect in a TaskEither chain: if the TaskEither fails, still return
- * a TaskEither.RightTask
+ * a TaskEither.Right
  *
  * @example
  * ```
@@ -57,29 +63,42 @@ export function sideEffect<E, A>(fn: (input: A) => TE.TaskEither<E, void>) {
     );
 }
 
-// This Error is always thrown at the beginning of a retry, we ignore it
-const EMPTY_OPTION_ERROR = new Error('Empty Option<delay>');
+interface RetryOptions {
+  capDelay?: number;
+  exponentialBackoff?: number;
+  retries?: number;
+}
 
 /**
+ * Retry a TaskEither
  *
  * @param retries - The number of time to retry
  * @param teFn - A function returning a TE
  */
 export function retry<A>(
-  retries: number,
-  teFn: (status: RetryStatus, delay: number) => TE.TaskEither<Error, A>
+  teFn: (status: RetryStatus, delay: number) => TE.TaskEither<Error, A>,
+  options: RetryOptions = {}
 ): TE.TaskEither<Error, A> {
+  // Set our retry policy
+  const policy = capDelay(
+    options.capDelay || 2000,
+    monoidRetryPolicy.concat(
+      exponentialBackoff(options.exponentialBackoff || 200),
+      limitRetries(options.retries || 3)
+    )
+  );
+
   return retrying(
-    capDelay(2000, limitRetries(retries)), // Do `retries` times max, and set limit to 2s
+    policy,
     status =>
       pipe(
         status.previousDelay,
         O.fold(
-          () => TE.left(EMPTY_OPTION_ERROR),
+          () => TE.left(new Error('Empty Option<delay>')),
           delay => teFn(status, delay)
         )
       ),
-    either => E.isLeft(either)
+    E.isLeft
   );
 }
 
