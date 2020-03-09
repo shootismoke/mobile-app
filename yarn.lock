@@ -30,10 +30,10 @@
   resolved "https://registry.yarnpkg.com/@amaurymartiny/tsconfig/-/tsconfig-1.0.11.tgz#ca764edc34cf9d3ffd6e37f90b12dbd4f5217496"
   integrity sha512-NynnIEqB+8nhw4Cu/omsJfpDUtHurj1NimXFaAFD4c2O8O0aia79B9bNGhTG5cmaYSkPxxG8Q3MZQnL1xxulUg==
 
-"@apollo/client@^3.0.0-beta.23", "@apollo/client@^3.0.0-beta.38":
-  version "3.0.0-beta.38"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-beta.38.tgz#4f69678903e87656626bf21a0ceaed909aab9fd0"
-  integrity sha512-ePfjtgGskFUxsIPFvmtoZ8vIoqJhuPJ4fck5ipgbN2Fy2PhYpwZl8pwv7BvY3beyYwtf1ppjA2dE7LCeuUovwg==
+"@apollo/client@^3.0.0-beta.23", "@apollo/client@^3.0.0-beta.39":
+  version "3.0.0-beta.39"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-beta.39.tgz#f43cd42ab6c3611f6990df72d59e4f6581ab0014"
+  integrity sha512-c1lBTGxss9KWkSYVADgP0K3nzbV7eh2A69X+WNySTnm9Ml34+4E+QsRdZbX98r////nan93iJd7mKjCTXmirLQ==
   dependencies:
     "@types/zen-observable" "^0.8.0"
     "@wry/equality" "^0.1.9"
