@@ -1,6 +1,51 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.5.0](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.4.0...v1.5.0) (2020-03-13)
+
+
+### Features
+
+* Add chinese(traditional) language ([#318](https://github.com/amaurymartiny/shoot-i-smoke/issues/318)) ([#319](https://github.com/amaurymartiny/shoot-i-smoke/issues/319)) ([f497e60](https://github.com/amaurymartiny/shoot-i-smoke/commit/f497e60ec64416205e36964ed0a87b9dd89f0bf5))
+* Add Korean translation ([#324](https://github.com/amaurymartiny/shoot-i-smoke/issues/324)) ([47341f7](https://github.com/amaurymartiny/shoot-i-smoke/commit/47341f7d1dbd2e38cd898c8a75b6c414bb154066))
+* Add notifications UI ([#439](https://github.com/amaurymartiny/shoot-i-smoke/issues/439)) ([fc9bffc](https://github.com/amaurymartiny/shoot-i-smoke/commit/fc9bffc46de2aa3fcf7871dd3f28819d24745805))
+* Add Offix to handle offline-first apollo ([#454](https://github.com/amaurymartiny/shoot-i-smoke/issues/454)) ([32387f5](https://github.com/amaurymartiny/shoot-i-smoke/commit/32387f5c41f110ca5212ed92832350daace87210))
+* Add russian language ([#279](https://github.com/amaurymartiny/shoot-i-smoke/issues/279)) ([5812c71](https://github.com/amaurymartiny/shoot-i-smoke/commit/5812c7149949fd7916182951abdbaa59d780d567))
+* Add SelectNotifications component to choose notifications ([#328](https://github.com/amaurymartiny/shoot-i-smoke/issues/328)) ([2fb831d](https://github.com/amaurymartiny/shoot-i-smoke/commit/2fb831dc0aefd91b0921246148c0ee7fb8173d2b))
+* Add swedish language ([#293](https://github.com/amaurymartiny/shoot-i-smoke/issues/293)) ([3e044ec](https://github.com/amaurymartiny/shoot-i-smoke/commit/3e044ece0c129859b7e462064651fb7209c1a529))
+* Add Ukrainian language ([#277](https://github.com/amaurymartiny/shoot-i-smoke/issues/277)) ([84eeccc](https://github.com/amaurymartiny/shoot-i-smoke/commit/84eeccc53049f71e761acb73003b9315a2dc9a6a))
+* Authenticate all backend calls with Hawk ([#411](https://github.com/amaurymartiny/shoot-i-smoke/issues/411)) ([890709f](https://github.com/amaurymartiny/shoot-i-smoke/commit/890709f7e1d4e33f960fa128537689f55556eb51))
+* Expand share dialog on iOS ([#250](https://github.com/amaurymartiny/shoot-i-smoke/issues/250)) ([#278](https://github.com/amaurymartiny/shoot-i-smoke/issues/278)) ([0a37241](https://github.com/amaurymartiny/shoot-i-smoke/commit/0a3724121aa4e4b5b7120e3e003fc45baff829cd))
+* Fetch historical data from OpenAQ ([#425](https://github.com/amaurymartiny/shoot-i-smoke/issues/425)) ([26acad1](https://github.com/amaurymartiny/shoot-i-smoke/commit/26acad1e775eb7c603d54eaf1e59daa5fdfa1d93))
+* First release for italian locale ([#272](https://github.com/amaurymartiny/shoot-i-smoke/issues/272)) ([f8814a1](https://github.com/amaurymartiny/shoot-i-smoke/commit/f8814a11179d9ae1f8a603523b08fbdd338cd20c))
+* Implement miles/kilometer selector ([#252](https://github.com/amaurymartiny/shoot-i-smoke/issues/252)) ([ca91f5b](https://github.com/amaurymartiny/shoot-i-smoke/commit/ca91f5bd04601324d1bfc132e14ee49b39eeb352))
+* Replace share text with an image on iOS ([#242](https://github.com/amaurymartiny/shoot-i-smoke/issues/242)) ([3250390](https://github.com/amaurymartiny/shoot-i-smoke/commit/32503905773de6bf6ac8a664be935a6b7e97f20c))
+* Share android image via expo-sharing ([#247](https://github.com/amaurymartiny/shoot-i-smoke/issues/247)) ([#255](https://github.com/amaurymartiny/shoot-i-smoke/issues/255)) ([9641cf6](https://github.com/amaurymartiny/shoot-i-smoke/commit/9641cf6437f9043fd95295a67f8ebcb77687fdc0))
+* Translation to french ([#267](https://github.com/amaurymartiny/shoot-i-smoke/issues/267)) ([56c763a](https://github.com/amaurymartiny/shoot-i-smoke/commit/56c763a700c675ca8374778a9dfe937cb60807ff))
+
+
+### Bug Fixes
+
+* ActionPicker should take Switch + text ([#459](https://github.com/amaurymartiny/shoot-i-smoke/issues/459)) ([90e63a4](https://github.com/amaurymartiny/shoot-i-smoke/commit/90e63a478ebafc7774c76a5116bc71c078845c1f))
+* Add image in push notification ([#460](https://github.com/amaurymartiny/shoot-i-smoke/issues/460)) ([f45a777](https://github.com/amaurymartiny/shoot-i-smoke/commit/f45a777f77d618149f757e281ff1021dd49831a1))
+* Add revisionId to Amplitude ([#273](https://github.com/amaurymartiny/shoot-i-smoke/issues/273)) ([2536b6b](https://github.com/amaurymartiny/shoot-i-smoke/commit/2536b6b67909462b41304a28d99e292173039651))
+* Add sentry logs on errors ([#269](https://github.com/amaurymartiny/shoot-i-smoke/issues/269)) ([f0f5f23](https://github.com/amaurymartiny/shoot-i-smoke/commit/f0f5f2370505d5096bc174662a17b4802a800ffc))
+* Add typechecking on yarn lint ([#248](https://github.com/amaurymartiny/shoot-i-smoke/issues/248)) ([#251](https://github.com/amaurymartiny/shoot-i-smoke/issues/251)) ([33b6ca9](https://github.com/amaurymartiny/shoot-i-smoke/commit/33b6ca9d107d8e71437cb650eb1b5d6df544ee79))
+* Added Finished Spanish Translation ([#303](https://github.com/amaurymartiny/shoot-i-smoke/issues/303)) ([8fd0b43](https://github.com/amaurymartiny/shoot-i-smoke/commit/8fd0b4318f8e94f2fbe8bc54e9d109b7c70eb2d5))
+* Don't track location errors on Sentry ([#326](https://github.com/amaurymartiny/shoot-i-smoke/issues/326)) ([c416d0f](https://github.com/amaurymartiny/shoot-i-smoke/commit/c416d0f3e331a601cf88b13c078c7246c1b6b773))
+* Fix android statusbar translucency ([#374](https://github.com/amaurymartiny/shoot-i-smoke/issues/374)) ([79f3345](https://github.com/amaurymartiny/shoot-i-smoke/commit/79f3345c88f05ce9969bd74d7186ed66437ba7e7)), closes [#250](https://github.com/amaurymartiny/shoot-i-smoke/issues/250)
+* Force status bar style to be dark content in iOS ([#305](https://github.com/amaurymartiny/shoot-i-smoke/issues/305)) ([16ef296](https://github.com/amaurymartiny/shoot-i-smoke/commit/16ef296719f91376d7f9d1d5770e6f78e88dbbe1))
+* More permissive error matching to skip sentry ([#414](https://github.com/amaurymartiny/shoot-i-smoke/issues/414)) ([f958293](https://github.com/amaurymartiny/shoot-i-smoke/commit/f9582939d676d60796e2f165e09e07175714746f))
+* Remove alpha notifications from About ([#395](https://github.com/amaurymartiny/shoot-i-smoke/issues/395)) ([32edba5](https://github.com/amaurymartiny/shoot-i-smoke/commit/32edba53793da07ee3cf9bfffcb8519cf991c31d))
+* Remove fetching from openaq for historical data ([#453](https://github.com/amaurymartiny/shoot-i-smoke/issues/453)) ([80a1ab4](https://github.com/amaurymartiny/shoot-i-smoke/commit/80a1ab4037d1ca1f897f94e7a2bf31d18dc1223f))
+* Remove warning for wrong view-shot version ([#412](https://github.com/amaurymartiny/shoot-i-smoke/issues/412)) ([2404dcc](https://github.com/amaurymartiny/shoot-i-smoke/commit/2404dcce7d03d38c0298fed42b30219f762bae31))
+* Retry fetching expo push token ([#473](https://github.com/amaurymartiny/shoot-i-smoke/issues/473)) ([c6392fd](https://github.com/amaurymartiny/shoot-i-smoke/commit/c6392fdc96e451ad076bbac971ebdedeac849156))
+* Round the cigarettes number when shared ([#241](https://github.com/amaurymartiny/shoot-i-smoke/issues/241)) ([5da7196](https://github.com/amaurymartiny/shoot-i-smoke/commit/5da71960289c5faa0ddf13d2df76b511d337e3ab))
+* Show isToofar warning on monthly and weekly ([#426](https://github.com/amaurymartiny/shoot-i-smoke/issues/426)) ([8f4569a](https://github.com/amaurymartiny/shoot-i-smoke/commit/8f4569a99503323ede87c4d44f94e98c051e4dd1))
+* Show revision ID nicely ([#271](https://github.com/amaurymartiny/shoot-i-smoke/issues/271)) ([4a9b38e](https://github.com/amaurymartiny/shoot-i-smoke/commit/4a9b38eb5f1a5a8151fb9c0a30a092cf43472672))
+* Update kr.json ([#331](https://github.com/amaurymartiny/shoot-i-smoke/issues/331)) ([b3fb855](https://github.com/amaurymartiny/shoot-i-smoke/commit/b3fb855460d2b9068b0cfbe45ed1cc0c12b28cd3))
+* Use universalId for updating notifications ([#451](https://github.com/amaurymartiny/shoot-i-smoke/issues/451)) ([e7c67a8](https://github.com/amaurymartiny/shoot-i-smoke/commit/e7c67a86c1855ace2e6bbfbe856a40d98ffebdb0))
 
 # [1.4.0](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.3.1...v1.4.0) (2019-10-02)
 
