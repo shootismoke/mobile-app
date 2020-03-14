@@ -58,7 +58,7 @@ export type AmplitudeEvent =
   | 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
 export function setupAmplitude(): Promise<void> {
-  return Constants.manifest.extra.amplitudeApiKey
+  return typeof Constants.manifest.extra.amplitudeApiKey === 'string'
     ? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
         () => {
           Amplitude.setUserProperties({
@@ -84,7 +84,7 @@ export function track(
   event: AmplitudeEvent,
   properties?: Record<string, Json>
 ): void {
-  if (!Constants.manifest.extra.amplitudeApiKey) {
+  if (typeof Constants.manifest.extra.amplitudeApiKey !== 'string') {
     return;
   }
 

@@ -39,4 +39,5 @@ export const IS_PROD =
  */
 export const IS_SENTRY_SET_UP =
   // We also added sentry on staging btw
-  (IS_PROD || IS_STAGING) && !!Constants.manifest.extra.sentryPublicDsn;
+  (IS_PROD || IS_STAGING) &&
+  typeof Constants.manifest.extra.sentryPublicDsn === 'string';

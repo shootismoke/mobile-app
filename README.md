@@ -80,15 +80,14 @@ The [Expo](https://expo.io) packager will show, and you can either:
 
 All required API tokens are already pre-filled in `app.example.json`. If you want to use your own API tokens, then in `app.json`, replace all the placeholders with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
 
-| Service                  | Url                                                                        | Comments                                                                    |
-| ------------------------ | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                                     | Required. Pre-filled with a staging token.                                  |
-| World Air Quality Index  | http://aqicn.org/api/                                                      | Required. You can use the public one in `app.example.json` for development. |
-| Algolia Places           | https://community.algolia.com/places/ (`Get Started` button on the bottom) | Optional, lower API rates if not provided.                                  |
-| Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start             | Optional in development.                                                    |
-| Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/              | Optional in development.                                                    |
-| Sentry Bug Tracking      | https://sentry.io                                                          | Optional.                                                                   |
-| Amplitude Analytics      | https://amplitude.com                                                      | Optional. Note: we **never** track PII.                                     |
+| Service                  | Url                                                            | Comments                                                                    |
+| ------------------------ | -------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                                  |
+| World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `app.example.json` for development. |
+| Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                                    |
+| Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                                    |
+| Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                                   |
+| Amplitude Analytics      | https://amplitude.com                                          | Optional. Note: we **never** track PII.                                     |
 
 ## :raising_hand: Contribute
 
