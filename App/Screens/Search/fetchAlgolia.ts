@@ -16,7 +16,6 @@
 
 import { LatLng } from '@shootismoke/dataproviders';
 import axios from 'axios';
-import Constants from 'expo-constants';
 import * as C from 'fp-ts/lib/Console';
 import * as E from 'fp-ts/lib/Either';
 import { pipe } from 'fp-ts/lib/pipeable';
@@ -92,17 +91,6 @@ export function fetchAlgolia(
                   query: search
                 },
                 {
-                  headers:
-                    Constants.manifest.extra.algoliaApplicationId &&
-                    Constants.manifest.extra.algoliaApiKey
-                      ? {
-                          'X-Algolia-Application-Id':
-                            Constants.manifest.extra.algoliaApplicationId,
-                          'X-Algolia-API-Key':
-                            Constants.manifest.extra.algoliaApiKey
-                        }
-                      : undefined,
-
                   timeout: 3000
                 }
               ),

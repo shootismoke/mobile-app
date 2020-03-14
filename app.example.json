@@ -14,8 +14,6 @@
     "assetBundlePatterns": ["assets/**/*"],
     "backgroundColor": "#FAFAFC",
     "extra": {
-      "algoliaApiKey": null,
-      "algoliaApplicationId": null,
       "aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
       "amplitudeApiKey": null,
       "hawkKey": "26bb8794-8f1e-4bf7-b977-081186af58d6",
