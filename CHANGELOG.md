@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.0...v1.5.1) (2020-03-14)
+
+
+### Bug Fixes
+
+* Remove useless Algolia community keys ([#480](https://github.com/amaurymartiny/shoot-i-smoke/issues/480)) ([f45d774](https://github.com/amaurymartiny/shoot-i-smoke/commit/f45d7743c3578ae3d4f60a8fb8ef8ced8c5373c1))
+
 ## [1.5.0](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.4.0...v1.5.0) (2020-03-13)
 
 
