@@ -40,18 +40,6 @@ const UNTRACKED_ERRORS = [
  */
 export function sentryError(namespace: string) {
   return function (error: Error): void {
-    console.log('HAWK', {
-      id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
-      key: Constants.manifest.extra.hawkKey,
-      algorithm: 'sha256'
-    });
-    console.log('MANIFEST', Constants.manifest.extra);
-    console.log(
-      'SENDING TO SENTRY',
-      IS_SENTRY_SET_UP,
-      !UNTRACKED_ERRORS.some(msg => error.message.includes(msg)),
-      error
-    );
     if (
       IS_SENTRY_SET_UP &&
       !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
