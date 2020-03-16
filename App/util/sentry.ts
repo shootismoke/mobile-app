@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import Constants from 'expo-constants';
 import * as Sentry from 'sentry-expo';
 
-import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './constants';
+import { IS_SENTRY_SET_UP } from './constants';
 
 // We don't send the following errors to Sentry
 const UNTRACKED_ERRORS = [
@@ -39,7 +38,7 @@ const UNTRACKED_ERRORS = [
  * @param error - The error to send
  */
 export function sentryError(namespace: string) {
-  return function (error: Error): void {
+  return function(error: Error): void {
     if (
       IS_SENTRY_SET_UP &&
       !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
