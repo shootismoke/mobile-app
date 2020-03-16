@@ -119,8 +119,8 @@ export function SelectNotifications(
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const { data: getUserData, error: queryError } = useQuery<
-    { getUser: DeepPartial<User> },
+  const { data: getUserData } = useQuery<
+    { getUser: DeepPartial<User> | null },
     QueryGetUserArgs
   >(GET_USER, {
     fetchPolicy: 'cache-and-network',
@@ -147,20 +147,20 @@ export function SelectNotifications(
     // If we have optimistic UI, show it
     optimisticNotif ||
     // If we have up-to-date data from backend, take that
-    updateUserData?.updateUser.notifications?.frequency ||
-    createUserData?.createUser.notifications?.frequency ||
+    updateUserData?.updateUser?.notifications?.frequency ||
+    createUserData?.createUser?.notifications?.frequency ||
     // At the beginning, before anything happens, query from backend
-    getUserData?.getUser.notifications?.frequency ||
+    getUserData?.getUser?.notifications?.frequency ||
     // If the getUserData is still loading, just show `never`
     'never';
 
   useEffect(() => {
-    if (queryError?.message.includes('No user with expoInstallationId')) {
+    if (getUserData?.getUser === null) {
       createUser({
         variables: { input: { expoInstallationId: Constants.installationId } }
       }).catch(sentryError('SelectNotifications'));
     }
-  }, [createUser, queryError]);
+  }, [createUser, getUserData]);
 
   useEffect(() => {
     // If we receive new updateUserData, then our optimistic UI is obsolete

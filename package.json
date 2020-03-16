@@ -1,6 +1,6 @@
 {
   "name": "shootismoke",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "author": "Amaury Martiny <amaury.martiny@protonmail.com>",
   "contributors": [
     "Marcelo S. Coelho"
@@ -23,7 +23,7 @@
     "@hapi/hawk": "^8.0.0",
     "@shootismoke/convert": "^0.2.8",
     "@shootismoke/dataproviders": "^0.2.17",
-    "@shootismoke/graphql": "^0.2.18",
+    "@shootismoke/graphql": "^0.2.19",
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
     "@types/p-any": "^1.1.3",
