@@ -31,8 +31,7 @@ export const IS_STAGING = RELEASE_CHANNEL === 'default';
 /**
  * Whether we're running a production version of the app
  */
-export const IS_PROD =
-  RELEASE_CHANNEL === `production-v${Constants.manifest.version}`;
+export const IS_PROD = RELEASE_CHANNEL.startsWith('production-v');
 
 /**
  * Whether or not we should set up Sentry bug tracking

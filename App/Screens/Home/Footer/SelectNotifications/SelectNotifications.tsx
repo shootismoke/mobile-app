@@ -119,7 +119,7 @@ export function SelectNotifications(
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const { data: getUserData } = useQuery<
+  const { data: getUserData, loading: getUserLoading } = useQuery<
     { getUser: DeepPartial<User> | null },
     QueryGetUserArgs
   >(GET_USER, {
@@ -155,12 +155,12 @@ export function SelectNotifications(
     'never';
 
   useEffect(() => {
-    if (getUserData?.getUser === null) {
+    if (getUserLoading === false && getUserData?.getUser === null) {
       createUser({
         variables: { input: { expoInstallationId: Constants.installationId } }
       }).catch(sentryError('SelectNotifications'));
     }
-  }, [createUser, getUserData]);
+  }, [createUser, getUserData, getUserLoading]);
 
   useEffect(() => {
     // If we receive new updateUserData, then our optimistic UI is obsolete

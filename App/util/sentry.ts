@@ -28,9 +28,7 @@ const UNTRACKED_ERRORS = [
   'Reverse geocoding returned no results',
   // No results from data providers
   'does not have PM2.5 measurings right now',
-  'Cannot normalize, got 0 result',
-  // User not created yet on backend
-  'No user with expoInstallationId'
+  'Cannot normalize, got 0 result'
 ];
 
 /**
