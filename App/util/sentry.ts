@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import Constants from 'expo-constants';
 import * as Sentry from 'sentry-expo';
 
-import { IS_SENTRY_SET_UP } from './constants';
+import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './constants';
 
 // We don't send the following errors to Sentry
 const UNTRACKED_ERRORS = [
@@ -38,7 +39,19 @@ const UNTRACKED_ERRORS = [
  * @param error - The error to send
  */
 export function sentryError(namespace: string) {
-  return function(error: Error): void {
+  return function (error: Error): void {
+    console.log('HAWK', {
+      id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
+      key: Constants.manifest.extra.hawkKey,
+      algorithm: 'sha256'
+    });
+    console.log('MANIFEST', Constants.manifest.extra);
+    console.log(
+      'SENDING TO SENTRY',
+      IS_SENTRY_SET_UP,
+      !UNTRACKED_ERRORS.some(msg => error.message.includes(msg)),
+      error
+    );
     if (
       IS_SENTRY_SET_UP &&
       !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
