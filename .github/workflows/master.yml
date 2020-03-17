@@ -23,5 +23,5 @@ jobs:
       - name: Generate staging app.json
         run: ./scripts/generateAppJson.js
         env:
-          - SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
+          SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
       - run: expo publish
