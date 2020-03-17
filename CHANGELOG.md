@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.1...v1.5.2) (2020-03-17)
+
+
+### Bug Fixes
+
+* Only create new user when getUser query finishes loading ([#488](https://github.com/amaurymartiny/shoot-i-smoke/issues/488)) ([8dfb96e](https://github.com/amaurymartiny/shoot-i-smoke/commit/8dfb96ed54e34f7c7bca6f4a5e186556052d33a0))
+* Use Maybe<User> for getUser endpoint ([#487](https://github.com/amaurymartiny/shoot-i-smoke/issues/487)) ([8c247ac](https://github.com/amaurymartiny/shoot-i-smoke/commit/8c247ac01d4caf36c0488de3df5c6648c06eb0f5))
+
 ### [1.5.1](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.0...v1.5.1) (2020-03-14)
 
 
