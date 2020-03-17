@@ -1,0 +1,27 @@
+name: master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  expo-publish-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - run: yarn install
+      - name: Generate staging app.json
+        run: ./scripts/generateAppJson.js
+        env:
+          SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
+      - run: expo publish
