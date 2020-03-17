@@ -1,10 +1,9 @@
 name: master
 
-# on:
-#   push:
-#     branches:
-#       - master
-on: [pull_request] # Just for testing
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   expo-publish-staging:
@@ -19,6 +18,7 @@ jobs:
           expo-version: 3.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
       - run: yarn install
       - name: Generate staging app.json
         run: ./scripts/generateAppJson.js
