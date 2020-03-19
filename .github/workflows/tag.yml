@@ -1,0 +1,47 @@
+name: tag
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
+  SIS_AMPLITUDE_API_KEY: ${{ secrets.SIS_PRODUCTION_AMPLITUDE_API_KEY }}
+  SIS_HAWK_KEY: ${{ secrets.SIS_PRODUCTION_HAWK_KEY }}
+  SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
+  SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
+  SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
+
+jobs:
+  expo-production-binaries:
+    strategy:
+      matrix:
+        build: [ios, android-apk, android-app-bundle]
+        include:
+          # Include, for each build, the expo build command
+          - build: ios
+            expo_build_command: build:ios
+          - build: android-apk
+            expo_build_command: build:android -t apk
+          - build: android-app-bundle
+            expo_build_command: build:android -t app-bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - run: yarn install
+      - name: Set GITHUB_TAG
+        id: vars
+        run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/head/
+      - name: Generate production app.json
+        run: ./scripts/generateAppJson.js
+      - run: expo ${{ matrix.expo_build_command }} -t app-bundle --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
