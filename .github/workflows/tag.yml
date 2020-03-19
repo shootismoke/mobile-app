@@ -44,4 +44,4 @@ jobs:
         run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/head/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      - run: expo ${{ matrix.expo_build_command }} -t app-bundle --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
+      - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
