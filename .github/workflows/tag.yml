@@ -1,6 +1,9 @@
 name: master
 
-on: [pull_request]
+on:
+  push:
+    tags:
+      - 'v*.*.*'
 
 env:
   SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
@@ -25,9 +28,12 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - run: yarn install
+      - name: Set GITHUB_TAG
+        id: vars
+        run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/head/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      - run: expo build:android -t app-bundle --release-channel=production-v1.5.3
+      - run: expo build:android -t app-bundle --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
 
   expo-production-ios:
     runs-on: ubuntu-latest
@@ -45,4 +51,4 @@ jobs:
       - run: yarn install
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      - run: expo build:ios --release-channel=production-v1.5.3
+      - run: expo build:ios --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
