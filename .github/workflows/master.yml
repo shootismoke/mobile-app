@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
+
 jobs:
   expo-publish-staging:
     runs-on: ubuntu-latest
@@ -22,6 +25,4 @@ jobs:
       - run: yarn install
       - name: Generate staging app.json
         run: ./scripts/generateAppJson.js
-        env:
-          SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
       - run: expo publish

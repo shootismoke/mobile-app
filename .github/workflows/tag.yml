@@ -1,0 +1,48 @@
+name: master
+
+on: [pull_request]
+
+env:
+  SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
+  SIS_AMPLITUDE_API_KEY: ${{ secrets.SIS_PRODUCTION_AMPLITUDE_API_KEY }}
+  SIS_HAWK_KEY: ${{ secrets.SIS_PRODUCTION_HAWK_KEY }}
+  SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
+  SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
+  SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
+
+jobs:
+  expo-production-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - run: yarn install
+      - name: Generate production app.json
+        run: ./scripts/generateAppJson.js
+      - run: expo build:android -t app-bundle --release-channel=production-v1.5.3
+
+  expo-production-ios:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - run: yarn install
+      - name: Generate production app.json
+        run: ./scripts/generateAppJson.js
+      - run: expo build:ios --release-channel=production-v1.5.3
