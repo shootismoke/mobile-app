@@ -29,6 +29,18 @@ const overrides = {
       hawkKey: process.env.SIS_HAWK_KEY,
       sentryPublicDsn: process.env.SIS_SENTRY_PUBLIC_DNS || null
     },
+    hooks: {
+      postPublish: [
+        {
+          file: 'sentry-expo/upload-sourcemaps',
+          config: {
+            organization: process.env.SIS_SENTRY_ORG || null,
+            project: process.env.SIS_SENTRY_PROJECT || null,
+            authToken: process.env.SIS_SENTRY_AUTH_TOKEN || null
+          }
+        }
+      ]
+    },
     ios: {
       buildNumber: pkgJson.version,
       config: {
