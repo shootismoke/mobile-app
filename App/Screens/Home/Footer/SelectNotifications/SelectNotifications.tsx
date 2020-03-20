@@ -39,13 +39,20 @@ import { scale } from 'react-native-size-matters';
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import { CREATE_USER, GET_USER, UPDATE_USER } from '../../../../stores/util';
+import {
+  CREATE_USER,
+  GET_USER,
+  HAWK_STALE_TIMESTAMP,
+  UPDATE_USER
+} from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
 /**
+ * Partial<T>, but deep recursive.
+ *
  * https://gist.github.com/navix/6c25c15e0a2d3cd0e5bce999e0086fc9
  */
 type DeepPartial<T> = {
@@ -114,20 +121,30 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Options for the `getUser` graphql query
+ */
+const getUserOptions = {
+  fetchPolicy: 'cache-and-network' as const,
+  variables: {
+    expoInstallationId: Constants.installationId
+  }
+};
+
 export function SelectNotifications(
   props: SelectNotificationsProps
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const { data: getUserData, loading: getUserLoading } = useQuery<
-    { getUser: DeepPartial<User> | null },
-    QueryGetUserArgs
-  >(GET_USER, {
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      expoInstallationId: Constants.installationId
-    }
-  });
+  const {
+    data: getUserData,
+    error: getUserError,
+    loading: getUserLoading,
+    refetch: getUserRefetch
+  } = useQuery<{ getUser: DeepPartial<User> | null }, QueryGetUserArgs>(
+    GET_USER,
+    getUserOptions
+  );
   const [createUser, { data: createUserData }] = useMutation<
     { createUser: DeepPartial<User> },
     MutationCreateUserArgs
@@ -154,6 +171,21 @@ export function SelectNotifications(
     // If the getUserData is still loading, just show `never`
     'never';
 
+  // Refetch on "Stale timestamp" hawk error
+  // FIXME this seems hacky, we should manage refetches from "Stale timestamp"
+  // globally. Maybe something like:
+  // https://github.com/apollographql/apollo-link/issues/541.
+  useEffect(() => {
+    if (getUserError?.message === HAWK_STALE_TIMESTAMP) {
+      // Wait 500ms, because on "Stale timestamp" error, we do a Hawk
+      // authenticateTimestampe to calibrate offset.
+      setTimeout(() => {
+        getUserRefetch(getUserOptions.variables);
+      }, 500);
+    }
+  }, [getUserError, getUserRefetch]);
+
+  // Create a new user if user does not exist on backend
   useEffect(() => {
     if (getUserLoading === false && getUserData?.getUser === null) {
       createUser({
@@ -162,6 +194,7 @@ export function SelectNotifications(
     }
   }, [createUser, getUserData, getUserLoading]);
 
+  // Optimistic UI
   useEffect(() => {
     // If we receive new updateUserData, then our optimistic UI is obsolete
     if (updateUserData) {

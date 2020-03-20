@@ -16,3 +16,4 @@
 
 export * from './fetchGpsPosition';
 export * from './gql';
+export * from './hawk';

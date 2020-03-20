@@ -22,26 +22,22 @@ import {
 } from '@apollo/client';
 import { ErrorResponse, onError } from '@apollo/link-error';
 import { RetryLink } from '@apollo/link-retry';
-import Hawk from '@hapi/hawk/lib/browser';
 import { userSchema } from '@shootismoke/graphql';
 import { persistCache } from 'apollo-cache-persist';
-import Constants from 'expo-constants';
-import { GraphQLError } from 'graphql';
 import { AsyncStorage } from 'react-native';
 
-import { IS_PROD, RELEASE_CHANNEL } from '../util/constants';
+import { IS_PROD } from '../util/constants';
 import { sentryError } from '../util/sentry';
+import {
+  credentials,
+  handleStaleTimestamp,
+  HAWK_STALE_TIMESTAMP,
+  hawkFetch
+} from './util';
 
 const BACKEND_URI = IS_PROD
   ? 'https://shootismoke.now.sh/api/graphql'
   : 'https://staging.shootismoke.now.sh/api/graphql';
-
-// Hawk credentials
-const credentials = {
-  id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
-  key: Constants.manifest.extra.hawkKey,
-  algorithm: 'sha256'
-};
 
 // FIXME Which type should this have?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,53 +47,35 @@ export type TCacheShape = any;
 let _client: ApolloClient<TCacheShape>;
 
 /**
- * Custom fetch for Hawk. Like `fetch`, but adds Hawk authentication on each
- * network call.
- *
- * @see https://www.apollographql.com/docs/react/v3.0-beta/networking/advanced-http-networking/#custom-fetching
+ * When we get errors from Apollo, we log them on Sentry, or do something else
+ * with them.
  */
-function hawkFetch(
-  input: RequestInfo,
-  init: RequestInit = {}
-): Promise<Response> {
-  // Set Hawk authorization header on each request
-  const { header } = Hawk.client.header(BACKEND_URI, 'POST', {
-    credentials
-  });
-
-  return fetch(input, {
-    ...init,
-    headers: { authorization: header, ...init.headers }
-  });
-}
-
-/**
- * Correctly handle `Stale timestamp` error from Hawk. We need to adjust local
- * timestamp offset.
- * @see https://github.com/hapijs/hawk/issues/86#issuecomment-20861575
- */
-function handleStaleTimestamp(error: GraphQLError): void {
-  try {
-    if (!error.extensions || !error.extensions.ts || !error.extensions.tsm) {
-      throw new Error(
-        `Stale timestamp response does not contain \`ts\` and \`tsm\` fields: ${JSON.stringify(
-          error.extensions
-        )}`
-      );
-    }
-
-    // Use authenticateTimestamp to adjust local timestamp offset
-    // https://github.com/hapijs/hawk/issues/86#issuecomment-20861575
-    const updated: boolean = Hawk.authenticateTimestamp(
-      error.extensions,
-      credentials
+function handleApolloError({
+  graphQLErrors,
+  networkError
+}: ErrorResponse): void {
+  // Send errors to Sentry
+  if (networkError) {
+    sentryError('Apollo')(
+      new Error(`[${networkError.name}]: ${networkError.message}`)
     );
+  }
 
-    if (!updated) {
-      throw new Error('authenticateTimestamp returned false');
+  if (graphQLErrors) {
+    // If we find a `Stale timestamp` error from hawk, we handle that
+    // separately. We would need to adjust the local timestamp offset.
+    const staleTimestampError = graphQLErrors.find(
+      ({ message }) => message === HAWK_STALE_TIMESTAMP
+    );
+    if (staleTimestampError) {
+      handleStaleTimestamp(staleTimestampError, credentials);
     }
-  } catch (error) {
-    sentryError('Apollo')(error);
+
+    graphQLErrors
+      .filter(({ message }) => message !== HAWK_STALE_TIMESTAMP)
+      .forEach(({ message, name }) =>
+        sentryError('Apollo')(new Error(`[${name}]: ${message}`))
+      );
   }
 }
 
@@ -123,36 +101,11 @@ export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
     cache,
     link: from([
       // Error handling
-      onError(({ graphQLErrors, networkError }: ErrorResponse): void => {
-        // Send errors to Sentry
-        if (networkError) {
-          sentryError('Apollo')(
-            new Error(`[${networkError.name}]: ${networkError.message}`)
-          );
-        }
-
-        if (graphQLErrors) {
-          // If we find a `Stale timestamp` error from hawk, we handle that
-          // separately. We would need to adjust the local timestamp offset.
-          const HAWK_STALE_TIMESTAMP = 'Hawk: Stale timestamp';
-          const staleTimestampError = graphQLErrors.find(
-            ({ message }) => message === HAWK_STALE_TIMESTAMP
-          );
-          if (staleTimestampError) {
-            handleStaleTimestamp(staleTimestampError);
-          }
-
-          graphQLErrors
-            .filter(({ message }) => message !== HAWK_STALE_TIMESTAMP)
-            .forEach(({ message, name }) =>
-              sentryError('Apollo')(new Error(`[${name}]: ${message}`))
-            );
-        }
-      }),
+      onError(handleApolloError),
       // Retry on error
       new RetryLink(),
       // Classic HTTP link
-      createHttpLink({ fetch: hawkFetch, uri: BACKEND_URI })
+      createHttpLink({ fetch: hawkFetch(BACKEND_URI), uri: BACKEND_URI })
     ]),
     typeDefs: [userSchema]
   });
