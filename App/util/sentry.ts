@@ -46,6 +46,6 @@ export function sentryError(namespace: string) {
       Sentry.captureException(error);
     }
 
-    console.log(`[${namespace}] ${error.message}`);
+    console.log(`[${namespace}]: ${error.message}`);
   };
 }
