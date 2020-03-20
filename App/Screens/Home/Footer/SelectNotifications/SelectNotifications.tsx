@@ -14,18 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { useMutation, useQuery } from '@apollo/client';
 import Switch from '@dooboo-ui/native-switch-toggle';
 import { FontAwesome } from '@expo/vector-icons';
-import {
-  Frequency,
-  MutationCreateUserArgs,
-  MutationUpdateUserArgs,
-  QueryGetUserArgs,
-  User
-} from '@shootismoke/graphql';
+import { Frequency } from '@shootismoke/graphql';
 import { Notifications } from 'expo';
-import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
 import * as C from 'fp-ts/lib/Console';
@@ -39,22 +31,15 @@ import { scale } from 'react-native-size-matters';
 import { ActionPicker } from '../../../../components';
 import { i18n } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
-import { CREATE_USER, GET_USER, UPDATE_USER } from '../../../../stores/util';
+import {
+  useGetOrCreateUser,
+  USER_VARIABLES,
+  useUpdateUser
+} from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
-
-/**
- * https://gist.github.com/navix/6c25c15e0a2d3cd0e5bce999e0086fc9
- */
-type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Array<infer U>
-    ? Array<DeepPartial<U>>
-    : T[P] extends ReadonlyArray<infer U>
-    ? ReadonlyArray<DeepPartial<U>>
-    : DeepPartial<T[P]>;
-};
 
 const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
 
@@ -119,25 +104,11 @@ export function SelectNotifications(
 ): React.ReactElement {
   const { style, ...rest } = props;
   const { api } = useContext(ApiContext);
-  const { data: getUserData, loading: getUserLoading } = useQuery<
-    { getUser: DeepPartial<User> | null },
-    QueryGetUserArgs
-  >(GET_USER, {
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      expoInstallationId: Constants.installationId
-    }
-  });
-  const [createUser, { data: createUserData }] = useMutation<
-    { createUser: DeepPartial<User> },
-    MutationCreateUserArgs
-  >(CREATE_USER, {
-    variables: { input: { expoInstallationId: Constants.installationId } }
-  });
-  const [updateUser, { data: updateUserData }] = useMutation<
-    { updateUser: DeepPartial<User> },
-    MutationUpdateUserArgs
-  >(UPDATE_USER);
+
+  // Data from backend
+  const { createUser, getUser } = useGetOrCreateUser();
+  const [updateUser, { data: updateUserData }] = useUpdateUser();
+
   // This state is used for optimistic UI: right after the user clicks, we set
   // this state to what the user clicked. When the actual mutation resolves, we
   // populate with the real data.
@@ -148,20 +119,13 @@ export function SelectNotifications(
     optimisticNotif ||
     // If we have up-to-date data from backend, take that
     updateUserData?.updateUser?.notifications?.frequency ||
-    createUserData?.createUser?.notifications?.frequency ||
+    createUser.data?.createUser?.notifications?.frequency ||
     // At the beginning, before anything happens, query from backend
-    getUserData?.getUser?.notifications?.frequency ||
+    getUser.data?.getUser?.notifications?.frequency ||
     // If the getUserData is still loading, just show `never`
     'never';
 
-  useEffect(() => {
-    if (getUserLoading === false && getUserData?.getUser === null) {
-      createUser({
-        variables: { input: { expoInstallationId: Constants.installationId } }
-      }).catch(sentryError('SelectNotifications'));
-    }
-  }, [createUser, getUserData, getUserLoading]);
-
+  // Optimistic UI
   useEffect(() => {
     // If we receive new updateUserData, then our optimistic UI is obsolete
     if (updateUserData) {
@@ -233,7 +197,7 @@ export function SelectNotifications(
           () =>
             updateUser({
               variables: {
-                expoInstallationId: Constants.installationId,
+                ...USER_VARIABLES,
                 input: { notifications }
               }
             }),
