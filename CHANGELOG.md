@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.3...v1.5.4) (2020-03-20)
+
+
+### Bug Fixes
+
+* Fix github actions expo build command ([#491](https://github.com/amaurymartiny/shoot-i-smoke/issues/491)) ([255f328](https://github.com/amaurymartiny/shoot-i-smoke/commit/255f32888624bd42af3460937f7f7e27cf61b43b))
+* Handle hawk stale timestamp error from backend ([#492](https://github.com/amaurymartiny/shoot-i-smoke/issues/492)) ([5796fd0](https://github.com/amaurymartiny/shoot-i-smoke/commit/5796fd05182e68082b413a05abdb85e9d6e9a6c2))
+
 ### [1.5.3](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.2...v1.5.3) (2020-03-19)
 
 ### [1.5.2](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.1...v1.5.2) (2020-03-17)
