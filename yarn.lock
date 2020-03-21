@@ -1875,10 +1875,10 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.8.tgz#328eb9d32aff370020f1ba17c1badc340c102300"
   integrity sha512-fa8PdUZOCbEjrRAgteXBIywMNMaXriFcaiy+2PTqBLZKBhi/EkHm4BsdTO1WyYEQwj61YgGzkMYRrlA+1yX4kw==
 
-"@shootismoke/dataproviders@^0.2.17":
-  version "0.2.17"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.17.tgz#0f6581e62ca44060a6849aaefcde3d9c91ff091c"
-  integrity sha512-t5a6J/x8tCIVIaFOCiOtrllrq6M7QiIdgTxoZWThFu52FaL8huVLD0dN9a5y6OJ0J3bkYsXx74sJTGYBCBB3aA==
+"@shootismoke/dataproviders@^0.2.23":
+  version "0.2.23"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.23.tgz#b563826c0093552bb517e8e21ff1d7627adb244d"
+  integrity sha512-0Gy4WVhLw/xPwrq43Nkksa2FwkXzFTohVx6umQYhf9feF/2vQhmji76jjHQ6dIl+8cMdHGvhkXo94EtcWKYCOQ==
   dependencies:
     "@shootismoke/convert" "^0.2.8"
     axios "^0.19.0"
@@ -1887,10 +1887,10 @@
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
 
-"@shootismoke/graphql@^0.2.19":
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.19.tgz#0a7fd0ac073e5bf0f12860d3a0ac5dd37b6437be"
-  integrity sha512-eYmubirdyj8RkAyxpyH9sBVqPETmPHTw1wf3oBOgJqXXiGI3Kyn6zOn9OqzWUtVolahUQ28eV/BCVkpYvA9MRg==
+"@shootismoke/graphql@^0.2.22":
+  version "0.2.22"
+  resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.22.tgz#78b8bffc62e48c466562a2ae36ca82004afca372"
+  integrity sha512-l2DHSSqBZ998qyY0P2B04VoyZdiWUOTMt5ng+UDlMhgX3qpMF0H4mYzQkeEYXLNaSOSxNk6wDtoac2Ol7XYQdw==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
