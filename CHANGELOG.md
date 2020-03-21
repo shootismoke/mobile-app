@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.7](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.6...v1.5.7) (2020-03-21)
+
+
+### Bug Fixes
+
+* Fix `t.response.data` undefined error ([#506](https://github.com/amaurymartiny/shoot-i-smoke/issues/506)) ([dd98291](https://github.com/amaurymartiny/shoot-i-smoke/commit/dd9829103974ce0e1288420b467f92648a619be8))
+* Fix production github actions ([#505](https://github.com/amaurymartiny/shoot-i-smoke/issues/505)) ([b44fa30](https://github.com/amaurymartiny/shoot-i-smoke/commit/b44fa30a223495358fc2f269ecdc0c40eda8820b))
+
 ### [1.5.6](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.5...v1.5.6) (2020-03-21)
 
 
