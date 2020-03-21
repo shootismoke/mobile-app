@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.5](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.4...v1.5.5) (2020-03-21)
+
+
+### Bug Fixes
+
+* Add name and client to ApolloClient ([#494](https://github.com/amaurymartiny/shoot-i-smoke/issues/494)) ([eaaa75c](https://github.com/amaurymartiny/shoot-i-smoke/commit/eaaa75c1dbed0141bfc26efd6202bcae9c994747))
+
 ### [1.5.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.3...v1.5.4) (2020-03-20)
 
 
