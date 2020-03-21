@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.5...v1.5.6) (2020-03-21)
+
+
+### Bug Fixes
+
+* Add detailed amplitude tracking for notifications ([#501](https://github.com/amaurymartiny/shoot-i-smoke/issues/501)) ([4e67d06](https://github.com/amaurymartiny/shoot-i-smoke/commit/4e67d064955496575cefe2c04cd78fc62fa1f442))
+* Add OpenAQ as credits in About page ([#502](https://github.com/amaurymartiny/shoot-i-smoke/issues/502)) ([c80b6cc](https://github.com/amaurymartiny/shoot-i-smoke/commit/c80b6cc74b43c433636d36c0903747661b1d0867))
+* Fix translation typo ([#503](https://github.com/amaurymartiny/shoot-i-smoke/issues/503)) ([9ae0c5d](https://github.com/amaurymartiny/shoot-i-smoke/commit/9ae0c5df2ce686062b46a4088a93db02512c91d6))
+* Remove duplicate in github action yaml ([#498](https://github.com/amaurymartiny/shoot-i-smoke/issues/498)) ([620bf0d](https://github.com/amaurymartiny/shoot-i-smoke/commit/620bf0d1605b91168782742970d2d0414cda3f5a))
+* Typo in Github action branch name ([#500](https://github.com/amaurymartiny/shoot-i-smoke/issues/500)) ([2456bf9](https://github.com/amaurymartiny/shoot-i-smoke/commit/2456bf9f4063daf8e9225ac2b1a3de6b6de7c94c))
+
 ### [1.5.5](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.4...v1.5.5) (2020-03-21)
 
 
