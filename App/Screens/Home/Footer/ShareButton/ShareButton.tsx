@@ -19,7 +19,7 @@ import { Share, StyleSheet, View, ViewProps } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 
 import { CircleButton } from '../../../../components';
-import { i18n } from '../../../../localization';
+import { t } from '../../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../../stores';
 import { sentryError } from '../../../../util/sentry';
 import { ShareImage } from './ShareImage';
@@ -57,13 +57,13 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
         format: 'png',
         quality: 1
       });
-      const message = i18n.t('home_share_message', {
+      const message = t('home_share_message', {
         city: currentLocation.city
           ? `in ${currentLocation.city}`
-          : i18n.t('home_share_message_here'),
+          : t('home_share_message_here'),
         cigarettes: Math.ceil(api.shootismoke.dailyCigarettes)
       });
-      const title = i18n.t('home_share_title');
+      const title = t('home_share_title');
 
       // FIXME imageUrl doesn't work on Android
       // https://github.com/amaurymartiny/shoot-i-smoke/issues/250

@@ -18,11 +18,11 @@ import { OpenAQFormat, stationName } from '@shootismoke/dataproviders';
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
-import { i18n } from '../../localization';
+import { t } from '../../localization';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import * as theme from '../../util/theme';
 
-const UNKNOWN_STATION = i18n.t('current_location_unknown_station');
+const UNKNOWN_STATION = t('current_location_unknown_station');
 
 interface CurrentLocationProps extends TextProps {
   measurement: OpenAQFormat;

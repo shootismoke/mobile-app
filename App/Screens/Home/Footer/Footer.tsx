@@ -19,7 +19,7 @@ import { StyleSheet, View, ViewProps } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { Button, CircleButton } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
@@ -80,11 +80,11 @@ export function Footer(props: FooterProps): React.ReactElement {
   function renderBigButton(): React.ReactElement {
     return isTooFar ? (
       <Button onPress={goToAboutWhySoFar}>
-        {i18n.t('home_btn_why_is_station_so_far').toUpperCase()}
+        {t('home_btn_why_is_station_so_far').toUpperCase()}
       </Button>
     ) : (
       <Button onPress={goToDetails}>
-        {i18n.t('home_btn_see_detailed_info').toUpperCase()}
+        {t('home_btn_see_detailed_info').toUpperCase()}
       </Button>
     );
   }

@@ -33,4 +33,6 @@ i18n.locale =
     ? 'en-US'
     : 'en';
 
-export { i18n };
+const { t } = i18n;
+
+export { i18n, t };
