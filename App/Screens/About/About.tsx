@@ -280,8 +280,7 @@ export function About(props: AboutProps): React.ReactElement {
           <Text onPress={handleOpenOpenAQ} style={theme.link}>
             {t('about_credits_data_from_link_2')}
           </Text>
-          {t('about_credits_data_from_message_3')}
-          {'\n'}
+          .{'\n'}
           {t('about_credits_source_code')}
           <Text onPress={handleOpenGithub} style={theme.link}>
             {t('about_credits_available_github')}
