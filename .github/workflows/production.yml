@@ -37,7 +37,7 @@ jobs:
       - run: yarn install
       - name: Set GITHUB_BRANCH
         id: vars
-        run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:10} # Remove refs/heads/
+        run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:11} # Remove refs/heads/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
       # Right now, the production release channel is `production-v1.5.1`
