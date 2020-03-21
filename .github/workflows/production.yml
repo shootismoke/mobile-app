@@ -21,7 +21,7 @@ env:
 jobs:
   # Publish to the current production release channel
   expo-production-publish:
-    if: startsWith(github.ref, 'refs/heads/production-v')
+    if: startsWith(github.ref, 'refs/heads/production-v') # On production-v* branches
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -47,7 +47,7 @@ jobs:
 
   # Build native binaries for testing or uploading to store
   expo-production-binaries:
-    if: startsWith(github.ref, 'refs/heads/v')
+    if: startsWith(github.ref, 'refs/tags/v') # On v* tags
     strategy:
       matrix:
         build: [ios, android-apk, android-app-bundle]
@@ -74,7 +74,7 @@ jobs:
       - run: yarn install
       - name: Set GITHUB_TAG
         id: vars
-        run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/head/
+        run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/tags/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
       - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
