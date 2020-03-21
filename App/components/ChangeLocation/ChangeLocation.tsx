@@ -24,7 +24,7 @@ import {
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import { i18n } from '../../localization';
+import { t } from '../../localization';
 import * as theme from '../../util/theme';
 import { CircleButton } from '../CircleButton';
 
@@ -56,7 +56,7 @@ export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {
   return (
     <TouchableOpacity style={[styles.container, style]} {...rest}>
       <CircleButton as={View} icon="md-pin" inverted style={styles.icon} />
-      <Text style={styles.label}>{i18n.t('home_header_change_location')}</Text>
+      <Text style={styles.label}>{t('home_header_change_location')}</Text>
     </TouchableOpacity>
   );
 }

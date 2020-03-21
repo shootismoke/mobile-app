@@ -23,7 +23,7 @@ import truncate from 'truncate';
 
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
-import { i18n } from '../../localization';
+import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
@@ -123,13 +123,13 @@ export function Details(props: DetailsProps): React.ReactElement {
               coordinate={station}
               image={stationIcon}
               ref={handleStationRef}
-              title={i18n.t('details_air_quality_station_marker')}
+              title={t('details_air_quality_station_marker')}
               description={truncate(station.description, 40)}
             />
             <Marker
               coordinate={currentLocation}
               image={homeIcon}
-              title={i18n.t('details_your_position_marker')}
+              title={t('details_your_position_marker')}
             />
           </MapView>
         )}

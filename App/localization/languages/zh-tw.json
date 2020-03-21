@@ -42,7 +42,7 @@
   "about_where_does_data_come_from_title": "資料從哪裡來？",
   "about_where_does_data_come_from_message_1": "空氣品質資料來自",
   "about_where_does_data_come_from_link_1": "WAQI",
-  "about_were_does_data_come_from_message_2": "此APP每小時將 PM2.5 的 AQI 格式轉換成直接的 PM 2.5 格式。",
+  "about_where_does_data_come_from_message_2": "此APP每小時將 PM2.5 的 AQI 格式轉換成直接的 PM 2.5 格式。",
   "about_why_is_the_station_so_far_title": "為何測站與我目前的位置差這麼遠？",
   "about_why_is_the_station_so_far_message": "由於每小時評估空氣品質數值的測站成本高昂，因此這份資料範圍仍舊是大都市或已開發地區為主，如果你離這些城市中心的距離較遠，數字結果可能不會很精確，也有可能實際數值比顯示的數值更好!",
   "about_weird_results_title": "這個結果是不正常的，或者與其他來源並不一致。",

@@ -22,7 +22,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
-import { i18n } from '../../localization';
+import { t } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';
@@ -73,10 +73,8 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
       <Image source={errorPicture} />
       <View>
         <Text style={styles.errorText}>
-          <Text style={styles.sorry}>
-            {i18n.t('error_screen_common_sorry')}
-          </Text>
-          {i18n.t('error_screen_error_cannot_load_cigarettes')}
+          <Text style={styles.sorry}>{t('error_screen_common_sorry')}</Text>
+          {t('error_screen_error_cannot_load_cigarettes')}
         </Text>
       </View>
       <Button
@@ -87,20 +85,20 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
         style={styles.chooseOther}
         type="primary"
       >
-        {i18n.t('error_screen_choose_other_location').toUpperCase()}
+        {t('error_screen_choose_other_location').toUpperCase()}
       </Button>
-      <Text style={theme.text}>{i18n.t('error_screen_error_description')}</Text>
+      <Text style={theme.text}>{t('error_screen_error_description')}</Text>
       <ScrollView style={styles.errorScrollView}>
         <TouchableOpacity onPress={(): void => setShowDetails(!showDetails)}>
           {showDetails ? (
             <Text style={styles.errorMessage}>
-              {i18n.t('error_screen_error_message', {
+              {t('error_screen_error_message', {
                 errorText: error && error.message
               })}
             </Text>
           ) : (
             <Text style={styles.errorMessage}>
-              {i18n.t('error_screen_show_details')}{' '}
+              {t('error_screen_show_details')}{' '}
               <Ionicons name="ios-arrow-forward" />
             </Text>
           )}
