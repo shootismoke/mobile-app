@@ -21,17 +21,30 @@ import {
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
+import { AmplitudeEvent, track } from '../../util/amplitude';
+
 interface ActionPickerProps extends TouchableOpacityProps {
   actionSheetOptions: ActionSheetOptions;
+  /**
+   * Which Amplitude event to track when opening the action picker.
+   */
+  amplitudeOpenEvent?: AmplitudeEvent;
   callback: (i: number) => void;
   children: (open: () => void) => React.ReactElement;
 }
 
 export function ActionPicker(props: ActionPickerProps): React.ReactElement {
-  const { actionSheetOptions, callback, children, ...rest } = props;
+  const {
+    actionSheetOptions,
+    amplitudeOpenEvent,
+    callback,
+    children,
+    ...rest
+  } = props;
   const { showActionSheetWithOptions } = useActionSheet();
 
   function handleActionSheet(): void {
+    amplitudeOpenEvent && track(amplitudeOpenEvent);
     showActionSheetWithOptions(actionSheetOptions, callback);
   }
 
