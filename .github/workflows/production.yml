@@ -1,6 +1,12 @@
 name: production
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - 'production-v*.*'
+    tags:
+      - 'v*.*.*'
+name: production
 
 env:
   SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
