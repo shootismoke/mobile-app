@@ -2,7 +2,6 @@ name: production
 
 on: [pull_request]
 
-
 env:
   SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
   SIS_AMPLITUDE_API_KEY: ${{ secrets.SIS_PRODUCTION_AMPLITUDE_API_KEY }}
@@ -36,8 +35,9 @@ jobs:
         run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:10} # Remove refs/heads/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      # Right now, the production version is v1.5.1
-      = run: echo "Publish to production-v1.5.1 instead of ${{ steps.vars.outputs.GITHUB_BRANCH }}"
+      # Right now, the production release channel is `production-v1.5.1`
+      # Starting from v1.6, the production release channels will be `production-v1.*`.
+      - run: echo "Publish to production-v1.5.1 instead of ${{ steps.vars.outputs.GITHUB_BRANCH }}"
       - run: expo publish --release-channel=production-v1.5.1
 
   # Build native binaries for testing or uploading to store
