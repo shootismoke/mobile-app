@@ -24,6 +24,7 @@ import { ErrorResponse, onError } from '@apollo/link-error';
 import { RetryLink } from '@apollo/link-retry';
 import { userSchema } from '@shootismoke/graphql';
 import { persistCache } from 'apollo-cache-persist';
+import Constants from 'expo-constants';
 import { AsyncStorage } from 'react-native';
 
 import { IS_PROD } from '../util/constants';
@@ -107,7 +108,9 @@ export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
       // Classic HTTP link
       createHttpLink({ fetch: hawkFetch(BACKEND_URI), uri: BACKEND_URI })
     ]),
-    typeDefs: [userSchema]
+    name: 'shootismoke-expo',
+    typeDefs: [userSchema],
+    version: `v${Constants.manifest.version}`
   });
 
   _client = client;
