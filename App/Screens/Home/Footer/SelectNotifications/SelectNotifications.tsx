@@ -236,9 +236,12 @@ export function SelectNotifications(
           .map(capitalize)
           .concat(i18n.t('home_frequency_notifications_cancel'))
       }}
+      amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
       callback={(buttonIndex): void => {
         if (buttonIndex === 4) {
           // 4 is cancel
+
+          track('HOME_SCREEN_NOTIFICATIONS_CANCEL');
           return;
         }
 
