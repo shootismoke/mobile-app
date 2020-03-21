@@ -156,11 +156,17 @@ export function SelectNotifications(
         () => Permissions.askAsync(Permissions.NOTIFICATIONS),
         'SelectNotifications'
       ),
-      TE.chain(({ status }) =>
-        status === 'granted'
-          ? TE.right(undefined)
-          : TE.left(new Error('Permission to access notifications was denied'))
-      ),
+      TE.chain(({ status }) => {
+        if (status === 'granted') {
+          return TE.right(undefined);
+        } else {
+          track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
+
+          return TE.left(
+            new Error('Permission to access notifications was denied')
+          );
+        }
+      }),
       TE.chain(() =>
         // Retry 3 times to get the Expo push token, sometimes we get an Error
         // "Couldn't get GCM token for device" on 1st try
@@ -208,6 +214,8 @@ export function SelectNotifications(
         error => {
           sentryError('SelectNotifications')(error);
           setOptimisticNotif('never');
+
+          track('HOME_SCREEN_NOTIFICATIONS_ERROR');
 
           return T.of(undefined);
         },
