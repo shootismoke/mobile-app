@@ -1,9 +1,12 @@
-name: tag
+name: production
 
 on:
   push:
+    branches:
+      - 'production-v*.*'
     tags:
       - 'v*.*.*'
+name: production
 
 env:
   SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
@@ -17,7 +20,35 @@ env:
   SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
 
 jobs:
+  # Publish to the current production release channel
+  expo-production-publish:
+    if: startsWith(github.ref, 'refs/heads/production-v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - run: yarn install
+      - name: Set GITHUB_BRANCH
+        id: vars
+        run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:10} # Remove refs/heads/
+      - name: Generate production app.json
+        run: ./scripts/generateAppJson.js
+      # Right now, the production release channel is `production-v1.5.1`
+      # Starting from v1.6, the production release channels will be `production-v1.*`.
+      - run: echo "Publish to production-v1.5.1 instead of ${{ steps.vars.outputs.GITHUB_BRANCH }}"
+      - run: expo publish --release-channel=production-v1.5.1
+
+  # Build native binaries for testing or uploading to store
   expo-production-binaries:
+    if: startsWith(github.ref, 'refs/heads/v')
     strategy:
       matrix:
         build: [ios, android-apk, android-app-bundle]
