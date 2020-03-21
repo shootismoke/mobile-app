@@ -17,7 +17,7 @@
 import React, { useContext } from 'react';
 
 import { ListItem } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
 
 const LOADING_TEXT = 'Fetching...';
@@ -36,7 +36,7 @@ export function GpsItem(): React.ReactElement | null {
 
   return (
     <ListItem
-      description={i18n.t('search_current_location')}
+      description={t('search_current_location')}
       icon="gps"
       onPress={handleClick}
       title={gps.name || LOADING_TEXT}

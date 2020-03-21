@@ -26,6 +26,8 @@ const UNTRACKED_ERRORS = [
   'Location request timed out',
   'Location request failed due to unsatisfied device settings',
   'Reverse geocoding returned no results',
+  // Notifications not allowed
+  'Permission to access notifications was denied',
   // No results from data providers
   'does not have PM2.5 measurings right now',
   'Cannot normalize, got 0 result'

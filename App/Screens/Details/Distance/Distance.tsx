@@ -18,7 +18,7 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
 import * as theme from '../../../util/theme';
 
@@ -44,12 +44,10 @@ export function Distance(props: DistanceProps): React.ReactElement {
   return (
     <Banner elevated shadowPosition="top" style={styles.banner}>
       <Text style={styles.distance}>
-        {i18n
-          .t('details_distance_label', {
-            distanceToStation: props.distance,
-            distanceUnit
-          })
-          .toUpperCase()}
+        {t('details_distance_label', {
+          distanceToStation: props.distance,
+          distanceUnit
+        }).toUpperCase()}
       </Text>
     </Banner>
   );

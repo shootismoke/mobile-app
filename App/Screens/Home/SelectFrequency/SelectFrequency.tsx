@@ -18,7 +18,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 
 import { BoxButton } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { Frequency, FrequencyContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
@@ -75,7 +75,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
         }}
         style={styles.boxButton}
       >
-        {i18n.t('home_frequency_daily')}
+        {t('home_frequency_daily')}
       </BoxButton>
       <BoxButton
         active={frequency === 'weekly'}
@@ -94,7 +94,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
         }}
         style={styles.boxButton}
       >
-        {i18n.t('home_frequency_weekly')}
+        {t('home_frequency_weekly')}
       </BoxButton>
 
       <BoxButton
@@ -112,7 +112,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
         }}
         style={styles.boxButton}
       >
-        {i18n.t('home_frequency_monthly')}
+        {t('home_frequency_monthly')}
       </BoxButton>
     </ScrollView>
   );

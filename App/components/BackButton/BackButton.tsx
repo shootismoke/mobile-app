@@ -27,7 +27,7 @@ import {
 } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
-import { i18n } from '../../localization';
+import { t } from '../../localization';
 import * as theme from '../../util/theme';
 
 interface BackButtonProps {
@@ -57,7 +57,7 @@ export function BackButton(props: BackButtonProps): React.ReactElement {
         style={styles.backButton}
       >
         <Image source={backIcon} />
-        <Text style={styles.backText}>{i18n.t('nav_btn_back')}</Text>
+        <Text style={styles.backText}>{t('nav_btn_back')}</Text>
       </TouchableOpacity>
     </View>
   );

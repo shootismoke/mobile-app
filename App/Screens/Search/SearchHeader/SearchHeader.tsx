@@ -19,7 +19,7 @@ import { Image, StyleSheet, TextInput } from 'react-native';
 
 import searchIcon from '../../../../assets/images/search.png';
 import { Banner } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import * as theme from '../../../util/theme';
 
 interface SearchHeaderProps {
@@ -53,7 +53,7 @@ export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
       <TextInput
         autoFocus
         onChangeText={onChangeSearch}
-        placeholder={i18n.t('search_header_input_placeholder')}
+        placeholder={t('search_header_input_placeholder')}
         placeholderTextColor="rgba(255, 255, 255, 0.6)"
         style={styles.input}
         underlineColorAndroid="transparent"

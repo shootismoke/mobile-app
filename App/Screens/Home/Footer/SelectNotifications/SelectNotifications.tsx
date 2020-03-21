@@ -29,7 +29,7 @@ import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import { ActionPicker } from '../../../../components';
-import { i18n } from '../../../../localization';
+import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import {
   useGetOrCreateUser,
@@ -156,11 +156,17 @@ export function SelectNotifications(
         () => Permissions.askAsync(Permissions.NOTIFICATIONS),
         'SelectNotifications'
       ),
-      TE.chain(({ status }) =>
-        status === 'granted'
-          ? TE.right(undefined)
-          : TE.left(new Error('Permission to access notifications was denied'))
-      ),
+      TE.chain(({ status }) => {
+        if (status === 'granted') {
+          return TE.right(undefined);
+        } else {
+          track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
+
+          return TE.left(
+            new Error('Permission to access notifications was denied')
+          );
+        }
+      }),
       TE.chain(() =>
         // Retry 3 times to get the Expo push token, sometimes we get an Error
         // "Couldn't get GCM token for device" on 1st try
@@ -209,6 +215,8 @@ export function SelectNotifications(
           sentryError('SelectNotifications')(error);
           setOptimisticNotif('never');
 
+          track('HOME_SCREEN_NOTIFICATIONS_ERROR');
+
           return T.of(undefined);
         },
         () => T.of(undefined)
@@ -224,13 +232,16 @@ export function SelectNotifications(
       actionSheetOptions={{
         cancelButtonIndex: 4,
         options: notificationsValues
-          .map(f => i18n.t(`home_frequency_${f}`)) // Translate
+          .map(f => t(`home_frequency_${f}`)) // Translate
           .map(capitalize)
-          .concat(i18n.t('home_frequency_notifications_cancel'))
+          .concat(t('home_frequency_notifications_cancel'))
       }}
+      amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
       callback={(buttonIndex): void => {
         if (buttonIndex === 4) {
           // 4 is cancel
+
+          track('HOME_SCREEN_NOTIFICATIONS_CANCEL');
           return;
         }
 
@@ -256,17 +267,14 @@ export function SelectNotifications(
 
           {isSwitchOn ? (
             <View>
-              <Text style={styles.label}>
-                {i18n.t('home_frequency_notify_me')}
-              </Text>
+              <Text style={styles.label}>{t('home_frequency_notify_me')}</Text>
               <Text style={styles.labelFrequency}>
-                {i18n.t(`home_frequency_${notif}`)}{' '}
-                <FontAwesome name="caret-down" />
+                {t(`home_frequency_${notif}`)} <FontAwesome name="caret-down" />
               </Text>
             </View>
           ) : (
             <Text style={styles.label}>
-              {i18n.t('home_frequency_allow_notifications')}
+              {t('home_frequency_allow_notifications')}
             </Text>
           )}
         </View>
