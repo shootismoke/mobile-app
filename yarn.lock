@@ -1875,10 +1875,10 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.8.tgz#328eb9d32aff370020f1ba17c1badc340c102300"
   integrity sha512-fa8PdUZOCbEjrRAgteXBIywMNMaXriFcaiy+2PTqBLZKBhi/EkHm4BsdTO1WyYEQwj61YgGzkMYRrlA+1yX4kw==
 
-"@shootismoke/dataproviders@^0.2.22":
-  version "0.2.22"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.22.tgz#4308d8d0a471865bc17f6a481e5611545c8872da"
-  integrity sha512-HmJZULNCjM9+dgMxrh05t5SELxTNLl/xYfZsGtPLyXZwZ1Rky6ThbGZEj2711Eg/zigxeP5vBvDeOdmYuipynA==
+"@shootismoke/dataproviders@^0.2.23":
+  version "0.2.23"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.23.tgz#b563826c0093552bb517e8e21ff1d7627adb244d"
+  integrity sha512-0Gy4WVhLw/xPwrq43Nkksa2FwkXzFTohVx6umQYhf9feF/2vQhmji76jjHQ6dIl+8cMdHGvhkXo94EtcWKYCOQ==
   dependencies:
     "@shootismoke/convert" "^0.2.8"
     axios "^0.19.0"
