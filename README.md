@@ -50,8 +50,8 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 | Release Channel                                                                               | Version | Description                                                                 | Url                                                                               |
 | --------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [Production](https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.5.6) | v1.5.6  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.5.6` |
-| [Staging](https://exp.host/@amaurymartiny/shoot-i-smoke)                                      | v1.5.6  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                                   |
+| [Production](https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.5.7) | v1.5.7  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.5.7` |
+| [Staging](https://exp.host/@amaurymartiny/shoot-i-smoke)                                      | v1.5.7  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                                   |
 
 ## :hammer: Build it yourself
 
