@@ -71,7 +71,7 @@
   "about_where_does_data_come_from_title": "Var kommer datan ifrån?",
   "about_where_does_data_come_from_message_1": "Luftkvalitetsdata kommer från",
   "about_where_does_data_come_from_link_1": "WAQI",
-  "about_were_does_data_come_from_message_2": "i form av PM2.5 AQI-nivåer som vanligtvis uppdateras varannan timme och konverteras till direkta PM2.5-nivåer av appen.",
+  "about_where_does_data_come_from_message_2": "i form av PM2.5 AQI-nivåer som vanligtvis uppdateras varannan timme och konverteras till direkta PM2.5-nivåer av appen.",
   "about_why_is_the_station_so_far_title": "Varför är stationen så långt borta från min nuvarande plats?",
   "about_why_is_the_station_so_far_message": "Eftersom stationer som mäter och kommunicerar luftkvalitetsresultat varje timme är dyra är uppgifterna fortfarande begränsade till välutvecklade regioner och större städer runt om i världen. Om du är långt ifrån ett mer framträdande stadscentrum kommer resultaten förmodligen inte att vara så exakta. Chansen är stor att din luft är bättre i det fallet åtminstone!",
   "about_weird_results_title": "Resultaten är konstiga eller oförenliga med andra källor!",

@@ -201,7 +201,7 @@ export function About(props: AboutProps): React.ReactElement {
           <Text onPress={handleOpenOpenAQ} style={theme.link}>
             {t('about_where_does_data_come_from_link_2')}
           </Text>
-          {t('about_were_does_data_come_from_message_3')}
+          {t('about_where_does_data_come_from_message_3')}
         </Text>
       </View>
 
@@ -230,7 +230,7 @@ export function About(props: AboutProps): React.ReactElement {
           <Text onPress={handleOpenOpenAQ} style={theme.link}>
             {t('about_weird_results_link_2')}
           </Text>
-          {t('about_weird_results_message_2')}
+          {t('about_weird_results_message_3')}
         </Text>
       </View>
 
