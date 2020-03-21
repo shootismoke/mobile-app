@@ -30,7 +30,7 @@ import {
 
 import locationIcon from '../../../../assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import * as theme from '../../../util/theme';
 
@@ -121,13 +121,13 @@ export function Header(props: HeaderProps): React.ReactElement {
             style={styles.currentLocation}
           />
           {renderInfo(
-            i18n.t('details_header_latest_update_label'),
-            `${formatDistanceToNow(new Date(api.pm25.date.local))} ${i18n.t(
+            t('details_header_latest_update_label'),
+            `${formatDistanceToNow(new Date(api.pm25.date.local))} ${t(
               'details_header_latest_update_ago'
             )}`
           )}
           {renderInfo(
-            i18n.t('details_header_primary_pollutant_label'),
+            t('details_header_primary_pollutant_label'),
             getDominantPol(api.normalized).toUpperCase()
           )}
 

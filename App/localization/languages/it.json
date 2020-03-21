@@ -71,7 +71,7 @@
   "about_where_does_data_come_from_title": "Da dove derivano i dati?",
   "about_where_does_data_come_from_message_1": "I dati di qualità aria derivano da",
   "about_where_does_data_come_from_link_1": "WAQI",
-  "about_were_does_data_come_from_message_2": "sotto forma di livelli AQI PM2.5 che di solito vengono aggiornati ogni ora e convertiti in livelli diretti PM2.5 dall'app.",
+  "about_where_does_data_come_from_message_2": "sotto forma di livelli AQI PM2.5 che di solito vengono aggiornati ogni ora e convertiti in livelli diretti PM2.5 dall'app.",
   "about_why_is_the_station_so_far_title": "Perché la stazione è così lontana dalla mia posizione attuale?",
   "about_why_is_the_station_so_far_message": "Poiché le stazioni che misurano e comunicano i risultati della qualità dell'aria ogni ora sono costose, i dati sono ancora limitati a regioni ben sviluppate e città più grandi di tutto il mondo. Se sei lontano da un centro urbano più importante, i risultati probabilmente non saranno così accurati. È probabile che la tua aria sia migliore in quel caso almeno!",
   "about_weird_results_title": "I risultati sono strani o incoerenti con altre fonti!",

@@ -30,7 +30,7 @@ import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
 import { BackButton } from '../../components';
-import { i18n } from '../../localization';
+import { t } from '../../localization';
 import { DistanceUnit, useDistanceUnit } from '../../stores/distanceUnit';
 import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
@@ -54,15 +54,15 @@ const handleOpenAmaury = (): void => {
   Linking.openURL('https://twitter.com/amaurymartiny');
 };
 
-const handleOpenAqi = (): void => {
-  Linking.openURL('http://aqicn.org');
+const handleOpenWaqi = (): void => {
+  Linking.openURL('https://aqicn.org');
 };
 
 const handleOpenOpenAQ = (): void => {
   Linking.openURL('https://openaq.org');
 };
 
-const handleOpenArticle = (): void => {
+const handleOpenBerkeley = (): void => {
   Linking.openURL(
     'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
   );
@@ -157,20 +157,14 @@ export function About(props: AboutProps): React.ReactElement {
 
       <View style={styles.section}>
         <Text style={styles.h2}>
-          {i18n.t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
+          {t('about_how_do_you_calculate_the_number_of_cigarettes_title')}
         </Text>
         <Text style={theme.text}>
-          {i18n.t(
-            'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
-          )}{' '}
-          <Text onPress={handleOpenArticle} style={theme.link}>
-            {i18n.t(
-              'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
-            )}
+          {t('about_how_do_you_calculate_the_number_of_cigarettes_message_1')}
+          <Text onPress={handleOpenBerkeley} style={theme.link}>
+            {t('about_how_do_you_calculate_the_number_of_cigarettes_link_1')}
           </Text>
-          {i18n.t(
-            'about_how_do_you_calculate_the_number_of_cigarettes_message_2'
-          )}
+          {t('about_how_do_you_calculate_the_number_of_cigarettes_message_2')}
           <Text style={styles.micro}>&micro;</Text>
           g/m&sup3;
           {' \u207D'}
@@ -180,7 +174,7 @@ export function About(props: AboutProps): React.ReactElement {
         <Box />
         <Text style={styles.articleLink}>
           (1){' '}
-          <Text onPress={handleOpenArticle} style={theme.link}>
+          <Text onPress={handleOpenBerkeley} style={theme.link}>
             http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
           </Text>
         </Text>
@@ -190,22 +184,24 @@ export function About(props: AboutProps): React.ReactElement {
         onMount={navigation.getParam('scrollInto') === 'aboutBetaInaccurate'}
         style={styles.section}
       >
-        <Text style={styles.h2}>{i18n.t('about_beta_inaccurate_title')}</Text>
-        <Text style={theme.text}>
-          {i18n.t('about_beta_inaccurate_message')}
-        </Text>
+        <Text style={styles.h2}>{t('about_beta_inaccurate_title')}</Text>
+        <Text style={theme.text}>{t('about_beta_inaccurate_message')}</Text>
       </ScrollIntoView>
 
       <View style={styles.section}>
         <Text style={styles.h2}>
-          {i18n.t('about_where_does_data_come_from_title')}
+          {t('about_where_does_data_come_from_title')}
         </Text>
         <Text style={theme.text}>
-          {i18n.t('about_where_does_data_come_from_message_1')}{' '}
-          <Text onPress={handleOpenAqi} style={theme.link}>
-            {i18n.t('about_where_does_data_come_from_link_1')}
-          </Text>{' '}
-          {i18n.t('about_were_does_data_come_from_message_2')}
+          {t('about_where_does_data_come_from_message_1')}
+          <Text onPress={handleOpenWaqi} style={theme.link}>
+            {t('about_where_does_data_come_from_link_1')}
+          </Text>
+          {t('about_where_does_data_come_from_message_2')}
+          <Text onPress={handleOpenOpenAQ} style={theme.link}>
+            {t('about_where_does_data_come_from_link_2')}
+          </Text>
+          {t('about_where_does_data_come_from_message_3')}
         </Text>
       </View>
 
@@ -216,27 +212,31 @@ export function About(props: AboutProps): React.ReactElement {
         style={styles.section}
       >
         <Text style={styles.h2}>
-          {i18n.t('about_why_is_the_station_so_far_title')}
+          {t('about_why_is_the_station_so_far_title')}
         </Text>
         <Text style={theme.text}>
-          {i18n.t('about_why_is_the_station_so_far_message')}
+          {t('about_why_is_the_station_so_far_message')}
         </Text>
       </ScrollIntoView>
 
       <View style={styles.section}>
-        <Text style={styles.h2}>{i18n.t('about_weird_results_title')}</Text>
+        <Text style={styles.h2}>{t('about_weird_results_title')}</Text>
         <Text style={theme.text}>
-          {i18n.t('about_weird_results_message_1')}{' '}
-          <Text onPress={handleOpenAqi} style={theme.link}>
-            {i18n.t('about_weird_results_link_1')}
-          </Text>{' '}
-          {i18n.t('about_weird_results_message_2')}
+          {t('about_weird_results_message_1')}
+          <Text onPress={handleOpenWaqi} style={theme.link}>
+            {t('about_weird_results_link_1')}
+          </Text>
+          {t('about_weird_results_message_2')}
+          <Text onPress={handleOpenOpenAQ} style={theme.link}>
+            {t('about_weird_results_link_2')}
+          </Text>
+          {t('about_weird_results_message_3')}
         </Text>
       </View>
 
       <View style={styles.distance}>
-        <Text style={styles.h2}>{i18n.t('about_settings_title')}</Text>
-        <Text style={theme.text}>{i18n.t('about_settings_distance_unit')}</Text>
+        <Text style={styles.h2}>{t('about_settings_title')}</Text>
+        <Text style={theme.text}>{t('about_settings_distance_unit')}</Text>
         <Picker
           onValueChange={(value: DistanceUnit): void => {
             track(
@@ -248,49 +248,50 @@ export function About(props: AboutProps): React.ReactElement {
           style={styles.distancePicker}
         >
           <Picker.Item
-            label={i18n.t('about_settings_distance_unit_km')}
+            label={t('about_settings_distance_unit_km')}
             value="km"
           />
           <Picker.Item
-            label={i18n.t('about_settings_distance_unit_mile')}
+            label={t('about_settings_distance_unit_mile')}
             value="mile"
           />
         </Picker>
       </View>
 
       <View style={styles.credits}>
-        <Text style={styles.h2}>{i18n.t('about_credits_title')}</Text>
+        <Text style={styles.h2}>{t('about_credits_title')}</Text>
         <Text style={theme.text}>
-          {i18n.t('about_credits_concept_and_development')}{' '}
+          {t('about_credits_concept_and_development')}{' '}
           <Text onPress={handleOpenAmaury} style={theme.link}>
             Amaury Martiny
           </Text>
           .{'\n'}
-          {i18n.t('about_credits_design_and_copywriting')}{' '}
+          {t('about_credits_design_and_copywriting')}{' '}
           <Text onPress={handleOpenMarcelo} style={theme.link}>
             Marcelo S. Coelho
           </Text>
           .{'\n'}
           {'\n'}
-          {i18n.t('about_credits_data_from')}{' '}
-          <Text onPress={handleOpenAqi} style={theme.link}>
-            WAQI
-          </Text>{' '}
-          and{' '}
-          <Text onPress={handleOpenOpenAQ} style={theme.link}>
-            OpenAQ
+          {t('about_credits_data_from_message_1')}
+          <Text onPress={handleOpenWaqi} style={theme.link}>
+            {t('about_credits_data_from_link_1')}
           </Text>
-          .{'\n'}
-          {i18n.t('about_credits_source_code')}{' '}
+          {t('about_credits_data_from_message_2')}
+          <Text onPress={handleOpenOpenAQ} style={theme.link}>
+            {t('about_credits_data_from_link_2')}
+          </Text>
+          {t('about_credits_data_from_message_3')}
+          {'\n'}
+          {t('about_credits_source_code')}
           <Text onPress={handleOpenGithub} style={theme.link}>
-            {i18n.t('about_credits_available_github')}
+            {t('about_credits_available_github')}
           </Text>
           .{'\n'}
           {'\n'}
-          Sh**t! I Smoke v
+          {Constants.manifest.name} v
           {Constants.manifest.revisionId || Constants.manifest.version}.
         </Text>
-        {/* Add languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
+        {/* Add changing languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
       </View>
     </CustomScrollView>
   );

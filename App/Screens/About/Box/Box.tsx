@@ -19,7 +19,7 @@ import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import cigarette from '../../../../assets/images/cigarette.png';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import * as theme from '../../../util/theme';
 
 const styles = StyleSheet.create({
@@ -99,7 +99,7 @@ export function Box(): React.ReactElement {
         <View style={styles.statisticsLeft}>
           <Image source={cigarette} style={styles.cigarette} />
           <Text style={styles.value} />
-          <Text style={styles.label}>{i18n.t('about_box_per_day')}</Text>
+          <Text style={styles.label}>{t('about_box_per_day')}</Text>
         </View>
         <Text style={styles.equal}>=</Text>
         <View style={styles.statisticsRight}>
@@ -110,7 +110,7 @@ export function Box(): React.ReactElement {
           </Text>
         </View>
       </View>
-      <Text style={styles.boxDescription}>{i18n.t('about_box_footnote')}</Text>
+      <Text style={styles.boxDescription}>{t('about_box_footnote')}</Text>
     </View>
   );
 }

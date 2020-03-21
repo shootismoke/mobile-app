@@ -25,7 +25,7 @@ import {
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
 
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext, Frequency } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
@@ -84,7 +84,7 @@ export function AdditionalInfo(
   if (isTooFar) {
     return (
       <View style={[theme.withPadding, style]} {...rest}>
-        <Text style={theme.text}>{i18n.t('home_station_too_far_message')}</Text>
+        <Text style={theme.text}>{t('home_station_too_far_message')}</Text>
       </View>
     );
   }
@@ -106,7 +106,7 @@ export function AdditionalInfo(
           <View style={styles.tag}>
             <Text style={styles.tagLabel}>BETA</Text>
           </View>
-          <Text style={theme.text}>{i18n.t('home_beta_not_accurate')}</Text>
+          <Text style={theme.text}>{t('home_beta_not_accurate')}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -17,7 +17,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
-import { i18n } from '../localization';
+import { t } from '../localization';
 import { noop } from '../util/noop';
 import { sentryError } from '../util/sentry';
 
@@ -43,14 +43,12 @@ export function DistanceUnitProvider({
 }: {
   children: React.ReactNode;
 }): React.ReactElement {
-  const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>(
-    i18n.locale === 'en-US' ? 'mile' : 'km'
-  );
+  const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>('km');
 
   function localizedDistanceUnit(format: 'short' | 'long'): string {
     return distanceUnit === 'km'
-      ? i18n.t(`distance_unit_${format}_km`)
-      : i18n.t(`distance_unit_${format}_mi`);
+      ? t(`distance_unit_${format}_km`)
+      : t(`distance_unit_${format}_mi`);
   }
 
   useEffect(() => {

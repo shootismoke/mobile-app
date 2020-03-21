@@ -26,7 +26,7 @@ import { scale } from 'react-native-size-matters';
 
 import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
-import { i18n } from '../../../localization';
+import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
 import { distanceToStation, isStationTooFar } from '../../../util/station';
@@ -90,11 +90,11 @@ export function Header(props: HeaderProps): React.ReactElement {
         <View style={styles.distance}>
           {isTooFar && <Image source={alert} style={styles.warning} />}
           <Text style={theme.text}>
-            {i18n.t('home_header_air_quality_station_distance', {
+            {t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
               distanceUnit: shortDistanceUnit
             })}{' '}
-            {!isGps && i18n.t('home_header_from_search')}
+            {!isGps && t('home_header_from_search')}
           </Text>
         </View>
       </View>

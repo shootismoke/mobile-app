@@ -29,7 +29,7 @@ import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import { ActionPicker } from '../../../../components';
-import { i18n } from '../../../../localization';
+import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import {
   useGetOrCreateUser,
@@ -232,9 +232,9 @@ export function SelectNotifications(
       actionSheetOptions={{
         cancelButtonIndex: 4,
         options: notificationsValues
-          .map(f => i18n.t(`home_frequency_${f}`)) // Translate
+          .map(f => t(`home_frequency_${f}`)) // Translate
           .map(capitalize)
-          .concat(i18n.t('home_frequency_notifications_cancel'))
+          .concat(t('home_frequency_notifications_cancel'))
       }}
       amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
       callback={(buttonIndex): void => {
@@ -267,17 +267,14 @@ export function SelectNotifications(
 
           {isSwitchOn ? (
             <View>
-              <Text style={styles.label}>
-                {i18n.t('home_frequency_notify_me')}
-              </Text>
+              <Text style={styles.label}>{t('home_frequency_notify_me')}</Text>
               <Text style={styles.labelFrequency}>
-                {i18n.t(`home_frequency_${notif}`)}{' '}
-                <FontAwesome name="caret-down" />
+                {t(`home_frequency_${notif}`)} <FontAwesome name="caret-down" />
               </Text>
             </View>
           ) : (
             <Text style={styles.label}>
-              {i18n.t('home_frequency_allow_notifications')}
+              {t('home_frequency_allow_notifications')}
             </Text>
           )}
         </View>
