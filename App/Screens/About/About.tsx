@@ -23,7 +23,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
@@ -41,13 +41,13 @@ const scrollViewOptions = {
   align: 'top' as 'top',
   insets: {
     bottom: 0,
-    top: scale(theme.spacing.normal)
-  }
+    top: scale(theme.spacing.normal),
+  },
 };
 
 export const aboutSections = {
   aboutBetaInaccurate: 'aboutBetaInaccurate',
-  aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle'
+  aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle',
 };
 
 const handleOpenAmaury = (): void => {
@@ -83,58 +83,58 @@ type AboutProps = NavigationInjectedProps<{
 const styles = StyleSheet.create({
   articleLink: {
     ...theme.text,
-    fontSize: scale(8)
+    fontSize: scale(8),
   },
   backButton: {
     marginBottom: theme.spacing.normal,
-    marginTop: theme.spacing.normal
+    marginTop: theme.spacing.normal,
   },
   credits: {
     borderTopColor: theme.iconBackgroundColor,
     borderTopWidth: 1,
     marginBottom: theme.spacing.normal,
-    paddingTop: theme.spacing.big
+    paddingTop: theme.spacing.big,
   },
   distance: {
     borderTopColor: theme.iconBackgroundColor,
     borderTopWidth: 1,
     marginBottom: theme.spacing.big,
-    paddingTop: theme.spacing.big
+    paddingTop: theme.spacing.big,
   },
   distancePicker: {
     ...Platform.select({
       ios: {
         marginBottom: scale(-60),
-        marginTop: scale(-40)
-      }
-    })
+        marginTop: scale(-40),
+      },
+    }),
   },
   distanceText: {
     ...theme.text,
     fontSize: scale(14),
     paddingLeft: theme.spacing.small,
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
   },
   h2: {
     ...theme.title,
     fontSize: scale(20),
     letterSpacing: 0,
     lineHeight: scale(24),
-    marginBottom: theme.spacing.small
+    marginBottom: theme.spacing.small,
   },
   micro: {
     ...Platform.select({
       ios: {
-        fontFamily: 'Georgia'
+        fontFamily: 'Georgia',
       },
       android: {
-        fontFamily: 'normal'
-      }
-    })
+        fontFamily: 'normal',
+      },
+    }),
   },
   section: {
-    marginBottom: theme.spacing.big
-  }
+    marginBottom: theme.spacing.big,
+  },
 });
 
 export function About(props: AboutProps): React.ReactElement {

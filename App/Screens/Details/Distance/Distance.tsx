@@ -29,12 +29,12 @@ interface DistanceProps {
 const styles = StyleSheet.create({
   banner: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   distance: {
     ...theme.title,
-    color: 'white'
-  }
+    color: 'white',
+  },
 });
 
 export function Distance(props: DistanceProps): React.ReactElement {
@@ -46,7 +46,7 @@ export function Distance(props: DistanceProps): React.ReactElement {
       <Text style={styles.distance}>
         {t('details_distance_label', {
           distanceToStation: props.distance,
-          distanceUnit
+          distanceUnit,
         }).toUpperCase()}
       </Text>
     </Banner>

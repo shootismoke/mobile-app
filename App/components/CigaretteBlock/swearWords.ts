@@ -23,5 +23,5 @@ export default [
   t('home_swear_word_geez'),
   t('home_swear_word_omg'),
   t('home_swear_word_crap'),
-  t('home_swear_word_arrgh')
+  t('home_swear_word_arrgh'),
 ];

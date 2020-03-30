@@ -43,19 +43,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     left: 0,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   cigarette: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   container: {
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   diagonal: {
     height: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2),
     position: 'absolute',
     transform: [{ rotate: '45deg' }, { scale: 1 }],
-    width: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2)
+    width: Math.floor(scale(CIGARETTES_HEIGHT) / Math.SQRT2),
   },
   head: {
     flexGrow: 1,
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     right: 0,
     top: 0,
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 });
 
 function getCigaretteActualLength(length: number, percentage: number): number {
@@ -85,21 +85,21 @@ function getMeasures(size: CigaretteSize, percentage: number): ViewStyle {
       return {
         height: Math.ceil(scale(13)),
         margin: Math.ceil(scale(12)),
-        width: getCigaretteActualLength(185, percentage)
+        width: getCigaretteActualLength(185, percentage),
       };
     }
     case 'medium': {
       return {
         height: Math.ceil(scale(7)),
         margin: Math.ceil(scale(6)),
-        width: getCigaretteActualLength(CIGARETTES_HEIGHT, percentage)
+        width: getCigaretteActualLength(CIGARETTES_HEIGHT, percentage),
       };
     }
     case 'small': {
       return {
         height: Math.ceil(scale(4)),
         margin: Math.ceil(scale(3)),
-        width: getCigaretteActualLength(41, percentage)
+        width: getCigaretteActualLength(41, percentage),
       };
     }
   }
@@ -118,7 +118,7 @@ function getStyle(
         height: height,
         marginTop: margin,
         marginRight: 100,
-        width: width
+        width: width,
       };
     }
     case 'vertical': {
@@ -126,7 +126,7 @@ function getStyle(
         height: width,
         marginRight: margin,
         marginTop: Math.ceil(scale(4)),
-        width: height
+        width: height,
       };
     }
     default:
@@ -145,7 +145,7 @@ function renderCigarette(
       style={[
         styles.container,
         getStyle(orientation, percentage, size),
-        additionalStyle
+        additionalStyle,
       ]}
     >
       <Image
@@ -155,7 +155,7 @@ function renderCigarette(
           // butt@3x is 840x63px
           orientation === 'vertical'
             ? { aspectRatio: 63 / 840, height: undefined, width: '100%' }
-            : { aspectRatio: 830 / 63, height: '100%', width: undefined }
+            : { aspectRatio: 830 / 63, height: '100%', width: undefined },
         ]}
       />
       <Image
@@ -165,7 +165,7 @@ function renderCigarette(
           // head@3x is 81x60px
           orientation === 'vertical'
             ? { aspectRatio: 60 / 81, height: undefined, width: '100%' }
-            : { aspectRatio: 81 / 60, height: '100%', width: undefined }
+            : { aspectRatio: 81 / 60, height: '100%', width: undefined },
         ]}
       />
     </View>
@@ -182,7 +182,7 @@ export function Cigarette(props: CigaretteProps): React.ReactElement {
         percentage >= 0.3
           ? { paddingTop: -(30 / 0.7) * percentage + 30 / 0.7 } // very empirical
           : undefined,
-        style
+        style,
       ]}
     >
       {renderCigarette(

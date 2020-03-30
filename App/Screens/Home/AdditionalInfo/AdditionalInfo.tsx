@@ -20,7 +20,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewProps
+  ViewProps,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -43,22 +43,22 @@ interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
 const styles = StyleSheet.create({
   linkToAbout: {
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   tag: {
     backgroundColor: '#C4C4C4',
     borderRadius: scale(10),
     marginRight: theme.spacing.mini,
     paddingHorizontal: scale(6),
-    paddingVertical: scale(3)
+    paddingVertical: scale(3),
   },
   tagLabel: {
     color: 'white',
     fontSize: scale(10),
     letterSpacing: scale(1),
     marginLeft: scale(2),
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export function AdditionalInfo(
@@ -98,7 +98,7 @@ export function AdditionalInfo(
             track('HOME_SCREEN_BETA_INACCURATE_CLICK');
             // eslint-disable-next-line
             navigation.navigate('About', {
-              scrollInto: aboutSections.aboutBetaInaccurate
+              scrollInto: aboutSections.aboutBetaInaccurate,
             });
           }}
           style={styles.linkToAbout}

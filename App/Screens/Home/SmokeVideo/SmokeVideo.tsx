@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
     height: Dimensions.get('screen').height,
     position: 'absolute',
     right: 0,
-    width: Dimensions.get('screen').width
+    width: Dimensions.get('screen').width,
   },
   overlay: {
-    flex: 1
+    flex: 1,
   },
   video: {
     bottom: 0,
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     width: Dimensions.get('screen').width,
-    zIndex: -1
-  }
+    zIndex: -1,
+  },
 });
 
 function getVideoStyle(cigarettes: number): ViewStyle {
@@ -53,7 +53,7 @@ function getVideoStyle(cigarettes: number): ViewStyle {
 }
 
 export function SmokeVideo({
-  cigarettes
+  cigarettes,
 }: SmokeVideoProps): React.ReactElement {
   return (
     <View style={styles.container}>

@@ -36,21 +36,21 @@ export function fetchReverseGeocode(
       () => ExpoLocation.reverseGeocodeAsync(currentLocation),
       'fetchReverseGeocode'
     ),
-    TE.chain(reverse =>
+    TE.chain((reverse) =>
       reverse.length
         ? TE.right(reverse[0])
         : TE.left(new Error('Reverse geocoding returned no results'))
     ),
-    TE.map(reverse => ({
+    TE.map((reverse) => ({
       ...currentLocation,
       city: reverse.city,
       country: reverse.country,
       name:
         [reverse.street, reverse.city, reverse.country]
-          .filter(x => x)
+          .filter((x) => x)
           .join(', ') ||
         // This case happens when e.g. we're in the middle of the ocean
-        [reverse.name, reverse.country].filter(x => x).join(', ')
+        [reverse.name, reverse.country].filter((x) => x).join(', '),
     }))
   );
 }
@@ -73,7 +73,7 @@ export function fetchGpsPosition(): TE.TaskEither<
       promiseToTE(
         () =>
           ExpoLocation.getCurrentPositionAsync({
-            timeout: 5000
+            timeout: 5000,
           }),
         // Uncomment to get other locations
         // Promise.resolve({

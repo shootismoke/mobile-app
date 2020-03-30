@@ -20,13 +20,13 @@ import {
   createAppContainer,
   CreateNavigatorConfig,
   NavigationRoute,
-  NavigationStackRouterConfig
+  NavigationStackRouterConfig,
 } from 'react-navigation';
 import {
   createStackNavigator,
   NavigationStackConfig,
   NavigationStackOptions,
-  NavigationStackProp
+  NavigationStackProp,
 } from 'react-navigation-stack';
 
 import { Api, ApiContext, ErrorContext } from '../stores';
@@ -49,7 +49,7 @@ function stackNavigatorOptions(
 > {
   return {
     cardStyle: {
-      backgroundColor: theme.backgroundColor
+      backgroundColor: theme.backgroundColor,
     },
     headerMode: 'none',
     initialRouteName,
@@ -57,8 +57,8 @@ function stackNavigatorOptions(
       // FIXME the `headerVisible` field has been moved away from this config
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      headerVisible: false
-    }
+      headerVisible: false,
+    },
   };
 }
 
@@ -69,17 +69,17 @@ const RootStack = createAppContainer(
   createStackNavigator(
     {
       About: {
-        screen: About
+        screen: About,
       },
       Details: {
-        screen: Details
+        screen: Details,
       },
       Home: {
-        screen: Home
+        screen: Home,
       },
       Search: {
-        screen: Search
-      }
+        screen: Search,
+      },
     },
     stackNavigatorOptions('Home')
   )
@@ -92,11 +92,11 @@ const ErrorStack = createAppContainer(
   createStackNavigator(
     {
       Error: {
-        screen: ErrorScreen
+        screen: ErrorScreen,
       },
       Search: {
-        screen: Search
-      }
+        screen: Search,
+      },
     },
     stackNavigatorOptions('Error')
   )

@@ -21,7 +21,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import * as theme from '../../util/theme';
@@ -38,14 +38,14 @@ interface BannerProps {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.primaryColor,
-    zIndex: 1
+    zIndex: 1,
   },
   content: {
     ...theme.withPadding,
     alignItems: 'center',
     flexDirection: 'row',
-    height: 48
-  }
+    height: 48,
+  },
 });
 
 export function Banner({
@@ -54,7 +54,7 @@ export function Banner({
   elevated,
   onClick,
   shadowPosition = 'bottom',
-  style
+  style,
 }: BannerProps): React.ReactElement {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Wrapper: any = asTouchable ? TouchableHighlight : View;
@@ -69,7 +69,7 @@ export function Banner({
           : null,
         elevated === 'very'
           ? theme.elevationShadowStyle(10, shadowPosition)
-          : null
+          : null,
       ]}
       underlayColor={asTouchable ? theme.primaryColor : undefined} // https://github.com/facebook/react-native/issues/11834
     >

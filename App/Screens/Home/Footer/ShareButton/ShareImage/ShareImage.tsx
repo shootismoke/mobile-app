@@ -23,18 +23,18 @@ import * as theme from '../../../../../util/theme';
 
 const styles = StyleSheet.create({
   cigaretteBlock: {
-    marginBottom: theme.spacing.normal
+    marginBottom: theme.spacing.normal,
   },
   container: {
     alignItems: 'center',
     flexDirection: 'column',
     paddingBottom: theme.spacing.big,
     paddingTop: theme.spacing.normal,
-    width: 480
+    width: 480,
   },
   currentLocation: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export function ShareImage(): React.ReactElement {

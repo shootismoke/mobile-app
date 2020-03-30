@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     // to achieve the same result (e.g. with a CSS equivalent of
     // `visible: hidden`), then open a PR
     left: -9999,
-    position: 'absolute'
-  }
+    position: 'absolute',
+  },
 });
 
 export function ShareButton(props: ShareButtonProps): React.ReactElement {
@@ -55,13 +55,13 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 
       const imageUrl = await captureRef(refViewShot, {
         format: 'png',
-        quality: 1
+        quality: 1,
       });
       const message = t('home_share_message', {
         city: currentLocation.city
           ? `in ${currentLocation.city}`
           : t('home_share_message_here'),
-        cigarettes: Math.ceil(api.shootismoke.dailyCigarettes)
+        cigarettes: Math.ceil(api.shootismoke.dailyCigarettes),
       });
       const title = t('home_share_title');
 

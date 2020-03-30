@@ -35,11 +35,11 @@ interface ContextType {
 const Context = createContext<ContextType>({
   distanceUnit: 'km',
   localizedDistanceUnit: () => '',
-  setDistanceUnit: noop
+  setDistanceUnit: noop,
 });
 
 export function DistanceUnitProvider({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }): React.ReactElement {

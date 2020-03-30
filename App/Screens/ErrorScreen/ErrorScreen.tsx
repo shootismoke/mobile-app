@@ -32,28 +32,28 @@ type ErrorScreenProps = NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   chooseOther: {
-    marginVertical: theme.spacing.normal
+    marginVertical: theme.spacing.normal,
   },
   container: {
     ...theme.fullScreen,
     ...theme.withPadding,
     flexGrow: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   errorMessage: {
-    ...theme.text
+    ...theme.text,
   },
   errorScrollView: {
     flex: 1,
-    marginVertical: theme.spacing.small
+    marginVertical: theme.spacing.small,
   },
   errorText: {
     ...theme.shitText,
-    marginTop: theme.spacing.big
+    marginTop: theme.spacing.big,
   },
   sorry: {
-    color: theme.primaryColor
-  }
+    color: theme.primaryColor,
+  },
 });
 
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
@@ -93,7 +93,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
           {showDetails ? (
             <Text style={styles.errorMessage}>
               {t('error_screen_error_message', {
-                errorText: error && error.message
+                errorText: error && error.message,
               })}
             </Text>
           ) : (

@@ -24,14 +24,14 @@ import * as names from './names.json';
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 0
+    borderWidth: 0,
   },
   picker: {
     height: 1000,
     position: 'absolute',
     top: 0,
-    width: 1000
-  }
+    width: 1000,
+  },
 });
 
 export function Language(): React.ReactElement {
@@ -55,7 +55,7 @@ export function Language(): React.ReactElement {
         selectedValue={i18n.locale}
         style={styles.picker}
       >
-        {Object.keys(i18n.translations).map(lang => (
+        {Object.keys(i18n.translations).map((lang) => (
           <Picker.Item key={lang} label={names[lang].nativeName} value={lang} />
         ))}
       </Picker>

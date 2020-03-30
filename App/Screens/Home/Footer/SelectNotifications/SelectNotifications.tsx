@@ -34,7 +34,7 @@ import { ApiContext } from '../../../../stores';
 import {
   useGetOrCreateUser,
   USER_VARIABLES,
-  useUpdateUser
+  useUpdateUser,
 } from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
@@ -62,7 +62,7 @@ function hex2rgba(hex: string, alpha = 1): string {
     throw new Error(`Invalid hex: ${hex}`);
   }
 
-  const [r, g, b] = matches.map(x => parseInt(x, 16));
+  const [r, g, b] = matches.map((x) => parseInt(x, 16));
 
   return `rgba(${r},${g},${b},${alpha})`;
 }
@@ -72,31 +72,31 @@ type SelectNotificationsProps = ViewProps;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   label: {
     ...theme.text,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   labelFrequency: {
     ...theme.text,
     color: theme.primaryColor,
     fontFamily: theme.gothamBlack,
     fontWeight: '900',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   switchCircle: {
     borderRadius: scale(11),
     height: scale(22),
-    width: scale(22)
+    width: scale(22),
   },
   switchContainer: {
     borderRadius: scale(14),
     height: scale(28),
     marginRight: theme.spacing.small,
     padding: scale(3),
-    width: scale(48)
-  }
+    width: scale(48),
+  },
 });
 
 export function SelectNotifications(
@@ -177,18 +177,18 @@ export function SelectNotifications(
               'SelectNotifications'
             ),
           {
-            retries: 3
+            retries: 3,
           }
         )
       ),
-      TE.map(expoPushToken => ({
+      TE.map((expoPushToken) => ({
         expoPushToken,
         frequency,
         timezone: Localization.timezone,
-        universalId: api.pm25.location
+        universalId: api.pm25.location,
       })),
       TE.chain(
-        sideEffect(notifications =>
+        sideEffect((notifications) =>
           TE.rightIO(
             C.log(
               `<SelectNotifications> - Update user ${JSON.stringify(
@@ -198,20 +198,20 @@ export function SelectNotifications(
           )
         )
       ),
-      TE.chain(notifications =>
+      TE.chain((notifications) =>
         promiseToTE(
           () =>
             updateUser({
               variables: {
                 ...USER_VARIABLES,
-                input: { notifications }
-              }
+                input: { notifications },
+              },
             }),
           'SelectNotifications'
         )
       ),
       TE.fold(
-        error => {
+        (error) => {
           sentryError('SelectNotifications')(error);
           setOptimisticNotif('never');
 
@@ -232,9 +232,9 @@ export function SelectNotifications(
       actionSheetOptions={{
         cancelButtonIndex: 4,
         options: notificationsValues
-          .map(f => t(`home_frequency_${f}`)) // Translate
+          .map((f) => t(`home_frequency_${f}`)) // Translate
           .map(capitalize)
-          .concat(t('home_frequency_notifications_cancel'))
+          .concat(t('home_frequency_notifications_cancel')),
       }}
       amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
       callback={(buttonIndex): void => {

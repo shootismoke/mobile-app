@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.iconBackgroundColor,
     flexGrow: 1,
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export function Background(props: BackgroundProps): React.ReactElement {

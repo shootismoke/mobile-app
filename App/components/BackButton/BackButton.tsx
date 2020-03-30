@@ -23,7 +23,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
@@ -38,12 +38,12 @@ interface BackButtonProps {
 const styles = StyleSheet.create({
   backButton: {
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   backText: {
     ...theme.text,
-    marginLeft: 9
-  }
+    marginLeft: 9,
+  },
 });
 
 export function BackButton(props: BackButtonProps): React.ReactElement {

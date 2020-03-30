@@ -38,17 +38,17 @@ export function AlgoliaItem(props: ItemProps): React.ReactElement {
         localeNames[0],
         city,
         county && county.length ? county[0] : null,
-        country
+        country,
       ]
-        .filter(_ => _)
-        .join(', ')
+        .filter((_) => _)
+        .join(', '),
     });
   };
 
   return (
     <ListItem
       description={[city, county && county.length ? county[0] : null, country]
-        .filter(_ => _)
+        .filter((_) => _)
         .join(', ')}
       icon="pin"
       onPress={handleClick}

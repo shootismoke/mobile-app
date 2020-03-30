@@ -27,12 +27,12 @@ import { ErrorContext } from './error';
 import {
   fetchGpsPosition,
   fetchReverseGeocode,
-  Location
+  Location,
 } from './util/fetchGpsPosition';
 
 const DEFAULT_LAT_LNG: LatLng = {
   latitude: 0,
-  longitude: 0
+  longitude: 0,
 };
 
 interface LocationWithSetter {
@@ -47,11 +47,11 @@ export const GpsLocationContext = createContext<Location | undefined>(
 export const CurrentLocationContext = createContext<LocationWithSetter>({
   ...DEFAULT_LAT_LNG,
   isGps: false,
-  setCurrentLocation: noop
+  setCurrentLocation: noop,
 });
 
 export function LocationContextProvider({
-  children
+  children,
 }: {
   children: JSX.Element;
 }): React.ReactElement {
@@ -66,7 +66,7 @@ export function LocationContextProvider({
       fetchGpsPosition(),
       TE.map(({ coords }) => coords),
       TE.chain(
-        sideEffect(gps => {
+        sideEffect((gps) => {
           // Set lat/lng for now, set the reverse location later
           // @see https://github.com/amaurymartiny/shoot-i-smoke/issues/323
           console.log(
@@ -80,7 +80,7 @@ export function LocationContextProvider({
           return TE.right(undefined);
         })
       ),
-      TE.chain(gps =>
+      TE.chain((gps) =>
         TE.rightTask(
           pipe(
             fetchReverseGeocode(gps),
@@ -89,12 +89,12 @@ export function LocationContextProvider({
         )
       ),
       TE.fold(
-        err => {
+        (err) => {
           setError(err);
 
           return T.of(undefined);
         },
-        location => {
+        (location) => {
           console.log(
             `<LocationContext> - Got reverse location ${JSON.stringify(
               location
@@ -119,7 +119,7 @@ export function LocationContextProvider({
             !!gpsLocation &&
             currentLocation.latitude === gpsLocation.latitude &&
             currentLocation.longitude === gpsLocation.longitude,
-          setCurrentLocation
+          setCurrentLocation,
         }}
       >
         {children}

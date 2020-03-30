@@ -31,7 +31,7 @@ export interface Credentials {
 export const credentials: Credentials = {
   id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
   key: Constants.manifest.extra.hawkKey,
-  algorithm: 'sha256'
+  algorithm: 'sha256',
 };
 
 /**
@@ -41,18 +41,18 @@ export const credentials: Credentials = {
  * @see https://www.apollographql.com/docs/react/v3.0-beta/networking/advanced-http-networking/#custom-fetching
  */
 export function hawkFetch(backendUri: string) {
-  return function(
+  return function (
     input: RequestInfo,
     init: RequestInit = {}
   ): Promise<Response> {
     // Set Hawk authorization header on each request
     const { header } = Hawk.client.header(backendUri, 'POST', {
-      credentials
+      credentials,
     });
 
     return fetch(input, {
       ...init,
-      headers: { authorization: header, ...init.headers }
+      headers: { authorization: header, ...init.headers },
     });
   };
 }

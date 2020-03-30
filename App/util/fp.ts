@@ -26,7 +26,7 @@ import {
   exponentialBackoff,
   limitRetries,
   monoidRetryPolicy,
-  RetryStatus
+  RetryStatus,
 } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 
@@ -52,7 +52,7 @@ export function sideEffect<E, A>(fn: (input: A) => TE.TaskEither<E, void>) {
       pipe(
         fn(input),
         TE.fold(
-          error =>
+          (error) =>
             pipe(
               T.fromIO(C.log(error)),
               T.map(() => input)
@@ -90,12 +90,12 @@ export function retry<A>(
 
   return retrying(
     policy,
-    status =>
+    (status) =>
       pipe(
         status.previousDelay,
         O.fold(
           () => TE.left(new Error('Empty Option<delay>')),
-          delay => teFn(status, delay)
+          (delay) => teFn(status, delay)
         )
       ),
     E.isLeft

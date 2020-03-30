@@ -18,7 +18,7 @@ import {
   ApolloClient,
   createHttpLink,
   from,
-  InMemoryCache
+  InMemoryCache,
 } from '@apollo/client';
 import { ErrorResponse, onError } from '@apollo/link-error';
 import { RetryLink } from '@apollo/link-retry';
@@ -33,7 +33,7 @@ import {
   credentials,
   handleStaleTimestamp,
   HAWK_STALE_TIMESTAMP,
-  hawkFetch
+  hawkFetch,
 } from './util';
 
 const BACKEND_URI = IS_PROD
@@ -53,7 +53,7 @@ let _client: ApolloClient<TCacheShape>;
  */
 function handleApolloError({
   graphQLErrors,
-  networkError
+  networkError,
 }: ErrorResponse): void {
   // Send errors to Sentry
   if (networkError) {
@@ -95,7 +95,7 @@ export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
     cache,
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore FIXME, I don't know how to fix here
-    storage: AsyncStorage
+    storage: AsyncStorage,
   });
 
   const client = new ApolloClient({
@@ -106,11 +106,11 @@ export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
       // Retry on error
       new RetryLink(),
       // Classic HTTP link
-      createHttpLink({ fetch: hawkFetch(BACKEND_URI), uri: BACKEND_URI })
+      createHttpLink({ fetch: hawkFetch(BACKEND_URI), uri: BACKEND_URI }),
     ]),
     name: 'shootismoke-expo',
     typeDefs: [userSchema],
-    version: `v${Constants.manifest.version}`
+    version: `v${Constants.manifest.version}`,
   });
 
   _client = client;

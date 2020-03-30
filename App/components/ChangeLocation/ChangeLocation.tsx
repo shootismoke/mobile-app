@@ -20,7 +20,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
-  View
+  View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
@@ -33,12 +33,12 @@ type ChangeLocationProps = TouchableOpacityProps;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icon: {
     alignSelf: 'center',
     paddingTop: scale(2), // Empirically looks most centered
-    marginBottom: theme.spacing.tiny
+    marginBottom: theme.spacing.tiny,
   },
   label: {
     color: theme.primaryColor,
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: scale(10),
     textAlign: 'center',
-    textTransform: 'uppercase'
-  }
+    textTransform: 'uppercase',
+  },
 });
 
 export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {

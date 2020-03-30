@@ -50,7 +50,7 @@ export function getCorrectLatLng(
   return {
     ...station,
     latitude: station.longitude,
-    longitude: station.latitude
+    longitude: station.latitude,
   };
 }
 

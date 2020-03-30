@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: theme.spacing.small
+    marginTop: theme.spacing.small,
   },
   share: {
-    marginRight: theme.spacing.small
-  }
+    marginRight: theme.spacing.small,
+  },
 });
 
 export function Footer(props: FooterProps): React.ReactElement {
@@ -68,7 +68,7 @@ export function Footer(props: FooterProps): React.ReactElement {
   function goToAboutWhySoFar(): void {
     track('HOME_SCREEN_ABOUT_WHY_SO_FAR_CLICK');
     navigation.navigate('About', {
-      scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle
+      scrollInto: aboutSections.aboutWhyIsTheStationSoFarTitle,
     });
   }
 

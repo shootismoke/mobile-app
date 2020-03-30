@@ -35,14 +35,14 @@ type DetailsProps = NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   map: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   mapContainer: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 // Holds the ref to the MapView.Marker representing the AQI station
@@ -95,7 +95,7 @@ export function Details(props: DetailsProps): React.ReactElement {
   const station = {
     description: stationName(api.pm25),
     title: stationName(api.pm25),
-    ...getCorrectLatLng(currentLocation, api.pm25.coordinates)
+    ...getCorrectLatLng(currentLocation, api.pm25.coordinates),
   };
 
   return (
@@ -114,7 +114,7 @@ export function Details(props: DetailsProps): React.ReactElement {
                 Math.abs(currentLocation.latitude - station.latitude) * 2,
               longitude: (currentLocation.longitude + station.longitude) / 2,
               longitudeDelta:
-                Math.abs(currentLocation.longitude - station.longitude) * 2
+                Math.abs(currentLocation.longitude - station.longitude) * 2,
             }}
             onMapReady={handleMapReady}
             style={styles.map}

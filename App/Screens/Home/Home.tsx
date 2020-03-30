@@ -23,7 +23,7 @@ import {
   ApiContext,
   CurrentLocationContext,
   Frequency,
-  FrequencyContext
+  FrequencyContext,
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
@@ -37,17 +37,17 @@ type HomeProps = NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   footer: {
-    marginBottom: theme.spacing.big
+    marginBottom: theme.spacing.big,
   },
   scroll: {
-    flex: 1
+    flex: 1,
   },
   withMargin: {
-    marginTop: theme.spacing.normal
-  }
+    marginTop: theme.spacing.normal,
+  },
 });
 
 interface Cigarettes {
@@ -87,7 +87,7 @@ export function Home(props: HomeProps): React.ReactElement {
   const [cigarettes, setCigarettes] = useState<Cigarettes>({
     count: api.shootismoke.dailyCigarettes,
     exact: true,
-    frequency
+    frequency,
   });
   useEffect(() => {
     setCigarettes({
@@ -96,7 +96,7 @@ export function Home(props: HomeProps): React.ReactElement {
         (frequency === 'daily' ? 1 : frequency === 'weekly' ? 7 : 30),
       // Since for weeky and monthyl, we just multiply, it's not exact
       exact: frequency === 'daily',
-      frequency
+      frequency,
     });
   }, [api, frequency]);
 

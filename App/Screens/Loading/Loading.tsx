@@ -29,13 +29,13 @@ let longWaitingTimeout: number | null = null;
 
 const styles = StyleSheet.create({
   dots: {
-    color: theme.primaryColor
+    color: theme.primaryColor,
   },
   text: {
     ...theme.title,
     fontSize: 18,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 function renderCough(index: number): React.ReactElement {
