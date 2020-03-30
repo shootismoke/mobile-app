@@ -21,7 +21,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
-  View
+  View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
@@ -39,20 +39,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: theme.spacing.mini
+    paddingVertical: theme.spacing.mini,
   },
   buttonText: {
     ...theme.title,
-    color: theme.primaryColor
+    color: theme.primaryColor,
   },
   icon: {
-    marginRight: theme.spacing.mini
+    marginRight: theme.spacing.mini,
   },
   primary: {
     borderColor: theme.primaryColor,
     borderRadius: scale(24),
-    borderWidth: scale(2)
-  }
+    borderWidth: scale(2),
+  },
 });
 
 export function Button(props: ButtonProps): React.ReactElement {
@@ -74,7 +74,7 @@ export function Button(props: ButtonProps): React.ReactElement {
       style={[
         styles.button,
         type === 'primary' ? styles.primary : undefined,
-        style
+        style,
       ]}
       {...rest}
     >

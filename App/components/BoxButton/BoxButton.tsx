@@ -20,7 +20,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
-  View
+  View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
@@ -33,7 +33,7 @@ interface BoxButtonProps extends TouchableWithoutFeedbackProps {
 
 const styles = StyleSheet.create({
   activeText: {
-    opacity: 1
+    opacity: 1,
   },
   boxButton: {
     ...theme.elevationShadowStyle(3),
@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.mini,
     paddingHorizontal: theme.spacing.small,
     paddingVertical: scale(6), // Padding for the shadow
-    shadowOpacity: 0.1
+    shadowOpacity: 0.1,
   },
   boxButtonText: {
     ...theme.shitText,
     opacity: theme.disabledOpacity,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export function BoxButton(props: BoxButtonProps): React.ReactElement {

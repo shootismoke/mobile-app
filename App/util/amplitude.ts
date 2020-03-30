@@ -68,7 +68,7 @@ export function setupAmplitude(): Promise<void> {
           Amplitude.setUserProperties({
             sisReleaseChannel: RELEASE_CHANNEL,
             sisRevisionId: Constants.manifest.revisionId || 'development',
-            sisVersion: Constants.manifest.version
+            sisVersion: Constants.manifest.version,
           });
         }
       )

@@ -16,7 +16,7 @@
 
 import {
   ActionSheetOptions,
-  useActionSheet
+  useActionSheet,
 } from '@expo/react-native-action-sheet';
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';

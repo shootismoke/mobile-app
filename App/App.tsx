@@ -31,7 +31,7 @@ import {
   FrequencyContextProvider,
   getApolloClient,
   LocationContextProvider,
-  TCacheShape
+  TCacheShape,
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
 import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
@@ -41,7 +41,7 @@ import { sentryError } from './util/sentry';
 if (IS_SENTRY_SET_UP) {
   Sentry.init({
     dsn: Constants.manifest.extra.sentryPublicDsn,
-    debug: true
+    debug: true,
   });
 
   Sentry.setRelease(RELEASE_CHANNEL);
@@ -58,10 +58,10 @@ export function App(): React.ReactElement {
     Promise.all([
       Font.loadAsync({
         'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
-        'gotham-book': require('../assets/fonts/Gotham-Book.ttf')
+        'gotham-book': require('../assets/fonts/Gotham-Book.ttf'),
       }),
       // Add Amplitude if available
-      setupAmplitude()
+      setupAmplitude(),
     ])
       .then(() => setReady(true))
       .catch(sentryError('App'));
@@ -69,14 +69,12 @@ export function App(): React.ReactElement {
 
   useEffect(() => {
     // Load the Offix client
-    getApolloClient()
-      .then(setClient)
-      .catch(sentryError('App'));
+    getApolloClient().then(setClient).catch(sentryError('App'));
   }, []);
 
   useEffect(() => {
     // Track user closing/re-opening the app
-    AppState.addEventListener('change', state => {
+    AppState.addEventListener('change', (state) => {
       if (state === 'active') {
         track('APP_REFOCUS');
       } else if (state === 'background') {
@@ -100,7 +98,7 @@ export function App(): React.ReactElement {
                   <LoadingBackground />
                 )}
                 {Platform.select({
-                  ios: <StatusBar barStyle="dark-content" />
+                  ios: <StatusBar barStyle="dark-content" />,
                 })}
               </DistanceUnitProvider>
             </FrequencyContextProvider>

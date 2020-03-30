@@ -23,7 +23,7 @@ import en from './languages/en.json';
 i18n.fallbacks = true;
 i18n.translations = {
   en,
-  'en-US': enUS
+  'en-US': enUS,
 };
 
 // If the locale is en-US, then we use the `en-US` file. For any other locale,

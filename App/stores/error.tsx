@@ -25,11 +25,11 @@ interface Context {
 
 export const ErrorContext = createContext<Context>({
   error: undefined,
-  setError: noop
+  setError: noop,
 });
 
 export function ErrorContextProvider({
-  children
+  children,
 }: {
   children: JSX.Element;
 }): React.ReactElement {

@@ -20,7 +20,7 @@ import {
   Image,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
@@ -41,21 +41,21 @@ const styles = StyleSheet.create({
     ...theme.withPadding,
     alignItems: 'center',
     flexDirection: 'row',
-    paddingTop: theme.spacing.normal
+    paddingTop: theme.spacing.normal,
   },
   currentLocation: {
     flex: 1,
-    marginRight: theme.spacing.mini
+    marginRight: theme.spacing.mini,
   },
   distance: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: theme.spacing.mini
+    marginTop: theme.spacing.mini,
   },
   warning: {
     marginRight: theme.spacing.mini,
-    marginTop: scale(-2) // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
-  }
+    marginTop: scale(-2), // FIXME We shouldn't need that, with `alignItems: 'center'` on .distance
+  },
 });
 
 export function Header(props: HeaderProps): React.ReactElement {
@@ -92,7 +92,7 @@ export function Header(props: HeaderProps): React.ReactElement {
           <Text style={theme.text}>
             {t('home_header_air_quality_station_distance', {
               distanceToStation: distance,
-              distanceUnit: shortDistanceUnit
+              distanceUnit: shortDistanceUnit,
             })}{' '}
             {!isGps && t('home_header_from_search')}
           </Text>

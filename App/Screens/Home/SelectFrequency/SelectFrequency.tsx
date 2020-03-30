@@ -25,14 +25,14 @@ import * as theme from '../../../util/theme';
 
 const styles = StyleSheet.create({
   boxButton: {
-    marginRight: theme.spacing.mini
+    marginRight: theme.spacing.mini,
   },
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   content: {
-    paddingHorizontal: theme.spacing.normal
-  }
+    paddingHorizontal: theme.spacing.normal,
+  },
 });
 
 export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
@@ -87,7 +87,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 
           if (scroll && scroll.current) {
             scroll.current.scrollTo({
-              x: dailyWidth + theme.spacing.mini
+              x: dailyWidth + theme.spacing.mini,
             });
           }
           handleChangeFrequency('weekly');

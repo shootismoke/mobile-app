@@ -36,18 +36,18 @@ const styles = StyleSheet.create({
   animationContainer: {
     display: 'flex',
     height: scale(CIGARETTES_HEIGHT),
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   cigarettesCount: {
-    color: theme.primaryColor
+    color: theme.primaryColor,
   },
   lottie: {
-    backgroundColor: theme.backgroundColor
+    backgroundColor: theme.backgroundColor,
   },
   shit: {
     ...theme.shitText,
-    marginTop: theme.spacing.normal
-  }
+    marginTop: theme.spacing.normal,
+  },
 });
 
 function getSwearWord(cigaretteCount: number): string {
@@ -100,7 +100,7 @@ export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
         cigarettesRounded === 1
           ? t('home_cigarettes_cigarette').toLowerCase()
           : t('home_cigarettes_cigarettes').toLowerCase(),
-      cigarettes: cigarettesRounded
+      cigarettes: cigarettesRounded,
     });
 
     const [firstPartText, secondPartText] = text.split('<');

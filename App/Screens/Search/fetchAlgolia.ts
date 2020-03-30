@@ -31,7 +31,7 @@ const algoliaUrls = [
   'https://places-dsn.algolia.net',
   'https://places-1.algolianet.com',
   'https://places-2.algolianet.com',
-  'https://places-3.algolianet.com'
+  'https://places-3.algolianet.com',
 ];
 
 // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/132720a17e15cdfcffade54dd4a23a21c1e16831/types/algoliasearch/index.d.ts#L2072
@@ -40,25 +40,25 @@ const AlgoliaHitT = t.exact(
     t.type({
       _geoloc: t.type({
         lat: t.number,
-        lng: t.number
+        lng: t.number,
       }),
       country: t.string,
       // eslint-disable-next-line
       locale_names: t.array(t.string),
-      objectID: t.string
+      objectID: t.string,
     }),
     t.partial({
       city: t.array(t.string),
-      county: t.array(t.string)
-    })
+      county: t.array(t.string),
+    }),
   ])
 );
 export type AlgoliaHit = t.TypeOf<typeof AlgoliaHitT>;
 
 const AxiosResponseT = t.type({
   data: t.type({
-    hits: t.array(AlgoliaHitT)
-  })
+    hits: t.array(AlgoliaHitT),
+  }),
 });
 
 export function fetchAlgolia(
@@ -66,7 +66,7 @@ export function fetchAlgolia(
   gps?: LatLng
 ): TE.TaskEither<Error, AlgoliaHit[]> {
   return retry(
-    status =>
+    (status) =>
       pipe(
         TE.rightIO(
           C.log(
@@ -88,26 +88,26 @@ export function fetchAlgolia(
                     : undefined,
                   hitsPerPage: 10,
                   language: 'en',
-                  query: search
+                  query: search,
                 },
                 {
-                  timeout: 5000
+                  timeout: 5000,
                 }
               ),
             'fetchAlgolia'
           )
         ),
-        TE.chain(response =>
+        TE.chain((response) =>
           T.of(
             pipe(
               AxiosResponseT.decode(response),
               E.mapLeft(failure),
-              E.mapLeft(errs => errs[0]), // Only show 1st error
+              E.mapLeft((errs) => errs[0]), // Only show 1st error
               E.mapLeft(Error)
             )
           )
         ),
-        TE.map(response => response.data.hits),
+        TE.map((response) => response.data.hits),
         TE.chain(
           sideEffect((hits: AlgoliaHit[]) =>
             TE.rightIO(
@@ -117,7 +117,7 @@ export function fetchAlgolia(
         )
       ),
     {
-      retries: algoliaUrls.length
+      retries: algoliaUrls.length,
     }
   );
 }

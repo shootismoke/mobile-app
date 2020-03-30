@@ -27,11 +27,11 @@ interface Context {
 
 export const FrequencyContext = createContext<Context>({
   frequency: 'daily',
-  setFrequency: noop
+  setFrequency: noop,
 });
 
 export function FrequencyContextProvider({
-  children
+  children,
 }: {
   children: JSX.Element;
 }): React.ReactElement {
@@ -41,7 +41,7 @@ export function FrequencyContextProvider({
     <FrequencyContext.Provider
       value={{
         frequency,
-        setFrequency
+        setFrequency,
       }}
     >
       {children}

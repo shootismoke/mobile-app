@@ -31,65 +31,65 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 20,
     marginBottom: 10,
-    padding: 10
+    padding: 10,
   },
   boxDescription: {
     ...theme.text,
     fontSize: 9,
     lineHeight: 16,
-    marginTop: 15
+    marginTop: 15,
   },
   cigarette: {
     left: 6,
     position: 'absolute',
-    bottom: 12
+    bottom: 12,
   },
   equal: {
     ...theme.text,
     color: theme.secondaryTextColor,
     fontSize: 44,
     lineHeight: 44,
-    marginHorizontal: 18
+    marginHorizontal: 18,
   },
   equivalence: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   label: {
     ...theme.title,
     color: theme.secondaryTextColor,
     fontSize: 12,
     fontWeight: '900',
-    letterSpacing: scale(0.5)
+    letterSpacing: scale(0.5),
   },
   micro: {
     ...Platform.select({
       ios: {
-        fontFamily: 'Georgia'
+        fontFamily: 'Georgia',
       },
       android: {
-        fontFamily: 'normal'
-      }
-    })
+        fontFamily: 'normal',
+      },
+    }),
   },
   statisticsLeft: {
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     marginTop: 36,
     paddingRight: 10,
-    width: 90
+    width: 90,
   },
   statisticsRight: {
     alignItems: 'center',
-    width: 90
+    width: 90,
   },
   value: {
     ...theme.text,
     color: theme.secondaryTextColor,
     fontSize: 44,
-    lineHeight: 44
-  }
+    lineHeight: 44,
+  },
 });
 
 export function Box(): React.ReactElement {

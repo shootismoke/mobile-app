@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: '#D2D2D2',
     height: 1,
-    marginHorizontal: theme.spacing.normal
-  }
+    marginHorizontal: theme.spacing.normal,
+  },
 });
 
 export function ListSeparator(): React.ReactElement {

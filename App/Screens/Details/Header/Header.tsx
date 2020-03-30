@@ -25,7 +25,7 @@ import {
   StyleSheet,
   Text,
   TextStyle,
-  View
+  View,
 } from 'react-native';
 
 import locationIcon from '../../../../assets/images/location.png';
@@ -40,10 +40,10 @@ interface HeaderProps {
 
 const styles = StyleSheet.create({
   backButton: {
-    marginBottom: theme.spacing.normal
+    marginBottom: theme.spacing.normal,
   },
   changeLocation: {
-    marginRight: theme.spacing.normal
+    marginRight: theme.spacing.normal,
   },
   container: {
     ...theme.elevationShadowStyle(2, 'bottom'),
@@ -51,33 +51,33 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: theme.spacing.small,
     paddingTop: theme.spacing.normal,
-    zIndex: 1
+    zIndex: 1,
   },
   content: {
-    flex: 1
+    flex: 1,
   },
   currentLocation: {
-    marginBottom: theme.spacing.normal
+    marginBottom: theme.spacing.normal,
   },
   info: {
     ...theme.text,
-    marginVertical: 5
+    marginVertical: 5,
   },
   label: {
     color: theme.primaryColor,
-    fontFamily: theme.gothamBlack
+    fontFamily: theme.gothamBlack,
   },
   layout: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   pollutantItem: {
-    flexBasis: '45%'
+    flexBasis: '45%',
   },
   pollutants: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: theme.spacing.normal
-  }
+    marginTop: theme.spacing.normal,
+  },
 });
 
 const renderInfo = (
@@ -132,7 +132,7 @@ export function Header(props: HeaderProps): React.ReactElement {
           )}
 
           <View style={styles.pollutants}>
-            {api.normalized.map(normalized => {
+            {api.normalized.map((normalized) => {
               return renderInfo(
                 `${normalized.parameter.toUpperCase()} AQI:`,
                 convert(

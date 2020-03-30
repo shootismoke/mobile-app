@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row',
     height: scale(CIGARETTES_HEIGHT),
-    width: scale(250)
+    width: scale(250),
   },
   innerContainer: {
     alignItems: 'flex-end',
     flexDirection: 'row',
-    flexWrap: 'wrap'
-  }
+    flexWrap: 'wrap',
+  },
 });
 
 export function Cigarettes(props: CigarettesProps): React.ReactElement {

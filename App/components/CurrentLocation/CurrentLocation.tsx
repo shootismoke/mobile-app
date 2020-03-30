@@ -31,8 +31,8 @@ interface CurrentLocationProps extends TextProps {
 
 const styles = StyleSheet.create({
   title: {
-    ...theme.title
-  }
+    ...theme.title,
+  },
 });
 
 export function CurrentLocation(

@@ -25,7 +25,7 @@ import { BackButton, ListSeparator } from '../../components';
 import {
   CurrentLocationContext,
   FrequencyContext,
-  GpsLocationContext
+  GpsLocationContext,
 } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
@@ -44,19 +44,19 @@ type SearchProps = NavigationInjectedProps;
 const styles = StyleSheet.create({
   backButton: {
     ...theme.withPadding,
-    marginVertical: theme.spacing.normal
+    marginVertical: theme.spacing.normal,
   },
   container: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   list: {
-    flex: 1
+    flex: 1,
   },
   noResults: {
     ...theme.text,
     ...theme.withPadding,
-    marginTop: theme.spacing.normal
-  }
+    marginTop: theme.spacing.normal,
+  },
 });
 
 function renderSeparator(): React.ReactElement {
@@ -97,13 +97,13 @@ export function Search(props: SearchProps): React.ReactElement {
       pipe(
         fetchAlgolia(s, gps),
         TE.fold(
-          err => {
+          (err) => {
             setLoading(false);
             setAlgoliaError(err);
 
             return T.of(undefined);
           },
-          hits => {
+          (hits) => {
             setLoading(false);
             setAlgoliaError(undefined);
             setHits(hits);

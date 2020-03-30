@@ -32,7 +32,7 @@ export const spacing = {
   mini: scale(10),
   small: scale(15),
   normal: scale(20),
-  big: scale(36)
+  big: scale(36),
 };
 
 /**
@@ -44,9 +44,9 @@ export const spacing = {
 const fixTextMargin = {
   ...Platform.select({
     ios: {
-      marginTop: scale(3)
-    }
-  })
+      marginTop: scale(3),
+    },
+  }),
 };
 
 /**
@@ -67,23 +67,23 @@ export function elevationShadowStyle(
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: scale((position === 'bottom' ? 1 : -1) * elevation)
+      height: scale((position === 'bottom' ? 1 : -1) * elevation),
     },
     shadowOpacity: disabledOpacity,
-    shadowRadius: scale(0.8 * elevation)
+    shadowRadius: scale(0.8 * elevation),
   };
 }
 
 export const fullScreen = {
   backgroundColor,
   flexGrow: 1,
-  paddingTop: Constants.statusBarHeight
+  paddingTop: Constants.statusBarHeight,
 };
 
 export const link = {
   color: primaryColor,
   fontFamily: gotham,
-  textDecorationLine: 'underline' as 'underline'
+  textDecorationLine: 'underline' as 'underline',
 };
 
 /**
@@ -95,7 +95,7 @@ export const shitText = {
   fontSize: scale(31),
   letterSpacing: scale(-1),
   lineHeight: scale(36),
-  ...fixTextMargin
+  ...fixTextMargin,
 };
 
 /**
@@ -106,7 +106,7 @@ export const text = {
   fontFamily: gotham,
   fontSize: scale(11),
   letterSpacing: scale(0.85),
-  lineHeight: scale(15)
+  lineHeight: scale(15),
 };
 
 export const title = {
@@ -115,13 +115,13 @@ export const title = {
   color: textColor,
   fontFamily: gothamBlack,
   fontSize: scale(12),
-  ...fixTextMargin
+  ...fixTextMargin,
 };
 
 export const withLetterSpacing = {
-  letterSpacing: scale(2)
+  letterSpacing: scale(2),
 };
 
 export const withPadding = {
-  paddingHorizontal: spacing.normal
+  paddingHorizontal: spacing.normal,
 };

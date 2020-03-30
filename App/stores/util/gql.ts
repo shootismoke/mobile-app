@@ -19,13 +19,13 @@ import {
   gql,
   MutationResult,
   MutationTuple,
-  QueryResult
+  QueryResult,
 } from '@apollo/client';
 import {
   MutationCreateUserArgs,
   MutationUpdateUserArgs,
   QueryGetUserArgs,
-  User
+  User,
 } from '@shootismoke/graphql';
 import Constants from 'expo-constants';
 import { useEffect, useState } from 'react';
@@ -95,7 +95,7 @@ const UPDATE_USER = gql`
  * Options for the `getUser` graphql query
  */
 export const USER_VARIABLES = {
-  expoInstallationId: Constants.installationId
+  expoInstallationId: Constants.installationId,
 };
 
 /**
@@ -118,13 +118,13 @@ export function useGetOrCreateUser(): {
     QueryGetUserArgs
   >(GET_USER, {
     fetchPolicy: 'cache-and-network' as const,
-    variables: USER_VARIABLES
+    variables: USER_VARIABLES,
   });
   const [createUser, createUserData] = useMutation<
     { createUser: DeepPartial<User> },
     MutationCreateUserArgs
   >(CREATE_USER, {
-    variables: { input: USER_VARIABLES }
+    variables: { input: USER_VARIABLES },
   });
 
   // The number of times we refetched.
@@ -134,7 +134,7 @@ export function useGetOrCreateUser(): {
   useEffect(() => {
     if (getUser.loading === false && getUser.data?.getUser === null) {
       createUser({
-        variables: { input: USER_VARIABLES }
+        variables: { input: USER_VARIABLES },
       }).catch(sentryError('SelectNotifications'));
     }
   }, [createUser, getUser.data, getUser.loading]);

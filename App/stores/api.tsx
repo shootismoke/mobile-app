@@ -18,7 +18,7 @@ import {
   LatLng,
   Normalized,
   OpenAQFormat,
-  ProviderPromise
+  ProviderPromise,
 } from '@shootismoke/dataproviders';
 import { aqicn, openaq } from '@shootismoke/dataproviders/lib/promise';
 import Constants from 'expo-constants';
@@ -63,8 +63,8 @@ function filterPm25(normalized: Normalized): Api {
       normalized,
       pm25: pm25[0],
       shootismoke: {
-        dailyCigarettes: pm25ToCigarettes(pm25[0].value)
-      }
+        dailyCigarettes: pm25ToCigarettes(pm25[0].value),
+      },
     };
   } else {
     throw new Error(
@@ -97,12 +97,12 @@ function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
   // Run these tasks parallely
   const tasks = [
     fetchForProvider(aqicn, {
-      token: Constants.manifest.extra.aqicnToken
+      token: Constants.manifest.extra.aqicnToken,
     }),
     fetchForProvider(openaq, {
       limit: 1,
-      parameter: ['pm25']
-    })
+      parameter: ['pm25'],
+    }),
   ];
 
   return promiseToTE(
@@ -131,7 +131,7 @@ interface ApiContextProviderProps {
 }
 
 export function ApiContextProvider({
-  children
+  children,
 }: ApiContextProviderProps): React.ReactElement {
   const { currentLocation, setCurrentLocation } = useContext(
     CurrentLocationContext
@@ -153,13 +153,13 @@ export function ApiContextProvider({
     pipe(
       raceApi(currentLocation),
       TE.fold(
-        error => {
+        (error) => {
           setError(error);
           track('API_DAILY_ERROR');
 
           return T.of(undefined);
         },
-        newApi => {
+        (newApi) => {
           setApi(newApi);
           track('API_DAILY_RESPONSE');
 

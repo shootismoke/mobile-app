@@ -30,7 +30,7 @@ const UNTRACKED_ERRORS = [
   'Permission to access notifications was denied',
   // No results from data providers
   'does not have PM2.5 measurings right now',
-  'Cannot normalize, got 0 result'
+  'Cannot normalize, got 0 result',
 ];
 
 /**
@@ -40,10 +40,10 @@ const UNTRACKED_ERRORS = [
  * @param error - The error to send
  */
 export function sentryError(namespace: string) {
-  return function(error: Error): void {
+  return function (error: Error): void {
     if (
       IS_SENTRY_SET_UP &&
-      !UNTRACKED_ERRORS.some(msg => error.message.includes(msg))
+      !UNTRACKED_ERRORS.some((msg) => error.message.includes(msg))
     ) {
       Sentry.captureException(error);
     }

@@ -21,7 +21,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
-  View
+  View,
 } from 'react-native';
 
 import gpsIcon from '../../../assets/images/location-big.png';
@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
     ...theme.withPadding,
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: theme.spacing.normal
+    paddingVertical: theme.spacing.normal,
   },
   description: {
-    ...theme.text
+    ...theme.text,
   },
   result: {
-    marginLeft: theme.spacing.normal
+    marginLeft: theme.spacing.normal,
   },
   title: {
-    ...theme.title
-  }
+    ...theme.title,
+  },
 });
 
 export function ListItem(props: ListItemProps): React.ReactElement {

@@ -32,18 +32,18 @@ const styles = StyleSheet.create({
   circle: {
     height: scale(36),
     paddingVertical: 0,
-    width: scale(36)
+    width: scale(36),
   },
   invertedCircle: {
     backgroundColor: theme.primaryColor,
-    borderWidth: 0
+    borderWidth: 0,
   },
   label: {
     ...theme.title,
     color: theme.primaryColor,
     fontSize: scale(9),
-    letterSpacing: 0
-  }
+    letterSpacing: 0,
+  },
 });
 
 /**
@@ -62,9 +62,7 @@ function renderIconOrText(
     />
   ) : text ? (
     <Text style={styles.label}>{text}</Text>
-  ) : (
-    undefined
-  );
+  ) : undefined;
 }
 
 export function CircleButton(props: CircleButtonProps): React.ReactElement {
@@ -75,7 +73,7 @@ export function CircleButton(props: CircleButtonProps): React.ReactElement {
       style={[
         styles.circle,
         inverted ? styles.invertedCircle : undefined,
-        style
+        style,
       ]}
       {...rest}
     >

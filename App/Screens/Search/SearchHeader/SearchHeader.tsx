@@ -29,20 +29,20 @@ interface SearchHeaderProps {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.primaryColor
+    backgroundColor: theme.primaryColor,
   },
   content: {
     ...theme.withPadding,
     alignItems: 'center',
     flexDirection: 'row',
-    height: 48
+    height: 48,
   },
   input: {
     ...theme.text,
     color: 'white',
     flexGrow: 1,
-    fontSize: 13
-  }
+    fontSize: 13,
+  },
 });
 
 export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
