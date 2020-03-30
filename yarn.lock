@@ -3865,14 +3865,7 @@ expo-av@~8.0.0:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
 
-expo-constants@*:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.1.tgz#87be02b6dae5c44a3246537452a0d77af15d46bf"
-  integrity sha512-n9S6lsEfTAhLY+x/Yrtc1rvVUhuEF+CcSWr/reAIGtk35+PYrAKfV4pbetRtqX9tl947bJv7kBQX6jpwYpeIpQ==
-  dependencies:
-    ua-parser-js "^0.7.19"
-
-expo-constants@~8.0.0:
+expo-constants@*, expo-constants@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-8.0.0.tgz#e2c5a072dacb4263ccfc57dcb4835ca791960d48"
   integrity sha512-NGRwSWfhwNFA9WVLXwqnSDPJJ4DdXTqEkl9Fr9PcyW5VCoFgz7uke256E1YZsYhOE0Ph365lu/5jjZs+MRmRog==
@@ -6243,6 +6236,11 @@ mkdirp@0.x, mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mkdirp@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.3.tgz#4cf2e30ad45959dddea53ad97d518b6c8205e1ea"
+  integrity sha512-6uCP4Qc0sWsgMLy1EOqqS/3rjDHOEnsStVr/4vtAIK2Y5i2kA7lFFejYrpIyiN9w0pYf4ckeCYT9f1r1P9KX5g==
+
 morgan@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
@@ -7731,16 +7729,16 @@ send@0.17.1:
     range-parser "~1.2.1"
     statuses "~1.5.0"
 
-sentry-expo@~2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-2.0.1.tgz#11e3e8c14f4c17e356f01f4c1b84474e3c880508"
-  integrity sha512-kfVBm1ezUROfHdqJyCi8cLNTvF2smcXE5fv+If68mgtRcH822qeyE6ACXbxOR+UT2FZFlPwXJATCr/vBMVujeg==
+sentry-expo@~2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-2.0.3.tgz#cea1794bdbb873bd72a0228e7a7971fd21c03fb3"
+  integrity sha512-9yi3W9wPyrpjgAUaFYi86he9iBtimTMSxgXsSDWDbTuMUmh/xRIoOvoUrf3L4Xb4zqbKFC3+mZWxLyfuc+hLpw==
   dependencies:
     "@expo/spawn-async" "^1.2.8"
     "@sentry/integrations" "^5.5.0"
     "@sentry/react-native" "^1.0.0"
     expo-constants "*"
-    mkdirp "^0.5.1"
+    mkdirp "^1.0.3"
     rimraf "^2.6.1"
 
 serialize-error@^2.1.0:
