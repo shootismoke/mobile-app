@@ -48,16 +48,12 @@ function stackNavigatorOptions(
   NavigationStackProp<NavigationRoute, any>
 > {
   return {
-    cardStyle: {
-      backgroundColor: theme.backgroundColor,
-    },
     headerMode: 'none',
     initialRouteName,
     defaultNavigationOptions: {
-      // FIXME the `headerVisible` field has been moved away from this config
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      headerVisible: false,
+      cardStyle: {
+        backgroundColor: theme.backgroundColor,
+      },
     },
   };
 }

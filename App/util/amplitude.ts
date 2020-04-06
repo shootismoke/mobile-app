@@ -70,6 +70,19 @@ export function setupAmplitude(): Promise<void> {
             sisRevisionId: Constants.manifest.revisionId || 'development',
             sisVersion: Constants.manifest.version,
           });
+          // Disable tracking all PII. Note: they are also disabled on
+          // Amplitude's dashboard.
+          // See https://help.amplitude.com/hc/en-us/articles/115002278527-iOS-SDK-Installation#disable-automatic-tracking-of-user-properties
+          // See https://help.amplitude.com/hc/en-us/articles/115002935588-Android-SDK-Installation#disable-automatic-tracking-of-user-properties
+          Amplitude.setTrackingOptions({
+            disableAdid: true,
+            disableCarrier: true,
+            disableDMA: true,
+            disableIDFA: true,
+            disableIDFV: true,
+            disableIPAddress: true,
+            disableLatLng: true,
+          });
         }
       )
     : Promise.resolve();
