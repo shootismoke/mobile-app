@@ -35,15 +35,12 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - run: yarn install
-      - name: Set GITHUB_BRANCH
+      - name: Set GITHUB_BRANCH # Will be production-v*.*
         id: vars
         run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:11} # Remove refs/heads/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      # Right now, the production release channel is `production-v1.5.1`
-      # Starting from v1.6, the production release channels will be `production-v1.*`.
-      - run: echo "Publish to production-v1.5.1 instead of ${{ steps.vars.outputs.GITHUB_BRANCH }}"
-      - run: expo publish --release-channel=production-v1.5.1
+      - run: expo publish --release-channel=${{ steps.vars.outputs.GITHUB_BRANCH }}
 
   # Build native binaries for testing or uploading to store
   expo-production-binaries:
@@ -72,7 +69,7 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - run: yarn install
-      - name: Set GITHUB_TAG
+      - name: Set GITHUB_TAG # Will be v*.*.*
         id: vars
         run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/tags/
       - name: Generate production app.json
