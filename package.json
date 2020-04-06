@@ -30,7 +30,7 @@
     "@types/react-native": "^0.62.0",
     "apollo-cache-persist": "^0.1.1",
     "date-fns": "^2.11.1",
-    "expo": "^36.0.0",
+    "expo": "^37.0.5",
     "expo-analytics-amplitude": "~8.0.0",
     "expo-av": "~8.0.0",
     "expo-constants": "~8.0.0",
