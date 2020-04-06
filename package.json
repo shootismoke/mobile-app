@@ -28,7 +28,7 @@
     "@types/haversine": "^1.1.4",
     "@types/i18n-js": "^3.0.1",
     "@types/p-any": "^1.1.3",
-    "@types/react-native": "^0.60.22",
+    "@types/react-native": "^0.62.1",
     "apollo-cache-persist": "^0.1.1",
     "date-fns": "^2.11.1",
     "expo": "^37.0.0",
