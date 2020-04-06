@@ -35,12 +35,12 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - run: yarn install
-      - name: Set GITHUB_BRANCH
+      - name: Set GITHUB_BRANCH # Will be production-v*.*
         id: vars
         run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:11} # Remove refs/heads/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      - run: expo publish --release-channel=production-${{ steps.vars.outputs.GITHUB_BRANCH }}
+      - run: expo publish --release-channel=${{ steps.vars.outputs.GITHUB_BRANCH }}
 
   # Build native binaries for testing or uploading to store
   expo-production-binaries:
@@ -69,7 +69,7 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - run: yarn install
-      - name: Set GITHUB_TAG
+      - name: Set GITHUB_TAG # Will be v*.*.*
         id: vars
         run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/tags/
       - name: Generate production app.json
