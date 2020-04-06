@@ -47,15 +47,18 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v') # On v* tags
     strategy:
       matrix:
-        build: [ios, android-apk, android-app-bundle]
+        build: [android-apk, android-app-bundle, ios]
         include:
           # Include, for each build, the expo build command
-          - build: ios
-            expo_build_command: build:ios
           - build: android-apk
             expo_build_command: build:android -t apk
           - build: android-app-bundle
             expo_build_command: build:android -t app-bundle
+          - build: ios
+            expo_build_command: build:ios
+      # expo-cli can only run one build at a time
+      # https://github.com/expo/expo-cli/issues/1820
+      max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
