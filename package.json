@@ -31,7 +31,7 @@
     "apollo-cache-persist": "^0.1.1",
     "date-fns": "^2.11.1",
     "expo": "^36.0.0",
-    "expo-analytics-amplitude": "~8.0.0",
+    "expo-analytics-amplitude": "~8.1.0",
     "expo-av": "~8.0.0",
     "expo-constants": "~8.0.0",
     "expo-font": "~8.0.0",

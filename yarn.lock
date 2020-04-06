@@ -3861,10 +3861,10 @@ expect@^24.9.0:
     jest-message-util "^24.9.0"
     jest-regex-util "^24.9.0"
 
-expo-analytics-amplitude@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-8.0.0.tgz#3749daf93a1650140a8610fe0645de05573d9aeb"
-  integrity sha512-Xvkbu+znoOEQueukEbq0IQTKWQWhvfv0QsT9y9Fq887bfz6c37cDfD6SLBj8NJ43qKlbZxegRe6kKv+o5rf5Nw==
+expo-analytics-amplitude@~8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-8.1.0.tgz#f50768ab58b0e35927acf47d87a3c9ead2b5650e"
+  integrity sha512-eekNhZt2Sgwo8JKQyGIYNVkQyQCKynXJigU1rgrrLrCdTX1qkZwyPPOqeqgruNqmsXTW7U0s/oHFe+nmnHLx3g==
 
 expo-app-loader-provider@~8.0.0:
   version "8.0.0"
