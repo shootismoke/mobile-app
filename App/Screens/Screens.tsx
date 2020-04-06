@@ -54,6 +54,10 @@ function stackNavigatorOptions(
       cardStyle: {
         backgroundColor: theme.backgroundColor,
       },
+      // FIXME the `headerVisible` field has been moved away from this config
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      headerVisible: false,
     },
   };
 }
