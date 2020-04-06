@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.7...v1.6.0) (2020-04-06)
+
+
+### Bug Fixes
+
+* **deps:** Update to Expo SDK37 ([#532](https://github.com/amaurymartiny/shoot-i-smoke/issues/532)) ([eb51486](https://github.com/amaurymartiny/shoot-i-smoke/commit/eb51486bdbdf4db6342fe8163c3253ca0e97fb04))
+
 ### [1.5.7](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.6...v1.5.7) (2020-03-21)
 
 
