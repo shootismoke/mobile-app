@@ -38,7 +38,7 @@
     },
     "icon": "assets/logos/ios/iTunesArtwork@3x.png",
     "ios": {
-      "buildNumber": "1.5.7",
+      "buildNumber": "1.6.0",
       "bundleIdentifier": "com.shitismoke.app",
       "config": {
         "googleMapsApiKey": "YOUR_OPTIONAL_KEY"
@@ -59,6 +59,6 @@
       "backgroundColor": "#EBE7DD",
       "image": "assets/logos/splash.png"
     },
-    "version": "1.5.7"
+    "version": "1.6.0"
   }
 }
