@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.0...v1.6.1) (2020-04-06)
+
+
+### Bug Fixes
+
+* Add back `headerVisible: false` ([#535](https://github.com/amaurymartiny/shoot-i-smoke/issues/535)) ([e38bb0d](https://github.com/amaurymartiny/shoot-i-smoke/commit/e38bb0d1623aa5338394a2338c75608f81953bed))
+* Add back headerVisible: false ([#534](https://github.com/amaurymartiny/shoot-i-smoke/issues/534)) ([45afc46](https://github.com/amaurymartiny/shoot-i-smoke/commit/45afc46029bc909830e5f27344be0ba49bdba51c))
+
 ## [1.6.0](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.5.7...v1.6.0) (2020-04-06)
 
 
