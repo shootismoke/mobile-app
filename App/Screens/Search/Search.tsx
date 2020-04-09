@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { StackNavigationProp } from '@react-navigation/stack';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
 
 import { BackButton, ListSeparator } from '../../components';
 import {
@@ -31,6 +31,7 @@ import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';
 import * as theme from '../../util/theme';
+import { RootStackParams } from '../routeParams';
 import { AlgoliaItem } from './AlgoliaItem';
 import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
 import { GpsItem } from './GpsItem';
@@ -39,7 +40,9 @@ import { SearchHeader } from './SearchHeader';
 // Timeout to detect when user stops typing
 let typingTimeout: number | null = null;
 
-type SearchProps = NavigationInjectedProps;
+interface SearchProps {
+  navigation: StackNavigationProp<RootStackParams, 'Search'>;
+}
 
 const styles = StyleSheet.create({
   backButton: {
@@ -64,6 +67,10 @@ function renderSeparator(): React.ReactElement {
 }
 
 export function Search(props: SearchProps): React.ReactElement {
+  const {
+    navigation: { goBack },
+  } = props;
+
   const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
   const { setFrequency } = useContext(FrequencyContext);
   const gps = useContext(GpsLocationContext);
@@ -153,12 +160,7 @@ export function Search(props: SearchProps): React.ReactElement {
 
   return (
     <View style={styles.container}>
-      <BackButton
-        onPress={(): void => {
-          props.navigation.goBack();
-        }}
-        style={styles.backButton}
-      />
+      <BackButton onPress={goBack} style={styles.backButton} />
       <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
       <FlatList
         data={hits}

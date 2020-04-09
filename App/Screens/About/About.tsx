@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import React from 'react';
 import {
@@ -27,13 +29,13 @@ import {
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
-import { NavigationInjectedProps } from 'react-navigation';
 
 import { BackButton } from '../../components';
 import { t } from '../../localization';
 import { DistanceUnit, useDistanceUnit } from '../../stores/distanceUnit';
 import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { RootStackParams } from '../routeParams';
 import { Box } from './Box';
 
 const CustomScrollView = wrapScrollView(ScrollView);
@@ -76,9 +78,10 @@ const handleOpenMarcelo = (): void => {
   Linking.openURL('https://www.behance.net/marceloscoelho');
 };
 
-type AboutProps = NavigationInjectedProps<{
-  scrollInto?: keyof typeof aboutSections;
-}>;
+interface AboutProps {
+  navigation: StackNavigationProp<RootStackParams, 'About'>;
+  route: RouteProp<RootStackParams, 'About'>;
+}
 
 const styles = StyleSheet.create({
   articleLink: {
@@ -138,7 +141,10 @@ const styles = StyleSheet.create({
 });
 
 export function About(props: AboutProps): React.ReactElement {
-  const { navigation } = props;
+  const {
+    navigation: { goBack },
+    route,
+  } = props;
   const { distanceUnit, setDistanceUnit } = useDistanceUnit();
 
   trackScreen('ABOUT');
@@ -148,12 +154,7 @@ export function About(props: AboutProps): React.ReactElement {
       scrollIntoViewOptions={scrollViewOptions}
       style={theme.withPadding}
     >
-      <BackButton
-        onPress={(): void => {
-          navigation.goBack();
-        }}
-        style={styles.backButton}
-      />
+      <BackButton onPress={goBack} style={styles.backButton} />
 
       <View style={styles.section}>
         <Text style={styles.h2}>
@@ -181,7 +182,7 @@ export function About(props: AboutProps): React.ReactElement {
       </View>
 
       <ScrollIntoView
-        onMount={navigation.getParam('scrollInto') === 'aboutBetaInaccurate'}
+        onMount={route.params.scrollInto === 'aboutBetaInaccurate'}
         style={styles.section}
       >
         <Text style={styles.h2}>{t('about_beta_inaccurate_title')}</Text>
@@ -206,9 +207,7 @@ export function About(props: AboutProps): React.ReactElement {
       </View>
 
       <ScrollIntoView
-        onMount={
-          navigation.getParam('scrollInto') === 'aboutWhyIsTheStationSoFarTitle'
-        }
+        onMount={route.params.scrollInto === 'aboutWhyIsTheStationSoFarTitle'}
         style={styles.section}
       >
         <Text style={styles.h2}>

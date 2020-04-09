@@ -15,10 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Ionicons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { NavigationInjectedProps } from 'react-navigation';
 
 import errorPicture from '../../../assets/images/error.png';
 import { Button } from '../../components';
@@ -27,8 +27,11 @@ import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';
 import * as theme from '../../util/theme';
+import { ErrorStackParams } from '../routeParams';
 
-type ErrorScreenProps = NavigationInjectedProps;
+interface ErrorScreenProps {
+  navigation: StackNavigationProp<ErrorStackParams, 'Error'>;
+}
 
 const styles = StyleSheet.create({
   chooseOther: {
