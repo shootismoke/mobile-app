@@ -19,7 +19,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { AppState, Platform, StatusBar } from 'react-native';
+import { AppState } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
 import { Screens } from './Screens';
@@ -97,9 +97,6 @@ export function App(): React.ReactElement {
                 ) : (
                   <LoadingBackground />
                 )}
-                {Platform.select({
-                  ios: <StatusBar barStyle="dark-content" />,
-                })}
               </DistanceUnitProvider>
             </FrequencyContextProvider>
           </ApiContextProvider>

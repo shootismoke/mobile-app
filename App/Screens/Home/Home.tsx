@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
 
 import { CigaretteBlock } from '../../components';
 import {
@@ -27,13 +27,16 @@ import {
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
+import { RootStackParams } from '../routeParams';
 import { AdditionalInfo } from './AdditionalInfo';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
 
-type HomeProps = NavigationInjectedProps;
+interface HomeProps {
+  navigation: StackNavigationProp<RootStackParams, 'Home'>;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -69,6 +72,8 @@ interface Cigarettes {
 }
 
 export function Home(props: HomeProps): React.ReactElement {
+  const { navigation } = props;
+
   const { api } = useContext(ApiContext);
   const { currentLocation } = useContext(CurrentLocationContext);
   const { frequency } = useContext(FrequencyContext);
@@ -106,7 +111,7 @@ export function Home(props: HomeProps): React.ReactElement {
       <Header
         onChangeLocationClick={(): void => {
           track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
-          props.navigation.navigate('Search');
+          navigation.navigate('Search');
         }}
       />
       <ScrollView bounces={false} style={styles.scroll}>
@@ -118,11 +123,11 @@ export function Home(props: HomeProps): React.ReactElement {
         <AdditionalInfo
           exactCount={cigarettes.exact}
           frequency={frequency}
-          navigation={props.navigation}
+          navigation={navigation}
           style={styles.withMargin}
         />
         <Footer
-          navigation={props.navigation}
+          navigation={navigation}
           style={[styles.withMargin, styles.footer]}
         />
       </ScrollView>

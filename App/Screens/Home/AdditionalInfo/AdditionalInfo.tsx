@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import {
   StyleSheet,
@@ -23,7 +24,6 @@ import {
   ViewProps,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { NavigationInjectedProps } from 'react-navigation';
 
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext, Frequency } from '../../../stores';
@@ -31,13 +31,15 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
+import { RootStackParams } from '../../routeParams';
 
-interface AdditionalInfoProps extends NavigationInjectedProps, ViewProps {
+interface AdditionalInfoProps extends ViewProps {
   /**
    * Whether the currently shown cigarettes are caculated exactly
    */
   exactCount: boolean;
   frequency: Frequency;
+  navigation: StackNavigationProp<RootStackParams, 'Home'>;
 }
 
 const styles = StyleSheet.create({

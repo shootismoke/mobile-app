@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { StackNavigationProp } from '@react-navigation/stack';
 import { stationName } from '@shootismoke/dataproviders';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { NavigationInjectedProps } from 'react-navigation';
 import truncate from 'truncate';
 
 import homeIcon from '../../../assets/images/home.png';
@@ -28,10 +28,13 @@ import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import { distanceToStation, getCorrectLatLng } from '../../util/station';
+import { RootStackParams } from '../routeParams';
 import { Distance } from './Distance';
 import { Header } from './Header';
 
-type DetailsProps = NavigationInjectedProps;
+interface DetailsProps {
+  navigation: StackNavigationProp<RootStackParams, 'Details'>;
+}
 
 const styles = StyleSheet.create({
   container: {

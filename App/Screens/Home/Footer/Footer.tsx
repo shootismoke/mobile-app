@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
 
 import { Button, CircleButton } from '../../../components';
 import { t } from '../../../localization';
@@ -25,10 +25,13 @@ import { track } from '../../../util/amplitude';
 import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
+import { RootStackParams } from '../../routeParams';
 import { SelectNotifications } from './SelectNotifications';
 import { ShareButton } from './ShareButton';
 
-interface FooterProps extends NavigationInjectedProps, ViewProps {}
+interface FooterProps extends ViewProps {
+  navigation: StackNavigationProp<RootStackParams, 'Home'>;
+}
 
 const styles = StyleSheet.create({
   secondLine: {
