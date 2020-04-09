@@ -21,6 +21,7 @@ import { t } from '../../localization';
 import { Api, ApiContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { trackScreen } from '../../util/amplitude';
+import { testIds } from '../../util/testId';
 import * as theme from '../../util/theme';
 import { Background } from './Background';
 
@@ -58,7 +59,7 @@ function renderText(
   if (api) ++coughs;
 
   return (
-    <Text>
+    <Text testID={testIds.Loading.coughText}>
       {t('loading_title_loading')}
       <Text style={styles.dots}>...</Text>
       {Array.from({ length: coughs }, (_, index) => index + 1).map(
