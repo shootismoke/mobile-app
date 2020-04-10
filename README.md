@@ -67,7 +67,7 @@ yarn install
 cp app.example.json app.json
 
 # Run the app with Expo
-yarn start --config app.json
+yarn start
 ```
 
 The [Expo](https://expo.io) packager will show, and you can either:
