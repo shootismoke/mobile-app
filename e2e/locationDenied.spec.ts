@@ -14,25 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { cleanup, init } from 'detox';
-import adapter from 'detox/runners/jest/adapter';
+import { by, element, expect } from 'detox';
+import { reloadApp } from 'detox-expo-helpers';
 
-const config = require('../package.json').detox;
+import { testIds } from '../App/util/testId';
 
-jest.setTimeout(120000);
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-jasmine.getEnv().addReporter(adapter);
+describe('Location denied', () => {
+  it('should go to Error page if location not allowed', async () => {
+    await reloadApp({
+      permissions: { location: 'never' },
+    });
 
-beforeAll(async () => {
-  await init(config);
-});
+    await expect(element(by.id(testIds.Error.screen))).toBeVisible();
+  });
 
-beforeEach(async () => {
-  await adapter.beforeEach();
-});
+  it('should show the error details', async () => {
+    await reloadApp({
+      permissions: { location: 'never' },
+    });
 
-afterAll(async () => {
-  await adapter.afterAll();
-  await cleanup();
+    await element(by.id(testIds.Error.showDetails)).tap();
+    await expect(element(by.id(testIds.Error.showDetails))).toHaveLabel(
+      'Error: Permission to access location was denied'
+    );
+  });
 });
