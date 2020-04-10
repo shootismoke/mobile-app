@@ -44,6 +44,7 @@ jobs:
           # Kill packager
           kill $PID
       - uses: actions/upload-artifact@master
+        if: always()
         with:
           name: test-e2e-artifacts
           path: ./artifacts
