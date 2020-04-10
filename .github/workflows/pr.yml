@@ -19,7 +19,7 @@ jobs:
         run: |
           yarn install
           yarn test
-  test:e2e:
+  test-e2e:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
