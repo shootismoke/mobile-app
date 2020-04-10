@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { by, element, expect } from 'detox';
+import { by, element, expect, waitFor } from 'detox';
 import { reloadApp } from 'detox-expo-helpers';
 
 import { testIds } from '../App/util/testId';
@@ -25,6 +25,9 @@ describe('Location denied', () => {
       permissions: { location: 'never' },
     });
 
+    waitFor(element(by.id(testIds.Error.screen)))
+      .toExist()
+      .withTimeout(30000);
     await expect(element(by.id(testIds.Error.screen))).toBeVisible();
   });
 
