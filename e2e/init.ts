@@ -19,7 +19,7 @@ import adapter from 'detox/runners/jest/adapter';
 
 const config = require('../package.json').detox;
 
-jest.setTimeout(180000);
+jest.setTimeout(30 * 60 * 1000); // 30 minutes timeout
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 jasmine.getEnv().addReporter(adapter);
