@@ -20,19 +20,17 @@ import { reloadApp } from 'detox-expo-helpers';
 import { testIds } from '../App/util/testId';
 
 describe('Location denied', () => {
-  it(
-    'should go to Error page if location not allowed',
-    async () => {
-      await reloadApp({
-        permissions: { location: 'never' },
-      });
+  // Load the app first, so that subsequent tests are faster (and don't timeout)
+  beforeAll(async () => {
+    await reloadApp();
+  });
 
-      console.log('RELOADED');
-
-      await expect(element(by.id(testIds.Error.screen))).toBeVisible();
-    },
-    30 * 60 * 1000
-  );
+  it('should go to Error page if location not allowed', async () => {
+    await reloadApp({
+      permissions: { location: 'never' },
+    });
+    await expect(element(by.id(testIds.Error.screen))).toBeVisible();
+  });
 
   it('should show the error details', async () => {
     await reloadApp({
