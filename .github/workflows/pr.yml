@@ -37,7 +37,7 @@ jobs:
       - name: Run E2E Tests
         run: |
           # Start packager in background
-          yarn start --tunnel &
+          yarn start &
           PID=$(ps $! | tail -1 | awk '{print $1}')
           # Run e2e test
           yarn test:e2e
