@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
     "start": "expo start",
-    "test:e2e": "detox test --configuration ios.sim"
+    "test:e2e": "detox test --configuration ios.sim --record-videos"
   },
   "detox": {
     "configurations": {
