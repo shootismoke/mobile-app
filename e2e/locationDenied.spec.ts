@@ -27,6 +27,8 @@ describe('Location denied', () => {
         permissions: { location: 'never' },
       });
 
+      console.log('RELOADED');
+
       await expect(element(by.id(testIds.Error.screen))).toBeVisible();
     },
     30 * 60 * 1000
