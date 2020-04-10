@@ -3,6 +3,7 @@
 # expo
 .expo/
 .tmp/
+bin/
 
 # dependencies
 /node_modules

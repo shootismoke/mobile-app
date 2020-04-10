@@ -2,6 +2,12 @@ name: pr
 
 on: [pull_request]
 
+env:
+  SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
+  SIS_SENTRY_ORG: ${{ secrets.SIS_STAGING_SENTRY_ORG }}
+  SIS_SENTRY_PROJECT: ${{ secrets.SIS_STAGING_SENTRY_PROJECT }}
+  SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_STAGING_SENTRY_AUTH_TOKEN }}
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -11,11 +17,34 @@ jobs:
         run: |
           yarn install
           yarn lint
-  test:
-    runs-on: ubuntu-latest
+  test-e2e:
+    runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Run yarn test
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-cache: true
+      - name: Install applesimutils
         run: |
-          yarn install
-          yarn test
+          brew tap wix/brew
+          brew install applesimutils
+      - run: yarn install
+      - name: Generate staging app.json
+        run: ./scripts/generateAppJson.js
+      - name: Download ExpoClient binary
+        run: ./e2e/dl_expo_bins.sh
+      - name: Run E2E Tests
+        run: |
+          # Start packager in background
+          yarn start >/dev/null &
+          PID=$(ps $! | tail -1 | awk '{print $1}')
+          # Run e2e test
+          yarn test:e2e
+          # Kill packager
+          kill $PID
+      - uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: test-e2e-artifacts
+          path: ./artifacts

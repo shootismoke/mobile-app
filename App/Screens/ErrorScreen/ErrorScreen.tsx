@@ -26,6 +26,7 @@ import { t } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';
+import { testIds } from '../../util/testId';
 import * as theme from '../../util/theme';
 import { ErrorStackParams } from '../routeParams';
 
@@ -72,7 +73,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
   }, [error]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={testIds.Error.screen}>
       <Image source={errorPicture} />
       <View>
         <Text style={styles.errorText}>
@@ -92,7 +93,10 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
       </Button>
       <Text style={theme.text}>{t('error_screen_error_description')}</Text>
       <ScrollView style={styles.errorScrollView}>
-        <TouchableOpacity onPress={(): void => setShowDetails(!showDetails)}>
+        <TouchableOpacity
+          onPress={(): void => setShowDetails(!showDetails)}
+          testID={testIds.Error.showDetails}
+        >
           {showDetails ? (
             <Text style={styles.errorMessage}>
               {t('error_screen_error_message', {
