@@ -12,7 +12,7 @@ env:
   SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_STAGING_SENTRY_AUTH_TOKEN }}
 
 jobs:
-  expo-publish-staging:
+  expo-staging:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

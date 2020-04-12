@@ -19,32 +19,9 @@ env:
   SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
 
 jobs:
-  # Publish to the current production release channel
-  expo-production-publish:
-    if: startsWith(github.ref, 'refs/heads/production-v') # On production-v* branches
+  # Build native binaries on production release channel
+  expo-production:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - uses: expo/expo-github-action@v5
-        with:
-          expo-version: 3.x
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-          expo-cache: true
-      - run: yarn install
-      - name: Set GITHUB_BRANCH # Will be production-v*.*
-        id: vars
-        run: echo ::set-output name=GITHUB_BRANCH::${GITHUB_REF:11} # Remove refs/heads/
-      - name: Generate production app.json
-        run: ./scripts/generateAppJson.js
-      - run: expo publish --release-channel=${{ steps.vars.outputs.GITHUB_BRANCH }}
-
-  # Build native binaries for testing or uploading to store
-  expo-production-binaries:
-    if: startsWith(github.ref, 'refs/tags/v') # On v* tags
     strategy:
       matrix:
         build: [android-apk, android-app-bundle, ios]
@@ -59,7 +36,6 @@ jobs:
       # expo-cli can only run one build at a time
       # https://github.com/expo/expo-cli/issues/1820
       max-parallel: 1
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -72,9 +48,14 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - run: yarn install
-      - name: Set GITHUB_TAG # Will be v*.*.*
+      - name: Set RELEASE_CHANNEL # Will be v*.* (major.minor)
+        if: startsWith(github.ref, 'refs/heads/production-v')
         id: vars
-        run: echo ::set-output name=GITHUB_TAG::${GITHUB_REF:10} # Remove /refs/tags/
+        run: echo ::set-output name=RELEASE_CHANNEL::${GITHUB_REF:22} # Remove refs/heads/production-
+      - name: Set RELEASE_CHANNEL # Will be v*.*.* (major.minor.patch)
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: vars
+        run: echo ::set-output name=RELEASE_CHANNEL::${GITHUB_REF:10} # Remove refs/tags/
       - name: Generate production app.json
         run: ./scripts/generateAppJson.js
-      - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ steps.vars.outputs.GITHUB_TAG }}
+      - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ steps.vars.outputs.RELEASE_CHANNEL }}
