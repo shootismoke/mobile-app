@@ -1,6 +1,13 @@
 name: pr
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+      - 'production-v*.*'
 
 env:
   SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
@@ -13,10 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Run yarn lint
-        run: |
-          yarn install
-          yarn lint
+      - run: yarn install
+      - run: yarn lint
+
   test-e2e:
     runs-on: macOS-latest
     steps:
