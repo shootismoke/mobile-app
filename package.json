@@ -43,7 +43,7 @@
     "@types/p-any": "^1.1.3",
     "@types/react-native": "^0.62.1",
     "apollo-cache-persist": "^0.1.1",
-    "date-fns": "^2.11.1",
+    "date-fns": "^2.12.0",
     "detox": "^16.1.1",
     "detox-expo-helpers": "^0.6.0",
     "expo": "^37.0.0",
