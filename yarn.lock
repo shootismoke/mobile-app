@@ -1918,11 +1918,12 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.1.tgz#937fab3194766256ee09fcd40b781740758617e7"
   integrity sha512-lhbQXx9HKZAPgBkISrBcmAcMpZsmpe/Cd/hY7LGZS5OfkySUBItnPZHgQPssWYUET8elF+yCFBbP1Q0RZPTdaw==
 
-"@types/react-native@^0.62.2":
-  version "0.62.2"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.2.tgz#f3e150f308c27089cefbcbfa3eb6cc14db279b2f"
-  integrity sha512-oIUIbqZNN9vRnGKWHYbTVp/GyTqdaM5mfy1s4zsi6BYvHAaFOPZ32IrhIHno/A5XOv4wuGfE7g5fliDk/H0+/Q==
+"@types/react-native@^0.60.22":
+  version "0.60.31"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.31.tgz#a7af12197f884ad8dd22cda2df9862ed72973ded"
+  integrity sha512-Y0Q+nv50KHnLL+jM0UH68gQQv7Wt6v2KuNepiHKwK1DoWGVd1oYun/GJCnvUje+/V8pMQQWW6QuBvHZz1pV7tQ==
   dependencies:
+    "@types/prop-types" "*"
     "@types/react" "*"
 
 "@types/react@*":
@@ -2017,10 +2018,10 @@
   dependencies:
     compare-versions "^3.4.0"
 
-"@unimodules/react-native-adapter@~5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-5.2.0.tgz#96bfd4cfbad5083b3aa1152ee0a4ac84fa9dfb69"
-  integrity sha512-S3HMEeQbV6xs7ORRcxXFGMk38DAnxqNcZG9T8JkX/KGY9ILUUqTS/e68+d849B6beEeglNMcOxyjwlqjykN+FA==
+"@unimodules/react-native-adapter@~5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-5.1.1.tgz#bb67a021c722772e716eaa3817084cd988642e4e"
+  integrity sha512-PlP6QQ2Z3ckORhS07tWcIweK+CkkxyzitJ1j1FD+N+G7G/CB99/vSfCEQ7BFVAPRO5vPrcS2QcwSDgvz06wKVA==
   dependencies:
     invariant "^2.2.4"
     lodash "^4.5.0"
@@ -4071,7 +4072,7 @@ expo-analytics-amplitude@~8.1.0:
   resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-8.1.0.tgz#f50768ab58b0e35927acf47d87a3c9ead2b5650e"
   integrity sha512-eekNhZt2Sgwo8JKQyGIYNVkQyQCKynXJigU1rgrrLrCdTX1qkZwyPPOqeqgruNqmsXTW7U0s/oHFe+nmnHLx3g==
 
-expo-asset@~8.1.3:
+expo-asset@~8.1.4:
   version "8.1.4"
   resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.1.4.tgz#5265c28c1c279b2f9779269195bec4caf250ba5d"
   integrity sha512-6YqW22F5issD1rgqBCja8TCA2dr+yf/89FdYs/jhQYpw5OJAnAvfpK3GL8h3jRCu1TvxZqhH5NeLG6f2b3oUqg==
@@ -4116,7 +4117,7 @@ expo-file-system@~8.1.0:
   dependencies:
     uuid "^3.4.0"
 
-expo-font@~8.1.0, expo-font@~8.1.1:
+expo-font@~8.1.0:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-8.1.1.tgz#40de629d7332887bdafae4756741f6979fc0043e"
   integrity sha512-z6008K7YSA7wpJ1mNyG2eSYUhEoFVjdL2uAbwaHFpsqwxDS4tcdKHoWkanIUiEnsjtHK7Uk0ywKJ8MRzmCaklw==
@@ -4167,10 +4168,10 @@ expo-web-browser@~8.1.0:
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-8.1.0.tgz#1b4ca25e4dd600fac9ad16e32d81be47778c2667"
   integrity sha512-Js2LIGut0NRKF+8BdQ2EOwGF2B2VYlnHgERxRtR+vHw7NOa7ZSl2GKFlAmf8QvAHqskk1OD0tujtoATv9XcELg==
 
-expo@^37.0.0:
-  version "37.0.5"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-37.0.5.tgz#65df7065af38e01bae6eb55d76db67b83126f82a"
-  integrity sha512-ipI+4yGxNoeJoWkuuZVJRvqN1tHvirFAPbJ304vUssoGGO3MrSNEZ3jlq+2IP0OSrCMwttk6cKVYM5ftAZSNwA==
+expo@^37.0.7:
+  version "37.0.7"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-37.0.7.tgz#fdfb54cc91d06d58aa4839c3d0c1c4bd499f601e"
+  integrity sha512-UI/5iWsL3isu1eJaDV1Iu7m/nepn2ywEDcW2Vl006RDF/z41hW/emBRpqNfBnOqyqlvHqN+Von4g/ANFTMZ5OA==
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@expo/vector-icons" "^10.0.2"
@@ -4179,11 +4180,11 @@ expo@^37.0.0:
     "@types/lodash.zipobject" "^4.1.4"
     "@types/qs" "^6.5.1"
     "@unimodules/core" "~5.1.0"
-    "@unimodules/react-native-adapter" "~5.2.0"
+    "@unimodules/react-native-adapter" "~5.1.1"
     babel-preset-expo "~8.1.0"
     badgin "^1.1.2"
     cross-spawn "^6.0.5"
-    expo-asset "~8.1.3"
+    expo-asset "~8.1.4"
     expo-constants "~9.0.0"
     expo-error-recovery "~1.1.0"
     expo-file-system "~8.1.0"
@@ -4204,7 +4205,7 @@ expo@^37.0.0:
     qs "^6.5.0"
     react-native-view-shot "3.1.2"
     serialize-error "^2.1.0"
-    unimodules-app-loader "~1.0.0"
+    unimodules-app-loader "~1.0.1"
     unimodules-barcode-scanner-interface "~5.1.0"
     unimodules-camera-interface "~5.1.0"
     unimodules-constants-interface "~5.1.0"
@@ -9894,7 +9895,7 @@ unicode-property-aliases-ecmascript@^1.0.4:
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.1.0.tgz#dd57a99f6207bedff4628abefb94c50db941c8f4"
   integrity sha512-PqSoPh/pWetQ2phoj5RLiaqIk4kCNwoV3CI+LfGmWLKI3rE3kl1h59XpX2BjgDrmbxD9ARtQobPGU1SguCYuQg==
 
-unimodules-app-loader@~1.0.0:
+unimodules-app-loader@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/unimodules-app-loader/-/unimodules-app-loader-1.0.1.tgz#4358195cfa4d6026c71c7365362acf047f252bb0"
   integrity sha512-GhPwdTp9WHRMRnM2ONQsHb0mciKU5tafohEX0+E4F7bSba89r+rJckWQnpDvHE7uyUaRtocLYcbk09vv2eg8ew==
