@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.3...v1.6.4) (2020-04-20)
+
+
+### Bug Fixes
+
+* Fix production.yml not running on CI ([#557](https://github.com/amaurymartiny/shoot-i-smoke/issues/557)) ([6ef1814](https://github.com/amaurymartiny/shoot-i-smoke/commit/6ef18143a5f0307355d3d85c81029510af143159))
+
 ### [1.6.3](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.2...v1.6.3) (2020-04-20)
 
 
