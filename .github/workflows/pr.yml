@@ -22,11 +22,9 @@ jobs:
       - uses: actions/checkout@v1
       - name: Set RELEASE_CHANNEL # Will be v*.* (major.minor)
         if: startsWith(github.ref, 'refs/heads/production-v')
-        id: vars
         run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:22} # Remove refs/heads/production-
       - name: Set RELEASE_CHANNEL # Will be v*.*.* (major.minor.patch)
         if: startsWith(github.ref, 'refs/tags/v')
-        id: vars
         run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:10} # Remove refs/tags/
       - run: echo ${{ env.RELEASE_CHANNEL }}
       - run: yarn install
