@@ -47,7 +47,7 @@
   "details_air_quality_station_marker": "Luftkvalitetsstation",
   "details_your_position_marker": "Din position",
   "details_header_latest_update_label": "Senaste uppdatering:",
-  "details_header_latest_update_ago": "sedan",
+  "details_header_latest_update_ago": "sedan {{time}}",
   "details_header_primary_pollutant_label": "Huvudsakligt förorenande ämne:",
   "details_distance_label": "LKS Station: {{distanceToStation}}{{distanceUnit}} away",
   "distance_unit_short_km": "km",

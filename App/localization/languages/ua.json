@@ -47,7 +47,7 @@
   "details_air_quality_station_marker": "Станція моніторингу повітря",
   "details_your_position_marker": "Твоє положення",
   "details_header_latest_update_label": "Останнє оновлення:",
-  "details_header_latest_update_ago": "назад",
+  "details_header_latest_update_ago": "назад {{time}}",
   "details_header_primary_pollutant_label": "Основний забрудник:",
   "details_distance_label": "Станція в {{distanceToStation}}{{distanceUnit}} звідси",
   "distance_unit_short_km": "км",

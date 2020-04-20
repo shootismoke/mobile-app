@@ -68,7 +68,7 @@
   "home_wait_more_days": "{{days}} dias mas",
   "home_wait_until_results": "para enseñar sus resultados",
   "search_current_location": "Su ubicación presentemente",
-  "details_header_latest_update_ago": "hace",
+  "details_header_latest_update_ago": "hace {{time}}",
   "distance_unit": "km",
   "haversine_distance_unit": "km",
   "past_stations_loading": "Cargando",
