@@ -81,7 +81,7 @@
   "details_air_quality_station_marker": "Air Quality Station",
   "details_your_position_marker": "Your position",
   "details_header_latest_update_label": "Latest Update:",
-  "details_header_latest_update_ago": "ago",
+  "details_header_latest_update_ago": "{{time}} ago",
   "details_header_primary_pollutant_label": "Primary Pollutant:",
   "details_distance_label": "AQI Station: {{distanceToStation}}{{distanceUnit}} away",
   "distance_unit_short_km": "km",

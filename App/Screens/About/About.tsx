@@ -182,7 +182,7 @@ export function About(props: AboutProps): React.ReactElement {
       </View>
 
       <ScrollIntoView
-        onMount={route.params.scrollInto === 'aboutBetaInaccurate'}
+        onMount={route.params?.scrollInto === 'aboutBetaInaccurate'}
         style={styles.section}
       >
         <Text style={styles.h2}>{t('about_beta_inaccurate_title')}</Text>
@@ -207,7 +207,7 @@ export function About(props: AboutProps): React.ReactElement {
       </View>
 
       <ScrollIntoView
-        onMount={route.params.scrollInto === 'aboutWhyIsTheStationSoFarTitle'}
+        onMount={route.params?.scrollInto === 'aboutWhyIsTheStationSoFarTitle'}
         style={styles.section}
       >
         <Text style={styles.h2}>

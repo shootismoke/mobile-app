@@ -68,7 +68,7 @@
   "home_wait_more_days": "{{days}} 更多天",
   "home_wait_until_results": "顯示你的結果",
   "search_current_location": "你現在的位置",
-  "details_header_latest_update_ago": "之前",
+  "details_header_latest_update_ago": "{{time}} 之前",
   "distance_unit": "公里",
   "haversine_distance_unit": "公里",
   "past_stations_loading": "載入中",

@@ -68,7 +68,7 @@
   "home_wait_more_days": "{{days}} 일 더",
   "home_wait_until_results": "결과 표시",
   "search_current_location": "당신의 현재 위치",
-  "details_header_latest_update_ago": "전에",
+  "details_header_latest_update_ago": "전에 {{time}}",
   "distance_unit": "킬로미터",
   "haversine_distance_unit": "킬로미터",
   "past_stations_loading": "로딩중",
