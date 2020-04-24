@@ -27,7 +27,6 @@ import { persistCache } from 'apollo-cache-persist';
 import Constants from 'expo-constants';
 import { AsyncStorage } from 'react-native';
 
-import { IS_PROD } from '../util/constants';
 import { sentryError } from '../util/sentry';
 import {
   credentials,
@@ -35,10 +34,6 @@ import {
   HAWK_STALE_TIMESTAMP,
   hawkFetch,
 } from './util';
-
-const BACKEND_URI = IS_PROD
-  ? 'https://shootismoke.now.sh/api/graphql'
-  : 'https://staging.shootismoke.now.sh/api/graphql';
 
 // FIXME Which type should this have?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,7 +101,10 @@ export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
       // Retry on error
       new RetryLink(),
       // Classic HTTP link
-      createHttpLink({ fetch: hawkFetch(BACKEND_URI), uri: BACKEND_URI }),
+      createHttpLink({
+        fetch: hawkFetch(Constants.manifest.extra.backendUrl),
+        uri: Constants.manifest.extra.backendUrl,
+      }),
     ]),
     name: 'shootismoke-expo',
     typeDefs: [userSchema],

@@ -10,6 +10,7 @@
     "module": "es6",
     "moduleResolution": "node",
     "noEmit": true,
+    "skipLibCheck": true,
     "target": "esnext"
   },
   "exclude": ["node_modules"],

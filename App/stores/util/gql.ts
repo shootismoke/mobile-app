@@ -48,7 +48,6 @@ type DeepPartial<T> = {
 
 const GET_USER = gql`
   query getUser($expoInstallationId: ID!) {
-    __typename
     getUser(expoInstallationId: $expoInstallationId) {
       __typename
       _id
@@ -63,7 +62,6 @@ const GET_USER = gql`
 
 const CREATE_USER = gql`
   mutation createUser($input: CreateUserInput!) {
-    __typename
     createUser(input: $input) {
       __typename
       _id
@@ -78,7 +76,6 @@ const CREATE_USER = gql`
 
 const UPDATE_USER = gql`
   mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
-    __typename
     updateUser(expoInstallationId: $expoInstallationId, input: $input) {
       __typename
       _id

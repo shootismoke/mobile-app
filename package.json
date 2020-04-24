@@ -8,7 +8,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
+    "lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx .",
     "start": "expo start",
     "test:e2e": "detox test --configuration ios.sim --record-videos all"
   },
@@ -23,7 +23,7 @@
     "test-runner": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.43",
+    "@apollo/client": "^3.0.0-beta.44",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/link-retry": "^2.0.0-beta.3",
     "@apollo/react-hooks": "^3.1.5",
