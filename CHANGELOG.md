@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.5](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.4...v1.6.5) (2020-04-24)
+
+
+### Bug Fixes
+
+* Remove Apollo warning about cache ([#558](https://github.com/amaurymartiny/shoot-i-smoke/issues/558)) ([f42d3a0](https://github.com/amaurymartiny/shoot-i-smoke/commit/f42d3a0dc2ceb604fe8fd9cd8329dc2abc1fed2a))
+
 ### [1.6.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.3...v1.6.4) (2020-04-20)
 
 
