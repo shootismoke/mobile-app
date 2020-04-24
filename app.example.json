@@ -8,18 +8,15 @@
       },
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
-      "permissions": [
-        "ACCESS_FINE_LOCATION"
-      ],
+      "permissions": ["ACCESS_FINE_LOCATION"],
       "versionCode": 13
     },
-    "assetBundlePatterns": [
-      "assets/**/*"
-    ],
+    "assetBundlePatterns": ["assets/**/*"],
     "backgroundColor": "#FAFAFC",
     "extra": {
       "aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
       "amplitudeApiKey": null,
+      "backendUrl": "https://staging.shootismoke.now.sh/api/graphql",
       "hawkKey": "26bb8794-8f1e-4bf7-b977-081186af58d6",
       "sentryPublicDsn": null
     },

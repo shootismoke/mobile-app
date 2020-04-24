@@ -37,7 +37,7 @@ jobs:
           brew install applesimutils
       - run: yarn install
       - name: Generate staging app.json
-        run: ./scripts/generateAppJson.js
+        run: ./scripts/generateAppJson.js > app.json
       - name: Download ExpoClient binary
         run: ./e2e/dl_expo_bins.sh
       - name: Run E2E Tests

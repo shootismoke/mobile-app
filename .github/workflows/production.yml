@@ -10,6 +10,7 @@ on:
 env:
   SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
   SIS_AMPLITUDE_API_KEY: ${{ secrets.SIS_PRODUCTION_AMPLITUDE_API_KEY }}
+  SIS_BACKEND_URL: https://shootismoke.now.sh/api/graphql
   SIS_HAWK_KEY: ${{ secrets.SIS_PRODUCTION_HAWK_KEY }}
   SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
   SIS_SENTRY_ORG: ${{ secrets.SIS_PRODUCTION_SENTRY_ORG }}
@@ -55,5 +56,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:10} # Remove refs/tags/
       - name: Generate production app.json
-        run: ./scripts/generateAppJson.js
+        run: ./scripts/generateAppJson.js > app.json
       - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}
