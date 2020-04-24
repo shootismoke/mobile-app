@@ -8,7 +8,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
+    "lint": "tsc --noEmit --skipLibCheck && eslint --ext .js,.ts,.tsx .",
     "start": "expo start",
     "test:e2e": "detox test --configuration ios.sim --record-videos all"
   },
