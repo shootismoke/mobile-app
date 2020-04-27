@@ -29,7 +29,7 @@
     "@apollo/react-hooks": "^3.1.5",
     "@dooboo-ui/native-switch-toggle": "^0.4.1",
     "@expo/react-native-action-sheet": "^3.5.0",
-    "@expo/vector-icons": "^10.0.0",
+    "@expo/vector-icons": "^10.1.0",
     "@hapi/hawk": "^8.0.0",
     "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/native": "^5.1.5",
