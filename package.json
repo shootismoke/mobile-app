@@ -32,7 +32,7 @@
     "@expo/vector-icons": "^10.0.0",
     "@hapi/hawk": "^8.0.0",
     "@react-native-community/masked-view": "0.1.6",
-    "@react-navigation/native": "^5.1.5",
+    "@react-navigation/native": "^5.1.7",
     "@react-navigation/stack": "^5.2.10",
     "@shootismoke/convert": "^0.2.8",
     "@shootismoke/dataproviders": "^0.2.23",
