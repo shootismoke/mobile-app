@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.6](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.5...v1.6.6) (2020-04-28)
+
+
+### Bug Fixes
+
+* Use our own FCM credentials ([#568](https://github.com/amaurymartiny/shoot-i-smoke/issues/568)) ([f8a6d3b](https://github.com/amaurymartiny/shoot-i-smoke/commit/f8a6d3b6fe31b9a78d849c00e12031d46e4fcd2b))
+* **deps:** Bump expo to 37.0.8 ([#567](https://github.com/amaurymartiny/shoot-i-smoke/issues/567)) ([069977c](https://github.com/amaurymartiny/shoot-i-smoke/commit/069977c41711c0c5b387e1e78201802827b7f629))
+
 ### [1.6.5](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.4...v1.6.5) (2020-04-24)
 
 
