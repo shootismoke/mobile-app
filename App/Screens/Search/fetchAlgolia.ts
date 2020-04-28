@@ -91,7 +91,7 @@ export function fetchAlgolia(
                   query: search,
                 },
                 {
-                  timeout: 5000,
+                  timeout: 10000,
                 }
               ),
             'fetchAlgolia'
