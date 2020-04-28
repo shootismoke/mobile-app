@@ -25,6 +25,7 @@ yarn-error.log*
 app.json
 app.staging.json
 app.production.json
+google-services.json
 
 # ide files
 .idea/

@@ -53,4 +53,15 @@ const overrides = {
   },
 };
 
-console.log(JSON.stringify(merge(defaultAppJson, overrides)));
+// Add link to `google-services.json`, if ENV variable is set.
+const googleServices = process.env.SIS_GOOGLE_SERVICES_JSON
+  ? {
+      expo: {
+        android: {
+          googleServicesFile: './google-services.json',
+        },
+      },
+    }
+  : {};
+
+console.log(JSON.stringify(merge(defaultAppJson, overrides, googleServices)));

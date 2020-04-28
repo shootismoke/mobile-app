@@ -16,6 +16,7 @@ env:
   SIS_SENTRY_ORG: ${{ secrets.SIS_PRODUCTION_SENTRY_ORG }}
   SIS_SENTRY_PROJECT: ${{ secrets.SIS_PRODUCTION_SENTRY_PROJECT }}
   SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_PRODUCTION_SENTRY_AUTH_TOKEN }}
+  SIS_GOOGLE_SERVICES_JSON: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
   SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
   SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
 
@@ -56,5 +57,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:10} # Remove refs/tags/
       - name: Generate production app.json
-        run: ./scripts/generateAppJson.js > app.json
+        run: |
+          ./scripts/generateAppJson.js > app.json
+          ./scripts/generateGoogleServicesJson.js > google-services.json
       - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}
