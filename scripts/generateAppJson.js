@@ -27,7 +27,7 @@ const overrides = {
     extra: {
       aqicnToken: process.env.SIS_AQICN_TOKEN,
       amplitudeApiKey: process.env.SIS_AMPLITUDE_API_KEY || null,
-      backendUrl: process.env.BACKEND_URL || STAGING_BACKEND_URL,
+      backendUrl: process.env.SIS_BACKEND_URL || STAGING_BACKEND_URL,
       hawkKey: process.env.SIS_HAWK_KEY,
       sentryPublicDsn: process.env.SIS_SENTRY_PUBLIC_DNS || null,
     },
