@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.8](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.7...v1.6.8) (2020-04-28)
+
+
+### Bug Fixes
+
+* Fix using staging URL in prod ([#570](https://github.com/amaurymartiny/shoot-i-smoke/issues/570)) ([d5c4037](https://github.com/amaurymartiny/shoot-i-smoke/commit/d5c403797516a6385cf0b7c730959f61cfff7025))
+
+### [1.6.7](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.6...v1.6.7) (2020-04-28)
+
+
+### Bug Fixes
+
+* Fix production build ([#569](https://github.com/amaurymartiny/shoot-i-smoke/issues/569)) ([1c3a40f](https://github.com/amaurymartiny/shoot-i-smoke/commit/1c3a40f709a650674d7c8dbe187ce28b834daf5a))
+
+### [1.6.6](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.5...v1.6.6) (2020-04-28)
+
+
+### Bug Fixes
+
+* Use our own FCM credentials ([#568](https://github.com/amaurymartiny/shoot-i-smoke/issues/568)) ([f8a6d3b](https://github.com/amaurymartiny/shoot-i-smoke/commit/f8a6d3b6fe31b9a78d849c00e12031d46e4fcd2b))
+* **deps:** Bump expo to 37.0.8 ([#567](https://github.com/amaurymartiny/shoot-i-smoke/issues/567)) ([069977c](https://github.com/amaurymartiny/shoot-i-smoke/commit/069977c41711c0c5b387e1e78201802827b7f629))
+
+### [1.6.5](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.4...v1.6.5) (2020-04-24)
+
+
+### Bug Fixes
+
+* Remove Apollo warning about cache ([#558](https://github.com/amaurymartiny/shoot-i-smoke/issues/558)) ([f42d3a0](https://github.com/amaurymartiny/shoot-i-smoke/commit/f42d3a0dc2ceb604fe8fd9cd8329dc2abc1fed2a))
+
+### [1.6.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.3...v1.6.4) (2020-04-20)
+
+
+### Bug Fixes
+
+* Fix production.yml not running on CI ([#557](https://github.com/amaurymartiny/shoot-i-smoke/issues/557)) ([6ef1814](https://github.com/amaurymartiny/shoot-i-smoke/commit/6ef18143a5f0307355d3d85c81029510af143159))
+
+### [1.6.3](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.2...v1.6.3) (2020-04-20)
+
+
+### Bug Fixes
+
+* Improve translations slightly ([#556](https://github.com/amaurymartiny/shoot-i-smoke/issues/556)) ([d689d33](https://github.com/amaurymartiny/shoot-i-smoke/commit/d689d33833fc98039ed6f4595c8bf6e48209371f))
+* **deps:** Update Expo to 37.0.7 ([#548](https://github.com/amaurymartiny/shoot-i-smoke/issues/548)) ([d769a5d](https://github.com/amaurymartiny/shoot-i-smoke/commit/d769a5d75900ab3ce4ac9bcfc68508671862095f))
+
 ### [1.6.2](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.1...v1.6.2) (2020-04-09)
 
 ### [1.6.1](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.0...v1.6.1) (2020-04-06)

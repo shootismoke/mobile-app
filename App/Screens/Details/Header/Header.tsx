@@ -122,9 +122,9 @@ export function Header(props: HeaderProps): React.ReactElement {
           />
           {renderInfo(
             t('details_header_latest_update_label'),
-            `${formatDistanceToNow(new Date(api.pm25.date.local))} ${t(
-              'details_header_latest_update_ago'
-            )}`
+            t('details_header_latest_update_ago', {
+              time: formatDistanceToNow(new Date(api.pm25.date.local)),
+            })
           )}
           {renderInfo(
             t('details_header_primary_pollutant_label'),

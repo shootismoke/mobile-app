@@ -1,6 +1,6 @@
 {
   "name": "shootismoke",
-  "version": "1.6.2",
+  "version": "1.6.8",
   "author": "Amaury Martiny <amaury.martiny@protonmail.com>",
   "contributors": [
     "Marcelo S. Coelho"
@@ -8,15 +8,25 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "lint": "tsc --noEmit --skipLibCheck && eslint --ext .ts,.tsx App",
-    "start": "expo start --config app.staging.json",
-    "test": "echo Skipped, see https://github.com/amaurymartiny/shoot-i-smoke/issues/19."
+    "lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx .",
+    "start": "expo start",
+    "test:e2e": "detox test --configuration ios.sim --record-videos all"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim": {
+        "binaryPath": "bin/Exponent.app",
+        "type": "ios.simulator",
+        "name": "iPhone 11 Pro Max"
+      }
+    },
+    "test-runner": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.41",
+    "@apollo/client": "^3.0.0-beta.44",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/link-retry": "^2.0.0-beta.3",
-    "@apollo/react-hooks": "^3.1.3",
+    "@apollo/react-hooks": "^3.1.5",
     "@dooboo-ui/native-switch-toggle": "^0.4.1",
     "@expo/react-native-action-sheet": "^3.5.0",
     "@expo/vector-icons": "^10.0.0",
@@ -27,16 +37,20 @@
     "@shootismoke/convert": "^0.2.8",
     "@shootismoke/dataproviders": "^0.2.23",
     "@shootismoke/graphql": "^0.2.22",
+    "@types/detox": "^14.5.2",
     "@types/haversine": "^1.1.4",
-    "@types/i18n-js": "^3.0.1",
+    "@types/i18n-js": "^3.0.2",
     "@types/p-any": "^1.1.3",
-    "@types/react-native": "^0.62.1",
+    "@types/react-native": "^0.60.22",
     "apollo-cache-persist": "^0.1.1",
-    "date-fns": "^2.11.1",
-    "expo": "^37.0.0",
+    "date-fns": "^2.12.0",
+    "detox": "^16.3.0",
+    "detox-expo-helpers": "^0.6.0",
+    "expo": "^37.0.8",
     "expo-analytics-amplitude": "~8.1.0",
     "expo-av": "~8.1.0",
     "expo-constants": "~9.0.0",
+    "expo-detox-hook": "^1.0.10",
     "expo-font": "~8.1.0",
     "expo-localization": "~8.1.0",
     "expo-location": "~8.1.0",
@@ -47,7 +61,7 @@
     "lottie-react-native": "~2.6.1",
     "p-any": "^3.0.0",
     "react": "16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-maps": "0.26.1",
     "react-native-reanimated": "~1.7.0",

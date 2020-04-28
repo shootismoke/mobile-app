@@ -47,7 +47,7 @@
   "details_air_quality_station_marker": "Станция определения качества воздуха (AQI)",
   "details_your_position_marker": "Ваше местоположение",
   "details_header_latest_update_label": "Последнее обновление:",
-  "details_header_latest_update_ago": "тому назад",
+  "details_header_latest_update_ago": "тому назад {{time}}",
   "details_header_primary_pollutant_label": "Основной загрязнитель:",
   "details_distance_label": "Расстояние до AQI станции: {{distanceToStation}}{{distanceUnit}}",
   "distance_unit_short_km": "км",
