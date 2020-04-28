@@ -6,6 +6,7 @@
           "apiKey": "YOUR_OPTIONAL_KEY"
         }
       },
+      "googleServicesFile": "./google-services.json",
       "icon": "assets/logos/android/playstore-icon.png",
       "package": "com.shitismoke.app",
       "permissions": ["ACCESS_FINE_LOCATION"],
