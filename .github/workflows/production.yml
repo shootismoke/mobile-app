@@ -6,9 +6,6 @@ on:
       - 'production-v*.*'
     tags:
       - 'v*.*.*'
-  pull_request:
-    branches:
-      - master
 
 env:
   SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
@@ -63,7 +60,4 @@ jobs:
         run: |
           ./scripts/generateAppJson.js > app.json
           ./scripts/generateGoogleServicesJson.js > google-services.json
-          ls
-          cat app.json
-          cat google-services.json
-      # - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}
+      - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}
