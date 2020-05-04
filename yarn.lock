@@ -8897,10 +8897,10 @@ send@0.17.1:
     range-parser "~1.2.1"
     statuses "~1.5.0"
 
-sentry-expo@~2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-2.0.3.tgz#cea1794bdbb873bd72a0228e7a7971fd21c03fb3"
-  integrity sha512-9yi3W9wPyrpjgAUaFYi86he9iBtimTMSxgXsSDWDbTuMUmh/xRIoOvoUrf3L4Xb4zqbKFC3+mZWxLyfuc+hLpw==
+sentry-expo@~2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-2.0.4.tgz#8075ba7c98e43f4d3a5b6cd6157946be963a74e7"
+  integrity sha512-yKo3j/DK2FlACoTvEUKhdrQvaHEFIPB6BE5PlBKA4HF/cErDVfrFQjYuJU2jdrG/+H0BqEQoKoMg/Yt6+v2stQ==
   dependencies:
     "@expo/spawn-async" "^1.2.8"
     "@sentry/integrations" "^5.5.0"
