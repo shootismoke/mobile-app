@@ -1191,10 +1191,10 @@
     babel-runtime "^6.23.0"
     exec-async "^2.2.0"
 
-"@expo/react-native-action-sheet@^3.5.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-3.6.0.tgz#8207ff460c8795ca9040e6d85daed63db6b3ac58"
-  integrity sha512-sAxQZ57iGkn/nKHvJoj51KIvnVx9RdMTpk2lKlo3FKPaezLWsdK0P9zLI/xG3NrD6CRr9tt3oK0silYi61VvZA==
+"@expo/react-native-action-sheet@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-3.7.0.tgz#2123ee37228a9a4f73828c41a5ca45c0631235ce"
+  integrity sha512-Hm2CYdhh6bH7rU+Xqk1hSlTVSKqqlYA7fBXWEU5s/k+6S8U3hHKBEoM3I08cmj1iNS3jFxpOBJU16AH3KSYkRg==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.1"
     hoist-non-react-statics "^3.3.0"
