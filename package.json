@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@amaurymartiny/config": "^1.1.0",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^25.2.2",
     "jest": "^24.9.0",
     "jest-expo": "^37.0.0",
     "ts-jest": "^24.3.0",
