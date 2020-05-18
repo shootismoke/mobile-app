@@ -23,7 +23,7 @@
     "test-runner": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.44",
+    "@apollo/client": "^3.0.0-beta.48",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/link-retry": "^2.0.0-beta.3",
     "@apollo/react-hooks": "^3.1.5",
