@@ -1789,10 +1789,10 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/detox@^16.4.0":
-  version "16.4.0"
-  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-16.4.0.tgz#67366e1cc3ba917f0e988968fca582a600c8aee9"
-  integrity sha512-aRX9LCo+t3O4Yxt5IcB/L/8a3SBCprcYDjvFpf/Bd140HJCoye/3+Xy9DHT32Tt+Epka0fyfGpHLN5mj3r6z8Q==
+"@types/detox@^16.4.1":
+  version "16.4.1"
+  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-16.4.1.tgz#f707cc9d55149bc60772d2509ac3f61f51c62365"
+  integrity sha512-Wb/2OKWlzmqpvPTuZls2j/bTjlf/NlhSFXEQDd7bwvbuUTjX42ntlH7jzzHN9M65gwe03b0WhJ32SNLYPve82g==
 
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
