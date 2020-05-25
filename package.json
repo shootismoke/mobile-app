@@ -46,7 +46,7 @@
     "date-fns": "^2.13.0",
     "detox": "^16.5.0",
     "detox-expo-helpers": "^0.6.0",
-    "expo": "^37.0.8",
+    "expo": "^37.0.12",
     "expo-analytics-amplitude": "~8.1.0",
     "expo-av": "~8.1.0",
     "expo-constants": "~9.0.0",
