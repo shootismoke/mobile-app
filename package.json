@@ -58,7 +58,7 @@
     "graphql": "^14.6.0",
     "haversine": "^1.1.1",
     "i18n-js": "^3.5.1",
-    "lottie-react-native": "~2.6.1",
+    "lottie-react-native": "~3.4.0",
     "p-any": "^3.0.0",
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
