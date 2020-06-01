@@ -1918,12 +1918,11 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.1.tgz#937fab3194766256ee09fcd40b781740758617e7"
   integrity sha512-lhbQXx9HKZAPgBkISrBcmAcMpZsmpe/Cd/hY7LGZS5OfkySUBItnPZHgQPssWYUET8elF+yCFBbP1Q0RZPTdaw==
 
-"@types/react-native@^0.60.22":
-  version "0.60.31"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.31.tgz#a7af12197f884ad8dd22cda2df9862ed72973ded"
-  integrity sha512-Y0Q+nv50KHnLL+jM0UH68gQQv7Wt6v2KuNepiHKwK1DoWGVd1oYun/GJCnvUje+/V8pMQQWW6QuBvHZz1pV7tQ==
+"@types/react-native@^0.62.12":
+  version "0.62.12"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.12.tgz#24407983b527749f37b512cd5d2bdc6133810b17"
+  integrity sha512-EuM2QOx0LGwY3mKQ313+QcTYOwJhw5eggmE42GO4ElIKIfNK+zxxM6Pe9dT1Eq8eCJXY0oG327L7gUBWniwNNA==
   dependencies:
-    "@types/prop-types" "*"
     "@types/react" "*"
 
 "@types/react@*":
