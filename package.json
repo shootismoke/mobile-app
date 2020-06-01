@@ -57,7 +57,7 @@
     "expo-permissions": "~8.1.0",
     "graphql": "^14.6.0",
     "haversine": "^1.1.1",
-    "i18n-js": "^3.5.1",
+    "i18n-js": "^3.7.0",
     "lottie-react-native": "~2.6.1",
     "p-any": "^3.0.0",
     "react": "16.9.0",
