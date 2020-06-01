@@ -1017,10 +1017,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@dooboo-ui/native-switch-toggle@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@dooboo-ui/native-switch-toggle/-/native-switch-toggle-0.4.1.tgz#0acfeec6f52edb158565f87864c23a05269cfe75"
-  integrity sha512-bFmiAAwvv+EgHBEQDoUaMRPkQcOoa10Ot/pcwa9mhDBpng0xo7MGwyBRfdyr4sDBXcr+yHFoIUdpqdbpmAmYsQ==
+"@dooboo-ui/native-switch-toggle@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@dooboo-ui/native-switch-toggle/-/native-switch-toggle-0.7.0.tgz#02dde41bfc2caf0070eb70c75bf31b60ab88460b"
+  integrity sha512-VZ7WLGQBTLv81TyudEDwhc1v2ESVPlDGkrRt6Fl3gCRShW4dPyOcKiGNdLuS01CKBW9N7mGMytmX+pH/Askplg==
   dependencies:
     dooboolab-welcome "^1.1.1"
 
