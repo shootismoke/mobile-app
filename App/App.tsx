@@ -25,13 +25,13 @@ import * as Sentry from 'sentry-expo';
 import { Screens } from './Screens';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
 import {
-  ApiContextProvider,
-  DistanceUnitProvider,
-  ErrorContextProvider,
-  FrequencyContextProvider,
-  getApolloClient,
-  LocationContextProvider,
-  TCacheShape,
+	ApiContextProvider,
+	DistanceUnitProvider,
+	ErrorContextProvider,
+	FrequencyContextProvider,
+	getApolloClient,
+	LocationContextProvider,
+	TCacheShape,
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
 import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
@@ -39,69 +39,69 @@ import { sentryError } from './util/sentry';
 
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
-  Sentry.init({
-    dsn: Constants.manifest.extra.sentryPublicDsn,
-    debug: true,
-  });
+	Sentry.init({
+		dsn: Constants.manifest.extra.sentryPublicDsn,
+		debug: true,
+	});
 
-  Sentry.setRelease(RELEASE_CHANNEL);
-  if (Constants.manifest.revisionId) {
-    Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
-  }
+	Sentry.setRelease(RELEASE_CHANNEL);
+	if (Constants.manifest.revisionId) {
+		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
+	}
 }
 
 export function App(): React.ReactElement {
-  const [ready, setReady] = useState(false);
-  const [client, setClient] = useState<ApolloClient<TCacheShape>>();
+	const [ready, setReady] = useState(false);
+	const [client, setClient] = useState<ApolloClient<TCacheShape>>();
 
-  useEffect(() => {
-    Promise.all([
-      Font.loadAsync({
-        'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
-        'gotham-book': require('../assets/fonts/Gotham-Book.ttf'),
-      }),
-      // Add Amplitude if available
-      setupAmplitude(),
-    ])
-      .then(() => setReady(true))
-      .catch(sentryError('App'));
-  }, []);
+	useEffect(() => {
+		Promise.all([
+			Font.loadAsync({
+				'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
+				'gotham-book': require('../assets/fonts/Gotham-Book.ttf'),
+			}),
+			// Add Amplitude if available
+			setupAmplitude(),
+		])
+			.then(() => setReady(true))
+			.catch(sentryError('App'));
+	}, []);
 
-  useEffect(() => {
-    // Load the Offix client
-    getApolloClient().then(setClient).catch(sentryError('App'));
-  }, []);
+	useEffect(() => {
+		// Load the Offix client
+		getApolloClient().then(setClient).catch(sentryError('App'));
+	}, []);
 
-  useEffect(() => {
-    // Track user closing/re-opening the app
-    AppState.addEventListener('change', (state) => {
-      if (state === 'active') {
-        track('APP_REFOCUS');
-      } else if (state === 'background') {
-        track('APP_EXIT');
-      }
-    });
-  }, []);
+	useEffect(() => {
+		// Track user closing/re-opening the app
+		AppState.addEventListener('change', (state) => {
+			if (state === 'active') {
+				track('APP_REFOCUS');
+			} else if (state === 'background') {
+				track('APP_EXIT');
+			}
+		});
+	}, []);
 
-  return (
-    <ErrorContextProvider>
-      <LocationContextProvider>
-        <ActionSheetProvider>
-          <ApiContextProvider>
-            <FrequencyContextProvider>
-              <DistanceUnitProvider>
-                {ready && client ? (
-                  <ApolloProvider client={client}>
-                    <Screens />
-                  </ApolloProvider>
-                ) : (
-                  <LoadingBackground />
-                )}
-              </DistanceUnitProvider>
-            </FrequencyContextProvider>
-          </ApiContextProvider>
-        </ActionSheetProvider>
-      </LocationContextProvider>
-    </ErrorContextProvider>
-  );
+	return (
+		<ErrorContextProvider>
+			<LocationContextProvider>
+				<ActionSheetProvider>
+					<ApiContextProvider>
+						<FrequencyContextProvider>
+							<DistanceUnitProvider>
+								{ready && client ? (
+									<ApolloProvider client={client}>
+										<Screens />
+									</ApolloProvider>
+								) : (
+									<LoadingBackground />
+								)}
+							</DistanceUnitProvider>
+						</FrequencyContextProvider>
+					</ApiContextProvider>
+				</ActionSheetProvider>
+			</LocationContextProvider>
+		</ErrorContextProvider>
+	);
 }

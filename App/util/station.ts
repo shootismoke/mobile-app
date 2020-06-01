@@ -35,23 +35,23 @@ export const MAX_DISTANCE_TO_STATION = 10;
  * the station's location.
  */
 export function getCorrectLatLng(
-  currentLocation: LatLng,
-  station: LatLng
+	currentLocation: LatLng,
+	station: LatLng
 ): LatLng {
-  const d1 =
-    Math.abs(currentLocation.latitude - station.latitude) +
-    Math.abs(currentLocation.longitude - station.longitude);
+	const d1 =
+		Math.abs(currentLocation.latitude - station.latitude) +
+		Math.abs(currentLocation.longitude - station.longitude);
 
-  const d2 =
-    Math.abs(currentLocation.latitude - station.longitude) +
-    Math.abs(currentLocation.longitude - station.latitude);
+	const d2 =
+		Math.abs(currentLocation.latitude - station.longitude) +
+		Math.abs(currentLocation.longitude - station.latitude);
 
-  if (d1 < d2) return station;
-  return {
-    ...station,
-    latitude: station.longitude,
-    longitude: station.latitude,
-  };
+	if (d1 < d2) return station;
+	return {
+		...station,
+		latitude: station.longitude,
+		longitude: station.latitude,
+	};
 }
 
 /**
@@ -62,17 +62,17 @@ export function getCorrectLatLng(
  * @param unit - The unit of measure returned.
  */
 export function distanceToStation(
-  currentLocation: LatLng,
-  api: Api,
-  unit: DistanceUnit = 'km'
+	currentLocation: LatLng,
+	api: Api,
+	unit: DistanceUnit = 'km'
 ): number {
-  return Math.round(
-    haversine(
-      currentLocation,
-      getCorrectLatLng(currentLocation, api.pm25.coordinates),
-      { unit }
-    )
-  );
+	return Math.round(
+		haversine(
+			currentLocation,
+			getCorrectLatLng(currentLocation, api.pm25.coordinates),
+			{ unit }
+		)
+	);
 }
 
 /**
@@ -83,5 +83,5 @@ export function distanceToStation(
  * @param api - The api object returned by remote data.
  */
 export function isStationTooFar(currentLocation: LatLng, api: Api): boolean {
-  return distanceToStation(currentLocation, api) > MAX_DISTANCE_TO_STATION;
+	return distanceToStation(currentLocation, api) > MAX_DISTANCE_TO_STATION;
 }

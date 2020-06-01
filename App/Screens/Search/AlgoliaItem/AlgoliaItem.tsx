@@ -21,38 +21,42 @@ import { Location } from '../../../stores/util/fetchGpsPosition';
 import { AlgoliaHit } from '../fetchAlgolia';
 
 interface ItemProps {
-  item: AlgoliaHit;
-  onClick: (item: Location) => void;
+	item: AlgoliaHit;
+	onClick: (item: Location) => void;
 }
 
 export function AlgoliaItem(props: ItemProps): React.ReactElement {
-  const { item, onClick } = props;
+	const { item, onClick } = props;
 
-  const { city, country, county, _geoloc, locale_names: localeNames } = item;
+	const { city, country, county, _geoloc, locale_names: localeNames } = item;
 
-  const handleClick = (): void => {
-    onClick({
-      latitude: _geoloc.lat,
-      longitude: _geoloc.lng,
-      name: [
-        localeNames[0],
-        city,
-        county && county.length ? county[0] : null,
-        country,
-      ]
-        .filter((_) => _)
-        .join(', '),
-    });
-  };
+	const handleClick = (): void => {
+		onClick({
+			latitude: _geoloc.lat,
+			longitude: _geoloc.lng,
+			name: [
+				localeNames[0],
+				city,
+				county && county.length ? county[0] : null,
+				country,
+			]
+				.filter((_) => _)
+				.join(', '),
+		});
+	};
 
-  return (
-    <ListItem
-      description={[city, county && county.length ? county[0] : null, country]
-        .filter((_) => _)
-        .join(', ')}
-      icon="pin"
-      onPress={handleClick}
-      title={localeNames[0]}
-    />
-  );
+	return (
+		<ListItem
+			description={[
+				city,
+				county && county.length ? county[0] : null,
+				country,
+			]
+				.filter((_) => _)
+				.join(', ')}
+			icon="pin"
+			onPress={handleClick}
+			title={localeNames[0]}
+		/>
+	);
 }

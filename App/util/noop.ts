@@ -15,5 +15,5 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 export function noop(): void {
-  /* Do nothing */
+	/* Do nothing */
 }

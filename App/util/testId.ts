@@ -18,8 +18,8 @@
  * Ids used for detox
  */
 export const testIds = {
-  Error: {
-    screen: 'Error.screen',
-    showDetails: 'Error.showDetails',
-  },
+	Error: {
+		screen: 'Error.screen',
+		showDetails: 'Error.showDetails',
+	},
 };

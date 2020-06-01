@@ -25,105 +25,105 @@ import { noop } from '../util/noop';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import {
-  fetchGpsPosition,
-  fetchReverseGeocode,
-  Location,
+	fetchGpsPosition,
+	fetchReverseGeocode,
+	Location,
 } from './util/fetchGpsPosition';
 
 const DEFAULT_LAT_LNG: LatLng = {
-  latitude: 0,
-  longitude: 0,
+	latitude: 0,
+	longitude: 0,
 };
 
 interface LocationWithSetter {
-  currentLocation?: Location;
-  isGps: boolean;
-  setCurrentLocation: (location?: Location) => void;
+	currentLocation?: Location;
+	isGps: boolean;
+	setCurrentLocation: (location?: Location) => void;
 }
 
 export const GpsLocationContext = createContext<Location | undefined>(
-  DEFAULT_LAT_LNG
+	DEFAULT_LAT_LNG
 );
 export const CurrentLocationContext = createContext<LocationWithSetter>({
-  ...DEFAULT_LAT_LNG,
-  isGps: false,
-  setCurrentLocation: noop,
+	...DEFAULT_LAT_LNG,
+	isGps: false,
+	setCurrentLocation: noop,
 });
 
 export function LocationContextProvider({
-  children,
+	children,
 }: {
-  children: JSX.Element;
+	children: JSX.Element;
 }): React.ReactElement {
-  const { setError } = useContext(ErrorContext);
+	const { setError } = useContext(ErrorContext);
 
-  const [gpsLocation, setGpsLocation] = useState<Location>();
-  const [currentLocation, setCurrentLocation] = useState<Location>();
+	const [gpsLocation, setGpsLocation] = useState<Location>();
+	const [currentLocation, setCurrentLocation] = useState<Location>();
 
-  // Fetch GPS location
-  useEffect(() => {
-    pipe(
-      fetchGpsPosition(),
-      TE.map(({ coords }) => coords),
-      TE.chain(
-        sideEffect((gps) => {
-          // Set lat/lng for now, set the reverse location later
-          // @see https://github.com/amaurymartiny/shoot-i-smoke/issues/323
-          console.log(
-            `<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
-              gps
-            )}`
-          );
-          setGpsLocation(gps);
-          setCurrentLocation(gps);
+	// Fetch GPS location
+	useEffect(() => {
+		pipe(
+			fetchGpsPosition(),
+			TE.map(({ coords }) => coords),
+			TE.chain(
+				sideEffect((gps) => {
+					// Set lat/lng for now, set the reverse location later
+					// @see https://github.com/amaurymartiny/shoot-i-smoke/issues/323
+					console.log(
+						`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
+							gps
+						)}`
+					);
+					setGpsLocation(gps);
+					setCurrentLocation(gps);
 
-          return TE.right(undefined);
-        })
-      ),
-      TE.chain((gps) =>
-        TE.rightTask(
-          pipe(
-            fetchReverseGeocode(gps),
-            TE.fold(() => T.of(gps as Location), T.of)
-          )
-        )
-      ),
-      TE.fold(
-        (err) => {
-          setError(err);
+					return TE.right(undefined);
+				})
+			),
+			TE.chain((gps) =>
+				TE.rightTask(
+					pipe(
+						fetchReverseGeocode(gps),
+						TE.fold(() => T.of(gps as Location), T.of)
+					)
+				)
+			),
+			TE.fold(
+				(err) => {
+					setError(err);
 
-          return T.of(undefined);
-        },
-        (location) => {
-          console.log(
-            `<LocationContext> - Got reverse location ${JSON.stringify(
-              location
-            )}`
-          );
-          setGpsLocation(location);
-          setCurrentLocation(location);
+					return T.of(undefined);
+				},
+				(location) => {
+					console.log(
+						`<LocationContext> - Got reverse location ${JSON.stringify(
+							location
+						)}`
+					);
+					setGpsLocation(location);
+					setCurrentLocation(location);
 
-          return T.of(undefined);
-        }
-      )
-    )().catch(sentryError('LocationContextProvider'));
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+					return T.of(undefined);
+				}
+			)
+		)().catch(sentryError('LocationContextProvider'));
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <GpsLocationContext.Provider value={gpsLocation}>
-      <CurrentLocationContext.Provider
-        value={{
-          currentLocation,
-          isGps:
-            !!currentLocation &&
-            !!gpsLocation &&
-            currentLocation.latitude === gpsLocation.latitude &&
-            currentLocation.longitude === gpsLocation.longitude,
-          setCurrentLocation,
-        }}
-      >
-        {children}
-      </CurrentLocationContext.Provider>
-    </GpsLocationContext.Provider>
-  );
+	return (
+		<GpsLocationContext.Provider value={gpsLocation}>
+			<CurrentLocationContext.Provider
+				value={{
+					currentLocation,
+					isGps:
+						!!currentLocation &&
+						!!gpsLocation &&
+						currentLocation.latitude === gpsLocation.latitude &&
+						currentLocation.longitude === gpsLocation.longitude,
+					setCurrentLocation,
+				}}
+			>
+				{children}
+			</CurrentLocationContext.Provider>
+		</GpsLocationContext.Provider>
+	);
 }

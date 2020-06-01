@@ -16,14 +16,14 @@
 
 import React from 'react';
 import {
-  GestureResponderEvent,
-  Image,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
+	GestureResponderEvent,
+	Image,
+	StyleProp,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	ViewStyle,
 } from 'react-native';
 
 import backIcon from '../../../assets/images/back.png';
@@ -31,34 +31,34 @@ import { t } from '../../localization';
 import * as theme from '../../util/theme';
 
 interface BackButtonProps {
-  onPress: (event: GestureResponderEvent) => void;
-  style?: StyleProp<ViewStyle>;
+	onPress: (event: GestureResponderEvent) => void;
+	style?: StyleProp<ViewStyle>;
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  backText: {
-    ...theme.text,
-    marginLeft: 9,
-  },
+	backButton: {
+		alignItems: 'center',
+		flexDirection: 'row',
+	},
+	backText: {
+		...theme.text,
+		marginLeft: 9,
+	},
 });
 
 export function BackButton(props: BackButtonProps): React.ReactElement {
-  const { style } = props;
+	const { style } = props;
 
-  return (
-    <View style={style}>
-      <TouchableOpacity
-        hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-        onPress={props.onPress}
-        style={styles.backButton}
-      >
-        <Image source={backIcon} />
-        <Text style={styles.backText}>{t('nav_btn_back')}</Text>
-      </TouchableOpacity>
-    </View>
-  );
+	return (
+		<View style={style}>
+			<TouchableOpacity
+				hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+				onPress={props.onPress}
+				style={styles.backButton}
+			>
+				<Image source={backIcon} />
+				<Text style={styles.backText}>{t('nav_btn_back')}</Text>
+			</TouchableOpacity>
+		</View>
+	);
 }

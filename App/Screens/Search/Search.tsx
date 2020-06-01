@@ -23,9 +23,9 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { BackButton, ListSeparator } from '../../components';
 import {
-  CurrentLocationContext,
-  FrequencyContext,
-  GpsLocationContext,
+	CurrentLocationContext,
+	FrequencyContext,
+	GpsLocationContext,
 } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
@@ -41,142 +41,142 @@ import { SearchHeader } from './SearchHeader';
 let typingTimeout: number | null = null;
 
 interface SearchProps {
-  navigation: StackNavigationProp<RootStackParams, 'Search'>;
+	navigation: StackNavigationProp<RootStackParams, 'Search'>;
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    ...theme.withPadding,
-    marginVertical: theme.spacing.normal,
-  },
-  container: {
-    flexGrow: 1,
-  },
-  list: {
-    flex: 1,
-  },
-  noResults: {
-    ...theme.text,
-    ...theme.withPadding,
-    marginTop: theme.spacing.normal,
-  },
+	backButton: {
+		...theme.withPadding,
+		marginVertical: theme.spacing.normal,
+	},
+	container: {
+		flexGrow: 1,
+	},
+	list: {
+		flex: 1,
+	},
+	noResults: {
+		...theme.text,
+		...theme.withPadding,
+		marginTop: theme.spacing.normal,
+	},
 });
 
 function renderSeparator(): React.ReactElement {
-  return <ListSeparator />;
+	return <ListSeparator />;
 }
 
 export function Search(props: SearchProps): React.ReactElement {
-  const {
-    navigation: { goBack },
-  } = props;
+	const {
+		navigation: { goBack },
+	} = props;
 
-  const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
-  const { setFrequency } = useContext(FrequencyContext);
-  const gps = useContext(GpsLocationContext);
+	const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
+	const { setFrequency } = useContext(FrequencyContext);
+	const gps = useContext(GpsLocationContext);
 
-  const [algoliaError, setAlgoliaError] = useState<Error | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState('');
-  const [hits, setHits] = useState<AlgoliaHit[]>([]);
+	const [algoliaError, setAlgoliaError] = useState<Error | undefined>(
+		undefined
+	);
+	const [loading, setLoading] = useState(false);
+	const [search, setSearch] = useState('');
+	const [hits, setHits] = useState<AlgoliaHit[]>([]);
 
-  trackScreen('SEARCH');
+	trackScreen('SEARCH');
 
-  function handleChangeSearch(s: string): void {
-    setSearch(s);
-    setAlgoliaError(undefined);
-    setHits([]);
+	function handleChangeSearch(s: string): void {
+		setSearch(s);
+		setAlgoliaError(undefined);
+		setHits([]);
 
-    if (!s) {
-      return;
-    }
+		if (!s) {
+			return;
+		}
 
-    setLoading(true);
+		setLoading(true);
 
-    if (typingTimeout) {
-      clearTimeout(typingTimeout);
-    }
-    typingTimeout = setTimeout(() => {
-      track('SEARCH_SCREEN_SEARCH', { search: s });
+		if (typingTimeout) {
+			clearTimeout(typingTimeout);
+		}
+		typingTimeout = setTimeout(() => {
+			track('SEARCH_SCREEN_SEARCH', { search: s });
 
-      pipe(
-        fetchAlgolia(s, gps),
-        TE.fold(
-          (err) => {
-            setLoading(false);
-            setAlgoliaError(err);
+			pipe(
+				fetchAlgolia(s, gps),
+				TE.fold(
+					(err) => {
+						setLoading(false);
+						setAlgoliaError(err);
 
-            return T.of(undefined);
-          },
-          (hits) => {
-            setLoading(false);
-            setAlgoliaError(undefined);
-            setHits(hits);
-            setFrequency('daily');
+						return T.of(undefined);
+					},
+					(hits) => {
+						setLoading(false);
+						setAlgoliaError(undefined);
+						setHits(hits);
+						setFrequency('daily');
 
-            return T.of(undefined);
-          }
-        )
-      )().catch(sentryError('Search'));
-    }, 500);
-  }
+						return T.of(undefined);
+					}
+				)
+			)().catch(sentryError('Search'));
+		}, 500);
+	}
 
-  function handleItemClick(item: Location): void {
-    setCurrentLocation(item);
-  }
+	function handleItemClick(item: Location): void {
+		setCurrentLocation(item);
+	}
 
-  function renderItem({ item }: { item: AlgoliaHit }): React.ReactElement {
-    return <AlgoliaItem item={item} onClick={handleItemClick} />;
-  }
+	function renderItem({ item }: { item: AlgoliaHit }): React.ReactElement {
+		return <AlgoliaItem item={item} onClick={handleItemClick} />;
+	}
 
-  function renderEmptyList(
-    algoliaError: Error | undefined,
-    hits: AlgoliaHit[],
-    loading: boolean,
-    search: string,
-    isGps: boolean
-  ): React.ReactElement | null {
-    if (isGps && !search) {
-      return null;
-    }
-    if (!search) return <GpsItem />;
-    if (loading) {
-      return <Text style={styles.noResults}>Waiting for results...</Text>;
-    }
-    if (algoliaError) {
-      return (
-        <Text style={styles.noResults}>
-          Error fetching locations. Please try again later.
-        </Text>
-      );
-    }
-    if (hits && hits.length === 0) {
-      return <Text style={styles.noResults}>No results.</Text>;
-    }
-    return <Text style={styles.noResults}>Waiting for results.</Text>;
-  }
+	function renderEmptyList(
+		algoliaError: Error | undefined,
+		hits: AlgoliaHit[],
+		loading: boolean,
+		search: string,
+		isGps: boolean
+	): React.ReactElement | null {
+		if (isGps && !search) {
+			return null;
+		}
+		if (!search) return <GpsItem />;
+		if (loading) {
+			return <Text style={styles.noResults}>Waiting for results...</Text>;
+		}
+		if (algoliaError) {
+			return (
+				<Text style={styles.noResults}>
+					Error fetching locations. Please try again later.
+				</Text>
+			);
+		}
+		if (hits && hits.length === 0) {
+			return <Text style={styles.noResults}>No results.</Text>;
+		}
+		return <Text style={styles.noResults}>Waiting for results.</Text>;
+	}
 
-  return (
-    <View style={styles.container}>
-      <BackButton onPress={goBack} style={styles.backButton} />
-      <SearchHeader onChangeSearch={handleChangeSearch} search={search} />
-      <FlatList
-        data={hits}
-        ItemSeparatorComponent={renderSeparator}
-        keyboardShouldPersistTaps="always"
-        keyExtractor={({ objectID }): string => objectID}
-        ListEmptyComponent={renderEmptyList(
-          algoliaError,
-          hits,
-          loading,
-          search,
-          isGps
-        )}
-        renderItem={renderItem}
-        style={styles.list}
-      />
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			<BackButton onPress={goBack} style={styles.backButton} />
+			<SearchHeader onChangeSearch={handleChangeSearch} search={search} />
+			<FlatList
+				data={hits}
+				ItemSeparatorComponent={renderSeparator}
+				keyboardShouldPersistTaps="always"
+				keyExtractor={({ objectID }): string => objectID}
+				ListEmptyComponent={renderEmptyList(
+					algoliaError,
+					hits,
+					loading,
+					search,
+					isGps
+				)}
+				renderItem={renderItem}
+				style={styles.list}
+			/>
+		</View>
+	);
 }

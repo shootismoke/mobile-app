@@ -15,10 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import {
-  ApolloClient,
-  createHttpLink,
-  from,
-  InMemoryCache,
+	ApolloClient,
+	createHttpLink,
+	from,
+	InMemoryCache,
 } from '@apollo/client';
 import { ErrorResponse, onError } from '@apollo/link-error';
 import { RetryLink } from '@apollo/link-retry';
@@ -29,10 +29,10 @@ import { AsyncStorage } from 'react-native';
 
 import { sentryError } from '../util/sentry';
 import {
-  credentials,
-  handleStaleTimestamp,
-  HAWK_STALE_TIMESTAMP,
-  hawkFetch,
+	credentials,
+	handleStaleTimestamp,
+	HAWK_STALE_TIMESTAMP,
+	hawkFetch,
 } from './util';
 
 // FIXME Which type should this have?
@@ -47,71 +47,71 @@ let _client: ApolloClient<TCacheShape>;
  * with them.
  */
 function handleApolloError({
-  graphQLErrors,
-  networkError,
+	graphQLErrors,
+	networkError,
 }: ErrorResponse): void {
-  // Send errors to Sentry
-  if (networkError) {
-    sentryError('Apollo')(
-      new Error(`[${networkError.name}]: ${networkError.message}`)
-    );
-  }
+	// Send errors to Sentry
+	if (networkError) {
+		sentryError('Apollo')(
+			new Error(`[${networkError.name}]: ${networkError.message}`)
+		);
+	}
 
-  if (graphQLErrors) {
-    // If we find a `Stale timestamp` error from hawk, we handle that
-    // separately. We would need to adjust the local timestamp offset.
-    const staleTimestampError = graphQLErrors.find(
-      ({ message }) => message === HAWK_STALE_TIMESTAMP
-    );
-    if (staleTimestampError) {
-      handleStaleTimestamp(staleTimestampError, credentials);
-    }
+	if (graphQLErrors) {
+		// If we find a `Stale timestamp` error from hawk, we handle that
+		// separately. We would need to adjust the local timestamp offset.
+		const staleTimestampError = graphQLErrors.find(
+			({ message }) => message === HAWK_STALE_TIMESTAMP
+		);
+		if (staleTimestampError) {
+			handleStaleTimestamp(staleTimestampError, credentials);
+		}
 
-    graphQLErrors
-      .filter(({ message }) => message !== HAWK_STALE_TIMESTAMP)
-      .forEach(({ message, name }) =>
-        sentryError('Apollo')(new Error(`[${name}]: ${message}`))
-      );
-  }
+		graphQLErrors
+			.filter(({ message }) => message !== HAWK_STALE_TIMESTAMP)
+			.forEach(({ message, name }) =>
+				sentryError('Apollo')(new Error(`[${name}]: ${message}`))
+			);
+	}
 }
 
 /**
  * Create an Apollo client.
  */
 export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
-  if (_client) {
-    return _client;
-  }
+	if (_client) {
+		return _client;
+	}
 
-  const cache = new InMemoryCache();
+	const cache = new InMemoryCache();
 
-  // await before instantiating ApolloClient, else queries might run before the cache is persisted
-  await persistCache({
-    cache,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore FIXME, I don't know how to fix here
-    storage: AsyncStorage,
-  });
+	// await before instantiating ApolloClient, else queries might run before the cache is persisted
+	await persistCache({
+		cache,
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore FIXME, I don't know how to fix here
+		storage: AsyncStorage,
+	});
 
-  const client = new ApolloClient({
-    cache,
-    link: from([
-      // Error handling
-      onError(handleApolloError),
-      // Retry on error
-      new RetryLink(),
-      // Classic HTTP link
-      createHttpLink({
-        fetch: hawkFetch(Constants.manifest.extra.backendUrl),
-        uri: Constants.manifest.extra.backendUrl,
-      }),
-    ]),
-    name: 'shootismoke-expo',
-    typeDefs: [userSchema],
-    version: `v${Constants.manifest.version}`,
-  });
+	const client = new ApolloClient({
+		cache,
+		link: from([
+			// Error handling
+			onError(handleApolloError),
+			// Retry on error
+			new RetryLink(),
+			// Classic HTTP link
+			createHttpLink({
+				fetch: hawkFetch(Constants.manifest.extra.backendUrl),
+				uri: Constants.manifest.extra.backendUrl,
+			}),
+		]),
+		name: 'shootismoke-expo',
+		typeDefs: [userSchema],
+		version: `v${Constants.manifest.version as string}`,
+	});
 
-  _client = client;
+	_client = client;
 
-  return client;
+	return client;
 }

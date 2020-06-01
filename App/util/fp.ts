@@ -22,11 +22,11 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import {
-  capDelay,
-  exponentialBackoff,
-  limitRetries,
-  monoidRetryPolicy,
-  RetryStatus,
+	capDelay,
+	exponentialBackoff,
+	limitRetries,
+	monoidRetryPolicy,
+	RetryStatus,
 } from 'retry-ts';
 import { retrying } from 'retry-ts/lib/Task';
 
@@ -47,26 +47,26 @@ import { sentryError } from './sentry';
  * ```
  */
 export function sideEffect<E, A>(fn: (input: A) => TE.TaskEither<E, void>) {
-  return (input: A): TE.TaskEither<E, A> =>
-    TE.rightTask<E, A>(
-      pipe(
-        fn(input),
-        TE.fold(
-          (error) =>
-            pipe(
-              T.fromIO(C.log(error)),
-              T.map(() => input)
-            ),
-          () => T.of(input)
-        )
-      )
-    );
+	return (input: A): TE.TaskEither<E, A> =>
+		TE.rightTask<E, A>(
+			pipe(
+				fn(input),
+				TE.fold(
+					(error) =>
+						pipe(
+							T.fromIO(C.log(error)),
+							T.map(() => input)
+						),
+					() => T.of(input)
+				)
+			)
+		);
 }
 
 interface RetryOptions {
-  capDelay?: number;
-  exponentialBackoff?: number;
-  retries?: number;
+	capDelay?: number;
+	exponentialBackoff?: number;
+	retries?: number;
 }
 
 /**
@@ -76,30 +76,30 @@ interface RetryOptions {
  * @param teFn - A function returning a TE
  */
 export function retry<A>(
-  teFn: (status: RetryStatus, delay: number) => TE.TaskEither<Error, A>,
-  options: RetryOptions = {}
+	teFn: (status: RetryStatus, delay: number) => TE.TaskEither<Error, A>,
+	options: RetryOptions = {}
 ): TE.TaskEither<Error, A> {
-  // Set our retry policy
-  const policy = capDelay(
-    options.capDelay || 2000,
-    monoidRetryPolicy.concat(
-      exponentialBackoff(options.exponentialBackoff || 200),
-      limitRetries(options.retries || 3)
-    )
-  );
+	// Set our retry policy
+	const policy = capDelay(
+		options.capDelay || 2000,
+		monoidRetryPolicy.concat(
+			exponentialBackoff(options.exponentialBackoff || 200),
+			limitRetries(options.retries || 3)
+		)
+	);
 
-  return retrying(
-    policy,
-    (status) =>
-      pipe(
-        status.previousDelay,
-        O.fold(
-          () => TE.left(new Error('Empty Option<delay>')),
-          (delay) => teFn(status, delay)
-        )
-      ),
-    E.isLeft
-  );
+	return retrying(
+		policy,
+		(status) =>
+			pipe(
+				status.previousDelay,
+				O.fold(
+					() => TE.left(new Error('Empty Option<delay>')),
+					(delay) => teFn(status, delay)
+				)
+			),
+		E.isLeft
+	);
 }
 
 /**
@@ -107,27 +107,28 @@ export function retry<A>(
  * @param fn - Function returning a Promise
  */
 export function promiseToTE<A>(
-  fn: Lazy<Promise<A>>,
-  namespace: string
+	fn: Lazy<Promise<A>>,
+	namespace: string
 ): TE.TaskEither<Error, A> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return TE.tryCatch(fn, (reason: any) => {
-    let error: Error | undefined;
-    // FIXME GraphQLError is empty
-    // https://github.com/apollographql/apollo-client/issues/2810#issuecomment-401738389
-    if (
-      reason.networkError &&
-      reason.networkError.result &&
-      reason.networkError.result.errors &&
-      reason.networkError.result.errors[0]
-    ) {
-      error = new Error(reason.networkError.result.errors[0].message);
-    } else {
-      error = reason instanceof Error ? reason : new Error(String(reason));
-    }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	return TE.tryCatch(fn, (reason: any) => {
+		let error: Error | undefined;
+		// FIXME GraphQLError is empty
+		// https://github.com/apollographql/apollo-client/issues/2810#issuecomment-401738389
+		if (
+			reason.networkError &&
+			reason.networkError.result &&
+			reason.networkError.result.errors &&
+			reason.networkError.result.errors[0]
+		) {
+			error = new Error(reason.networkError.result.errors[0].message);
+		} else {
+			error =
+				reason instanceof Error ? reason : new Error(String(reason));
+		}
 
-    sentryError(namespace)(error);
+		sentryError(namespace)(error);
 
-    return error;
-  });
+		return error;
+	});
 }

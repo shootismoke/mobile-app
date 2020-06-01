@@ -16,16 +16,16 @@
 
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  gql,
-  MutationResult,
-  MutationTuple,
-  QueryResult,
+	gql,
+	MutationResult,
+	MutationTuple,
+	QueryResult,
 } from '@apollo/client';
 import {
-  MutationCreateUserArgs,
-  MutationUpdateUserArgs,
-  QueryGetUserArgs,
-  User,
+	MutationCreateUserArgs,
+	MutationUpdateUserArgs,
+	QueryGetUserArgs,
+	User,
 } from '@shootismoke/graphql';
 import Constants from 'expo-constants';
 import { useEffect, useState } from 'react';
@@ -39,60 +39,60 @@ import { HAWK_STALE_TIMESTAMP } from './hawk';
  * https://gist.github.com/navix/6c25c15e0a2d3cd0e5bce999e0086fc9
  */
 type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Array<infer U>
-    ? Array<DeepPartial<U>>
-    : T[P] extends ReadonlyArray<infer U>
-    ? ReadonlyArray<DeepPartial<U>>
-    : DeepPartial<T[P]>;
+	[P in keyof T]?: T[P] extends Array<infer U>
+		? Array<DeepPartial<U>>
+		: T[P] extends ReadonlyArray<infer U>
+		? ReadonlyArray<DeepPartial<U>>
+		: DeepPartial<T[P]>;
 };
 
 const GET_USER = gql`
-  query getUser($expoInstallationId: ID!) {
-    getUser(expoInstallationId: $expoInstallationId) {
-      __typename
-      _id
-      notifications {
-        __typename
-        _id
-        frequency
-      }
-    }
-  }
+	query getUser($expoInstallationId: ID!) {
+		getUser(expoInstallationId: $expoInstallationId) {
+			__typename
+			_id
+			notifications {
+				__typename
+				_id
+				frequency
+			}
+		}
+	}
 `;
 
 const CREATE_USER = gql`
-  mutation createUser($input: CreateUserInput!) {
-    createUser(input: $input) {
-      __typename
-      _id
-      notifications {
-        __typename
-        _id
-        frequency
-      }
-    }
-  }
+	mutation createUser($input: CreateUserInput!) {
+		createUser(input: $input) {
+			__typename
+			_id
+			notifications {
+				__typename
+				_id
+				frequency
+			}
+		}
+	}
 `;
 
 const UPDATE_USER = gql`
-  mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
-    updateUser(expoInstallationId: $expoInstallationId, input: $input) {
-      __typename
-      _id
-      notifications {
-        __typename
-        _id
-        frequency
-      }
-    }
-  }
+	mutation updateUser($expoInstallationId: ID!, $input: UpdateUserInput!) {
+		updateUser(expoInstallationId: $expoInstallationId, input: $input) {
+			__typename
+			_id
+			notifications {
+				__typename
+				_id
+				frequency
+			}
+		}
+	}
 `;
 
 /**
  * Options for the `getUser` graphql query
  */
 export const USER_VARIABLES = {
-  expoInstallationId: Constants.installationId,
+	expoInstallationId: Constants.installationId,
 };
 
 /**
@@ -100,68 +100,74 @@ export const USER_VARIABLES = {
  * refetching if hawk timestamp is stale.
  */
 export function useGetOrCreateUser(): {
-  createUser: MutationResult<{
-    createUser: DeepPartial<User>;
-  }>;
-  getUser: QueryResult<
-    {
-      getUser: DeepPartial<User> | null;
-    },
-    QueryGetUserArgs
-  >;
+	createUser: MutationResult<{
+		createUser: DeepPartial<User>;
+	}>;
+	getUser: QueryResult<
+		{
+			getUser: DeepPartial<User> | null;
+		},
+		QueryGetUserArgs
+	>;
 } {
-  const getUser = useQuery<
-    { getUser: DeepPartial<User> | null },
-    QueryGetUserArgs
-  >(GET_USER, {
-    fetchPolicy: 'cache-and-network' as const,
-    variables: USER_VARIABLES,
-  });
-  const [createUser, createUserData] = useMutation<
-    { createUser: DeepPartial<User> },
-    MutationCreateUserArgs
-  >(CREATE_USER, {
-    variables: { input: USER_VARIABLES },
-  });
+	const getUser = useQuery<
+		{ getUser: DeepPartial<User> | null },
+		QueryGetUserArgs
+	>(GET_USER, {
+		fetchPolicy: 'cache-and-network' as const,
+		variables: USER_VARIABLES,
+	});
+	const [createUser, createUserData] = useMutation<
+		{ createUser: DeepPartial<User> },
+		MutationCreateUserArgs
+	>(CREATE_USER, {
+		variables: { input: USER_VARIABLES },
+	});
 
-  // The number of times we refetched.
-  const [refetchCount, setRefetchCount] = useState(0);
+	// The number of times we refetched.
+	const [refetchCount, setRefetchCount] = useState(0);
 
-  // Create a new user if user does not exist on backend
-  useEffect(() => {
-    if (getUser.loading === false && getUser.data?.getUser === null) {
-      createUser({
-        variables: { input: USER_VARIABLES },
-      }).catch(sentryError('SelectNotifications'));
-    }
-  }, [createUser, getUser.data, getUser.loading]);
+	// Create a new user if user does not exist on backend
+	useEffect(() => {
+		if (getUser.loading === false && getUser.data?.getUser === null) {
+			createUser({
+				variables: { input: USER_VARIABLES },
+			}).catch(sentryError('SelectNotifications'));
+		}
+	}, [createUser, getUser.data, getUser.loading]);
 
-  // Refetch on "Stale timestamp" hawk error
-  // FIXME this seems hacky, we should manage refetches from "Stale timestamp"
-  // globally. Maybe something like:
-  // https://github.com/apollographql/apollo-link/issues/541.
-  useEffect(() => {
-    // We also only refetch once
-    if (getUser.error?.message === HAWK_STALE_TIMESTAMP && refetchCount === 0) {
-      setRefetchCount(refetchCount + 1);
-      // Wait 500ms, because on "Stale timestamp" error, we do a Hawk
-      // authenticateTimestampe to calibrate offset.
-      setTimeout(() => {
-        getUser.refetch(USER_VARIABLES);
-      }, 500);
-    }
-  }, [getUser, refetchCount]);
+	// Refetch on "Stale timestamp" hawk error
+	// FIXME this seems hacky, we should manage refetches from "Stale timestamp"
+	// globally. Maybe something like:
+	// https://github.com/apollographql/apollo-link/issues/541.
+	useEffect(() => {
+		// We also only refetch once
+		if (
+			getUser.error?.message === HAWK_STALE_TIMESTAMP &&
+			refetchCount === 0
+		) {
+			setRefetchCount(refetchCount + 1);
+			// Wait 500ms, because on "Stale timestamp" error, we do a Hawk
+			// authenticateTimestampe to calibrate offset.
+			setTimeout(() => {
+				getUser
+					.refetch(USER_VARIABLES)
+					.catch(sentryError('useGetOrCreateUser'));
+			}, 500);
+		}
+	}, [getUser, refetchCount]);
 
-  return { createUser: createUserData, getUser };
+	return { createUser: createUserData, getUser };
 }
 
 export function useUpdateUser(): MutationTuple<
-  {
-    updateUser: DeepPartial<User>;
-  },
-  MutationUpdateUserArgs
+	{
+		updateUser: DeepPartial<User>;
+	},
+	MutationUpdateUserArgs
 > {
-  return useMutation<{ updateUser: DeepPartial<User> }, MutationUpdateUserArgs>(
-    UPDATE_USER
-  );
+	return useMutation<
+		{ updateUser: DeepPartial<User> },
+		MutationUpdateUserArgs
+	>(UPDATE_USER);
 }

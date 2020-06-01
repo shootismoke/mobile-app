@@ -1,0 +1,5 @@
+.eslintrc.js
+.expo
+bin
+coverage
+node_modules

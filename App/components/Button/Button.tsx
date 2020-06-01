@@ -17,81 +17,81 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	TouchableOpacityProps,
+	View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
 
 export interface ButtonProps extends TouchableOpacityProps {
-  as?: typeof View; // Give a possibility to show the Button as View instead of TouchableOpacity
-  children?: string | React.ReactElement;
-  icon?: string;
-  type?: 'primary' | 'secondary';
+	as?: typeof View; // Give a possibility to show the Button as View instead of TouchableOpacity
+	children?: string | React.ReactElement;
+	icon?: string;
+	type?: 'primary' | 'secondary';
 }
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: theme.spacing.mini,
-  },
-  buttonText: {
-    ...theme.title,
-    color: theme.primaryColor,
-  },
-  icon: {
-    marginRight: theme.spacing.mini,
-  },
-  primary: {
-    borderColor: theme.primaryColor,
-    borderRadius: scale(24),
-    borderWidth: scale(2),
-  },
+	button: {
+		alignItems: 'center',
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		paddingVertical: theme.spacing.mini,
+	},
+	buttonText: {
+		...theme.title,
+		color: theme.primaryColor,
+	},
+	icon: {
+		marginRight: theme.spacing.mini,
+	},
+	primary: {
+		borderColor: theme.primaryColor,
+		borderRadius: scale(24),
+		borderWidth: scale(2),
+	},
 });
 
 export function Button(props: ButtonProps): React.ReactElement {
-  const {
-    as: Wrapper = TouchableOpacity,
-    children,
-    icon,
-    onPress,
-    style,
-    type = 'primary',
-    ...rest
-  } = props;
+	const {
+		as: Wrapper = TouchableOpacity,
+		children,
+		icon,
+		onPress,
+		style,
+		type = 'primary',
+		...rest
+	} = props;
 
-  return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore FIXME TS doesn't seem to like this construct
-    <Wrapper
-      onPress={onPress}
-      style={[
-        styles.button,
-        type === 'primary' ? styles.primary : undefined,
-        style,
-      ]}
-      {...rest}
-    >
-      {icon && (
-        <Ionicons
-          color={theme.primaryColor}
-          name={icon}
-          size={15}
-          style={children && styles.icon}
-        />
-      )}
-      {children &&
-        (typeof children === 'string' ? (
-          <Text style={styles.buttonText}>{children}</Text>
-        ) : (
-          children
-        ))}
-    </Wrapper>
-  );
+	return (
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore FIXME TS doesn't seem to like this construct
+		<Wrapper
+			onPress={onPress}
+			style={[
+				styles.button,
+				type === 'primary' ? styles.primary : undefined,
+				style,
+			]}
+			{...rest}
+		>
+			{icon && (
+				<Ionicons
+					color={theme.primaryColor}
+					name={icon}
+					size={15}
+					style={children && styles.icon}
+				/>
+			)}
+			{children &&
+				(typeof children === 'string' ? (
+					<Text style={styles.buttonText}>{children}</Text>
+				) : (
+					children
+				))}
+		</Wrapper>
+	);
 }

@@ -23,23 +23,23 @@ import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
 const LOADING_TEXT = 'Fetching...';
 
 export function GpsItem(): React.ReactElement | null {
-  const { setCurrentLocation } = useContext(CurrentLocationContext);
-  const gps = useContext(GpsLocationContext);
+	const { setCurrentLocation } = useContext(CurrentLocationContext);
+	const gps = useContext(GpsLocationContext);
 
-  if (!gps) {
-    return null;
-  }
+	if (!gps) {
+		return null;
+	}
 
-  const handleClick = (): void => {
-    setCurrentLocation(gps);
-  };
+	const handleClick = (): void => {
+		setCurrentLocation(gps);
+	};
 
-  return (
-    <ListItem
-      description={t('search_current_location')}
-      icon="gps"
-      onPress={handleClick}
-      title={gps.name || LOADING_TEXT}
-    />
-  );
+	return (
+		<ListItem
+			description={t('search_current_location')}
+			icon="gps"
+			onPress={handleClick}
+			title={gps.name || LOADING_TEXT}
+		/>
+	);
 }
