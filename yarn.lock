@@ -3609,16 +3609,17 @@ detox-expo-helpers@^0.6.0:
     semver "^5.6.0"
     xdl "^51.5.0"
 
-detox@^16.6.0:
-  version "16.6.0"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-16.6.0.tgz#c53457e5044c7e388004a8a862c26e04fd0c5a8c"
-  integrity sha512-2FziZMJ2+fEEwNCR1kfZ/e/CqTFIJXC1jRHdyK1t3oePfT1Qq+V22ejdfxs061b1o9AsoJrjPqi+It8AOaQCsw==
+detox@^16.7.1:
+  version "16.7.1"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-16.7.1.tgz#f027809839b43c8a58e156dd8ea2267b8d36a744"
+  integrity sha512-TrxANje18ztxdqBv+YmC8H5vVab6m6v36p96ZvtBmuMkRfeoWBjVNKJH0bsA7zqoSu5C28gE77tfu/hahAkM5A==
   dependencies:
     "@babel/core" "^7.4.5"
     bunyan "^1.8.12"
     bunyan-debug-stream "^1.1.0"
     chalk "^2.4.2"
     child-process-promise "^2.2.0"
+    find-up "^4.1.0"
     fs-extra "^4.0.2"
     funpermaproxy "^1.0.1"
     get-port "^2.1.0"

@@ -44,7 +44,7 @@
     "@types/react-native": "^0.60.22",
     "apollo-cache-persist": "^0.1.1",
     "date-fns": "^2.14.0",
-    "detox": "^16.6.0",
+    "detox": "^16.7.1",
     "detox-expo-helpers": "^0.6.0",
     "expo": "^37.0.8",
     "expo-analytics-amplitude": "~8.1.0",
