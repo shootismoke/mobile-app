@@ -32,9 +32,9 @@ import { ActionPicker } from '../../../../components';
 import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import {
-  useGetOrCreateUser,
-  USER_VARIABLES,
-  useUpdateUser,
+	useGetOrCreateUser,
+	USER_VARIABLES,
+	useUpdateUser,
 } from '../../../../stores/util';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
@@ -49,7 +49,7 @@ const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
  * @param s - String to capitalize
  */
 function capitalize(s: string): string {
-  return s[0].toUpperCase() + s.slice(1);
+	return s[0].toUpperCase() + s.slice(1);
 }
 
 /**
@@ -57,228 +57,233 @@ function capitalize(s: string): string {
  * @see https://stackoverflow.com/questions/21646738/convert-hex-to-rgba#answer-51564734
  */
 function hex2rgba(hex: string, alpha = 1): string {
-  const matches = hex.match(/\w\w/g);
-  if (!matches) {
-    throw new Error(`Invalid hex: ${hex}`);
-  }
+	const matches = hex.match(/\w\w/g);
+	if (!matches) {
+		throw new Error(`Invalid hex: ${hex}`);
+	}
 
-  const [r, g, b] = matches.map((x) => parseInt(x, 16));
+	const [r, g, b] = matches.map((x) => parseInt(x, 16));
 
-  return `rgba(${r},${g},${b},${alpha})`;
+	return `rgba(${r},${g},${b},${alpha})`;
 }
 
 type SelectNotificationsProps = ViewProps;
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  label: {
-    ...theme.text,
-    textTransform: 'uppercase',
-  },
-  labelFrequency: {
-    ...theme.text,
-    color: theme.primaryColor,
-    fontFamily: theme.gothamBlack,
-    fontWeight: '900',
-    textTransform: 'uppercase',
-  },
-  switchCircle: {
-    borderRadius: scale(11),
-    height: scale(22),
-    width: scale(22),
-  },
-  switchContainer: {
-    borderRadius: scale(14),
-    height: scale(28),
-    marginRight: theme.spacing.small,
-    padding: scale(3),
-    width: scale(48),
-  },
+	container: {
+		alignItems: 'center',
+		flexDirection: 'row',
+	},
+	label: {
+		...theme.text,
+		textTransform: 'uppercase',
+	},
+	labelFrequency: {
+		...theme.text,
+		color: theme.primaryColor,
+		fontFamily: theme.gothamBlack,
+		fontWeight: '900',
+		textTransform: 'uppercase',
+	},
+	switchCircle: {
+		borderRadius: scale(11),
+		height: scale(22),
+		width: scale(22),
+	},
+	switchContainer: {
+		borderRadius: scale(14),
+		height: scale(28),
+		marginRight: theme.spacing.small,
+		padding: scale(3),
+		width: scale(48),
+	},
 });
 
 export function SelectNotifications(
-  props: SelectNotificationsProps
+	props: SelectNotificationsProps
 ): React.ReactElement {
-  const { style, ...rest } = props;
-  const { api } = useContext(ApiContext);
+	const { style, ...rest } = props;
+	const { api } = useContext(ApiContext);
 
-  // Data from backend
-  const { createUser, getUser } = useGetOrCreateUser();
-  const [updateUser, { data: updateUserData }] = useUpdateUser();
+	// Data from backend
+	const { createUser, getUser } = useGetOrCreateUser();
+	const [updateUser, { data: updateUserData }] = useUpdateUser();
 
-  // This state is used for optimistic UI: right after the user clicks, we set
-  // this state to what the user clicked. When the actual mutation resolves, we
-  // populate with the real data.
-  const [optimisticNotif, setOptimisticNotif] = useState<Frequency>();
+	// This state is used for optimistic UI: right after the user clicks, we set
+	// this state to what the user clicked. When the actual mutation resolves, we
+	// populate with the real data.
+	const [optimisticNotif, setOptimisticNotif] = useState<Frequency>();
 
-  const notif =
-    // If we have optimistic UI, show it
-    optimisticNotif ||
-    // If we have up-to-date data from backend, take that
-    updateUserData?.updateUser?.notifications?.frequency ||
-    createUser.data?.createUser?.notifications?.frequency ||
-    // At the beginning, before anything happens, query from backend
-    getUser.data?.getUser?.notifications?.frequency ||
-    // If the getUserData is still loading, just show `never`
-    'never';
+	const notif =
+		// If we have optimistic UI, show it
+		optimisticNotif ||
+		// If we have up-to-date data from backend, take that
+		updateUserData?.updateUser?.notifications?.frequency ||
+		createUser.data?.createUser?.notifications?.frequency ||
+		// At the beginning, before anything happens, query from backend
+		getUser.data?.getUser?.notifications?.frequency ||
+		// If the getUserData is still loading, just show `never`
+		'never';
 
-  // Optimistic UI
-  useEffect(() => {
-    // If we receive new updateUserData, then our optimistic UI is obsolete
-    if (updateUserData) {
-      setOptimisticNotif(undefined);
-    }
-  }, [updateUserData]);
+	// Optimistic UI
+	useEffect(() => {
+		// If we receive new updateUserData, then our optimistic UI is obsolete
+		if (updateUserData) {
+			setOptimisticNotif(undefined);
+		}
+	}, [updateUserData]);
 
-  /**
-   * Handler for changing notification frequency
-   *
-   * @param buttonIndex - The button index in the ActionSheet
-   */
-  function handleChangeNotif(frequency: Frequency): void {
-    setOptimisticNotif(frequency);
+	/**
+	 * Handler for changing notification frequency
+	 *
+	 * @param buttonIndex - The button index in the ActionSheet
+	 */
+	function handleChangeNotif(frequency: Frequency): void {
+		setOptimisticNotif(frequency);
 
-    track(
-      `HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
-    );
+		track(
+			`HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
+		);
 
-    if (!api) {
-      throw new Error(
-        'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
-      );
-    }
+		if (!api) {
+			throw new Error(
+				'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
+			);
+		}
 
-    pipe(
-      promiseToTE(
-        () => Permissions.askAsync(Permissions.NOTIFICATIONS),
-        'SelectNotifications'
-      ),
-      TE.chain(({ status }) => {
-        if (status === 'granted') {
-          return TE.right(undefined);
-        } else {
-          track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
+		pipe(
+			promiseToTE(
+				() => Permissions.askAsync(Permissions.NOTIFICATIONS),
+				'SelectNotifications'
+			),
+			TE.chain(({ status }) => {
+				if (status === 'granted') {
+					return TE.right(undefined);
+				} else {
+					track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
 
-          return TE.left(
-            new Error('Permission to access notifications was denied')
-          );
-        }
-      }),
-      TE.chain(() =>
-        // Retry 3 times to get the Expo push token, sometimes we get an Error
-        // "Couldn't get GCM token for device" on 1st try
-        retry(
-          () =>
-            promiseToTE(
-              () => Notifications.getExpoPushTokenAsync(),
-              'SelectNotifications'
-            ),
-          {
-            retries: 3,
-          }
-        )
-      ),
-      TE.map((expoPushToken) => ({
-        expoPushToken,
-        frequency,
-        timezone: Localization.timezone,
-        universalId: api.pm25.location,
-      })),
-      TE.chain(
-        sideEffect((notifications) =>
-          TE.rightIO(
-            C.log(
-              `<SelectNotifications> - Update user ${JSON.stringify(
-                notifications
-              )}`
-            )
-          )
-        )
-      ),
-      TE.chain((notifications) =>
-        promiseToTE(
-          () =>
-            updateUser({
-              variables: {
-                ...USER_VARIABLES,
-                input: { notifications },
-              },
-            }),
-          'SelectNotifications'
-        )
-      ),
-      TE.fold(
-        (error) => {
-          sentryError('SelectNotifications')(error);
-          setOptimisticNotif('never');
+					return TE.left(
+						new Error(
+							'Permission to access notifications was denied'
+						)
+					);
+				}
+			}),
+			TE.chain(() =>
+				// Retry 3 times to get the Expo push token, sometimes we get an Error
+				// "Couldn't get GCM token for device" on 1st try
+				retry(
+					() =>
+						promiseToTE(
+							() => Notifications.getExpoPushTokenAsync(),
+							'SelectNotifications'
+						),
+					{
+						retries: 3,
+					}
+				)
+			),
+			TE.map((expoPushToken) => ({
+				expoPushToken,
+				frequency,
+				timezone: Localization.timezone,
+				universalId: api.pm25.location,
+			})),
+			TE.chain(
+				sideEffect((notifications) =>
+					TE.rightIO(
+						C.log(
+							`<SelectNotifications> - Update user ${JSON.stringify(
+								notifications
+							)}`
+						)
+					)
+				)
+			),
+			TE.chain((notifications) =>
+				promiseToTE(
+					() =>
+						updateUser({
+							variables: {
+								...USER_VARIABLES,
+								input: { notifications },
+							},
+						}),
+					'SelectNotifications'
+				)
+			),
+			TE.fold(
+				(error) => {
+					sentryError('SelectNotifications')(error);
+					setOptimisticNotif('never');
 
-          track('HOME_SCREEN_NOTIFICATIONS_ERROR');
+					track('HOME_SCREEN_NOTIFICATIONS_ERROR');
 
-          return T.of(undefined);
-        },
-        () => T.of(undefined)
-      )
-    )().catch(sentryError('SelectNotifications'));
-  }
+					return T.of(undefined);
+				},
+				() => T.of(undefined)
+			)
+		)().catch(sentryError('SelectNotifications'));
+	}
 
-  // Is the switch on or off?
-  const isSwitchOn = notif !== 'never';
+	// Is the switch on or off?
+	const isSwitchOn = notif !== 'never';
 
-  return (
-    <ActionPicker
-      actionSheetOptions={{
-        cancelButtonIndex: 4,
-        options: notificationsValues
-          .map((f) => t(`home_frequency_${f}`)) // Translate
-          .map(capitalize)
-          .concat(t('home_frequency_notifications_cancel')),
-      }}
-      amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
-      callback={(buttonIndex): void => {
-        if (buttonIndex === 4) {
-          // 4 is cancel
+	return (
+		<ActionPicker
+			actionSheetOptions={{
+				cancelButtonIndex: 4,
+				options: notificationsValues
+					.map((f) => t(`home_frequency_${f}`)) // Translate
+					.map(capitalize)
+					.concat(t('home_frequency_notifications_cancel')),
+			}}
+			amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
+			callback={(buttonIndex): void => {
+				if (buttonIndex === 4) {
+					// 4 is cancel
 
-          track('HOME_SCREEN_NOTIFICATIONS_CANCEL');
-          return;
-        }
+					track('HOME_SCREEN_NOTIFICATIONS_CANCEL');
+					return;
+				}
 
-        handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
-      }}
-    >
-      {(open): React.ReactElement => (
-        <View style={[styles.container, style]} {...rest}>
-          <Switch
-            backgroundColorOn={theme.primaryColor}
-            backgroundColorOff={hex2rgba(
-              theme.secondaryTextColor,
-              theme.disabledOpacity
-            )}
-            circleColorOff="white"
-            circleColorOn="white"
-            circleStyle={styles.switchCircle}
-            containerStyle={styles.switchContainer}
-            switchOn={isSwitchOn}
-            onPress={open}
-            duration={500}
-          />
+				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
+			}}
+		>
+			{(open): React.ReactElement => (
+				<View style={[styles.container, style]} {...rest}>
+					<Switch
+						backgroundColorOn={theme.primaryColor}
+						backgroundColorOff={hex2rgba(
+							theme.secondaryTextColor,
+							theme.disabledOpacity
+						)}
+						circleColorOff="white"
+						circleColorOn="white"
+						circleStyle={styles.switchCircle}
+						containerStyle={styles.switchContainer}
+						switchOn={isSwitchOn}
+						onPress={open}
+						duration={500}
+					/>
 
-          {isSwitchOn ? (
-            <View>
-              <Text style={styles.label}>{t('home_frequency_notify_me')}</Text>
-              <Text style={styles.labelFrequency}>
-                {t(`home_frequency_${notif}`)} <FontAwesome name="caret-down" />
-              </Text>
-            </View>
-          ) : (
-            <Text style={styles.label}>
-              {t('home_frequency_allow_notifications')}
-            </Text>
-          )}
-        </View>
-      )}
-    </ActionPicker>
-  );
+					{isSwitchOn ? (
+						<View>
+							<Text style={styles.label}>
+								{t('home_frequency_notify_me')}
+							</Text>
+							<Text style={styles.labelFrequency}>
+								{t(`home_frequency_${notif}`)}{' '}
+								<FontAwesome name="caret-down" />
+							</Text>
+						</View>
+					) : (
+						<Text style={styles.label}>
+							{t('home_frequency_allow_notifications')}
+						</Text>
+					)}
+				</View>
+			)}
+		</ActionPicker>
+	);
 }

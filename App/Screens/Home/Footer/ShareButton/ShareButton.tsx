@@ -27,58 +27,58 @@ import { ShareImage } from './ShareImage';
 type ShareButtonProps = ViewProps;
 
 const styles = StyleSheet.create({
-  viewShot: {
-    // We don't want to show this on the screen. If you have a better idea how
-    // to achieve the same result (e.g. with a CSS equivalent of
-    // `visible: hidden`), then open a PR
-    left: -9999,
-    position: 'absolute',
-  },
+	viewShot: {
+		// We don't want to show this on the screen. If you have a better idea how
+		// to achieve the same result (e.g. with a CSS equivalent of
+		// `visible: hidden`), then open a PR
+		left: -9999,
+		position: 'absolute',
+	},
 });
 
 export function ShareButton(props: ShareButtonProps): React.ReactElement {
-  const { api } = useContext(ApiContext);
-  const { currentLocation } = useContext(CurrentLocationContext);
-  const refViewShot = createRef<View>();
+	const { api } = useContext(ApiContext);
+	const { currentLocation } = useContext(CurrentLocationContext);
+	const refViewShot = createRef<View>();
 
-  async function handleShare(): Promise<void> {
-    try {
-      if (!api) {
-        throw new Error(
-          'Home/Footer/ShareButton.tsx only renders when `api` is defined.'
-        );
-      } else if (!currentLocation) {
-        throw new Error(
-          'Home/Footer/ShareButton.tsx only renders when `currentLocation` is defined.'
-        );
-      }
+	async function handleShare(): Promise<void> {
+		try {
+			if (!api) {
+				throw new Error(
+					'Home/Footer/ShareButton.tsx only renders when `api` is defined.'
+				);
+			} else if (!currentLocation) {
+				throw new Error(
+					'Home/Footer/ShareButton.tsx only renders when `currentLocation` is defined.'
+				);
+			}
 
-      const imageUrl = await captureRef(refViewShot, {
-        format: 'png',
-        quality: 1,
-      });
-      const message = t('home_share_message', {
-        city: currentLocation.city
-          ? `in ${currentLocation.city}`
-          : t('home_share_message_here'),
-        cigarettes: Math.ceil(api.shootismoke.dailyCigarettes),
-      });
-      const title = t('home_share_title');
+			const imageUrl = await captureRef(refViewShot, {
+				format: 'png',
+				quality: 1,
+			});
+			const message = t('home_share_message', {
+				city: currentLocation.city
+					? `in ${currentLocation.city}`
+					: t('home_share_message_here'),
+				cigarettes: Math.ceil(api.shootismoke.dailyCigarettes),
+			});
+			const title = t('home_share_title');
 
-      // FIXME imageUrl doesn't work on Android
-      // https://github.com/amaurymartiny/shoot-i-smoke/issues/250
-      await Share.share({ message, title, url: imageUrl });
-    } catch (error) {
-      sentryError('ShareButton')(error);
-    }
-  }
+			// FIXME imageUrl doesn't work on Android
+			// https://github.com/amaurymartiny/shoot-i-smoke/issues/250
+			await Share.share({ message, title, url: imageUrl });
+		} catch (error) {
+			sentryError('ShareButton')(error);
+		}
+	}
 
-  return (
-    <View {...props}>
-      <View collapsable={false} ref={refViewShot} style={styles.viewShot}>
-        <ShareImage />
-      </View>
-      <CircleButton icon="ios-share-alt" onPress={handleShare} />
-    </View>
-  );
+	return (
+		<View {...props}>
+			<View collapsable={false} ref={refViewShot} style={styles.viewShot}>
+				<ShareImage />
+			</View>
+			<CircleButton icon="ios-share-alt" onPress={handleShare} />
+		</View>
+	);
 }

@@ -21,30 +21,30 @@ import { noop } from '../util/noop';
 export type Frequency = 'daily' | 'weekly' | 'monthly';
 
 interface Context {
-  frequency: Frequency;
-  setFrequency: (newFrequency: Frequency) => void;
+	frequency: Frequency;
+	setFrequency: (newFrequency: Frequency) => void;
 }
 
 export const FrequencyContext = createContext<Context>({
-  frequency: 'daily',
-  setFrequency: noop,
+	frequency: 'daily',
+	setFrequency: noop,
 });
 
 export function FrequencyContextProvider({
-  children,
+	children,
 }: {
-  children: JSX.Element;
+	children: JSX.Element;
 }): React.ReactElement {
-  const [frequency, setFrequency] = useState<Frequency>('daily');
+	const [frequency, setFrequency] = useState<Frequency>('daily');
 
-  return (
-    <FrequencyContext.Provider
-      value={{
-        frequency,
-        setFrequency,
-      }}
-    >
-      {children}
-    </FrequencyContext.Provider>
-  );
+	return (
+		<FrequencyContext.Provider
+			value={{
+				frequency,
+				setFrequency,
+			}}
+		>
+			{children}
+		</FrequencyContext.Provider>
+	);
 }

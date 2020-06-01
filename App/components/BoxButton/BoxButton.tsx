@@ -16,55 +16,58 @@
 
 import React from 'react';
 import {
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  TouchableWithoutFeedbackProps,
-  View,
+	StyleSheet,
+	Text,
+	TouchableWithoutFeedback,
+	TouchableWithoutFeedbackProps,
+	View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
 
 interface BoxButtonProps extends TouchableWithoutFeedbackProps {
-  active?: boolean;
-  children: string;
+	active?: boolean;
+	children: string;
 }
 
 const styles = StyleSheet.create({
-  activeText: {
-    opacity: 1,
-  },
-  boxButton: {
-    ...theme.elevationShadowStyle(3),
-    backgroundColor: 'white',
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-    borderRadius: scale(12),
-    borderWidth: 1,
-    marginBottom: theme.spacing.mini,
-    paddingHorizontal: theme.spacing.small,
-    paddingVertical: scale(6), // Padding for the shadow
-    shadowOpacity: 0.1,
-  },
-  boxButtonText: {
-    ...theme.shitText,
-    opacity: theme.disabledOpacity,
-    textAlign: 'center',
-  },
+	activeText: {
+		opacity: 1,
+	},
+	boxButton: {
+		...theme.elevationShadowStyle(3),
+		backgroundColor: 'white',
+		borderColor: 'rgba(0, 0, 0, 0.1)',
+		borderRadius: scale(12),
+		borderWidth: 1,
+		marginBottom: theme.spacing.mini,
+		paddingHorizontal: theme.spacing.small,
+		paddingVertical: scale(6), // Padding for the shadow
+		shadowOpacity: 0.1,
+	},
+	boxButtonText: {
+		...theme.shitText,
+		opacity: theme.disabledOpacity,
+		textAlign: 'center',
+	},
 });
 
 export function BoxButton(props: BoxButtonProps): React.ReactElement {
-  const { active, children, onPress, style, ...rest } = props;
+	const { active, children, onPress, style, ...rest } = props;
 
-  return (
-    <TouchableWithoutFeedback onPress={onPress} {...rest}>
-      <View style={[styles.boxButton, style]}>
-        <Text
-          style={[styles.boxButtonText, active ? styles.activeText : undefined]}
-        >
-          {children}
-        </Text>
-      </View>
-    </TouchableWithoutFeedback>
-  );
+	return (
+		<TouchableWithoutFeedback onPress={onPress} {...rest}>
+			<View style={[styles.boxButton, style]}>
+				<Text
+					style={[
+						styles.boxButtonText,
+						active ? styles.activeText : undefined,
+					]}
+				>
+					{children}
+				</Text>
+			</View>
+		</TouchableWithoutFeedback>
+	);
 }

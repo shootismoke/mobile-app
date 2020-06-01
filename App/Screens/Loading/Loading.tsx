@@ -28,81 +28,81 @@ import { Background } from './Background';
 let longWaitingTimeout: number | null = null;
 
 const styles = StyleSheet.create({
-  dots: {
-    color: theme.primaryColor,
-  },
-  text: {
-    ...theme.title,
-    fontSize: 18,
-    textAlign: 'center',
-  },
+	dots: {
+		color: theme.primaryColor,
+	},
+	text: {
+		...theme.title,
+		fontSize: 18,
+		textAlign: 'center',
+	},
 });
 
 function renderCough(index: number): React.ReactElement {
-  return (
-    <Text key={index}>
-      {t('loading_title_cough')}
-      <Text style={styles.dots}>...</Text>
-    </Text>
-  );
+	return (
+		<Text key={index}>
+			{t('loading_title_cough')}
+			<Text style={styles.dots}>...</Text>
+		</Text>
+	);
 }
 
 function renderText(
-  longWaiting: boolean,
-  gps?: Location,
-  api?: Api
+	longWaiting: boolean,
+	gps?: Location,
+	api?: Api
 ): React.ReactElement {
-  let coughs = 0; // Number of times to show "Cough..."
-  if (gps) ++coughs;
-  if (longWaiting) ++coughs;
-  if (api) ++coughs;
+	let coughs = 0; // Number of times to show "Cough..."
+	if (gps) ++coughs;
+	if (longWaiting) ++coughs;
+	if (api) ++coughs;
 
-  return (
-    <Text>
-      {t('loading_title_loading')}
-      <Text style={styles.dots}>...</Text>
-      {Array.from({ length: coughs }, (_, index) => index + 1).map(
-        // Create array 1..N and rendering Cough...
-        renderCough
-      )}
-    </Text>
-  );
+	return (
+		<Text>
+			{t('loading_title_loading')}
+			<Text style={styles.dots}>...</Text>
+			{Array.from({ length: coughs }, (_, index) => index + 1).map(
+				// Create array 1..N and rendering Cough...
+				renderCough
+			)}
+		</Text>
+	);
 }
 
 function clearLongWaiting(): void {
-  if (longWaitingTimeout) {
-    clearTimeout(longWaitingTimeout);
-    longWaitingTimeout = null;
-  }
+	if (longWaitingTimeout) {
+		clearTimeout(longWaitingTimeout);
+		longWaitingTimeout = null;
+	}
 }
 
 export function Loading(): React.ReactElement {
-  const { api } = useContext(ApiContext);
-  const gps = useContext(GpsLocationContext);
+	const { api } = useContext(ApiContext);
+	const gps = useContext(GpsLocationContext);
 
-  const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time
+	const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time
 
-  trackScreen('LOADING');
+	trackScreen('LOADING');
 
-  useEffect(() => {
-    // Set a 2s timer that will set `longWaiting` to true. Used to show an
-    // additional "cough" message on the loading screen
-    longWaitingTimeout = setTimeout(() => {
-      setLongWaiting(true);
-    }, 2000);
+	useEffect(() => {
+		// Set a 2s timer that will set `longWaiting` to true. Used to show an
+		// additional "cough" message on the loading screen
+		longWaitingTimeout = setTimeout(() => {
+			setLongWaiting(true);
+		}, 2000);
 
-    return clearLongWaiting;
-  }, []);
+		return clearLongWaiting;
+	}, []);
 
-  useEffect(() => {
-    if (api) {
-      clearLongWaiting();
-    }
-  }, [api]);
+	useEffect(() => {
+		if (api) {
+			clearLongWaiting();
+		}
+	}, [api]);
 
-  return (
-    <Background style={theme.withPadding}>
-      <Text style={styles.text}>{renderText(longWaiting, gps, api)}</Text>
-    </Background>
-  );
+	return (
+		<Background style={theme.withPadding}>
+			<Text style={styles.text}>{renderText(longWaiting, gps, api)}</Text>
+		</Background>
+	);
 }

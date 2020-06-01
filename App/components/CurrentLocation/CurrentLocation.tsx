@@ -25,28 +25,28 @@ import * as theme from '../../util/theme';
 const UNKNOWN_STATION = t('current_location_unknown_station');
 
 interface CurrentLocationProps extends TextProps {
-  measurement: OpenAQFormat;
-  currentLocation: Location;
+	measurement: OpenAQFormat;
+	currentLocation: Location;
 }
 
 const styles = StyleSheet.create({
-  title: {
-    ...theme.title,
-  },
+	title: {
+		...theme.title,
+	},
 });
 
 export function CurrentLocation(
-  props: CurrentLocationProps
+	props: CurrentLocationProps
 ): React.ReactElement {
-  const { currentLocation, measurement, style, ...rest } = props;
+	const { currentLocation, measurement, style, ...rest } = props;
 
-  return (
-    <Text style={[styles.title, style]} {...rest}>
-      {(
-        currentLocation.name ||
-        stationName(measurement) ||
-        UNKNOWN_STATION
-      ).toUpperCase()}
-    </Text>
-  );
+	return (
+		<Text style={[styles.title, style]} {...rest}>
+			{(
+				currentLocation.name ||
+				stationName(measurement) ||
+				UNKNOWN_STATION
+			).toUpperCase()}
+		</Text>
+	);
 }

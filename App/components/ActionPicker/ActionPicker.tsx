@@ -15,8 +15,8 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import {
-  ActionSheetOptions,
-  useActionSheet,
+	ActionSheetOptions,
+	useActionSheet,
 } from '@expo/react-native-action-sheet';
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
@@ -24,33 +24,33 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { AmplitudeEvent, track } from '../../util/amplitude';
 
 interface ActionPickerProps extends TouchableOpacityProps {
-  actionSheetOptions: ActionSheetOptions;
-  /**
-   * Which Amplitude event to track when opening the action picker.
-   */
-  amplitudeOpenEvent?: AmplitudeEvent;
-  callback: (i: number) => void;
-  children: (open: () => void) => React.ReactElement;
+	actionSheetOptions: ActionSheetOptions;
+	/**
+	 * Which Amplitude event to track when opening the action picker.
+	 */
+	amplitudeOpenEvent?: AmplitudeEvent;
+	callback: (i: number) => void;
+	children: (open: () => void) => React.ReactElement;
 }
 
 export function ActionPicker(props: ActionPickerProps): React.ReactElement {
-  const {
-    actionSheetOptions,
-    amplitudeOpenEvent,
-    callback,
-    children,
-    ...rest
-  } = props;
-  const { showActionSheetWithOptions } = useActionSheet();
+	const {
+		actionSheetOptions,
+		amplitudeOpenEvent,
+		callback,
+		children,
+		...rest
+	} = props;
+	const { showActionSheetWithOptions } = useActionSheet();
 
-  function handleActionSheet(): void {
-    amplitudeOpenEvent && track(amplitudeOpenEvent);
-    showActionSheetWithOptions(actionSheetOptions, callback);
-  }
+	function handleActionSheet(): void {
+		amplitudeOpenEvent && track(amplitudeOpenEvent);
+		showActionSheetWithOptions(actionSheetOptions, callback);
+	}
 
-  return (
-    <TouchableOpacity onPress={handleActionSheet} {...rest}>
-      {children(handleActionSheet)}
-    </TouchableOpacity>
-  );
+	return (
+		<TouchableOpacity onPress={handleActionSheet} {...rest}>
+			{children(handleActionSheet)}
+		</TouchableOpacity>
+	);
 }

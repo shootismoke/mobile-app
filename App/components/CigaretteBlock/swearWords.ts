@@ -17,11 +17,11 @@
 import { t } from '../../localization';
 
 export default [
-  t('home_swear_word_shoot'),
-  t('home_swear_word_dang'),
-  t('home_swear_word_darn'),
-  t('home_swear_word_geez'),
-  t('home_swear_word_omg'),
-  t('home_swear_word_crap'),
-  t('home_swear_word_arrgh'),
+	t('home_swear_word_shoot'),
+	t('home_swear_word_dang'),
+	t('home_swear_word_darn'),
+	t('home_swear_word_geez'),
+	t('home_swear_word_omg'),
+	t('home_swear_word_crap'),
+	t('home_swear_word_arrgh'),
 ];

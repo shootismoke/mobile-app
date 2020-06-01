@@ -20,26 +20,26 @@ import { reloadApp } from 'detox-expo-helpers';
 import { testIds } from '../App/util/testId';
 
 describe('Location denied', () => {
-  // Load the app first, so that subsequent tests are faster (and don't timeout)
-  beforeAll(async () => {
-    await reloadApp();
-  });
+	// Load the app first, so that subsequent tests are faster (and don't timeout)
+	beforeAll(async () => {
+		await reloadApp();
+	});
 
-  it('should go to Error page if location not allowed', async () => {
-    await reloadApp({
-      permissions: { location: 'never' },
-    });
-    await expect(element(by.id(testIds.Error.screen))).toBeVisible();
-  });
+	it('should go to Error page if location not allowed', async () => {
+		await reloadApp({
+			permissions: { location: 'never' },
+		});
+		await expect(element(by.id(testIds.Error.screen))).toBeVisible();
+	});
 
-  it('should show the error details', async () => {
-    await reloadApp({
-      permissions: { location: 'never' },
-    });
+	it('should show the error details', async () => {
+		await reloadApp({
+			permissions: { location: 'never' },
+		});
 
-    await element(by.id(testIds.Error.showDetails)).tap();
-    await expect(element(by.id(testIds.Error.showDetails))).toHaveLabel(
-      'Error: Permission to access location was denied'
-    );
-  });
+		await element(by.id(testIds.Error.showDetails)).tap();
+		await expect(element(by.id(testIds.Error.showDetails))).toHaveLabel(
+			'Error: Permission to access location was denied'
+		);
+	});
 });

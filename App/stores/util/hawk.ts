@@ -22,16 +22,16 @@ import { RELEASE_CHANNEL } from '../../util/constants';
 import { sentryError } from '../../util/sentry';
 
 export interface Credentials {
-  id: string;
-  key: string;
-  algorithm: 'sha256';
+	id: string;
+	key: string;
+	algorithm: 'sha256';
 }
 
 // Hawk credentials
 export const credentials: Credentials = {
-  id: `${Constants.manifest.slug}-${RELEASE_CHANNEL}`,
-  key: Constants.manifest.extra.hawkKey,
-  algorithm: 'sha256',
+	id: `${Constants.manifest.slug as string}-${RELEASE_CHANNEL}`,
+	key: Constants.manifest.extra.hawkKey,
+	algorithm: 'sha256',
 };
 
 /**
@@ -41,20 +41,20 @@ export const credentials: Credentials = {
  * @see https://www.apollographql.com/docs/react/v3.0-beta/networking/advanced-http-networking/#custom-fetching
  */
 export function hawkFetch(backendUri: string) {
-  return function (
-    input: RequestInfo,
-    init: RequestInit = {}
-  ): Promise<Response> {
-    // Set Hawk authorization header on each request
-    const { header } = Hawk.client.header(backendUri, 'POST', {
-      credentials,
-    });
+	return function (
+		input: RequestInfo,
+		init: RequestInit = {}
+	): Promise<Response> {
+		// Set Hawk authorization header on each request
+		const { header } = Hawk.client.header(backendUri, 'POST', {
+			credentials,
+		});
 
-    return fetch(input, {
-      ...init,
-      headers: { authorization: header, ...init.headers },
-    });
-  };
+		return fetch(input, {
+			...init,
+			headers: { authorization: header, ...init.headers },
+		});
+	};
 }
 
 /**
@@ -72,37 +72,41 @@ export const HAWK_STALE_TIMESTAMP = 'Hawk: Stale timestamp';
  * @param error - Error with message {{HAWK_STALE_TIMESTAMP}}.
  */
 export function handleStaleTimestamp(
-  error: GraphQLError,
-  credentials: Credentials
+	error: GraphQLError,
+	credentials: Credentials
 ): void {
-  try {
-    // We only retry to calibrate our local timestamp offset max 5 times.
-    ++staleTimestampCount;
-    if (staleTimestampCount >= 5) {
-      throw new Error(
-        `Received "Stale timestamp" error ${staleTimestampCount} times`
-      );
-    }
+	try {
+		// We only retry to calibrate our local timestamp offset max 5 times.
+		++staleTimestampCount;
+		if (staleTimestampCount >= 5) {
+			throw new Error(
+				`Received "Stale timestamp" error ${staleTimestampCount} times`
+			);
+		}
 
-    if (!error.extensions || !error.extensions.ts || !error.extensions.tsm) {
-      throw new Error(
-        `Stale timestamp response does not contain \`ts\` and \`tsm\` fields: ${JSON.stringify(
-          error.extensions
-        )}`
-      );
-    }
+		if (
+			!error.extensions ||
+			!error.extensions.ts ||
+			!error.extensions.tsm
+		) {
+			throw new Error(
+				`Stale timestamp response does not contain \`ts\` and \`tsm\` fields: ${JSON.stringify(
+					error.extensions
+				)}`
+			);
+		}
 
-    // Use authenticateTimestamp to adjust local timestamp offset
-    // https://github.com/hapijs/hawk/issues/86#issuecomment-20861575
-    const updated: boolean = Hawk.authenticateTimestamp(
-      error.extensions,
-      credentials
-    );
+		// Use authenticateTimestamp to adjust local timestamp offset
+		// https://github.com/hapijs/hawk/issues/86#issuecomment-20861575
+		const updated: boolean = Hawk.authenticateTimestamp(
+			error.extensions,
+			credentials
+		);
 
-    if (!updated) {
-      throw new Error('authenticateTimestamp returned false');
-    }
-  } catch (error) {
-    sentryError('Apollo')(error);
-  }
+		if (!updated) {
+			throw new Error('authenticateTimestamp returned false');
+		}
+	} catch (error) {
+		sentryError('Apollo')(error);
+	}
 }

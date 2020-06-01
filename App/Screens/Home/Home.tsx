@@ -20,10 +20,10 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { CigaretteBlock } from '../../components';
 import {
-  ApiContext,
-  CurrentLocationContext,
-  Frequency,
-  FrequencyContext,
+	ApiContext,
+	CurrentLocationContext,
+	Frequency,
+	FrequencyContext,
 } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
@@ -35,102 +35,104 @@ import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
 
 interface HomeProps {
-  navigation: StackNavigationProp<RootStackParams, 'Home'>;
+	navigation: StackNavigationProp<RootStackParams, 'Home'>;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-  },
-  footer: {
-    marginBottom: theme.spacing.big,
-  },
-  scroll: {
-    flex: 1,
-  },
-  withMargin: {
-    marginTop: theme.spacing.normal,
-  },
+	container: {
+		flexGrow: 1,
+	},
+	footer: {
+		marginBottom: theme.spacing.big,
+	},
+	scroll: {
+		flex: 1,
+	},
+	withMargin: {
+		marginTop: theme.spacing.normal,
+	},
 });
 
 interface Cigarettes {
-  /**
-   * The current number of cigarettes shown on this Home screen
-   */
-  count: number;
-  /**
-   * Denotes whether the cigarette count is exact or not. It's usually exact.
-   * The only case where it's not exact, it's when we fetch weekly/monthly
-   * cigarettes count, and the backend doesn't give us data back, then we
-   * just multiply the daily count by 7 or 30, and put exact=false.
-   */
-  exact: boolean;
-  /**
-   * The frequency on this cigarettes number
-   */
-  frequency: Frequency;
+	/**
+	 * The current number of cigarettes shown on this Home screen
+	 */
+	count: number;
+	/**
+	 * Denotes whether the cigarette count is exact or not. It's usually exact.
+	 * The only case where it's not exact, it's when we fetch weekly/monthly
+	 * cigarettes count, and the backend doesn't give us data back, then we
+	 * just multiply the daily count by 7 or 30, and put exact=false.
+	 */
+	exact: boolean;
+	/**
+	 * The frequency on this cigarettes number
+	 */
+	frequency: Frequency;
 }
 
 export function Home(props: HomeProps): React.ReactElement {
-  const { navigation } = props;
+	const { navigation } = props;
 
-  const { api } = useContext(ApiContext);
-  const { currentLocation } = useContext(CurrentLocationContext);
-  const { frequency } = useContext(FrequencyContext);
+	const { api } = useContext(ApiContext);
+	const { currentLocation } = useContext(CurrentLocationContext);
+	const { frequency } = useContext(FrequencyContext);
 
-  if (!api) {
-    throw new Error('Home/Home.tsx only gets displayed when `api` is defined.');
-  } else if (!currentLocation) {
-    throw new Error(
-      'Home/Home.tsx only gets displayed when `currentLocation` is defined.'
-    );
-  }
+	if (!api) {
+		throw new Error(
+			'Home/Home.tsx only gets displayed when `api` is defined.'
+		);
+	} else if (!currentLocation) {
+		throw new Error(
+			'Home/Home.tsx only gets displayed when `currentLocation` is defined.'
+		);
+	}
 
-  trackScreen('HOME');
+	trackScreen('HOME');
 
-  // Decide on how many cigarettes we want to show on the Home screen.
-  const [cigarettes, setCigarettes] = useState<Cigarettes>({
-    count: api.shootismoke.dailyCigarettes,
-    exact: true,
-    frequency,
-  });
-  useEffect(() => {
-    setCigarettes({
-      count:
-        api.shootismoke.dailyCigarettes *
-        (frequency === 'daily' ? 1 : frequency === 'weekly' ? 7 : 30),
-      // Since for weeky and monthyl, we just multiply, it's not exact
-      exact: frequency === 'daily',
-      frequency,
-    });
-  }, [api, frequency]);
+	// Decide on how many cigarettes we want to show on the Home screen.
+	const [cigarettes, setCigarettes] = useState<Cigarettes>({
+		count: api.shootismoke.dailyCigarettes,
+		exact: true,
+		frequency,
+	});
+	useEffect(() => {
+		setCigarettes({
+			count:
+				api.shootismoke.dailyCigarettes *
+				(frequency === 'daily' ? 1 : frequency === 'weekly' ? 7 : 30),
+			// Since for weeky and monthyl, we just multiply, it's not exact
+			exact: frequency === 'daily',
+			frequency,
+		});
+	}, [api, frequency]);
 
-  return (
-    <View style={styles.container}>
-      <SmokeVideo cigarettes={cigarettes.count} />
-      <Header
-        onChangeLocationClick={(): void => {
-          track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
-          navigation.navigate('Search');
-        }}
-      />
-      <ScrollView bounces={false} style={styles.scroll}>
-        <CigaretteBlock
-          cigarettes={cigarettes.count}
-          style={styles.withMargin}
-        />
-        <SelectFrequency style={styles.withMargin} />
-        <AdditionalInfo
-          exactCount={cigarettes.exact}
-          frequency={frequency}
-          navigation={navigation}
-          style={styles.withMargin}
-        />
-        <Footer
-          navigation={navigation}
-          style={[styles.withMargin, styles.footer]}
-        />
-      </ScrollView>
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			<SmokeVideo cigarettes={cigarettes.count} />
+			<Header
+				onChangeLocationClick={(): void => {
+					track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
+					navigation.navigate('Search');
+				}}
+			/>
+			<ScrollView bounces={false} style={styles.scroll}>
+				<CigaretteBlock
+					cigarettes={cigarettes.count}
+					style={styles.withMargin}
+				/>
+				<SelectFrequency style={styles.withMargin} />
+				<AdditionalInfo
+					exactCount={cigarettes.exact}
+					frequency={frequency}
+					navigation={navigation}
+					style={styles.withMargin}
+				/>
+				<Footer
+					navigation={navigation}
+					style={[styles.withMargin, styles.footer]}
+				/>
+			</ScrollView>
+		</View>
+	);
 }

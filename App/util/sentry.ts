@@ -20,17 +20,17 @@ import { IS_SENTRY_SET_UP } from './constants';
 
 // We don't send the following errors to Sentry
 const UNTRACKED_ERRORS = [
-  // Location not allowed
-  'Permission to access location was denied',
-  'Location provider is unavailable. Make sure that location services are enabled',
-  'Location request timed out',
-  'Location request failed due to unsatisfied device settings',
-  'Reverse geocoding returned no results',
-  // Notifications not allowed
-  'Permission to access notifications was denied',
-  // No results from data providers
-  'does not have PM2.5 measurings right now',
-  'Cannot normalize, got 0 result',
+	// Location not allowed
+	'Permission to access location was denied',
+	'Location provider is unavailable. Make sure that location services are enabled',
+	'Location request timed out',
+	'Location request failed due to unsatisfied device settings',
+	'Reverse geocoding returned no results',
+	// Notifications not allowed
+	'Permission to access notifications was denied',
+	// No results from data providers
+	'does not have PM2.5 measurings right now',
+	'Cannot normalize, got 0 result',
 ];
 
 /**
@@ -40,14 +40,14 @@ const UNTRACKED_ERRORS = [
  * @param error - The error to send
  */
 export function sentryError(namespace: string) {
-  return function (error: Error): void {
-    if (
-      IS_SENTRY_SET_UP &&
-      !UNTRACKED_ERRORS.some((msg) => error.message.includes(msg))
-    ) {
-      Sentry.captureException(error);
-    }
+	return function (error: Error): void {
+		if (
+			IS_SENTRY_SET_UP &&
+			!UNTRACKED_ERRORS.some((msg) => error.message.includes(msg))
+		) {
+			Sentry.captureException(error);
+		}
 
-    console.log(`[${namespace}]: ${error.message}`);
-  };
+		console.log(`[${namespace}]: ${error.message}`);
+	};
 }

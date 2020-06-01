@@ -23,73 +23,73 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { promiseToTE } from '../../util/fp';
 
 export interface Location extends LatLng {
-  city?: string;
-  country?: string;
-  name?: string;
+	city?: string;
+	country?: string;
+	name?: string;
 }
 
 export function fetchReverseGeocode(
-  currentLocation: LatLng
+	currentLocation: LatLng
 ): TE.TaskEither<Error, Location> {
-  return pipe(
-    promiseToTE(
-      () => ExpoLocation.reverseGeocodeAsync(currentLocation),
-      'fetchReverseGeocode'
-    ),
-    TE.chain((reverse) =>
-      reverse.length
-        ? TE.right(reverse[0])
-        : TE.left(new Error('Reverse geocoding returned no results'))
-    ),
-    TE.map((reverse) => ({
-      ...currentLocation,
-      city: reverse.city,
-      country: reverse.country,
-      name:
-        [reverse.street, reverse.city, reverse.country]
-          .filter((x) => x)
-          .join(', ') ||
-        // This case happens when e.g. we're in the middle of the ocean
-        [reverse.name, reverse.country].filter((x) => x).join(', '),
-    }))
-  );
+	return pipe(
+		promiseToTE(
+			() => ExpoLocation.reverseGeocodeAsync(currentLocation),
+			'fetchReverseGeocode'
+		),
+		TE.chain((reverse) =>
+			reverse.length
+				? TE.right(reverse[0])
+				: TE.left(new Error('Reverse geocoding returned no results'))
+		),
+		TE.map((reverse) => ({
+			...currentLocation,
+			city: reverse.city,
+			country: reverse.country,
+			name:
+				[reverse.street, reverse.city, reverse.country]
+					.filter((x) => x)
+					.join(', ') ||
+				// This case happens when e.g. we're in the middle of the ocean
+				[reverse.name, reverse.country].filter((x) => x).join(', '),
+		}))
+	);
 }
 
 export function fetchGpsPosition(): TE.TaskEither<
-  Error,
-  ExpoLocation.LocationData
+	Error,
+	ExpoLocation.LocationData
 > {
-  return pipe(
-    promiseToTE(
-      () => Permissions.askAsync(Permissions.LOCATION),
-      'fetchGpsPosition'
-    ),
-    TE.chain(({ status }) =>
-      status === 'granted'
-        ? TE.right(undefined)
-        : TE.left(new Error('Permission to access location was denied'))
-    ),
-    TE.chain(() =>
-      promiseToTE(
-        () =>
-          ExpoLocation.getCurrentPositionAsync({
-            timeout: 5000,
-          }),
-        // Uncomment to get other locations
-        // Promise.resolve({
-        //   coords: {
-        //     latitude: Math.random() * 90,
-        //     longitude: Math.random() * 90
-        //   }
-        // });
-        // Promise.resolve({
-        //   coords: {
-        //     latitude: 48.4,
-        //     longitude: 2.34
-        //   }
-        // });
-        'fetchGpsPosition'
-      )
-    )
-  );
+	return pipe(
+		promiseToTE(
+			() => Permissions.askAsync(Permissions.LOCATION),
+			'fetchGpsPosition'
+		),
+		TE.chain(({ status }) =>
+			status === 'granted'
+				? TE.right(undefined)
+				: TE.left(new Error('Permission to access location was denied'))
+		),
+		TE.chain(() =>
+			promiseToTE(
+				() =>
+					ExpoLocation.getCurrentPositionAsync({
+						timeout: 5000,
+					}),
+				// Uncomment to get other locations
+				// Promise.resolve({
+				//   coords: {
+				//     latitude: Math.random() * 90,
+				//     longitude: Math.random() * 90
+				//   }
+				// });
+				// Promise.resolve({
+				//   coords: {
+				//     latitude: 48.4,
+				//     longitude: 2.34
+				//   }
+				// });
+				'fetchGpsPosition'
+			)
+		)
+	);
 }

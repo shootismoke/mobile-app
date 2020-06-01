@@ -27,99 +27,103 @@ import loadingAnimation from './animation.json';
 import swearWords from './swearWords';
 
 interface CigaretteBlockProps extends ViewProps {
-  cigarettes: number;
-  frequency?: Frequency;
-  loading?: boolean;
+	cigarettes: number;
+	frequency?: Frequency;
+	loading?: boolean;
 }
 
 const styles = StyleSheet.create({
-  animationContainer: {
-    display: 'flex',
-    height: scale(CIGARETTES_HEIGHT),
-    justifyContent: 'flex-end',
-  },
-  cigarettesCount: {
-    color: theme.primaryColor,
-  },
-  lottie: {
-    backgroundColor: theme.backgroundColor,
-  },
-  shit: {
-    ...theme.shitText,
-    marginTop: theme.spacing.normal,
-  },
+	animationContainer: {
+		display: 'flex',
+		height: scale(CIGARETTES_HEIGHT),
+		justifyContent: 'flex-end',
+	},
+	cigarettesCount: {
+		color: theme.primaryColor,
+	},
+	lottie: {
+		backgroundColor: theme.backgroundColor,
+	},
+	shit: {
+		...theme.shitText,
+		marginTop: theme.spacing.normal,
+	},
 });
 
 function getSwearWord(cigaretteCount: number): string {
-  if (cigaretteCount <= 1) return t('home_cigarettes_oh');
+	if (cigaretteCount <= 1) return t('home_cigarettes_oh');
 
-  // Return a random swear word
-  return swearWords[Math.floor(Math.random() * swearWords.length)];
+	// Return a random swear word
+	return swearWords[Math.floor(Math.random() * swearWords.length)];
 }
 
 function renderAnimation(): React.ReactElement {
-  return (
-    <View style={styles.animationContainer}>
-      <LottieView
-        autoPlay
-        autoSize
-        source={loadingAnimation}
-        style={styles.lottie}
-      />
-    </View>
-  );
+	return (
+		<View style={styles.animationContainer}>
+			<LottieView
+				autoPlay
+				autoSize
+				source={loadingAnimation}
+				style={styles.lottie}
+			/>
+		</View>
+	);
 }
 
 export function CigaretteBlock(props: CigaretteBlockProps): React.ReactElement {
-  const { cigarettes, frequency, loading, style, ...rest } = props;
+	const { cigarettes, frequency, loading, style, ...rest } = props;
 
-  // Decide on a swear word. The effect says that the swear word only changes
-  // when the cigarettes count changes.
-  const [swearWord, setSwearWord] = useState(getSwearWord(cigarettes));
-  useEffect(() => {
-    setSwearWord(getSwearWord(cigarettes));
-  }, [cigarettes]);
+	// Decide on a swear word. The effect says that the swear word only changes
+	// when the cigarettes count changes.
+	const [swearWord, setSwearWord] = useState(getSwearWord(cigarettes));
+	useEffect(() => {
+		setSwearWord(getSwearWord(cigarettes));
+	}, [cigarettes]);
 
-  const renderCigarettesText = (): React.ReactElement => {
-    if (loading) {
-      // FIXME i18n
-      return (
-        <Text style={styles.shit}>
-          Loading<Text style={styles.cigarettesCount}>...{'\n'}</Text>
-        </Text>
-      );
-    }
+	const renderCigarettesText = (): React.ReactElement => {
+		if (loading) {
+			// FIXME i18n
+			return (
+				<Text style={styles.shit}>
+					Loading<Text style={styles.cigarettesCount}>...{'\n'}</Text>
+				</Text>
+			);
+		}
 
-    // Round to 1 decimal
-    const cigarettesRounded = Math.round(cigarettes * 10) / 10;
+		// Round to 1 decimal
+		const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
-    const text = t('home_cigarettes_smoked_cigarette_title', {
-      swearWord,
-      presentPast: t('home_cigarettes_you_smoke'),
-      singularPlural:
-        cigarettesRounded === 1
-          ? t('home_cigarettes_cigarette').toLowerCase()
-          : t('home_cigarettes_cigarettes').toLowerCase(),
-      cigarettes: cigarettesRounded,
-    });
+		const text = t('home_cigarettes_smoked_cigarette_title', {
+			swearWord,
+			presentPast: t('home_cigarettes_you_smoke'),
+			singularPlural:
+				cigarettesRounded === 1
+					? t('home_cigarettes_cigarette').toLowerCase()
+					: t('home_cigarettes_cigarettes').toLowerCase(),
+			cigarettes: cigarettesRounded,
+		});
 
-    const [firstPartText, secondPartText] = text.split('<');
+		const [firstPartText, secondPartText] = text.split('<');
 
-    return (
-      <Text style={styles.shit}>
-        {firstPartText}
-        <Text style={styles.cigarettesCount}>
-          {secondPartText.split('>')[0]}
-        </Text>
-        {secondPartText.split('>')[1]} {frequency}
-      </Text>
-    );
-  };
+		return (
+			<Text style={styles.shit}>
+				{firstPartText}
+				<Text style={styles.cigarettesCount}>
+					{secondPartText.split('>')[0]}
+				</Text>
+				{secondPartText.split('>')[1]} {frequency}
+			</Text>
+		);
+	};
 
-  return (
-    <View style={[theme.withPadding, style]} {...rest}>
-      {loading ? renderAnimation() : <Cigarettes cigarettes={cigarettes} />}
-      {renderCigarettesText()}
-    </View>
-  );
+	return (
+		<View style={[theme.withPadding, style]} {...rest}>
+			{loading ? (
+				renderAnimation()
+			) : (
+				<Cigarettes cigarettes={cigarettes} />
+			)}
+			{renderCigarettesText()}
+		</View>
+	);
 }

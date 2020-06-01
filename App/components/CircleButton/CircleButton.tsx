@@ -23,61 +23,61 @@ import * as theme from '../../util/theme';
 import { Button, ButtonProps } from '../Button';
 
 interface CircleButtonProps extends ButtonProps {
-  icon?: string;
-  inverted?: boolean;
-  text?: string;
+	icon?: string;
+	inverted?: boolean;
+	text?: string;
 }
 
 const styles = StyleSheet.create({
-  circle: {
-    height: scale(36),
-    paddingVertical: 0,
-    width: scale(36),
-  },
-  invertedCircle: {
-    backgroundColor: theme.primaryColor,
-    borderWidth: 0,
-  },
-  label: {
-    ...theme.title,
-    color: theme.primaryColor,
-    fontSize: scale(9),
-    letterSpacing: 0,
-  },
+	circle: {
+		height: scale(36),
+		paddingVertical: 0,
+		width: scale(36),
+	},
+	invertedCircle: {
+		backgroundColor: theme.primaryColor,
+		borderWidth: 0,
+	},
+	label: {
+		...theme.title,
+		color: theme.primaryColor,
+		fontSize: scale(9),
+		letterSpacing: 0,
+	},
 });
 
 /**
  * Decide whether we show an icon or a text
  */
 function renderIconOrText(
-  icon?: string,
-  inverted?: boolean,
-  text?: string
+	icon?: string,
+	inverted?: boolean,
+	text?: string
 ): React.ReactElement | undefined {
-  return icon ? (
-    <Ionicons
-      color={inverted ? 'white' : theme.primaryColor}
-      name={icon}
-      size={scale(22)}
-    />
-  ) : text ? (
-    <Text style={styles.label}>{text}</Text>
-  ) : undefined;
+	return icon ? (
+		<Ionicons
+			color={inverted ? 'white' : theme.primaryColor}
+			name={icon}
+			size={scale(22)}
+		/>
+	) : text ? (
+		<Text style={styles.label}>{text}</Text>
+	) : undefined;
 }
 
 export function CircleButton(props: CircleButtonProps): React.ReactElement {
-  const { icon, inverted, style, text, ...rest } = props;
+	const { icon, inverted, style, text, ...rest } = props;
 
-  return (
-    <Button
-      style={[
-        styles.circle,
-        inverted ? styles.invertedCircle : undefined,
-        style,
-      ]}
-      {...rest}
-    >
-      {renderIconOrText(icon, inverted, text)}
-    </Button>
-  );
+	return (
+		<Button
+			style={[
+				styles.circle,
+				inverted ? styles.invertedCircle : undefined,
+				style,
+			]}
+			{...rest}
+		>
+			{renderIconOrText(icon, inverted, text)}
+		</Button>
+	);
 }

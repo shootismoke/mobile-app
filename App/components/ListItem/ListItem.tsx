@@ -16,12 +16,12 @@
 
 import React from 'react';
 import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
+	Image,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	TouchableOpacityProps,
+	View,
 } from 'react-native';
 
 import gpsIcon from '../../../assets/images/location-big.png';
@@ -29,39 +29,39 @@ import pinIcon from '../../../assets/images/location.png';
 import * as theme from '../../util/theme';
 
 interface ListItemProps extends TouchableOpacityProps {
-  description: string;
-  icon: 'pin' | 'gps';
-  title: string;
+	description: string;
+	icon: 'pin' | 'gps';
+	title: string;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...theme.withPadding,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: theme.spacing.normal,
-  },
-  description: {
-    ...theme.text,
-  },
-  result: {
-    marginLeft: theme.spacing.normal,
-  },
-  title: {
-    ...theme.title,
-  },
+	container: {
+		...theme.withPadding,
+		alignItems: 'center',
+		flexDirection: 'row',
+		paddingVertical: theme.spacing.normal,
+	},
+	description: {
+		...theme.text,
+	},
+	result: {
+		marginLeft: theme.spacing.normal,
+	},
+	title: {
+		...theme.title,
+	},
 });
 
 export function ListItem(props: ListItemProps): React.ReactElement {
-  const { description, icon, title, ...rest } = props;
+	const { description, icon, title, ...rest } = props;
 
-  return (
-    <TouchableOpacity style={styles.container} {...rest}>
-      <Image source={icon === 'gps' ? gpsIcon : pinIcon} />
-      <View style={styles.result}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+	return (
+		<TouchableOpacity style={styles.container} {...rest}>
+			<Image source={icon === 'gps' ? gpsIcon : pinIcon} />
+			<View style={styles.result}>
+				<Text style={styles.title}>{title}</Text>
+				<Text style={styles.description}>{description}</Text>
+			</View>
+		</TouchableOpacity>
+	);
 }

@@ -15,15 +15,15 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 export type ErrorStackParams = {
-  Error: undefined;
-  Search: undefined;
+	Error: undefined;
+	Search: undefined;
 };
 
 export type RootStackParams = {
-  About: {
-    scrollInto?: string;
-  };
-  Details: undefined;
-  Home: undefined;
-  Search: undefined;
+	About: {
+		scrollInto?: string;
+	};
+	Details: undefined;
+	Home: undefined;
+	Search: undefined;
 };

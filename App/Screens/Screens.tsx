@@ -43,40 +43,45 @@ const ErrorStack = createStackNavigator();
  * Shared navigator screen options across different screens.
  */
 const navigationOptions = {
-  headerMode: 'none' as const,
+	headerMode: 'none' as const,
 };
 
 function renderScreen(api?: Api, error?: Error): React.ReactElement {
-  if (error) {
-    return (
-      <ErrorStack.Navigator initialRouteName="Error" {...navigationOptions}>
-        <ErrorStack.Screen component={ErrorScreen} name="Error" />
-        <ErrorStack.Screen component={Search} name="Search" />
-      </ErrorStack.Navigator>
-    );
-  }
+	if (error) {
+		return (
+			<ErrorStack.Navigator
+				initialRouteName="Error"
+				{...navigationOptions}
+			>
+				<ErrorStack.Screen component={ErrorScreen} name="Error" />
+				<ErrorStack.Screen component={Search} name="Search" />
+			</ErrorStack.Navigator>
+		);
+	}
 
-  if (!api) {
-    return <Loading />;
-  }
+	if (!api) {
+		return <Loading />;
+	}
 
-  return (
-    <RootStack.Navigator initialRouteName="Home" {...navigationOptions}>
-      <RootStack.Screen component={About} name="About" />
-      <RootStack.Screen component={Details} name="Details" />
-      <RootStack.Screen component={Home} name="Home" />
-      <RootStack.Screen component={Search} name="Search" />
-    </RootStack.Navigator>
-  );
+	return (
+		<RootStack.Navigator initialRouteName="Home" {...navigationOptions}>
+			<RootStack.Screen component={About} name="About" />
+			<RootStack.Screen component={Details} name="Details" />
+			<RootStack.Screen component={Home} name="Home" />
+			<RootStack.Screen component={Search} name="Search" />
+		</RootStack.Navigator>
+	);
 }
 
 export function Screens(): React.ReactElement {
-  const { api } = useContext(ApiContext);
-  const { error } = useContext(ErrorContext);
+	const { api } = useContext(ApiContext);
+	const { error } = useContext(ErrorContext);
 
-  return (
-    <View style={theme.fullScreen}>
-      <NavigationContainer>{renderScreen(api, error)}</NavigationContainer>
-    </View>
-  );
+	return (
+		<View style={theme.fullScreen}>
+			<NavigationContainer>
+				{renderScreen(api, error)}
+			</NavigationContainer>
+		</View>
+	);
 }

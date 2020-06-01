@@ -15,10 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import {
-  LatLng,
-  Normalized,
-  OpenAQFormat,
-  ProviderPromise,
+	LatLng,
+	Normalized,
+	OpenAQFormat,
+	ProviderPromise,
 } from '@shootismoke/dataproviders';
 import { aqicn, openaq } from '@shootismoke/dataproviders/lib/promise';
 import Constants from 'expo-constants';
@@ -41,11 +41,11 @@ import { CurrentLocationContext } from './location';
  * where we make sure to add cigarette conversion
  */
 export interface Api {
-  normalized: Normalized;
-  pm25: OpenAQFormat;
-  shootismoke: {
-    dailyCigarettes: number;
-  };
+	normalized: Normalized;
+	pm25: OpenAQFormat;
+	shootismoke: {
+		dailyCigarettes: number;
+	};
 }
 
 /**
@@ -56,21 +56,21 @@ export interface Api {
  * @param normalized - The normalized data to process
  */
 function filterPm25(normalized: Normalized): Api {
-  const pm25 = normalized.filter(({ parameter }) => parameter === 'pm25');
+	const pm25 = normalized.filter(({ parameter }) => parameter === 'pm25');
 
-  if (pm25.length) {
-    return {
-      normalized,
-      pm25: pm25[0],
-      shootismoke: {
-        dailyCigarettes: pm25ToCigarettes(pm25[0].value),
-      },
-    };
-  } else {
-    throw new Error(
-      `Station ${normalized[0].location} does not have PM2.5 measurings right now`
-    );
-  }
+	if (pm25.length) {
+		return {
+			normalized,
+			pm25: pm25[0],
+			shootismoke: {
+				dailyCigarettes: pm25ToCigarettes(pm25[0].value),
+			},
+		};
+	} else {
+		throw new Error(
+			`Station ${normalized[0].location} does not have PM2.5 measurings right now`
+		);
+	}
 }
 
 /**
@@ -80,104 +80,106 @@ function filterPm25(normalized: Normalized): Api {
  * @param gps - The GPS coordinates to fetch data for
  */
 function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
-  // Helper function to fetch & normalize data for 1 provider
-  async function fetchForProvider<DataByGps, DataByStation, Options>(
-    provider: ProviderPromise<DataByGps, DataByStation, Options>,
-    options?: Options
-  ): Promise<Api> {
-    const data = await provider.fetchByGps(gps, options);
-    const normalized = provider.normalizeByGps(data);
-    console.log(
-      `<ApiContext> Got data from ${provider.id}: ${JSON.stringify(normalized)}`
-    );
+	// Helper function to fetch & normalize data for 1 provider
+	async function fetchForProvider<DataByGps, DataByStation, Options>(
+		provider: ProviderPromise<DataByGps, DataByStation, Options>,
+		options?: Options
+	): Promise<Api> {
+		const data = await provider.fetchByGps(gps, options);
+		const normalized = provider.normalizeByGps(data);
+		console.log(
+			`<ApiContext> Got data from ${provider.id}: ${JSON.stringify(
+				normalized
+			)}`
+		);
 
-    return filterPm25(normalized);
-  }
+		return filterPm25(normalized);
+	}
 
-  // Run these tasks parallely
-  const tasks = [
-    fetchForProvider(aqicn, {
-      token: Constants.manifest.extra.aqicnToken,
-    }),
-    fetchForProvider(openaq, {
-      limit: 1,
-      parameter: ['pm25'],
-    }),
-  ];
+	// Run these tasks parallely
+	const tasks = [
+		fetchForProvider(aqicn, {
+			token: Constants.manifest.extra.aqicnToken,
+		}),
+		fetchForProvider(openaq, {
+			limit: 1,
+			parameter: ['pm25'],
+		}),
+	];
 
-  return promiseToTE(
-    () =>
-      promiseAny(tasks).catch((errors: AggregateError) => {
-        // Transform an AggregateError into a JS native Error
-        const aggregateMessage = [...errors]
-          .map(({ message }, index) => `${index + 1}. ${message}`)
-          .join('. ');
+	return promiseToTE(
+		() =>
+			promiseAny(tasks).catch((errors: AggregateError) => {
+				// Transform an AggregateError into a JS native Error
+				const aggregateMessage = [...errors]
+					.map(({ message }, index) => `${index + 1}. ${message}`)
+					.join('. ');
 
-        throw new Error(aggregateMessage);
-      }),
-    'ApiContext'
-  );
+				throw new Error(aggregateMessage);
+			}),
+		'ApiContext'
+	);
 }
 
 interface Context {
-  api?: Api;
-  reloadApp: () => void;
+	api?: Api;
+	reloadApp: () => void;
 }
 
 export const ApiContext = createContext<Context>({ reloadApp: noop });
 
 interface ApiContextProviderProps {
-  children: JSX.Element;
+	children: JSX.Element;
 }
 
 export function ApiContextProvider({
-  children,
+	children,
 }: ApiContextProviderProps): React.ReactElement {
-  const { currentLocation, setCurrentLocation } = useContext(
-    CurrentLocationContext
-  );
-  const { setError } = useContext(ErrorContext);
-  const [api, setApi] = useState<Api | undefined>(undefined);
+	const { currentLocation, setCurrentLocation } = useContext(
+		CurrentLocationContext
+	);
+	const { setError } = useContext(ErrorContext);
+	const [api, setApi] = useState<Api | undefined>(undefined);
 
-  const { latitude, longitude } = currentLocation || {};
+	const { latitude, longitude } = currentLocation || {};
 
-  useEffect(() => {
-    setApi(undefined);
-    setError(undefined);
+	useEffect(() => {
+		setApi(undefined);
+		setError(undefined);
 
-    if (!currentLocation || !latitude || !longitude) {
-      return;
-    }
+		if (!currentLocation || !latitude || !longitude) {
+			return;
+		}
 
-    track('API_DAILY_REQUEST');
-    pipe(
-      raceApi(currentLocation),
-      TE.fold(
-        (error) => {
-          setError(error);
-          track('API_DAILY_ERROR');
+		track('API_DAILY_REQUEST');
+		pipe(
+			raceApi(currentLocation),
+			TE.fold(
+				(error) => {
+					setError(error);
+					track('API_DAILY_ERROR');
 
-          return T.of(undefined);
-        },
-        (newApi) => {
-          setApi(newApi);
-          track('API_DAILY_RESPONSE');
+					return T.of(undefined);
+				},
+				(newApi) => {
+					setApi(newApi);
+					track('API_DAILY_RESPONSE');
 
-          return T.of(undefined);
-        }
-      )
-    )().catch(sentryError('ApiContextProvider'));
-  }, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
+					return T.of(undefined);
+				}
+			)
+		)().catch(sentryError('ApiContextProvider'));
+	}, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <ApiContext.Provider
-      value={{
-        api,
-        // eslint-disable-next-line
+	return (
+		<ApiContext.Provider
+			value={{
+				api,
+				// eslint-disable-next-line
         reloadApp: () => setCurrentLocation({ ...currentLocation! }) // Small trick to re-run effect
-      }}
-    >
-      {children}
-    </ApiContext.Provider>
-  );
+			}}
+		>
+			{children}
+		</ApiContext.Provider>
+	);
 }

@@ -19,13 +19,13 @@ import { getDominantPol } from '@shootismoke/dataproviders';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
 import {
-  GestureResponderEvent,
-  Image,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
+	GestureResponderEvent,
+	Image,
+	StyleProp,
+	StyleSheet,
+	Text,
+	TextStyle,
+	View,
 } from 'react-native';
 
 import locationIcon from '../../../../assets/images/location.png';
@@ -35,118 +35,120 @@ import { ApiContext, CurrentLocationContext } from '../../../stores';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {
-  onBackClick: (event: GestureResponderEvent) => void;
+	onBackClick: (event: GestureResponderEvent) => void;
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    marginBottom: theme.spacing.normal,
-  },
-  changeLocation: {
-    marginRight: theme.spacing.normal,
-  },
-  container: {
-    ...theme.elevationShadowStyle(2, 'bottom'),
-    ...theme.withPadding,
-    backgroundColor: 'white',
-    paddingBottom: theme.spacing.small,
-    paddingTop: theme.spacing.normal,
-    zIndex: 1,
-  },
-  content: {
-    flex: 1,
-  },
-  currentLocation: {
-    marginBottom: theme.spacing.normal,
-  },
-  info: {
-    ...theme.text,
-    marginVertical: 5,
-  },
-  label: {
-    color: theme.primaryColor,
-    fontFamily: theme.gothamBlack,
-  },
-  layout: {
-    flexDirection: 'row',
-  },
-  pollutantItem: {
-    flexBasis: '45%',
-  },
-  pollutants: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: theme.spacing.normal,
-  },
+	backButton: {
+		marginBottom: theme.spacing.normal,
+	},
+	changeLocation: {
+		marginRight: theme.spacing.normal,
+	},
+	container: {
+		...theme.elevationShadowStyle(2, 'bottom'),
+		...theme.withPadding,
+		backgroundColor: 'white',
+		paddingBottom: theme.spacing.small,
+		paddingTop: theme.spacing.normal,
+		zIndex: 1,
+	},
+	content: {
+		flex: 1,
+	},
+	currentLocation: {
+		marginBottom: theme.spacing.normal,
+	},
+	info: {
+		...theme.text,
+		marginVertical: 5,
+	},
+	label: {
+		color: theme.primaryColor,
+		fontFamily: theme.gothamBlack,
+	},
+	layout: {
+		flexDirection: 'row',
+	},
+	pollutantItem: {
+		flexBasis: '45%',
+	},
+	pollutants: {
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		marginTop: theme.spacing.normal,
+	},
 });
 
 const renderInfo = (
-  label: string,
-  value: string | number,
-  style?: StyleProp<TextStyle>
+	label: string,
+	value: string | number,
+	style?: StyleProp<TextStyle>
 ): React.ReactElement => {
-  return (
-    <Text key={label} style={[styles.info, style]}>
-      <Text style={styles.label}>{label}</Text> {value}
-    </Text>
-  );
+	return (
+		<Text key={label} style={[styles.info, style]}>
+			<Text style={styles.label}>{label}</Text> {value}
+		</Text>
+	);
 };
 
 export function Header(props: HeaderProps): React.ReactElement {
-  const { onBackClick } = props;
-  const { api } = useContext(ApiContext);
-  const { currentLocation } = useContext(CurrentLocationContext);
+	const { onBackClick } = props;
+	const { api } = useContext(ApiContext);
+	const { currentLocation } = useContext(CurrentLocationContext);
 
-  if (!currentLocation) {
-    throw new Error(
-      'Details/Header/Header.tsx only render when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Details/Header/Header.tsx only render when `api` is defined.'
-    );
-  }
+	if (!currentLocation) {
+		throw new Error(
+			'Details/Header/Header.tsx only render when `currentLocation` is defined.'
+		);
+	} else if (!api) {
+		throw new Error(
+			'Details/Header/Header.tsx only render when `api` is defined.'
+		);
+	}
 
-  return (
-    <View style={styles.container}>
-      <BackButton onPress={onBackClick} style={styles.backButton} />
+	return (
+		<View style={styles.container}>
+			<BackButton onPress={onBackClick} style={styles.backButton} />
 
-      <View style={styles.layout}>
-        <Image source={locationIcon} style={styles.changeLocation} />
+			<View style={styles.layout}>
+				<Image source={locationIcon} style={styles.changeLocation} />
 
-        <View style={styles.content}>
-          <CurrentLocation
-            currentLocation={currentLocation}
-            measurement={api.pm25}
-            style={styles.currentLocation}
-          />
-          {renderInfo(
-            t('details_header_latest_update_label'),
-            t('details_header_latest_update_ago', {
-              time: formatDistanceToNow(new Date(api.pm25.date.local)),
-            })
-          )}
-          {renderInfo(
-            t('details_header_primary_pollutant_label'),
-            getDominantPol(api.normalized).toUpperCase()
-          )}
+				<View style={styles.content}>
+					<CurrentLocation
+						currentLocation={currentLocation}
+						measurement={api.pm25}
+						style={styles.currentLocation}
+					/>
+					{renderInfo(
+						t('details_header_latest_update_label'),
+						t('details_header_latest_update_ago', {
+							time: formatDistanceToNow(
+								new Date(api.pm25.date.local)
+							),
+						})
+					)}
+					{renderInfo(
+						t('details_header_primary_pollutant_label'),
+						getDominantPol(api.normalized).toUpperCase()
+					)}
 
-          <View style={styles.pollutants}>
-            {api.normalized.map((normalized) => {
-              return renderInfo(
-                `${normalized.parameter.toUpperCase()} AQI:`,
-                convert(
-                  normalized.parameter,
-                  'raw',
-                  'usaEpa',
-                  normalized.value
-                ),
-                styles.pollutantItem
-              );
-            })}
-          </View>
-        </View>
-      </View>
-    </View>
-  );
+					<View style={styles.pollutants}>
+						{api.normalized.map((normalized) => {
+							return renderInfo(
+								`${normalized.parameter.toUpperCase()} AQI:`,
+								convert(
+									normalized.parameter,
+									'raw',
+									'usaEpa',
+									normalized.value
+								),
+								styles.pollutantItem
+							);
+						})}
+					</View>
+				</View>
+			</View>
+		</View>
+	);
 }

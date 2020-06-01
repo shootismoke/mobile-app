@@ -31,86 +31,90 @@ import * as theme from '../../util/theme';
 import { ErrorStackParams } from '../routeParams';
 
 interface ErrorScreenProps {
-  navigation: StackNavigationProp<ErrorStackParams, 'Error'>;
+	navigation: StackNavigationProp<ErrorStackParams, 'Error'>;
 }
 
 const styles = StyleSheet.create({
-  chooseOther: {
-    marginVertical: theme.spacing.normal,
-  },
-  container: {
-    ...theme.fullScreen,
-    ...theme.withPadding,
-    flexGrow: 1,
-    flexDirection: 'column',
-  },
-  errorMessage: {
-    ...theme.text,
-  },
-  errorScrollView: {
-    flex: 1,
-    marginVertical: theme.spacing.small,
-  },
-  errorText: {
-    ...theme.shitText,
-    marginTop: theme.spacing.big,
-  },
-  sorry: {
-    color: theme.primaryColor,
-  },
+	chooseOther: {
+		marginVertical: theme.spacing.normal,
+	},
+	container: {
+		...theme.fullScreen,
+		...theme.withPadding,
+		flexGrow: 1,
+		flexDirection: 'column',
+	},
+	errorMessage: {
+		...theme.text,
+	},
+	errorScrollView: {
+		flex: 1,
+		marginVertical: theme.spacing.small,
+	},
+	errorText: {
+		...theme.shitText,
+		marginTop: theme.spacing.big,
+	},
+	sorry: {
+		color: theme.primaryColor,
+	},
 });
 
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
-  const { error } = useContext(ErrorContext);
-  const [showDetails, setShowDetails] = useState(false);
+	const { error } = useContext(ErrorContext);
+	const [showDetails, setShowDetails] = useState(false);
 
-  trackScreen('ERROR');
+	trackScreen('ERROR');
 
-  useEffect(() => {
-    if (error) {
-      sentryError('ErrorScreen')(error);
-    }
-  }, [error]);
+	useEffect(() => {
+		if (error) {
+			sentryError('ErrorScreen')(error);
+		}
+	}, [error]);
 
-  return (
-    <View style={styles.container} testID={testIds.Error.screen}>
-      <Image source={errorPicture} />
-      <View>
-        <Text style={styles.errorText}>
-          <Text style={styles.sorry}>{t('error_screen_common_sorry')}</Text>
-          {t('error_screen_error_cannot_load_cigarettes')}
-        </Text>
-      </View>
-      <Button
-        onPress={(): void => {
-          track('ERROR_SCREEN_CHANGE_LOCATION_CLICK');
-          props.navigation.navigate('Search');
-        }}
-        style={styles.chooseOther}
-        type="primary"
-      >
-        {t('error_screen_choose_other_location').toUpperCase()}
-      </Button>
-      <Text style={theme.text}>{t('error_screen_error_description')}</Text>
-      <ScrollView style={styles.errorScrollView}>
-        <TouchableOpacity
-          onPress={(): void => setShowDetails(!showDetails)}
-          testID={testIds.Error.showDetails}
-        >
-          {showDetails ? (
-            <Text style={styles.errorMessage}>
-              {t('error_screen_error_message', {
-                errorText: error && error.message,
-              })}
-            </Text>
-          ) : (
-            <Text style={styles.errorMessage}>
-              {t('error_screen_show_details')}{' '}
-              <Ionicons name="ios-arrow-forward" />
-            </Text>
-          )}
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
-  );
+	return (
+		<View style={styles.container} testID={testIds.Error.screen}>
+			<Image source={errorPicture} />
+			<View>
+				<Text style={styles.errorText}>
+					<Text style={styles.sorry}>
+						{t('error_screen_common_sorry')}
+					</Text>
+					{t('error_screen_error_cannot_load_cigarettes')}
+				</Text>
+			</View>
+			<Button
+				onPress={(): void => {
+					track('ERROR_SCREEN_CHANGE_LOCATION_CLICK');
+					props.navigation.navigate('Search');
+				}}
+				style={styles.chooseOther}
+				type="primary"
+			>
+				{t('error_screen_choose_other_location').toUpperCase()}
+			</Button>
+			<Text style={theme.text}>
+				{t('error_screen_error_description')}
+			</Text>
+			<ScrollView style={styles.errorScrollView}>
+				<TouchableOpacity
+					onPress={(): void => setShowDetails(!showDetails)}
+					testID={testIds.Error.showDetails}
+				>
+					{showDetails ? (
+						<Text style={styles.errorMessage}>
+							{t('error_screen_error_message', {
+								errorText: error && error.message,
+							})}
+						</Text>
+					) : (
+						<Text style={styles.errorMessage}>
+							{t('error_screen_show_details')}{' '}
+							<Ionicons name="ios-arrow-forward" />
+						</Text>
+					)}
+				</TouchableOpacity>
+			</ScrollView>
+		</View>
+	);
 }

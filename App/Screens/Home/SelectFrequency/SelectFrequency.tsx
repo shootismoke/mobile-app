@@ -24,96 +24,96 @@ import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
 
 const styles = StyleSheet.create({
-  boxButton: {
-    marginRight: theme.spacing.mini,
-  },
-  container: {
-    flexDirection: 'row',
-  },
-  content: {
-    paddingHorizontal: theme.spacing.normal,
-  },
+	boxButton: {
+		marginRight: theme.spacing.mini,
+	},
+	container: {
+		flexDirection: 'row',
+	},
+	content: {
+		paddingHorizontal: theme.spacing.normal,
+	},
 });
 
 export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
-  const scroll = useRef<ScrollView>(null);
-  const { frequency, setFrequency } = useContext(FrequencyContext);
-  const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
+	const scroll = useRef<ScrollView>(null);
+	const { frequency, setFrequency } = useContext(FrequencyContext);
+	const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
-  const { style, ...rest } = props;
+	const { style, ...rest } = props;
 
-  function handleChangeFrequency(f: Frequency): void {
-    setTimeout(() => {
-      setFrequency(f);
-    }, 400);
-  }
+	function handleChangeFrequency(f: Frequency): void {
+		setTimeout(() => {
+			setFrequency(f);
+		}, 400);
+	}
 
-  return (
-    <ScrollView
-      contentContainerStyle={styles.content}
-      horizontal
-      ref={scroll}
-      showsHorizontalScrollIndicator={false}
-      style={[styles.container, style]}
-      {...rest}
-    >
-      <BoxButton
-        active={frequency === 'daily'}
-        onLayout={(event): void =>
-          setDailyWidth(event.nativeEvent.layout.width)
-        }
-        onPress={(): void => {
-          track('HOME_SCREEN_DAILY_CLICK');
-          if (frequency === 'daily') {
-            return;
-          }
+	return (
+		<ScrollView
+			contentContainerStyle={styles.content}
+			horizontal
+			ref={scroll}
+			showsHorizontalScrollIndicator={false}
+			style={[styles.container, style]}
+			{...rest}
+		>
+			<BoxButton
+				active={frequency === 'daily'}
+				onLayout={(event): void =>
+					setDailyWidth(event.nativeEvent.layout.width)
+				}
+				onPress={(): void => {
+					track('HOME_SCREEN_DAILY_CLICK');
+					if (frequency === 'daily') {
+						return;
+					}
 
-          if (scroll && scroll.current) {
-            scroll.current.scrollTo({ x: 0 });
-          }
-          handleChangeFrequency('daily');
-        }}
-        style={styles.boxButton}
-      >
-        {t('home_frequency_daily')}
-      </BoxButton>
-      <BoxButton
-        active={frequency === 'weekly'}
-        onPress={(): void => {
-          track('HOME_SCREEN_WEEKLY_CLICK');
-          if (frequency === 'weekly') {
-            return;
-          }
+					if (scroll && scroll.current) {
+						scroll.current.scrollTo({ x: 0 });
+					}
+					handleChangeFrequency('daily');
+				}}
+				style={styles.boxButton}
+			>
+				{t('home_frequency_daily')}
+			</BoxButton>
+			<BoxButton
+				active={frequency === 'weekly'}
+				onPress={(): void => {
+					track('HOME_SCREEN_WEEKLY_CLICK');
+					if (frequency === 'weekly') {
+						return;
+					}
 
-          if (scroll && scroll.current) {
-            scroll.current.scrollTo({
-              x: dailyWidth + theme.spacing.mini,
-            });
-          }
-          handleChangeFrequency('weekly');
-        }}
-        style={styles.boxButton}
-      >
-        {t('home_frequency_weekly')}
-      </BoxButton>
+					if (scroll && scroll.current) {
+						scroll.current.scrollTo({
+							x: dailyWidth + theme.spacing.mini,
+						});
+					}
+					handleChangeFrequency('weekly');
+				}}
+				style={styles.boxButton}
+			>
+				{t('home_frequency_weekly')}
+			</BoxButton>
 
-      <BoxButton
-        active={frequency === 'monthly'}
-        onPress={(): void => {
-          track('HOME_SCREEN_MONTHLY_CLICK');
-          if (frequency === 'monthly') {
-            return;
-          }
+			<BoxButton
+				active={frequency === 'monthly'}
+				onPress={(): void => {
+					track('HOME_SCREEN_MONTHLY_CLICK');
+					if (frequency === 'monthly') {
+						return;
+					}
 
-          if (scroll && scroll.current) {
-            scroll.current.scrollToEnd();
-          }
-          handleChangeFrequency('monthly');
-        }}
-        style={styles.boxButton}
-      >
-        {t('home_frequency_monthly')}
-      </BoxButton>
-    </ScrollView>
-  );
+					if (scroll && scroll.current) {
+						scroll.current.scrollToEnd();
+					}
+					handleChangeFrequency('monthly');
+				}}
+				style={styles.boxButton}
+			>
+				{t('home_frequency_monthly')}
+			</BoxButton>
+		</ScrollView>
+	);
 }

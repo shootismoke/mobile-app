@@ -1,1 +1,11 @@
-module.exports = { ...require('@amaurymartiny/eslintrc'), env: { node: true } };
+module.exports = {
+	...require('@amaurymartiny/eslintrc'),
+	env: { node: true },
+	// FIXME Turn these rules on again:
+	// https://github.com/amaurymartiny/shoot-i-smoke/issues/619
+	rules: {
+		'@typescript-eslint/no-unsafe-assignment': 'off',
+		'@typescript-eslint/no-unsafe-call': 'off',
+		'@typescript-eslint/no-unsafe-member-access': 'off',
+	},
+};

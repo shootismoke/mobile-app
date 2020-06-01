@@ -20,19 +20,19 @@ import adapter from 'detox/runners/jest/adapter';
 const config = require('../package.json').detox;
 
 jest.setTimeout(30 * 60 * 1000); // 30 minutes timeout
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 jasmine.getEnv().addReporter(adapter);
 
 beforeAll(async () => {
-  await init(config);
+	await init(config);
 });
 
 beforeEach(async () => {
-  await adapter.beforeEach();
+	await adapter.beforeEach();
 });
 
 afterAll(async () => {
-  await adapter.afterAll();
-  await cleanup();
+	await adapter.afterAll();
+	await cleanup();
 });

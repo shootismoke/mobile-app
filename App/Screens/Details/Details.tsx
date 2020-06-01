@@ -33,111 +33,123 @@ import { Distance } from './Distance';
 import { Header } from './Header';
 
 interface DetailsProps {
-  navigation: StackNavigationProp<RootStackParams, 'Details'>;
+	navigation: StackNavigationProp<RootStackParams, 'Details'>;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-  },
-  map: {
-    flexGrow: 1,
-  },
-  mapContainer: {
-    flexGrow: 1,
-  },
+	container: {
+		flexGrow: 1,
+	},
+	map: {
+		flexGrow: 1,
+	},
+	mapContainer: {
+		flexGrow: 1,
+	},
 });
 
 // Holds the ref to the MapView.Marker representing the AQI station
 let stationMarker: Marker | undefined;
 
 export function Details(props: DetailsProps): React.ReactElement {
-  const { navigation } = props;
+	const { navigation } = props;
 
-  const [showMap, setShowMap] = useState(false);
-  const { api } = useContext(ApiContext);
-  const { currentLocation: _currentLocation } = useContext(
-    CurrentLocationContext
-  );
-  const { distanceUnit } = useDistanceUnit();
+	const [showMap, setShowMap] = useState(false);
+	const { api } = useContext(ApiContext);
+	const { currentLocation: _currentLocation } = useContext(
+		CurrentLocationContext
+	);
+	const { distanceUnit } = useDistanceUnit();
 
-  trackScreen('DETAILS');
+	trackScreen('DETAILS');
 
-  useEffect(() => {
-    // Show map after 200ms for smoother screen transition
-    setTimeout(() => setShowMap(true), 500);
-  }, []);
+	useEffect(() => {
+		// Show map after 200ms for smoother screen transition
+		setTimeout(() => setShowMap(true), 500);
+	}, []);
 
-  const handleMapReady = (): void => {
-    stationMarker && stationMarker.showCallout && stationMarker.showCallout();
-  };
+	const handleMapReady = (): void => {
+		stationMarker &&
+			stationMarker.showCallout &&
+			stationMarker.showCallout();
+	};
 
-  const handleStationRef = (ref: Marker): void => {
-    stationMarker = ref;
-  };
+	const handleStationRef = (ref: Marker): void => {
+		stationMarker = ref;
+	};
 
-  // TODO
-  // I have no idea why, but if we don't clone the object, and continue to
-  // use `location.current` everywhere, we get a `setting key of frozen
-  // object` error. It's related to the MapView below.
-  // eslint-disable-next-line
+	// TODO
+	// I have no idea why, but if we don't clone the object, and continue to
+	// use `location.current` everywhere, we get a `setting key of frozen
+	// object` error. It's related to the MapView below.
+	// eslint-disable-next-line
   const currentLocation = { ..._currentLocation! };
 
-  if (!currentLocation) {
-    throw new Error(
-      'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
-    );
-  } else if (!api) {
-    throw new Error(
-      'Details/Details.tsx only convert `distanceToStation` when `api` is defined.'
-    );
-  }
+	if (!currentLocation) {
+		throw new Error(
+			'Details/Details.tsx only convert `distanceToStation` when `currentLocation` is defined.'
+		);
+	} else if (!api) {
+		throw new Error(
+			'Details/Details.tsx only convert `distanceToStation` when `api` is defined.'
+		);
+	}
 
-  const distance = distanceToStation(currentLocation, api, distanceUnit);
+	const distance = distanceToStation(currentLocation, api, distanceUnit);
 
-  const station = {
-    description: stationName(api.pm25),
-    title: stationName(api.pm25),
-    ...getCorrectLatLng(currentLocation, api.pm25.coordinates),
-  };
+	const station = {
+		description: stationName(api.pm25),
+		title: stationName(api.pm25),
+		...getCorrectLatLng(currentLocation, api.pm25.coordinates),
+	};
 
-  return (
-    <View style={styles.container}>
-      <Header
-        onBackClick={(): void => {
-          navigation.goBack();
-        }}
-      />
-      <View style={styles.mapContainer}>
-        {showMap && (
-          <MapView
-            initialRegion={{
-              latitude: (currentLocation.latitude + station.latitude) / 2,
-              latitudeDelta:
-                Math.abs(currentLocation.latitude - station.latitude) * 2,
-              longitude: (currentLocation.longitude + station.longitude) / 2,
-              longitudeDelta:
-                Math.abs(currentLocation.longitude - station.longitude) * 2,
-            }}
-            onMapReady={handleMapReady}
-            style={styles.map}
-          >
-            <Marker
-              coordinate={station}
-              image={stationIcon}
-              ref={handleStationRef}
-              title={t('details_air_quality_station_marker')}
-              description={truncate(station.description, 40)}
-            />
-            <Marker
-              coordinate={currentLocation}
-              image={homeIcon}
-              title={t('details_your_position_marker')}
-            />
-          </MapView>
-        )}
-      </View>
-      <Distance distance={distance} />
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			<Header
+				onBackClick={(): void => {
+					navigation.goBack();
+				}}
+			/>
+			<View style={styles.mapContainer}>
+				{showMap && (
+					<MapView
+						initialRegion={{
+							latitude:
+								(currentLocation.latitude + station.latitude) /
+								2,
+							latitudeDelta:
+								Math.abs(
+									currentLocation.latitude - station.latitude
+								) * 2,
+							longitude:
+								(currentLocation.longitude +
+									station.longitude) /
+								2,
+							longitudeDelta:
+								Math.abs(
+									currentLocation.longitude -
+										station.longitude
+								) * 2,
+						}}
+						onMapReady={handleMapReady}
+						style={styles.map}
+					>
+						<Marker
+							coordinate={station}
+							image={stationIcon}
+							ref={handleStationRef}
+							title={t('details_air_quality_station_marker')}
+							description={truncate(station.description, 40)}
+						/>
+						<Marker
+							coordinate={currentLocation}
+							image={homeIcon}
+							title={t('details_your_position_marker')}
+						/>
+					</MapView>
+				)}
+			</View>
+			<Distance distance={distance} />
+		</View>
+	);
 }
