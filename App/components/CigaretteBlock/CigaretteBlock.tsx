@@ -18,9 +18,9 @@ import LottieView from 'lottie-react-native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { Frequency } from '@shootismoke/ui';
 
 import { t } from '../../localization';
-import { Frequency } from '../../stores';
 import * as theme from '../../util/theme';
 import { Cigarettes, CIGARETTES_HEIGHT } from '../Cigarettes';
 import loadingAnimation from './animation.json';

@@ -24,11 +24,11 @@ import {
 	ViewProps,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { Frequency, isStationTooFar } from '@shootismoke/ui';
 
 import { t } from '../../../localization';
-import { ApiContext, CurrentLocationContext, Frequency } from '../../../stores';
+import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
-import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
 import { RootStackParams } from '../../routeParams';
@@ -101,7 +101,7 @@ export function AdditionalInfo(
 					onPress={(): void => {
 						track('HOME_SCREEN_BETA_INACCURATE_CLICK');
 						// eslint-disable-next-line
-            navigation.navigate('About', {
+						navigation.navigate('About', {
 							scrollInto: aboutSections.aboutBetaInaccurate,
 						});
 					}}

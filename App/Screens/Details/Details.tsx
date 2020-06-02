@@ -20,6 +20,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import truncate from 'truncate';
+import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 
 import homeIcon from '../../../assets/images/home.png';
 import stationIcon from '../../../assets/images/station.png';
@@ -27,7 +28,6 @@ import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
-import { distanceToStation, getCorrectLatLng } from '../../util/station';
 import { RootStackParams } from '../routeParams';
 import { Distance } from './Distance';
 import { Header } from './Header';
@@ -83,7 +83,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 	// use `location.current` everywhere, we get a `setting key of frozen
 	// object` error. It's related to the MapView below.
 	// eslint-disable-next-line
-  const currentLocation = { ..._currentLocation! };
+	const currentLocation = { ..._currentLocation! };
 
 	if (!currentLocation) {
 		throw new Error(

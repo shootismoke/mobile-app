@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Ids used for detox
+ * Ids used for detox.
  */
 export const testIds = {
 	Error: {

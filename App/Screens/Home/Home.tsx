@@ -17,14 +17,10 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { Frequency, FrequencyContext } from '@shootismoke/ui';
 
 import { CigaretteBlock } from '../../components';
-import {
-	ApiContext,
-	CurrentLocationContext,
-	Frequency,
-	FrequencyContext,
-} from '../../stores';
+import { ApiContext, CurrentLocationContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { RootStackParams } from '../routeParams';

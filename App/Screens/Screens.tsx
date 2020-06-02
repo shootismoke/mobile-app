@@ -18,8 +18,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { View } from 'react-native';
+import { Api } from '@shootismoke/ui';
 
-import { Api, ApiContext, ErrorContext } from '../stores';
+import { ApiContext, ErrorContext } from '../stores';
 import * as theme from '../util/theme';
 import { About } from './About';
 import { Details } from './Details';

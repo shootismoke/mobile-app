@@ -17,12 +17,12 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
+import { isStationTooFar } from '@shootismoke/ui';
 
 import { Button, CircleButton } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
-import { isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
 import { RootStackParams } from '../../routeParams';

@@ -18,10 +18,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
 import { t } from '../localization';
-import { noop } from '../util/noop';
+import { noop, DistanceUnit } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
 
-export type DistanceUnit = 'km' | 'mile';
 type DistanceUnitFormat = 'short' | 'long';
 
 const STORAGE_KEY = 'DISTANCE_UNIT';
