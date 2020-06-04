@@ -17,9 +17,9 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Frequency, FrequencyContext } from '@shootismoke/ui';
+import { CigarettesBlock, Frequency, FrequencyContext } from '@shootismoke/ui';
 
-import { CigaretteBlock } from '../../components';
+import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
@@ -113,9 +113,11 @@ export function Home(props: HomeProps): React.ReactElement {
 				}}
 			/>
 			<ScrollView bounces={false} style={styles.scroll}>
-				<CigaretteBlock
+				<CigarettesBlock
 					cigarettes={cigarettes.count}
-					style={styles.withMargin}
+					fullCigaretteLength={cigarettes.count <= 0.4 ? 185 : 90}
+					style={[theme.withPadding, styles.withMargin]}
+					t={t}
 				/>
 				<SelectFrequency style={styles.withMargin} />
 				<AdditionalInfo

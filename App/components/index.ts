@@ -20,7 +20,6 @@ export * from './Banner';
 export * from './BoxButton';
 export * from './Button';
 export * from './Cigarettes';
-export * from './CigaretteBlock';
 export * from './CircleButton';
 export * from './ChangeLocation';
 export * from './CurrentLocation';
