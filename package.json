@@ -71,7 +71,7 @@
     "react-native-size-matters": "^0.3.0",
     "react-native-view-shot": "3.1.2",
     "retry-ts": "^0.1.2",
-    "sentry-expo": "~2.0.3",
+    "sentry-expo": "~2.1.2",
     "truncate": "^2.1.0"
   },
   "devDependencies": {
