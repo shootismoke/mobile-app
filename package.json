@@ -35,7 +35,7 @@
     "@react-navigation/native": "^5.1.5",
     "@react-navigation/stack": "^5.2.10",
     "@shootismoke/convert": "^0.2.8",
-    "@shootismoke/dataproviders": "^0.2.23",
+    "@shootismoke/dataproviders": "^0.2.28",
     "@shootismoke/graphql": "^0.2.22",
     "@types/detox": "^16.4.1",
     "@types/haversine": "^1.1.4",
