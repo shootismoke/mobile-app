@@ -34,7 +34,7 @@
     "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/native": "^5.1.5",
     "@react-navigation/stack": "^5.2.10",
-    "@shootismoke/convert": "^0.2.8",
+    "@shootismoke/convert": "^0.2.28",
     "@shootismoke/dataproviders": "^0.2.23",
     "@shootismoke/graphql": "^0.2.22",
     "@types/detox": "^16.4.1",
