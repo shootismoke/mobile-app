@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@amaurymartiny/config@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@amaurymartiny/config/-/config-1.3.0.tgz#d194e591523055480bca98a503e5c249066a3720"
-  integrity sha512-igI6vKRvqoVoYH9S55jaB0uuT1254R5DEfji7Y5bLJf6zVsbG24qvQXDyvjt/lNItfQK16Fv/ubXVsnYjW5yxA==
+"@amaurymartiny/config@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@amaurymartiny/config/-/config-1.3.1.tgz#387c74a077267ca9ac111edccbae1fe679f76c7a"
+  integrity sha512-LXP9TxfDYsc4eaq1gbMnUOf+VQSHyJoHlBRT0LBTXuV6k3WYPPNVlcSFZvPopAYq8+h97+Ng6i9NF46Ag2z7cw==
   dependencies:
-    "@amaurymartiny/eslintrc" "^1.3.0"
+    "@amaurymartiny/eslintrc" "^1.3.1"
     "@amaurymartiny/tsconfig" "^1.3.0"
 
-"@amaurymartiny/eslintrc@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@amaurymartiny/eslintrc/-/eslintrc-1.3.0.tgz#3c0759de6bf66f49fb15bd9751b2fa5f05e04869"
-  integrity sha512-e3mvAXScFtVBe7Cem0g0WmTLZ+f/sNrqg/3EeArxqTf5Im/nwBpJ46gPvhEjI73mLlgPrloIB4Ea4lNNX+CMYw==
+"@amaurymartiny/eslintrc@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@amaurymartiny/eslintrc/-/eslintrc-1.3.1.tgz#8df005ec215196daf24498533797deef696fd330"
+  integrity sha512-CKpA6Y7KGpchLP0UEkKw0q76vXaLJsqWGG3tmMQI7PKv2DSmz/AK/tRfw/pVQPKALhY/0aE53IwdxbjHpgzOqA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^3.0.2"
     "@typescript-eslint/parser" "^3.0.2"
