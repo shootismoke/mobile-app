@@ -100,7 +100,12 @@ export function Details(props: DetailsProps): React.ReactElement {
 	const station = {
 		description: stationName(api.pm25),
 		title: stationName(api.pm25),
-		...getCorrectLatLng(currentLocation, api.pm25.coordinates),
+		...getCorrectLatLng(
+			currentLocation,
+			// Only in rare cases is `api.pm25.coordinates` undefined. In this
+			// case, we would just show 0km distance.
+			api.pm25.coordinates || currentLocation
+		),
 	};
 
 	return (
