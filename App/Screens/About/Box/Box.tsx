@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
 	},
 });
 
+// FIXME Use component from `@shootismoke/ui`
 export function Box(): React.ReactElement {
 	return (
 		<View style={styles.box}>

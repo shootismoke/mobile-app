@@ -1730,17 +1730,20 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.2.25":
-  version "0.2.25"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.25.tgz#2c7f1be6fd1015d00c99ed4cd89271a84c2ede65"
-  integrity sha512-Qn4z0vRZm2f3iV1tbesnjwlaUdpmK6nfsMVZ4U1ojMdyKuxJnQWaqiG5NybX0xKEtwRanKqx0QkUpQG0MyWj4A==
-
-"@shootismoke/dataproviders@^0.2.25":
-  version "0.2.25"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.25.tgz#5cf11ce5597a8dc21788da7e9b92480bbee5ff6c"
-  integrity sha512-rtzDzzKmCFq50LgGzlFEdb/TD7I+REDQW0xzy4YuGR5g4mEyLSP3Nt61x5T2QBDjVZJyqOl/Qb9IftGTMo7+kw==
+"@shootismoke/convert@^0.2.28":
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.28.tgz#5d60b5d61a0e9c97c9314b4357f01f5157a4e857"
+  integrity sha512-xHUYw1TBN/yZ7GcZiAfrmyEGFYes32tpSoPHLbpZ8dnuJHrVkH45PLkWODqY19kGnUqOp8RoCpTtGigcCgNDuA==
   dependencies:
-    "@shootismoke/convert" "^0.2.25"
+    "@types/debug" "^4.1.5"
+    debug "^4.1.1"
+
+"@shootismoke/dataproviders@^0.2.28":
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.28.tgz#e58c1b8828d2ac3fee6a6a762c9c94dc831445e1"
+  integrity sha512-zKzccOQbO+bTJA/y7oUFBvsUDYFyqOXZ+80WODrdJD5iarW+/HgTd6n8Zbja1sh3xasRMFxuZRh82DaWVQKp1A==
+  dependencies:
+    "@shootismoke/convert" "^0.2.28"
     axios "^0.19.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
@@ -1752,13 +1755,13 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.22.tgz#78b8bffc62e48c466562a2ae36ca82004afca372"
   integrity sha512-l2DHSSqBZ998qyY0P2B04VoyZdiWUOTMt5ng+UDlMhgX3qpMF0H4mYzQkeEYXLNaSOSxNk6wDtoac2Ol7XYQdw==
 
-"@shootismoke/ui@^0.2.26":
-  version "0.2.26"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.2.26.tgz#5d189058d0592766bf38bd9cd772fa8811570a89"
-  integrity sha512-IB9iCDrRoMbnNvWk+1V3vQHIdFomI4Ychvj1Qh9bo6qRdBmqPeXOE5WZsAuhpQbVK/4rni5kNQoPInG4ILhCNA==
+"@shootismoke/ui@^0.2.30":
+  version "0.2.30"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.2.30.tgz#92a810358a5d554db7321ce20408c6820b3fe410"
+  integrity sha512-Iaeo4F5metne+Op5eHWnKa0LqYZF0n7gxoURwVw2Y+Gep5eagrs0Kyc7WGGJqJ8JUn6hKySajG9ymsEV8AYfnQ==
   dependencies:
     "@expo/vector-icons" "^10.2.0"
-    "@shootismoke/dataproviders" "^0.2.25"
+    "@shootismoke/dataproviders" "^0.2.28"
     "@types/haversine" "^1.1.4"
     "@types/p-any" "^1.1.3"
     expo-constants "^9.0.0"
@@ -1810,6 +1813,11 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
+
+"@types/debug@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
+  integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
 
 "@types/detox@^16.4.1":
   version "16.4.1"

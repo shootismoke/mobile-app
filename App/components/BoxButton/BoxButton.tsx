@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
 	},
 });
 
+// FIXME Use component from `@shootismoke/ui`
 export function BoxButton(props: BoxButtonProps): React.ReactElement {
 	const { active, children, onPress, style, ...rest } = props;
 

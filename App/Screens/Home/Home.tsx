@@ -18,6 +18,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { CigarettesBlock, Frequency, FrequencyContext } from '@shootismoke/ui';
+import { scale } from 'react-native-size-matters';
 
 import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
@@ -34,7 +35,29 @@ interface HomeProps {
 	navigation: StackNavigationProp<RootStackParams, 'Home'>;
 }
 
+/**
+ * Thresholds on cigarettes count to show different cigarettes sizes.
+ */
+const THRESHOLD = {
+	FIRST: 0.2,
+	SECOND: 1,
+	THIRD: 4,
+	FOURTH: 14,
+};
+
+/**
+ * Sizes of different cigarettes.
+ */
+const SIZES = {
+	BIG: 180,
+	MEDIUM: 90,
+	SMALL: 41,
+};
+
 const styles = StyleSheet.create({
+	cigarettes: {
+		height: scale(SIZES.MEDIUM),
+	},
 	container: {
 		flexGrow: 1,
 	},
@@ -115,9 +138,36 @@ export function Home(props: HomeProps): React.ReactElement {
 			<ScrollView bounces={false} style={styles.scroll}>
 				<CigarettesBlock
 					cigarettes={cigarettes.count}
-					fullCigaretteLength={cigarettes.count <= 0.4 ? 185 : 90}
+					cigarettesStyle={styles.cigarettes}
+					fullCigaretteLength={scale(
+						cigarettes.count <= THRESHOLD.FIRST
+							? SIZES.BIG
+							: cigarettes.count <= THRESHOLD.SECOND
+							? SIZES.MEDIUM
+							: cigarettes.count <= THRESHOLD.THIRD
+							? SIZES.BIG
+							: cigarettes.count <= THRESHOLD.FOURTH
+							? SIZES.MEDIUM
+							: SIZES.SMALL
+					)}
+					showMaxCigarettes={64}
+					spacingHorizontal={scale(
+						cigarettes.count <= THRESHOLD.THIRD
+							? 9
+							: cigarettes.count <= THRESHOLD.FOURTH
+							? 6
+							: 3
+					)}
+					spacingVertical={scale(
+						cigarettes.count <= THRESHOLD.THIRD
+							? 9
+							: cigarettes.count <= THRESHOLD.FOURTH
+							? 6
+							: 3
+					)}
 					style={[theme.withPadding, styles.withMargin]}
 					t={t}
+					textStyle={[theme.shitText, styles.withMargin]}
 				/>
 				<SelectFrequency style={styles.withMargin} />
 				<AdditionalInfo
