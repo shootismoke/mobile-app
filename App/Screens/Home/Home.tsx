@@ -54,6 +54,15 @@ const SIZES = {
 	SMALL: 41,
 };
 
+/**
+ * Depending on cigarettes sizes, get correct margins.
+ */
+function getCigarettesMargin(count: number): number {
+	return scale(
+		count <= THRESHOLD.THIRD ? 9 : count <= THRESHOLD.FOURTH ? 6 : 3
+	);
+}
+
 const styles = StyleSheet.create({
 	cigarettes: {
 		height: scale(SIZES.MEDIUM),
@@ -151,20 +160,8 @@ export function Home(props: HomeProps): React.ReactElement {
 							: SIZES.SMALL
 					)}
 					showMaxCigarettes={64}
-					spacingHorizontal={scale(
-						cigarettes.count <= THRESHOLD.THIRD
-							? 9
-							: cigarettes.count <= THRESHOLD.FOURTH
-							? 6
-							: 3
-					)}
-					spacingVertical={scale(
-						cigarettes.count <= THRESHOLD.THIRD
-							? 9
-							: cigarettes.count <= THRESHOLD.FOURTH
-							? 6
-							: 3
-					)}
+					spacingHorizontal={getCigarettesMargin(cigarettes.count)}
+					spacingVertical={getCigarettesMargin(cigarettes.count)}
 					style={[theme.withPadding, styles.withMargin]}
 					t={t}
 					textStyle={[theme.shitText, styles.withMargin]}
