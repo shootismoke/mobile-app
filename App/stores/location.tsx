@@ -21,7 +21,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { sideEffect } from '../util/fp';
-import { noop } from '../util/noop';
+import { noop } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import {

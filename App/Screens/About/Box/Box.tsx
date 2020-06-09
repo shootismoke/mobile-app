@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import cigarette from '@shootismoke/ui/assets/images/cigarette.png';
 import React from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import cigarette from '../../../../assets/images/cigarette.png';
 import { t } from '../../../localization';
 import * as theme from '../../../util/theme';
 
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
 	},
 });
 
+// FIXME Use component from `@shootismoke/ui`
 export function Box(): React.ReactElement {
 	return (
 		<View style={styles.box}>

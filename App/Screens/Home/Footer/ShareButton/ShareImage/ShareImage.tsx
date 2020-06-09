@@ -16,8 +16,10 @@
 
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { CigarettesBlock } from '@shootismoke/ui';
 
-import { CigaretteBlock, CurrentLocation } from '../../../../../components';
+import { t } from '../../../../../localization';
+import { CurrentLocation } from '../../../../../components';
 import { ApiContext, CurrentLocationContext } from '../../../../../stores';
 import * as theme from '../../../../../util/theme';
 
@@ -53,10 +55,11 @@ export function ShareImage(): React.ReactElement {
 
 	return (
 		<View style={styles.container}>
-			<CigaretteBlock
+			<CigarettesBlock
 				cigarettes={api.shootismoke.dailyCigarettes}
 				frequency="daily"
 				style={styles.cigaretteBlock}
+				t={t}
 			/>
 			<CurrentLocation
 				currentLocation={currentLocation}

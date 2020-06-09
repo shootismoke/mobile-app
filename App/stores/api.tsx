@@ -14,112 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import {
-	LatLng,
-	Normalized,
-	OpenAQFormat,
-	ProviderPromise,
-} from '@shootismoke/dataproviders';
-import { aqicn, openaq } from '@shootismoke/dataproviders/lib/promise';
+import { raceApiPromise, Api, noop } from '@shootismoke/ui';
 import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import promiseAny, { AggregateError } from 'p-any';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
 import { promiseToTE } from '../util/fp';
-import { noop } from '../util/noop';
-import { pm25ToCigarettes } from '../util/secretSauce';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
-
-/**
- * Api is basically the normalized data from '@shootismoke/dataproviders',
- * where we make sure to add cigarette conversion
- */
-export interface Api {
-	normalized: Normalized;
-	pm25: OpenAQFormat;
-	shootismoke: {
-		dailyCigarettes: number;
-	};
-}
-
-/**
- * Given some normalized data points, filter out the first one that contains
- * pm25 data. Returns a TaskEither left is none is found, or format the data
- * into the Api interface
- *
- * @param normalized - The normalized data to process
- */
-function filterPm25(normalized: Normalized): Api {
-	const pm25 = normalized.filter(({ parameter }) => parameter === 'pm25');
-
-	if (pm25.length) {
-		return {
-			normalized,
-			pm25: pm25[0],
-			shootismoke: {
-				dailyCigarettes: pm25ToCigarettes(pm25[0].value),
-			},
-		};
-	} else {
-		throw new Error(
-			`Station ${normalized[0].location} does not have PM2.5 measurings right now`
-		);
-	}
-}
-
-/**
- * Fetch data parallely from difference data sources, and return the first
- * response
- *
- * @param gps - The GPS coordinates to fetch data for
- */
-function raceApi(gps: LatLng): TE.TaskEither<Error, Api> {
-	// Helper function to fetch & normalize data for 1 provider
-	async function fetchForProvider<DataByGps, DataByStation, Options>(
-		provider: ProviderPromise<DataByGps, DataByStation, Options>,
-		options?: Options
-	): Promise<Api> {
-		const data = await provider.fetchByGps(gps, options);
-		const normalized = provider.normalizeByGps(data);
-		console.log(
-			`<ApiContext> Got data from ${provider.id}: ${JSON.stringify(
-				normalized
-			)}`
-		);
-
-		return filterPm25(normalized);
-	}
-
-	// Run these tasks parallely
-	const tasks = [
-		fetchForProvider(aqicn, {
-			token: Constants.manifest.extra.aqicnToken,
-		}),
-		fetchForProvider(openaq, {
-			limit: 1,
-			parameter: ['pm25'],
-		}),
-	];
-
-	return promiseToTE(
-		() =>
-			promiseAny(tasks).catch((errors: AggregateError) => {
-				// Transform an AggregateError into a JS native Error
-				const aggregateMessage = [...errors]
-					.map(({ message }, index) => `${index + 1}. ${message}`)
-					.join('. ');
-
-				throw new Error(aggregateMessage);
-			}),
-		'ApiContext'
-	);
-}
 
 interface Context {
 	api?: Api;
@@ -153,7 +59,13 @@ export function ApiContextProvider({
 
 		track('API_DAILY_REQUEST');
 		pipe(
-			raceApi(currentLocation),
+			promiseToTE(
+				() =>
+					raceApiPromise(currentLocation, {
+						aqicnToken: Constants.manifest.extra.aqicnToken,
+					}),
+				'ApiContext'
+			),
 			TE.fold(
 				(error) => {
 					setError(error);
@@ -176,7 +88,7 @@ export function ApiContextProvider({
 			value={{
 				api,
 				// eslint-disable-next-line
-        reloadApp: () => setCurrentLocation({ ...currentLocation! }) // Small trick to re-run effect
+				reloadApp: () => setCurrentLocation({ ...currentLocation! }), // Small trick to re-run effect
 			}}
 		>
 			{children}

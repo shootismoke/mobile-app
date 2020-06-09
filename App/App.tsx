@@ -21,6 +21,7 @@ import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 import * as Sentry from 'sentry-expo';
+import { FrequencyContextProvider } from '@shootismoke/ui';
 
 import { Screens } from './Screens';
 import { Background as LoadingBackground } from './Screens/Loading/Background';
@@ -28,7 +29,6 @@ import {
 	ApiContextProvider,
 	DistanceUnitProvider,
 	ErrorContextProvider,
-	FrequencyContextProvider,
 	getApolloClient,
 	LocationContextProvider,
 	TCacheShape,
@@ -57,8 +57,8 @@ export function App(): React.ReactElement {
 	useEffect(() => {
 		Promise.all([
 			Font.loadAsync({
-				'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
-				'gotham-book': require('../assets/fonts/Gotham-Book.ttf'),
+				'gotham-black': require('@shootismoke/ui/assets/fonts/Gotham-Black.ttf'),
+				'gotham-book': require('@shootismoke/ui/assets/fonts/Gotham-Book.ttf'),
 			}),
 			// Add Amplitude if available
 			setupAmplitude(),

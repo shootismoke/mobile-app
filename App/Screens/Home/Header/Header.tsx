@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import alert from '@shootismoke/ui/assets/images/alert.png';
 import React, { useContext } from 'react';
 import {
 	GestureResponderEvent,
@@ -23,13 +24,12 @@ import {
 	View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { isStationTooFar, distanceToStation } from '@shootismoke/ui';
 
-import alert from '../../../../assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
-import { distanceToStation, isStationTooFar } from '../../../util/station';
 import * as theme from '../../../util/theme';
 
 interface HeaderProps {

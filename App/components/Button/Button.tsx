@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
 	},
 });
 
+// FIXME Use component from `@shootismoke/ui`
 export function Button(props: ButtonProps): React.ReactElement {
 	const {
 		as: Wrapper = TouchableOpacity,

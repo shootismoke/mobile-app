@@ -16,6 +16,7 @@
 
 import { convert } from '@shootismoke/convert';
 import { getDominantPol } from '@shootismoke/dataproviders';
+import locationIcon from '@shootismoke/ui/assets/images/location.png';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
 import {
@@ -28,7 +29,6 @@ import {
 	View,
 } from 'react-native';
 
-import locationIcon from '../../../../assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';

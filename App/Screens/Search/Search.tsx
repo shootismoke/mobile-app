@@ -20,13 +20,10 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FrequencyContext } from '@shootismoke/ui';
 
 import { BackButton, ListSeparator } from '../../components';
-import {
-	CurrentLocationContext,
-	FrequencyContext,
-	GpsLocationContext,
-} from '../../stores';
+import { CurrentLocationContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';

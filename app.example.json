@@ -1,61 +1,64 @@
 {
-  "expo": {
-    "android": {
-      "config": {
-        "googleMaps": {
-          "apiKey": "YOUR_OPTIONAL_KEY"
-        }
-      },
-      "icon": "assets/logos/android/playstore-icon.png",
-      "package": "com.shitismoke.app",
-      "permissions": ["ACCESS_FINE_LOCATION"],
-      "versionCode": 13
-    },
-    "assetBundlePatterns": ["assets/**/*"],
-    "backgroundColor": "#FAFAFC",
-    "extra": {
-      "aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
-      "amplitudeApiKey": null,
-      "backendUrl": "https://staging.shootismoke.now.sh/api/graphql",
-      "hawkKey": "26bb8794-8f1e-4bf7-b977-081186af58d6",
-      "sentryPublicDsn": null
-    },
-    "githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": null,
-            "project": null,
-            "authToken": null
-          }
-        }
-      ]
-    },
-    "icon": "assets/logos/ios/iTunesArtwork@3x.png",
-    "ios": {
-      "buildNumber": "1.6.0",
-      "bundleIdentifier": "com.shitismoke.app",
-      "config": {
-        "googleMapsApiKey": "YOUR_OPTIONAL_KEY"
-      },
-      "icon": "assets/logos/ios/iTunesArtwork@3x.png",
-      "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app uses your location to find the air quality level near you."
-      }
-    },
-    "name": "Sh**t! I Smoke",
-    "notification": {
-      "icon": "assets/images/poop.png"
-    },
-    "primaryColor": "#EBE7DD",
-    "privacy": "public",
-    "slug": "shootismoke",
-    "splash": {
-      "backgroundColor": "#EBE7DD",
-      "image": "assets/logos/splash.png"
-    },
-    "version": "1.6.0"
-  }
+	"expo": {
+		"android": {
+			"config": {
+				"googleMaps": {
+					"apiKey": "YOUR_OPTIONAL_KEY"
+				}
+			},
+			"icon": "assets/logos/android/playstore-icon.png",
+			"package": "com.shitismoke.app",
+			"permissions": ["ACCESS_FINE_LOCATION"],
+			"versionCode": 13
+		},
+		"assetBundlePatterns": [
+			"assets/**/*",
+			"./node_modules/@shootismoke/ui/assets/**/*"
+		],
+		"backgroundColor": "#FAFAFC",
+		"extra": {
+			"aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
+			"amplitudeApiKey": null,
+			"backendUrl": "https://staging.shootismoke.now.sh/api/graphql",
+			"hawkKey": "26bb8794-8f1e-4bf7-b977-081186af58d6",
+			"sentryPublicDsn": null
+		},
+		"githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
+		"hooks": {
+			"postPublish": [
+				{
+					"file": "sentry-expo/upload-sourcemaps",
+					"config": {
+						"organization": null,
+						"project": null,
+						"authToken": null
+					}
+				}
+			]
+		},
+		"icon": "assets/logos/ios/iTunesArtwork@3x.png",
+		"ios": {
+			"buildNumber": "1.6.0",
+			"bundleIdentifier": "com.shitismoke.app",
+			"config": {
+				"googleMapsApiKey": "YOUR_OPTIONAL_KEY"
+			},
+			"icon": "assets/logos/ios/iTunesArtwork@3x.png",
+			"infoPlist": {
+				"NSLocationWhenInUseUsageDescription": "This app uses your location to find the air quality level near you."
+			}
+		},
+		"name": "Sh**t! I Smoke",
+		"notification": {
+			"icon": "./node_modules/@shootismoke/ui/assets/images/poop.png"
+		},
+		"primaryColor": "#EBE7DD",
+		"privacy": "public",
+		"slug": "shootismoke",
+		"splash": {
+			"backgroundColor": "#EBE7DD",
+			"image": "assets/logos/splash.png"
+		},
+		"version": "1.6.0"
+	}
 }

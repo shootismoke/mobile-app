@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import searchIcon from '@shootismoke/ui/assets/images/search.png';
 import React from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
 
-import searchIcon from '../../../../assets/images/search.png';
 import { Banner } from '../../../components';
 import { t } from '../../../localization';
 import * as theme from '../../../util/theme';

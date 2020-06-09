@@ -16,7 +16,7 @@
 
 import React, { createContext, useState } from 'react';
 
-import { noop } from '../util/noop';
+import { noop } from '@shootismoke/ui';
 
 interface Context {
 	error?: Error;
