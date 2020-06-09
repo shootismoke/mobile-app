@@ -28,7 +28,7 @@ import {
 	View,
 } from 'react-native';
 
-import locationIcon from '../../../../assets/images/location.png';
+import locationIcon from '@shootismoke/ui/assets/images/location.png';
 import { BackButton, CurrentLocation } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';

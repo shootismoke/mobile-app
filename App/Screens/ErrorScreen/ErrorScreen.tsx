@@ -20,7 +20,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import errorPicture from '../../../assets/images/error.png';
+import errorPicture from '@shootismoke/ui/assets/images/error.png';
 import { Button } from '../../components';
 import { t } from '../../localization';
 import { ErrorContext } from '../../stores';

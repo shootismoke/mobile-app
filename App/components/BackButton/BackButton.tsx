@@ -26,7 +26,7 @@ import {
 	ViewStyle,
 } from 'react-native';
 
-import backIcon from '../../../assets/images/back.png';
+import backIcon from '@shootismoke/ui/assets/images/back.png';
 import { t } from '../../localization';
 import * as theme from '../../util/theme';
 

@@ -22,8 +22,8 @@ import MapView, { Marker } from 'react-native-maps';
 import truncate from 'truncate';
 import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 
-import homeIcon from '../../../assets/images/home.png';
-import stationIcon from '../../../assets/images/station.png';
+import homeIcon from '@shootismoke/ui/assets/images/home.png';
+import stationIcon from '@shootismoke/ui/assets/images/station.png';
 import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';

@@ -57,8 +57,8 @@ export function App(): React.ReactElement {
 	useEffect(() => {
 		Promise.all([
 			Font.loadAsync({
-				'gotham-black': require('../assets/fonts/Gotham-Black.ttf'),
-				'gotham-book': require('../assets/fonts/Gotham-Book.ttf'),
+				'gotham-black': require('@shootismoke/ui/assets/fonts/Gotham-Black.ttf'),
+				'gotham-book': require('@shootismoke/ui/assets/fonts/Gotham-Book.ttf'),
 			}),
 			// Add Amplitude if available
 			setupAmplitude(),

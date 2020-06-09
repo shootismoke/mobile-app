@@ -1,18 +1,18 @@
 {
-  "compilerOptions": {
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "experimentalDecorators": true,
-    "isolatedModules": true,
-    "jsx": "react-native",
-    "lib": ["es6"],
-    "module": "es6",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "target": "esnext"
-  },
-  "exclude": ["node_modules"],
-  "extends": "./node_modules/@amaurymartiny/tsconfig/tsconfig"
+	"compilerOptions": {
+		"allowJs": false,
+		"allowSyntheticDefaultImports": true,
+		"noFallthroughCasesInSwitch": true,
+		"experimentalDecorators": true,
+		"isolatedModules": true,
+		"jsx": "react-native",
+		"lib": ["es6"],
+		"module": "es6",
+		"moduleResolution": "node",
+		"noEmit": true,
+		"skipLibCheck": true,
+		"target": "esnext"
+	},
+	"exclude": ["node_modules"],
+	"extends": "./node_modules/@amaurymartiny/tsconfig/tsconfig"
 }

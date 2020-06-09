@@ -25,7 +25,7 @@ import {
 import { scale } from 'react-native-size-matters';
 import { isStationTooFar, distanceToStation } from '@shootismoke/ui';
 
-import alert from '../../../../assets/images/alert.png';
+import alert from '@shootismoke/ui/assets/images/alert.png';
 import { ChangeLocation, CurrentLocation } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';

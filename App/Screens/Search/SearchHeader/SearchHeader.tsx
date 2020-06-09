@@ -17,7 +17,7 @@
 import React from 'react';
 import { Image, StyleSheet, TextInput } from 'react-native';
 
-import searchIcon from '../../../../assets/images/search.png';
+import searchIcon from '@shootismoke/ui/assets/images/search.png';
 import { Banner } from '../../../components';
 import { t } from '../../../localization';
 import * as theme from '../../../util/theme';
