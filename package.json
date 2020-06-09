@@ -23,7 +23,7 @@
     "test-runner": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.50",
+    "@apollo/client": "^3.0.0-rc.2",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/link-retry": "^2.0.0-beta.3",
     "@apollo/react-hooks": "^3.1.5",
@@ -56,11 +56,11 @@
     "react-native-scroll-into-view": "^1.0.3",
     "react-native-size-matters": "^0.3.0",
     "react-native-view-shot": "3.1.2",
-    "sentry-expo": "~2.0.3",
+    "sentry-expo": "^2.1.2",
     "truncate": "^2.1.0"
   },
   "devDependencies": {
-    "@amaurymartiny/config": "^1.3.0",
+    "@amaurymartiny/config": "^1.3.1",
     "@types/detox": "^16.4.1",
     "@types/jest": "^25.2.3",
     "detox": "^16.7.2",
@@ -68,6 +68,6 @@
     "jest": "^24.9.0",
     "jest-expo": "^37.0.0",
     "ts-jest": "^24.3.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.5"
   }
 }
