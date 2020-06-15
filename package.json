@@ -33,7 +33,7 @@
 		"@react-native-community/masked-view": "0.1.6",
 		"@react-navigation/native": "^5.1.5",
 		"@react-navigation/stack": "^5.2.10",
-		"@shootismoke/graphql": "^0.2.22",
+		"@shootismoke/graphql": "^0.2.29",
 		"@shootismoke/ui": "^0.2.30",
 		"@types/i18n-js": "^3.0.3",
 		"@types/react-native": "^0.60.22",
