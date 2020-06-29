@@ -36,7 +36,7 @@
 		"@shootismoke/graphql": "^0.2.29",
 		"@shootismoke/ui": "^0.2.30",
 		"@types/i18n-js": "^3.0.3",
-		"@types/react-native": "^0.60.22",
+		"@types/react-native": "^0.62.14",
 		"apollo-cache-persist": "^0.1.1",
 		"date-fns": "^2.14.0",
 		"expo": "^37.0.8",
