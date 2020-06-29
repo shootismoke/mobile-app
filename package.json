@@ -62,7 +62,7 @@
 	"devDependencies": {
 		"@amaurymartiny/config": "^1.3.1",
 		"@types/detox": "^16.4.1",
-		"@types/jest": "^26.0.0",
+		"@types/jest": "^26.0.3",
 		"detox": "^16.8.2",
 		"detox-expo-helpers": "^0.6.0",
 		"jest": "^24.9.0",
