@@ -4158,10 +4158,10 @@ expect@^24.9.0:
     jest-message-util "^24.9.0"
     jest-regex-util "^24.9.0"
 
-expo-analytics-amplitude@~8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-8.1.0.tgz#f50768ab58b0e35927acf47d87a3c9ead2b5650e"
-  integrity sha512-eekNhZt2Sgwo8JKQyGIYNVkQyQCKynXJigU1rgrrLrCdTX1qkZwyPPOqeqgruNqmsXTW7U0s/oHFe+nmnHLx3g==
+expo-analytics-amplitude@~8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-8.2.1.tgz#96f4609022eb60dd5a1fae1c40c77f9a5b55f8cf"
+  integrity sha512-+GQDKFusM0G4K+lOjY2HbMyn9tSpyIfhpCpopfd/BcNZVjv9t53Fh8q0eV2ha1GLMoe5JAsS4Cskr1xDtbhbxw==
 
 expo-asset@~8.1.4:
   version "8.1.4"
