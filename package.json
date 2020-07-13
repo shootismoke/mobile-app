@@ -44,7 +44,7 @@
 		"expo-av": "~8.2.1",
 		"expo-detox-hook": "^1.0.10",
 		"expo-localization": "~8.2.1",
-		"expo-notifications": "~0.3.3",
+		"expo-notifications": "~0.4.0",
 		"graphql": "^14.6.0",
 		"i18n-js": "^3.7.1",
 		"react": "16.11.0",
