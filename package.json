@@ -45,7 +45,7 @@
 		"expo-detox-hook": "^1.0.10",
 		"expo-localization": "~8.2.1",
 		"expo-notifications": "~0.3.3",
-		"graphql": "^14.6.0",
+		"graphql": "^14.7.0",
 		"i18n-js": "^3.7.1",
 		"react": "16.11.0",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
