@@ -13,8 +13,7 @@
 		},
 		"assetBundlePatterns": [
 			"assets/**/*",
-			"./node_modules/@shootismoke/ui/assets/**/*",
-			"./node_modules/@shootismoke/ui/lib/**/*"
+			"./node_modules/@shootismoke/ui/assets/**/*"
 		],
 		"backgroundColor": "#FAFAFC",
 		"extra": {
