@@ -16,9 +16,7 @@
 
 import React, { useContext, useRef, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
-import { Frequency, FrequencyContext } from '@shootismoke/ui';
-
-import { BoxButton } from '../../../components';
+import { BoxButton, Frequency, FrequencyContext } from '@shootismoke/ui';
 import { t } from '../../../localization';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
