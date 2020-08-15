@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.9](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.8...v1.6.9) (2020-08-15)
+
+
+### Bug Fixes
+
+* Add timeout to cough...cough... ([#703](https://github.com/amaurymartiny/shoot-i-smoke/issues/703)) ([c591a05](https://github.com/amaurymartiny/shoot-i-smoke/commit/c591a059fb8513096ac58e0d125e584766be2a94))
+* Bump expo to SDK38 ([#660](https://github.com/amaurymartiny/shoot-i-smoke/issues/660)) ([be9bec4](https://github.com/amaurymartiny/shoot-i-smoke/commit/be9bec4e0eda889df12188714dece590ec60836b))
+
 ### [1.6.8](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.6.7...v1.6.8) (2020-04-28)
 
 
