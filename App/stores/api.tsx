@@ -38,6 +38,9 @@ interface ApiContextProviderProps {
 	children: JSX.Element;
 }
 
+// Timeout, in ms, after which we abandon the api request.
+const API_TIMEOUT = 5000;
+
 export function ApiContextProvider({
 	children,
 }: ApiContextProviderProps): React.ReactElement {
@@ -61,9 +64,23 @@ export function ApiContextProvider({
 		pipe(
 			promiseToTE(
 				() =>
-					raceApiPromise(currentLocation, {
-						aqicnToken: Constants.manifest.extra.aqicnToken,
-					}),
+					// raceApiPromise will fetch the API data from different
+					// sources, and return the first result. We also add a
+					// timeout on these requests.
+					Promise.race([
+						new Promise<Api>((_resolve, reject) => {
+							setTimeout(
+								() =>
+									reject(
+										'Request to fetch API data timed out.'
+									),
+								API_TIMEOUT
+							);
+						}),
+						raceApiPromise(currentLocation, {
+							aqicnToken: Constants.manifest.extra.aqicnToken,
+						}),
+					]),
 				'ApiContext'
 			),
 			TE.fold(
