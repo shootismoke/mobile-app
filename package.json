@@ -37,7 +37,7 @@
 		"@types/i18n-js": "^3.0.3",
 		"@types/react-native": "~0.62.13",
 		"apollo-cache-persist": "^0.1.1",
-		"date-fns": "^2.15.0",
+		"date-fns": "^2.16.0",
 		"expo": "^38.0.0",
 		"expo-analytics-amplitude": "~8.2.1",
 		"expo-av": "~8.2.1",
