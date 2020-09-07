@@ -9685,10 +9685,10 @@ react-native-scroll-into-view@^1.0.3:
   dependencies:
     prop-types ">=15.6.1"
 
-react-native-size-matters@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.0.tgz#0692e324a189884819b570c4cab24d27ecd4311d"
-  integrity sha512-PuwA07mr3woQPFJXo3FwlFwpe6bb2LCb20sDZ4JWMpGBtmppq4sKH4GLgS6Sw+GkN0sSOEXGZLaOsHZYFY9hJg==
+react-native-size-matters@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
+  integrity sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw==
 
 react-native-view-shot@3.1.2:
   version "3.1.2"
