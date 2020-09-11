@@ -41,6 +41,23 @@ interface ApiContextProviderProps {
 // Timeout, in ms, after which we abandon the api request.
 const API_TIMEOUT = 5000;
 
+/**
+ * withTimeout wraps another promise, and rejects if the inner promise
+ * time outs after `timeout`.
+ * @param p - Promise to add timeout to.
+ */
+export function withTimeout<T>(p: Promise<T>, timeout: number): Promise<T> {
+	return Promise.race([
+		new Promise<T>((_resolve, reject) => {
+			setTimeout(
+				() => reject('Request to fetch API data timed out.'),
+				timeout
+			);
+		}),
+		p,
+	]);
+}
+
 export function ApiContextProvider({
 	children,
 }: ApiContextProviderProps): React.ReactElement {
@@ -67,20 +84,12 @@ export function ApiContextProvider({
 					// raceApiPromise will fetch the API data from different
 					// sources, and return the first result. We also add a
 					// timeout on these requests.
-					Promise.race([
-						new Promise<Api>((_resolve, reject) => {
-							setTimeout(
-								() =>
-									reject(
-										'Request to fetch API data timed out.'
-									),
-								API_TIMEOUT
-							);
-						}),
+					withTimeout(
 						raceApiPromise(currentLocation, {
 							aqicnToken: Constants.manifest.extra.aqicnToken,
 						}),
-					]),
+						API_TIMEOUT
+					),
 				'ApiContext'
 			),
 			TE.fold(

@@ -10,6 +10,7 @@
 	"scripts": {
 		"lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx .",
 		"start": "expo start",
+		"test:unit": "jest App",
 		"test:e2e": "detox test --configuration ios.sim --record-videos all"
 	},
 	"detox": {
@@ -47,7 +48,7 @@
 		"graphql": "^14.7.0",
 		"i18n-js": "^3.7.1",
 		"react": "16.11.0",
-		"react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
+		"react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
 		"react-native-gesture-handler": "~1.6.0",
 		"react-native-maps": "0.27.1",
 		"react-native-reanimated": "~1.9.0",
