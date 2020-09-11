@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { convert } from '@shootismoke/convert';
-import { getDominantPol } from '@shootismoke/dataproviders';
+import { convert, Pollutant } from '@shootismoke/convert';
+import { getDominantPol, Normalized } from '@shootismoke/dataproviders';
 import locationIcon from '@shootismoke/ui/assets/images/location.png';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
@@ -92,6 +92,40 @@ const renderInfo = (
 	);
 };
 
+/**
+ * Represents the average value of a pollutant.
+ */
+type PollutantAverage = Record<
+	Pollutant,
+	{ values: number[]; average: number }
+>;
+
+/**
+ * The API returns multiple normalized entries for each pollutant, we calculate
+ * the average for each pollutant.
+ *
+ * @param normalized - The normalized data
+ */
+function pollutantAverage(normalized: Normalized): PollutantAverage {
+	return normalized.reduce((acc, entry) => {
+		if (!acc[entry.parameter]) {
+			acc[entry.parameter] = {
+				average: entry.value,
+				values: [entry.value],
+			};
+		} else {
+			const values = [...acc[entry.parameter].values, entry.value];
+			const average = values.reduce((a, b) => a + b) / values.length;
+			acc[entry.parameter] = {
+				average,
+				values,
+			};
+		}
+
+		return acc;
+	}, {} as PollutantAverage);
+}
+
 export function Header(props: HeaderProps): React.ReactElement {
 	const { onBackClick } = props;
 	const { api } = useContext(ApiContext);
@@ -106,6 +140,11 @@ export function Header(props: HeaderProps): React.ReactElement {
 			'Details/Header/Header.tsx only render when `api` is defined.'
 		);
 	}
+
+	// Given all the normalized data from different close stations, calculate
+	// the average AQI of each pollutant.
+	// FIXME Make sure the units are correctly converted.
+	const averages = pollutantAverage(api.normalized);
 
 	return (
 		<View style={styles.container}>
@@ -134,14 +173,14 @@ export function Header(props: HeaderProps): React.ReactElement {
 					)}
 
 					<View style={styles.pollutants}>
-						{api.normalized.map((normalized) => {
+						{Object.keys(averages).map((pollutant) => {
 							return renderInfo(
-								`${normalized.parameter.toUpperCase()} AQI:`,
+								`${pollutant.toUpperCase()} AQI:`,
 								convert(
-									normalized.parameter,
+									pollutant as Pollutant,
 									'raw',
 									'usaEpa',
-									normalized.value
+									averages[pollutant as Pollutant].average
 								),
 								styles.pollutantItem
 							);
