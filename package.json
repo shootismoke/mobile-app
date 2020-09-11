@@ -10,7 +10,7 @@
 	"scripts": {
 		"lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx .",
 		"start": "expo start",
-		"test": "jest",
+		"test:unit": "jest App",
 		"test:e2e": "detox test --configuration ios.sim --record-videos all"
 	},
 	"detox": {
