@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.2](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.7.1...v1.7.2) (2020-09-14)
+
+
+### Bug Fixes
+
+* Show rounded number in Details ([#731](https://github.com/amaurymartiny/shoot-i-smoke/issues/731)) ([0b6f367](https://github.com/amaurymartiny/shoot-i-smoke/commit/0b6f36797f839cb6f24b5143479b2bc79af72299))
+
 ### [1.7.1](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.7.0...v1.7.1) (2020-09-11)
 
 
