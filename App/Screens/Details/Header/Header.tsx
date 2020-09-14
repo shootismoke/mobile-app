@@ -115,7 +115,9 @@ function pollutantAverage(normalized: Normalized): PollutantAverage {
 			};
 		} else {
 			const values = [...acc[entry.parameter].values, entry.value];
-			const average = values.reduce((a, b) => a + b) / values.length;
+			const average = Math.round(
+				values.reduce((a, b) => a + b) / values.length
+			);
 			acc[entry.parameter] = {
 				average,
 				values,
