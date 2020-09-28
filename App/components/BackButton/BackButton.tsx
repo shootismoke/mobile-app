@@ -19,6 +19,7 @@ import React from 'react';
 import {
 	GestureResponderEvent,
 	Image,
+	ImageRequireSource,
 	StyleProp,
 	StyleSheet,
 	Text,
@@ -56,7 +57,7 @@ export function BackButton(props: BackButtonProps): React.ReactElement {
 				onPress={props.onPress}
 				style={styles.backButton}
 			>
-				<Image source={backIcon} />
+				<Image source={backIcon as ImageRequireSource} />
 				<Text style={styles.backText}>{t('nav_btn_back')}</Text>
 			</TouchableOpacity>
 		</View>

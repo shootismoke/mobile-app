@@ -18,7 +18,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import errorPicture from '@shootismoke/ui/assets/images/error.png';
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import {
+	Image,
+	ImageRequireSource,
+	StyleSheet,
+	Text,
+	View,
+} from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Button } from '../../components';
@@ -74,7 +80,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 
 	return (
 		<View style={styles.container} testID={testIds.Error.screen}>
-			<Image source={errorPicture} />
+			<Image source={errorPicture as ImageRequireSource} />
 			<View>
 				<Text style={styles.errorText}>
 					<Text style={styles.sorry}>
