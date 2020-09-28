@@ -80,7 +80,6 @@ export function setupAmplitude(): Promise<void> {
 						disableAdid: true,
 						disableCarrier: true,
 						disableDMA: true,
-						disableIDFA: true,
 						disableIDFV: true,
 						disableIPAddress: true,
 						disableLatLng: true,
