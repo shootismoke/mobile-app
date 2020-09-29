@@ -60,9 +60,7 @@ export function Language(): React.ReactElement {
 				{Object.keys(i18n.translations).map((lang) => (
 					<Picker.Item
 						key={lang}
-						label={
-							names[i18n.locale as keyof typeof names].nativeName
-						}
+						label={names[lang as keyof typeof names].nativeName}
 						value={lang}
 					/>
 				))}
