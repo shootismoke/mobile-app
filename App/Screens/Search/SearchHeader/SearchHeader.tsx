@@ -16,7 +16,7 @@
 
 import searchIcon from '@shootismoke/ui/assets/images/search.png';
 import React from 'react';
-import { Image, StyleSheet, TextInput } from 'react-native';
+import { Image, ImageRequireSource, StyleSheet, TextInput } from 'react-native';
 
 import { Banner } from '../../../components';
 import { t } from '../../../localization';
@@ -59,7 +59,7 @@ export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
 				underlineColorAndroid="transparent"
 				value={search}
 			/>
-			<Image source={searchIcon} />
+			<Image source={searchIcon as ImageRequireSource} />
 		</Banner>
 	);
 }

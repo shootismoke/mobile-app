@@ -86,7 +86,8 @@ export function ApiContextProvider({
 					// timeout on these requests.
 					withTimeout(
 						raceApiPromise(currentLocation, {
-							aqicnToken: Constants.manifest.extra.aqicnToken,
+							aqicnToken: Constants.manifest.extra
+								.aqicnToken as string,
 						}),
 						API_TIMEOUT
 					),

@@ -103,7 +103,7 @@ export async function getApolloClient(): Promise<ApolloClient<TCacheShape>> {
 			// Classic HTTP link
 			createHttpLink({
 				fetch: hawkFetch(Constants.manifest.extra.backendUrl),
-				uri: Constants.manifest.extra.backendUrl,
+				uri: Constants.manifest.extra.backendUrl as string,
 			}),
 		]),
 		name: 'shootismoke-expo',

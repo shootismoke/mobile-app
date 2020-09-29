@@ -40,7 +40,7 @@ import { sentryError } from './util/sentry';
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
 	Sentry.init({
-		dsn: Constants.manifest.extra.sentryPublicDsn,
+		dsn: Constants.manifest.extra.sentryPublicDsn as string,
 		debug: true,
 	});
 
@@ -57,8 +57,8 @@ export function App(): React.ReactElement {
 	useEffect(() => {
 		Promise.all([
 			Font.loadAsync({
-				'gotham-black': require('@shootismoke/ui/assets/fonts/Gotham-Black.ttf'),
-				'gotham-book': require('@shootismoke/ui/assets/fonts/Gotham-Book.ttf'),
+				'gotham-black': require('@shootismoke/ui/assets/fonts/Gotham-Black.ttf') as Font.FontResource,
+				'gotham-book': require('@shootismoke/ui/assets/fonts/Gotham-Book.ttf') as Font.FontResource,
 			}),
 			// Add Amplitude if available
 			setupAmplitude(),

@@ -19,7 +19,7 @@ import { stationName } from '@shootismoke/dataproviders';
 import homeIcon from '@shootismoke/ui/assets/images/home.png';
 import stationIcon from '@shootismoke/ui/assets/images/station.png';
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ImageRequireSource, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import truncate from 'truncate';
 import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
@@ -141,14 +141,14 @@ export function Details(props: DetailsProps): React.ReactElement {
 					>
 						<Marker
 							coordinate={station}
-							image={stationIcon}
+							image={stationIcon as ImageRequireSource}
 							ref={handleStationRef}
 							title={t('details_air_quality_station_marker')}
 							description={truncate(station.description, 40)}
 						/>
 						<Marker
 							coordinate={currentLocation}
-							image={homeIcon}
+							image={homeIcon as ImageRequireSource}
 							title={t('details_your_position_marker')}
 						/>
 					</MapView>

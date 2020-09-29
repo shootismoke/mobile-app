@@ -48,7 +48,9 @@ export function Language(): React.ReactElement {
 	// https://github.com/facebook/react-native/issues/7817#issuecomment-264851951
 	return (
 		<View style={styles.container}>
-			<Text style={theme.link}>{names[i18n.locale].nativeName}</Text>
+			<Text style={theme.link}>
+				{names[i18n.locale as keyof typeof names].nativeName}
+			</Text>
 			<Picker
 				itemStyle={theme.text}
 				onValueChange={handleValueChange}
@@ -58,7 +60,7 @@ export function Language(): React.ReactElement {
 				{Object.keys(i18n.translations).map((lang) => (
 					<Picker.Item
 						key={lang}
-						label={names[lang].nativeName}
+						label={names[lang as keyof typeof names].nativeName}
 						value={lang}
 					/>
 				))}
