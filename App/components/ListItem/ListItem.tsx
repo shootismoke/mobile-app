@@ -19,6 +19,7 @@ import pinIcon from '@shootismoke/ui/assets/images/location.png';
 import React from 'react';
 import {
 	Image,
+	ImageRequireSource,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -57,7 +58,13 @@ export function ListItem(props: ListItemProps): React.ReactElement {
 
 	return (
 		<TouchableOpacity style={styles.container} {...rest}>
-			<Image source={icon === 'gps' ? gpsIcon : pinIcon} />
+			<Image
+				source={
+					icon === 'gps'
+						? (gpsIcon as ImageRequireSource)
+						: (pinIcon as ImageRequireSource)
+				}
+			/>
 			<View style={styles.result}>
 				<Text style={styles.title}>{title}</Text>
 				<Text style={styles.description}>{description}</Text>

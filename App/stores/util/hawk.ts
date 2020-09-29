@@ -30,7 +30,7 @@ export interface Credentials {
 // Hawk credentials
 export const credentials: Credentials = {
 	id: `${Constants.manifest.slug as string}-${RELEASE_CHANNEL}`,
-	key: Constants.manifest.extra.hawkKey,
+	key: Constants.manifest.extra.hawkKey as string,
 	algorithm: 'sha256',
 };
 
@@ -46,9 +46,9 @@ export function hawkFetch(backendUri: string) {
 		init: RequestInit = {}
 	): Promise<Response> {
 		// Set Hawk authorization header on each request
-		const { header } = Hawk.client.header(backendUri, 'POST', {
+		const header = Hawk.client.header(backendUri, 'POST', {
 			credentials,
-		});
+		}).header as string;
 
 		return fetch(input, {
 			...init,
@@ -101,7 +101,7 @@ export function handleStaleTimestamp(
 		const updated: boolean = Hawk.authenticateTimestamp(
 			error.extensions,
 			credentials
-		);
+		) as boolean;
 
 		if (!updated) {
 			throw new Error('authenticateTimestamp returned false');

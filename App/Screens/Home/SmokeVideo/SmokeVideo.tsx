@@ -19,6 +19,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 
 import smokeVideo from '../../../../assets/video/smoke_bg_fafafc.mp4';
+import { AVPlaybackSource } from 'expo-av/build/AV';
 
 interface SmokeVideoProps {
 	cigarettes: number;
@@ -62,7 +63,7 @@ export function SmokeVideo({
 				isLooping
 				resizeMode="cover"
 				shouldPlay
-				source={smokeVideo}
+				source={smokeVideo as AVPlaybackSource}
 				style={styles.video}
 			/>
 		</View>

@@ -11,7 +11,8 @@
 		"moduleResolution": "node",
 		"noEmit": true,
 		"skipLibCheck": true,
-		"target": "esnext"
+		"target": "esnext",
+		"resolveJsonModule": true
 	},
 	"exclude": ["node_modules"],
 	"extends": "./node_modules/@amaurymartiny/tsconfig/tsconfig"

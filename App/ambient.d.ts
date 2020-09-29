@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-declare module '*.json';
 declare module '*.mp4';
 declare module '*.png';
 declare module '@hapi/hawk/lib/browser';

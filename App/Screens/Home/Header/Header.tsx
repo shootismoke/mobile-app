@@ -19,6 +19,7 @@ import React, { useContext } from 'react';
 import {
 	GestureResponderEvent,
 	Image,
+	ImageRequireSource,
 	StyleSheet,
 	Text,
 	View,
@@ -89,7 +90,10 @@ export function Header(props: HeaderProps): React.ReactElement {
 				/>
 				<View style={styles.distance}>
 					{isTooFar && (
-						<Image source={alert} style={styles.warning} />
+						<Image
+							source={alert as ImageRequireSource}
+							style={styles.warning}
+						/>
 					)}
 					<Text style={theme.text}>
 						{t('home_header_air_quality_station_distance', {

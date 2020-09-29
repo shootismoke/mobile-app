@@ -16,7 +16,14 @@
 
 import cigarette from '@shootismoke/ui/assets/images/cigarette.png';
 import React from 'react';
-import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import {
+	Image,
+	ImageRequireSource,
+	Platform,
+	StyleSheet,
+	Text,
+	View,
+} from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import { t } from '../../../localization';
@@ -98,7 +105,10 @@ export function Box(): React.ReactElement {
 		<View style={styles.box}>
 			<View style={styles.equivalence}>
 				<View style={styles.statisticsLeft}>
-					<Image source={cigarette} style={styles.cigarette} />
+					<Image
+						source={cigarette as ImageRequireSource}
+						style={styles.cigarette}
+					/>
 					<Text style={styles.value} />
 					<Text style={styles.label}>{t('about_box_per_day')}</Text>
 				</View>

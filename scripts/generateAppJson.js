@@ -7,6 +7,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 const merge = require('lodash/merge');
 

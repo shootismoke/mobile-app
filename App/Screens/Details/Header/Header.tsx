@@ -22,6 +22,7 @@ import React, { useContext } from 'react';
 import {
 	GestureResponderEvent,
 	Image,
+	ImageRequireSource,
 	StyleProp,
 	StyleSheet,
 	Text,
@@ -153,7 +154,10 @@ export function Header(props: HeaderProps): React.ReactElement {
 			<BackButton onPress={onBackClick} style={styles.backButton} />
 
 			<View style={styles.layout}>
-				<Image source={locationIcon} style={styles.changeLocation} />
+				<Image
+					source={locationIcon as ImageRequireSource}
+					style={styles.changeLocation}
+				/>
 
 				<View style={styles.content}>
 					<CurrentLocation
