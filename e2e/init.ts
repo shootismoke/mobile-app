@@ -17,7 +17,7 @@
 import { cleanup, init } from 'detox';
 import adapter from 'detox/runners/jest/adapter';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+// eslint-disable-next-line
 const config = require('../package.json').detox;
 
 jest.setTimeout(30 * 60 * 1000); // 30 minutes timeout

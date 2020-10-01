@@ -9,6 +9,7 @@
 			"icon": "assets/logos/android/playstore-icon.png",
 			"package": "com.shitismoke.app",
 			"permissions": ["ACCESS_FINE_LOCATION"],
+			"useNextNotificationsApi": true,
 			"versionCode": 14
 		},
 		"assetBundlePatterns": [

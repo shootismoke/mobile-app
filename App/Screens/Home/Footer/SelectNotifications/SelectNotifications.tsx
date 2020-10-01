@@ -17,7 +17,7 @@
 import Switch from '@dooboo-ui/native-switch-toggle';
 import { FontAwesome } from '@expo/vector-icons';
 import { Frequency } from '@shootismoke/graphql';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
 import * as C from 'fp-ts/lib/Console';
@@ -184,9 +184,9 @@ export function SelectNotifications(
 				)
 			),
 			TE.map((expoPushToken) => ({
-				expoPushToken,
+				expoPushToken: expoPushToken.data,
 				frequency,
-				timezone: Localization.timezone as string,
+				timezone: Localization.timezone,
 				universalId: api.pm25.location,
 			})),
 			TE.chain(
