@@ -186,7 +186,7 @@ export function SelectNotifications(
 			TE.map((expoPushToken) => ({
 				expoPushToken: expoPushToken.data,
 				frequency,
-				timezone: Localization.timezone as string,
+				timezone: Localization.timezone,
 				universalId: api.pm25.location,
 			})),
 			TE.chain(

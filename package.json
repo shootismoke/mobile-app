@@ -24,7 +24,7 @@
 		"test-runner": "jest"
 	},
 	"dependencies": {
-		"@apollo/client": "3.0.0-rc.12",
+		"@apollo/client": "^3.2.1",
 		"@apollo/link-error": "^2.0.0-beta.3",
 		"@apollo/link-retry": "^2.0.0-beta.3",
 		"@dooboo-ui/native-switch-toggle": "^0.7.0",
@@ -46,7 +46,7 @@
 		"expo-localization": "~9.0.0",
 		"expo-notifications": "~0.7.2",
 		"expo-status-bar": "^1.0.0",
-		"graphql": "^14.7.0",
+		"graphql": "^15.3.0",
 		"i18n-js": "^3.7.1",
 		"react": "16.13.1",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
@@ -65,7 +65,7 @@
 		"@amaurymartiny/config": "^1.3.1",
 		"@types/detox": "^16.4.1",
 		"@types/jest": "^26.0.14",
-		"detox": "^16.8.2",
+		"detox": "^17.8.0",
 		"detox-expo-helpers": "^0.6.0",
 		"jest": "^24.9.0",
 		"jest-expo": "^39.0.0",
