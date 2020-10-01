@@ -19,6 +19,7 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { AsyncStorage } from 'react-native';
 
 import { sideEffect } from '../util/fp';
 import { noop } from '@shootismoke/ui';
@@ -38,7 +39,7 @@ const DEFAULT_LAT_LNG: LatLng = {
 interface LocationWithSetter {
 	currentLocation?: Location;
 	isGps: boolean;
-	setCurrentLocation: (location?: Location) => void;
+	setAndSaveCurrentLocation: (location?: Location) => void;
 }
 
 export const GpsLocationContext = createContext<Location | undefined>(
@@ -47,7 +48,7 @@ export const GpsLocationContext = createContext<Location | undefined>(
 export const CurrentLocationContext = createContext<LocationWithSetter>({
 	...DEFAULT_LAT_LNG,
 	isGps: false,
-	setCurrentLocation: noop,
+	setAndSaveCurrentLocation: noop,
 });
 
 export function LocationContextProvider({
@@ -59,6 +60,11 @@ export function LocationContextProvider({
 
 	const [gpsLocation, setGpsLocation] = useState<Location>();
 	const [currentLocation, setCurrentLocation] = useState<Location>();
+
+	const setAndSaveCurrentLocation = (location: Location | undefined) => {
+		setCurrentLocation(location);
+		AsyncStorage.setItem("LAST_KNOWN_LOCATION", JSON.stringify(location))
+	}
 
 	// Fetch GPS location
 	useEffect(() => {
@@ -75,7 +81,7 @@ export function LocationContextProvider({
 						)}`
 					);
 					setGpsLocation(gps);
-					setCurrentLocation(gps);
+					setAndSaveCurrentLocation(gps);
 
 					return TE.right(undefined);
 				})
@@ -101,7 +107,7 @@ export function LocationContextProvider({
 						)}`
 					);
 					setGpsLocation(location);
-					setCurrentLocation(location);
+					setAndSaveCurrentLocation(location);
 
 					return T.of(undefined);
 				}
@@ -119,7 +125,7 @@ export function LocationContextProvider({
 						!!gpsLocation &&
 						currentLocation.latitude === gpsLocation.latitude &&
 						currentLocation.longitude === gpsLocation.longitude,
-					setCurrentLocation,
+					setAndSaveCurrentLocation,
 				}}
 			>
 				{children}
