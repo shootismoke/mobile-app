@@ -20,7 +20,7 @@ export type ErrorStackParams = {
 };
 
 export type RootStackParams = {
-	About: {
+	About?: {
 		scrollInto?: string;
 	};
 	Details: undefined;

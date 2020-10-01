@@ -84,7 +84,7 @@ export function Button(props: ButtonProps): React.ReactElement {
 					color={theme.primaryColor}
 					name={icon}
 					size={15}
-					style={children && styles.icon}
+					style={children ? styles.icon : undefined}
 				/>
 			)}
 			{children &&

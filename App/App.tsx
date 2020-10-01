@@ -57,7 +57,9 @@ export function App(): React.ReactElement {
 	useEffect(() => {
 		Promise.all([
 			Font.loadAsync({
+				// eslint-disable-next-line @typescript-eslint/no-var-requires
 				'gotham-black': require('@shootismoke/ui/assets/fonts/Gotham-Black.ttf') as Font.FontResource,
+				// eslint-disable-next-line @typescript-eslint/no-var-requires
 				'gotham-book': require('@shootismoke/ui/assets/fonts/Gotham-Book.ttf') as Font.FontResource,
 			}),
 			// Add Amplitude if available
