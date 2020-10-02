@@ -64,11 +64,10 @@ function getCigarettesMargin(count: number): number {
 }
 
 /*
- * Dynamically calculating max number of cigarettes
+ * Calculates each cigarettes height using number of cigarettes
  */
-function getDynamicMaxCigarettes(count: number): number {
-	const CIGARETTE_ASPECT_RATIO = 21 / 280; // taken from the @shootismoke/ui lib
-	const height = scale(
+function getCigarettesHeight(count: number): number {
+	return scale(
 		count <= THRESHOLD.FIRST
 			? SIZES.BIG
 			: count <= THRESHOLD.SECOND
@@ -79,6 +78,14 @@ function getDynamicMaxCigarettes(count: number): number {
 			? SIZES.MEDIUM
 			: SIZES.SMALL
 	);
+}
+
+/*
+ * Dynamically calculating max number of cigarettes
+ */
+function getDynamicMaxCigarettes(count: number): number {
+	const CIGARETTE_ASPECT_RATIO = 21 / 280; // taken from the @shootismoke/ui lib
+	const height = getCigarettesHeight(count);
 	const width = height * CIGARETTE_ASPECT_RATIO;
 	const margin = getCigarettesMargin(count);
 	const componentWidth =
@@ -174,17 +181,7 @@ export function Home(props: HomeProps): React.ReactElement {
 				<CigarettesBlock
 					cigarettes={cigarettes.count}
 					cigarettesStyle={styles.cigarettes}
-					fullCigaretteLength={scale(
-						cigarettes.count <= THRESHOLD.FIRST
-							? SIZES.BIG
-							: cigarettes.count <= THRESHOLD.SECOND
-							? SIZES.MEDIUM
-							: cigarettes.count <= THRESHOLD.THIRD
-							? SIZES.BIG
-							: cigarettes.count <= THRESHOLD.FOURTH
-							? SIZES.MEDIUM
-							: SIZES.SMALL
-					)}
+					fullCigaretteLength={getCigarettesHeight(cigarettes.count)}
 					showMaxCigarettes={getDynamicMaxCigarettes(
 						cigarettes.count
 					)}
