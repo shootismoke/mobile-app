@@ -23,7 +23,7 @@ import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
 const LOADING_TEXT = 'Fetching...';
 
 export function GpsItem(): React.ReactElement | null {
-	const { setCurrentLocation } = useContext(CurrentLocationContext);
+	const { setAndSaveCurrentLocation } = useContext(CurrentLocationContext);
 	const gps = useContext(GpsLocationContext);
 
 	if (!gps) {
@@ -31,7 +31,7 @@ export function GpsItem(): React.ReactElement | null {
 	}
 
 	const handleClick = (): void => {
-		setCurrentLocation(gps);
+		setAndSaveCurrentLocation(gps);
 	};
 
 	return (
