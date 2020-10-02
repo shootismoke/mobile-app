@@ -63,8 +63,11 @@ export function LocationContextProvider({
 
 	const setAndSaveCurrentLocation = (location: Location | undefined) => {
 		setCurrentLocation(location);
-		AsyncStorage.setItem('LAST_KNOWN_LOCATION', JSON.stringify(location))
-	}
+		AsyncStorage.setItem(
+			'LAST_KNOWN_LOCATION',
+			JSON.stringify(location)
+		).catch(sentryError('LocationContextProvider'));
+	};
 
 	// Fetch GPS location
 	useEffect(() => {
@@ -114,13 +117,17 @@ export function LocationContextProvider({
 			)
 		)().catch(() => {
 			async function useLastKnownLocation(): Promise<void> {
-				const location_string = await AsyncStorage.getItem('LAST_KNOWN_LOCATION');
+				const location_string = await AsyncStorage.getItem(
+					'LAST_KNOWN_LOCATION'
+				);
 
 				if (location_string !== null) {
 					setCurrentLocation(JSON.parse(location_string));
 				}
 			}
-			useLastKnownLocation().catch(sentryError('LocationContextProvider'));
+			useLastKnownLocation().catch(
+				sentryError('LocationContextProvider')
+			);
 		});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
