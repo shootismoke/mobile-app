@@ -10,9 +10,9 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"noEmit": true,
+		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"target": "esnext",
-		"resolveJsonModule": true
 	},
 	"exclude": ["node_modules"],
 	"extends": "./node_modules/@amaurymartiny/tsconfig/tsconfig"

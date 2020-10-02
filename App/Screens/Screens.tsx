@@ -18,6 +18,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { Api } from '@shootismoke/ui';
 
 import { ApiContext, ErrorContext } from '../stores';
@@ -80,6 +81,7 @@ export function Screens(): React.ReactElement {
 
 	return (
 		<View style={theme.fullScreen}>
+			<StatusBar style="auto" animated={true} translucent={true} />
 			<NavigationContainer>
 				{renderScreen(api, error)}
 			</NavigationContainer>

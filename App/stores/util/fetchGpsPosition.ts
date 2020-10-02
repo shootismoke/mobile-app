@@ -43,8 +43,8 @@ export function fetchReverseGeocode(
 		),
 		TE.map((reverse) => ({
 			...currentLocation,
-			city: reverse.city,
-			country: reverse.country,
+			city: reverse.city || undefined, // Convert null to undefined.
+			country: reverse.country || undefined, // Convert null to undefined.
 			name:
 				[reverse.street, reverse.city, reverse.country]
 					.filter((x) => x)
@@ -57,7 +57,7 @@ export function fetchReverseGeocode(
 
 export function fetchGpsPosition(): TE.TaskEither<
 	Error,
-	ExpoLocation.LocationData
+	ExpoLocation.LocationObject
 > {
 	return pipe(
 		promiseToTE(
@@ -71,10 +71,7 @@ export function fetchGpsPosition(): TE.TaskEither<
 		),
 		TE.chain(() =>
 			promiseToTE(
-				() =>
-					ExpoLocation.getCurrentPositionAsync({
-						timeout: 5000,
-					}),
+				() => ExpoLocation.getCurrentPositionAsync(),
 				// Uncomment to get other locations
 				// Promise.resolve({
 				//   coords: {
