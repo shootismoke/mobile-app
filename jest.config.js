@@ -22,7 +22,7 @@ module.exports = {
 	],
 	globals: {
 		'ts-jest': {
-			babelConfig: true,
+			babelConfig: true, // Globals with ts-jest config to look for babel config.
 		},
 	},
 };
