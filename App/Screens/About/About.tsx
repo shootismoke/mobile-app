@@ -29,7 +29,7 @@ import {
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
-import { DistanceUnit } from '@shootismoke/ui';
+import { ConversionBox, DistanceUnit } from '@shootismoke/ui';
 
 import { BackButton } from '../../components';
 import { t } from '../../localization';
@@ -38,7 +38,6 @@ import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { sentryError } from '../../util/sentry';
 import { RootStackParams } from '../routeParams';
-import { Box } from './Box';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -188,7 +187,7 @@ export function About(props: AboutProps): React.ReactElement {
 					&sup1;
 					{'\u207E'}.
 				</Text>
-				<Box />
+				<ConversionBox showFootnote={true} t={t} />
 				<Text style={styles.articleLink}>
 					(1){' '}
 					<Text onPress={handleOpenBerkeley} style={theme.link}>
