@@ -12,6 +12,8 @@ module.exports = {
 	transform: {
 		...tsjPreset.transform,
 	},
+	// blacklist any unwanted modules that get transpiled, like sentry
+	// https://docs.expo.io/guides/testing-with-jest/#jest-configuration
 	transformIgnorePatterns: [
 		'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)',
 	],
