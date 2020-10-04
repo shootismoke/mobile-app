@@ -17,9 +17,9 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
-import { isStationTooFar } from '@shootismoke/ui';
+import { Button, isStationTooFar } from '@shootismoke/ui';
 
-import { Button, CircleButton } from '../../../components';
+import { CircleButton } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
