@@ -67,9 +67,9 @@
 		"@types/jest": "^26.0.14",
 		"detox": "^17.8.0",
 		"detox-expo-helpers": "^0.6.0",
-		"jest": "^24.9.0",
+		"jest": "^26.4.2",
 		"jest-expo": "^39.0.0",
-		"ts-jest": "^24.3.0",
+		"ts-jest": "^26.4.1",
 		"typescript": "~3.9.2"
 	}
 }
