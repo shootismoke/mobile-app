@@ -2503,10 +2503,10 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.31.tgz#e31c6e3faf6244138154a9e80bdff434b2089274"
   integrity sha512-2jkSBBO6dirseXdh94IoQFHumUzRbX//DFtluEwc2GGxpHFKtrRNkUIFbhVlUtXcJ/f/ROamAX6nHE1/8lT2aw==
 
-"@shootismoke/ui@^0.2.30":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.2.31.tgz#b42694dd9eb1afc004721ca37425aec80c5c6425"
-  integrity sha512-lj6iNcIhj1HTf+5GTWgJu5rMTo176X/5Gi1zXbuYeob2zOaptRqu4NLYyYKO2kLr5zioIOiJnu6bfaOEtysNYQ==
+"@shootismoke/ui@^0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.2.32.tgz#7ef458e3e514520df3ea7bb407073066ffdfe816"
+  integrity sha512-9CtxQI/i9K0AGIPcN1xYMhsAEmMmVx/6al42JVhwWldzFCpR2cw8zzUdPASbHCxX1ccGTdKp7LPGlZXkRCsMmQ==
   dependencies:
     "@expo/vector-icons" "^10.2.0"
     "@shootismoke/dataproviders" "^0.2.31"
