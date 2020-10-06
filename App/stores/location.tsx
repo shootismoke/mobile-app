@@ -31,6 +31,8 @@ import {
 	Location,
 } from './util/fetchGpsPosition';
 
+const LAST_KNOWN_LOCATION_KEY = 'LAST_KNOWN_LOCATION'
+
 const DEFAULT_LAT_LNG: LatLng = {
 	latitude: 0,
 	longitude: 0,
@@ -146,7 +148,7 @@ export function LocationContextProvider({
 
 	useEffect(() => {
 		AsyncStorage.setItem(
-			'LAST_KNOWN_LOCATION',
+			LAST_KNOWN_LOCATION_KEY,
 			JSON.stringify(currentLocation)
 		).catch(sentryError('LocationContextProvider'));
 	}, [currentLocation]);
