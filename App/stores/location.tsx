@@ -21,7 +21,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
-import { sideEffect } from '../util/fp';
+import { promiseToTE, sideEffect } from '../util/fp';
 import { noop } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
@@ -39,7 +39,7 @@ const DEFAULT_LAT_LNG: LatLng = {
 interface LocationWithSetter {
 	currentLocation?: Location;
 	isGps: boolean;
-	setAndSaveCurrentLocation: (location?: Location) => void;
+	setCurrentLocation: (location?: Location) => void;
 }
 
 export const GpsLocationContext = createContext<Location | undefined>(
@@ -48,7 +48,7 @@ export const GpsLocationContext = createContext<Location | undefined>(
 export const CurrentLocationContext = createContext<LocationWithSetter>({
 	...DEFAULT_LAT_LNG,
 	isGps: false,
-	setAndSaveCurrentLocation: noop,
+	setCurrentLocation: noop,
 });
 
 export function LocationContextProvider({
@@ -60,14 +60,6 @@ export function LocationContextProvider({
 
 	const [gpsLocation, setGpsLocation] = useState<Location>();
 	const [currentLocation, setCurrentLocation] = useState<Location>();
-
-	const setAndSaveCurrentLocation = (location: Location | undefined) => {
-		setCurrentLocation(location);
-		AsyncStorage.setItem(
-			'LAST_KNOWN_LOCATION',
-			JSON.stringify(location)
-		).catch(sentryError('LocationContextProvider'));
-	};
 
 	// Fetch GPS location
 	useEffect(() => {
@@ -84,7 +76,7 @@ export function LocationContextProvider({
 						)}`
 					);
 					setGpsLocation(gps);
-					setAndSaveCurrentLocation(gps);
+					setCurrentLocation(gps);
 
 					return TE.right(undefined);
 				})
@@ -95,6 +87,40 @@ export function LocationContextProvider({
 						fetchReverseGeocode(gps),
 						TE.fold(() => T.of(gps as Location), T.of)
 					)
+				)
+			),
+			TE.orElse((err) =>
+				pipe(
+					promiseToTE(
+						() => AsyncStorage.getItem('LAST_KNOWN_LOCATION'),
+						'LocationContext'
+					),
+					TE.chain((locationString) => {
+						// Skip parsing if AsyncStorage is empty.
+						if (!locationString) {
+							return TE.left(
+								new Error(
+									'AsyncStorage does not contain LAST_KNOWN_LOCATION'
+								)
+							);
+						}
+
+						const parsedLocation = JSON.parse(
+							locationString
+						) as Location;
+
+						// Make sure parsedLocation is well-formed.
+						return parsedLocation.latitude &&
+							parsedLocation.longitude
+							? TE.right(parsedLocation)
+							: TE.left(
+								new Error(
+									'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
+								)
+							);
+					}),
+					// Show the initial error from fetchGpsPosition.
+					TE.mapLeft(() => err)
 				)
 			),
 			TE.fold(
@@ -110,26 +136,20 @@ export function LocationContextProvider({
 						)}`
 					);
 					setGpsLocation(location);
-					setAndSaveCurrentLocation(location);
+					setCurrentLocation(location);
 
 					return T.of(undefined);
 				}
 			)
-		)().catch(() => {
-			async function useLastKnownLocation(): Promise<void> {
-				const location_string = await AsyncStorage.getItem(
-					'LAST_KNOWN_LOCATION'
-				);
-
-				if (location_string !== null) {
-					setCurrentLocation(JSON.parse(location_string));
-				}
-			}
-			useLastKnownLocation().catch(
-				sentryError('LocationContextProvider')
-			);
-		});
+		)().catch(sentryError('LocationContextProvider'));
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		AsyncStorage.setItem(
+			'LAST_KNOWN_LOCATION',
+			JSON.stringify(currentLocation)
+		).catch(sentryError('LocationContextProvider'));
+	}, [currentLocation])
 
 	return (
 		<GpsLocationContext.Provider value={gpsLocation}>
@@ -141,7 +161,7 @@ export function LocationContextProvider({
 						!!gpsLocation &&
 						currentLocation.latitude === gpsLocation.latitude &&
 						currentLocation.longitude === gpsLocation.longitude,
-					setAndSaveCurrentLocation,
+					setCurrentLocation,
 				}}
 			>
 				{children}

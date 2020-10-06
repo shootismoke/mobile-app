@@ -68,7 +68,7 @@ export function Search(props: SearchProps): React.ReactElement {
 		navigation: { goBack },
 	} = props;
 
-	const { isGps, setAndSaveCurrentLocation } = useContext(
+	const { isGps, setCurrentLocation } = useContext(
 		CurrentLocationContext
 	);
 	const { setFrequency } = useContext(FrequencyContext);
@@ -123,7 +123,7 @@ export function Search(props: SearchProps): React.ReactElement {
 	}
 
 	function handleItemClick(item: Location): void {
-		setAndSaveCurrentLocation(item);
+		setCurrentLocation(item);
 	}
 
 	function renderItem({ item }: { item: AlgoliaHit }): React.ReactElement {

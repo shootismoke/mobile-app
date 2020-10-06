@@ -61,7 +61,7 @@ export function withTimeout<T>(p: Promise<T>, timeout: number): Promise<T> {
 export function ApiContextProvider({
 	children,
 }: ApiContextProviderProps): React.ReactElement {
-	const { currentLocation, setAndSaveCurrentLocation } = useContext(
+	const { currentLocation, setCurrentLocation } = useContext(
 		CurrentLocationContext
 	);
 	const { setError } = useContext(ErrorContext);
@@ -115,7 +115,7 @@ export function ApiContextProvider({
 			value={{
 				api,
 				// eslint-disable-next-line
-				reloadApp: () => setAndSaveCurrentLocation({ ...currentLocation! }), // Small trick to re-run effect
+				reloadApp: () => setCurrentLocation({ ...currentLocation! }), // Small trick to re-run effect
 			}}
 		>
 			{children}
