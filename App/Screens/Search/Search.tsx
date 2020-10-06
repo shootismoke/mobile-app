@@ -68,9 +68,7 @@ export function Search(props: SearchProps): React.ReactElement {
 		navigation: { goBack },
 	} = props;
 
-	const { isGps, setCurrentLocation } = useContext(
-		CurrentLocationContext
-	);
+	const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
 	const { setFrequency } = useContext(FrequencyContext);
 	const gps = useContext(GpsLocationContext);
 

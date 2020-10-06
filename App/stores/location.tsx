@@ -114,10 +114,10 @@ export function LocationContextProvider({
 							parsedLocation.longitude
 							? TE.right(parsedLocation)
 							: TE.left(
-								new Error(
-									'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
-								)
-							);
+									new Error(
+										'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
+									)
+							  );
 					}),
 					// Show the initial error from fetchGpsPosition.
 					TE.mapLeft(() => err)
@@ -149,7 +149,7 @@ export function LocationContextProvider({
 			'LAST_KNOWN_LOCATION',
 			JSON.stringify(currentLocation)
 		).catch(sentryError('LocationContextProvider'));
-	}, [currentLocation])
+	}, [currentLocation]);
 
 	return (
 		<GpsLocationContext.Provider value={gpsLocation}>
