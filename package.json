@@ -24,7 +24,7 @@
 		"test-runner": "jest"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.2.1",
+		"@apollo/client": "^3.2.2",
 		"@apollo/link-error": "^2.0.0-beta.3",
 		"@apollo/link-retry": "^2.0.0-beta.3",
 		"@dooboo-ui/native-switch-toggle": "^0.7.0",
@@ -34,7 +34,7 @@
 		"@react-navigation/native": "^5.1.5",
 		"@react-navigation/stack": "^5.2.10",
 		"@shootismoke/graphql": "^0.2.31",
-		"@shootismoke/ui": "^0.2.30",
+		"@shootismoke/ui": "^0.2.32",
 		"@types/i18n-js": "^3.0.3",
 		"@types/react-native": "~0.63.2",
 		"apollo-cache-persist": "^0.1.1",
@@ -67,9 +67,9 @@
 		"@types/jest": "^26.0.14",
 		"detox": "^17.8.0",
 		"detox-expo-helpers": "^0.6.0",
-		"jest": "^24.9.0",
+		"jest": "^26.4.2",
 		"jest-expo": "^39.0.0",
-		"ts-jest": "^24.3.0",
+		"ts-jest": "^26.4.1",
 		"typescript": "~3.9.2"
 	}
 }

@@ -17,7 +17,6 @@
 export * from './ActionPicker';
 export * from './BackButton';
 export * from './Banner';
-export * from './Button';
 export * from './CircleButton';
 export * from './ChangeLocation';
 export * from './CurrentLocation';

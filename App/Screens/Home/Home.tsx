@@ -16,7 +16,7 @@
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Dimensions } from 'react-native';
 import { CigarettesBlock, Frequency, FrequencyContext } from '@shootismoke/ui';
 import { scale } from 'react-native-size-matters';
 
@@ -61,6 +61,39 @@ function getCigarettesMargin(count: number): number {
 	return scale(
 		count <= THRESHOLD.THIRD ? 9 : count <= THRESHOLD.FOURTH ? 6 : 3
 	);
+}
+
+/*
+ * Calculates each cigarettes height using number of cigarettes
+ */
+function getCigarettesHeight(count: number): number {
+	return scale(
+		count <= THRESHOLD.FIRST
+			? SIZES.BIG
+			: count <= THRESHOLD.SECOND
+			? SIZES.MEDIUM
+			: count <= THRESHOLD.THIRD
+			? SIZES.BIG
+			: count <= THRESHOLD.FOURTH
+			? SIZES.MEDIUM
+			: SIZES.SMALL
+	);
+}
+
+/*
+ * Dynamically calculating max number of cigarettes
+ */
+function getDynamicMaxCigarettes(count: number): number {
+	const CIGARETTE_ASPECT_RATIO = 21 / 280; // taken from the @shootismoke/ui lib
+	const height = getCigarettesHeight(count);
+	const width = height * CIGARETTE_ASPECT_RATIO;
+	const margin = getCigarettesMargin(count);
+	const componentWidth =
+		Dimensions.get('window').width -
+		theme.withPadding.paddingHorizontal * 2;
+	// componentWidth * 2 because we want to show cigarettes in two rows
+	const r = Math.floor((componentWidth * 2) / (width + margin));
+	return r;
 }
 
 const styles = StyleSheet.create({
@@ -148,18 +181,10 @@ export function Home(props: HomeProps): React.ReactElement {
 				<CigarettesBlock
 					cigarettes={cigarettes.count}
 					cigarettesStyle={styles.cigarettes}
-					fullCigaretteLength={scale(
-						cigarettes.count <= THRESHOLD.FIRST
-							? SIZES.BIG
-							: cigarettes.count <= THRESHOLD.SECOND
-							? SIZES.MEDIUM
-							: cigarettes.count <= THRESHOLD.THIRD
-							? SIZES.BIG
-							: cigarettes.count <= THRESHOLD.FOURTH
-							? SIZES.MEDIUM
-							: SIZES.SMALL
+					fullCigaretteLength={getCigarettesHeight(cigarettes.count)}
+					showMaxCigarettes={getDynamicMaxCigarettes(
+						cigarettes.count
 					)}
-					showMaxCigarettes={64}
 					spacingHorizontal={getCigarettesMargin(cigarettes.count)}
 					spacingVertical={getCigarettesMargin(cigarettes.count)}
 					style={[theme.withPadding, styles.withMargin]}
