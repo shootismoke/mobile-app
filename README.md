@@ -107,7 +107,7 @@ The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts
 
 GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 
-## :star: Credits
+## :star: Credits Goes To Marcelo And Amaury.
 
 Created with pride by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
 
