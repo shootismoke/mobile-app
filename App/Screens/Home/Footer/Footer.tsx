@@ -20,7 +20,6 @@ import { StyleSheet, View, ViewProps } from 'react-native';
 import { Button, isStationTooFar } from '@shootismoke/ui';
 
 import { CircleButton } from '../../../components';
-import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
@@ -28,6 +27,7 @@ import { aboutSections } from '../../About';
 import { RootStackParams } from '../../routeParams';
 import { SelectNotifications } from './SelectNotifications';
 import { ShareButton } from './ShareButton';
+import { useTranslation } from 'react-i18next';
 
 interface FooterProps extends ViewProps {
 	navigation: StackNavigationProp<RootStackParams, 'Home'>;
@@ -81,6 +81,7 @@ export function Footer(props: FooterProps): React.ReactElement {
 	}
 
 	function renderBigButton(): React.ReactElement {
+		const { t } = useTranslation()
 		return isTooFar ? (
 			<Button onPress={goToAboutWhySoFar}>
 				{t('home_btn_why_is_station_so_far').toUpperCase()}

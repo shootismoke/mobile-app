@@ -18,9 +18,9 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { Banner } from '../../../components';
-import { t } from '../../../localization';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
 import * as theme from '../../../util/theme';
+import { useTranslation } from 'react-i18next';
 
 interface DistanceProps {
 	distance: number;
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
 export function Distance(props: DistanceProps): React.ReactElement {
 	const { localizedDistanceUnit } = useDistanceUnit();
 	const distanceUnit = localizedDistanceUnit('short');
+	const { t } = useTranslation()
 
 	return (
 		<Banner elevated shadowPosition="top" style={styles.banner}>

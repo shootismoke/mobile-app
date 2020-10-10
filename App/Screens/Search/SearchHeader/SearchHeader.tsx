@@ -19,8 +19,8 @@ import React from 'react';
 import { Image, ImageRequireSource, StyleSheet, TextInput } from 'react-native';
 
 import { Banner } from '../../../components';
-import { t } from '../../../localization';
 import * as theme from '../../../util/theme';
+import { useTranslation } from 'react-i18next';
 
 interface SearchHeaderProps {
 	onChangeSearch?: (text: string) => void;
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
 
 export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
 	const { onChangeSearch, search } = props;
+	const { t } = useTranslation()
 
 	return (
 		<Banner elevated shadowPosition="bottom">

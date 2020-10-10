@@ -18,12 +18,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Api } from '@shootismoke/ui';
 
-import { t } from '../../localization';
 import { ApiContext, GpsLocationContext } from '../../stores';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { Background } from './Background';
+import { useTranslation } from 'react-i18next';
 
 // The variable returned by setTimeout for longWaiting
 let longWaitingTimeout: number | null = null;
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
 });
 
 function renderCough(index: number): React.ReactElement {
+	const { t } = useTranslation()
 	return (
 		<Text key={index}>
 			{t('loading_title_cough')}
@@ -53,6 +54,7 @@ function renderText(
 	gps?: Location,
 	api?: Api
 ): React.ReactElement {
+	const { t } = useTranslation()
 	let coughs = 0; // Number of times to show "Cough..."
 	if (gps) ++coughs;
 	if (longWaiting) ++coughs;

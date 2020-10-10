@@ -18,11 +18,10 @@ import { OpenAQFormat, stationName } from '@shootismoke/dataproviders';
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
-import { t } from '../../localization';
 import { Location } from '../../stores/util/fetchGpsPosition';
 import * as theme from '../../util/theme';
+import { useTranslation } from 'react-i18next';
 
-const UNKNOWN_STATION = t('current_location_unknown_station');
 
 interface CurrentLocationProps extends TextProps {
 	measurement: OpenAQFormat;
@@ -39,6 +38,10 @@ export function CurrentLocation(
 	props: CurrentLocationProps
 ): React.ReactElement {
 	const { currentLocation, measurement, style, ...rest } = props;
+
+	const { t } = useTranslation('home');
+	const UNKNOWN_STATION = t('current_location_unknown_station');
+
 
 	return (
 		<Text style={[styles.title, style]} {...rest}>

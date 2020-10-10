@@ -17,9 +17,9 @@
 import React, { useContext, useRef, useState } from 'react';
 import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 import { BoxButton, Frequency, FrequencyContext } from '@shootismoke/ui';
-import { t } from '../../../localization';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
 	boxButton: {
@@ -39,6 +39,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 	const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
 	const { style, ...rest } = props;
+	const { t } = useTranslation('home')
 
 	function handleChangeFrequency(f: Frequency): void {
 		setTimeout(() => {

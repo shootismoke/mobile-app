@@ -20,7 +20,6 @@ import { ScrollView, StyleSheet, View, Dimensions } from 'react-native';
 import { CigarettesBlock, Frequency, FrequencyContext } from '@shootismoke/ui';
 import { scale } from 'react-native-size-matters';
 
-import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
@@ -30,6 +29,7 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
+import { useTranslation } from 'react-i18next';
 
 interface HomeProps {
 	navigation: StackNavigationProp<RootStackParams, 'Home'>;
@@ -71,12 +71,12 @@ function getCigarettesHeight(count: number): number {
 		count <= THRESHOLD.FIRST
 			? SIZES.BIG
 			: count <= THRESHOLD.SECOND
-			? SIZES.MEDIUM
-			: count <= THRESHOLD.THIRD
-			? SIZES.BIG
-			: count <= THRESHOLD.FOURTH
-			? SIZES.MEDIUM
-			: SIZES.SMALL
+				? SIZES.MEDIUM
+				: count <= THRESHOLD.THIRD
+					? SIZES.BIG
+					: count <= THRESHOLD.FOURTH
+						? SIZES.MEDIUM
+						: SIZES.SMALL
 	);
 }
 
@@ -138,6 +138,8 @@ export function Home(props: HomeProps): React.ReactElement {
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const { frequency } = useContext(FrequencyContext);
+	const { t } = useTranslation('home')
+
 
 	if (!api) {
 		throw new Error(

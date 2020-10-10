@@ -29,7 +29,6 @@ import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 import { ActionPicker } from '../../../../components';
-import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import {
 	useGetOrCreateUser,
@@ -40,6 +39,7 @@ import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE, retry, sideEffect } from '../../../../util/fp';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
+import { useTranslation } from 'react-i18next';
 
 const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
 
@@ -124,6 +124,8 @@ export function SelectNotifications(
 		getUser.data?.getUser?.notifications?.frequency ||
 		// If the getUserData is still loading, just show `never`
 		'never';
+
+	const { t } = useTranslation('home')
 
 	// Optimistic UI
 	useEffect(() => {
@@ -278,10 +280,10 @@ export function SelectNotifications(
 							</Text>
 						</View>
 					) : (
-						<Text style={styles.label}>
-							{t('home_frequency_allow_notifications')}
-						</Text>
-					)}
+							<Text style={styles.label}>
+								{t('home_frequency_allow_notifications')}
+							</Text>
+						)}
 				</View>
 			)}
 		</ActionPicker>

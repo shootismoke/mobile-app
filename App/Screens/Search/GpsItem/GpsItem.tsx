@@ -17,12 +17,13 @@
 import React, { useContext } from 'react';
 
 import { ListItem } from '../../../components';
-import { t } from '../../../localization';
 import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
+import { useTranslation } from 'react-i18next';
 
 const LOADING_TEXT = 'Fetching...';
 
 export function GpsItem(): React.ReactElement | null {
+	const { t } = useTranslation()
 	const { setCurrentLocation } = useContext(CurrentLocationContext);
 	const gps = useContext(GpsLocationContext);
 

@@ -28,13 +28,13 @@ import {
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import { t } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';
 import { testIds } from '../../util/testId';
 import * as theme from '../../util/theme';
 import { ErrorStackParams } from '../routeParams';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorScreenProps {
 	navigation: StackNavigationProp<ErrorStackParams, 'Error'>;
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 	const { error } = useContext(ErrorContext);
 	const [showDetails, setShowDetails] = useState(false);
+	const { t } = useTranslation('error');
 
 	trackScreen('ERROR');
 
@@ -84,9 +85,9 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 			<View>
 				<Text style={styles.errorText}>
 					<Text style={styles.sorry}>
-						{t('error_screen_common_sorry')}
+						{t('sorry')}
 					</Text>
-					{t('error_screen_error_cannot_load_cigarettes')}
+					{t('cannot_load_cigarettes')}
 				</Text>
 			</View>
 			<Button
@@ -97,10 +98,10 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 				style={styles.chooseOther}
 				type="primary"
 			>
-				{t('error_screen_choose_other_location').toUpperCase()}
+				{t('choose_other_location').toUpperCase()}
 			</Button>
 			<Text style={theme.text}>
-				{t('error_screen_error_description')}
+				{t('description')}
 			</Text>
 			<ScrollView style={styles.errorScrollView}>
 				<TouchableOpacity
@@ -109,16 +110,16 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 				>
 					{showDetails ? (
 						<Text style={styles.errorMessage}>
-							{t('error_screen_error_message', {
+							{t('message', {
 								errorText: error && error.message,
 							})}
 						</Text>
 					) : (
-						<Text style={styles.errorMessage}>
-							{t('error_screen_show_details')}{' '}
-							<Ionicons name="ios-arrow-forward" />
-						</Text>
-					)}
+							<Text style={styles.errorMessage}>
+								{t('show_details')}{' '}
+								<Ionicons name="ios-arrow-forward" />
+							</Text>
+						)}
 				</TouchableOpacity>
 			</ScrollView>
 		</View>

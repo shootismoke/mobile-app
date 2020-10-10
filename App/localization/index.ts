@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+/*
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
@@ -36,3 +37,35 @@ i18n.locale =
 const { t } = i18n;
 
 export { i18n, t };
+*/
+
+import i18next, { LanguageDetectorAsyncModule } from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import * as Localization from 'expo-localization';
+
+import en from './languages/en.json';
+
+const languageDetector: LanguageDetectorAsyncModule = {
+	type: 'languageDetector',
+	async: true,
+	detect: (cb: Function) => cb(Localization.locale.split('-')[0]),
+	init: () => { },
+	cacheUserLanguage: () => { }
+}
+
+i18next
+	.use(languageDetector)
+	.use(initReactI18next)
+	.init({
+		debug: true,
+		resources: {
+			en
+		},
+		lng: 'en',
+		ns: ['home', 'about', 'sharing', 'warning', 'error'],
+		fallbackLng: 'en',
+		pluralSeparator: '-',
+		contextSeparator: '-'
+	})
+
+export default i18next

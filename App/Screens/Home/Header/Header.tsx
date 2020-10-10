@@ -28,10 +28,10 @@ import { scale } from 'react-native-size-matters';
 import { isStationTooFar, distanceToStation } from '@shootismoke/ui';
 
 import { ChangeLocation, CurrentLocation } from '../../../components';
-import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
 import * as theme from '../../../util/theme';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
 	onChangeLocationClick: (event: GestureResponderEvent) => void;
@@ -79,6 +79,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 
 	const distance = distanceToStation(currentLocation, api, distanceUnit);
 	const isTooFar = isStationTooFar(currentLocation, api);
+	const { t } = useTranslation('home')
 
 	return (
 		<View style={styles.container}>

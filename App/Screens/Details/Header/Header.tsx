@@ -31,7 +31,6 @@ import {
 } from 'react-native';
 
 import { BackButton, CurrentLocation } from '../../../components';
-import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import * as theme from '../../../util/theme';
 

@@ -17,9 +17,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
-import { t } from '../localization';
 import { noop, DistanceUnit } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
+import { useTranslation } from 'react-i18next';
 
 type DistanceUnitFormat = 'short' | 'long';
 
@@ -43,6 +43,7 @@ export function DistanceUnitProvider({
 	children: React.ReactNode;
 }): React.ReactElement {
 	const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>('km');
+	const { t } = useTranslation()
 
 	function localizedDistanceUnit(format: 'short' | 'long'): string {
 		return distanceUnit === 'km'

@@ -26,12 +26,12 @@ import {
 import { scale } from 'react-native-size-matters';
 import { Frequency, isStationTooFar } from '@shootismoke/ui';
 
-import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
 import { aboutSections } from '../../About';
 import { RootStackParams } from '../../routeParams';
+import { useTranslation } from 'react-i18next';
 
 interface AdditionalInfoProps extends ViewProps {
 	/**
@@ -69,6 +69,7 @@ export function AdditionalInfo(
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const { exactCount, frequency, navigation, style, ...rest } = props;
+	const { t } = useTranslation('')
 
 	if (!currentLocation) {
 		throw new Error(
@@ -87,7 +88,7 @@ export function AdditionalInfo(
 		return (
 			<View style={[theme.withPadding, style]} {...rest}>
 				<Text style={theme.text}>
-					{t('home_station_too_far_message')}
+					{t('station_too_far_message')}
 				</Text>
 			</View>
 		);
@@ -111,7 +112,7 @@ export function AdditionalInfo(
 						<Text style={styles.tagLabel}>BETA</Text>
 					</View>
 					<Text style={theme.text}>
-						{t('home_beta_not_accurate')}
+						{t('beta_not_accurate')}
 					</Text>
 				</TouchableOpacity>
 			</View>

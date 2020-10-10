@@ -24,13 +24,13 @@ import MapView, { Marker } from 'react-native-maps';
 import truncate from 'truncate';
 import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 
-import { t } from '../../localization';
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { trackScreen } from '../../util/amplitude';
 import { RootStackParams } from '../routeParams';
 import { Distance } from './Distance';
 import { Header } from './Header';
+import { useTranslation } from 'react-i18next';
 
 interface DetailsProps {
 	navigation: StackNavigationProp<RootStackParams, 'Details'>;
@@ -60,6 +60,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 		CurrentLocationContext
 	);
 	const { distanceUnit } = useDistanceUnit();
+	const { t } = useTranslation();
 
 	trackScreen('DETAILS');
 
@@ -133,7 +134,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 							longitudeDelta:
 								Math.abs(
 									currentLocation.longitude -
-										station.longitude
+									station.longitude
 								) * 2,
 						}}
 						onMapReady={handleMapReady}

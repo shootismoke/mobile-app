@@ -32,13 +32,15 @@ import { scale } from 'react-native-size-matters';
 import { DistanceUnit } from '@shootismoke/ui';
 
 import { BackButton } from '../../components';
-import { t } from '../../localization';
+// import { t } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { sentryError } from '../../util/sentry';
 import { RootStackParams } from '../routeParams';
 import { Box } from './Box';
+
+import { Trans, withTranslation, WithTranslation, useTranslation } from 'react-i18next';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -151,11 +153,14 @@ const styles = StyleSheet.create({
 export function About(props: AboutProps): React.ReactElement {
 	const {
 		navigation: { goBack },
-		route,
+		route
 	} = props;
 	const { distanceUnit, setDistanceUnit } = useDistanceUnit();
+	const { t } = useTranslation('about')
 
 	trackScreen('ABOUT');
+
+	const proportion = '22&micro;g/m&sup3;\u207D&sup1;\u207E'
 
 	return (
 		<CustomScrollView
@@ -166,27 +171,12 @@ export function About(props: AboutProps): React.ReactElement {
 
 			<View style={styles.section}>
 				<Text style={styles.h2}>
-					{t(
-						'about_how_do_you_calculate_the_number_of_cigarettes_title'
-					)}
+					{t('how_to_calculate_number_of_cigarettes.title')}
 				</Text>
 				<Text style={theme.text}>
-					{t(
-						'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
-					)}
-					<Text onPress={handleOpenBerkeley} style={theme.link}>
-						{t(
-							'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
-						)}
-					</Text>
-					{t(
-						'about_how_do_you_calculate_the_number_of_cigarettes_message_2'
-					)}
-					<Text style={styles.micro}>&micro;</Text>
-					g/m&sup3;
-					{' \u207D'}
-					&sup1;
-					{'\u207E'}.
+					<Trans i18nKey='how_to_calculate_number_of_cigarettes.message' t={t}>
+						This app was inspired by Berkeley Earth’s findings about the <Text onPress={handleOpenBerkeley} style={theme.link}>equivalence between air pollution and cigarette smoking</Text>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <Text style={styles.micro}>{{ proportion }}</Text>.
+					</Trans>
 				</Text>
 				<Box />
 				<Text style={styles.articleLink}>
@@ -202,27 +192,29 @@ export function About(props: AboutProps): React.ReactElement {
 				style={styles.section}
 			>
 				<Text style={styles.h2}>
-					{t('about_beta_inaccurate_title')}
+					{t('inaccurated_beta.title')}
 				</Text>
 				<Text style={theme.text}>
-					{t('about_beta_inaccurate_message')}
+					{t('inaccurated_beta.message')}
 				</Text>
 			</ScrollIntoView>
 
 			<View style={styles.section}>
 				<Text style={styles.h2}>
-					{t('about_where_does_data_come_from_title')}
+					{t('where_does_data_come_from.title')}
 				</Text>
 				<Text style={theme.text}>
-					{t('about_where_does_data_come_from_message_1')}
-					<Text onPress={handleOpenWaqi} style={theme.link}>
-						{t('about_where_does_data_come_from_link_1')}
-					</Text>
-					{t('about_where_does_data_come_from_message_2')}
-					<Text onPress={handleOpenOpenAQ} style={theme.link}>
-						{t('about_where_does_data_come_from_link_2')}
-					</Text>
-					{t('about_where_does_data_come_from_message_3')}
+					<Trans i18nKey='where_does_data_come_from.message' t={t}>
+						{t('about_where_does_data_come_from_message_1')}
+						<Text onPress={handleOpenWaqi} style={theme.link}>
+							{t('about_where_does_data_come_from_link_1')}
+						</Text>
+						{t('about_where_does_data_come_from_message_2')}
+						<Text onPress={handleOpenOpenAQ} style={theme.link}>
+							{t('about_where_does_data_come_from_link_2')}
+						</Text>
+						{t('about_where_does_data_come_from_message_3')}
+					</Trans>
 				</Text>
 			</View>
 
@@ -234,25 +226,19 @@ export function About(props: AboutProps): React.ReactElement {
 				style={styles.section}
 			>
 				<Text style={styles.h2}>
-					{t('about_why_is_the_station_so_far_title')}
+					{t('why_is_the_station_so_far.title')}
 				</Text>
 				<Text style={theme.text}>
-					{t('about_why_is_the_station_so_far_message')}
+					{t('why_is_the_station_so_far.message')}
 				</Text>
 			</ScrollIntoView>
 
 			<View style={styles.section}>
-				<Text style={styles.h2}>{t('about_weird_results_title')}</Text>
+				<Text style={styles.h2}>{t('weird_results.title')}</Text>
 				<Text style={theme.text}>
-					{t('about_weird_results_message_1')}
-					<Text onPress={handleOpenWaqi} style={theme.link}>
-						{t('about_weird_results_link_1')}
-					</Text>
-					{t('about_weird_results_message_2')}
-					<Text onPress={handleOpenOpenAQ} style={theme.link}>
-						{t('about_weird_results_link_2')}
-					</Text>
-					{t('about_weird_results_message_3')}
+					<Trans i18nKey='weird_results.message' t={t}>
+						We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <Text onPress={handleOpenWaqi} style={theme.link}>WAQI</Text> and <Text onPress={handleOpenOpenAQ} style={theme.link}>OpenAQ</Text> for more information and history on your station.
+					</Trans>
 				</Text>
 			</View>
 
@@ -321,3 +307,4 @@ export function About(props: AboutProps): React.ReactElement {
 		</CustomScrollView>
 	);
 }
+

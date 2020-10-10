@@ -26,8 +26,8 @@ import {
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
-import { t } from '../../../localization';
 import * as theme from '../../../util/theme';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
 	box: {
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
 
 // FIXME Use component from `@shootismoke/ui`
 export function Box(): React.ReactElement {
+	const { t } = useTranslation('about')
 	return (
 		<View style={styles.box}>
 			<View style={styles.equivalence}>

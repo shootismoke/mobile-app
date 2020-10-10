@@ -16,11 +16,9 @@
 
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
-import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
-import * as Sentry from 'sentry-expo';
 import { FrequencyContextProvider } from '@shootismoke/ui';
 
 import { Screens } from './Screens';
@@ -34,21 +32,28 @@ import {
 	TCacheShape,
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 import { sentryError } from './util/sentry';
 
-// Add Sentry if available
-if (IS_SENTRY_SET_UP) {
-	Sentry.init({
-		dsn: Constants.manifest.extra.sentryPublicDsn as string,
-		debug: true,
-	});
+import './localization';
 
-	Sentry.setRelease(RELEASE_CHANNEL);
-	if (Constants.manifest.revisionId) {
-		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
-	}
-}
+
+// TODO Disable this because no support for ARMHF
+// import * as Sentry from 'sentry-expo';
+// import Constants from 'expo-constants';
+// import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
+//
+// // Add Sentry if available
+// if (IS_SENTRY_SET_UP) {
+// 	Sentry.init({
+// 		dsn: Constants.manifest.extra.sentryPublicDsn as string,
+// 		debug: true,
+// 	});
+
+// 	Sentry.setRelease(RELEASE_CHANNEL);
+// 	if (Constants.manifest.revisionId) {
+// 		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
+// 	}
+// }
 
 export function App(): React.ReactElement {
 	const [ready, setReady] = useState(false);
@@ -71,7 +76,9 @@ export function App(): React.ReactElement {
 
 	useEffect(() => {
 		// Load the Offix client
-		getApolloClient().then(setClient).catch(sentryError('App'));
+		getApolloClient()
+			.then(setClient)
+			.catch(sentryError('App'));
 	}, []);
 
 	useEffect(() => {
@@ -97,8 +104,8 @@ export function App(): React.ReactElement {
 										<Screens />
 									</ApolloProvider>
 								) : (
-									<LoadingBackground />
-								)}
+										<LoadingBackground />
+									)}
 							</DistanceUnitProvider>
 						</FrequencyContextProvider>
 					</ApiContextProvider>
@@ -107,3 +114,5 @@ export function App(): React.ReactElement {
 		</ErrorContextProvider>
 	);
 }
+
+// TODO bug will be encounter until all the old translation is replaced
