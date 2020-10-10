@@ -31,7 +31,7 @@ import {
 	Location,
 } from './util/fetchGpsPosition';
 
-const LAST_KNOWN_LOCATION_KEY = 'LAST_KNOWN_LOCATION'
+const LAST_KNOWN_LOCATION_KEY = 'LAST_KNOWN_LOCATION';
 
 const DEFAULT_LAT_LNG: LatLng = {
 	latitude: 0,
