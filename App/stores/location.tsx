@@ -19,8 +19,9 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { AsyncStorage } from 'react-native';
 
-import { sideEffect } from '../util/fp';
+import { promiseToTE, sideEffect } from '../util/fp';
 import { noop } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
@@ -29,6 +30,8 @@ import {
 	fetchReverseGeocode,
 	Location,
 } from './util/fetchGpsPosition';
+
+const LAST_KNOWN_LOCATION_KEY = 'LAST_KNOWN_LOCATION'
 
 const DEFAULT_LAT_LNG: LatLng = {
 	latitude: 0,
@@ -88,6 +91,40 @@ export function LocationContextProvider({
 					)
 				)
 			),
+			TE.orElse((err) =>
+				pipe(
+					promiseToTE(
+						() => AsyncStorage.getItem('LAST_KNOWN_LOCATION'),
+						'LocationContext'
+					),
+					TE.chain((locationString) => {
+						// Skip parsing if AsyncStorage is empty.
+						if (!locationString) {
+							return TE.left(
+								new Error(
+									'AsyncStorage does not contain LAST_KNOWN_LOCATION'
+								)
+							);
+						}
+
+						const parsedLocation = JSON.parse(
+							locationString
+						) as Location;
+
+						// Make sure parsedLocation is well-formed.
+						return parsedLocation.latitude &&
+							parsedLocation.longitude
+							? TE.right(parsedLocation)
+							: TE.left(
+									new Error(
+										'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
+									)
+							  );
+					}),
+					// Show the initial error from fetchGpsPosition.
+					TE.mapLeft(() => err)
+				)
+			),
 			TE.fold(
 				(err) => {
 					setError(err);
@@ -108,6 +145,13 @@ export function LocationContextProvider({
 			)
 		)().catch(sentryError('LocationContextProvider'));
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		AsyncStorage.setItem(
+			LAST_KNOWN_LOCATION_KEY,
+			JSON.stringify(currentLocation)
+		).catch(sentryError('LocationContextProvider'));
+	}, [currentLocation]);
 
 	return (
 		<GpsLocationContext.Provider value={gpsLocation}>
