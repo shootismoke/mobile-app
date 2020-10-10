@@ -37,23 +37,22 @@ import { sentryError } from './util/sentry';
 import './localization';
 
 
-// TODO Disable this because no support for ARMHF
-// import * as Sentry from 'sentry-expo';
-// import Constants from 'expo-constants';
-// import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
-//
-// // Add Sentry if available
-// if (IS_SENTRY_SET_UP) {
-// 	Sentry.init({
-// 		dsn: Constants.manifest.extra.sentryPublicDsn as string,
-// 		debug: true,
-// 	});
+import * as Sentry from 'sentry-expo';
+import Constants from 'expo-constants';
+import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 
-// 	Sentry.setRelease(RELEASE_CHANNEL);
-// 	if (Constants.manifest.revisionId) {
-// 		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
-// 	}
-// }
+// Add Sentry if available
+if (IS_SENTRY_SET_UP) {
+	Sentry.init({
+		dsn: Constants.manifest.extra.sentryPublicDsn as string,
+		debug: true,
+	});
+
+	Sentry.setRelease(RELEASE_CHANNEL);
+	if (Constants.manifest.revisionId) {
+		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
+	}
+}
 
 export function App(): React.ReactElement {
 	const [ready, setReady] = useState(false);
