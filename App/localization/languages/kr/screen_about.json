@@ -1,0 +1,42 @@
+{
+  "about_box_footnote": "",
+  "about_box_per_day": "",
+  "about_credits_available_github": "",
+  "about_credits_concept_and_development": "",
+  "about_credits_data_from_link_1": "",
+  "about_credits_data_from_link_2": "",
+  "about_credits_data_from_message_1": "",
+  "about_credits_data_from_message_2": "",
+  "about_credits_design_and_copywriting": "",
+  "about_credits_source_code": "",
+  "about_credits_title": "",
+  "about_settings_distance_unit": "",
+  "about_settings_distance_unit_km": "",
+  "about_settings_distance_unit_mile": "",
+  "about_settings_title": "",
+  "about_where_does_data_come_from_link_1": "",
+  "about_where_does_data_come_from_link_2": "",
+  "about_where_does_data_come_from_message_1": "",
+  "about_where_does_data_come_from_message_2": "",
+  "about_where_does_data_come_from_message_3": "",
+  "how_to_calculate_number_of_cigarettes": {
+    "message": "This app was inspired by Berkeley Earth’s findings about the <1>equivalence between air pollution and cigarette smoking</1>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <3>{{proportion}}</3>.",
+    "title": ""
+  },
+  "inaccurated_beta": {
+    "message": "",
+    "title": ""
+  },
+  "weird_results": {
+    "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <1>WAQI</1> and <3>OpenAQ</3> for more information and history on your station.",
+    "title": ""
+  },
+  "where_does_data_come_from": {
+    "message": "{t('about_where_does_data_come_from_message_1')}<1>{t('about_where_does_data_come_from_link_1')}</1>{t('about_where_does_data_come_from_message_2')}<3>{t('about_where_does_data_come_from_link_2')}</3>{t('about_where_does_data_come_from_message_3')}",
+    "title": ""
+  },
+  "why_is_the_station_so_far": {
+    "message": "",
+    "title": ""
+  }
+}

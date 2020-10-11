@@ -43,7 +43,8 @@ import i18next, { LanguageDetectorAsyncModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 
-import en from './languages/en.json';
+// TODO make a script loader
+import components from './languages/en/components.json';
 
 const languageDetector: LanguageDetectorAsyncModule = {
 	type: 'languageDetector',
@@ -59,13 +60,15 @@ i18next
 	.init({
 		debug: true,
 		resources: {
-			en
+			en: { components }
 		},
 		lng: 'en',
-		ns: ['home', 'about', 'sharing', 'warning', 'error'],
-		fallbackLng: 'en',
-		pluralSeparator: '-',
-		contextSeparator: '-'
+		ns: [
+			'screen_about', 'screen_detail', 'screen_error',
+			'screen_home', 'screen_loading', 'screen_search',
+			'components'
+		],
+		fallbackLng: 'en'
 	})
 
 export default i18next

@@ -1,0 +1,20 @@
+{
+  "beta_not_accurate": "",
+  "btn": {
+    "see_detailed_info": "",
+    "why_is_station_so_far": ""
+  },
+  "frequency_allow_notifications": "",
+  "frequency_daily": "",
+  "frequency_monthly": "",
+  "frequency_notif": "",
+  "frequency_notifications_cancel": "",
+  "frequency_notify_me": "",
+  "frequency_weekly": "",
+  "header_air_quality_station_distance": "",
+  "header_from_search": "",
+  "share_message": "",
+  "share_message_plural": "",
+  "share_title": "",
+  "station_too_far_message": ""
+}
