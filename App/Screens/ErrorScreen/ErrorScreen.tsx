@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 	const { error } = useContext(ErrorContext);
 	const [showDetails, setShowDetails] = useState(false);
-	const { t } = useTranslation('error');
+	const { t } = useTranslation('screen_error');
 
 	trackScreen('ERROR');
 
@@ -125,3 +125,5 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 		</View>
 	);
 }
+
+// TODO Translating

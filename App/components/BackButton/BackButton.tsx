@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 export function BackButton(props: BackButtonProps): React.ReactElement {
 	const { style } = props;
-	const { t } = useTranslation('glossary')
+	const { t } = useTranslation('components')
 
 	return (
 		<View style={style}>
@@ -59,9 +59,10 @@ export function BackButton(props: BackButtonProps): React.ReactElement {
 				style={styles.backButton}
 			>
 				<Image source={backIcon as ImageRequireSource} />
-				<Text style={styles.backText}>{t('nav.btn_back')}</Text>
+				<Text style={styles.backText}>{t('btn_back')}</Text>
 			</TouchableOpacity>
 		</View>
 	);
 }
 
+// TODO translating

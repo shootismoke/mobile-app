@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {
 	const { style, ...rest } = props;
-	const { t } = useTranslation('home');
+	const { t } = useTranslation('components');
 	return (
 		<TouchableOpacity style={[styles.container, style]} {...rest}>
 			<CircleButton

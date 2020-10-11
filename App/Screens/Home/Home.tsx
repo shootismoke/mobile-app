@@ -138,7 +138,7 @@ export function Home(props: HomeProps): React.ReactElement {
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const { frequency } = useContext(FrequencyContext);
-	const { t } = useTranslation('home')
+	const { t } = useTranslation('screen_home')
 
 
 	if (!api) {

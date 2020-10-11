@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
 });
 
 function renderCough(index: number): React.ReactElement {
-	const { t } = useTranslation()
+	const { t } = useTranslation('screen_loading')
 	return (
 		<Text key={index}>
-			{t('loading_title_cough')}
+			{t('title_cough')}
 			<Text style={styles.dots}>...</Text>
 		</Text>
 	);
@@ -54,7 +54,7 @@ function renderText(
 	gps?: Location,
 	api?: Api
 ): React.ReactElement {
-	const { t } = useTranslation()
+	const { t } = useTranslation('screen_loading')
 	let coughs = 0; // Number of times to show "Cough..."
 	if (gps) ++coughs;
 	if (longWaiting) ++coughs;
@@ -62,7 +62,7 @@ function renderText(
 
 	return (
 		<Text>
-			{t('loading_title_loading')}
+			{t('title_loading')}
 			<Text style={styles.dots}>...</Text>
 			{Array.from({ length: coughs }, (_, index) => index + 1).map(
 				// Create array 1..N and rendering Cough...

@@ -60,7 +60,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 		CurrentLocationContext
 	);
 	const { distanceUnit } = useDistanceUnit();
-	const { t } = useTranslation();
+	const { t } = useTranslation('screen_detail');
 
 	trackScreen('DETAILS');
 
@@ -144,13 +144,13 @@ export function Details(props: DetailsProps): React.ReactElement {
 							coordinate={station}
 							image={stationIcon as ImageRequireSource}
 							ref={handleStationRef}
-							title={t('details_air_quality_station_marker')}
+							title={t('air_quality_station_marker')}
 							description={truncate(station.description, 40)}
 						/>
 						<Marker
 							coordinate={currentLocation}
 							image={homeIcon as ImageRequireSource}
-							title={t('details_your_position_marker')}
+							title={t('your_position_marker')}
 						/>
 					</MapView>
 				)}

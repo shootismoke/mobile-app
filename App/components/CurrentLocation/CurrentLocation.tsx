@@ -39,7 +39,7 @@ export function CurrentLocation(
 ): React.ReactElement {
 	const { currentLocation, measurement, style, ...rest } = props;
 
-	const { t } = useTranslation('home');
+	const { t } = useTranslation('components');
 	const UNKNOWN_STATION = t('current_location_unknown_station');
 
 

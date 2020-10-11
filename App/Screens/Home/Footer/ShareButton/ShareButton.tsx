@@ -40,7 +40,7 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const refViewShot = createRef<View>();
-	const { t } = useTranslation('home')
+	const { t } = useTranslation('screen_home')
 
 	async function handleShare(): Promise<void> {
 		try {
@@ -62,9 +62,10 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 				city: currentLocation.city
 					? `in ${currentLocation.city}`
 					: t('share_message_here'),
-				cigarettes: Math.ceil(api.shootismoke.dailyCigarettes),
+				count: Math.ceil(api.shootismoke.dailyCigarettes),
 			});
 			const title = t('share_title');
+			// TODO Translating plural, correct translation...
 
 			// FIXME imageUrl doesn't work on Android
 			// https://github.com/amaurymartiny/shoot-i-smoke/issues/250

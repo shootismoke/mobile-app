@@ -43,12 +43,12 @@ export function DistanceUnitProvider({
 	children: React.ReactNode;
 }): React.ReactElement {
 	const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>('km');
-	const { t } = useTranslation()
+	const { t } = useTranslation('components')
 
 	function localizedDistanceUnit(format: 'short' | 'long'): string {
 		return distanceUnit === 'km'
-			? t(`distance_unit_${format}_km`)
-			: t(`distance_unit_${format}_mi`);
+			? t(`distance_unit.${format}_km`)
+			: t(`distance_unit.${format}_mi`);
 	}
 
 	useEffect(() => {

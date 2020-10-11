@@ -69,7 +69,7 @@ export function AdditionalInfo(
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const { exactCount, frequency, navigation, style, ...rest } = props;
-	const { t } = useTranslation('')
+	const { t } = useTranslation('screen_home')
 
 	if (!currentLocation) {
 		throw new Error(

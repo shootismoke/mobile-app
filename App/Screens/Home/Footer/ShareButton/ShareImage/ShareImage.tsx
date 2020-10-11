@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 export function ShareImage(): React.ReactElement {
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
-	const { t } = useTranslation()
+	const { t } = useTranslation('screen_home')
 
 	if (!currentLocation) {
 		throw new Error(

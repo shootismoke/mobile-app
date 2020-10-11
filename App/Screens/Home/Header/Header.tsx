@@ -79,7 +79,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 
 	const distance = distanceToStation(currentLocation, api, distanceUnit);
 	const isTooFar = isStationTooFar(currentLocation, api);
-	const { t } = useTranslation('home')
+	const { t } = useTranslation('screen_home')
 
 	return (
 		<View style={styles.container}>
@@ -97,11 +97,11 @@ export function Header(props: HeaderProps): React.ReactElement {
 						/>
 					)}
 					<Text style={theme.text}>
-						{t('home_header_air_quality_station_distance', {
+						{t('header_air_quality_station_distance', {
 							distanceToStation: distance,
 							distanceUnit: shortDistanceUnit,
 						})}{' '}
-						{!isGps && t('home_header_from_search')}
+						{!isGps && t('header_from_search')}
 					</Text>
 				</View>
 			</View>
@@ -110,3 +110,5 @@ export function Header(props: HeaderProps): React.ReactElement {
 		</View>
 	);
 }
+
+// TODO translating can Trans be used in this case?

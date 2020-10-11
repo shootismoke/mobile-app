@@ -81,14 +81,14 @@ export function Footer(props: FooterProps): React.ReactElement {
 	}
 
 	function renderBigButton(): React.ReactElement {
-		const { t } = useTranslation()
+		const { t } = useTranslation('screen_home')
 		return isTooFar ? (
 			<Button onPress={goToAboutWhySoFar}>
-				{t('home_btn_why_is_station_so_far').toUpperCase()}
+				{t('btn.why_is_station_so_far').toUpperCase()}
 			</Button>
 		) : (
 			<Button onPress={goToDetails}>
-				{t('home_btn_see_detailed_info').toUpperCase()}
+				{t('btn.see_detailed_info').toUpperCase()}
 			</Button>
 		);
 	}

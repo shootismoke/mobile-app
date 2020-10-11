@@ -40,7 +40,7 @@ import { sentryError } from '../../util/sentry';
 import { RootStackParams } from '../routeParams';
 import { Box } from './Box';
 
-import { Trans, withTranslation, WithTranslation, useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -156,11 +156,11 @@ export function About(props: AboutProps): React.ReactElement {
 		route
 	} = props;
 	const { distanceUnit, setDistanceUnit } = useDistanceUnit();
-	const { t } = useTranslation('about')
+	const { t } = useTranslation('screen_about')
 
 	trackScreen('ABOUT');
 
-	const proportion = '22&micro;g/m&sup3;\u207D&sup1;\u207E'
+	const proportion = `22&micro;g/m&sup3;\u207D&sup1;\u207E`
 
 	return (
 		<CustomScrollView
@@ -308,3 +308,4 @@ export function About(props: AboutProps): React.ReactElement {
 	);
 }
 
+// TODO translating

@@ -39,7 +39,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 	const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
 	const { style, ...rest } = props;
-	const { t } = useTranslation('home')
+	const { t } = useTranslation('screen_home')
 
 	function handleChangeFrequency(f: Frequency): void {
 		setTimeout(() => {
@@ -74,7 +74,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('home_frequency_daily')}
+				{t('frequency_daily')}
 			</BoxButton>
 			<BoxButton
 				active={frequency === 'weekly'}
@@ -93,7 +93,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('home_frequency_weekly')}
+				{t('frequency_weekly')}
 			</BoxButton>
 
 			<BoxButton
@@ -111,7 +111,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('home_frequency_monthly')}
+				{t('frequency_monthly')}
 			</BoxButton>
 		</ScrollView>
 	);

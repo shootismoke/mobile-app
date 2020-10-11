@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 
 // FIXME Use component from `@shootismoke/ui`
 export function Box(): React.ReactElement {
-	const { t } = useTranslation('about')
+	const { t } = useTranslation('screen_about')
 	return (
 		<View style={styles.box}>
 			<View style={styles.equivalence}>

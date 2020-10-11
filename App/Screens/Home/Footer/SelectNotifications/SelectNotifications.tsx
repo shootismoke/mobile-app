@@ -125,7 +125,7 @@ export function SelectNotifications(
 		// If the getUserData is still loading, just show `never`
 		'never';
 
-	const { t } = useTranslation('home')
+	const { t } = useTranslation('screen_home')
 
 	// Optimistic UI
 	useEffect(() => {
@@ -236,9 +236,9 @@ export function SelectNotifications(
 			actionSheetOptions={{
 				cancelButtonIndex: 4,
 				options: notificationsValues
-					.map((f) => t(`home_frequency_${f}`)) // Translate
+					.map((f) => t(`frequency_${f}`)) // Translate
 					.map(capitalize)
-					.concat(t('home_frequency_notifications_cancel')),
+					.concat(t('frequency_notifications_cancel')),
 			}}
 			amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
 			callback={(buttonIndex): void => {
@@ -272,16 +272,16 @@ export function SelectNotifications(
 					{isSwitchOn ? (
 						<View>
 							<Text style={styles.label}>
-								{t('home_frequency_notify_me')}
+								{t('frequency_notify_me')}
 							</Text>
 							<Text style={styles.labelFrequency}>
-								{t(`home_frequency_${notif}`)}{' '}
+								{t('frequency', {context: notif})}{' '}
 								<FontAwesome name="caret-down" />
 							</Text>
 						</View>
 					) : (
 							<Text style={styles.label}>
-								{t('home_frequency_allow_notifications')}
+								{t('frequency_allow_notifications')}
 							</Text>
 						)}
 				</View>
@@ -289,3 +289,5 @@ export function SelectNotifications(
 		</ActionPicker>
 	);
 }
+
+// TODO Translating
