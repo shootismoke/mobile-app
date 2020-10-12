@@ -2361,10 +2361,10 @@
   dependencies:
     nanoid "^3.1.12"
 
-"@react-navigation/stack@^5.2.10":
-  version "5.9.2"
-  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.9.2.tgz#68841c9ef032177d15664b14cff62e16698f89c7"
-  integrity sha512-imEvTuCNsIo3ZriN6eIreGaxypuuB9ZOqdUXfxJznzMCkb7lN4OR/YVztAJW3QQzhuD4vwly+7jDvt7SxyfSuw==
+"@react-navigation/stack@^5.9.3":
+  version "5.9.3"
+  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.9.3.tgz#c12cbd7cc8436e3995aa291d7617c5b8f7a950ea"
+  integrity sha512-/CJ5Rsrc9bMI20dD8oC/QSZHARMFuUv8DeoiYE7R2N0M44cFupF1CrzaZBBC/S4Zi1ahZ0A+Hj/gAzAEQrNTvA==
   dependencies:
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
