@@ -9,10 +9,11 @@ module.exports = {
 		'kr', 'ru', 'sv', 'ua',
 		'vi', 'zh-tw'
 	],
-	output: 'App/localization/languages/$LOCALE/$NAMESPACE.json',
+	output: 'App/localization/namespaces/$LOCALE@$NAMESPACE.json',
 	input: [
 		'App/Screens/**/*.tsx',
-		'App/components/**/*.tsx'
+		'App/components/**/*.tsx',
+		'node_modules/@shootismoke/ui/lib/**/*.js'
 	],
 	defaultNamespace: 'components',
 	verbose: true,
