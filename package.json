@@ -12,7 +12,7 @@
 		"start": "expo start",
 		"test:unit": "jest App",
 		"test:e2e": "detox test --configuration ios.sim --record-videos all",
-		"extrans": "npx i18next"
+		"extract": "npx i18next; node ./scripts/packTranslations.js"
 	},
 	"detox": {
 		"configurations": {

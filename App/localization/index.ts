@@ -44,7 +44,7 @@ import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 
 // TODO make a script loader >> react-i18next-expo-backend
-import components from './languages/en/components.json';
+import components from './languages/en.json';
 
 const languageDetector: LanguageDetectorAsyncModule = {
 	type: 'languageDetector',

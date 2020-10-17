@@ -4,9 +4,6 @@
   "about_box_per_day": "",
   "btn_back": "",
   "current_location_unknown_station": "",
-  "details_header_latest_update_ago": "",
-  "details_header_latest_update_label": "",
-  "details_header_primary_pollutant_label": "",
   "header_change_location": "",
   "home_cigarettes_count_0": "",
   "home_cigarettes_count_1": "",
@@ -42,13 +39,8 @@
     "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <1>WAQI</1> and <3>OpenAQ</3> for more information and history on your station.",
     "title": ""
   },
-  "where_does_data_come_from_link_1": "",
-  "where_does_data_come_from_link_2": "",
-  "where_does_data_come_from_message_1": "",
-  "where_does_data_come_from_message_2": "",
-  "where_does_data_come_from_message_3": "",
   "where_does_data_come_from": {
-    "message": "{t('where_does_data_come_from_message_1')}<1>{t('where_does_data_come_from_link_1')}</1>{t('where_does_data_come_from_message_2')}<3>{t('where_does_data_come_from_link_2')}</3>{t('where_does_data_come_from_message_3')}",
+    "message": "Air quality data comes from <1>WAQI</1> and <3>OpenAQ</3> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
     "title": ""
   },
   "why_is_the_station_so_far": {
@@ -60,6 +52,11 @@
 	"screen_detail": {
   "air_quality_station_marker": "",
   "distance_label": "",
+  "header_latest_update": {
+    "ago": "",
+    "label": ""
+  },
+  "header_primary_pollutant_label": "",
   "your_position_marker": ""
 }
 ,

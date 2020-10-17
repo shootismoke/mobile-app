@@ -29,6 +29,7 @@ import {
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
+import { Trans, useTranslation } from 'react-i18next';
 import { DistanceUnit } from '@shootismoke/ui';
 
 import { BackButton } from '../../components';
@@ -40,7 +41,6 @@ import { sentryError } from '../../util/sentry';
 import { RootStackParams } from '../routeParams';
 import { Box } from './Box';
 
-import { Trans, useTranslation } from 'react-i18next';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -160,7 +160,7 @@ export function About(props: AboutProps): React.ReactElement {
 
 	trackScreen('ABOUT');
 
-	const proportion = `22&micro;g/m&sup3;\u207D&sup1;\u207E`
+	const proportion = `22&micro;g/m&sup3;\u207D&sup1;\u207E` //TODO test if this works
 
 	return (
 		<CustomScrollView
@@ -174,8 +174,8 @@ export function About(props: AboutProps): React.ReactElement {
 					{t('how_to_calculate_number_of_cigarettes.title')}
 				</Text>
 				<Text style={theme.text}>
-					<Trans i18nKey='how_to_calculate_number_of_cigarettes.message' t={t}>
-						This app was inspired by Berkeley Earth’s findings about the <Text onPress={handleOpenBerkeley} style={theme.link}>equivalence between air pollution and cigarette smoking</Text>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <Text style={styles.micro}>{{ proportion }}</Text>.
+					<Trans i18nKey='how_to_calculate_number_of_cigarettes.message' values={{ proportion }} t={t}>
+						This app was inspired by Berkeley Earth’s findings about the <Text onPress={handleOpenBerkeley} style={theme.link}>equivalence between air pollution and cigarette smoking</Text>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <Text style={styles.micro}>{'{{proportion}}'}</Text>.
 					</Trans>
 				</Text>
 				<Box />
@@ -205,15 +205,7 @@ export function About(props: AboutProps): React.ReactElement {
 				</Text>
 				<Text style={theme.text}>
 					<Trans i18nKey='where_does_data_come_from.message' t={t}>
-						{t('about_where_does_data_come_from_message_1')}
-						<Text onPress={handleOpenWaqi} style={theme.link}>
-							{t('about_where_does_data_come_from_link_1')}
-						</Text>
-						{t('about_where_does_data_come_from_message_2')}
-						<Text onPress={handleOpenOpenAQ} style={theme.link}>
-							{t('about_where_does_data_come_from_link_2')}
-						</Text>
-						{t('about_where_does_data_come_from_message_3')}
+						Air quality data comes from <Text onPress={handleOpenWaqi} style={theme.link}>WAQI</Text> and <Text onPress={handleOpenOpenAQ} style={theme.link}>OpenAQ</Text> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.
 					</Trans>
 				</Text>
 			</View>
@@ -243,14 +235,14 @@ export function About(props: AboutProps): React.ReactElement {
 			</View>
 
 			<View style={styles.distance}>
-				<Text style={styles.h2}>{t('about_settings_title')}</Text>
+				<Text style={styles.h2}>{t('settings_title')}</Text>
 				<Text style={theme.text}>
-					{t('about_settings_distance_unit')}
+					{t('settings_distance_unit')}
 				</Text>
 				<Picker
 					onValueChange={(value: DistanceUnit): void => {
 						track(
-							`ABOUT_SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
+							`SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
 						);
 						setDistanceUnit(value);
 					}}
@@ -258,42 +250,42 @@ export function About(props: AboutProps): React.ReactElement {
 					style={styles.distancePicker}
 				>
 					<Picker.Item
-						label={t('about_settings_distance_unit_km')}
+						label={t('settings_distance_unit_km')}
 						value="km"
 					/>
 					<Picker.Item
-						label={t('about_settings_distance_unit_mile')}
+						label={t('settings_distance_unit_mile')}
 						value="mile"
 					/>
 				</Picker>
 			</View>
 
 			<View style={styles.credits}>
-				<Text style={styles.h2}>{t('about_credits_title')}</Text>
+				<Text style={styles.h2}>{t('credits_title')}</Text>
 				<Text style={theme.text}>
-					{t('about_credits_concept_and_development')}{' '}
+					{t('credits_concept_and_development')}{' '}
 					<Text onPress={handleOpenAmaury} style={theme.link}>
 						Amaury Martiny
 					</Text>
 					.{'\n'}
-					{t('about_credits_design_and_copywriting')}{' '}
+					{t('credits_design_and_copywriting')}{' '}
 					<Text onPress={handleOpenMarcelo} style={theme.link}>
 						Marcelo S. Coelho
 					</Text>
 					.{'\n'}
 					{'\n'}
-					{t('about_credits_data_from_message_1')}
+					{t('credits_data_from_message_1')}
 					<Text onPress={handleOpenWaqi} style={theme.link}>
-						{t('about_credits_data_from_link_1')}
+						{t('credits_data_from_link_1')}
 					</Text>
-					{t('about_credits_data_from_message_2')}
+					{t('credits_data_from_message_2')}
 					<Text onPress={handleOpenOpenAQ} style={theme.link}>
-						{t('about_credits_data_from_link_2')}
+						{t('credits_data_from_link_2')}
 					</Text>
 					.{'\n'}
-					{t('about_credits_source_code')}
+					{t('credits_source_code')}
 					<Text onPress={handleOpenGithub} style={theme.link}>
-						{t('about_credits_available_github')}
+						{t('credits_available_github')}
 					</Text>
 					.{'\n'}
 					{'\n'}

@@ -29,6 +29,7 @@ import {
 	TextStyle,
 	View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { BackButton, CurrentLocation } from '../../../components';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
@@ -132,6 +133,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 	const { onBackClick } = props;
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
+	const { t } = useTranslation('screen_detail')
 
 	if (!currentLocation) {
 		throw new Error(
@@ -165,15 +167,15 @@ export function Header(props: HeaderProps): React.ReactElement {
 						style={styles.currentLocation}
 					/>
 					{renderInfo(
-						t('details_header_latest_update_label'),
-						t('details_header_latest_update_ago', {
+						t('header_latest_update.label'),
+						t('header_latest_update.ago', {
 							time: formatDistanceToNow(
 								new Date(api.pm25.date.local)
 							),
 						})
 					)}
 					{renderInfo(
-						t('details_header_primary_pollutant_label'),
+						t('header_primary_pollutant_label'),
 						getDominantPol(api.normalized).toUpperCase()
 					)}
 
