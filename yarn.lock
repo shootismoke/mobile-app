@@ -2478,20 +2478,20 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.31.tgz#96a5e460dfcbb394339f2abcef0546fbbebf6f6b"
-  integrity sha512-u8XLBapWj8y+qIj+jZtvbOkEEYwDEQBkyY4hoXOOuzVDrARi/CBQV7qn4mAqR2QY1hnkTHeAdx7YE+NXD6pBGw==
+"@shootismoke/convert@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.5.7.tgz#48e4f5dfda7ef63155018d6dc2a3a9dc344d08b2"
+  integrity sha512-soQMK7EmYBl2Y7wDywRrnliVceAUGruiCBDvDJ/SEMqGOiuGwti3ZOTPoQOJiA3QRK/bZ5zfsGpNNAEXKc8YBw==
   dependencies:
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
 
-"@shootismoke/dataproviders@^0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.31.tgz#eaebdc8f9733e01903301d7ea7d3091b22e2656d"
-  integrity sha512-HpW8TUJ/XacuzhyVd1naKmcsSC3omfuaBm0pQMVvPctjWBCm6BwFFFRlEyHTLnnxSkApU7A7rYdHS5qIyq6nQQ==
+"@shootismoke/dataproviders@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.5.7.tgz#2b316802373a51536ac0b0167706ac4e713f51ab"
+  integrity sha512-ergJXXTTzAfPoVvoi/Dpy+fmCOmKvry/zXCc/5pjDjRC26+mtS4nI771YflEffsUo1zSj3QqXpwPvf1GBXlNiA==
   dependencies:
-    "@shootismoke/convert" "^0.2.31"
+    "@shootismoke/convert" "^0.5.7"
     axios "^0.20.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
@@ -2503,20 +2503,20 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.31.tgz#e31c6e3faf6244138154a9e80bdff434b2089274"
   integrity sha512-2jkSBBO6dirseXdh94IoQFHumUzRbX//DFtluEwc2GGxpHFKtrRNkUIFbhVlUtXcJ/f/ROamAX6nHE1/8lT2aw==
 
-"@shootismoke/ui@^0.2.32":
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.2.32.tgz#7ef458e3e514520df3ea7bb407073066ffdfe816"
-  integrity sha512-9CtxQI/i9K0AGIPcN1xYMhsAEmMmVx/6al42JVhwWldzFCpR2cw8zzUdPASbHCxX1ccGTdKp7LPGlZXkRCsMmQ==
+"@shootismoke/ui@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.5.7.tgz#ccf301b9cf8c0d8833b9d299b91b4ee157d5020a"
+  integrity sha512-4kMD9h1dMmB2rXfmAn0Jllp9fC7N0mX0BcAS69Cqeg2Ikqg22tZto2QIkkmwPMnTl0xjYRMcNPbWV7LjAX6DhA==
   dependencies:
     "@expo/vector-icons" "^10.2.0"
-    "@shootismoke/dataproviders" "^0.2.31"
+    "@shootismoke/dataproviders" "^0.5.7"
     "@types/haversine" "^1.1.4"
     "@types/p-any" "^1.1.3"
     expo-constants "^9.0.0"
     haversine "^1.1.1"
     lottie-react-native "^3.4.0"
     p-any "^3.0.0"
-    react-native-web "^0.13.0"
+    react-native-web "^0.14.0"
     retry-ts "^0.1.2"
 
 "@sindresorhus/is@^0.7.0":
@@ -10258,10 +10258,10 @@ react-native-view-shot@3.1.2:
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
   integrity sha512-9u9fPtp6a52UMoZ/UCPrCjKZk8tnkI9To0Eh6yYnLKFEGkRZ7Chm6DqwDJbYJHeZrheCCopaD5oEOnRqhF4L2Q==
 
-react-native-web@^0.13.0:
-  version "0.13.14"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.13.14.tgz#6a9144ffd2bcae07116efee827b99b20c9a0623d"
-  integrity sha512-tadUswGcXbH7pNTIGR41I2uqN/YrqGMnRTHbVU/ENGk2lps1W75ty+SHtWsWBEdYF4e2zOw8Dd/AJeD5kbat0A==
+react-native-web@^0.14.0:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.14.2.tgz#18957b0c72f5200f2b97a0bd73b3657d5e2401bb"
+  integrity sha512-cjgqWhFLZoveJx8Upu6PH+1tq4ZbW6zvkQ8ChOWfQ8BdoYY0o4jhlBZJTgQVLNP6s7BkpMAb87er/T7Zhd8qJw==
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
