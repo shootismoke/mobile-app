@@ -59,7 +59,7 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
 		...rest
 	} = props;
 
-	const { t } = useTranslation('components')
+	const { t } = useTranslation('components');
 
 	// Decide on a swear word. The effect says that the swear word only changes
 	// when the cigarettes count changes.
@@ -86,14 +86,14 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
 		<Text style={[theme.shitText, style]} {...rest}>
 			<Trans
 				i18nKey="cigarette_report"
-				values={{ id: swearWordId, frequency: frequency || 'none', cig_count: cigarettesRounded }}
+				values={{ id: swearWordId, frequency: frequency || 'daily', cig_count: cigarettesRounded }}
 				t={t}
 			>
 				$t(swear_word, {'{'} "context": "{'{{id}}'}" {'}'})! You smoke{'\n'}
 				<Text style={styles.cigarettesCount}>
 					$t(cigarette_count, {'{'} "count": "{'{{cig_count}}'}" {'}'})
 				</Text>{' '}
-				$t(frequency, {'{'} "context": "{'{{frequency}}'}" {'}'}). {/* TODO question about this frequency */}
+				$t(frequency, {'{'} "context": "{'{{frequency}}'}" {'}'}).{/* TODO question about this frequency */}
 			</Trans>
 		</Text>
 	);
@@ -112,10 +112,6 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
  * t('swear_word', 'OMG',	{context: '5'})
  * t('swear_word', 'Crap',	{context: '6'})
  * t('swear_word', 'Arrgh',	{context: '7'})
- * t('frequency', '',			{context: 'none'})
- * t('frequency', 'daily',		{context: 'daily'})
- * t('frequency', 'weekly',		{context: 'weekly'})
- * t('frequency', 'monthly',	{context: 'monthly'})
  *
  * > Add hidden translation
  * t('cigarette_count', '{{count}} cigarette', {count: 1})

@@ -16,12 +16,10 @@
 
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { CigarettesBlock } from '@shootismoke/ui';
 
-import { CurrentLocation } from '../../../../../components';
+import { CigarettesBlock, CurrentLocation } from '../../../../../components';
 import { ApiContext, CurrentLocationContext } from '../../../../../stores';
 import * as theme from '../../../../../util/theme';
-import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
 	cigaretteBlock: {
@@ -42,7 +40,6 @@ const styles = StyleSheet.create({
 export function ShareImage(): React.ReactElement {
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
-	const { t } = useTranslation('screen_home')
 
 	if (!currentLocation) {
 		throw new Error(
@@ -60,7 +57,6 @@ export function ShareImage(): React.ReactElement {
 				cigarettes={api.shootismoke.dailyCigarettes}
 				frequency="daily"
 				style={styles.cigaretteBlock}
-				t={t}
 			/>
 			<CurrentLocation
 				currentLocation={currentLocation}

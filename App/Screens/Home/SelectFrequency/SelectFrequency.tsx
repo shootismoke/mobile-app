@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useRef, useState } from 'react';
-import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 import { BoxButton, Frequency, FrequencyContext } from '@shootismoke/ui';
+import React, { useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';
-import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
 	boxButton: {
@@ -39,7 +39,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 	const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
 	const { style, ...rest } = props;
-	const { t } = useTranslation('screen_home')
+	const { t } = useTranslation('components')
 
 	function handleChangeFrequency(f: Frequency): void {
 		setTimeout(() => {
@@ -74,7 +74,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('frequency_daily')}
+				{t('frequency', 'daily', { context: 'daily' })}
 			</BoxButton>
 			<BoxButton
 				active={frequency === 'weekly'}
@@ -93,7 +93,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('frequency_weekly')}
+				{t('frequency', 'weekly', { context: 'weekly' })}
 			</BoxButton>
 
 			<BoxButton
@@ -111,8 +111,10 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('frequency_monthly')}
+				{t('frequency', 'monthly', { context: 'monthly' })}
 			</BoxButton>
 		</ScrollView>
 	);
 }
+
+// TODO
