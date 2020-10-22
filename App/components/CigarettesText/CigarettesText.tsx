@@ -82,18 +82,23 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
 	// Round to 1 decimal
 	const cigarettesRounded = Math.round(cigarettes * 10) / 10;
 
+	const nestingTrans = {
+		swear_word: t('swear_word', { context: swearWordId.toString() }),
+		cigarette_count: t('cigarette_count', { count: cigarettesRounded }),
+		frequency: t('frequency', { context: frequency || 'daily' })
+	}
+
 	return (
 		<Text style={[theme.shitText, style]} {...rest}>
 			<Trans
 				i18nKey="cigarette_report"
-				values={{ id: swearWordId, frequency: frequency || 'daily', cig_count: cigarettesRounded }}
+				values={{ ...nestingTrans }}
 				t={t}
 			>
-				$t(swear_word, {'{'} "context": "{'{{id}}'}" {'}'})! You smoke{'\n'}
+				{'{{swear_word}}'}! You smoke{'\n'}
 				<Text style={styles.cigarettesCount}>
-					$t(cigarette_count, {'{'} "count": "{'{{cig_count}}'}" {'}'})
-				</Text>{' '}
-				$t(frequency, {'{'} "context": "{'{{frequency}}'}" {'}'}).{/* TODO question about this frequency */}
+					{'{{cigarette_count}}'}
+				</Text> {'{{frequency}}'}.
 			</Trans>
 		</Text>
 	);
@@ -112,9 +117,5 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
  * t('swear_word', 'OMG',	{context: '5'})
  * t('swear_word', 'Crap',	{context: '6'})
  * t('swear_word', 'Arrgh',	{context: '7'})
- *
- * > Add hidden translation
- * t('cigarette_count', '{{count}} cigarette', {count: 1})
- * t('cigarette_count', '{{count}} cigarettes', {count: 1000})
  */
 // TODO does parser need ns if it has been declared in useTranslation?
