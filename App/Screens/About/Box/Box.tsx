@@ -111,7 +111,7 @@ export function Box(): React.ReactElement {
 						style={styles.cigarette}
 					/>
 					<Text style={styles.value} />
-					<Text style={styles.label}>{t('about_box_per_day')}</Text>
+					<Text style={styles.label}>{t('box_per_day')}</Text>
 				</View>
 				<Text style={styles.equal}>=</Text>
 				<View style={styles.statisticsRight}>
@@ -122,7 +122,7 @@ export function Box(): React.ReactElement {
 					</Text>
 				</View>
 			</View>
-			<Text style={styles.boxDescription}>{t('about_box_footnote')}</Text>
+			<Text style={styles.boxDescription}>{t('box_footnote')}</Text>
 		</View>
 	);
 }

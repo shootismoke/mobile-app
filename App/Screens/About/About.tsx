@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import { DistanceUnit } from '@shootismoke/ui';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Constants from 'expo-constants';
 import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import {
-	Linking,
 	Picker,
 	Platform,
 	ScrollView,
@@ -29,17 +29,15 @@ import {
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
-import { Trans, useTranslation } from 'react-i18next';
-import { DistanceUnit } from '@shootismoke/ui';
 
 import { BackButton } from '../../components';
-// import { t } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
-import { sentryError } from '../../util/sentry';
 import { RootStackParams } from '../routeParams';
+import { Credit } from './Credit';
 import { Box } from './Box';
+import { handleOpenBerkeley, handleOpenWaqi, handleOpenOpenAQ } from './Bookmarks';
 
 
 const CustomScrollView = wrapScrollView(ScrollView);
@@ -56,41 +54,13 @@ export const aboutSections = {
 	aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle',
 };
 
-const handleOpenAmaury = (): void => {
-	Linking.openURL('https://twitter.com/amaurymartiny').catch(
-		sentryError('About')
-	);
-};
-
-const handleOpenWaqi = (): void => {
-	Linking.openURL('https://aqicn.org').catch(sentryError('About'));
-};
-
-const handleOpenOpenAQ = (): void => {
-	Linking.openURL('https://openaq.org').catch(sentryError('About'));
-};
-
-const handleOpenBerkeley = (): void => {
-	Linking.openURL(
-		'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
-	).catch(sentryError('About'));
-};
-
-const handleOpenGithub = (): void => {
-	Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke').catch(
-		sentryError('About')
-	);
-};
-
-const handleOpenMarcelo = (): void => {
-	Linking.openURL('https://www.behance.net/marceloscoelho').catch(
-		sentryError('About')
-	);
-};
-
 interface AboutProps {
 	navigation: StackNavigationProp<RootStackParams, 'About'>;
 	route: RouteProp<RootStackParams, 'About'>;
+}
+
+interface ProportionProps {
+	size: string;
 }
 
 const styles = StyleSheet.create({
@@ -101,12 +71,6 @@ const styles = StyleSheet.create({
 	backButton: {
 		marginBottom: theme.spacing.normal,
 		marginTop: theme.spacing.normal,
-	},
-	credits: {
-		borderTopColor: theme.iconBackgroundColor,
-		borderTopWidth: 1,
-		marginBottom: theme.spacing.normal,
-		paddingTop: theme.spacing.big,
 	},
 	distance: {
 		borderTopColor: theme.iconBackgroundColor,
@@ -150,6 +114,12 @@ const styles = StyleSheet.create({
 	},
 });
 
+function Proportion(props: ProportionProps): React.ReactElement {
+	const { size } = props
+	const note1 = '\u207D\u00B9\u207E'
+	return <>{size}<Text style={styles.micro}>&micro;</Text>g/m&sup3; {note1}</>
+}
+
 export function About(props: AboutProps): React.ReactElement {
 	const {
 		navigation: { goBack },
@@ -159,8 +129,6 @@ export function About(props: AboutProps): React.ReactElement {
 	const { t } = useTranslation('screen_about')
 
 	trackScreen('ABOUT');
-
-	const proportion = `22&micro;g/m&sup3;\u207D&sup1;\u207E` //TODO test if this works
 
 	return (
 		<CustomScrollView
@@ -174,8 +142,8 @@ export function About(props: AboutProps): React.ReactElement {
 					{t('how_to_calculate_number_of_cigarettes.title')}
 				</Text>
 				<Text style={theme.text}>
-					<Trans i18nKey='how_to_calculate_number_of_cigarettes.message' values={{ proportion }} t={t}>
-						This app was inspired by Berkeley Earth’s findings about the <Text onPress={handleOpenBerkeley} style={theme.link}>equivalence between air pollution and cigarette smoking</Text>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <Text style={styles.micro}>{'{{proportion}}'}</Text>.
+					<Trans i18nKey='how_to_calculate_number_of_cigarettes.message' t={t}>
+						This app was inspired by Berkeley Earth’s findings about the <Text onPress={handleOpenBerkeley} style={theme.link}>equivalence between air pollution and cigarette smoking</Text>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <Proportion size='22' />.
 					</Trans>
 				</Text>
 				<Box />
@@ -235,9 +203,9 @@ export function About(props: AboutProps): React.ReactElement {
 			</View>
 
 			<View style={styles.distance}>
-				<Text style={styles.h2}>{t('settings_title')}</Text>
+				<Text style={styles.h2}>{t('settings.title')}</Text>
 				<Text style={theme.text}>
-					{t('settings_distance_unit')}
+					{t('settings.distance_unit.label')}
 				</Text>
 				<Picker
 					onValueChange={(value: DistanceUnit): void => {
@@ -250,52 +218,17 @@ export function About(props: AboutProps): React.ReactElement {
 					style={styles.distancePicker}
 				>
 					<Picker.Item
-						label={t('settings_distance_unit_km')}
+						label={t('settings.distance_unit.km', 'km')}
 						value="km"
 					/>
 					<Picker.Item
-						label={t('settings_distance_unit_mile')}
+						label={t('settings.distance_unit.mile', 'mile')}
 						value="mile"
 					/>
 				</Picker>
 			</View>
 
-			<View style={styles.credits}>
-				<Text style={styles.h2}>{t('credits_title')}</Text>
-				<Text style={theme.text}>
-					{t('credits_concept_and_development')}{' '}
-					<Text onPress={handleOpenAmaury} style={theme.link}>
-						Amaury Martiny
-					</Text>
-					.{'\n'}
-					{t('credits_design_and_copywriting')}{' '}
-					<Text onPress={handleOpenMarcelo} style={theme.link}>
-						Marcelo S. Coelho
-					</Text>
-					.{'\n'}
-					{'\n'}
-					{t('credits_data_from_message_1')}
-					<Text onPress={handleOpenWaqi} style={theme.link}>
-						{t('credits_data_from_link_1')}
-					</Text>
-					{t('credits_data_from_message_2')}
-					<Text onPress={handleOpenOpenAQ} style={theme.link}>
-						{t('credits_data_from_link_2')}
-					</Text>
-					.{'\n'}
-					{t('credits_source_code')}
-					<Text onPress={handleOpenGithub} style={theme.link}>
-						{t('credits_available_github')}
-					</Text>
-					.{'\n'}
-					{'\n'}
-					{Constants.manifest.name} v
-					{Constants.manifest.revisionId ||
-						Constants.manifest.version}
-					.
-				</Text>
-				{/* Add changing languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
-			</View>
+			<Credit />
 		</CustomScrollView>
 	);
 }

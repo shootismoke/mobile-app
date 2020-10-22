@@ -64,5 +64,3 @@ export function BackButton(props: BackButtonProps): React.ReactElement {
 		</View>
 	);
 }
-
-// TODO translating

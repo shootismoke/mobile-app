@@ -62,7 +62,7 @@ export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {
 				inverted
 				style={styles.icon}
 			/>
-			<Text style={styles.label}>{t('header_change_location')}</Text>
+			<Text style={styles.label}>{t('header.change_location')}</Text>
 		</TouchableOpacity>
 	);
 }

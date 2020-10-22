@@ -92,7 +92,7 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
 		<Text style={[theme.shitText, style]} {...rest}>
 			<Trans
 				i18nKey="cigarette_report"
-				values={{ ...nestingTrans }}
+				values={nestingTrans}
 				t={t}
 			>
 				{'{{swear_word}}'}! You smoke{'\n'}
