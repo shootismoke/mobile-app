@@ -79,7 +79,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 
 	const distance = distanceToStation(currentLocation, api, distanceUnit);
 	const isTooFar = isStationTooFar(currentLocation, api);
-	const { t } = useTranslation('screen_home')
+	const { t } = useTranslation('screen_home');
 
 	return (
 		<View style={styles.container}>

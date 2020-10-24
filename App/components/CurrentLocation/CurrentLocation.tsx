@@ -22,7 +22,6 @@ import { Location } from '../../stores/util/fetchGpsPosition';
 import * as theme from '../../util/theme';
 import { useTranslation } from 'react-i18next';
 
-
 interface CurrentLocationProps extends TextProps {
 	measurement: OpenAQFormat;
 	currentLocation: Location;
@@ -41,7 +40,6 @@ export function CurrentLocation(
 
 	const { t } = useTranslation('components');
 	const UNKNOWN_STATION = t('current_location_unknown_station');
-
 
 	return (
 		<Text style={[styles.title, style]} {...rest}>

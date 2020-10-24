@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
 
 export function ConversionBox(props: ConversionBoxProps): React.ReactElement {
 	const { cigarettes = 1, showFootnote, style, ...rest } = props;
-	const { t } = useTranslation('components')
+	const { t } = useTranslation('components');
 
 	return (
 		<View style={[styles.box, style]} {...rest}>

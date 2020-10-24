@@ -19,6 +19,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Button } from '@shootismoke/ui';
 import errorPicture from '@shootismoke/ui/assets/images/error.png';
 import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
 	Image,
 	ImageRequireSource,
@@ -34,7 +35,6 @@ import { sentryError } from '../../util/sentry';
 import { testIds } from '../../util/testId';
 import * as theme from '../../util/theme';
 import { ErrorStackParams } from '../routeParams';
-import { useTranslation } from 'react-i18next';
 
 interface ErrorScreenProps {
 	navigation: StackNavigationProp<ErrorStackParams, 'Error'>;
@@ -84,9 +84,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 			<Image source={errorPicture as ImageRequireSource} />
 			<View>
 				<Text style={styles.errorText}>
-					<Text style={styles.sorry}>
-						{t('sorry')}
-					</Text>
+					<Text style={styles.sorry}>{t('header.sorry')}</Text>
 					{t('cannot_load_cigarettes')}
 				</Text>
 			</View>
@@ -100,9 +98,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 			>
 				{t('choose_other_location').toUpperCase()}
 			</Button>
-			<Text style={theme.text}>
-				{t('description')}
-			</Text>
+			<Text style={theme.text}>{t('description')}</Text>
 			<ScrollView style={styles.errorScrollView}>
 				<TouchableOpacity
 					onPress={(): void => setShowDetails(!showDetails)}

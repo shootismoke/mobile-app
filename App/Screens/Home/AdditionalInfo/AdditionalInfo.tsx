@@ -69,7 +69,7 @@ export function AdditionalInfo(
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const { exactCount, frequency, navigation, style, ...rest } = props;
-	const { t } = useTranslation('screen_home')
+	const { t } = useTranslation('screen_home');
 
 	if (!currentLocation) {
 		throw new Error(
@@ -87,9 +87,7 @@ export function AdditionalInfo(
 	if (isTooFar) {
 		return (
 			<View style={[theme.withPadding, style]} {...rest}>
-				<Text style={theme.text}>
-					{t('station_too_far_message')}
-				</Text>
+				<Text style={theme.text}>{t('station_too_far_message')}</Text>
 			</View>
 		);
 	}
@@ -111,9 +109,7 @@ export function AdditionalInfo(
 					<View style={styles.tag}>
 						<Text style={styles.tagLabel}>BETA</Text>
 					</View>
-					<Text style={theme.text}>
-						{t('beta_not_accurate')}
-					</Text>
+					<Text style={theme.text}>{t('beta_not_accurate')}</Text>
 				</TouchableOpacity>
 			</View>
 		);

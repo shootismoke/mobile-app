@@ -42,22 +42,15 @@ const styles = StyleSheet.create({
  * word.
  * @param maxLevel - The cigarette count for which we show the swear
  */
-export function getSwearWordId(cigaretteCount: number, maxLevel: number = 7): number {
+export function getSwearWordId(cigaretteCount: number, maxLevel = 7): number {
 	if (cigaretteCount <= 1) return 0;
 	const minLevel = 1;
-	const limRange =
-		Math.random() * (maxLevel - minLevel) + minLevel;
+	const limRange = Math.random() * (maxLevel - minLevel) + minLevel;
 	return Math.floor(limRange);
 }
 
 export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
-	const {
-		cigarettes,
-		frequency,
-		loading,
-		style,
-		...rest
-	} = props;
+	const { cigarettes, frequency, loading, style, ...rest } = props;
 
 	const { t } = useTranslation('components');
 
@@ -85,27 +78,24 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
 	const nestingTrans = {
 		swear_word: t('swear_word', { context: swearWordId.toString() }),
 		cigarette_count: t('cigarette_count', { count: cigarettesRounded }),
-		frequency: t('frequency', { context: frequency || 'daily' })
-	}
+		frequency: t('frequency', { context: frequency || 'daily' }),
+	};
 
 	return (
 		<Text style={[theme.shitText, style]} {...rest}>
-			<Trans
-				i18nKey="cigarette_report"
-				values={nestingTrans}
-				t={t}
-			>
+			<Trans i18nKey="cigarette_report" values={nestingTrans} t={t}>
 				{'{{swear_word}}'}! You smoke{'\n'}
 				<Text style={styles.cigarettesCount}>
 					{'{{cigarette_count}}'}
-				</Text> {'{{frequency}}'}.
+				</Text>{' '}
+				{'{{frequency}}'}.
 			</Trans>
 		</Text>
 	);
 }
 
 /**
- * For i18next-parser
+ * I18NEXT-PARSER
  * https://github.com/i18next/i18next-parser#caveats
  *
  * > Convert dynamic values to static values

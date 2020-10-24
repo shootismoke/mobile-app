@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 export function BackButton(props: BackButtonProps): React.ReactElement {
 	const { style } = props;
-	const { t } = useTranslation('components')
+	const { t } = useTranslation('components');
 
 	return (
 		<View style={style}>

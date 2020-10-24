@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
 export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
 	const { onChangeSearch, search } = props;
-	const { t } = useTranslation('screen_search')
+	const { t } = useTranslation('screen_search');
 
 	return (
 		<Banner elevated shadowPosition="bottom">

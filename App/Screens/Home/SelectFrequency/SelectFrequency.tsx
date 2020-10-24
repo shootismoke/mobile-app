@@ -39,7 +39,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 	const [dailyWidth, setDailyWidth] = useState(0); // Width of the daily button
 
 	const { style, ...rest } = props;
-	const { t } = useTranslation('components')
+	const { t } = useTranslation('components');
 
 	function handleChangeFrequency(f: Frequency): void {
 		setTimeout(() => {

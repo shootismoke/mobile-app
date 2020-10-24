@@ -14,61 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
 import * as Localization from 'expo-localization';
-import i18n from 'i18n-js';
-
-import enUS from './languages/en-us';
-import en from './languages/en.json';
-
-i18n.fallbacks = true;
-i18n.translations = {
-	en,
-	'en-US': enUS,
-};
-
-// If the locale is en-US, then we use the `en-US` file. For any other locale,
-// we use the `en` file
-i18n.locale =
-	Localization.locale && Localization.locale.toLowerCase() === 'en-us'
-		? 'en-US'
-		: 'en';
-
-const { t } = i18n;
-
-export { i18n, t };
-*/
-
 import i18next, { LanguageDetectorAsyncModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as Localization from 'expo-localization';
 
 // TODO make a script loader >> react-i18next-expo-backend
-import components from './languages/en.json';
+import en from './languages/en.json';
 
 const languageDetector: LanguageDetectorAsyncModule = {
 	type: 'languageDetector',
 	async: true,
 	detect: (cb: Function) => cb(Localization.locale.split('-')[0]),
-	init: () => { },
-	cacheUserLanguage: () => { }
-}
+	init: () => {},
+	cacheUserLanguage: () => {},
+};
 
 i18next
 	.use(languageDetector)
 	.use(initReactI18next)
 	.init({
 		debug: true,
-		resources: {
-			en: { components }
-		},
+		resources: { en },
 		lng: 'en',
 		ns: [
-			'screen_about', 'screen_detail', 'screen_error',
-			'screen_home', 'screen_loading', 'screen_search',
-			'components'
+			'screen_about',
+			'screen_detail',
+			'screen_error',
+			'screen_home',
+			'screen_loading',
+			'screen_search',
+			'components',
 		],
-		fallbackLng: 'en'
-	})
+		fallbackLng: 'en',
+	});
 
-export default i18next
+export default i18next;

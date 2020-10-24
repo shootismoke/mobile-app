@@ -125,7 +125,7 @@ export function SelectNotifications(
 		// If the getUserData is still loading, just show `never`
 		'never';
 
-	const { t } = useTranslation('screen_home')
+	const { t } = useTranslation('screen_home');
 
 	// Optimistic UI
 	useEffect(() => {
@@ -272,18 +272,18 @@ export function SelectNotifications(
 					{isSwitchOn ? (
 						<View>
 							<Text style={styles.label}>
-								{t('frequency_notify_me')}
+								{t('frequency.notify_me')}
 							</Text>
 							<Text style={styles.labelFrequency}>
-								{t('frequency', {context: notif})}{' '}
+								{t('frequency', { context: notif })}{' '}
 								<FontAwesome name="caret-down" />
 							</Text>
 						</View>
 					) : (
-							<Text style={styles.label}>
-								{t('frequency_allow_notifications')}
-							</Text>
-						)}
+						<Text style={styles.label}>
+							{t('frequency.allow_notifications')}
+						</Text>
+					)}
 				</View>
 			)}
 		</ActionPicker>
@@ -291,3 +291,4 @@ export function SelectNotifications(
 }
 
 // TODO Translating
+// frequency_never

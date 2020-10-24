@@ -43,7 +43,7 @@ export function DistanceUnitProvider({
 	children: React.ReactNode;
 }): React.ReactElement {
 	const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>('km');
-	const { t } = useTranslation('components')
+	const { t } = useTranslation('components');
 
 	function localizedDistanceUnit(format: 'short' | 'long'): string {
 		return distanceUnit === 'km'
@@ -79,3 +79,5 @@ export function DistanceUnitProvider({
 }
 
 export const useDistanceUnit = (): ContextType => useContext(Context);
+
+// TODO distance_unit.short_km

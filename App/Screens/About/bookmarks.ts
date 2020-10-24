@@ -23,25 +23,27 @@ function AboutLink(url: string): void {
 }
 
 export function handleOpenWaqi(): void {
-	AboutLink('https://aqicn.org')
-};
+	AboutLink('https://aqicn.org');
+}
 
 export function handleOpenOpenAQ(): void {
-	AboutLink('https://openaq.org')
-};
+	AboutLink('https://openaq.org');
+}
 
 export function handleOpenBerkeley(): void {
-	AboutLink('http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/')
-};
+	AboutLink(
+		'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
+	);
+}
 
 export function handleOpenAmaury(): void {
-	AboutLink('https://twitter.com/amaurymartiny')
-};
+	AboutLink('https://twitter.com/amaurymartiny');
+}
 
 export function handleOpenGithub(): void {
-	AboutLink('https://github.com/amaurymartiny/shoot-i-smoke')
-};
+	AboutLink('https://github.com/amaurymartiny/shoot-i-smoke');
+}
 
 export function handleOpenMarcelo(): void {
-	AboutLink('https://www.behance.net/marceloscoelho')
-};
+	AboutLink('https://www.behance.net/marceloscoelho');
+}

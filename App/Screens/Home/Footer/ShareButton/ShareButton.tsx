@@ -40,7 +40,7 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const refViewShot = createRef<View>();
-	const { t } = useTranslation('screen_home')
+	const { t } = useTranslation('screen_home');
 
 	async function handleShare(): Promise<void> {
 		try {

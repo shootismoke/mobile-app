@@ -36,23 +36,23 @@ import { sentryError } from './util/sentry';
 
 import './localization';
 
+// TODO
+// import * as Sentry from 'sentry-expo';
+// import Constants from 'expo-constants';
+// import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 
-import * as Sentry from 'sentry-expo';
-import Constants from 'expo-constants';
-import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
+// // Add Sentry if available
+// if (IS_SENTRY_SET_UP) {
+// 	Sentry.init({
+// 		dsn: Constants.manifest.extra.sentryPublicDsn as string,
+// 		debug: true,
+// 	});
 
-// Add Sentry if available
-if (IS_SENTRY_SET_UP) {
-	Sentry.init({
-		dsn: Constants.manifest.extra.sentryPublicDsn as string,
-		debug: true,
-	});
-
-	Sentry.setRelease(RELEASE_CHANNEL);
-	if (Constants.manifest.revisionId) {
-		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
-	}
-}
+// 	Sentry.setRelease(RELEASE_CHANNEL);
+// 	if (Constants.manifest.revisionId) {
+// 		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
+// 	}
+// }
 
 export function App(): React.ReactElement {
 	const [ready, setReady] = useState(false);
@@ -75,9 +75,7 @@ export function App(): React.ReactElement {
 
 	useEffect(() => {
 		// Load the Offix client
-		getApolloClient()
-			.then(setClient)
-			.catch(sentryError('App'));
+		getApolloClient().then(setClient).catch(sentryError('App'));
 	}, []);
 
 	useEffect(() => {
@@ -103,8 +101,8 @@ export function App(): React.ReactElement {
 										<Screens />
 									</ApolloProvider>
 								) : (
-										<LoadingBackground />
-									)}
+									<LoadingBackground />
+								)}
 							</DistanceUnitProvider>
 						</FrequencyContextProvider>
 					</ApiContextProvider>

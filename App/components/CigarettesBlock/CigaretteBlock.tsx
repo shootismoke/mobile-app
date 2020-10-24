@@ -99,16 +99,16 @@ export function CigarettesBlock(
 			{loading ? (
 				renderAnimation(cigarettesStyle)
 			) : (
-					<Cigarettes
-						cigarettes={cigarettes}
-						fullCigaretteLength={fullCigaretteLength}
-						showMaxCigarettes={showMaxCigarettes}
-						showVerticalAfter={showVerticalAfter}
-						spacingVertical={spacingVertical}
-						spacingHorizontal={spacingHorizontal}
-						style={cigarettesStyle}
-					/>
-				)}
+				<Cigarettes
+					cigarettes={cigarettes}
+					fullCigaretteLength={fullCigaretteLength}
+					showMaxCigarettes={showMaxCigarettes}
+					showVerticalAfter={showVerticalAfter}
+					spacingVertical={spacingVertical}
+					spacingHorizontal={spacingHorizontal}
+					style={cigarettesStyle}
+				/>
+			)}
 			<CigarettesText
 				cigarettes={cigarettes}
 				frequency={frequency}

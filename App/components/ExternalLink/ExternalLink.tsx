@@ -5,10 +5,14 @@ import { link } from '../../util/theme';
 
 interface ExlinkProps {
 	dest: (event: GestureResponderEvent) => void;
-	children: ReactNode
+	children: ReactNode;
 }
 
 export function Exlink(props: ExlinkProps): React.ReactElement {
-	const { children, dest } = props
-	return <Text onPress={dest} style={link}>{children}</Text>
+	const { children, dest } = props;
+	return (
+		<Text onPress={dest} style={link}>
+			{children}
+		</Text>
+	);
 }

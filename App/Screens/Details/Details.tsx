@@ -16,13 +16,14 @@
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { stationName } from '@shootismoke/dataproviders';
+import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 import homeIcon from '@shootismoke/ui/assets/images/home.png';
 import stationIcon from '@shootismoke/ui/assets/images/station.png';
 import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ImageRequireSource, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import truncate from 'truncate';
-import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 
 import { ApiContext, CurrentLocationContext } from '../../stores';
 import { useDistanceUnit } from '../../stores/distanceUnit';
@@ -30,7 +31,6 @@ import { trackScreen } from '../../util/amplitude';
 import { RootStackParams } from '../routeParams';
 import { Distance } from './Distance';
 import { Header } from './Header';
-import { useTranslation } from 'react-i18next';
 
 interface DetailsProps {
 	navigation: StackNavigationProp<RootStackParams, 'Details'>;
@@ -121,12 +121,9 @@ export function Details(props: DetailsProps): React.ReactElement {
 					<MapView
 						initialRegion={{
 							latitude:
-								(currentLocation.latitude + station.latitude) /
-								2,
+								(currentLocation.latitude + station.latitude) / 2,
 							latitudeDelta:
-								Math.abs(
-									currentLocation.latitude - station.latitude
-								) * 2,
+								Math.abs(currentLocation.latitude - station.latitude) * 2,
 							longitude:
 								(currentLocation.longitude +
 									station.longitude) /
@@ -144,13 +141,13 @@ export function Details(props: DetailsProps): React.ReactElement {
 							coordinate={station}
 							image={stationIcon as ImageRequireSource}
 							ref={handleStationRef}
-							title={t('air_quality_station_marker')}
+							title={t('marker.air_quality_station')}
 							description={truncate(station.description, 40)}
 						/>
 						<Marker
 							coordinate={currentLocation}
 							image={homeIcon as ImageRequireSource}
-							title={t('your_position_marker')}
+							title={t('marker.your_position')}
 						/>
 					</MapView>
 				)}

@@ -1,38 +1,56 @@
 {
 	"components": {
-  "about_box_footnote": "",
-  "about_box_per_day": "",
+  "box_footnote": "",
+  "box_per_day": "",
   "btn_back": "",
+  "cigarette_count": "",
+  "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
   "current_location_unknown_station": "",
-  "header_change_location": "",
-  "home_cigarettes_count": "",
-  "home_cigarettes_swear_smoke": ""
+  "frequency": "",
+  "frequency_daily": "daily",
+  "frequency_monthly": "monthly",
+  "frequency_weekly": "weekly",
+  "header": {
+    "change_location": ""
+  },
+  "loading_cigarettes": "Loading<1>...</1>",
+  "swear_word": "",
+  "swear_word_0": "Oh",
+  "swear_word_1": "Shoot",
+  "swear_word_2": "Dang",
+  "swear_word_3": "Darn",
+  "swear_word_4": "Geez",
+  "swear_word_5": "OMG",
+  "swear_word_6": "Crap",
+  "swear_word_7": "Arrgh"
 }
 ,
 	"screen_about": {
-  "about_box_footnote": "",
-  "about_box_per_day": "",
-  "credits_available_github": "",
-  "credits_concept_and_development": "",
-  "credits_data_from_link_1": "",
-  "credits_data_from_link_2": "",
-  "credits_data_from_message_1": "",
-  "credits_data_from_message_2": "",
-  "credits_design_and_copywriting": "",
-  "credits_source_code": "",
-  "credits_title": "",
+  "box_footnote": "",
+  "box_per_day": "",
+  "credits": {
+    "concept_and_development": "Concept & Development by <3>{{author}}</3>.",
+    "database": "Air quality data from <1>WAQI</1> and <3>OpenAQ</3>.",
+    "design_and_copywriting": "Design & Copywriting by <3>{{author}}</3>.",
+    "source_code": "Source code <1>available on Github</1>.",
+    "title": ""
+  },
   "how_to_calculate_number_of_cigarettes": {
-    "message": "This app was inspired by Berkeley Earth’s findings about the <1>equivalence between air pollution and cigarette smoking</1>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <3>{{proportion}}</3>.",
+    "message": "This app was inspired by Berkeley Earth’s findings about the <1>equivalence between air pollution and cigarette smoking</1>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <3></3>.",
     "title": ""
   },
   "inaccurated_beta": {
     "message": "",
     "title": ""
   },
-  "settings_distance_unit": "",
-  "settings_distance_unit_km": "",
-  "settings_distance_unit_mile": "",
-  "settings_title": "",
+  "settings": {
+    "distance_unit": {
+      "km": "km",
+      "label": "",
+      "mile": "mile"
+    },
+    "title": ""
+  },
   "weird_results": {
     "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <1>WAQI</1> and <3>OpenAQ</3> for more information and history on your station.",
     "title": ""
@@ -73,13 +91,12 @@
     "see_detailed_info": "",
     "why_is_station_so_far": ""
   },
-  "frequency_allow_notifications": "",
-  "frequency_daily": "",
-  "frequency_monthly": "",
   "frequency_notif": "",
   "frequency_notifications_cancel": "",
-  "frequency_notify_me": "",
-  "frequency_weekly": "",
+  "frequency": {
+    "allow_notifications": "",
+    "notify_me": ""
+  },
   "header_air_quality_station_distance": "",
   "header_from_search": "",
   "share_message": "",

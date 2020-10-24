@@ -133,7 +133,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 	const { onBackClick } = props;
 	const { api } = useContext(ApiContext);
 	const { currentLocation } = useContext(CurrentLocationContext);
-	const { t } = useTranslation('screen_detail')
+	const { t } = useTranslation('screen_detail');
 
 	if (!currentLocation) {
 		throw new Error(
@@ -149,6 +149,8 @@ export function Header(props: HeaderProps): React.ReactElement {
 	// the average AQI of each pollutant.
 	// FIXME Make sure the units are correctly converted.
 	const averages = pollutantAverage(api.normalized);
+
+	const time: string = formatDistanceToNow(new Date(api.pm25.date.local));
 
 	return (
 		<View style={styles.container}>
@@ -167,15 +169,11 @@ export function Header(props: HeaderProps): React.ReactElement {
 						style={styles.currentLocation}
 					/>
 					{renderInfo(
-						t('header_latest_update.label'),
-						t('header_latest_update.ago', {
-							time: formatDistanceToNow(
-								new Date(api.pm25.date.local)
-							),
-						})
+						t('header.latest_update.label', 'Latest Update:'),
+						t('header.latest_update.ago', '{{time}} ago', { time }) as string
 					)}
 					{renderInfo(
-						t('header_primary_pollutant_label'),
+						t('header.primary_pollutant_label'),
 						getDominantPol(api.normalized).toUpperCase()
 					)}
 

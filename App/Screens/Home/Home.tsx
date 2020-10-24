@@ -29,7 +29,6 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
-import { useTranslation } from 'react-i18next';
 import { CigarettesBlock } from '../../components/CigarettesBlock';
 
 interface HomeProps {
@@ -72,12 +71,12 @@ function getCigarettesHeight(count: number): number {
 		count <= THRESHOLD.FIRST
 			? SIZES.BIG
 			: count <= THRESHOLD.SECOND
-				? SIZES.MEDIUM
-				: count <= THRESHOLD.THIRD
-					? SIZES.BIG
-					: count <= THRESHOLD.FOURTH
-						? SIZES.MEDIUM
-						: SIZES.SMALL
+			? SIZES.MEDIUM
+			: count <= THRESHOLD.THIRD
+			? SIZES.BIG
+			: count <= THRESHOLD.FOURTH
+			? SIZES.MEDIUM
+			: SIZES.SMALL
 	);
 }
 
@@ -140,7 +139,6 @@ export function Home(props: HomeProps): React.ReactElement {
 	const { currentLocation } = useContext(CurrentLocationContext);
 	const { frequency } = useContext(FrequencyContext);
 
-
 	if (!api) {
 		throw new Error(
 			'Home/Home.tsx only gets displayed when `api` is defined.'
@@ -184,7 +182,9 @@ export function Home(props: HomeProps): React.ReactElement {
 					cigarettes={cigarettes.count}
 					cigarettesStyle={styles.cigarettes}
 					fullCigaretteLength={getCigarettesHeight(cigarettes.count)}
-					showMaxCigarettes={getDynamicMaxCigarettes(cigarettes.count)}
+					showMaxCigarettes={getDynamicMaxCigarettes(
+						cigarettes.count
+					)}
 					spacingHorizontal={getCigarettesMargin(cigarettes.count)}
 					spacingVertical={getCigarettesMargin(cigarettes.count)}
 					style={[theme.withPadding, styles.withMargin]}

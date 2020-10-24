@@ -14,13 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { DistanceUnit } from '@shootismoke/ui';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-	Picker,
 	Platform,
 	ScrollView,
 	StyleSheet,
@@ -31,14 +29,17 @@ import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 
 import { BackButton } from '../../components';
-import { useDistanceUnit } from '../../stores/distanceUnit';
-import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
+import { trackScreen } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { RootStackParams } from '../routeParams';
-import { Credit } from './Credit';
+import {
+	handleOpenBerkeley,
+	handleOpenWaqi,
+	handleOpenOpenAQ,
+} from './bookmarks';
 import { Box } from './Box';
-import { handleOpenBerkeley, handleOpenWaqi, handleOpenOpenAQ } from './Bookmarks';
-
+import { Credit } from './Credit';
+import { Setting } from './Setting';
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -78,14 +79,6 @@ const styles = StyleSheet.create({
 		marginBottom: theme.spacing.big,
 		paddingTop: theme.spacing.big,
 	},
-	distancePicker: {
-		...Platform.select({
-			ios: {
-				marginBottom: scale(-60),
-				marginTop: scale(-40),
-			},
-		}),
-	},
 	distanceText: {
 		...theme.text,
 		fontSize: scale(14),
@@ -115,18 +108,22 @@ const styles = StyleSheet.create({
 });
 
 function Proportion(props: ProportionProps): React.ReactElement {
-	const { size } = props
-	const note1 = '\u207D\u00B9\u207E'
-	return <>{size}<Text style={styles.micro}>&micro;</Text>g/m&sup3; {note1}</>
+	const { size } = props;
+	const note1 = '\u207D\u00B9\u207E';
+	return (
+		<>
+			{size}
+			<Text style={styles.micro}>&micro;</Text>g/m&sup3; {note1}
+		</>
+	);
 }
 
 export function About(props: AboutProps): React.ReactElement {
 	const {
 		navigation: { goBack },
-		route
+		route,
 	} = props;
-	const { distanceUnit, setDistanceUnit } = useDistanceUnit();
-	const { t } = useTranslation('screen_about')
+	const { t } = useTranslation('screen_about');
 
 	trackScreen('ABOUT');
 
@@ -142,8 +139,19 @@ export function About(props: AboutProps): React.ReactElement {
 					{t('how_to_calculate_number_of_cigarettes.title')}
 				</Text>
 				<Text style={theme.text}>
-					<Trans i18nKey='how_to_calculate_number_of_cigarettes.message' t={t}>
-						This app was inspired by Berkeley Earth’s findings about the <Text onPress={handleOpenBerkeley} style={theme.link}>equivalence between air pollution and cigarette smoking</Text>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <Proportion size='22' />.
+					<Trans
+						i18nKey="how_to_calculate_number_of_cigarettes.message"
+						t={t}
+					>
+						This app was inspired by Berkeley Earth’s findings about
+						the{' '}
+						<Text onPress={handleOpenBerkeley} style={theme.link}>
+							equivalence between air pollution and cigarette
+							smoking
+						</Text>
+						. The rule of thumb is simple: one cigarette per day
+						(24h) is the rough equivalent of a PM2.5 level of{' '}
+						<Proportion size="22" />.
 					</Trans>
 				</Text>
 				<Box />
@@ -159,12 +167,8 @@ export function About(props: AboutProps): React.ReactElement {
 				onMount={route.params?.scrollInto === 'aboutBetaInaccurate'}
 				style={styles.section}
 			>
-				<Text style={styles.h2}>
-					{t('inaccurated_beta.title')}
-				</Text>
-				<Text style={theme.text}>
-					{t('inaccurated_beta.message')}
-				</Text>
+				<Text style={styles.h2}>{t('inaccurated_beta.title')}</Text>
+				<Text style={theme.text}>{t('inaccurated_beta.message')}</Text>
 			</ScrollIntoView>
 
 			<View style={styles.section}>
@@ -172,8 +176,18 @@ export function About(props: AboutProps): React.ReactElement {
 					{t('where_does_data_come_from.title')}
 				</Text>
 				<Text style={theme.text}>
-					<Trans i18nKey='where_does_data_come_from.message' t={t}>
-						Air quality data comes from <Text onPress={handleOpenWaqi} style={theme.link}>WAQI</Text> and <Text onPress={handleOpenOpenAQ} style={theme.link}>OpenAQ</Text> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.
+					<Trans i18nKey="where_does_data_come_from.message" t={t}>
+						Air quality data comes from{' '}
+						<Text onPress={handleOpenWaqi} style={theme.link}>
+							WAQI
+						</Text>{' '}
+						and{' '}
+						<Text onPress={handleOpenOpenAQ} style={theme.link}>
+							OpenAQ
+						</Text>{' '}
+						in the form of PM2.5 AQI levels which are usually
+						updated every one hour and converted to direct PM2.5
+						levels by the app.
 					</Trans>
 				</Text>
 			</View>
@@ -196,38 +210,24 @@ export function About(props: AboutProps): React.ReactElement {
 			<View style={styles.section}>
 				<Text style={styles.h2}>{t('weird_results.title')}</Text>
 				<Text style={theme.text}>
-					<Trans i18nKey='weird_results.message' t={t}>
-						We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <Text onPress={handleOpenWaqi} style={theme.link}>WAQI</Text> and <Text onPress={handleOpenOpenAQ} style={theme.link}>OpenAQ</Text> for more information and history on your station.
+					<Trans i18nKey="weird_results.message" t={t}>
+						We have also encountered a few surprising results: large
+						cities with better air than small villages; sudden huge
+						increases in the number of cigarettes; stations of the
+						same town showing significantly different numbers... The
+						fact is air quality depends on several factors such as
+						temperature, pressure, humidity and even wind direction
+						and intensity. If the result seems weird for you, check{' '}
+						<Text onPress={handleOpenWaqi} style={theme.link}>
+							WAQI
+						</Text> and <Text onPress={handleOpenOpenAQ} style={theme.link}>
+							OpenAQ
+						</Text>{' '}
+						for more information and history on your station.
 					</Trans>
 				</Text>
 			</View>
-
-			<View style={styles.distance}>
-				<Text style={styles.h2}>{t('settings.title')}</Text>
-				<Text style={theme.text}>
-					{t('settings.distance_unit.label')}
-				</Text>
-				<Picker
-					onValueChange={(value: DistanceUnit): void => {
-						track(
-							`SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
-						);
-						setDistanceUnit(value);
-					}}
-					selectedValue={distanceUnit}
-					style={styles.distancePicker}
-				>
-					<Picker.Item
-						label={t('settings.distance_unit.km', 'km')}
-						value="km"
-					/>
-					<Picker.Item
-						label={t('settings.distance_unit.mile', 'mile')}
-						value="mile"
-					/>
-				</Picker>
-			</View>
-
+			<Setting />
 			<Credit />
 		</CustomScrollView>
 	);

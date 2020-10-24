@@ -1,102 +1,112 @@
 {
 	"components": {
-  "about_box_footnote": "",
-  "about_box_per_day": "",
-  "btn_back": "",
-  "current_location_unknown_station": "",
-  "header_change_location": "",
-  "home_cigarettes_count": "",
-  "home_cigarettes_count_plural": "",
-  "home_cigarettes_swear_smoke": ""
-}
-,
+		"box_footnote": "aaa",
+		"box_per_day": "aaa",
+		"btn_back": "aaa",
+		"cigarette_count": "aaa",
+		"cigarette_count_plural": "aaa",
+		"cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
+		"current_location_unknown_station": "aaa",
+		"frequency": "aaa",
+		"frequency_daily": "daily",
+		"frequency_monthly": "monthly",
+		"frequency_weekly": "weekly",
+		"header": {
+			"change_location": "aaa"
+		},
+		"loading_cigarettes": "Loading<1>...</1>",
+		"swear_word": "aaa",
+		"swear_word_0": "Oh",
+		"swear_word_1": "Shoot",
+		"swear_word_2": "Dang",
+		"swear_word_3": "Darn",
+		"swear_word_4": "Geez",
+		"swear_word_5": "OMG",
+		"swear_word_6": "Crap",
+		"swear_word_7": "Arrgh"
+	},
 	"screen_about": {
-  "about_box_footnote": "",
-  "about_box_per_day": "",
-  "credits_available_github": "",
-  "credits_concept_and_development": "",
-  "credits_data_from_link_1": "",
-  "credits_data_from_link_2": "",
-  "credits_data_from_message_1": "",
-  "credits_data_from_message_2": "",
-  "credits_design_and_copywriting": "",
-  "credits_source_code": "",
-  "credits_title": "",
-  "how_to_calculate_number_of_cigarettes": {
-    "message": "This app was inspired by Berkeley Earth’s findings about the <1>equivalence between air pollution and cigarette smoking</1>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <3>{{proportion}}</3>.",
-    "title": ""
-  },
-  "inaccurated_beta": {
-    "message": "",
-    "title": ""
-  },
-  "settings_distance_unit": "",
-  "settings_distance_unit_km": "",
-  "settings_distance_unit_mile": "",
-  "settings_title": "",
-  "weird_results": {
-    "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <1>WAQI</1> and <3>OpenAQ</3> for more information and history on your station.",
-    "title": ""
-  },
-  "where_does_data_come_from": {
-    "message": "Air quality data comes from <1>WAQI</1> and <3>OpenAQ</3> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
-    "title": ""
-  },
-  "why_is_the_station_so_far": {
-    "message": "",
-    "title": ""
-  }
-}
-,
+		"box_footnote": "aaa",
+		"box_per_day": "aaa",
+		"credits": {
+			"concept_and_development": "Concept & Development by <3>{{author}}</3>.",
+			"database": "Air quality data from <1>WAQI</1> and <3>OpenAQ</3>.",
+			"design_and_copywriting": "Design & Copywriting by <3>{{author}}</3>.",
+			"source_code": "Source code <1>available on Github</1>.",
+			"title": "aaa"
+		},
+		"how_to_calculate_number_of_cigarettes": {
+			"message": "This app was inspired by Berkeley Earth’s findings about the <1>equivalence between air pollution and cigarette smoking</1>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <3></3>.",
+			"title": "aaa"
+		},
+		"inaccurated_beta": {
+			"message": "aaa",
+			"title": "aaa"
+		},
+		"settings": {
+			"distance_unit": {
+				"km": "km",
+				"label": "aaa",
+				"mile": "mile"
+			},
+			"title": "aaa"
+		},
+		"weird_results": {
+			"message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <1>WAQI</1> and <3>OpenAQ</3> for more information and history on your station.",
+			"title": "aaa"
+		},
+		"where_does_data_come_from": {
+			"message": "Air quality data comes from <1>WAQI</1> and <3>OpenAQ</3> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
+			"title": "aaa"
+		},
+		"why_is_the_station_so_far": {
+			"message": "aaa",
+			"title": "aaa"
+		}
+	},
 	"screen_detail": {
-  "air_quality_station_marker": "",
-  "distance_label": "",
-  "header_latest_update": {
-    "ago": "",
-    "label": ""
-  },
-  "header_primary_pollutant_label": "",
-  "your_position_marker": ""
-}
-,
+		"air_quality_station_marker": "aaa",
+		"distance_label": "aaa",
+		"header_latest_update": {
+			"ago": "aaa",
+			"label": "aaa"
+		},
+		"header_primary_pollutant_label": "aaa",
+		"your_position_marker": "aaa"
+	},
 	"screen_error": {
-  "cannot_load_cigarettes": "",
-  "choose_other_location": "",
-  "description": "",
-  "message": "",
-  "show_details": "",
-  "sorry": ""
-}
-,
+		"cannot_load_cigarettes": "aaa",
+		"choose_other_location": "aaa",
+		"description": "aaa",
+		"message": "aaa",
+		"show_details": "aaa",
+		"sorry": "aaa"
+	},
 	"screen_home": {
-  "beta_not_accurate": "",
-  "btn": {
-    "see_detailed_info": "",
-    "why_is_station_so_far": ""
-  },
-  "frequency_allow_notifications": "",
-  "frequency_daily": "",
-  "frequency_monthly": "",
-  "frequency_notif": "",
-  "frequency_notifications_cancel": "",
-  "frequency_notify_me": "",
-  "frequency_weekly": "",
-  "header_air_quality_station_distance": "",
-  "header_from_search": "",
-  "share_message": "",
-  "share_message_plural": "",
-  "share_title": "",
-  "station_too_far_message": ""
-}
-,
+		"beta_not_accurate": "aaa",
+		"btn": {
+			"see_detailed_info": "aaa",
+			"why_is_station_so_far": "aaa"
+		},
+		"frequency_notif": "aaa",
+		"frequency_notifications_cancel": "aaa",
+		"frequency": {
+			"allow_notifications": "aaa",
+			"notify_me": "aaa"
+		},
+		"header_air_quality_station_distance": "aaa",
+		"header_from_search": "aaa",
+		"share_message": "aaa",
+		"share_message_plural": "aaa",
+		"share_title": "aaa",
+		"station_too_far_message": "aaa"
+	},
 	"screen_loading": {
-  "title_cough": "",
-  "title_loading": ""
-}
-,
+		"title_cough": "aaa",
+		"title_loading": "aaa"
+	},
 	"screen_search": {
-  "current_location": "",
-  "header_input_placeholder": ""
-}
-
+		"current_location": "aaa",
+		"header_input_placeholder": "aaa"
+	}
 }
