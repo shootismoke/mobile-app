@@ -72,7 +72,7 @@ yarn start
 
 The [Expo](https://expo.io) packager will show, and you can either:
 
--   install the Expo app, scan the displayed QR code, and run the app on your mobile phone directly.
+-   install the Expo app -> scan the displayed QR code -> run the app on your mobile phone directly.
 -   open the Android simulator.
 -   open the iOS simulator.
 
