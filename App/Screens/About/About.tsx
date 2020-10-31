@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import Constants from 'expo-constants';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
@@ -24,22 +25,52 @@ import {
 	StyleSheet,
 	Text,
 	View,
+	Picker,
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 
 import { BackButton } from '../../components';
-import { trackScreen } from '../../util/amplitude';
+import { trackScreen, AmplitudeEvent, track } from '../../util/amplitude';
 import * as theme from '../../util/theme';
 import { RootStackParams } from '../routeParams';
-import {
-	handleOpenBerkeley,
-	handleOpenWaqi,
-	handleOpenOpenAQ,
-} from './bookmarks';
 import { Box } from './Box';
-import { Credit } from './Credit';
-import { Setting } from './Setting';
+import { useDistanceUnit } from '../../stores';
+import { DistanceUnit, link } from '@shootismoke/ui';
+
+import { Linking } from 'react-native';
+
+import { sentryError } from '../../util/sentry';
+
+function AboutLink(url: string): void {
+	Linking.openURL(url).catch(sentryError('About'));
+}
+
+export function handleOpenWaqi(): void {
+	AboutLink('https://aqicn.org');
+}
+
+export function handleOpenOpenAQ(): void {
+	AboutLink('https://openaq.org');
+}
+
+export function handleOpenBerkeley(): void {
+	AboutLink(
+		'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
+	);
+}
+
+export function handleOpenAmaury(): void {
+	AboutLink('https://twitter.com/amaurymartiny');
+}
+
+export function handleOpenGithub(): void {
+	AboutLink('https://github.com/amaurymartiny/shoot-i-smoke');
+}
+
+export function handleOpenMarcelo(): void {
+	AboutLink('https://www.behance.net/marceloscoelho');
+}
 
 const CustomScrollView = wrapScrollView(ScrollView);
 const scrollViewOptions = {
@@ -65,6 +96,12 @@ interface ProportionProps {
 }
 
 const styles = StyleSheet.create({
+	credits: {
+		borderTopColor: theme.iconBackgroundColor,
+		borderTopWidth: 1,
+		marginBottom: theme.spacing.normal,
+		paddingTop: theme.spacing.big,
+	},
 	articleLink: {
 		...theme.text,
 		fontSize: scale(8),
@@ -105,6 +142,14 @@ const styles = StyleSheet.create({
 	section: {
 		marginBottom: theme.spacing.big,
 	},
+	distancePicker: {
+		...Platform.select({
+			ios: {
+				marginBottom: scale(-60),
+				marginTop: scale(-40),
+			},
+		}),
+	},
 });
 
 function Proportion(props: ProportionProps): React.ReactElement {
@@ -124,8 +169,12 @@ export function About(props: AboutProps): React.ReactElement {
 		route,
 	} = props;
 	const { t } = useTranslation('screen_about');
+	const { distanceUnit, setDistanceUnit } = useDistanceUnit();
 
 	trackScreen('ABOUT');
+
+	const appName = Constants.manifest.name;
+	const appVer = Constants.manifest.revisionId || Constants.manifest.version;
 
 	return (
 		<CustomScrollView
@@ -227,8 +276,71 @@ export function About(props: AboutProps): React.ReactElement {
 					</Trans>
 				</Text>
 			</View>
-			<Setting />
-			<Credit />
+
+			<View style={styles.distance}>
+				<Text style={styles.h2}>{t('settings.title')}</Text>
+				<Text style={theme.text}>
+					{t('settings.distance_unit.label')}
+				</Text>
+				<Picker onValueChange={(value: DistanceUnit): void => {
+					track(
+						`SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
+					);
+					setDistanceUnit(value);
+				}}
+					selectedValue={distanceUnit}
+					style={styles.distancePicker}
+				>
+					<Picker.Item
+						label={t('settings.distance_unit.km', 'km')}
+						value="km"
+					/>
+					<Picker.Item
+						label={t('settings.distance_unit.mile', 'mile')}
+						value="mile"
+					/>
+				</Picker>
+				{/* TODO Add changing languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
+			</View>
+
+			<View style={styles.credits}>
+				<Text style={styles.h2}>{t('credits.title')}</Text>
+				<Text style={theme.text}>
+					<Trans
+						i18nKey="credits.concept_and_development"
+						values={{ author: 'Amaury Martiny' }}
+						t={t}
+					>
+						Concept {'&'} Development by{' '}
+						<Text style={link} onPress={handleOpenAmaury}>{'{{author}}'}</Text>.
+				</Trans>
+					{'\n'}
+					<Trans
+						i18nKey="credits.design_and_copywriting"
+						values={{ author: 'Marcelo S. Coelho' }}
+						t={t}
+					>
+						Design {'&'} Copywriting by{' '}
+						<Text style={link} onPress={handleOpenMarcelo}>{'{{author}}'}</Text>.
+				</Trans>
+					{'\n'}
+					{'\n'}
+					<Trans i18nKey="credits.database" t={t}>
+						Air quality data from{' '}
+						<Text style={link} onPress={handleOpenWaqi}>WAQI</Text> and{' '}
+						<Text style={link} onPress={handleOpenOpenAQ}>OpenAQ</Text>.
+				</Trans>
+					{'\n'}
+					<Trans i18nKey="credits.source_code" t={t}>
+						Source code{' '}
+						<Text style={link} onPress={handleOpenGithub}>available on Github</Text>
+					.
+				</Trans>
+					{'\n'}
+					{'\n'}
+					{`${appName || ''} v${appVer || '?'}`}.
+			</Text>
+			</View>
 		</CustomScrollView>
 	);
 }
