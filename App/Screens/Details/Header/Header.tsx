@@ -150,7 +150,18 @@ export function Header(props: HeaderProps): React.ReactElement {
 	// FIXME Make sure the units are correctly converted.
 	const averages = pollutantAverage(api.normalized);
 
-	const time: string = formatDistanceToNow(new Date(api.pm25.date.local));
+	const time = formatDistanceToNow(new Date(api.pm25.date.local));
+
+	// FIXME The eslint keeps removing 'as string' and shot out an error.
+	const last_update_label: string = t(
+		'header.latest_update.label',
+		'Latest Update:'
+	);
+	const last_update_ago: string = t(
+		'header.latest_update.ago',
+		'{{time}} ago',
+		{ time }
+	);
 
 	return (
 		<View style={styles.container}>
@@ -168,10 +179,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 						measurement={api.pm25}
 						style={styles.currentLocation}
 					/>
-					{renderInfo(
-						t('header.latest_update.label', 'Latest Update:'),
-						t('header.latest_update.ago', '{{time}} ago', { time }) as string
-					)}
+					{renderInfo(last_update_label, last_update_ago)}
 					{renderInfo(
 						t('header.primary_pollutant_label'),
 						getDominantPol(api.normalized).toUpperCase()

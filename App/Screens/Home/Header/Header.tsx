@@ -98,7 +98,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 					)}
 					<Text style={theme.text}>
 						<Trans
-							i18nKey='header.air_quality_station_distance_from'
+							i18nKey="header.air_quality_station_distance_from"
 							values={{
 								distanceToStation: distance,
 								distanceUnit: shortDistanceUnit,
@@ -106,7 +106,8 @@ export function Header(props: HeaderProps): React.ReactElement {
 							tOptions={{ context: isGps ? 'detect' : 'search' }}
 							t={t}
 						>
-							Air Quality Station: {'{{distanceToStation}}{{distanceUnit}}'} away
+							Air Quality Station:{' '}
+							{'{{distanceToStation}}{{distanceUnit}}'} away
 						</Trans>
 					</Text>
 				</View>

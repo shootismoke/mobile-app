@@ -61,9 +61,12 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 
 			const title = t('sharing.title');
 			const message = t('sharing.message', {
-				city: t('sharing.located', { context: currentLocation.city ? 'city' : 'here', place: `${currentLocation.city}` }),
+				city: t('sharing.located', {
+					context: currentLocation.city ? 'city' : 'here',
+					place: `${currentLocation.city || ''}`,
+				}),
 				amount: Math.ceil(api.shootismoke.dailyCigarettes),
-				link: 'https://shootismoke.github.io'
+				link: 'https://shootismoke.github.io',
 			});
 
 			// FIXME imageUrl doesn't work on Android

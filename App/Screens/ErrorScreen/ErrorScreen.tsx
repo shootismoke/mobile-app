@@ -84,7 +84,9 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 			<Image source={errorPicture as ImageRequireSource} />
 			<View>
 				<Text style={styles.errorText}>
-					<Text style={styles.sorry}>{t('header.sorry', 'Sorry')}</Text>
+					<Text style={styles.sorry}>
+						{t('header.sorry', 'Sorry')}
+					</Text>
 					{t('cannot_load_cigarettes')}
 				</Text>
 			</View>
@@ -111,14 +113,13 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 							})}
 						</Text>
 					) : (
-							<Text style={styles.errorMessage}>
-								{t('show_details')}{' '}
-								<Ionicons name="ios-arrow-forward" />
-							</Text>
-						)}
+						<Text style={styles.errorMessage}>
+							{t('show_details')}{' '}
+							<Ionicons name="ios-arrow-forward" />
+						</Text>
+					)}
 				</TouchableOpacity>
 			</ScrollView>
 		</View>
 	);
 }
-

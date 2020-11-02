@@ -24,9 +24,14 @@ import en from './languages/en.json';
 const languageDetector: LanguageDetectorAsyncModule = {
 	type: 'languageDetector',
 	async: true,
-	detect: (cb: Function) => cb(Localization.locale.split('-')[0]),
-	init: () => {},
-	cacheUserLanguage: () => {},
+	detect: (cb: (lng: string) => void) =>
+		cb(Localization.locale.split('-')[0]),
+	init: () => {
+		/* Do nothing */
+	},
+	cacheUserLanguage: () => {
+		/* Do nothing */
+	},
 };
 
 i18next
@@ -46,6 +51,7 @@ i18next
 			'components',
 		],
 		fallbackLng: 'en',
-	});
+	})
+	.catch(console.error);
 
 export default i18next;

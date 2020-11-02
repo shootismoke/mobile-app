@@ -121,9 +121,12 @@ export function Details(props: DetailsProps): React.ReactElement {
 					<MapView
 						initialRegion={{
 							latitude:
-								(currentLocation.latitude + station.latitude) / 2,
+								(currentLocation.latitude + station.latitude) /
+								2,
 							latitudeDelta:
-								Math.abs(currentLocation.latitude - station.latitude) * 2,
+								Math.abs(
+									currentLocation.latitude - station.latitude
+								) * 2,
 							longitude:
 								(currentLocation.longitude +
 									station.longitude) /
@@ -131,7 +134,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 							longitudeDelta:
 								Math.abs(
 									currentLocation.longitude -
-									station.longitude
+										station.longitude
 								) * 2,
 						}}
 						onMapReady={handleMapReady}

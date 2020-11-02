@@ -17,6 +17,7 @@
 import Constants from 'expo-constants';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { ConversionBox, DistanceUnit } from '@shootismoke/ui';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -26,21 +27,18 @@ import {
 	Text,
 	View,
 	Picker,
+	Linking,
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 
 import { BackButton } from '../../components';
+import { useDistanceUnit } from '../../stores';
 import { trackScreen, AmplitudeEvent, track } from '../../util/amplitude';
 import * as theme from '../../util/theme';
-import { RootStackParams } from '../routeParams';
-import { Box } from './Box';
-import { useDistanceUnit } from '../../stores';
-import { DistanceUnit, link } from '@shootismoke/ui';
-
-import { Linking } from 'react-native';
-
 import { sentryError } from '../../util/sentry';
+
+import { RootStackParams } from '../routeParams';
 
 function AboutLink(url: string): void {
 	Linking.openURL(url).catch(sentryError('About'));
@@ -203,7 +201,7 @@ export function About(props: AboutProps): React.ReactElement {
 						<Proportion size="22" />.
 					</Trans>
 				</Text>
-				<Box />
+				<ConversionBox showFootnote={true} t={t} />
 				<Text style={styles.articleLink}>
 					(1){' '}
 					<Text onPress={handleOpenBerkeley} style={theme.link}>
@@ -269,7 +267,9 @@ export function About(props: AboutProps): React.ReactElement {
 						and intensity. If the result seems weird for you, check{' '}
 						<Text onPress={handleOpenWaqi} style={theme.link}>
 							WAQI
-						</Text> and <Text onPress={handleOpenOpenAQ} style={theme.link}>
+						</Text>{' '}
+						and{' '}
+						<Text onPress={handleOpenOpenAQ} style={theme.link}>
 							OpenAQ
 						</Text>{' '}
 						for more information and history on your station.
@@ -282,12 +282,13 @@ export function About(props: AboutProps): React.ReactElement {
 				<Text style={theme.text}>
 					{t('settings.distance_unit.label')}
 				</Text>
-				<Picker onValueChange={(value: DistanceUnit): void => {
-					track(
-						`SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
-					);
-					setDistanceUnit(value);
-				}}
+				<Picker
+					onValueChange={(value: DistanceUnit): void => {
+						track(
+							`SCREEN_SETTINGS_${value.toUpperCase()}` as AmplitudeEvent
+						);
+						setDistanceUnit(value);
+					}}
 					selectedValue={distanceUnit}
 					style={styles.distancePicker}
 				>
@@ -312,7 +313,10 @@ export function About(props: AboutProps): React.ReactElement {
 						t={t}
 					>
 						Concept {'&'} Development by{' '}
-						<Text style={link} onPress={handleOpenAmaury}>{'{{author}}'}</Text>.
+						<Text style={theme.link} onPress={handleOpenAmaury}>
+							{'{{author}}'}
+						</Text>
+						.
 					</Trans>
 					{'\n'}
 					<Trans
@@ -321,20 +325,31 @@ export function About(props: AboutProps): React.ReactElement {
 						t={t}
 					>
 						Design {'&'} Copywriting by{' '}
-						<Text style={link} onPress={handleOpenMarcelo}>{'{{author}}'}</Text>.
+						<Text style={theme.link} onPress={handleOpenMarcelo}>
+							{'{{author}}'}
+						</Text>
+						.
 					</Trans>
 					{'\n'}
 					{'\n'}
 					<Trans i18nKey="credits.database" t={t}>
 						Air quality data from{' '}
-						<Text style={link} onPress={handleOpenWaqi}>WAQI</Text> and{' '}
-						<Text style={link} onPress={handleOpenOpenAQ}>OpenAQ</Text>.
+						<Text style={theme.link} onPress={handleOpenWaqi}>
+							WAQI
+						</Text>{' '}
+						and{' '}
+						<Text style={theme.link} onPress={handleOpenOpenAQ}>
+							OpenAQ
+						</Text>
+						.
 					</Trans>
 					{'\n'}
 					<Trans i18nKey="credits.source_code" t={t}>
 						Source code{' '}
-						<Text style={link} onPress={handleOpenGithub}>available on Github</Text>
-					.
+						<Text style={theme.link} onPress={handleOpenGithub}>
+							available on Github
+						</Text>
+						.
 					</Trans>
 					{'\n'}
 					{'\n'}

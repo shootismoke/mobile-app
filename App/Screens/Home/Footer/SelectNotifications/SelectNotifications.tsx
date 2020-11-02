@@ -236,7 +236,7 @@ export function SelectNotifications(
 			actionSheetOptions={{
 				cancelButtonIndex: 4,
 				options: notificationsValues
-					.map(f => t(`notification.frequency_${f}`))
+					.map((f) => t(`notification.frequency_${f}`))
 					.map(capitalize)
 					.concat(capitalize(t('notification.cancel', 'cancel'))),
 			}}
@@ -280,10 +280,10 @@ export function SelectNotifications(
 							</Text>
 						</View>
 					) : (
-							<Text style={styles.label}>
-								{t('notification.allow')}
-							</Text>
-						)}
+						<Text style={styles.label}>
+							{t('notification.allow')}
+						</Text>
+					)}
 				</View>
 			)}
 		</ActionPicker>
