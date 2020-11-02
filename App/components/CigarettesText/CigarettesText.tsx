@@ -108,4 +108,3 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
  * t('swear_word', 'Crap',	{context: '6'})
  * t('swear_word', 'Arrgh',	{context: '7'})
  */
-// TODO does parser need ns if it has been declared in useTranslation?

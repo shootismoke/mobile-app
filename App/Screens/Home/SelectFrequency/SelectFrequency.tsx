@@ -116,5 +116,3 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 		</ScrollView>
 	);
 }
-
-// TODO

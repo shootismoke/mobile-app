@@ -84,7 +84,7 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 			<Image source={errorPicture as ImageRequireSource} />
 			<View>
 				<Text style={styles.errorText}>
-					<Text style={styles.sorry}>{t('header.sorry')}</Text>
+					<Text style={styles.sorry}>{t('header.sorry', 'Sorry')}</Text>
 					{t('cannot_load_cigarettes')}
 				</Text>
 			</View>
@@ -122,4 +122,3 @@ export function ErrorScreen(props: ErrorScreenProps): React.ReactElement {
 	);
 }
 
-// TODO Translating

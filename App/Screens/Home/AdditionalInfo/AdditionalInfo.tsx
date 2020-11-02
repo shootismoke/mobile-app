@@ -87,7 +87,7 @@ export function AdditionalInfo(
 	if (isTooFar) {
 		return (
 			<View style={[theme.withPadding, style]} {...rest}>
-				<Text style={theme.text}>{t('station_too_far_message')}</Text>
+				<Text style={theme.text}>{t('station_too_far')}</Text>
 			</View>
 		);
 	}

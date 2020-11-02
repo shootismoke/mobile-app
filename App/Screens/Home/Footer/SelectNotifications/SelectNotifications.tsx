@@ -54,7 +54,7 @@ function capitalize(s: string): string {
 
 /**
  * Convert hex to rgba.
- * @see https://stackoverflow.com/questions/21646738/convert-hex-to-rgba#answer-51564734
+ * @see https://stackoverflow.com/a/51564734
  */
 function hex2rgba(hex: string, alpha = 1): string {
 	const matches = hex.match(/\w\w/g);
@@ -236,9 +236,9 @@ export function SelectNotifications(
 			actionSheetOptions={{
 				cancelButtonIndex: 4,
 				options: notificationsValues
-					.map((f) => t(`frequency_${f}`)) // Translate
+					.map(f => t(`notification.frequency_${f}`))
 					.map(capitalize)
-					.concat(t('frequency_notifications_cancel')),
+					.concat(capitalize(t('notification.cancel', 'cancel'))),
 			}}
 			amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
 			callback={(buttonIndex): void => {
@@ -272,23 +272,31 @@ export function SelectNotifications(
 					{isSwitchOn ? (
 						<View>
 							<Text style={styles.label}>
-								{t('frequency.notify_me')}
+								{t('notification.notify_me')}
 							</Text>
 							<Text style={styles.labelFrequency}>
-								{t('frequency', { context: notif })}{' '}
+								{t(`notification.frequency_${notif}`)}{' '}
 								<FontAwesome name="caret-down" />
 							</Text>
 						</View>
 					) : (
-						<Text style={styles.label}>
-							{t('frequency.allow_notifications')}
-						</Text>
-					)}
+							<Text style={styles.label}>
+								{t('notification.allow')}
+							</Text>
+						)}
 				</View>
 			)}
 		</ActionPicker>
 	);
 }
 
-// TODO Translating
-// frequency_never
+/**
+ * I18NEXT-PARSER
+ * https://github.com/i18next/i18next-parser#caveats
+ *
+ * > 'notification.frequency'
+ * t('notification.frequency', 'never',		{context:'never'})
+ * t('notification.frequency', 'daily',		{context:'daily'})
+ * t('notification.frequency', 'weekly',	{context:'weekly'})
+ * t('notification.frequency', 'monthly',	{context:'monthly'})
+ */

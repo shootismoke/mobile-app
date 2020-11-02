@@ -59,7 +59,7 @@ export function BackButton(props: BackButtonProps): React.ReactElement {
 				style={styles.backButton}
 			>
 				<Image source={backIcon as ImageRequireSource} />
-				<Text style={styles.backText}>{t('btn_back')}</Text>
+				<Text style={styles.backText}>{t('btn_back', 'Back')}</Text>
 			</TouchableOpacity>
 		</View>
 	);

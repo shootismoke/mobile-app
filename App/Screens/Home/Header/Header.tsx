@@ -31,7 +31,7 @@ import { ChangeLocation, CurrentLocation } from '../../../components';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { useDistanceUnit } from '../../../stores/distanceUnit';
 import * as theme from '../../../util/theme';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 interface HeaderProps {
 	onChangeLocationClick: (event: GestureResponderEvent) => void;
@@ -97,11 +97,17 @@ export function Header(props: HeaderProps): React.ReactElement {
 						/>
 					)}
 					<Text style={theme.text}>
-						{t('header_air_quality_station_distance', {
-							distanceToStation: distance,
-							distanceUnit: shortDistanceUnit,
-						})}{' '}
-						{!isGps && t('header_from_search')}
+						<Trans
+							i18nKey='header.air_quality_station_distance_from'
+							values={{
+								distanceToStation: distance,
+								distanceUnit: shortDistanceUnit,
+							}}
+							tOptions={{ context: isGps ? 'detect' : 'search' }}
+							t={t}
+						>
+							Air Quality Station: {'{{distanceToStation}}{{distanceUnit}}'} away
+						</Trans>
 					</Text>
 				</View>
 			</View>
@@ -111,4 +117,11 @@ export function Header(props: HeaderProps): React.ReactElement {
 	);
 }
 
-// TODO translating can Trans be used in this case?
+/**
+ * I18NEXT-PARSER
+ * https://github.com/i18next/i18next-parser#caveats
+ *
+ * > Trans: header.air_quality_station_distance_from
+ * t('header.air_quality_station_distance_from', 'Air Quality Station: {{distanceToStation}}{{distanceUnit}} away', {context: 'detect'})
+ * t('header.air_quality_station_distance_from', 'Air Quality Station: {{distanceToStation}}{{distanceUnit}} away from search', {context: 'search'})
+ */

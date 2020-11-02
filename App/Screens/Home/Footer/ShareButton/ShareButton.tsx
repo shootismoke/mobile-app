@@ -58,14 +58,13 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 				format: 'png',
 				quality: 1,
 			});
-			const message = t('share_message', {
-				city: currentLocation.city
-					? `in ${currentLocation.city}`
-					: t('share_message_here'),
-				count: Math.ceil(api.shootismoke.dailyCigarettes),
+
+			const title = t('sharing.title');
+			const message = t('sharing.message', {
+				city: t('sharing.located', { context: currentLocation.city ? 'city' : 'here', place: `${currentLocation.city}` }),
+				amount: Math.ceil(api.shootismoke.dailyCigarettes),
+				link: 'https://shootismoke.github.io'
 			});
-			const title = t('share_title');
-			// TODO Translating plural, correct translation...
 
 			// FIXME imageUrl doesn't work on Android
 			// https://github.com/amaurymartiny/shoot-i-smoke/issues/250
@@ -84,3 +83,13 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 		</View>
 	);
 }
+
+/**
+ * I18NEXT-PARSER
+ * https://github.com/i18next/i18next-parser#caveats
+ *
+ * > const message =
+ * t('sharing.located', 'in {{place}}', {context: 'city'})
+ * t('sharing.located', 'here', {context: 'here'})
+ * t('sharing.message', 'Shoot! People {{city}} \"smoke\" {{amount}} cigarettes daily just by breathing urban air. Try it out yourself: {{link}}')
+ */

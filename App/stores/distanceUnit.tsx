@@ -46,9 +46,8 @@ export function DistanceUnitProvider({
 	const { t } = useTranslation('components');
 
 	function localizedDistanceUnit(format: 'short' | 'long'): string {
-		return distanceUnit === 'km'
-			? t(`distance_unit.${format}_km`)
-			: t(`distance_unit.${format}_mi`);
+		const unit = distanceUnit === 'km' ? 'km' : 'mi';
+		return t(`distance_unit.${format}`, { context: unit });
 	}
 
 	useEffect(() => {
@@ -80,4 +79,13 @@ export function DistanceUnitProvider({
 
 export const useDistanceUnit = (): ContextType => useContext(Context);
 
-// TODO distance_unit.short_km
+/**
+ * I18NEXT-PARSER
+ * https://github.com/i18next/i18next-parser#caveats
+ *
+ * > localizedDistanceUnit
+ * t('distance_unit.long', 'kilometer', {context: 'km'})
+ * t('distance_unit.long', 'mile', {context: 'mi'})
+ * t('distance_unit.short', 'km', {context: 'km'})
+ * t('distance_unit.short', 'mi', {context: 'mi'})
+ */

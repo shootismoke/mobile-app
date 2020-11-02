@@ -2,10 +2,16 @@
 	"components": {
   "box_footnote": "",
   "box_per_day": "",
-  "btn_back": "",
+  "btn_back": "Back",
   "cigarette_count": "",
   "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
   "current_location_unknown_station": "",
+  "distance_unit": {
+    "long_km": "kilometer",
+    "long_mi": "mile",
+    "short_km": "km",
+    "short_mi": "mi"
+  },
   "frequency": "",
   "frequency_daily": "daily",
   "frequency_monthly": "monthly",
@@ -29,14 +35,14 @@
   "box_footnote": "",
   "box_per_day": "",
   "credits": {
-    "concept_and_development": "Concept & Development by <3>{{author}}</3>.",
-    "database": "Air quality data from <1>WAQI</1> and <3>OpenAQ</3>.",
-    "design_and_copywriting": "Design & Copywriting by <3>{{author}}</3>.",
-    "source_code": "Source code <1>available on Github</1>.",
+    "concept_and_development": "Concept & Development by <4>{{author}}</4>.",
+    "database": "Air quality data from <2>WAQI</2> and <5>OpenAQ</5>.",
+    "design_and_copywriting": "Design & Copywriting by <4>{{author}}</4>.",
+    "source_code": "Source code <2>available on Github</2>.",
     "title": ""
   },
   "how_to_calculate_number_of_cigarettes": {
-    "message": "This app was inspired by Berkeley Earth’s findings about the <1>equivalence between air pollution and cigarette smoking</1>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <3></3>.",
+    "message": "This app was inspired by Berkeley Earth’s findings about the <2>equivalence between air pollution and cigarette smoking</2>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <5></5>.",
     "title": ""
   },
   "inaccurated_beta": {
@@ -52,11 +58,11 @@
     "title": ""
   },
   "weird_results": {
-    "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <1>WAQI</1> and <3>OpenAQ</3> for more information and history on your station.",
+    "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <2>WAQI</2> and <4>OpenAQ</4> for more information and history on your station.",
     "title": ""
   },
   "where_does_data_come_from": {
-    "message": "Air quality data comes from <1>WAQI</1> and <3>OpenAQ</3> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
+    "message": "Air quality data comes from <2>WAQI</2> and <6>OpenAQ</6> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
     "title": ""
   },
   "why_is_the_station_so_far": {
@@ -66,23 +72,29 @@
 }
 ,
 	"screen_detail": {
-  "air_quality_station_marker": "",
   "distance_label": "",
-  "header_latest_update": {
-    "ago": "",
-    "label": ""
+  "header": {
+    "latest_update": {
+      "ago": "{{time}} ago",
+      "label": "Latest Update:"
+    },
+    "primary_pollutant_label": ""
   },
-  "header_primary_pollutant_label": "",
-  "your_position_marker": ""
+  "marker": {
+    "air_quality_station": "",
+    "your_position": ""
+  }
 }
 ,
 	"screen_error": {
   "cannot_load_cigarettes": "",
   "choose_other_location": "",
   "description": "",
+  "header": {
+    "sorry": "Sorry"
+  },
   "message": "",
-  "show_details": "",
-  "sorry": ""
+  "show_details": ""
 }
 ,
 	"screen_home": {
@@ -91,27 +103,39 @@
     "see_detailed_info": "",
     "why_is_station_so_far": ""
   },
-  "frequency_notif": "",
-  "frequency_notifications_cancel": "",
-  "frequency": {
-    "allow_notifications": "",
+  "header": {
+    "air_quality_station_distance_from": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
+    "air_quality_station_distance_from_detect": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
+    "air_quality_station_distance_from_search": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away from search"
+  },
+  "notification": {
+    "allow": "",
+    "cancel": "cancel",
+    "frequency_daily": "daily",
+    "frequency_monthly": "monthly",
+    "frequency_never": "never",
+    "frequency_weekly": "weekly",
     "notify_me": ""
   },
-  "header_air_quality_station_distance": "",
-  "header_from_search": "",
-  "share_message": "",
-  "share_title": "",
-  "station_too_far_message": ""
+  "sharing": {
+    "located_city": "in {{place}}",
+    "located_here": "here",
+    "message": "Shoot! People {{city}} \"smoke\" {{amount}} cigarettes daily just by breathing urban air. Try it out yourself: {{link}}",
+    "title": ""
+  },
+  "station_too_far": ""
 }
 ,
 	"screen_loading": {
-  "title_cough": "",
-  "title_loading": ""
+  "cough": "",
+  "loading": ""
 }
 ,
 	"screen_search": {
   "current_location": "",
-  "header_input_placeholder": ""
+  "header": {
+    "input_placeholder": ""
+  }
 }
 
 }

@@ -54,7 +54,7 @@ export function SearchHeader(props: SearchHeaderProps): React.ReactElement {
 			<TextInput
 				autoFocus
 				onChangeText={onChangeSearch}
-				placeholder={t('header_input_placeholder')}
+				placeholder={t('header.input_placeholder')}
 				placeholderTextColor="rgba(255, 255, 255, 0.6)"
 				style={styles.input}
 				underlineColorAndroid="transparent"

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 function renderCough(index: number, t: TFunction): React.ReactElement {
 	return (
 		<Text key={index}>
-			{t('title_cough')}
+			{t('cough')}
 			<Text style={styles.dots}>...</Text>
 		</Text>
 	);
@@ -62,7 +62,7 @@ function renderText(
 
 	return (
 		<Text>
-			{t('title_loading')}
+			{t('loading')}
 			<Text style={styles.dots}>...</Text>
 			{Array.from({ length: coughs }, (_, index) => index + 1).map(
 				(value, index) => {

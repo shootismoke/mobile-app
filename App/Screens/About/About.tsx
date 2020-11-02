@@ -313,7 +313,7 @@ export function About(props: AboutProps): React.ReactElement {
 					>
 						Concept {'&'} Development by{' '}
 						<Text style={link} onPress={handleOpenAmaury}>{'{{author}}'}</Text>.
-				</Trans>
+					</Trans>
 					{'\n'}
 					<Trans
 						i18nKey="credits.design_and_copywriting"
@@ -322,27 +322,25 @@ export function About(props: AboutProps): React.ReactElement {
 					>
 						Design {'&'} Copywriting by{' '}
 						<Text style={link} onPress={handleOpenMarcelo}>{'{{author}}'}</Text>.
-				</Trans>
+					</Trans>
 					{'\n'}
 					{'\n'}
 					<Trans i18nKey="credits.database" t={t}>
 						Air quality data from{' '}
 						<Text style={link} onPress={handleOpenWaqi}>WAQI</Text> and{' '}
 						<Text style={link} onPress={handleOpenOpenAQ}>OpenAQ</Text>.
-				</Trans>
+					</Trans>
 					{'\n'}
 					<Trans i18nKey="credits.source_code" t={t}>
 						Source code{' '}
 						<Text style={link} onPress={handleOpenGithub}>available on Github</Text>
 					.
-				</Trans>
+					</Trans>
 					{'\n'}
 					{'\n'}
 					{`${appName || ''} v${appVer || '?'}`}.
-			</Text>
+				</Text>
 			</View>
 		</CustomScrollView>
 	);
 }
-
-// TODO translating
