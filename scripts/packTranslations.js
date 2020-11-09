@@ -7,155 +7,169 @@
  *
  * TODO do not overwrite the old translation, rename those.
  */
-const fs = require('fs');
-const p = require('path');
+const {
+	readFileSync,
+	readdirSync,
+	existsSync,
+	writeFile,
+	mkdirSync,
+	rmdir,
+	promises
+} = require('fs');
+const { join } = require('path');
 
-const ROOT = p.join('App', 'localization');
-const SRC = 'namespaces';
-const DEST = 'languages';
-const NAME = /([a-zA-Z\-]{2,5})\@([\w\-]+)(?=\.json)/i; // regexr.com/5dud0
-const OLD = /(?=_old)*/i; //
+const ROOT = join(__dirname, '..', 'App', 'localization');
+const SRC = join(ROOT, 'raw-src');
+const DEST = join(ROOT, 'languages');
+const NAME = /([a-zA-Z-]{2,5})@([\w-]+)(?=\.json)/i; // regexr.com/5dud0
 
 const MSG = {};
 
-MSG.no_translation = `
-Translation files not found!
-Please make sure the translation files has this pattern: 'lang-code@namespace.json'`;
-MSG.wrong_content =
-	'The writeTo only accepts ReadableStream or string as content param.';
-MSG.cleaned = (target) => `[${target}] is deleted!`;
-MSG.saved = (file, src) => `Exporting ${file} from '${src}' is completed.`;
+MSG.errors = {
+	file_not_found: 'Translation files not found!',
+};
+MSG.instruction = {};
+MSG.tasks = {
+	merge_complete: (lang) => `Merging ${lang} language is completed.`,
+	clean_up_complete: (target) => `[${target}] is deleted!`,
+};
+
+const mergeOldFile = async () => {
+	const backupDir = `${DEST}.old`
+	const newDir = DEST
+
+	/**
+	 * TODO check for dead keys and remove them
+	 */
+	const files = readdirSync(newDir).map(async (lang) => {
+		const newFile = join(newDir, lang)
+		const newLang = readFileSync(newFile)
+		const bakLang = readFileSync(join(backupDir, lang))
+		const mergedLang = {
+			...JSON.parse(newLang),
+			...JSON.parse(bakLang)
+		}
+		return await promises.writeFile(
+			newFile,
+			JSON.stringify(mergedLang, null, 2)
+		)
+	})
+
+	return Promise.all(files)
+};
+
+const cleanUp = (target) => {
+	const handler = (error) => {
+		if (error) throw error;
+		else console.log(MSG.tasks.clean_up_complete(target));
+	};
+	rmdir(target, { recursive: true }, handler);
+};
+
+const loadNamespace = (name) => {
+	const nsFile = join(SRC, `${name}.json`);
+	const data = readFileSync(nsFile);
+	return JSON.parse(data);
+};
+
+const mergeNamespaces = ({ name, nsMap }) =>
+	new Promise((res, rej) => {
+		const mergedFileName = join(DEST, `${name}.json`);
+		const mergedFile = {};
+
+		for (const { ns, name } of nsMap) {
+			mergedFile[ns] = loadNamespace(name);
+		}
+
+		const handleWriteFile = (err) => {
+			if (err) rej(err);
+			else res(MSG.tasks.merge_complete(name));
+		};
+		writeFile(
+			mergedFileName,
+			JSON.stringify(mergedFile, null, 2),
+			handleWriteFile
+		);
+	});
+
+const backup = async (dir) => {
+	const backupDest = `${dir}.old`
+	if (!existsSync(backupDest)) mkdirSync(backupDest)
+
+	const files = readdirSync(dir).map(async (file) => {
+		const backupFile = join(dir, file)
+		const backupDestFile = join(backupDest, file)
+		return promises.copyFile(backupFile, backupDestFile)
+	})
+
+	return await Promise.all(files)
+};
+
+const secureDestDir = async () => {
+	if (!existsSync(DEST)) mkdirSync(DEST, { recursive: true });
+	else await backup(DEST)
+};
+
+const exportAll = async (maps) => {
+	const processes = [];
+
+	await secureDestDir();
+	for (const lang in maps) {
+		const params = { name: lang, nsMap: maps[lang] };
+		const process = mergeNamespaces(params);
+		processes.push(process);
+	}
+
+	return Promise.allSettled(processes);
+};
 
 const Scanner = {};
 
-Scanner.filterFiles = (paths) =>
-	paths.filter((path) => {
-		const isFile = path.isFile();
-		const isTraslatedFile = NAME.test(path.name);
-		return isFile && isTraslatedFile;
-	});
-
-Scanner.getValidFilenames = (paths) =>
-	Scanner.filterFiles(paths).map((file) => {
-		const filename = file.name.match(NAME);
-		let o = {};
-		o.name = filename[0];
-		o.code = filename[1];
-		o.ns = filename[2];
-		return o;
-	});
-
-Scanner.objectize = (files) => {
+Scanner.getLangMap = (files) => {
 	let list = {};
-	for (const file of files) {
-		if (!list[file.code]) list[file.code] = [[file.ns, file.name]];
-		else list[file.code].push([file.ns, file.name]);
+	for (const { code, ns, name } of files) {
+		const meta = { ns, name };
+		if (!list[code]) list[code] = [meta];
+		else list[code].push(meta);
 	}
 	return list;
 };
 
-Scanner.scan = (dir) =>
-	new Promise((resolve, reject) => {
-		const path = p.join(ROOT, dir);
-		const option = { withFileTypes: true };
-		const handler = (error, paths) => {
-			if (error) reject(error);
+Scanner.filterFiles = (fsDirents) =>
+	fsDirents
+		.filter((fsDirent) => {
+			const isFile = fsDirent.isFile();
+			const isTraslatedFile = NAME.test(fsDirent.name);
+			return isFile && isTraslatedFile;
+		})
+		.map((file) => {
+			const filename = file.name.match(NAME);
+			return {
+				name: filename[0],
+				code: filename[1],
+				ns: filename[2],
+			};
+		});
 
-			const files = Scanner.getValidFilenames(paths);
-			if (!files) reject(new Error(MSG.no_translation));
-			else resolve(Scanner.objectize(files));
-		};
-		fs.readdir(path, option, handler);
-	});
+Scanner.scan = () => {
+	const options = { withFileTypes: true };
 
-const Json = {};
+	const dirents = readdirSync(SRC, options);
+	const validFiles = Scanner.filterFiles(dirents);
 
-Json.token = {
-	open: '{\n',
-	item: (name) => `\t"${name}": `,
-	separator: ',\n',
-	close: '\n}',
+	if (!validFiles) throw new Error(MSG.errors.file_not_found);
+	else return Scanner.getLangMap(validFiles);
 };
 
-Json.writeTo = (filepath, content, flags = 'a') =>
-	new Promise((res, rej) => {
-		const path = p.join(ROOT, filepath);
-		const writer = fs.createWriteStream(path, { flags });
+const println = (array) => array.forEach((item) => console.log(item));
 
-		if (content instanceof fs.ReadStream)
-			content.pipe(writer).on('finish', res).on('error', rej);
-		else if (typeof content === 'string') writer.end(content, 'utf-8', res);
-		else rej(MSG.wrong_content);
-	});
+(async (flags) => {
+	const langMap = Scanner.scan();
+	const jobs = await exportAll(langMap);
 
-Json.header = (dest) => Json.writeTo(dest, Json.token.open, 'w');
-
-Json.body = async ({ path, lang, nsMap }) => {
-	const mapSize = nsMap.length;
-	for (let i = 0; i < mapSize; i++) {
-		const ns = nsMap[i][0];
-		const srcFilename = nsMap[i][1];
-		const src = p.join(ROOT, path.src, `${srcFilename}.json`);
-		const dest = p.join(path.dest, `${lang}.json`);
-		const loader = fs.createReadStream(src);
-
-		await Json.writeTo(dest, Json.token.item(ns));
-		await Json.writeTo(dest, loader);
-		if (i + 1 < mapSize) await Json.writeTo(dest, Json.token.separator);
-	}
-};
-
-Json.footer = (dest) => Json.writeTo(dest, Json.token.close);
-
-Json.save = async (meta) => {
-	const filename = `${meta.lang}.json`;
-	const dest = p.join(meta.path.dest, filename);
-
-	await Json.header(dest);
-	await Json.body(meta);
-	await Json.footer(dest);
-
-	return MSG.saved(filename, p.join(ROOT, meta.path.src, meta.lang));
-};
-
-const checkDestDir = async (dest) => {
-	const path = p.join(ROOT, dest);
-	if (!fs.existsSync(path))
-		return fs.promises.mkdir(path, { recursive: true });
-};
-
-const exportAll = async (path, list) => {
-	let processes = [];
-	await checkDestDir(path.dest);
-	for (const code in list) {
-		const meta = { path, lang: code, nsMap: list[code] };
-		processes.push(Json.save(meta));
-	}
-	return Promise.allSettled(processes);
-};
-
-const clean = (dir) => {
-	const path = p.join(ROOT, dir);
-	const ifFail = (error) => {
-		if (error) throw error;
-		else console.log(MSG.cleaned(path));
-	};
-	return fs.rmdir(path, { recursive: true }, ifFail);
-};
-
-/**
- * Executing
- */
-const main = async (flags) => {
-	const langMap = await Scanner.scan(SRC);
-	const path = { src: SRC, dest: DEST };
-	const jobs = await exportAll(path, langMap);
-
-	if (flags[0] == '-c') clean(SRC);
-
-	return jobs;
-};
-
-main(process.argv.slice(2))
-	.then((results) => results.forEach((result) => console.log(result.value)))
+	if (flags.length > 0 && flags.includes('-c')) cleanUp(SRC);
+	if (flags.length > 0 && flags.includes('-m')) await mergeOldFile();
+	return jobs.map((job) => (job.value ? job.value : job.reason));
+})(process.argv.slice(2))
+	.then(println)
 	.catch(console.error);

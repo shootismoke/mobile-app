@@ -3,3 +3,4 @@
 bin
 coverage
 node_modules
+scripts/packTranslations.js
