@@ -74,7 +74,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('frequency', 'daily', { context: 'daily' })}
+				{t('frequency.daily', 'daily')}
 			</BoxButton>
 			<BoxButton
 				active={frequency === 'weekly'}
@@ -93,7 +93,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('frequency', 'weekly', { context: 'weekly' })}
+				{t('frequency.weekly', 'weekly')}
 			</BoxButton>
 
 			<BoxButton
@@ -111,7 +111,7 @@ export function SelectFrequency(props: ScrollViewProps): React.ReactElement {
 				}}
 				style={styles.boxButton}
 			>
-				{t('frequency', 'monthly', { context: 'monthly' })}
+				{t('frequency.monthly', 'monthly')}
 			</BoxButton>
 		</ScrollView>
 	);

@@ -125,7 +125,7 @@ export function SelectNotifications(
 		// If the getUserData is still loading, just show `never`
 		'never';
 
-	const { t } = useTranslation('screen_home');
+	const { t } = useTranslation(['screen_home', 'components']);
 
 	// Optimistic UI
 	useEffect(() => {
@@ -236,9 +236,13 @@ export function SelectNotifications(
 			actionSheetOptions={{
 				cancelButtonIndex: 4,
 				options: notificationsValues
-					.map((f) => t(`notification.frequency_${f}`))
+					.map((f) => t(`components:frequency.${f}`))
 					.map(capitalize)
-					.concat(capitalize(t('notification.cancel', 'cancel'))),
+					.concat(
+						capitalize(
+							t('screen_home:notification.cancel', 'cancel')
+						)
+					),
 			}}
 			amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
 			callback={(buttonIndex): void => {
@@ -272,16 +276,16 @@ export function SelectNotifications(
 					{isSwitchOn ? (
 						<View>
 							<Text style={styles.label}>
-								{t('notification.notify_me')}
+								{t('screen_home:notification.notify_me')}
 							</Text>
 							<Text style={styles.labelFrequency}>
-								{t(`notification.frequency_${notif}`)}{' '}
+								{t(`components:frequency.${notif}`)}{' '}
 								<FontAwesome name="caret-down" />
 							</Text>
 						</View>
 					) : (
 						<Text style={styles.label}>
-							{t('notification.allow')}
+							{t('screen_home:notification.allow')}
 						</Text>
 					)}
 				</View>
@@ -295,8 +299,6 @@ export function SelectNotifications(
  * https://github.com/i18next/i18next-parser#caveats
  *
  * > 'notification.frequency'
- * t('notification.frequency', 'never',		{context:'never'})
- * t('notification.frequency', 'daily',		{context:'daily'})
- * t('notification.frequency', 'weekly',	{context:'weekly'})
- * t('notification.frequency', 'monthly',	{context:'monthly'})
+ * t('components:frequency.never', 'never')
+ * More frequency at SelectFrequency.tsx
  */

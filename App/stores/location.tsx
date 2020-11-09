@@ -73,9 +73,7 @@ export function LocationContextProvider({
 					// Set lat/lng for now, set the reverse location later
 					// @see https://github.com/amaurymartiny/shoot-i-smoke/issues/323
 					console.log(
-						`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
-							gps
-						)}`
+						`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(gps)}`
 					);
 					setGpsLocation(gps);
 					setCurrentLocation(gps);
@@ -116,10 +114,10 @@ export function LocationContextProvider({
 							parsedLocation.longitude
 							? TE.right(parsedLocation)
 							: TE.left(
-									new Error(
-										'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
-									)
-							  );
+								new Error(
+									'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
+								)
+							);
 					}),
 					// Show the initial error from fetchGpsPosition.
 					TE.mapLeft(() => err)
