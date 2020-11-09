@@ -1,142 +1,109 @@
 {
-	"components": {
-  "box_footnote": "",
-  "box_per_day": "",
-  "btn_back": "Back",
-  "cigarette_count": "",
-  "cigarette_count_plural": "",
-  "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
-  "current_location_unknown_station": "",
-  "distance_unit": {
-    "long_km": "kilometer",
-    "long_mi": "mile",
-    "short_km": "km",
-    "short_mi": "mi"
-  },
-  "frequency": "",
-  "frequency_daily": "daily",
-  "frequency_monthly": "monthly",
-  "frequency_weekly": "weekly",
-  "header": {
-    "change_location": ""
-  },
-  "loading_cigarettes": "Loading<1>...</1>",
-  "swear_word": "",
-  "swear_word_0": "Oh",
-  "swear_word_1": "Shoot",
-  "swear_word_2": "Dang",
-  "swear_word_3": "Darn",
-  "swear_word_4": "Geez",
-  "swear_word_5": "OMG",
-  "swear_word_6": "Crap",
-  "swear_word_7": "Arrgh"
-}
-,
-	"screen_about": {
-  "box_footnote": "",
-  "box_per_day": "",
-  "credits": {
-    "concept_and_development": "Concept & Development by <4>{{author}}</4>.",
-    "database": "Air quality data from <2>WAQI</2> and <5>OpenAQ</5>.",
-    "design_and_copywriting": "Design & Copywriting by <4>{{author}}</4>.",
-    "source_code": "Source code <2>available on Github</2>.",
-    "title": ""
-  },
-  "how_to_calculate_number_of_cigarettes": {
-    "message": "This app was inspired by Berkeley Earth’s findings about the <2>equivalence between air pollution and cigarette smoking</2>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <5></5>.",
-    "title": ""
-  },
-  "inaccurated_beta": {
-    "message": "",
-    "title": ""
-  },
-  "settings": {
-    "distance_unit": {
-      "km": "km",
-      "label": "",
-      "mile": "mile"
+  "components": {
+    "box_footnote": "* Les particules atmosphériques (PM) dont le diamètre est inférieur à 2,5 micromètres augmentent les risques d’inhalation par les êtres vivants.",
+    "box_per_day": "par jour",
+    "btn_back": "Retour",
+    "cigarette_count": "EMPTY",
+    "cigarette_count_plural": "EMPTY",
+    "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
+    "current_location_unknown_station": "Station AQI inconnue",
+    "distance_unit": {},
+    "frequency": {},
+    "header": {
+      "change_location": "Changer la position"
     },
-    "title": ""
+    "loading_cigarettes": "Loading<1>...</1>",
+    "swear_word": "EMPTY",
+    "swear_word_0": "Oh",
+    "swear_word_1": "Saperlipopette",
+    "swear_word_2": "Oh wow",
+    "swear_word_3": "Fichtre",
+    "swear_word_4": "Ciel",
+    "swear_word_5": "Oh mon dieu",
+    "swear_word_6": "Zut",
+    "swear_word_7": "Arf"
   },
-  "weird_results": {
-    "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <2>WAQI</2> and <4>OpenAQ</4> for more information and history on your station.",
-    "title": ""
-  },
-  "where_does_data_come_from": {
-    "message": "Air quality data comes from <2>WAQI</2> and <6>OpenAQ</6> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
-    "title": ""
-  },
-  "why_is_the_station_so_far": {
-    "message": "",
-    "title": ""
-  }
-}
-,
-	"screen_detail": {
-  "distance_label": "",
-  "header": {
-    "latest_update": {
-      "ago": "{{time}} ago",
-      "label": "Latest Update:"
+  "screen_about": {
+    "credits": {
+      "concept_and_development": "Concept & Development by <4>{{author}}</4>.",
+      "database": "Air quality data from <2>WAQI</2> and <6>OpenAQ</6>.",
+      "design_and_copywriting": "Design & Copywriting by <4>{{author}}</4>.",
+      "source_code": "Source code <2>available on Github</2>.",
+      "title": "Crédits"
     },
-    "primary_pollutant_label": ""
+    "how_to_calculate_number_of_cigarettes": {
+      "message": "This app was inspired by Berkeley Earth’s findings about the <2>equivalence between air pollution and cigarette smoking</2>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <5></5>.",
+      "title": "Comment calculons nous le nombre de cigarettes ?"
+    },
+    "inaccurated_beta": {
+      "message": "L'affichage des cigarettes fumées par semaine et par mois est en version beta car les résultats peuvent être très inexacts: nous multiplions simplement le niveau actuel de PM2.5 pour estimer le niveau d'une semaine (7 jours) et d'un mois (30 jours). Pour la fonctionnalité entière, nous prévoyons un accès à la base de données contenant l'historique du niveau de PM2.5 par localisation, pour que nous puissions fournir une estimation précise suivant le nombre de cigarettes que vous fumez par semaine ou par mois.",
+      "title": "Pourquoi la fonction du nombre de cigarettes par semaines et par mois est-elle en version beta ?"
+    },
+    "settings": {
+      "distance_unit": {}
+    },
+    "weird_results": {
+      "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <2>WAQI</2> and <6>OpenAQ</6> for more information and history on your station."
+    },
+    "where_does_data_come_from": {
+      "message": "Air quality data comes from <2>WAQI</2> and <6>OpenAQ</6> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
+      "title": "D'où viennent les données ?"
+    },
+    "why_is_the_station_so_far": {
+      "message": "Comme les stations qui mesurent et communiquent les résultats de la qualité de l'air toutes les heures coûtent cher, les données sont toujours limitées aux régions bien développées et aux grandes villes du monde. Si vous êtes loin d'un centre urbain plus important, les résultats ne seront probablement pas aussi précis. Les chances sont que votre air est meilleur dans ce cas au moins !",
+      "title": "Pourquoi la station est-elle si loin de moi ?"
+    }
   },
-  "marker": {
-    "air_quality_station": "",
-    "your_position": ""
+  "screen_detail": {
+    "distance_label": "Station AQI: {{distanceToStation}}km",
+    "header": {
+      "latest_update": {
+        "ago": "il y a {{time}}",
+        "label": "Dernière mise à jour :"
+      },
+      "primary_pollutant_label": "Polluant primaire :"
+    },
+    "marker": {
+      "air_quality_station": "Station de mesure de la pollution de l'air",
+      "your_position": "Votre position"
+    }
+  },
+  "screen_error": {
+    "cannot_load_cigarettes": "Ne ne pouvons\npas charger\nvos cigarettes.",
+    "choose_other_location": "Choisir un autre lieu",
+    "description": "Il y a soit un problème avec nos bases de données, ou bien vous n'avez pas de station de surveillance de l'air près de vous. Réessayez plus tard !",
+    "header": {
+      "sorry": "Désolé !"
+    },
+    "message": "Erreur: {{errorText}}"
+  },
+  "screen_home": {
+    "beta_not_accurate": "Les chiffres ne sont pas précis à 100%.",
+    "btn": {
+      "see_detailed_info": "Voir des informations plus détaillées",
+      "why_is_station_so_far": "Pourquoi la station est-elle si éloignée?"
+    },
+    "header": {
+      "air_quality_station_distance_from": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
+      "air_quality_station_distance_from_detect": "Station de surveillance de l'air: {{distanceToStation}}km",
+      "air_quality_station_distance_from_search": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away from search"
+    },
+    "notification": {},
+    "sharing": {
+      "located_city": "in {{place}}",
+      "message": "Shoot! People {{city}} \"smoke\" {{amount}} cigarettes daily just by breathing urban air. Try it out yourself: {{link}}",
+      "title": "Saviez-vous que vous fumez peut-être jusqu'à 20 cigarettes par jour, juste parce-que vous vivez dans une grande ville ?"
+    },
+    "station_too_far": "Nous ne sommes pas parvenus à trouver une station plus proche de vous. Les résultats pourraient être inexacts à cette distance."
+  },
+  "screen_loading": {
+    "cough": "Tousse",
+    "loading": "Chargement"
+  },
+  "screen_search": {
+    "current_location": "Votre position",
+    "header": {
+      "input_placeholder": "Chercher une ville ou une adresse"
+    }
   }
-}
-,
-	"screen_error": {
-  "cannot_load_cigarettes": "",
-  "choose_other_location": "",
-  "description": "",
-  "header": {
-    "sorry": "Sorry"
-  },
-  "message": "",
-  "show_details": ""
-}
-,
-	"screen_home": {
-  "beta_not_accurate": "",
-  "btn": {
-    "see_detailed_info": "",
-    "why_is_station_so_far": ""
-  },
-  "header": {
-    "air_quality_station_distance_from": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
-    "air_quality_station_distance_from_detect": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
-    "air_quality_station_distance_from_search": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away from search"
-  },
-  "notification": {
-    "allow": "",
-    "cancel": "cancel",
-    "frequency_daily": "daily",
-    "frequency_monthly": "monthly",
-    "frequency_never": "never",
-    "frequency_weekly": "weekly",
-    "notify_me": ""
-  },
-  "sharing": {
-    "located_city": "in {{place}}",
-    "located_here": "here",
-    "message": "Shoot! People {{city}} \"smoke\" {{amount}} cigarettes daily just by breathing urban air. Try it out yourself: {{link}}",
-    "title": ""
-  },
-  "station_too_far": ""
-}
-,
-	"screen_loading": {
-  "cough": "",
-  "loading": ""
-}
-,
-	"screen_search": {
-  "current_location": "",
-  "header": {
-    "input_placeholder": ""
-  }
-}
-
 }

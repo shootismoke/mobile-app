@@ -49,7 +49,7 @@ const mergeOldFile = async () => {
 			...JSON.parse(newLang),
 			...JSON.parse(bakLang)
 		}
-		return await promises.writeFile(
+		return promises.writeFile(
 			newFile,
 			JSON.stringify(mergedLang, null, 2)
 		)
@@ -102,12 +102,12 @@ const backup = async (dir) => {
 		return promises.copyFile(backupFile, backupDestFile)
 	})
 
-	return await Promise.all(files)
+	return Promise.all(files)
 };
 
 const secureDestDir = async () => {
 	if (!existsSync(DEST)) mkdirSync(DEST, { recursive: true });
-	else await backup(DEST)
+	else backup(DEST)
 };
 
 const exportAll = async (maps) => {

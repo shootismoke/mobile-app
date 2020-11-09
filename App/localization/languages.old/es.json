@@ -4,6 +4,7 @@
     "box_per_day": "EMPTY",
     "btn_back": "Back",
     "cigarette_count": "EMPTY",
+    "cigarette_count_plural": "EMPTY",
     "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
     "current_location_unknown_station": "EMPTY",
     "distance_unit": {
