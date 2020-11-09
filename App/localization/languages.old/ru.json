@@ -1,37 +1,32 @@
 {
   "components": {
-    "box_footnote": "EMPTY",
-    "box_per_day": "EMPTY",
-    "btn_back": "Back",
+    "box_footnote": "*Атмосферные твёрные частицы (PM), диаметром менее 2.5 микрометров, с повышенной вероятностью вдыхания живыми существами.",
+    "box_per_day": "в день",
+    "btn_back": "Назад",
     "cigarette_count_0": "EMPTY",
     "cigarette_count_1": "EMPTY",
     "cigarette_count_2": "EMPTY",
     "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
-    "current_location_unknown_station": "EMPTY",
+    "current_location_unknown_station": "Неизвестная станция AQI",
     "distance_unit": {
-      "long_km": "kilometer",
-      "long_mi": "mile",
-      "short_km": "km",
-      "short_mi": "mi"
+      "long_km": "километр",
+      "long_mi": "миля",
+      "short_km": "км",
+      "short_mi": "мили"
     },
-    "frequency": {
-      "daily": "daily",
-      "monthly": "monthly",
-      "never": "never",
-      "weekly": "weekly"
-    },
+    "frequency": {},
     "header": {
-      "change_location": "EMPTY"
+      "change_location": "Изменить местолоположение"
     },
     "loading_cigarettes": "Loading<1>...</1>",
     "swear_word": "EMPTY",
-    "swear_word_0": "Oh",
-    "swear_word_1": "Shoot",
-    "swear_word_2": "Dang",
-    "swear_word_3": "Darn",
-    "swear_word_4": "Geez",
+    "swear_word_0": "Ой",
+    "swear_word_1": "Ъуъ",
+    "swear_word_2": "Чёрт",
+    "swear_word_3": "Проклятье",
+    "swear_word_4": "Блин",
     "swear_word_5": "OMG",
-    "swear_word_6": "Crap",
+    "swear_word_6": "Дерьмо",
     "swear_word_7": "Arrgh"
   },
   "screen_about": {
@@ -40,93 +35,81 @@
       "database": "Air quality data from <2>WAQI</2> and <6>OpenAQ</6>.",
       "design_and_copywriting": "Design & Copywriting by <4>{{author}}</4>.",
       "source_code": "Source code <2>available on Github</2>.",
-      "title": "EMPTY"
+      "title": "Авторы"
     },
     "how_to_calculate_number_of_cigarettes": {
       "message": "This app was inspired by Berkeley Earth’s findings about the <2>equivalence between air pollution and cigarette smoking</2>. The rule of thumb is simple: one cigarette per day (24h) is the rough equivalent of a PM2.5 level of <5></5>.",
-      "title": "EMPTY"
+      "title": "Как вы расчитываете количество ежедневных сигарет?"
     },
     "inaccurated_beta": {
-      "message": "EMPTY",
-      "title": "EMPTY"
+      "message": "Функция отображения еженедельных и ежемесячных сигарет находится в бета-версии, потому что результаты могут быть очень неточными: мы просто умножаем текущий уровень PM2,5, чтобы расчитать неделю (7 дней) и месяц (30 дней). Для полной функциональности мы планируем иметь доступ к базе данных, которая содержит историю местоположения PM2.5, чтобы мы смогли предоставить точную оценку количества сигарет, которые вы выкурите в течение недели или месяца.",
+      "title": "Почему расчёт еженедельного и ежемесячного количества сигарет находится в статусе бета-версии?"
     },
     "settings": {
-      "distance_unit": {
-        "km": "km",
-        "label": "EMPTY",
-        "mile": "mile"
-      },
-      "title": "EMPTY"
+      "distance_unit": {}
     },
     "weird_results": {
-      "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <2>WAQI</2> and <6>OpenAQ</6> for more information and history on your station.",
-      "title": "EMPTY"
+      "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <2>WAQI</2> and <6>OpenAQ</6> for more information and history on your station."
     },
     "where_does_data_come_from": {
       "message": "Air quality data comes from <2>WAQI</2> and <6>OpenAQ</6> in the form of PM2.5 AQI levels which are usually updated every one hour and converted to direct PM2.5 levels by the app.",
-      "title": "EMPTY"
+      "title": "Откуда берутся данные?"
     },
     "why_is_the_station_so_far": {
-      "message": "EMPTY",
-      "title": "EMPTY"
+      "message": "Поскольку станции, которые измеряют и сообщают результаты по качеству воздуха каждый час, дороги, данные по-прежнему ограничены хорошо развитыми регионами и более крупными городами по всему миру. Если вы далеко от более заметного городского центра, результаты, вероятно, будут не такими точными. Скорее всего воздух в вашем районе хотя бы должен быть лучше!",
+      "title": "Почему станция находится так далеко от моего текущего местоположения?"
     }
   },
   "screen_detail": {
-    "distance_label": "EMPTY",
+    "distance_label": "Расстояние до AQI станции: {{distanceToStation}}{{distanceUnit}}",
     "header": {
       "latest_update": {
-        "ago": "{{time}} ago",
-        "label": "Latest Update:"
+        "ago": "тому назад {{time}}",
+        "label": "Последнее обновление:"
       },
-      "primary_pollutant_label": "EMPTY"
+      "primary_pollutant_label": "Основной загрязнитель:"
     },
     "marker": {
-      "air_quality_station": "EMPTY",
-      "your_position": "EMPTY"
+      "air_quality_station": "Станция определения качества воздуха (AQI)",
+      "your_position": "Ваше местоположение"
     }
   },
   "screen_error": {
-    "cannot_load_cigarettes": "EMPTY",
-    "choose_other_location": "EMPTY",
-    "description": "EMPTY",
+    "cannot_load_cigarettes": "Мы не можем загрузить количество ваших сигарет.",
+    "choose_other_location": "Выберите другую локацию",
+    "description": "Либо проблема с нашими базами данных, либо рядом с вами нет станций мониторинга воздуха. Попробуйте позже!",
     "header": {
-      "sorry": "Sorry"
+      "sorry": "Извините!\n"
     },
-    "message": "EMPTY",
-    "show_details": "EMPTY"
+    "message": "Ошибка: {{errorText}}"
   },
   "screen_home": {
-    "beta_not_accurate": "EMPTY",
+    "beta_not_accurate": "Значение может не совпадать на 100%",
     "btn": {
-      "see_detailed_info": "EMPTY",
-      "why_is_station_so_far": "EMPTY"
+      "see_detailed_info": "Посмотреть детальную информацию",
+      "why_is_station_so_far": "Почему станция так далеко?"
     },
     "header": {
       "air_quality_station_distance_from": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
-      "air_quality_station_distance_from_detect": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away",
+      "air_quality_station_distance_from_detect": "Расстояние до станции определения качества воздуха: {{distanceToStation}}{{distanceUnit}}",
       "air_quality_station_distance_from_search": "Air Quality Station: {{distanceToStation}}{{distanceUnit}} away from search"
     },
-    "notification": {
-      "allow": "EMPTY",
-      "cancel": "cancel",
-      "notify_me": "EMPTY"
-    },
+    "notification": {},
     "sharing": {
       "located_city": "in {{place}}",
-      "located_here": "here",
       "message": "Shoot! People {{city}} \"smoke\" {{amount}} cigarettes daily just by breathing urban air. Try it out yourself: {{link}}",
-      "title": "EMPTY"
+      "title": "А вы знаете, что вы, возможно, выкуриваете до 20 сигарет в день просто из-за того, что живёте в мегаполисе?"
     },
-    "station_too_far": "EMPTY"
+    "station_too_far": "Мы не смогли найти ни одной станции рядом с вами.\nРезультаты могут быть не точными из-за расстояния."
   },
   "screen_loading": {
-    "cough": "EMPTY",
-    "loading": "EMPTY"
+    "cough": "Кхе",
+    "loading": "Загрузка"
   },
   "screen_search": {
-    "current_location": "EMPTY",
+    "current_location": "Ваше местоположение",
     "header": {
-      "input_placeholder": "EMPTY"
+      "input_placeholder": "Искать город или адрес"
     }
   }
 }

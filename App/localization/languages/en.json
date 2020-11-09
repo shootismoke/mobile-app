@@ -3,8 +3,8 @@
     "box_footnote": "*Atmospheric particulate matter (PM) that have a diameter of less than 2.5 micrometers, with increased chances of inhalation by living beings.",
     "box_per_day": "per day",
     "btn_back": "Back",
-    "cigarette_count": "EMPTY",
-    "cigarette_count_plural": "EMPTY",
+    "cigarette_count": "{{count}} cigarette",
+    "cigarette_count_plural": "{{count}} cigarettes",
     "cigarette_report": "{{swear_word}}! You smoke\n<3>{{cigarette_count}}</3> {{frequency}}.",
     "current_location_unknown_station": "Unknown AQI station",
     "distance_unit": {
@@ -58,6 +58,7 @@
       "title": "Settings"
     },
     "weird_results": {
+      "title": "The results are weird or inconsistent with other sources!",
       "message": "We have also encountered a few surprising results: large cities with better air than small villages; sudden huge increases in the number of cigarettes; stations of the same town showing significantly different numbers... The fact is air quality depends on several factors such as temperature, pressure, humidity and even wind direction and intensity. If the result seems weird for you, check <2>WAQI</2> and <6>OpenAQ</6> for more information and history on your station."
     },
     "where_does_data_come_from": {

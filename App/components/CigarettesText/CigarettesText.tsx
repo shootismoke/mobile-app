@@ -78,7 +78,7 @@ export function CigarettesText(props: CigaretteTextProps): React.ReactElement {
 	const nestingTrans = {
 		swear_word: t('swear_word', { context: swearWordId.toString() }),
 		cigarette_count: t('cigarette_count', { count: cigarettesRounded }),
-		frequency: t('frequency', { context: frequency || 'daily' }),
+		frequency: t(`frequency.${frequency || 'daily'}`),
 	};
 
 	return (
