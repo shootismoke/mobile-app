@@ -74,7 +74,7 @@ const MAP = {
 		},
 		'weird_results': {
 			message: null,
-			title: 'EMPTY'
+			title: 'about_weird_results_title'
 		},
 		'where_does_data_come_from': {
 			message: null,
@@ -125,7 +125,7 @@ const MAP = {
 			notify_me: 'home_frequency_notify_me'
 		},
 		'sharing': {
-			'located_city': null,
+			located_city: null,
 			located_here: 'home_share_message_here',
 			message: null,
 			title: 'home_share_title'
