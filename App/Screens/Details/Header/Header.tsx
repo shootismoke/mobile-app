@@ -152,7 +152,6 @@ export function Header(props: HeaderProps): React.ReactElement {
 
 	const time = formatDistanceToNow(new Date(api.pm25.date.local));
 
-	// FIXME The eslint keeps removing 'as string' and shot out an error.
 	const last_update_label: string = t(
 		'header.latest_update.label',
 		'Latest Update:'

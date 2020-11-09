@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
 export function Language(): React.ReactElement {
 	const { reloadApp } = useContext(ApiContext);
 
-	const handleValueChange = (itemValue: string): void => {
-		i18n.changeLanguage(itemValue);
+	const handleValueChange = async (itemValue: string): Promise<void> => {
+		await i18n.changeLanguage(itemValue);
 
 		// Reload app for changes to take effect
 		reloadApp();
