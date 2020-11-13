@@ -6,7 +6,7 @@
 bin/
 
 # dependencies
-/node_modules
+node_modules
 
 # misc
 .env.local
@@ -17,6 +17,8 @@ bin/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+artifacts
 
 # os generated files
 .DS_Store
