@@ -30,10 +30,10 @@
   resolved "https://registry.yarnpkg.com/@amaurymartiny/tsconfig/-/tsconfig-1.3.2.tgz#079f49046ffdd61a8c4c60c792b45721414ef66f"
   integrity sha512-e3YF80h+THn/30yByJSnGQRN3EpaUDDw5QZSy/GlyuDIDXfO9ML2eBhMe3a9By3ERp4Eyse/U5Oa+wgt5R2i5w==
 
-"@apollo/client@^3.0.0-beta.23", "@apollo/client@^3.3.4":
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.3.4.tgz#fded078222fcd9272d6e3501c7d1d76adb61da79"
-  integrity sha512-PnbkSa2gcFD6Qakn2eJCJ1RMYdCzEIlRlaHZGnUNbH+7AKOYwjDVtSVCC03nDtWeS9yWiJ15A8xGMreMKAboQQ==
+"@apollo/client@^3.0.0-beta.23", "@apollo/client@^3.3.6":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.3.6.tgz#f359646308167f38d5bc498dfc2344c888400093"
+  integrity sha512-XSm/STyNS8aHdDigLLACKNMHwI0qaQmEHWHtTP+jHe/E1wZRnn66VZMMgwKLy2V4uHISHfmiZ4KpUKDPeJAKqg==
   dependencies:
     "@graphql-typed-document-node/core" "^3.0.0"
     "@types/zen-observable" "^0.8.0"
