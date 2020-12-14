@@ -4723,10 +4723,10 @@ detox-expo-helpers@^0.6.0:
     semver "^5.6.0"
     xdl "^51.5.0"
 
-detox@^17.11.4:
-  version "17.11.4"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-17.11.4.tgz#f3a925179b13bb5a031b0e1d609d2ba78b89e010"
-  integrity sha512-duZpv5JHTSqEwDt/RFkGz18qIbgBDdAX/ktQZLHljtezeF0G2Cp+DF/b964ULRY48kaPBhovzfN/ChCq1lq3lQ==
+detox@^17.14.5:
+  version "17.14.5"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-17.14.5.tgz#7b5d6288eac048d77a605cd69ab9c6285d557aa3"
+  integrity sha512-ibDCMN73xBK1u+8y6pT7kcAqZ9NsnPEbs3p/2HRwyb6gvSI9UnKOwIe6/B4n/MqpV9XhMXDhLDNrMj9YZCw19A==
   dependencies:
     bunyan "^1.8.12"
     bunyan-debug-stream "^1.1.0"
