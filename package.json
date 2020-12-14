@@ -41,7 +41,7 @@
 		"date-fns": "^2.16.1",
 		"expo": "^39.0.0",
 		"expo-analytics-amplitude": "~8.3.1",
-		"expo-av": "~8.6.0",
+		"expo-av": "~8.7.0",
 		"expo-detox-hook": "^1.0.10",
 		"expo-localization": "~9.0.0",
 		"expo-notifications": "~0.7.2",
