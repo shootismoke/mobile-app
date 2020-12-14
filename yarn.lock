@@ -5214,10 +5214,10 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-expo-analytics-amplitude@~8.3.1:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-8.3.1.tgz#7e2622a3b156005586ee5ec529746b29b8665cf9"
-  integrity sha512-BW7sORrB/AZRsGViNwE2triJyf/Sgp5hiobDaA1rQKkWjzWu6YqQ4WdvY+nBt3aQyShG6+ctaRgCPl+Qkm9enA==
+expo-analytics-amplitude@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-9.0.0.tgz#e8d4555a862812c0171351217fb10818d45a2606"
+  integrity sha512-/Dl+hKwR0hq9ipphwbk2ZzmtfbsP8k4rlPyy3iNo6VeF5AzUEgfQ3IEk6d0hJJoVxw4dyD/PU7R7h1h+/sSgXg==
 
 expo-application@~2.3.0:
   version "2.3.0"
