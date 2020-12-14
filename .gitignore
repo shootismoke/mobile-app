@@ -4,6 +4,7 @@
 .expo/
 .tmp/
 bin/
+artifacts/
 
 # dependencies
 /node_modules

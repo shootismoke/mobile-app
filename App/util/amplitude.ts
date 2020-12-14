@@ -83,7 +83,7 @@ export function setupAmplitude(): Promise<void> {
 						disableIDFV: true,
 						disableIPAddress: true,
 						disableLatLng: true,
-					});
+					}).catch(sentryError('setupAmplitude'));
 				}
 		  )
 		: Promise.resolve();
