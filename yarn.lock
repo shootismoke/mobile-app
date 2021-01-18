@@ -1399,13 +1399,6 @@
   dependencies:
     cross-spawn "^6.0.5"
 
-"@expo/vector-icons@^10.2.0":
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.2.1.tgz#47fb2fa12d7ad601835babde6bd3ddea7f6fde89"
-  integrity sha512-clYQZFLeU2y23n03hXg18EEsZS5c73sJJnfderztfSAqkUXkfUtv07fwuprYwbHIvgFkw6L7R6xJOCVYtS85iQ==
-  dependencies:
-    lodash "^4.17.4"
-
 "@expo/vector-icons@^12.0.0":
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-12.0.2.tgz#ffb65a547091abcc529686be21b63ebf4cad041b"
@@ -2539,21 +2532,21 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.2.31.tgz#96a5e460dfcbb394339f2abcef0546fbbebf6f6b"
-  integrity sha512-u8XLBapWj8y+qIj+jZtvbOkEEYwDEQBkyY4hoXOOuzVDrARi/CBQV7qn4mAqR2QY1hnkTHeAdx7YE+NXD6pBGw==
+"@shootismoke/convert@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.6.4.tgz#cdcece71848f7e4ddf4a90a0c4cc03de553b31a3"
+  integrity sha512-qlkASK8kIQ056C43EF7N6++/qlvaUXImUfWbpu3+UHkm5D51X4xbwdN8qHiXm1EXrLe2hI2Brdi4jWlL0PsVbg==
   dependencies:
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
 
-"@shootismoke/dataproviders@^0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.2.31.tgz#eaebdc8f9733e01903301d7ea7d3091b22e2656d"
-  integrity sha512-HpW8TUJ/XacuzhyVd1naKmcsSC3omfuaBm0pQMVvPctjWBCm6BwFFFRlEyHTLnnxSkApU7A7rYdHS5qIyq6nQQ==
+"@shootismoke/dataproviders@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.6.4.tgz#613884f7fb19cfbe97fa55eaf131534b12c66297"
+  integrity sha512-CKQsrOypdBSb2HBN0nlU5kew9AtP6+mPtTay6fMxLkahctnKd6xNMIuI/PCtYV0t0lhgN363vFtgXLQxhKYNrQ==
   dependencies:
-    "@shootismoke/convert" "^0.2.31"
-    axios "^0.20.0"
+    "@shootismoke/convert" "^0.6.4"
+    axios "^0.21.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
     fp-ts "^2.1.1"
@@ -2564,26 +2557,41 @@
   resolved "https://registry.yarnpkg.com/@shootismoke/graphql/-/graphql-0.2.31.tgz#e31c6e3faf6244138154a9e80bdff434b2089274"
   integrity sha512-2jkSBBO6dirseXdh94IoQFHumUzRbX//DFtluEwc2GGxpHFKtrRNkUIFbhVlUtXcJ/f/ROamAX6nHE1/8lT2aw==
 
-"@shootismoke/ui@^0.2.32":
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.2.32.tgz#7ef458e3e514520df3ea7bb407073066ffdfe816"
-  integrity sha512-9CtxQI/i9K0AGIPcN1xYMhsAEmMmVx/6al42JVhwWldzFCpR2cw8zzUdPASbHCxX1ccGTdKp7LPGlZXkRCsMmQ==
+"@shootismoke/ui@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.6.4.tgz#8e252c325acd6121d6a4c85b435cd7bb26b98af9"
+  integrity sha512-fGmju5mQI48I5IWCstfANhIlOfoI3Glv1Fu4TkzCGUJHiYeM/mKZrBigX7AXYk9JPhBPH/XyJNpdQtTLEgmtow==
   dependencies:
-    "@expo/vector-icons" "^10.2.0"
-    "@shootismoke/dataproviders" "^0.2.31"
+    "@shootismoke/dataproviders" "^0.6.4"
+    "@sindresorhus/slugify" "^1.1.0"
     "@types/haversine" "^1.1.4"
     "@types/p-any" "^1.1.3"
-    expo-constants "^9.0.0"
     haversine "^1.1.1"
     lottie-react-native "^3.4.0"
     p-any "^3.0.0"
-    react-native-web "^0.13.0"
+    react-native-web "^0.14.0"
     retry-ts "^0.1.2"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
+
+"@sindresorhus/slugify@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-1.1.0.tgz#2f195365d9b953384305b62664b44b4036c49430"
+  integrity sha512-ujZRbmmizX26yS/HnB3P9QNlNa4+UvHh+rIse3RbOXLp8yl6n1TxB4t7NHggtVgS8QmmOtzXo48kCxZGACpkPw==
+  dependencies:
+    "@sindresorhus/transliterate" "^0.1.1"
+    escape-string-regexp "^4.0.0"
+
+"@sindresorhus/transliterate@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/transliterate/-/transliterate-0.1.1.tgz#779b31244781d3c898f185b61d58c89e7c782674"
+  integrity sha512-QSdIQ5keUFAZ3KLbfbsntW39ox0Ym8183RqTwBq/ZEFoN3NQAtGV+qWaNdzKpIDHgj9J2CQ2iNDRVU11Zyr7MQ==
+  dependencies:
+    escape-string-regexp "^2.0.0"
+    lodash.deburr "^4.1.0"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
@@ -3411,10 +3419,10 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.10.1.tgz#e1e82e4f3e999e2cfd61b161280d16a111f86428"
   integrity sha512-zg7Hz2k5lI8kb7U32998pRRFin7zJlkfezGJjUc2heaD4Pw2wObakCDVzkKztTm/Ln7eiVvYsjqak0Ed4LkMDA==
 
-axios@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
-  integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+axios@^0.21.0:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   dependencies:
     follow-redirects "^1.10.0"
 
@@ -5352,7 +5360,7 @@ expo-av@~8.7.0:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
 
-expo-constants@*, expo-constants@^9.0.0:
+expo-constants@*:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.2.0.tgz#e86a38793deaff9018878afac65bce2543c80a4c"
   integrity sha512-WKwiEMvBgPrEPEyZKm21UUB2KWQux9OCWf6ZDORLTln7kO3rsbaJEprfWUWTP7AxyaLMYfN+/0WFHjZc25SZWQ==
@@ -8486,6 +8494,11 @@ lodash._reinterpolate@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
 
+lodash.deburr@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.deburr/-/lodash.deburr-4.1.0.tgz#ddb1bbb3ef07458c0177ba07de14422cb033ff9b"
+  integrity sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=
+
 lodash.frompairs@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.frompairs/-/lodash.frompairs-4.0.1.tgz#bc4e5207fa2757c136e573614e9664506b2b1bd2"
@@ -10601,10 +10614,10 @@ react-native-view-shot@3.1.2:
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
   integrity sha512-9u9fPtp6a52UMoZ/UCPrCjKZk8tnkI9To0Eh6yYnLKFEGkRZ7Chm6DqwDJbYJHeZrheCCopaD5oEOnRqhF4L2Q==
 
-react-native-web@^0.13.0:
-  version "0.13.14"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.13.14.tgz#6a9144ffd2bcae07116efee827b99b20c9a0623d"
-  integrity sha512-tadUswGcXbH7pNTIGR41I2uqN/YrqGMnRTHbVU/ENGk2lps1W75ty+SHtWsWBEdYF4e2zOw8Dd/AJeD5kbat0A==
+react-native-web@^0.14.0:
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.14.10.tgz#a4435b00370bb3265c288eacaaa1c9a963537d0d"
+  integrity sha512-YTvYnUUPnOjU50GiXk90cm6atk714vF8p7HhBlqHtLtftHk9xQRwgxXzoMHiKf0Bx20Dyo2SGvv4XrPxcmEheQ==
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
