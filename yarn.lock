@@ -2253,10 +2253,10 @@
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
   integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
 
-"@types/detox@^16.4.3":
-  version "16.4.3"
-  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-16.4.3.tgz#d1cc2cff668152b07016d076b9d078d6cf0c501b"
-  integrity sha512-VZQlPJ86a0zx5XHkKsey+UCyZVR9Bfd0fVNDROCNFquITLTVHNrBEwiQgHnzRprbPtlsCSJdkN3Vfa7xAqUaqg==
+"@types/detox@^17.14.0":
+  version "17.14.0"
+  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-17.14.0.tgz#42922b64a918c1d5be74a4f0f397138f4ffabb8f"
+  integrity sha512-/yrUvrPjmY5CHcBu6dq+f9vDk/6joR9i335LGenP4U+TPWPbZ1QuK4ERJN2gzb6rdMeTA1+fhm58ZUQ+B6EyXQ==
 
 "@types/glob@*":
   version "7.1.3"
