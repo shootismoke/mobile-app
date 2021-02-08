@@ -58,7 +58,7 @@
 		"react-native-scroll-into-view": "^1.0.3",
 		"react-native-size-matters": "^0.3.0",
 		"react-native-view-shot": "3.1.2",
-		"sentry-expo": "^2.1.2",
+		"sentry-expo": "^3.0.4",
 		"truncate": "^2.1.0"
 	},
 	"devDependencies": {
