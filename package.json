@@ -46,7 +46,7 @@
 		"expo-localization": "~9.1.0",
 		"expo-notifications": "~0.8.2",
 		"expo-status-bar": "~1.0.3",
-		"graphql": "^15.3.0",
+		"graphql": "^15.5.0",
 		"i18n-js": "^3.7.1",
 		"react": "16.13.1",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-40.0.0.tar.gz",
