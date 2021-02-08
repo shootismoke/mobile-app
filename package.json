@@ -24,7 +24,7 @@
 		"test-runner": "jest"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.3.6",
+		"@apollo/client": "^3.3.8",
 		"@apollo/link-error": "^2.0.0-beta.3",
 		"@apollo/link-retry": "^2.0.0-beta.3",
 		"@dooboo-ui/native-switch-toggle": "^0.7.0",
