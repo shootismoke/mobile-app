@@ -80,7 +80,7 @@ export function AdditionalInfo(
 		);
 	}
 
-	const isTooFar = isStationTooFar(currentLocation, api);
+	const isTooFar = isStationTooFar(currentLocation, api.pm25);
 
 	// Render a "station too far" warning
 	if (isTooFar) {

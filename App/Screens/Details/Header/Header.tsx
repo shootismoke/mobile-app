@@ -184,7 +184,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 								`${pollutant.toUpperCase()} AQI:`,
 								convert(
 									pollutant as Pollutant,
-									'raw',
+									'ugm3',
 									'usaEpa',
 									averages[pollutant as Pollutant].average
 								),

@@ -15,8 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext, useRef, useState } from 'react';
-import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
-import { BoxButton, Frequency, FrequencyContext } from '@shootismoke/ui';
+import { ScrollView, ScrollViewProps, StyleSheet, Text } from 'react-native';
+import { Frequency, FrequencyContext } from '@shootismoke/ui';
+
+import { BoxButton } from '../../../components';
 import { t } from '../../../localization';
 import { track } from '../../../util/amplitude';
 import * as theme from '../../../util/theme';

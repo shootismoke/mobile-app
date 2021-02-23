@@ -45,7 +45,7 @@ export function sentryError(namespace: string) {
 			IS_SENTRY_SET_UP &&
 			!UNTRACKED_ERRORS.some((msg) => error.message.includes(msg))
 		) {
-			Sentry.captureException(error);
+			Sentry.Native.captureException(error);
 		}
 
 		console.log(`[${namespace}]: ${error.message}`);

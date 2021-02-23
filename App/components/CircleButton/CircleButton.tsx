@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Ionicons } from '@expo/vector-icons';
-import { Button, ButtonProps } from '@shootismoke/ui';
+import Ionicons from '@expo/vector-icons/build/Ionicons';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
+import { Button, ButtonProps } from '../Button';
 import * as theme from '../../util/theme';
 
 interface CircleButtonProps extends ButtonProps {
@@ -57,7 +57,7 @@ function renderIconOrText(
 	return icon ? (
 		<Ionicons
 			color={inverted ? 'white' : theme.primaryColor}
-			name={icon}
+			name={icon as 'body'} // FIXME Typings are really not optimal here, `icon` is obviously a string, but using 'body' to make TS happy.
 			size={scale(22)}
 		/>
 	) : text ? (

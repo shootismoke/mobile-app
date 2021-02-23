@@ -17,9 +17,9 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
-import { Button, isStationTooFar } from '@shootismoke/ui';
+import { isStationTooFar } from '@shootismoke/ui';
 
-import { CircleButton } from '../../../components';
+import { Button, CircleButton } from '../../../components';
 import { t } from '../../../localization';
 import { ApiContext, CurrentLocationContext } from '../../../stores';
 import { track } from '../../../util/amplitude';
@@ -61,7 +61,7 @@ export function Footer(props: FooterProps): React.ReactElement {
 		);
 	}
 
-	const isTooFar = isStationTooFar(currentLocation, api);
+	const isTooFar = isStationTooFar(currentLocation, api.pm25);
 
 	function goToAbout(): void {
 		track('HOME_SCREEN_ABOUT_CLICK');

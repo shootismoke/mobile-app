@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button } from '@shootismoke/ui';
 import errorPicture from '@shootismoke/ui/assets/images/error.png';
 import React, { useContext, useEffect, useState } from 'react';
 import {
@@ -28,6 +27,7 @@ import {
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
+import { Button } from '../../components';
 import { t } from '../../localization';
 import { ErrorContext } from '../../stores';
 import { track, trackScreen } from '../../util/amplitude';

@@ -39,14 +39,14 @@ import { sentryError } from './util/sentry';
 
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
-	Sentry.init({
+	Sentry.Native.init({
 		dsn: Constants.manifest.extra.sentryPublicDsn as string,
 		debug: true,
+		release: RELEASE_CHANNEL,
 	});
 
-	Sentry.setRelease(RELEASE_CHANNEL);
 	if (Constants.manifest.revisionId) {
-		Sentry.setExtra('sisRevisionId', Constants.manifest.revisionId);
+		Sentry.Native.setExtra('sisRevisionId', Constants.manifest.revisionId);
 	}
 }
 
