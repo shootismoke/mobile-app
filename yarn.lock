@@ -1150,7 +1150,7 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/config-plugins@1.0.19":
+"@expo/config-plugins@1.0.19", "@expo/config-plugins@~1.0.13":
   version "1.0.19"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-1.0.19.tgz#aef514a6ad2f69d9ccd6c370c11cbda74677eed7"
   integrity sha512-4ii5+mmvewoqU8WSOwglfFHahxa3EhwvWlvxIAlWSUBuzbojg8m3HBxwGQh7c+wRldgaiyuexj4vl/PG0fFwCg==
@@ -5401,11 +5401,12 @@ expo-asset@~8.2.1:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-av@~8.7.0:
-  version "8.7.0"
-  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.7.0.tgz#01030256dc75cebd5d02060393ba0ad36c10a7f8"
-  integrity sha512-tYw0z//UZm9THicOsu4w0A7Olq/JauTy7kcBR15Fhyppd9wd8Jtq7QYNtf2igd1R+byS2L0AGwE0nazlbQR+Qw==
+expo-av@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-9.0.0.tgz#76b5dbb006bfddf5b6ce43151d8f3a9eb66c7fa5"
+  integrity sha512-VAMt/iPNeG33G1ycf2zhlZ+I7Ymuh3FYk9XL85jMrGOn6prW4C1tRp5YczZqgunLd5dzeBhunHCTlZn7WODP6g==
   dependencies:
+    "@expo/config-plugins" "~1.0.13"
     lodash "^4.17.15"
     nullthrows "^1.1.0"
 
