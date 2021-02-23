@@ -29,8 +29,7 @@
 		"@react-native-community/masked-view": "0.1.10",
 		"@react-navigation/native": "^5.9.3",
 		"@react-navigation/stack": "^5.14.3",
-		"@shootismoke/graphql": "^0.6.4",
-		"@shootismoke/ui": "^0.6.4",
+		"@shootismoke/ui": "^0.7.1",
 		"@types/i18n-js": "^3.8.0",
 		"@types/react-native": "~0.63.2",
 		"date-fns": "^2.17.0",
@@ -41,7 +40,6 @@
 		"expo-localization": "~9.1.0",
 		"expo-notifications": "~0.8.2",
 		"expo-status-bar": "~1.0.3",
-		"graphql": "^15.5.0",
 		"i18n-js": "^3.8.0",
 		"react": "16.13.1",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
@@ -54,7 +52,6 @@
 		"react-native-size-matters": "^0.4.0",
 		"react-native-view-shot": "3.1.2",
 		"sentry-expo": "^3.0.4",
-		"swr": "^0.4.2",
 		"truncate": "^2.1.0"
 	},
 	"devDependencies": {

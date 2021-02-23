@@ -17,7 +17,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, ViewProps } from 'react-native';
 
-import { Frequency } from '@shootismoke/ui/lib/context/Frequency';
+import type { Frequency } from '@shootismoke/ui';
 import * as theme from '../../util/theme';
 import { swearWords } from './swearWords';
 import { t } from '../../localization';

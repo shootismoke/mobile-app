@@ -15,7 +15,6 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { createContext, useState } from 'react';
-
 import { noop } from '@shootismoke/ui';
 
 interface Context {
