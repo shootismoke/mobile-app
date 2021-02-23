@@ -95,7 +95,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 		);
 	}
 
-	const distance = distanceToStation(currentLocation, api, distanceUnit);
+	const distance = distanceToStation(currentLocation, api.pm25, distanceUnit);
 
 	const station = {
 		description: stationName(api.pm25),

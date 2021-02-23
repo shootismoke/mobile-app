@@ -29,9 +29,9 @@ import {
 } from 'react-native';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
-import { ConversionBox, DistanceUnit } from '@shootismoke/ui';
+import { DistanceUnit } from '@shootismoke/ui';
 
-import { BackButton } from '../../components';
+import { ConversionBox, BackButton } from '../../components';
 import { t } from '../../localization';
 import { useDistanceUnit } from '../../stores/distanceUnit';
 import { AmplitudeEvent, track, trackScreen } from '../../util/amplitude';
@@ -187,7 +187,7 @@ export function About(props: AboutProps): React.ReactElement {
 					&sup1;
 					{'\u207E'}.
 				</Text>
-				<ConversionBox showFootnote={true} t={t} />
+				<ConversionBox showFootnote={true} />
 				<Text style={styles.articleLink}>
 					(1){' '}
 					<Text onPress={handleOpenBerkeley} style={theme.link}>

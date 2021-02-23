@@ -61,7 +61,7 @@ export function Footer(props: FooterProps): React.ReactElement {
 		);
 	}
 
-	const isTooFar = isStationTooFar(currentLocation, api);
+	const isTooFar = isStationTooFar(currentLocation, api.pm25);
 
 	function goToAbout(): void {
 		track('HOME_SCREEN_ABOUT_CLICK');

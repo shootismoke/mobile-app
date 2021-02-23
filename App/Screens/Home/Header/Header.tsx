@@ -77,8 +77,8 @@ export function Header(props: HeaderProps): React.ReactElement {
 		);
 	}
 
-	const distance = distanceToStation(currentLocation, api, distanceUnit);
-	const isTooFar = isStationTooFar(currentLocation, api);
+	const distance = distanceToStation(currentLocation, api.pm25, distanceUnit);
+	const isTooFar = isStationTooFar(currentLocation, api.pm25);
 
 	return (
 		<View style={styles.container}>

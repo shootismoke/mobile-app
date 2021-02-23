@@ -57,7 +57,7 @@ function renderIconOrText(
 	return icon ? (
 		<Ionicons
 			color={inverted ? 'white' : theme.primaryColor}
-			name={icon}
+			name={icon as 'body'} // FIXME Typings are really not optimal here, `icon` is obviously a string, but using 'body' to make TS happy.
 			size={scale(22)}
 		/>
 	) : text ? (
