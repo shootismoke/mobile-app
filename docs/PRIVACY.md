@@ -2,7 +2,7 @@
 
 Effective on October 2nd, 2019.
 
-Marcelo S. Coelho & Amaury Martiny built the Sh\*\*t! I Smoke app as an Open Source app. This SERVICE is provided by Marcelo S. Coelho & Amaury Martiny at no cost and is intended for use as is.
+Marcelo S. Coelho & Amaury M. built the Sh\*\*t! I Smoke app as an Open Source app. This SERVICE is provided by Marcelo S. Coelho & Amaury M. at no cost and is intended for use as is.
 
 This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
 
@@ -16,11 +16,11 @@ For a better experience, while using our Service, We may require you to provide 
 
 The app does use third party services that may collect information used to identify you. The list of third party services and their respective privacy policy can be found below.
 
-- World Air Quality Index (WAQI): http://aqicn.org/privacy
-- Google Maps API, for iOS and for Android: https://policies.google.com/privacy
-- Algolia: https://www.algolia.com/policies/privacy
-- Sentry: https://sentry.io/privacy/
-- Amplitude: https://amplitude.com/privacy
+-   World Air Quality Index (WAQI): http://aqicn.org/privacy
+-   Google Maps API, for iOS and for Android: https://policies.google.com/privacy
+-   Algolia: https://www.algolia.com/policies/privacy
+-   Sentry: https://sentry.io/privacy/
+-   Amplitude: https://amplitude.com/privacy
 
 ## Log Data
 
@@ -36,10 +36,10 @@ This Service does not use these “cookies” explicitly. However, the app may u
 
 We may employ third-party companies and individuals due to the following reasons:
 
-- To facilitate our Service;
-- To provide the Service on our behalf;
-- To perform Service-related services; or
-- To assist us in analyzing how our Service is used.
+-   To facilitate our Service;
+-   To provide the Service on our behalf;
+-   To perform Service-related services; or
+-   To assist us in analyzing how our Service is used.
 
 We want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.
 

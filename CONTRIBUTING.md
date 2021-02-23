@@ -2,11 +2,11 @@
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+-   Reporting a bug
+-   Discussing the current state of the code
+-   Submitting a fix
+-   Proposing new features
+-   Becoming a maintainer
 
 ## We Develop with Github
 
@@ -23,25 +23,25 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 5. Make sure your code lints.
 6. Issue that pull request!
 
-## Any contributions you make will be under the GPL-3.0 Software License
+## Any contributions you make will be transferred to us
 
-In short, when you submit code changes, your submissions are understood to be under the same [GPL-3.0 License](https://choosealicense.com/licenses/gpl-3.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
+When you submit code changes, we ask you to sign a CLA: https://cla-assistant.io/amaurymartiny/shoot-i-smoke, which transfer your submissions to the authors Marcelo S. Coelho and Amaury M. We then release these submissions under the [GPL-3.0 License](https://choosealicense.com/licenses/gpl-3.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ## Report bugs using Github's issues
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/amaurymartiny/shoot-i-smoke/issues); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/amaurym/shoot-i-smoke/issues); it's that easy!
 
 ## Write bug reports with detail, background, and sample code
 
 **Great Bug Reports** tend to have:
 
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give sample code if you can.
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+-   A quick summary and/or background
+-   Steps to reproduce
+    -   Be specific!
+    -   Give sample code if you can.
+-   What you expected would happen
+-   What actually happens
+-   Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
 People _love_ thorough bug reports. I'm not even kidding.
 
@@ -57,7 +57,7 @@ There's two additional rule that are not (yet?) implemented in `eslint`: imports
 
 The `import ... from '...';` at the top of files follow some rules:
 
-- Absolute imports before relative imports
+-   Absolute imports before relative imports
 
 ```diff
 - import { Cigarettes } from './Cigarettes';
@@ -66,7 +66,7 @@ The `import ... from '...';` at the top of files follow some rules:
 + import { Cigarettes } from './Cigarettes';
 ```
 
-- Absolute imports are sorted alphabetically by package name
+-   Absolute imports are sorted alphabetically by package name
 
 ```diff
 - import { StackNavigation } from 'react-navigation';
@@ -75,7 +75,7 @@ The `import ... from '...';` at the top of files follow some rules:
 + import { StackNavigation } from 'react-navigation';
 ```
 
-- Relative imports are reverse-sorted by import depth, meaning deeper imports appear first
+-   Relative imports are reverse-sorted by import depth, meaning deeper imports appear first
 
 ```diff
 - import { Cigarettes } from './Cigarettes';
@@ -84,7 +84,7 @@ The `import ... from '...';` at the top of files follow some rules:
 + import { Cigarettes } from './Cigarettes';
 ```
 
-- Imports at the same depth are sorted alphabetically by module name
+-   Imports at the same depth are sorted alphabetically by module name
 
 ```diff
 - import { Cigarettes } from './Cigarettes';
@@ -95,7 +95,7 @@ The `import ... from '...';` at the top of files follow some rules:
 
 ### Props/Destructuring Ordering
 
-- Destructured fields are ordered alphabetically
+-   Destructured fields are ordered alphabetically
 
 ```diff
 - import { useState, useContext } from 'react';
@@ -107,13 +107,9 @@ The `import ... from '...';` at the top of files follow some rules:
 + const { height, width } = props;
 ```
 
-- Props in React components are ordered alphabetically
+-   Props in React components are ordered alphabetically
 
 ```diff
 - <Cigarettes style={{ width: 30 }} cigarettes={2} />
 + <Cigarettes cigarettes={2} style={{ width: 30 }} />
 ```
-
-## License
-
-By contributing, you agree that your contributions will be licensed under its GPL-3.0 License owned by Marcelo S. Coelho & Amaury Martiny.

@@ -1,5 +1,5 @@
 // Sh**t! I Smoke
-// Copyright (C) 2018-2020  Marcelo S. Coelho, Amaury Martiny
+// Copyright (C) 2018-2021  Marcelo S. Coelho, Amaury M.
 
 // Sh**t! I Smoke is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 			const title = t('home_share_title');
 
 			// FIXME imageUrl doesn't work on Android
-			// https://github.com/amaurymartiny/shoot-i-smoke/issues/250
+			// https://github.com/amaurym/shoot-i-smoke/issues/250
 			await Share.share({ message, title, url: imageUrl });
 		} catch (error) {
 			sentryError('ShareButton')(error);

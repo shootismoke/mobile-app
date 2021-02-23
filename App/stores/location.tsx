@@ -1,5 +1,5 @@
 // Sh**t! I Smoke
-// Copyright (C) 2018-2020  Marcelo S. Coelho, Amaury Martiny
+// Copyright (C) 2018-2021  Marcelo S. Coelho, Amaury M.
 
 // Sh**t! I Smoke is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ export function LocationContextProvider({
 			TE.chain(
 				sideEffect((gps) => {
 					// Set lat/lng for now, set the reverse location later
-					// @see https://github.com/amaurymartiny/shoot-i-smoke/issues/323
+					// @see https://github.com/amaurym/shoot-i-smoke/issues/323
 					console.log(
 						`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
 							gps

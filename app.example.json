@@ -24,7 +24,7 @@
 			"hawkKey": "26bb8794-8f1e-4bf7-b977-081186af58d6",
 			"sentryPublicDsn": null
 		},
-		"githubUrl": "https://github.com/amaurymartiny/shoot-i-smoke",
+		"githubUrl": "https://github.com/amaurym/shoot-i-smoke",
 		"hooks": {
 			"postPublish": [
 				{
