@@ -1,5 +1,5 @@
 // Sh**t! I Smoke
-// Copyright (C) 2018-2020  Marcelo S. Coelho, Amaury Martiny
+// Copyright (C) 2018-2021  Marcelo S. Coelho, Amaury M.
 
 // Sh**t! I Smoke is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -54,9 +54,7 @@ export const aboutSections = {
 };
 
 const handleOpenAmaury = (): void => {
-	Linking.openURL('https://twitter.com/amaurymartiny').catch(
-		sentryError('About')
-	);
+	Linking.openURL('https://amaurym.com').catch(sentryError('About'));
 };
 
 const handleOpenWaqi = (): void => {
@@ -74,7 +72,7 @@ const handleOpenBerkeley = (): void => {
 };
 
 const handleOpenGithub = (): void => {
-	Linking.openURL('https://github.com/amaurymartiny/shoot-i-smoke').catch(
+	Linking.openURL('https://github.com/amaurym/shoot-i-smoke').catch(
 		sentryError('About')
 	);
 };
@@ -286,7 +284,7 @@ export function About(props: AboutProps): React.ReactElement {
 				<Text style={theme.text}>
 					{t('about_credits_concept_and_development')}{' '}
 					<Text onPress={handleOpenAmaury} style={theme.link}>
-						Amaury Martiny
+						Amaury M
 					</Text>
 					.{'\n'}
 					{t('about_credits_design_and_copywriting')}{' '}
@@ -315,7 +313,7 @@ export function About(props: AboutProps): React.ReactElement {
 						Constants.manifest.version}
 					.
 				</Text>
-				{/* Add changing languages https://github.com/amaurymartiny/shoot-i-smoke/issues/73 */}
+				{/* Add changing languages https://github.com/amaurym/shoot-i-smoke/issues/73 */}
 			</View>
 		</CustomScrollView>
 	);

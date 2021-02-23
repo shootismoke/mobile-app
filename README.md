@@ -5,13 +5,13 @@
 <h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
 
 <p align="center">
-  <a href="https://github.com/amaurymartiny/shoot-i-smoke/actions">
-    <img alt="Github Actions" src="https://github.com/amaurymartiny/shoot-i-smoke/workflows/CI/badge.svg" />
+  <a href="https://github.com/amaurym/shoot-i-smoke/actions">
+    <img alt="Github Actions" src="https://github.com/amaurym/shoot-i-smoke/workflows/CI/badge.svg" />
   </a>
-  <a href="https://david-dm.org/amaurymartiny/shoot-i-smoke">
-    <img alt="david-dm" src="https://img.shields.io/david/amaurymartiny/shoot-i-smoke.svg" />
+  <a href="https://david-dm.org/amaurym/shoot-i-smoke">
+    <img alt="david-dm" src="https://img.shields.io/david/amaurym/shoot-i-smoke.svg" />
   </a>
-  <a href="https://codeclimate.com/github/amaurymartiny/shoot-i-smoke/maintainability">
+  <a href="https://codeclimate.com/github/amaurym/shoot-i-smoke/maintainability">
     <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
   </a>
   <a href="https://spectrum.chat/shootismoke">
@@ -48,10 +48,10 @@
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
-| Release Channel                                                                               | Version | Description                                                                 | Url                                                                               |
-| --------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [Production](https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.7.2) | v1.7.2  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurymartiny/shoot-i-smoke?release-channel=production-v1.7.2` |
-| [Staging](https://exp.host/@amaurymartiny/shoot-i-smoke)                                      | v1.7.2  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurymartiny/shoot-i-smoke`                                   |
+| Release Channel                                                                         | Version | Description                                                                 | Url                                                                         |
+| --------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [Production](https://exp.host/@amaurym/shoot-i-smoke?release-channel=production-v1.7.2) | v1.7.2  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurym/shoot-i-smoke?release-channel=production-v1.7.2` |
+| [Staging](https://exp.host/@amaurym/shoot-i-smoke)                                      | v1.7.2  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurym/shoot-i-smoke`                                   |
 
 ## :hammer: Build it yourself
 
@@ -59,7 +59,7 @@ Run the following commands:
 
 ```bash
 # Clone this repo
-git clone https://github.com/amaurymartiny/shoot-i-smoke && cd shoot-i-smoke
+git clone https://github.com/amaurym/shoot-i-smoke && cd shoot-i-smoke
 # Install dependencies
 yarn install
 
@@ -91,17 +91,17 @@ All required API tokens are already pre-filled in `app.example.json`. If you wan
 
 ## :raising_hand: Contribute
 
-If you find a bug, or if you have an idea for this app, please [file an issue here](https://github.com/amaurymartiny/shoot-i-smoke/issues). We really appreciate feedback and inputs!
+If you find a bug, or if you have an idea for this app, please [file an issue here](https://github.com/amaurym/shoot-i-smoke/issues). We really appreciate feedback and inputs!
 
 🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX). If you need context for some terms, here are [some screenshots](https://nx1394.your-storageshare.de/s/grS6CZJGapRSH6i).
 
-For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along. You can start with these [easy tasks](https://github.com/amaurymartiny/shoot-i-smoke/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along. You can start with these [easy tasks](https://github.com/amaurym/shoot-i-smoke/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 More information on contributing [here](./CONTRIBUTING.md).
 
 ## :microscope: Tests
 
-The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts` files in the project for tests. If you're interested to help out, have a look at [issue #19](https://github.com/amaurymartiny/shoot-i-smoke/issues/19).
+The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts` files in the project for tests. If you're interested to help out, have a look at [issue #19](https://github.com/amaurym/shoot-i-smoke/issues/19).
 
 ## :newspaper: License
 
@@ -109,7 +109,7 @@ GPL-3.0. See [LICENSE](./LICENSE) file for more information.
 
 ## :star: Credits
 
-Created with pride by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://www.toptal.com/resume/amaury-martiny#utilize-unreal-developers-today).
+Created with pride by [Marcelo](http://www.marcelocoelho.cc) & [Amaury](https://amaurym.com).
 
 A **huge** thanks to the following contributors for their amazing work:
 
