@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
@@ -29,9 +28,7 @@ import {
 	ApiContextProvider,
 	DistanceUnitProvider,
 	ErrorContextProvider,
-	getApolloClient,
 	LocationContextProvider,
-	TCacheShape,
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
 import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
@@ -52,7 +49,6 @@ if (IS_SENTRY_SET_UP) {
 
 export function App(): React.ReactElement {
 	const [ready, setReady] = useState(false);
-	const [client, setClient] = useState<ApolloClient<TCacheShape>>();
 
 	useEffect(() => {
 		Promise.all([
@@ -67,11 +63,6 @@ export function App(): React.ReactElement {
 		])
 			.then(() => setReady(true))
 			.catch(sentryError('App'));
-	}, []);
-
-	useEffect(() => {
-		// Load the Offix client
-		getApolloClient().then(setClient).catch(sentryError('App'));
 	}, []);
 
 	useEffect(() => {
@@ -92,13 +83,7 @@ export function App(): React.ReactElement {
 					<ApiContextProvider>
 						<FrequencyContextProvider>
 							<DistanceUnitProvider>
-								{ready && client ? (
-									<ApolloProvider client={client}>
-										<Screens />
-									</ApolloProvider>
-								) : (
-									<LoadingBackground />
-								)}
+								{ready ? <Screens /> : <LoadingBackground />}
 							</DistanceUnitProvider>
 						</FrequencyContextProvider>
 					</ApiContextProvider>
