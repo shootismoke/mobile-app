@@ -57,7 +57,7 @@ export function ChangeLocation(props: ChangeLocationProps): React.ReactElement {
 		<TouchableOpacity style={[styles.container, style]} {...rest}>
 			<CircleButton
 				as={View}
-				icon="md-pin"
+				icon="location-sharp"
 				inverted
 				style={styles.icon}
 			/>

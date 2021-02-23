@@ -78,7 +78,7 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 			<View collapsable={false} ref={refViewShot} style={styles.viewShot}>
 				<ShareImage />
 			</View>
-			<CircleButton icon="ios-share-alt" onPress={handleShare} />
+			<CircleButton icon="ios-share-social" onPress={handleShare} />
 		</View>
 	);
 }

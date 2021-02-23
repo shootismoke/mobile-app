@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import Switch from '@dooboo-ui/native-switch-toggle';
-import { FontAwesome } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { Frequency } from '@shootismoke/graphql';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
@@ -274,7 +274,7 @@ export function SelectNotifications(
 							</Text>
 							<Text style={styles.labelFrequency}>
 								{t(`home_frequency_${notif}`)}{' '}
-								<FontAwesome name="caret-down" />
+								<Ionicons name="caret-down" />
 							</Text>
 						</View>
 					) : (

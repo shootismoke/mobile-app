@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import errorPicture from '@shootismoke/ui/assets/images/error.png';
 import React, { useContext, useEffect, useState } from 'react';
