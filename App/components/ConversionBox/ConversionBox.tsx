@@ -25,7 +25,7 @@ import {
 	ViewProps,
 } from 'react-native';
 
-import cigarette from '../../assets/images/cigarette.png';
+import cigarette from '@shootismoke/ui/assets/images/cigarette.png';
 import * as theme from '../../util/theme';
 import { t } from '../../localization';
 
