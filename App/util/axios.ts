@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { IUser, MongoUser } from '@shootismoke/ui';
 import Constants from 'expo-constants';
 
@@ -26,6 +26,8 @@ const axiosConfig = {
 };
 
 export function createUser(user: IUser): Promise<MongoUser> {
+	console.log(`<Axios> - POST /api/users, body=${JSON.stringify(user)}`);
+
 	return axios
 		.post<MongoUser>(
 			`${Constants.manifest.extra.backendUrl as string}/api/users`,
@@ -37,10 +39,15 @@ export function createUser(user: IUser): Promise<MongoUser> {
 				},
 			}
 		)
-		.then(({ data }) => data);
+		.then(({ data }) => data)
+		.catch((err) => {
+			throw axiosErrorToError(err);
+		});
 }
 
 export function getUser(userId: string): Promise<MongoUser> {
+	console.log(`<Axios> - GET /api/users/${userId}`);
+
 	return axios
 		.get<MongoUser>(
 			`${
@@ -48,13 +55,20 @@ export function getUser(userId: string): Promise<MongoUser> {
 			}/api/users/${userId}`,
 			axiosConfig
 		)
-		.then(({ data }) => data);
+		.then(({ data }) => data)
+		.catch((err) => {
+			throw axiosErrorToError(err);
+		});
 }
 
 export function updateUser(
 	userId: string,
 	user: Partial<IUser>
 ): Promise<MongoUser> {
+	console.log(
+		`<Axios> - PATCH /api/users/${userId}, body=${JSON.stringify(user)}`
+	);
+
 	return axios
 		.patch<MongoUser>(
 			`${
@@ -68,5 +82,12 @@ export function updateUser(
 				},
 			}
 		)
-		.then(({ data }) => data);
+		.then(({ data }) => data)
+		.catch((err) => {
+			throw axiosErrorToError(err);
+		});
+}
+
+function axiosErrorToError(err: AxiosError) {
+	return new Error(`${err.message}: ${JSON.stringify(err.response?.data)}`);
 }

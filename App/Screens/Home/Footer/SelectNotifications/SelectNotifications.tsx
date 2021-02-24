@@ -16,12 +16,10 @@
 
 import Switch from '@dooboo-ui/native-switch-toggle';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
-import { Frequency, MongoUser, retry, sideEffect } from '@shootismoke/ui';
-
+import { Frequency, MongoUser, retry } from '@shootismoke/ui';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
-import * as C from 'fp-ts/lib/Console';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -116,6 +114,9 @@ export function SelectNotifications(
 			.then((serializedUser) => {
 				if (serializedUser) {
 					const user = JSON.parse(serializedUser) as MongoUser;
+					console.log(
+						`<SelectNotifications> - Got user ${user._id} from AsyncStorage.`
+					);
 					setStorageUser(user);
 
 					return getUser(user._id);
@@ -146,6 +147,8 @@ export function SelectNotifications(
 	 * @param buttonIndex - The button index in the ActionSheet
 	 */
 	function handleChangeNotif(frequency: Frequency | 'never'): void {
+		setOptimisticNotif(frequency);
+
 		track(
 			`HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
 		);
@@ -194,21 +197,8 @@ export function SelectNotifications(
 				timezone: Localization.timezone,
 				lastStationId: api.pm25.location,
 			})),
-			TE.chain(
-				sideEffect((notifications) =>
-					TE.rightIO(
-						C.log(
-							`<SelectNotifications> - Update user ${JSON.stringify(
-								notifications
-							)}`
-						)
-					)
-				)
-			),
 			TE.chain((notifications) =>
 				promiseToTE(() => {
-					setOptimisticNotif(notifications.frequency);
-
 					if (!storageUser) {
 						if (notifications.frequency === 'never') {
 							return Promise.resolve(undefined);
@@ -235,6 +225,22 @@ export function SelectNotifications(
 								},
 							});
 						}
+					}
+				}, 'SelectNotifications')
+			),
+			TE.chain((user) =>
+				promiseToTE(() => {
+					if (!user) {
+						return Promise.resolve();
+					} else {
+						// Once we created/updated the user, save it back to
+						// AsyncStorage.
+						return AsyncStorage.setItem(
+							KEY_MONGO_USER,
+							JSON.stringify(user)
+						).then(() => {
+							setStorageUser(user);
+						});
 					}
 				}, 'SelectNotifications')
 			),
