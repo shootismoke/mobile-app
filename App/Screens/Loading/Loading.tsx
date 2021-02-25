@@ -26,7 +26,7 @@ import * as theme from '../../util/theme';
 import { Background } from './Background';
 
 // The variable returned by setTimeout for longWaiting
-let longWaitingTimeout: number | null = null;
+let longWaitingTimeout: NodeJS.Timeout | null = null;
 
 const styles = StyleSheet.create({
 	dots: {

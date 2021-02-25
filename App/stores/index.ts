@@ -15,7 +15,6 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 export * from './api';
-export * from './apollo';
 export * from './error';
 export * from './distanceUnit';
 export * from './location';

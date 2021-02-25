@@ -15,10 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
+import type { AlgoliaHit } from '@shootismoke/ui';
 
 import { ListItem } from '../../../components';
 import { Location } from '../../../stores/util/fetchGpsPosition';
-import { AlgoliaHit } from '../fetchAlgolia';
 
 interface ItemProps {
 	item: AlgoliaHit;

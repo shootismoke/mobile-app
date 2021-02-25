@@ -39,7 +39,7 @@ interface ApiContextProviderProps {
 }
 
 // Timeout, in ms, after which we abandon the api request.
-const API_TIMEOUT = 5000;
+const API_TIMEOUT = 10000;
 
 /**
  * withTimeout wraps another promise, and rejects if the inner promise

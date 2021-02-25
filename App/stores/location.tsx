@@ -15,13 +15,14 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { LatLng } from '@shootismoke/dataproviders';
+import { sideEffect } from '@shootismoke/ui';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
-import { promiseToTE, sideEffect } from '../util/fp';
+import { promiseToTE } from '../util/fp';
 import { noop } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';

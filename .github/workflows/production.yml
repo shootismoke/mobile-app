@@ -1,63 +1,63 @@
 name: production
 
 on:
-  push:
-    branches:
-      - 'production-v*.*'
-    tags:
-      - 'v*.*.*'
+    push:
+        branches:
+            - 'production-v*.*'
+        tags:
+            - 'v*.*.*'
 
 env:
-  SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
-  SIS_AMPLITUDE_API_KEY: ${{ secrets.SIS_PRODUCTION_AMPLITUDE_API_KEY }}
-  SIS_BACKEND_URL: https://shootismoke.now.sh/api/graphql
-  SIS_HAWK_KEY: ${{ secrets.SIS_PRODUCTION_HAWK_KEY }}
-  SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
-  SIS_SENTRY_ORG: ${{ secrets.SIS_PRODUCTION_SENTRY_ORG }}
-  SIS_SENTRY_PROJECT: ${{ secrets.SIS_PRODUCTION_SENTRY_PROJECT }}
-  SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_PRODUCTION_SENTRY_AUTH_TOKEN }}
-  SIS_GOOGLE_SERVICES_JSON: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
-  SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
-  SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
+    SIS_AQICN_TOKEN: ${{ secrets.SIS_PRODUCTION_AQICN_TOKEN }}
+    SIS_AMPLITUDE_API_KEY: ${{ secrets.SIS_PRODUCTION_AMPLITUDE_API_KEY }}
+    SIS_BACKEND_URL: https://shootismoke.app
+    SIS_HAWK_KEY: ${{ secrets.SIS_PRODUCTION_HAWK_KEY }}
+    SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
+    SIS_SENTRY_ORG: ${{ secrets.SIS_PRODUCTION_SENTRY_ORG }}
+    SIS_SENTRY_PROJECT: ${{ secrets.SIS_PRODUCTION_SENTRY_PROJECT }}
+    SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_PRODUCTION_SENTRY_AUTH_TOKEN }}
+    SIS_GOOGLE_SERVICES_JSON: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
+    SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
+    SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
 
 jobs:
-  # Build native binaries on production release channel
-  expo-production:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        build: [android-apk, android-app-bundle, ios]
-        include:
-          # Include, for each build, the expo build command
-          - build: android-apk
-            expo_build_command: build:android -t apk
-          - build: android-app-bundle
-            expo_build_command: build:android -t app-bundle
-          - build: ios
-            expo_build_command: build:ios
-      # expo-cli can only run one build at a time
-      # https://github.com/expo/expo-cli/issues/1820
-      max-parallel: 1
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - uses: expo/expo-github-action@v5
-        with:
-          expo-version: 3.x
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-          expo-cache: true
-      - run: yarn install
-      - name: Set RELEASE_CHANNEL env variable # Will be v*.* (major.minor)
-        if: startsWith(github.ref, 'refs/heads/production-v')
-        run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:22} # Remove refs/heads/production-
-      - name: Set RELEASE_CHANNEL env variable # Will be v*.*.* (major.minor.patch)
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:10} # Remove refs/tags/
-      - name: Generate production app.json
-        run: |
-          ./scripts/generateAppJson.js > app.json
-          ./scripts/generateGoogleServicesJson.js > google-services.json
-      - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}
+    # Build native binaries on production release channel
+    expo-production:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                build: [android-apk, android-app-bundle, ios]
+                include:
+                    # Include, for each build, the expo build command
+                    - build: android-apk
+                      expo_build_command: build:android -t apk
+                    - build: android-app-bundle
+                      expo_build_command: build:android -t app-bundle
+                    - build: ios
+                      expo_build_command: build:ios
+            # expo-cli can only run one build at a time
+            # https://github.com/expo/expo-cli/issues/1820
+            max-parallel: 1
+        steps:
+            - uses: actions/checkout@v1
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12.x
+            - uses: expo/expo-github-action@v5
+              with:
+                  expo-version: 3.x
+                  expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+                  expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+                  expo-cache: true
+            - run: yarn install
+            - name: Set RELEASE_CHANNEL env variable # Will be v*.* (major.minor)
+              if: startsWith(github.ref, 'refs/heads/production-v')
+              run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:22} # Remove refs/heads/production-
+            - name: Set RELEASE_CHANNEL env variable # Will be v*.*.* (major.minor.patch)
+              if: startsWith(github.ref, 'refs/tags/v')
+              run: echo ::set-env name=RELEASE_CHANNEL::${GITHUB_REF:10} # Remove refs/tags/
+            - name: Generate production app.json
+              run: |
+                  ./scripts/generateAppJson.js > app.json
+                  ./scripts/generateGoogleServicesJson.js > google-services.json
+            - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}

@@ -1,61 +1,61 @@
 name: pr
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-      - 'production-v*.*'
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+            - 'production-v*.*'
 
 env:
-  SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
-  SIS_SENTRY_ORG: ${{ secrets.SIS_STAGING_SENTRY_ORG }}
-  SIS_SENTRY_PROJECT: ${{ secrets.SIS_STAGING_SENTRY_PROJECT }}
-  SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_STAGING_SENTRY_AUTH_TOKEN }}
+    SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
+    SIS_SENTRY_ORG: ${{ secrets.SIS_STAGING_SENTRY_ORG }}
+    SIS_SENTRY_PROJECT: ${{ secrets.SIS_STAGING_SENTRY_PROJECT }}
+    SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_STAGING_SENTRY_AUTH_TOKEN }}
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - run: yarn install
-      - run: yarn lint
-  test-unit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - run: yarn install
-      - run: yarn test:unit
-  test-e2e:
-    runs-on: macOS-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: expo/expo-github-action@v5
-        with:
-          expo-version: 3.x
-          expo-cache: true
-      - name: Install applesimutils
-        run: |
-          brew tap wix/brew
-          brew install applesimutils
-      - run: yarn install
-      - name: Generate staging app.json
-        run: ./scripts/generateAppJson.js > app.json
-      - name: Download ExpoClient binary
-        run: ./e2e/dl_expo_bins.sh
-      - name: Run E2E Tests
-        run: |
-          # Start packager in background
-          yarn start >/dev/null &
-          PID=$(ps $! | tail -1 | awk '{print $1}')
-          # Run e2e test
-          yarn test:e2e
-          # Kill packager
-          kill $PID
-      - uses: actions/upload-artifact@master
-        if: always()
-        with:
-          name: test-e2e-artifacts
-          path: ./artifacts
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - run: yarn install
+            - run: yarn lint
+    test-unit:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - run: yarn install
+            - run: yarn test:unit
+    test-e2e:
+        runs-on: macOS-latest
+        steps:
+            - uses: actions/checkout@v1
+            - uses: expo/expo-github-action@v5
+              with:
+                  expo-version: 3.x
+                  expo-cache: true
+            - name: Install applesimutils
+              run: |
+                  brew tap wix/brew
+                  brew install applesimutils
+            - run: yarn install
+            - name: Generate staging app.json
+              run: ./scripts/generateAppJson.js > app.json
+            - name: Download ExpoClient binary
+              run: ./e2e/dl_expo_bins.sh
+            - name: Run E2E Tests
+              run: |
+                  # Start packager in background
+                  yarn start >/dev/null &
+                  PID=$(ps $! | tail -1 | awk '{print $1}')
+                  # Run e2e test
+                  yarn test:e2e
+                  # Kill packager
+                  kill $PID
+            - uses: actions/upload-artifact@master
+              if: always()
+              with:
+                  name: test-e2e-artifacts
+                  path: ./artifacts

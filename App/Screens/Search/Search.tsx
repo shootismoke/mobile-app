@@ -20,7 +20,7 @@ import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { FrequencyContext } from '@shootismoke/ui';
+import { FrequencyContext, AlgoliaHit, fetchAlgolia } from '@shootismoke/ui';
 
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
@@ -30,12 +30,11 @@ import { sentryError } from '../../util/sentry';
 import * as theme from '../../util/theme';
 import { RootStackParams } from '../routeParams';
 import { AlgoliaItem } from './AlgoliaItem';
-import { AlgoliaHit, fetchAlgolia } from './fetchAlgolia';
 import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
 
 // Timeout to detect when user stops typing
-let typingTimeout: number | null = null;
+let typingTimeout: NodeJS.Timeout | null = null;
 
 interface SearchProps {
 	navigation: StackNavigationProp<RootStackParams, 'Search'>;

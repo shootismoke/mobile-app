@@ -20,8 +20,8 @@
 		"extra": {
 			"aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
 			"amplitudeApiKey": null,
-			"backendUrl": "https://staging.shootismoke.now.sh/api/graphql",
-			"hawkKey": "26bb8794-8f1e-4bf7-b977-081186af58d6",
+			"backendUrl": "https://staging.shootismoke.vercel.app",
+			"backendSecret": "staging-ssshhh!",
 			"sentryPublicDsn": null
 		},
 		"githubUrl": "https://github.com/amaurym/shoot-i-smoke",

@@ -14,7 +14,7 @@ const merge = require('lodash/merge');
 const defaultAppJson = require('../app.example.json');
 const pkgJson = require('../package.json');
 
-const STAGING_BACKEND_URL = 'https://staging.shootismoke.now.sh/api/graphql';
+const STAGING_BACKEND_URL = 'https://staging.shootismoke.vercel.app';
 
 const overrides = {
 	expo: {
