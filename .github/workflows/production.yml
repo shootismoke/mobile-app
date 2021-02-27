@@ -50,14 +50,14 @@ jobs:
                   expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
                   expo-cache: true
             - run: yarn install
-            - name: Set RELEASE_CHANNEL env variable # Will be v*.* (major.minor)
+            - name: Set RELEASE_CHANNEL env variable # Will be "production-v*.*"
               if: startsWith(github.ref, 'refs/heads/production-v')
-              run: echo RELEASE_CHANNEL=${GITHUB_REF:22} >> $GITHUB_ENV # Remove refs/heads/production-
-            - name: Set RELEASE_CHANNEL env variable # Will be v*.*.* (major.minor.patch)
+              run: echo RELEASE_CHANNEL=${GITHUB_REF:11} >> $GITHUB_ENV # Remove refs/heads/
+            - name: Set RELEASE_CHANNEL env variable # Will be "v*.*.*"
               if: startsWith(github.ref, 'refs/tags/v')
               run: echo RELEASE_CHANNEL=${GITHUB_REF:10} >> $GITHUB_ENV # Remove refs/tags/
             - name: Generate production app.json
               run: |
                   ./scripts/generateAppJson.js > app.json
                   ./scripts/generateGoogleServicesJson.js > google-services.json
-            - run: expo ${{ matrix.expo_build_command }} --release-channel=production-${{ env.RELEASE_CHANNEL }}
+            - run: expo ${{ matrix.expo_build_command }} --release-channel=${{ env.RELEASE_CHANNEL }}
