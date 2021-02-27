@@ -16,7 +16,7 @@
 
 import Switch from '@dooboo-ui/native-switch-toggle';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
-import { Frequency, MongoUser, retry } from '@shootismoke/ui';
+import { Frequency, MongoUser, retry, sideEffect } from '@shootismoke/ui';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
@@ -106,25 +106,48 @@ export function SelectNotifications(
 	const { api } = useContext(ApiContext);
 
 	// User stored in AsyncStorage.
-	const [storageUser, setStorageUser] = useState<MongoUser>();
+	const [currentUser, setCurrentUser] = useState<MongoUser>();
 
-	// Fetch data from backend
+	// Fetch data from backend.
 	useEffect(() => {
 		AsyncStorage.getItem(KEY_MONGO_USER)
 			.then((serializedUser) => {
 				if (serializedUser) {
 					const user = JSON.parse(serializedUser) as MongoUser;
 					console.log(
-						`<SelectNotifications> - Got user ${user._id} from AsyncStorage.`
+						`<SelectNotifications> - Got user ${JSON.stringify(
+							user
+						)} from AsyncStorage.`
 					);
-					setStorageUser(user);
 
-					return getUser(user._id);
+					setCurrentUser(user);
+
+					if (!user.expoReport?.expoPushToken) {
+						throw new Error(
+							'User in AsyncStorage does not have expoPushToken.'
+						);
+					}
+
+					// Retrieve from backend the latest version of current user.
+					return getUser(user.expoReport.expoPushToken);
+				} else {
+					return Notifications.getExpoPushTokenAsync().then(
+						({ data }) => getUser(data)
+					);
 				}
 			})
-			.then((user) => user && setStorageUser(user))
-			.catch(sentryError);
+			.then((user) => user && setCurrentUser(user))
+			.catch(sentryError('SelectNotifications'));
 	}, []);
+
+	// Update currentUser in AsyncStorage each time it changes.
+	useEffect(() => {
+		currentUser &&
+			AsyncStorage.setItem(
+				KEY_MONGO_USER,
+				JSON.stringify(currentUser)
+			).catch(sentryError('SelectNotifications'));
+	}, [currentUser]);
 
 	// This state is used for optimistic UI: right after the user clicks, we set
 	// this state to what the user clicked. When the actual mutation resolves, we
@@ -137,8 +160,8 @@ export function SelectNotifications(
 		// If we have optimistic UI, show it
 		optimisticNotif ||
 		// If we have up-to-date data from backend, take that
-		storageUser?.expoReport?.frequency ||
-		// If the getUserData is still loading, just show `never`
+		currentUser?.expoReport?.frequency ||
+		// If the getUser function is still loading, just show `never`
 		'never';
 
 	/**
@@ -199,7 +222,7 @@ export function SelectNotifications(
 			})),
 			TE.chain((notifications) =>
 				promiseToTE(() => {
-					if (!storageUser) {
+					if (!currentUser) {
 						if (notifications.frequency === 'never') {
 							return Promise.resolve(undefined);
 						} else {
@@ -214,11 +237,11 @@ export function SelectNotifications(
 						}
 					} else {
 						if (notifications.frequency === 'never') {
-							return updateUser(storageUser._id, {
+							return updateUser(currentUser._id, {
 								expoReport: (null as unknown) as undefined,
 							});
 						} else {
-							return updateUser(storageUser._id, {
+							return updateUser(currentUser._id, {
 								expoReport: {
 									expoPushToken: notifications.expoPushToken,
 									frequency: notifications.frequency,
@@ -228,21 +251,12 @@ export function SelectNotifications(
 					}
 				}, 'SelectNotifications')
 			),
-			TE.chain((user) =>
-				promiseToTE(() => {
-					if (!user) {
-						return Promise.resolve();
-					} else {
-						// Once we created/updated the user, save it back to
-						// AsyncStorage.
-						return AsyncStorage.setItem(
-							KEY_MONGO_USER,
-							JSON.stringify(user)
-						).then(() => {
-							setStorageUser(user);
-						});
-					}
-				}, 'SelectNotifications')
+			TE.chain(
+				sideEffect((user) => {
+					user && setCurrentUser(user);
+
+					return TE.right(undefined);
+				})
 			),
 			TE.fold(
 				(error) => {
