@@ -45,14 +45,19 @@ export function createUser(user: IUser): Promise<MongoUser> {
 		});
 }
 
-export function getUser(userId: string): Promise<MongoUser> {
-	console.log(`<Axios> - GET /api/users/${userId}`);
+/**
+ * Get user by expoPushToken.
+ *
+ * @param expoPushToken - The Expo push token.
+ */
+export function getUser(expoPushToken: string): Promise<MongoUser> {
+	console.log(`<Axios> - GET /api/users/expoPushToken/${expoPushToken}`);
 
 	return axios
 		.get<MongoUser>(
 			`${
 				Constants.manifest.extra.backendUrl as string
-			}/api/users/${userId}`,
+			}/api/users/expoPushToken/${expoPushToken}`,
 			axiosConfig
 		)
 		.then(({ data }) => data)
