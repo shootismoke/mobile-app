@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.7.2...v1.8.0) (2021-02-27)
+
+
+### Features
+
+* Add new expo-status-bar package and added the StatusBar in Screen.tsx ([#751](https://github.com/amaurymartiny/shoot-i-smoke/issues/751)) ([5b34bbf](https://github.com/amaurymartiny/shoot-i-smoke/commit/5b34bbf615e6b9783cefd389fa7ae0560407817f))
+* Calculating Max Cigarattes to display dynamically ([#750](https://github.com/amaurymartiny/shoot-i-smoke/issues/750)) ([2d7fb34](https://github.com/amaurymartiny/shoot-i-smoke/commit/2d7fb343628a351cb121232113c20da31afd4700))
+* Switch to new backend, remove graphql ([#903](https://github.com/amaurymartiny/shoot-i-smoke/issues/903)) ([1f10db3](https://github.com/amaurymartiny/shoot-i-smoke/commit/1f10db3db85baaac2c429968407514351c6d0f24))
+* Update to Expo SDK 40 ([#900](https://github.com/amaurymartiny/shoot-i-smoke/issues/900)) ([5c0ef58](https://github.com/amaurymartiny/shoot-i-smoke/commit/5c0ef58363bf963016186acbbc8d98e23ab82556))
+* Use last known location if GPS fails to sync ([#752](https://github.com/amaurymartiny/shoot-i-smoke/issues/752)) ([f0a1716](https://github.com/amaurymartiny/shoot-i-smoke/commit/f0a1716b32bfac4b295f6f407f211f6aba8e371d))
+
+
+### Bug Fixes
+
+* Fix yarn test:unit v1.22.4 ([#753](https://github.com/amaurymartiny/shoot-i-smoke/issues/753)) ([1b7e89e](https://github.com/amaurymartiny/shoot-i-smoke/commit/1b7e89eddbaadef61df7a9259fe312958c009146)), closes [#724](https://github.com/amaurymartiny/shoot-i-smoke/issues/724)
+* Update to Expo SDK 39 ([#747](https://github.com/amaurymartiny/shoot-i-smoke/issues/747)) ([1dc9dfb](https://github.com/amaurymartiny/shoot-i-smoke/commit/1dc9dfb8daaf97ee26fc6d494bbc57a1352fecbc))
+* Update to Expo SDK 40 ([#850](https://github.com/amaurymartiny/shoot-i-smoke/issues/850)) ([3ba4052](https://github.com/amaurymartiny/shoot-i-smoke/commit/3ba4052ffa747af50800a89bf9fd49d318febb97))
+
 ### [1.7.2](https://github.com/amaurym/shoot-i-smoke/compare/v1.7.1...v1.7.2) (2020-09-14)
 
 
