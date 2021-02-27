@@ -41,7 +41,7 @@ const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
 /**
  * Key in the AsyncStorage for the mongo userId.
  */
-const KEY_MONGO_USER = 'mongoUserId';
+const KEY_MONGO_USER = 'mongoUser';
 
 /**
  * Capitalize a string.
@@ -124,15 +124,27 @@ export function SelectNotifications(
 
 					if (!user.expoReport?.expoPushToken) {
 						throw new Error(
-							'User in AsyncStorage does not have expoPushToken.'
+							'<SelectNotifications> - User in AsyncStorage does not have expoPushToken.'
 						);
 					}
 
 					// Retrieve from backend the latest version of current user.
 					return getUser(user.expoReport.expoPushToken);
 				} else {
-					return Notifications.getExpoPushTokenAsync().then(
-						({ data }) => getUser(data)
+					console.log(
+						'<SelectNotifications> - No user found in AsyncStorage'
+					);
+
+					// If the user have gave the "Notifications" permission,
+					// then we fetch the user from the backend.
+					return Permissions.getAsync(
+						Permissions.NOTIFICATIONS
+					).then(({ granted }) =>
+						granted
+							? Notifications.getExpoPushTokenAsync().then(
+									({ data }) => getUser(data)
+							  )
+							: undefined
 					);
 				}
 			})
