@@ -32,12 +32,7 @@ export function createUser(user: IUser): Promise<MongoUser> {
 		.post<MongoUser>(
 			`${Constants.manifest.extra.backendUrl as string}/api/users`,
 			user,
-			{
-				headers: {
-					'x-shootismoke-secret': Constants.manifest.extra
-						.backendSecret as string,
-				},
-			}
+			axiosConfig
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
@@ -80,12 +75,7 @@ export function updateUser(
 				Constants.manifest.extra.backendUrl as string
 			}/api/users/${userId}`,
 			user,
-			{
-				headers: {
-					'x-shootismoke-secret': Constants.manifest.extra
-						.backendSecret as string,
-				},
-			}
+			axiosConfig
 		)
 		.then(({ data }) => data)
 		.catch((err) => {

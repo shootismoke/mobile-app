@@ -31,12 +31,14 @@ export const IS_STAGING = RELEASE_CHANNEL === 'default';
 /**
  * Whether we're running a production version of the app
  */
-export const IS_PROD = RELEASE_CHANNEL.startsWith('production-v');
+export const IS_PROD =
+	RELEASE_CHANNEL.startsWith('production-v') || // e.g. production-v1.8
+	RELEASE_CHANNEL.startsWith('v'); // e.g. v1.8.5
 
 /**
  * Whether or not we should set up Sentry bug tracking
  */
 export const IS_SENTRY_SET_UP =
-	// We also added sentry on staging btw
+	// We also added sentry on staging btw.
 	(IS_PROD || IS_STAGING) &&
 	typeof Constants.manifest.extra.sentryPublicDsn === 'string';
