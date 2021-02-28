@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.5](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.4...v1.8.5) (2021-02-28)
+
+
+### Bug Fixes
+
+* Explicitly use PROVIDER_GOOGLE in MapsView ([7b0e176](https://github.com/amaurymartiny/shoot-i-smoke/commit/7b0e1768e4cd39013404cf8a79a8d53058e17d4c))
+* Fix CI, remove duplication, fix Sentry ([#909](https://github.com/amaurymartiny/shoot-i-smoke/issues/909)) ([f5f8ad6](https://github.com/amaurymartiny/shoot-i-smoke/commit/f5f8ad68dde3bcc66fb3e38c554daacd02f4ec3d))
+* Only fetch pm25 in openaq race API ([7da9561](https://github.com/amaurymartiny/shoot-i-smoke/commit/7da9561029be750d15affcd44b19e98215a50135))
+
 ### [1.8.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.3...v1.8.4) (2021-02-28)
 
 
