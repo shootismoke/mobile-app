@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.4](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.3...v1.8.4) (2021-02-28)
+
+
+### Bug Fixes
+
+* Update @shootismoke/ui to use lastest OpenAQ API v2 ([#907](https://github.com/amaurymartiny/shoot-i-smoke/issues/907)) ([eac4261](https://github.com/amaurymartiny/shoot-i-smoke/commit/eac4261d617f319e0e623f5632f6215b0c47afa9))
+
 ### [1.8.3](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.2...v1.8.3) (2021-02-27)
 
 ### [1.8.2](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.1...v1.8.2) (2021-02-27)
