@@ -2477,35 +2477,37 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.7.0.tgz#49c31d1d4b5be20484eb70f006430db3c580167e"
-  integrity sha512-3FHbx1sq89JMtYFFa4lMVExqNmecZRAx5hm4l8kDWT0udSi/Dr5zGr3aR3IWr3aULzi5pKXjBTZMpsC5RScG/g==
+"@shootismoke/convert@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.8.1.tgz#8b0180f219c70d194b68f557a9c6338ff55551ae"
+  integrity sha512-Apny9s088Hk00GZYxg/VqmwRG37E9pgZIbHT0qRICuNbut1wNPOwpYHk+mEZ9j0BprnnFQqphbC0Fp+zdpvItg==
   dependencies:
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
 
-"@shootismoke/dataproviders@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.7.0.tgz#77e33d3b7e3db42b3ca804174397130095d5d7d8"
-  integrity sha512-BrEeoqeEzadgeGPq6hSP6fHYfk3dVj8bfaygt2AYZxm7UENYHAetSgpiAACXJFBkEC7QCd6H7JlJnKO8KBw8RQ==
+"@shootismoke/dataproviders@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.8.4.tgz#9812a58dd06b0753fabf9ddcffd2a37cd27ce302"
+  integrity sha512-X0ODxp3zlZFiduemJTaI6tb/6VTTPCYdjk/BqbVQY+t3gMdI4cwegi6TxJvCpWgWTUebJtnHWuvelNkUluZ7+g==
   dependencies:
-    "@shootismoke/convert" "^0.7.0"
+    "@shootismoke/convert" "^0.8.1"
     axios "^0.21.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
 
-"@shootismoke/ui@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.7.2.tgz#8e0ef9a592a0cbbb38df7cfdf416d27fd2d7387b"
-  integrity sha512-bOjR9AOWvbHAL/J+MXaVXimHx6unRzCquWwU/Sh9jweh0CMoyXEfjkMJ/C/HHUv7E0utYYKDnX+w2gZWKDekXA==
+"@shootismoke/ui@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.4.tgz#6a001a149f91aecdae3d66fc9d47ae9272e27e93"
+  integrity sha512-RdSOyutwyZEmS308mhDahwSSL1zVBVK4Gh7c5ub+SISBfZj1zqgXaoTjFMt2K1T6KcuKMLR7YoJy+9AsAMoHVw==
   dependencies:
-    "@shootismoke/dataproviders" "^0.7.0"
+    "@shootismoke/dataproviders" "^0.8.4"
     "@sindresorhus/slugify" "^1.1.0"
+    "@types/async-retry" "^1.4.2"
     "@types/haversine" "^1.1.4"
     "@types/p-any" "^1.1.3"
+    async-retry "^1.3.1"
     expo-server-sdk "^3.6.0"
     haversine "^1.1.1"
     lottie-react-native "^3.4.0"
@@ -2548,6 +2550,13 @@
   integrity sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@types/async-retry@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@types/async-retry/-/async-retry-1.4.2.tgz#7f910188cd3893b51e32df51765ee8d5646053e3"
+  integrity sha512-GUDuJURF0YiJZ+CBjNQA0+vbP/VHlJbB0sFqkzsV7EcOPRfurVonXpXKAt3w8qIjM1TEzpz6hc6POocPvHOS3w==
+  dependencies:
+    "@types/retry" "*"
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.12"
@@ -2736,6 +2745,11 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
+
+"@types/retry@*":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@types/retry/-/retry-0.12.0.tgz#2b35eccfcee7d38cd72ad99232fbd58bffb3c84d"
+  integrity sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -3304,6 +3318,13 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+
+async-retry@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/async-retry/-/async-retry-1.3.1.tgz#139f31f8ddce50c0870b0ba558a6079684aaed55"
+  integrity sha512-aiieFW/7h3hY0Bq5d+ktDBejxuwR78vRu9hDUdR8rNhSaQ29VzPL4AoIRG7D/c7tdenwOcKvgPM6tIxB3cB6HA==
+  dependencies:
+    retry "0.12.0"
 
 async@^0.9.0:
   version "0.9.2"
@@ -11077,15 +11098,15 @@ retry-ts@^0.1.2:
   resolved "https://registry.yarnpkg.com/retry-ts/-/retry-ts-0.1.2.tgz#83164521ba17b447053fae08d6adaff01c617306"
   integrity sha512-SwG8UL3V/SdGybVvLlb+GpIJTSY1t5SRzGUqZcEBejXJW5la3SUdglrWpyVSquL5Il+uYskaQfkgUn6zHy6rBA==
 
+retry@0.12.0, retry@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
+  integrity sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=
+
 retry@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
   integrity sha1-52OI0heZLCUnUCQdPTlW/tmNj/Q=
-
-retry@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
-  integrity sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=
 
 reusify@^1.0.4:
   version "1.0.4"

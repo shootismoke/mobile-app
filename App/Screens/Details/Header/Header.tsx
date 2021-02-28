@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { convert, Pollutant } from '@shootismoke/convert';
-import { getDominantPol, Normalized } from '@shootismoke/dataproviders';
+import { getDominantPol, OpenAQResults } from '@shootismoke/dataproviders';
 import locationIcon from '@shootismoke/ui/assets/images/location.png';
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext } from 'react';
@@ -105,10 +105,10 @@ type PollutantAverage = Record<
  * The API returns multiple normalized entries for each pollutant, we calculate
  * the average for each pollutant.
  *
- * @param normalized - The normalized data
+ * @param results - The normalized data in OpenAQResult format.
  */
-function pollutantAverage(normalized: Normalized): PollutantAverage {
-	return normalized.reduce((acc, entry) => {
+function pollutantAverage(results: OpenAQResults): PollutantAverage {
+	return results.reduce((acc, entry) => {
 		if (!acc[entry.parameter]) {
 			acc[entry.parameter] = {
 				average: entry.value,
@@ -147,7 +147,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 	// Given all the normalized data from different close stations, calculate
 	// the average AQI of each pollutant.
 	// FIXME Make sure the units are correctly converted.
-	const averages = pollutantAverage(api.normalized);
+	const averages = pollutantAverage(api.results);
 
 	return (
 		<View style={styles.container}>
@@ -175,7 +175,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 					)}
 					{renderInfo(
 						t('details_header_primary_pollutant_label'),
-						getDominantPol(api.normalized).toUpperCase()
+						getDominantPol(api.results).toUpperCase()
 					)}
 
 					<View style={styles.pollutants}>

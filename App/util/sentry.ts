@@ -18,7 +18,7 @@ import * as Sentry from 'sentry-expo';
 
 import { IS_SENTRY_SET_UP } from './constants';
 
-// We don't send the following errors to Sentry
+// We don't send the following errors to Sentry to not pollute it.
 const UNTRACKED_ERRORS = [
 	// Location not allowed
 	'Permission to access location was denied',
