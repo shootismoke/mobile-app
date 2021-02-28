@@ -6,7 +6,12 @@ on:
             - master
 
 env:
-    # For google stuff, use production key in staging env.
+    # Sentry. Use same keys as production.
+    SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
+    SIS_SENTRY_ORG: ${{ secrets.SIS_PRODUCTION_SENTRY_ORG }}
+    SIS_SENTRY_PROJECT: ${{ secrets.SIS_PRODUCTION_SENTRY_PROJECT }}
+    SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_PRODUCTION_SENTRY_AUTH_TOKEN }}
+    # Google. Use same keys as production.
     SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
     SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
 
