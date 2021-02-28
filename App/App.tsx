@@ -31,7 +31,7 @@ import {
 	LocationContextProvider,
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { IS_SENTRY_SET_UP, RELEASE_CHANNEL, IS_PROD } from './util/constants';
+import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
 import { sentryError } from './util/sentry';
 
 // Add Sentry if available
@@ -39,7 +39,7 @@ if (IS_SENTRY_SET_UP) {
 	Sentry.Native.init({
 		dsn: Constants.manifest.extra.sentryPublicDsn as string,
 		debug: true,
-		enableNative: IS_PROD,
+		enableNative: false, // Or else the app crashes.
 		release: RELEASE_CHANNEL,
 	});
 
