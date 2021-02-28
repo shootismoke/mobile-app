@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { LatLng } from '@shootismoke/dataproviders/lib/types';
+import type { LatLng } from '@shootismoke/dataproviders';
 import * as ExpoLocation from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { pipe } from 'fp-ts/lib/pipeable';

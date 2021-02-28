@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { OpenAQFormat, stationName } from '@shootismoke/dataproviders';
+import { OpenAQResult, stationName } from '@shootismoke/dataproviders';
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
@@ -25,7 +25,7 @@ import * as theme from '../../util/theme';
 const UNKNOWN_STATION = t('current_location_unknown_station');
 
 interface CurrentLocationProps extends TextProps {
-	measurement: OpenAQFormat;
+	measurement: OpenAQResult;
 	currentLocation: Location;
 }
 
