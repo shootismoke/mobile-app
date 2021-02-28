@@ -14,8 +14,6 @@ const merge = require('lodash/merge');
 const defaultAppJson = require('../app.example.json');
 const pkgJson = require('../package.json');
 
-const STAGING_BACKEND_URL = 'https://staging.shootismoke.vercel.app';
-
 const overrides = {
 	expo: {
 		android: {
@@ -28,8 +26,8 @@ const overrides = {
 		extra: {
 			aqicnToken: process.env.SIS_AQICN_TOKEN,
 			amplitudeApiKey: process.env.SIS_AMPLITUDE_API_KEY || null,
-			backendUrl: process.env.SIS_BACKEND_URL || STAGING_BACKEND_URL,
-			hawkKey: process.env.SIS_HAWK_KEY,
+			backendUrl: process.env.SIS_BACKEND_URL,
+			backendSecret: process.env.SIS_BACKEND_SECRET,
 			sentryPublicDsn: process.env.SIS_SENTRY_PUBLIC_DNS || null,
 		},
 		hooks: {

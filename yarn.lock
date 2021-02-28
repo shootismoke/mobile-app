@@ -2497,10 +2497,10 @@
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
 
-"@shootismoke/ui@^0.8.5":
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.5.tgz#bbbb5c9c98212555ce920cd853c095e42ccad2e7"
-  integrity sha512-+RF41izZ5WWxuJ/m0SJyLUnKq8pFxLz95I2zRRaYoOM3dPtz+9QwcDb41OcjioviaJGbU6yeUZ5XVycG8tf5HA==
+"@shootismoke/ui@^0.8.6":
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.6.tgz#7f4644eeff108edd012857c7e11653f4a07bafc9"
+  integrity sha512-lft83A7kMl1NwylFQlsS9BljGrnWwZSgLPgy/8be5l3j+K23gTsg1/pRicROcLTatjipV3724XhUBBY/bHMoGw==
   dependencies:
     "@shootismoke/dataproviders" "^0.8.5"
     "@sindresorhus/slugify" "^1.1.0"

@@ -9,12 +9,6 @@ on:
             - master
             - 'production-v*.*'
 
-env:
-    SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
-    SIS_SENTRY_ORG: ${{ secrets.SIS_STAGING_SENTRY_ORG }}
-    SIS_SENTRY_PROJECT: ${{ secrets.SIS_STAGING_SENTRY_PROJECT }}
-    SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_STAGING_SENTRY_AUTH_TOKEN }}
-
 jobs:
     lint:
         runs-on: ubuntu-latest
