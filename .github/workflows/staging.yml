@@ -6,10 +6,10 @@ on:
             - master
 
 env:
-    SIS_HAWK_KEY: ${{ secrets.SIS_STAGING_HAWK_KEY }}
-    SIS_SENTRY_ORG: ${{ secrets.SIS_STAGING_SENTRY_ORG }}
-    SIS_SENTRY_PROJECT: ${{ secrets.SIS_STAGING_SENTRY_PROJECT }}
-    SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_STAGING_SENTRY_AUTH_TOKEN }}
+    # For google stuff, use production key in staging env.
+    SIS_GOOGLE_SERVICES_JSON: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
+    SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
+    SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
 
 jobs:
     expo-staging:
