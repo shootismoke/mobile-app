@@ -44,6 +44,7 @@ const API_TIMEOUT = 10000;
 /**
  * withTimeout wraps another promise, and rejects if the inner promise
  * time outs after `timeout`.
+ *
  * @param p - Promise to add timeout to.
  */
 export function withTimeout<T>(p: Promise<T>, timeout: number): Promise<T> {

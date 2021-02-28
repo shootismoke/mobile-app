@@ -2477,32 +2477,32 @@
     xcode "2.0.0"
     yargs "^12.0.2"
 
-"@shootismoke/convert@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.8.1.tgz#8b0180f219c70d194b68f557a9c6338ff55551ae"
-  integrity sha512-Apny9s088Hk00GZYxg/VqmwRG37E9pgZIbHT0qRICuNbut1wNPOwpYHk+mEZ9j0BprnnFQqphbC0Fp+zdpvItg==
+"@shootismoke/convert@^0.8.5":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@shootismoke/convert/-/convert-0.8.5.tgz#b091d0ceb768d63ffa3cf8519bec4dc34efe6658"
+  integrity sha512-YXOr6ZI3PReyEt+LVXuOp3f236fQlP4C/h7UXQXBB9lyFuicsdjZXcfZDaqnkD+M0R3oA861in2FfkLKeZzoYQ==
   dependencies:
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
 
-"@shootismoke/dataproviders@^0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.8.4.tgz#9812a58dd06b0753fabf9ddcffd2a37cd27ce302"
-  integrity sha512-X0ODxp3zlZFiduemJTaI6tb/6VTTPCYdjk/BqbVQY+t3gMdI4cwegi6TxJvCpWgWTUebJtnHWuvelNkUluZ7+g==
+"@shootismoke/dataproviders@^0.8.5":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.8.5.tgz#fe316c410c811f162f34598c686afd757ff0404d"
+  integrity sha512-jhZCA4ejrPmjVxJ4aBz8QQXpJkcSp+QmMskxam7mLAoISL2acDq2AOkc+m3PiOfwgRyHE5tuuoN8nlLBB2qgkw==
   dependencies:
-    "@shootismoke/convert" "^0.8.1"
+    "@shootismoke/convert" "^0.8.5"
     axios "^0.21.0"
     date-fns "^2.8.1"
     date-fns-tz "^1.0.9"
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
 
-"@shootismoke/ui@^0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.4.tgz#6a001a149f91aecdae3d66fc9d47ae9272e27e93"
-  integrity sha512-RdSOyutwyZEmS308mhDahwSSL1zVBVK4Gh7c5ub+SISBfZj1zqgXaoTjFMt2K1T6KcuKMLR7YoJy+9AsAMoHVw==
+"@shootismoke/ui@^0.8.5":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.5.tgz#bbbb5c9c98212555ce920cd853c095e42ccad2e7"
+  integrity sha512-+RF41izZ5WWxuJ/m0SJyLUnKq8pFxLz95I2zRRaYoOM3dPtz+9QwcDb41OcjioviaJGbU6yeUZ5XVycG8tf5HA==
   dependencies:
-    "@shootismoke/dataproviders" "^0.8.4"
+    "@shootismoke/dataproviders" "^0.8.5"
     "@sindresorhus/slugify" "^1.1.0"
     "@types/async-retry" "^1.4.2"
     "@types/haversine" "^1.1.4"
