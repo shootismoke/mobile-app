@@ -39,7 +39,7 @@ if (IS_SENTRY_SET_UP) {
 	Sentry.Native.init({
 		dsn: Constants.manifest.extra.sentryPublicDsn as string,
 		debug: true,
-		enableNative: !IS_PROD,
+		enableNative: IS_PROD,
 		release: RELEASE_CHANNEL,
 	});
 
