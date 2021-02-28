@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { convert, Pollutant } from '@shootismoke/convert';
+import { convert, Pollutant, ugm3 } from '@shootismoke/convert';
 import { getDominantPol, OpenAQResults } from '@shootismoke/dataproviders';
 import locationIcon from '@shootismoke/ui/assets/images/location.png';
 import { formatDistanceToNow } from 'date-fns';
@@ -184,7 +184,7 @@ export function Header(props: HeaderProps): React.ReactElement {
 								`${pollutant.toUpperCase()} AQI:`,
 								convert(
 									pollutant as Pollutant,
-									'ugm3',
+									ugm3,
 									'usaEpa',
 									averages[pollutant as Pollutant].average
 								),
