@@ -20,7 +20,7 @@ import homeIcon from '@shootismoke/ui/assets/images/home.png';
 import stationIcon from '@shootismoke/ui/assets/images/station.png';
 import React, { useContext, useEffect, useState } from 'react';
 import { ImageRequireSource, StyleSheet, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import truncate from 'truncate';
 import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 
@@ -137,6 +137,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 								) * 2,
 						}}
 						onMapReady={handleMapReady}
+						provider={PROVIDER_GOOGLE}
 						style={styles.map}
 					>
 						<Marker
