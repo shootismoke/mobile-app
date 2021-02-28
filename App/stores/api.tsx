@@ -91,6 +91,12 @@ export function ApiContextProvider({
 								token: Constants.manifest.extra
 									.aqicnToken as string,
 							},
+							openaq: {
+								// Limiting to only fetch pm25. Sometimes, when
+								// we search for all pollutants, the pm25 ones
+								// don't get returned within the result limits.
+								parameter: ['pm25'],
+							},
 						}),
 						API_TIMEOUT
 					),

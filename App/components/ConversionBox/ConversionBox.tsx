@@ -24,8 +24,8 @@ import {
 	ImageSourcePropType,
 	ViewProps,
 } from 'react-native';
-
 import cigarette from '@shootismoke/ui/assets/images/cigarette.png';
+
 import * as theme from '../../util/theme';
 import { t } from '../../localization';
 
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
 	},
 	statisticsLeft: {
 		alignItems: 'flex-end',
-		marginTop: 36,
 		paddingRight: 10,
 		width: 90,
 	},
