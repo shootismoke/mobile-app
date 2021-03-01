@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.8](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.7...v1.8.8) (2021-03-01)
+
+
+### Bug Fixes
+
+* Fix MapView crashing ([#910](https://github.com/amaurymartiny/shoot-i-smoke/issues/910)) ([12fe7b6](https://github.com/amaurymartiny/shoot-i-smoke/commit/12fe7b61994745c26c27ca70e70d363a53d5b637))
+
 ### [1.8.7](https://github.com/shootismoke/mobile-app/compare/v1.8.6...v1.8.7) (2021-03-01)
 
 ### [1.8.6](https://github.com/shootismoke/mobile-app/compare/v1.8.5...v1.8.6) (2021-02-28)
