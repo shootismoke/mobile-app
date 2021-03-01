@@ -72,7 +72,7 @@ const handleOpenBerkeley = (): void => {
 };
 
 const handleOpenGithub = (): void => {
-	Linking.openURL('https://github.com/amaurym/shoot-i-smoke').catch(
+	Linking.openURL('https://github.com/shootismoke/mobile-app').catch(
 		sentryError('About')
 	);
 };
@@ -313,7 +313,7 @@ export function About(props: AboutProps): React.ReactElement {
 						Constants.manifest.version}
 					.
 				</Text>
-				{/* Add changing languages https://github.com/amaurym/shoot-i-smoke/issues/73 */}
+				{/* Add changing languages https://github.com/shootismoke/mobile-app/issues/73 */}
 			</View>
 		</CustomScrollView>
 	);

@@ -29,7 +29,7 @@ When you submit code changes, we ask you to sign a CLA: https://cla-assistant.io
 
 ## Report bugs using Github's issues
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/amaurym/shoot-i-smoke/issues); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/shootismoke/mobile-app/issues); it's that easy!
 
 ## Write bug reports with detail, background, and sample code
 
