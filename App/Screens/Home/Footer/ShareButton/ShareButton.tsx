@@ -66,7 +66,7 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 			const title = t('home_share_title');
 
 			// FIXME imageUrl doesn't work on Android
-			// https://github.com/amaurym/shoot-i-smoke/issues/250
+			// https://github.com/shootismoke/mobile-app/issues/250
 			await Share.share({ message, title, url: imageUrl });
 		} catch (error) {
 			sentryError('ShareButton')(error);

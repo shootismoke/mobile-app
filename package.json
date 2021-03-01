@@ -29,7 +29,7 @@
 		"@react-native-community/masked-view": "0.1.10",
 		"@react-navigation/native": "^5.9.3",
 		"@react-navigation/stack": "^5.14.3",
-		"@shootismoke/ui": "^0.8.6",
+		"@shootismoke/ui": "^0.8.7",
 		"@types/i18n-js": "^3.8.0",
 		"@types/react-native": "~0.63.2",
 		"date-fns": "^2.17.0",

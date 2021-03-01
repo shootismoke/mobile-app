@@ -5,8 +5,8 @@
 <h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
 
 <p align="center">
-  <a href="https://github.com/amaurym/shoot-i-smoke/actions">
-    <img alt="Github Actions" src="https://github.com/amaurym/shoot-i-smoke/workflows/CI/badge.svg" />
+  <a href="https://github.com/shootismoke/mobile-app/actions">
+    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/CI/badge.svg" />
   </a>
   <a href="https://david-dm.org/amaurym/shoot-i-smoke">
     <img alt="david-dm" src="https://img.shields.io/david/amaurym/shoot-i-smoke.svg" />
@@ -59,7 +59,7 @@ Run the following commands:
 
 ```bash
 # Clone this repo
-git clone https://github.com/amaurym/shoot-i-smoke && cd shoot-i-smoke
+git clone https://github.com/shootismoke/mobile-app && cd shoot-i-smoke
 # Install dependencies
 yarn install
 
@@ -91,17 +91,17 @@ All required API tokens are already pre-filled in `app.example.json`. If you wan
 
 ## :raising_hand: Contribute
 
-If you find a bug, or if you have an idea for this app, please [file an issue here](https://github.com/amaurym/shoot-i-smoke/issues). We really appreciate feedback and inputs!
+If you find a bug, or if you have an idea for this app, please [file an issue here](https://github.com/shootismoke/mobile-app/issues). We really appreciate feedback and inputs!
 
 🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX). If you need context for some terms, here are [some screenshots](https://nx1394.your-storageshare.de/s/grS6CZJGapRSH6i).
 
-For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along. You can start with these [easy tasks](https://github.com/amaurym/shoot-i-smoke/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along. You can start with these [easy tasks](https://github.com/shootismoke/mobile-app/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 More information on contributing [here](./CONTRIBUTING.md).
 
 ## :microscope: Tests
 
-The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts` files in the project for tests. If you're interested to help out, have a look at [issue #19](https://github.com/amaurym/shoot-i-smoke/issues/19).
+The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts` files in the project for tests. If you're interested to help out, have a look at [issue #19](https://github.com/shootismoke/mobile-app/issues/19).
 
 ## :newspaper: License
 

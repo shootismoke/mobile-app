@@ -24,7 +24,7 @@
 			"backendSecret": "staging-ssshhh!",
 			"sentryPublicDsn": null
 		},
-		"githubUrl": "https://github.com/amaurym/shoot-i-smoke",
+		"githubUrl": "https://github.com/shootismoke/mobile-app",
 		"hooks": {
 			"postPublish": [
 				{
