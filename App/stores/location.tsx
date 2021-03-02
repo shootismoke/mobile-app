@@ -148,9 +148,12 @@ export function LocationContextProvider({
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		AsyncStorage.setItem(
-			LAST_KNOWN_LOCATION_KEY,
-			JSON.stringify(currentLocation)
+		(currentLocation
+			? AsyncStorage.setItem(
+					LAST_KNOWN_LOCATION_KEY,
+					JSON.stringify(currentLocation)
+			  )
+			: AsyncStorage.removeItem(LAST_KNOWN_LOCATION_KEY)
 		).catch(sentryError('LocationContextProvider'));
 	}, [currentLocation]);
 
