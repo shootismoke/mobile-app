@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.10](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.9...v1.8.10) (2021-03-02)
+
+
+### Bug Fixes
+
+* Fix setting null/undefined value in AsyncStorage ([#912](https://github.com/amaurymartiny/shoot-i-smoke/issues/912)) ([b39fc67](https://github.com/amaurymartiny/shoot-i-smoke/commit/b39fc67038e3438e263ee04620e6d344d8f537cb))
+
 ### [1.8.9](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.8...v1.8.9) (2021-03-02)
 
 
