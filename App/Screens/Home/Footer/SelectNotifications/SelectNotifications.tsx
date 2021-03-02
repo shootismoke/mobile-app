@@ -24,7 +24,8 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { useContext, useEffect, useState } from 'react';
-import { AsyncStorage, StyleSheet, Text, View, ViewProps } from 'react-native';
+import { StyleSheet, Text, View, ViewProps } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { scale } from 'react-native-size-matters';
 
 import { ActionPicker } from '../../../../components';

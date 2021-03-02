@@ -15,7 +15,7 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { t } from '../localization';
 import { noop, DistanceUnit } from '@shootismoke/ui';

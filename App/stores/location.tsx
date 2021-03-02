@@ -20,7 +20,7 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { promiseToTE } from '../util/fp';
 import { noop } from '@shootismoke/ui';
