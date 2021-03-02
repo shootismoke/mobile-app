@@ -26,6 +26,7 @@
 	"dependencies": {
 		"@dooboo-ui/native-switch-toggle": "^0.7.0",
 		"@expo/react-native-action-sheet": "^3.8.0",
+		"@react-native-async-storage/async-storage": "^1.14.1",
 		"@react-native-community/masked-view": "0.1.10",
 		"@react-navigation/native": "^5.9.3",
 		"@react-navigation/stack": "^5.14.3",
