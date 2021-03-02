@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.9](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.8...v1.8.9) (2021-03-02)
+
+
+### Bug Fixes
+
+* Fix crash on iOS due to AsyncStorage ([#911](https://github.com/amaurymartiny/shoot-i-smoke/issues/911)) ([959c4e7](https://github.com/amaurymartiny/shoot-i-smoke/commit/959c4e7391e41b6be77f55af143c4df6223127e1))
+
 ### [1.8.8](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.7...v1.8.8) (2021-03-01)
 
 
