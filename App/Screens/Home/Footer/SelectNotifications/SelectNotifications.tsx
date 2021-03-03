@@ -133,15 +133,15 @@ export function SelectNotifications(
 					return getUser(user.expoReport.expoPushToken);
 				} else {
 					console.log(
-						'<SelectNotifications> - No user found in AsyncStorage'
+						'<SelectNotifications> - No user found in AsyncStorage.'
 					);
 
 					// If the user have gave the "Notifications" permission,
 					// then we fetch the user from the backend.
 					return Permissions.getAsync(
 						Permissions.NOTIFICATIONS
-					).then(({ granted }) =>
-						granted
+					).then(({ status }) =>
+						status === 'granted'
 							? Notifications.getExpoPushTokenAsync().then(
 									({ data }) => getUser(data)
 							  )
@@ -215,7 +215,10 @@ export function SelectNotifications(
 			}),
 			TE.chain(() =>
 				// Retry 3 times to get the Expo push token, sometimes we get an Error
-				// "Couldn't get GCM token for device" on 1st try
+				// "Couldn't get GCM token for device" on 1st try" or
+				// "Fetching the token failed: SERVICE_NOT_AVAILABLE"
+				// It seems the correct solution is an exponential backoff:
+				// https://github.com/firebase/firebase-android-sdk/issues/158
 				retry(
 					() =>
 						promiseToTE(
@@ -223,7 +226,8 @@ export function SelectNotifications(
 							'SelectNotifications'
 						),
 					{
-						retries: 3,
+						exponentialBackoff: 200, // retry first after 200ms
+						retries: 4,
 					}
 				)
 			),

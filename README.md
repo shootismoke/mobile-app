@@ -8,10 +8,10 @@
   <a href="https://github.com/shootismoke/mobile-app/actions">
     <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/CI/badge.svg" />
   </a>
-  <a href="https://david-dm.org/amaurym/shoot-i-smoke">
-    <img alt="david-dm" src="https://img.shields.io/david/amaurym/shoot-i-smoke.svg" />
+  <a href="https://david-dm.org/shootismoke/mobile-app">
+    <img alt="david-dm" src="https://img.shields.io/david/shootismoke/mobile-app.svg" />
   </a>
-  <a href="https://codeclimate.com/github/amaurym/shoot-i-smoke/maintainability">
+  <a href="https://codeclimate.com/github/shootismoke/mobile-app/maintainability">
     <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
   </a>
   <a href="https://spectrum.chat/shootismoke">
@@ -48,10 +48,10 @@
 
 This app is bootstrapped with [Expo](https://expo.io), you can download the Expo app on the [App Store](https://itunes.apple.com/us/app/expo-client/id982107779) or [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent), and enter the url provided below. We have 2 release channels:
 
-| Release Channel                                                                         | Version | Description                                                                 | Url                                                                         |
-| --------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| [Production](https://exp.host/@amaurym/shoot-i-smoke?release-channel=production-v1.7.2) | v1.7.2  | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@amaurym/shoot-i-smoke?release-channel=production-v1.7.2` |
-| [Staging](https://exp.host/@amaurym/shoot-i-smoke)                                      | v1.7.2  | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@amaurym/shoot-i-smoke`                                   |
+| Release Channel                                                                           | Version | Description                                                                 | Url                                                                           |
+| ----------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Production](https://exp.host/@amaurymartiny/shootismoke?release-channel=production-v1.8) | v1.8.10 | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@shootismoke/mobile-app?release-channel=production-v1.8.10` |
+| [Staging](https://exp.host/@amaurymartiny/shootismoke)                                    | v1.8.10 | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@shootismoke/mobile-app`                                    |
 
 ## :hammer: Build it yourself
 

@@ -107,8 +107,8 @@ export function track(
 	}
 
 	(properties
-		? Amplitude.logEventWithProperties(event, properties)
-		: Amplitude.logEvent(event)
+		? Amplitude.logEventWithPropertiesAsync(event, properties)
+		: Amplitude.logEventAsync(event)
 	).catch(sentryError('amplitudeTrack'));
 }
 
