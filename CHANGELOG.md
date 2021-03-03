@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.11](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.10...v1.8.11) (2021-03-03)
+
+
+### Bug Fixes
+
+* Fix warnings and errors given by Sentry ([#913](https://github.com/amaurymartiny/shoot-i-smoke/issues/913)) ([d6c4483](https://github.com/amaurymartiny/shoot-i-smoke/commit/d6c4483906f4216f76b217fdfb4cc50599f24d00))
+
 ### [1.8.10](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.9...v1.8.10) (2021-03-02)
 
 
