@@ -33,16 +33,22 @@ import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE } from '../../../../util/fp';
-import { createUser, getUser, updateUser } from '../../../../util/axios';
+import {
+	createUser,
+	deleteUser,
+	getUser,
+	updateUser,
+} from '../../../../util/axios';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
 const notificationsValues = ['never', 'daily', 'weekly', 'monthly'] as const;
 
 /**
- * Key in the AsyncStorage for the mongo userId.
+ * Key in the AsyncStorage for the last chosen frequency. It's used for
+ * optimistic UI in the frequency selector.
  */
-const KEY_MONGO_USER = 'mongoUser';
+const KEY_LAST_CHOSEN_FREQUENCY = 'lastChosenFrequency';
 
 /**
  * Capitalize a string.
@@ -111,55 +117,53 @@ export function SelectNotifications(
 
 	// Fetch data from backend.
 	useEffect(() => {
-		AsyncStorage.getItem(KEY_MONGO_USER)
-			.then((serializedUser) => {
-				if (serializedUser) {
-					const user = JSON.parse(serializedUser) as MongoUser;
-					console.log(
-						`<SelectNotifications> - Got user ${JSON.stringify(
-							user
-						)} from AsyncStorage.`
-					);
-
-					setCurrentUser(user);
-
-					if (!user.expoReport?.expoPushToken) {
+		AsyncStorage.getItem(KEY_LAST_CHOSEN_FREQUENCY)
+			.then((lastChosenFrequency) => {
+				if (lastChosenFrequency) {
+					if (
+						!(notificationsValues as readonly string[]).includes(
+							lastChosenFrequency
+						)
+					) {
 						throw new Error(
-							'<SelectNotifications> - User in AsyncStorage does not have expoPushToken.'
+							`<SelectNotifications> - Got unknown frequency "${lastChosenFrequency}" from AsyncStorage.`
 						);
 					}
 
-					// Retrieve from backend the latest version of current user.
-					return getUser(user.expoReport.expoPushToken);
-				} else {
+					const f = lastChosenFrequency as Frequency;
 					console.log(
-						'<SelectNotifications> - No user found in AsyncStorage.'
+						`<SelectNotifications> - Got frequency "${f}" from AsyncStorage.`
 					);
 
-					// If the user have gave the "Notifications" permission,
-					// then we fetch the user from the backend.
-					return Permissions.getAsync(
-						Permissions.NOTIFICATIONS
-					).then(({ status }) =>
-						status === 'granted'
-							? Notifications.getExpoPushTokenAsync().then(
-									({ data }) => getUser(data)
-							  )
-							: undefined
-					);
+					// We're optimistic that the backend frequency is the same
+					// as the one saved in AsyncStorage, so we set it.
+					setOptimisticNotif(f);
 				}
+			})
+			.then(() => {
+				return Permissions.getAsync(
+					Permissions.NOTIFICATIONS
+				).then(({ status }) =>
+					status === 'granted'
+						? Notifications.getExpoPushTokenAsync().then(
+								({ data }) => getUser(data)
+						  )
+						: undefined
+				);
 			})
 			.then((user) => user && setCurrentUser(user))
 			.catch(sentryError('SelectNotifications'));
 	}, []);
 
-	// Update currentUser in AsyncStorage each time it changes.
+	// Update lastChosenFrequency in AsyncStorage each time it changes.
 	useEffect(() => {
-		currentUser &&
-			AsyncStorage.setItem(
-				KEY_MONGO_USER,
-				JSON.stringify(currentUser)
-			).catch(sentryError('SelectNotifications'));
+		(currentUser?.expoReport?.frequency
+			? AsyncStorage.setItem(
+					KEY_LAST_CHOSEN_FREQUENCY,
+					currentUser.expoReport.frequency
+			  )
+			: AsyncStorage.removeItem(KEY_LAST_CHOSEN_FREQUENCY)
+		).catch(sentryError('SelectNotifications'));
 	}, [currentUser]);
 
 	// This state is used for optimistic UI: right after the user clicks, we set
@@ -254,9 +258,9 @@ export function SelectNotifications(
 						}
 					} else {
 						if (notifications.frequency === 'never') {
-							return updateUser(currentUser._id, {
-								expoReport: (null as unknown) as undefined,
-							});
+							return deleteUser(currentUser._id).then(
+								() => undefined // Set currentUser to undefined after deletion.
+							);
 						} else {
 							return updateUser(currentUser._id, {
 								expoReport: {
@@ -270,7 +274,7 @@ export function SelectNotifications(
 			),
 			TE.chain(
 				sideEffect((user) => {
-					user && setCurrentUser(user);
+					setCurrentUser(user);
 
 					return TE.right(undefined);
 				})
@@ -278,7 +282,7 @@ export function SelectNotifications(
 			TE.fold(
 				(error) => {
 					sentryError('SelectNotifications')(error);
-					setOptimisticNotif('never');
+					setOptimisticNotif(undefined);
 
 					track('HOME_SCREEN_NOTIFICATIONS_ERROR');
 

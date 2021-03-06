@@ -2492,10 +2492,10 @@
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
 
-"@shootismoke/dataproviders@^0.8.7":
-  version "0.8.7"
-  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.8.7.tgz#f17ee14b640ef9fbb5bd950916a85fe56401fdf7"
-  integrity sha512-6leoUJNyoB8GCFq7D/3SWH/tKEu5XHct0u/+IlwhMKfI3bVg1ZjnbMJF7WHLd5a7okGP5yiBIUAAbz3I2AaU3Q==
+"@shootismoke/dataproviders@^0.8.8":
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/@shootismoke/dataproviders/-/dataproviders-0.8.8.tgz#fdfae6d0a74be8778703b8a23dcb6f7d91dbbc98"
+  integrity sha512-yxVmcWFAvXbCvS2e5ZExv05/1+pjIW/W1zS0eUwks4EdpT1TkOeZcA5TLs3WpB+QYIKCYJV2Ca4j82fQmvDihA==
   dependencies:
     "@shootismoke/convert" "^0.8.7"
     axios "^0.21.0"
@@ -2504,12 +2504,12 @@
     fp-ts "^2.1.1"
     io-ts "^2.0.1"
 
-"@shootismoke/ui@^0.8.7":
-  version "0.8.7"
-  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.7.tgz#0fbf47a132f159b2fa14a7f78abb7891df1069e5"
-  integrity sha512-cPejm5ZPQC25171bXXftUqEnhkAPmMOAtexXx8cFnM3gVlbckq6TEHsjeQZXDWyko+L1NaemUt5g7SPYQmEugQ==
+"@shootismoke/ui@^0.8.8":
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/@shootismoke/ui/-/ui-0.8.8.tgz#7a2f0a56a798a128380554b4452de504cade793a"
+  integrity sha512-Ep/Uh2t2s7dmkpXE2Lf/4GHwP3gGMmLQ2atlR9X/CBfD30m+BTz8vqcvbgUN89nRoMZYHCHHalj28IEjJ17sOQ==
   dependencies:
-    "@shootismoke/dataproviders" "^0.8.7"
+    "@shootismoke/dataproviders" "^0.8.8"
     "@sindresorhus/slugify" "^1.1.0"
     "@types/async-retry" "^1.4.2"
     "@types/haversine" "^1.1.4"
