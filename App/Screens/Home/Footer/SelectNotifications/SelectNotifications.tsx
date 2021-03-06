@@ -33,7 +33,12 @@ import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
 import { promiseToTE } from '../../../../util/fp';
-import { createUser, getUser, updateUser } from '../../../../util/axios';
+import {
+	createUser,
+	deleteUser,
+	getUser,
+	updateUser,
+} from '../../../../util/axios';
 import { sentryError } from '../../../../util/sentry';
 import * as theme from '../../../../util/theme';
 
@@ -254,9 +259,7 @@ export function SelectNotifications(
 						}
 					} else {
 						if (notifications.frequency === 'never') {
-							return updateUser(currentUser._id, {
-								expoReport: (null as unknown) as undefined,
-							});
+							return deleteUser(currentUser._id);
 						} else {
 							return updateUser(currentUser._id, {
 								expoReport: {

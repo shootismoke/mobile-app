@@ -31,9 +31,9 @@ const UNTRACKED_ERRORS = [
 	// No results from data providers
 	'does not have PM2.5 measurings right now',
 	'Cannot normalize, got 0 result',
-	'Request to fetch API data timed out.',
+	'Request to fetch API data timed out',
 	// First time fetching a user
-	'No user with "ExponentPushToken',
+	'No user with',
 ];
 
 /**

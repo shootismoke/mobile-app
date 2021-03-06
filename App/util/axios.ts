@@ -83,6 +83,22 @@ export function updateUser(
 		});
 }
 
+export function deleteUser(userId: string): Promise<MongoUser> {
+	console.log(`<Axios> - DELETE /api/users/${userId}`);
+
+	return axios
+		.delete<MongoUser>(
+			`${
+				Constants.manifest.extra.backendUrl as string
+			}/api/users/${userId}`,
+			axiosConfig
+		)
+		.then(({ data }) => data)
+		.catch((err) => {
+			throw axiosErrorToError(err);
+		});
+}
+
 function axiosErrorToError(err: AxiosError) {
 	return new Error(`${err.message}: ${JSON.stringify(err.response?.data)}`);
 }
