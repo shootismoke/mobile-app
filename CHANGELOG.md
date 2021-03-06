@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.12](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.11...v1.8.12) (2021-03-06)
+
+
+### Bug Fixes
+
+* Delete user when no more notifications ([#914](https://github.com/amaurymartiny/shoot-i-smoke/issues/914)) ([d1d34a3](https://github.com/amaurymartiny/shoot-i-smoke/commit/d1d34a30684de344c039076a8549bc4d5eaf2c2e))
+
 ### [1.8.11](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.10...v1.8.11) (2021-03-03)
 
 
