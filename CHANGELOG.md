@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.13](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.12...v1.8.13) (2021-03-09)
+
 ### [1.8.12](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.11...v1.8.12) (2021-03-06)
 
 
