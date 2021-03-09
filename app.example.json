@@ -10,7 +10,7 @@
 			"package": "com.shitismoke.app",
 			"permissions": ["ACCESS_FINE_LOCATION"],
 			"useNextNotificationsApi": true,
-			"versionCode": 15
+			"versionCode": 16
 		},
 		"assetBundlePatterns": [
 			"assets/**/*",
