@@ -55,9 +55,11 @@ export function App(): React.ReactElement {
 		Promise.all([
 			Font.loadAsync({
 				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				'gotham-black': require('@shootismoke/ui/assets/fonts/Gotham-Black.ttf') as Font.FontResource,
+				Montserrat400: require('../assets/fonts/Montserrat_Regular_400.ttf') as Font.FontResource,
 				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				'gotham-book': require('@shootismoke/ui/assets/fonts/Gotham-Book.ttf') as Font.FontResource,
+				Montserrat500: require('../assets/fonts/Montserrat_Medium_500.ttf') as Font.FontResource,
+				// eslint-disable-next-line @typescript-eslint/no-var-requires
+				Montserrat800: require('../assets/fonts/Montserrat_ExtraBold_800.ttf') as Font.FontResource,
 			}),
 			// Add Amplitude if available
 			setupAmplitude(),

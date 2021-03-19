@@ -43,16 +43,16 @@ const styles = StyleSheet.create({
 		paddingVertical: theme.spacing.mini,
 	},
 	buttonText: {
-		...theme.title,
-		color: theme.primaryColor,
+		...theme.typography.type300,
+		color: theme.colors.orange,
 	},
 	buttonTextFull: {
-		...theme.title,
+		...theme.typography.type300,
 		color: 'white',
 	},
 	full: {
-		backgroundColor: theme.primaryColor,
-		borderColor: theme.primaryColor,
+		backgroundColor: theme.colors.orange,
+		borderColor: theme.colors.orange,
 		borderRadius: 24,
 		borderWidth: 2,
 	},
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 		marginRight: theme.spacing.mini,
 	},
 	primary: {
-		borderColor: theme.primaryColor,
+		borderColor: theme.colors.orange,
 		borderRadius: 24,
 		borderWidth: 2,
 	},

@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
 		marginBottom: theme.spacing.tiny,
 	},
 	label: {
-		color: theme.primaryColor,
-		fontFamily: theme.gothamBlack,
+		color: theme.colors.orange,
+		fontFamily: theme.Montserrat800,
 		fontSize: scale(8),
 		letterSpacing: 0,
 		lineHeight: scale(10),

@@ -37,7 +37,7 @@ interface BannerProps {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: theme.primaryColor,
+		backgroundColor: theme.colors.orange,
 		zIndex: 1,
 	},
 	content: {
@@ -71,7 +71,7 @@ export function Banner({
 					? theme.elevationShadowStyle(10, shadowPosition)
 					: null,
 			]}
-			underlayColor={asTouchable ? theme.primaryColor : undefined} // https://github.com/facebook/react-native/issues/11834
+			underlayColor={asTouchable ? theme.colors.orange : undefined} // https://github.com/facebook/react-native/issues/11834
 		>
 			<View
 				pointerEvents={asTouchable ? 'none' : 'auto'}

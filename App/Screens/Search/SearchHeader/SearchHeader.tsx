@@ -29,7 +29,7 @@ interface SearchHeaderProps {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: theme.primaryColor,
+		backgroundColor: theme.colors.orange,
 	},
 	content: {
 		...theme.withPadding,

@@ -30,7 +30,7 @@ let longWaitingTimeout: NodeJS.Timeout | null = null;
 
 const styles = StyleSheet.create({
 	dots: {
-		color: theme.primaryColor,
+		color: theme.colors.orange,
 	},
 	text: {
 		...theme.title,
