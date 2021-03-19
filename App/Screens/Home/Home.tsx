@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 	},
 	footer: {
-		marginBottom: theme.spacing.big,
+		paddingBottom: theme.spacing.huge,
 	},
 	scroll: {
 		flex: 1,

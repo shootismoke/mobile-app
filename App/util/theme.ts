@@ -35,6 +35,9 @@ export const colors = {
 export const backgroundColor = '#FAFAFC';
 export const iconBackgroundColor = '#EBE7DD';
 
+/**
+ * @deprecated Use 500 instead.
+ */
 export const Montserrat400 = 'Montserrat400';
 export const Montserrat500 = 'Montserrat500';
 export const Montserrat800 = 'Montserrat800';
@@ -97,6 +100,7 @@ export const spacing = {
 	small: scale(15),
 	normal: scale(20),
 	big: scale(36),
+	huge: scale(48),
 };
 
 /**
