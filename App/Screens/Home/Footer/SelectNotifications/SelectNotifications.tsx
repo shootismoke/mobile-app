@@ -83,12 +83,13 @@ const styles = StyleSheet.create({
 	},
 	label: {
 		...theme.text,
+		color: theme.colors.gray600,
 		textTransform: 'uppercase',
 	},
 	labelFrequency: {
 		...theme.text,
-		color: theme.primaryColor,
-		fontFamily: theme.gothamBlack,
+		color: theme.colors.orange,
+		fontFamily: theme.Montserrat800,
 		fontWeight: '900',
 		textTransform: 'uppercase',
 	},
@@ -324,11 +325,8 @@ export function SelectNotifications(
 			{(open): React.ReactElement => (
 				<View style={[styles.container, style]} {...rest}>
 					<Switch
-						backgroundColorOn={theme.primaryColor}
-						backgroundColorOff={hex2rgba(
-							theme.secondaryTextColor,
-							theme.disabledOpacity
-						)}
+						backgroundColorOn={theme.colors.orange}
+						backgroundColorOff={theme.colors.gray200}
 						circleColorOff="white"
 						circleColorOn="white"
 						circleStyle={styles.switchCircle}

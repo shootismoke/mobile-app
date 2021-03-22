@@ -53,34 +53,46 @@ export const aboutSections = {
 	aboutWhyIsTheStationSoFarTitle: 'aboutWhyIsTheStationSoFarTitle',
 };
 
-const handleOpenAmaury = (): void => {
+const openAmaury = (): void => {
 	Linking.openURL('https://amaurym.com').catch(sentryError('About'));
 };
 
-const handleOpenWaqi = (): void => {
+const openWaqi = (): void => {
 	Linking.openURL('https://aqicn.org').catch(sentryError('About'));
 };
 
-const handleOpenOpenAQ = (): void => {
+const openOpenAQ = (): void => {
 	Linking.openURL('https://openaq.org').catch(sentryError('About'));
 };
 
-const handleOpenBerkeley = (): void => {
+const openBerkeley = (): void => {
 	Linking.openURL(
 		'http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/'
 	).catch(sentryError('About'));
 };
 
-const handleOpenGithub = (): void => {
+const openGithub = (): void => {
 	Linking.openURL('https://github.com/shootismoke/mobile-app').catch(
 		sentryError('About')
 	);
 };
 
-const handleOpenMarcelo = (): void => {
+const openMarcelo = (): void => {
 	Linking.openURL('https://www.behance.net/marceloscoelho').catch(
 		sentryError('About')
 	);
+};
+
+const openPrivacy = (): void => {
+	Linking.openURL(
+		'https://github.com/shootismoke/policies/blob/main/privacy/index.md'
+	).catch(sentryError('About'));
+};
+
+const openTerms = (): void => {
+	Linking.openURL(
+		'https://github.com/shootismoke/policies/blob/main/terms/index.md'
+	).catch(sentryError('About'));
 };
 
 interface AboutProps {
@@ -171,7 +183,7 @@ export function About(props: AboutProps): React.ReactElement {
 					{t(
 						'about_how_do_you_calculate_the_number_of_cigarettes_message_1'
 					)}
-					<Text onPress={handleOpenBerkeley} style={theme.link}>
+					<Text onPress={openBerkeley} style={theme.link}>
 						{t(
 							'about_how_do_you_calculate_the_number_of_cigarettes_link_1'
 						)}
@@ -188,7 +200,7 @@ export function About(props: AboutProps): React.ReactElement {
 				<ConversionBox showFootnote={true} />
 				<Text style={styles.articleLink}>
 					(1){' '}
-					<Text onPress={handleOpenBerkeley} style={theme.link}>
+					<Text onPress={openBerkeley} style={theme.link}>
 						http://berkeleyearth.org/air-pollution-and-cigarette-equivalence/
 					</Text>
 				</Text>
@@ -212,11 +224,11 @@ export function About(props: AboutProps): React.ReactElement {
 				</Text>
 				<Text style={theme.text}>
 					{t('about_where_does_data_come_from_message_1')}
-					<Text onPress={handleOpenWaqi} style={theme.link}>
+					<Text onPress={openWaqi} style={theme.link}>
 						{t('about_where_does_data_come_from_link_1')}
 					</Text>
 					{t('about_where_does_data_come_from_message_2')}
-					<Text onPress={handleOpenOpenAQ} style={theme.link}>
+					<Text onPress={openOpenAQ} style={theme.link}>
 						{t('about_where_does_data_come_from_link_2')}
 					</Text>
 					{t('about_where_does_data_come_from_message_3')}
@@ -242,11 +254,11 @@ export function About(props: AboutProps): React.ReactElement {
 				<Text style={styles.h2}>{t('about_weird_results_title')}</Text>
 				<Text style={theme.text}>
 					{t('about_weird_results_message_1')}
-					<Text onPress={handleOpenWaqi} style={theme.link}>
+					<Text onPress={openWaqi} style={theme.link}>
 						{t('about_weird_results_link_1')}
 					</Text>
 					{t('about_weird_results_message_2')}
-					<Text onPress={handleOpenOpenAQ} style={theme.link}>
+					<Text onPress={openOpenAQ} style={theme.link}>
 						{t('about_weird_results_link_2')}
 					</Text>
 					{t('about_weird_results_message_3')}
@@ -283,27 +295,27 @@ export function About(props: AboutProps): React.ReactElement {
 				<Text style={styles.h2}>{t('about_credits_title')}</Text>
 				<Text style={theme.text}>
 					{t('about_credits_concept_and_development')}{' '}
-					<Text onPress={handleOpenAmaury} style={theme.link}>
+					<Text onPress={openAmaury} style={theme.link}>
 						Amaury M
 					</Text>
 					.{'\n'}
 					{t('about_credits_design_and_copywriting')}{' '}
-					<Text onPress={handleOpenMarcelo} style={theme.link}>
+					<Text onPress={openMarcelo} style={theme.link}>
 						Marcelo S. Coelho
 					</Text>
 					.{'\n'}
 					{'\n'}
 					{t('about_credits_data_from_message_1')}
-					<Text onPress={handleOpenWaqi} style={theme.link}>
+					<Text onPress={openWaqi} style={theme.link}>
 						{t('about_credits_data_from_link_1')}
 					</Text>
 					{t('about_credits_data_from_message_2')}
-					<Text onPress={handleOpenOpenAQ} style={theme.link}>
+					<Text onPress={openOpenAQ} style={theme.link}>
 						{t('about_credits_data_from_link_2')}
 					</Text>
 					.{'\n'}
 					{t('about_credits_source_code')}
-					<Text onPress={handleOpenGithub} style={theme.link}>
+					<Text onPress={openGithub} style={theme.link}>
 						{t('about_credits_available_github')}
 					</Text>
 					.{'\n'}
@@ -311,6 +323,14 @@ export function About(props: AboutProps): React.ReactElement {
 					{Constants.manifest.name} v
 					{Constants.manifest.revisionId ||
 						Constants.manifest.version}
+					. See{' '}
+					<Text onPress={openTerms} style={theme.link}>
+						Terms of Service
+					</Text>{' '}
+					and{' '}
+					<Text onPress={openPrivacy} style={theme.link}>
+						Privacy Policy
+					</Text>
 					.
 				</Text>
 				{/* Add changing languages https://github.com/shootismoke/mobile-app/issues/73 */}

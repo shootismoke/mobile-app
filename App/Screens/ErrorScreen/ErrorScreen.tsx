@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 		marginTop: theme.spacing.big,
 	},
 	sorry: {
-		color: theme.primaryColor,
+		color: theme.colors.orange,
 	},
 });
 

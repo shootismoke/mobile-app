@@ -30,6 +30,7 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
+import { AusAir } from './AdSection';
 
 interface HomeProps {
 	navigation: StackNavigationProp<RootStackParams, 'Home'>;
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 	},
 	footer: {
-		marginBottom: theme.spacing.big,
+		paddingBottom: theme.spacing.huge,
 	},
 	scroll: {
 		flex: 1,
@@ -171,13 +172,13 @@ export function Home(props: HomeProps): React.ReactElement {
 	return (
 		<View style={styles.container}>
 			<SmokeVideo cigarettes={cigarettes.count} />
-			<Header
-				onChangeLocationClick={(): void => {
-					track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
-					navigation.navigate('Search');
-				}}
-			/>
 			<ScrollView bounces={false} style={styles.scroll}>
+				<Header
+					onChangeLocationClick={(): void => {
+						track('HOME_SCREEN_CHANGE_LOCATION_CLICK');
+						navigation.navigate('Search');
+					}}
+				/>
 				<CigarettesBlock
 					cigarettes={cigarettes.count}
 					cigarettesStyle={styles.cigarettes}
@@ -201,6 +202,8 @@ export function Home(props: HomeProps): React.ReactElement {
 					navigation={navigation}
 					style={[styles.withMargin, styles.footer]}
 				/>
+
+				<AusAir />
 			</ScrollView>
 		</View>
 	);

@@ -32,7 +32,7 @@ interface BoxButtonProps extends TouchableWithoutFeedbackProps {
 
 const styles = StyleSheet.create({
 	activeText: {
-		opacity: 1,
+		color: theme.colors.gray700,
 	},
 	boxButton: {
 		...theme.elevationShadowStyle(3),
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 	},
 	boxButtonText: {
 		...theme.shitText,
-		opacity: theme.disabledOpacity,
+		color: theme.colors.gray200,
 		textAlign: 'center',
 	},
 });

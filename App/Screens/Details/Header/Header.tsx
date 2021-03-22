@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
 		marginVertical: 5,
 	},
 	label: {
-		color: theme.primaryColor,
-		fontFamily: theme.gothamBlack,
+		color: theme.colors.orange,
+		fontFamily: theme.Montserrat800,
 	},
 	layout: {
 		flexDirection: 'row',

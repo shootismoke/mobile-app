@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
 		width: scale(36),
 	},
 	invertedCircle: {
-		backgroundColor: theme.primaryColor,
+		backgroundColor: theme.colors.orange,
 		borderWidth: 0,
 	},
 	label: {
 		...theme.title,
-		color: theme.primaryColor,
+		color: theme.colors.orange,
 		fontSize: scale(9),
 		letterSpacing: 0,
 	},
@@ -56,7 +56,7 @@ function renderIconOrText(
 ): React.ReactElement | undefined {
 	return icon ? (
 		<Ionicons
-			color={inverted ? 'white' : theme.primaryColor}
+			color={inverted ? 'white' : theme.colors.orange}
 			name={icon as 'body'} // FIXME Typings are really not optimal here, `icon` is obviously a string, but using 'body' to make TS happy.
 			size={scale(22)}
 		/>

@@ -49,6 +49,7 @@ export type AmplitudeEvent =
 	| 'HOME_SCREEN_NOTIFICATIONS_MONTHLY'
 	| 'HOME_SCREEN_NOTIFICATIONS_ERROR'
 	| 'HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED'
+	| 'HOME_SCREEN_AD_AUSAIR_V1WOMANBLACKMASK'
 	| 'ABOUT_SCREEN_OPEN'
 	| 'ABOUT_SCREEN_CLOSE'
 	| 'ABOUT_SCREEN_SETTINGS_KM'
@@ -64,28 +65,28 @@ export type AmplitudeEvent =
 
 export function setupAmplitude(): Promise<void> {
 	return typeof Constants.manifest.extra.amplitudeApiKey === 'string'
-		? Amplitude.initialize(Constants.manifest.extra.amplitudeApiKey).then(
-				() => {
-					Amplitude.setUserProperties({
-						sisReleaseChannel: RELEASE_CHANNEL,
-						sisRevisionId:
-							Constants.manifest.revisionId || 'development',
-						sisVersion: Constants.manifest.version,
-					}).catch(sentryError('setupAmplitude'));
-					// Disable tracking all PII. Note: they are also disabled on
-					// Amplitude's dashboard.
-					// See https://help.amplitude.com/hc/en-us/articles/115002278527-iOS-SDK-Installation#disable-automatic-tracking-of-user-properties
-					// See https://help.amplitude.com/hc/en-us/articles/115002935588-Android-SDK-Installation#disable-automatic-tracking-of-user-properties
-					Amplitude.setTrackingOptions({
-						disableAdid: true,
-						disableCarrier: true,
-						disableDMA: true,
-						disableIDFV: true,
-						disableIPAddress: true,
-						disableLatLng: true,
-					}).catch(sentryError('setupAmplitude'));
-				}
-		  )
+		? Amplitude.initializeAsync(
+				Constants.manifest.extra.amplitudeApiKey
+		  ).then(() => {
+				Amplitude.setUserPropertiesAsync({
+					sisReleaseChannel: RELEASE_CHANNEL,
+					sisRevisionId:
+						Constants.manifest.revisionId || 'development',
+					sisVersion: Constants.manifest.version,
+				}).catch(sentryError('setupAmplitude'));
+				// Disable tracking all PII. Note: they are also disabled on
+				// Amplitude's dashboard.
+				// See https://help.amplitude.com/hc/en-us/articles/115002278527-iOS-SDK-Installation#disable-automatic-tracking-of-user-properties
+				// See https://help.amplitude.com/hc/en-us/articles/115002935588-Android-SDK-Installation#disable-automatic-tracking-of-user-properties
+				Amplitude.setTrackingOptionsAsync({
+					disableAdid: true,
+					disableCarrier: true,
+					disableDMA: true,
+					disableIDFV: true,
+					disableIPAddress: true,
+					disableLatLng: true,
+				}).catch(sentryError('setupAmplitude'));
+		  })
 		: Promise.resolve();
 }
 

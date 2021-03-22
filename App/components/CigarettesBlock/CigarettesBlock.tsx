@@ -54,9 +54,6 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		justifyContent: 'flex-end',
 	},
-	lottie: {
-		backgroundColor: theme.backgroundColor,
-	},
 	shitText: {
 		marginTop: theme.spacing.normal,
 	},
@@ -67,12 +64,7 @@ function renderAnimation(
 ): React.ReactElement {
 	return (
 		<View style={[styles.animationContainer, cigarettesStyle]}>
-			<LottieView
-				autoPlay
-				autoSize
-				source={loadingAnimation}
-				style={styles.lottie}
-			/>
+			<LottieView autoPlay autoSize source={loadingAnimation} />
 		</View>
 	);
 }

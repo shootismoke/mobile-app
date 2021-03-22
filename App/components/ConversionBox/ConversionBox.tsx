@@ -25,6 +25,7 @@ import {
 	ViewProps,
 } from 'react-native';
 import cigarette from '@shootismoke/ui/assets/images/cigarette.png';
+import { scale } from 'react-native-size-matters';
 
 import * as theme from '../../util/theme';
 import { t } from '../../localization';
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
 	},
 	equal: {
 		...theme.text,
-		color: theme.textColor,
+		color: theme.colors.gray600,
 		fontSize: LINE_HEIGHT,
 		lineHeight: LINE_HEIGHT,
 		marginHorizontal: 18,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
 		...theme.title,
 		fontSize: 12,
 		fontWeight: '900',
-		letterSpacing: 0.5,
+		letterSpacing: scale(0.5),
 	},
 	micro: {
 		fontFamily: 'arial',
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
 	},
 	value: {
 		...theme.text,
-		color: theme.textColor,
+		color: theme.colors.gray600,
 		fontSize: LINE_HEIGHT,
 		fontWeight: '800' as const,
 		lineHeight: LINE_HEIGHT,
