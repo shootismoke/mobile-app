@@ -30,7 +30,6 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { SelectFrequency } from './SelectFrequency';
 import { SmokeVideo } from './SmokeVideo';
-import { AusAir } from './AdSection';
 
 interface HomeProps {
 	navigation: StackNavigationProp<RootStackParams, 'Home'>;
@@ -202,8 +201,6 @@ export function Home(props: HomeProps): React.ReactElement {
 					navigation={navigation}
 					style={[styles.withMargin, styles.footer]}
 				/>
-
-				<AusAir />
 			</ScrollView>
 		</View>
 	);
