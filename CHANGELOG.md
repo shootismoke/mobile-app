@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.14](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.13...v1.8.14) (2021-05-17)
+
+
+### Features
+
+* Add AdSection with AusAir ([#916](https://github.com/amaurymartiny/shoot-i-smoke/issues/916)) ([f40b137](https://github.com/amaurymartiny/shoot-i-smoke/commit/f40b137d788a421ff0fba9e75e464ab619c559f2))
+
 ### [1.8.13](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.12...v1.8.13) (2021-03-09)
 
 ### [1.8.12](https://github.com/amaurymartiny/shoot-i-smoke/compare/v1.8.11...v1.8.12) (2021-03-06)
