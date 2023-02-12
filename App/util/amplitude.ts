@@ -63,15 +63,15 @@ export type AmplitudeEvent =
 	| 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
 export function setupAmplitude(): Promise<void> {
-	return typeof Constants.manifest.extra.amplitudeApiKey === 'string'
+	return typeof Constants.manifest?.extra?.amplitudeApiKey === 'string'
 		? Amplitude.initializeAsync(
-				Constants.manifest.extra.amplitudeApiKey
+				Constants.manifest?.extra?.amplitudeApiKey
 		  ).then(() => {
 				Amplitude.setUserPropertiesAsync({
 					sisReleaseChannel: RELEASE_CHANNEL,
 					sisRevisionId:
-						Constants.manifest.revisionId || 'development',
-					sisVersion: Constants.manifest.version,
+						Constants.manifest?.revisionId || 'development',
+					sisVersion: Constants.manifest?.version,
 				}).catch(sentryError('setupAmplitude'));
 				// Disable tracking all PII. Note: they are also disabled on
 				// Amplitude's dashboard.
@@ -102,7 +102,7 @@ export function track(
 	event: AmplitudeEvent,
 	properties?: Record<string, Json>
 ): void {
-	if (typeof Constants.manifest.extra.amplitudeApiKey !== 'string') {
+	if (typeof Constants.manifest?.extra?.amplitudeApiKey !== 'string') {
 		return;
 	}
 

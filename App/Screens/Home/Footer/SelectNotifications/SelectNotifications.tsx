@@ -142,14 +142,13 @@ export function SelectNotifications(
 				}
 			})
 			.then(() => {
-				return Permissions.getAsync(
-					Permissions.NOTIFICATIONS
-				).then(({ status }) =>
-					status === 'granted'
-						? Notifications.getExpoPushTokenAsync().then(
-								({ data }) => getUser(data)
-						  )
-						: undefined
+				return Permissions.getAsync(Permissions.NOTIFICATIONS).then(
+					({ status }) =>
+						status === 'granted'
+							? Notifications.getExpoPushTokenAsync().then(
+									({ data }) => getUser(data)
+							  )
+							: undefined
 				);
 			})
 			.then((user) => user && setCurrentUser(user))
@@ -312,6 +311,10 @@ export function SelectNotifications(
 			}}
 			amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
 			callback={(buttonIndex): void => {
+				if (!buttonIndex) {
+					return;
+				}
+
 				if (buttonIndex === 4) {
 					// 4 is cancel
 
@@ -319,7 +322,7 @@ export function SelectNotifications(
 					return;
 				}
 
-				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
+				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped never
 			}}
 		>
 			{(open): React.ReactElement => (

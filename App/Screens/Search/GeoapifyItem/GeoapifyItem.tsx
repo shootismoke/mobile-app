@@ -15,48 +15,35 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import type { AlgoliaHit } from '@shootismoke/ui';
+import type { GeoapifyRes } from '../geoapify';
 
 import { ListItem } from '../../../components';
 import { Location } from '../../../stores/util/fetchGpsPosition';
 
 interface ItemProps {
-	item: AlgoliaHit;
+	item: GeoapifyRes;
 	onClick: (item: Location) => void;
 }
 
-export function AlgoliaItem(props: ItemProps): React.ReactElement {
+export function GeoapifyItem(props: ItemProps): React.ReactElement {
 	const { item, onClick } = props;
 
-	const { city, country, county, _geoloc, locale_names: localeNames } = item;
+	const { city, country, formatted, lat, lon } = item;
 
 	const handleClick = (): void => {
 		onClick({
-			latitude: _geoloc.lat,
-			longitude: _geoloc.lng,
-			name: [
-				localeNames[0],
-				city,
-				county && county.length ? county[0] : null,
-				country,
-			]
-				.filter((_) => _)
-				.join(', '),
+			latitude: lat,
+			longitude: lon,
+			name: [city, country].filter((_) => _).join(', ') || formatted,
 		});
 	};
 
 	return (
 		<ListItem
-			description={[
-				city,
-				county && county.length ? county[0] : null,
-				country,
-			]
-				.filter((_) => _)
-				.join(', ')}
+			description={formatted}
 			icon="pin"
 			onPress={handleClick}
-			title={localeNames[0]}
+			title={[city, country].filter((_) => _).join(', ') || formatted}
 		/>
 	);
 }

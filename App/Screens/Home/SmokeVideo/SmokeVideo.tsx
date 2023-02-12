@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Video } from 'expo-av';
+import { ResizeMode, Video } from 'expo-av';
 import React from 'react';
 import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 
@@ -61,7 +61,7 @@ export function SmokeVideo({
 			<View style={[styles.overlay, getVideoStyle(cigarettes)]} />
 			<Video
 				isLooping
-				resizeMode="cover"
+				resizeMode={'cover' as ResizeMode}
 				shouldPlay
 				source={smokeVideo as AVPlaybackSource}
 				style={styles.video}

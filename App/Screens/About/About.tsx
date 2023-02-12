@@ -20,13 +20,13 @@ import Constants from 'expo-constants';
 import React from 'react';
 import {
 	Linking,
-	Picker,
 	Platform,
 	ScrollView,
 	StyleSheet,
 	Text,
 	View,
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { ScrollIntoView, wrapScrollView } from 'react-native-scroll-into-view';
 import { scale } from 'react-native-size-matters';
 import { DistanceUnit } from '@shootismoke/ui';
@@ -320,9 +320,9 @@ export function About(props: AboutProps): React.ReactElement {
 					</Text>
 					.{'\n'}
 					{'\n'}
-					{Constants.manifest.name} v
-					{Constants.manifest.revisionId ||
-						Constants.manifest.version}
+					{Constants.manifest?.name} v
+					{Constants.manifest?.revisionId ||
+						Constants.manifest?.version}
 					. See{' '}
 					<Text onPress={openTerms} style={theme.link}>
 						Terms of Service

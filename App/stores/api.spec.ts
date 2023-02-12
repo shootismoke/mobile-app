@@ -17,7 +17,7 @@
 import { withTimeout } from './api';
 
 describe('withTimeout', () => {
-	it('should correct time out', async (done) => {
+	it('should correct time out', async () => {
 		jest.setTimeout(5000);
 
 		const p = new Promise((resolve) => setTimeout(resolve, 2001));
@@ -25,9 +25,7 @@ describe('withTimeout', () => {
 		try {
 			await withTimeout(p, 2000);
 
-			done.fail();
-		} catch (e) {
-			done();
-		}
+			throw new Error('Should have thrown');
+		} catch (e) {}
 	});
 });

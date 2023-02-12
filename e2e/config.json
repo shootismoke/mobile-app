@@ -1,5 +1,0 @@
-{
-  "preset": "ts-jest",
-  "setupFilesAfterEnv": ["./init.ts"],
-  "testEnvironment": "node"
-}

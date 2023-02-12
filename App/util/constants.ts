@@ -21,7 +21,7 @@ import Constants from 'expo-constants';
  * `production-v{version}`.
  */
 export const RELEASE_CHANNEL: string =
-	Constants.manifest.releaseChannel || 'development';
+	Constants.manifest?.releaseChannel || 'development';
 
 /**
  * Whether we're running a staging version of the app
@@ -41,4 +41,4 @@ export const IS_PROD =
 export const IS_SENTRY_SET_UP =
 	// We also added sentry on staging btw.
 	(IS_PROD || IS_STAGING) &&
-	typeof Constants.manifest.extra.sentryPublicDsn === 'string';
+	typeof Constants.manifest?.extra?.sentryPublicDsn === 'string';
