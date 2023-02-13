@@ -36,7 +36,7 @@ export function createUser(user: IUser): Promise<MongoUser> {
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
@@ -57,7 +57,7 @@ export function getUser(expoPushToken: string): Promise<MongoUser> {
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
@@ -79,7 +79,7 @@ export function updateUser(
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
@@ -95,7 +95,7 @@ export function deleteUser(userId: string): Promise<MongoUser> {
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 

@@ -54,14 +54,14 @@ export function App(): React.ReactElement {
 	useEffect(() => {
 		Promise.all([
 			Font.loadAsync({
-				// eslint-disable-next-line @typescript-eslint/no-var-requires
 				Montserrat400:
+					// eslint-disable-next-line @typescript-eslint/no-var-requires
 					require('../assets/fonts/Montserrat_Regular_400.ttf') as Font.FontResource,
-				// eslint-disable-next-line @typescript-eslint/no-var-requires
 				Montserrat500:
+					// eslint-disable-next-line @typescript-eslint/no-var-requires
 					require('../assets/fonts/Montserrat_Medium_500.ttf') as Font.FontResource,
-				// eslint-disable-next-line @typescript-eslint/no-var-requires
 				Montserrat800:
+					// eslint-disable-next-line @typescript-eslint/no-var-requires
 					require('../assets/fonts/Montserrat_ExtraBold_800.ttf') as Font.FontResource,
 			}),
 			// Add Amplitude if available

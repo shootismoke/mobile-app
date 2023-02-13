@@ -101,7 +101,12 @@ export function Search(props: SearchProps): React.ReactElement {
 				Constants.manifest?.extra?.geoapifyApiKey as string,
 				gps
 			)
-				.then(setHits)
+				.then((hits) => {
+					setGeoapifyError(undefined);
+					setLoading(false);
+					setFrequency('daily');
+					setHits(hits);
+				})
 				.catch(sentryError('Search'));
 		}, 500);
 	}

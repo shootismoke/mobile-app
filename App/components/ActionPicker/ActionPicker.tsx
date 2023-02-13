@@ -19,7 +19,7 @@ import {
 	useActionSheet,
 } from '@expo/react-native-action-sheet';
 import React from 'react';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { AmplitudeEvent, track } from '../../util/amplitude';
 

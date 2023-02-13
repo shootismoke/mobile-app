@@ -59,21 +59,6 @@ function capitalize(s: string): string {
 	return s[0].toUpperCase() + s.slice(1);
 }
 
-/**
- * Convert hex to rgba.
- * @see https://stackoverflow.com/questions/21646738/convert-hex-to-rgba#answer-51564734
- */
-function hex2rgba(hex: string, alpha = 1): string {
-	const matches = hex.match(/\w\w/g);
-	if (!matches) {
-		throw new Error(`Invalid hex: ${hex}`);
-	}
-
-	const [r, g, b] = matches.map((x) => parseInt(x, 16));
-
-	return `rgba(${r},${g},${b},${alpha})`;
-}
-
 type SelectNotificationsProps = ViewProps;
 
 const styles = StyleSheet.create({

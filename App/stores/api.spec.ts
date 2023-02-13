@@ -26,6 +26,8 @@ describe('withTimeout', () => {
 			await withTimeout(p, 2000);
 
 			throw new Error('Should have thrown');
-		} catch (e) {}
+		} catch (e) {
+			// ok
+		}
 	});
 });
