@@ -16,12 +16,10 @@
 
 import axios, { AxiosError } from 'axios';
 import type { IUser, MongoUser } from '@shootismoke/ui';
-import Constants from 'expo-constants';
 
 const axiosConfig = {
 	headers: {
-		'x-shootismoke-secret': Constants.manifest?.extra
-			?.backendSecret as string,
+		'x-shootismoke-secret': process.env.BACKEND_SECRET as string,
 	},
 };
 
@@ -30,7 +28,7 @@ export function createUser(user: IUser): Promise<MongoUser> {
 
 	return axios
 		.post<MongoUser>(
-			`${Constants.manifest?.extra?.backendUrl as string}/api/users`,
+			`${process.env.BACKEND_URL as string}/api/users`,
 			user,
 			axiosConfig
 		)
@@ -51,7 +49,7 @@ export function getUser(expoPushToken: string): Promise<MongoUser> {
 	return axios
 		.get<MongoUser>(
 			`${
-				Constants.manifest?.extra?.backendUrl as string
+				process.env.BACKEND_URL as string
 			}/api/users/expoPushToken/${expoPushToken}`,
 			axiosConfig
 		)
@@ -71,9 +69,7 @@ export function updateUser(
 
 	return axios
 		.patch<MongoUser>(
-			`${
-				Constants.manifest?.extra?.backendUrl as string
-			}/api/users/${userId}`,
+			`${process.env.BACKEND_URL as string}/api/users/${userId}`,
 			user,
 			axiosConfig
 		)
@@ -88,9 +84,7 @@ export function deleteUser(userId: string): Promise<MongoUser> {
 
 	return axios
 		.delete<MongoUser>(
-			`${
-				Constants.manifest?.extra?.backendUrl as string
-			}/api/users/${userId}`,
+			`${process.env.BACKEND_URL as string}/api/users/${userId}`,
 			axiosConfig
 		)
 		.then(({ data }) => data)

@@ -63,10 +63,8 @@ export type AmplitudeEvent =
 	| 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
 export function setupAmplitude(): Promise<void> {
-	return typeof Constants.manifest?.extra?.amplitudeApiKey === 'string'
-		? Amplitude.initializeAsync(
-				Constants.manifest?.extra?.amplitudeApiKey
-		  ).then(() => {
+	return typeof process.env.AMPLITUDE_API_KEY === 'string'
+		? Amplitude.initializeAsync(process.env.AMPLITUDE_API_KEY).then(() => {
 				Amplitude.setUserPropertiesAsync({
 					sisReleaseChannel: RELEASE_CHANNEL,
 					sisRevisionId:
@@ -102,7 +100,7 @@ export function track(
 	event: AmplitudeEvent,
 	properties?: Record<string, Json>
 ): void {
-	if (typeof Constants.manifest?.extra?.amplitudeApiKey !== 'string') {
+	if (typeof process.env.AMPLITUDE_API_KEY !== 'string') {
 		return;
 	}
 

@@ -15,7 +15,6 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { raceApiPromise, Api, noop } from '@shootismoke/ui';
-import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -88,8 +87,7 @@ export function ApiContextProvider({
 					withTimeout(
 						raceApiPromise(currentLocation, {
 							aqicn: {
-								token: Constants.manifest?.extra
-									?.aqicnToken as string,
+								token: process.env.AQICN_TOKEN as string,
 							},
 							openaq: {
 								// Limiting to only fetch pm25. Sometimes, when

@@ -15,7 +15,6 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import Constants from 'expo-constants';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { FrequencyContext } from '@shootismoke/ui';
@@ -96,11 +95,7 @@ export function Search(props: SearchProps): React.ReactElement {
 		typingTimeout = setTimeout(() => {
 			track('SEARCH_SCREEN_SEARCH', { search: s });
 			console.log('HERE');
-			geoapify(
-				s,
-				Constants.manifest?.extra?.geoapifyApiKey as string,
-				gps
-			)
+			geoapify(s, process.env.GEOAPIFY_API_KEY as string, gps)
 				.then((hits) => {
 					setGeoapifyError(undefined);
 					setLoading(false);

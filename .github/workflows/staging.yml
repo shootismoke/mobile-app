@@ -1,35 +1,30 @@
-name: master
-
+name: EAS Build
 on:
+    workflow_dispatch:
     push:
         branches:
             - master
-
-env:
-    # Sentry. Use same keys as production.
-    SIS_SENTRY_PUBLIC_DNS: ${{ secrets.SIS_PRODUCTION_SENTRY_PUBLIC_DNS }}
-    SIS_SENTRY_ORG: ${{ secrets.SIS_PRODUCTION_SENTRY_ORG }}
-    SIS_SENTRY_PROJECT: ${{ secrets.SIS_PRODUCTION_SENTRY_PROJECT }}
-    SIS_SENTRY_AUTH_TOKEN: ${{ secrets.SIS_PRODUCTION_SENTRY_AUTH_TOKEN }}
-    # Google. Use same keys as production.
-    SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
-    SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
-    # Geoapify. Use same keys as production.
-    SIS_GEOAPIFY_API_KEY: ${{ secrets.GEOAPIFY_API_KEY }}
+    pull_request:
+        branches:
+            - master
 
 jobs:
-    expo-staging:
+    build:
+        name: Install and build
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
-            - uses: actions/setup-node@v1
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
               with:
                   node-version: 18.x
-            - uses: expo/expo-github-action@v5
+                  cache: npm
+            - name: Setup Expo and EAS
+              uses: expo/expo-github-action@v7
               with:
-                  expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-                  expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-            - run: yarn install
-            - name: Generate staging app.json
-              run: ./scripts/generateAppJson.js > app.json
-            - run: eas update
+                  expo-version: 5.x
+                  eas-version: latest
+                  token: ${{ secrets.EXPO_TOKEN }}
+            - name: Install dependencies
+              run: npm ci
+            - name: Build on EAS
+              run: eas build --platform all --non-interactive
