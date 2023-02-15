@@ -24,8 +24,6 @@ function getEndpoint(search: string, apiKey: string, gps?: LatLng): string {
 		return base + `&bias=proximity:${gps.longitude},${gps.latitude}`;
 	}
 
-	console.log('Searching without bias', base);
-
 	return base;
 }
 

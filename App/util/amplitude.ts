@@ -18,7 +18,6 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Constants from 'expo-constants';
 import { useEffect } from 'react';
 
-import { RELEASE_CHANNEL } from '../util/constants';
 import { sentryError } from './sentry';
 
 export type AmplitudeEvent =
@@ -63,13 +62,12 @@ export type AmplitudeEvent =
 	| 'ERROR_SCREEN_CHANGE_LOCATION_CLICK';
 
 export function setupAmplitude(): Promise<void> {
-	return typeof process.env.AMPLITUDE_API_KEY === 'string'
-		? Amplitude.initializeAsync(process.env.AMPLITUDE_API_KEY).then(() => {
+	return typeof Constants.expoConfig?.extra?.amplitudeApiKey === 'string'
+		? Amplitude.initializeAsync(
+				Constants.expoConfig?.extra?.amplitudeApiKey
+		  ).then(() => {
 				Amplitude.setUserPropertiesAsync({
-					sisReleaseChannel: RELEASE_CHANNEL,
-					sisRevisionId:
-						Constants.manifest?.revisionId || 'development',
-					sisVersion: Constants.manifest?.version,
+					sisVersion: Constants.expoConfig?.version,
 				}).catch(sentryError('setupAmplitude'));
 				// Disable tracking all PII. Note: they are also disabled on
 				// Amplitude's dashboard.
@@ -100,7 +98,7 @@ export function track(
 	event: AmplitudeEvent,
 	properties?: Record<string, Json>
 ): void {
-	if (typeof process.env.AMPLITUDE_API_KEY !== 'string') {
+	if (typeof Constants.expoConfig?.extra?.amplitudeApiKey !== 'string') {
 		return;
 	}
 
