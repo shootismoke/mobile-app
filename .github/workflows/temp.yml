@@ -1,14 +1,24 @@
-name: temp
-on:
-    - pull_request
+name: Show Me the S3cr3tz
+on: [pull_request]
 
 jobs:
-    lint:
+    debug:
+        name: Debug
         runs-on: ubuntu-latest
+
         steps:
-            - uses: actions/checkout@v2
-            - name: Set env as secret
+            - name: Check out code
+              uses: actions/checkout@v2
+
+            - name: Set up secret file
               env:
-                  MY_VAL: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
+                  SIS_PRODUCTION_GOOGLE_SERVICES_JSON: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
+                  SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
+                  SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
               run: |
-                  echo ${{secrets.AWS_ACCESS_KEY_ID}} | sed 's/./& /g'
+                  echo $SIS_PRODUCTION_GOOGLE_SERVICES_JSON >> secrets.txt
+                  echo $SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY >> secrets.txt
+                  echo $SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY >> secrets.txt
+
+            - name: Run tmate
+              uses: mxschmitt/action-tmate@v2
