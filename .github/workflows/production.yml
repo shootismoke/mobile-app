@@ -47,7 +47,7 @@ jobs:
             - uses: actions/checkout@v1
             - uses: actions/setup-node@v1
               with:
-                  node-version: 18.x
+                  node-version: 16.x
             - uses: expo/expo-github-action@v5
               with:
                   expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
