@@ -52,6 +52,9 @@
 		"version": "1.9.0",
 		"runtimeVersion": {
 			"policy": "appVersion"
+		},
+		"updates": {
+			"url": "https://u.expo.dev/19ce6a2a-47d4-4737-be57-72a003afa635"
 		}
 	}
 }
