@@ -16,6 +16,7 @@
 		},
 		"preview": {
 			"distribution": "internal",
+			"channel": "staging",
 			"ios": {
 				"resourceClass": "m1-medium"
 			},
@@ -25,6 +26,7 @@
 			}
 		},
 		"production": {
+			"channel": "production",
 			"ios": {
 				"resourceClass": "m1-medium"
 			},
