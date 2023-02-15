@@ -17,10 +17,10 @@
 
 <p align="center">
   <a href="https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8">
-    <img alt="app-store" src="https://shootismoke.app/_next/image?url=%2F_next%2Fstatic%2Fimages%2Fapp-store-6299929f8c25bf0a73687c56c59d383f.png&w=3840&q=75" />
+    <img alt="app-store" src="https://github.com/shootismoke/webapp/blob/master/assets/images/app-store.png?raw=true"  width="200" />
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.shitismoke.app">
-    <img alt="google-play" src="https://shootismoke.app/_next/image?url=%2F_next%2Fstatic%2Fimages%2Fplay-store-cb00d38a8fc34e1ec5b0732bee38c09d.png&w=3840&q=75" />
+    <img alt="google-play" src="https://github.com/shootismoke/webapp/blob/master/assets/images/play-store.png?raw=true" width="200" />
   </a>
 </p>
 
@@ -69,16 +69,17 @@ The [Expo](https://expo.io) packager will show, and you can either:
 
 #### Use your own API tokens
 
-All required API tokens are already pre-filled in `app.example.json`. If you want to use your own API tokens, then in `app.json`, replace all the placeholders with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
+All required API tokens are already pre-filled in `eas.json`. If you want to use your own API tokens, then in `eas.json`'s `env` field, add your own values. For those that are optional, you can just put `null` (without quotes).
 
-| Service                  | Url                                                            | Comments                                                                    |
-| ------------------------ | -------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                                  |
-| World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `app.example.json` for development. |
-| Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                                    |
-| Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                                    |
-| Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                                   |
-| Amplitude Analytics      | https://amplitude.com                                          | Optional. Note: we **never** track PII.                                     |
+| Name              |                          | Service                                                        | Url                                                                 | Comments |
+| ----------------- | ------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------- | -------- |
+| GEOAPIFY_API_KEY  | Geoapify geocoding       | https://geoapify.com                                           | Required. Get your own and replace the `<TODO>` placeholder.        |
+| BACKEND_SECRET    | Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                          |
+| AQICN_TOKEN       | World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `eas.json` for development. |
+| SENTRY_PUBLIC_DSN | Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                           |
+| AMPLITUDE_API_KEY | Amplitude Analytics      | https://amplitude.com                                          | Optional. Note: we **never** track PII.                             |
+|                   | Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                            |
+|                   | Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                            |
 
 ## :raising_hand: Contribute
 

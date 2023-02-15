@@ -11,7 +11,8 @@
 			},
 			"env": {
 				"AQICN_TOKEN": "6bb4237574756ba29f05cea553bd22576596c11e",
-				"BACKEND_SECRET": "https://staging.shootismoke.vercel.app"
+				"BACKEND_SECRET": "https://staging.shootismoke.vercel.app",
+				"GEOAPIFY_API_KEY": "<TODO>"
 			}
 		},
 		"preview": {
