@@ -21,4 +21,4 @@ import Constants from 'expo-constants';
  */
 export const IS_SENTRY_SET_UP =
 	// We also added sentry on staging btw.
-	typeof Constants.expoConfig?.extra?.sentryPublicDsn === 'string';
+	!!Constants.expoConfig?.extra?.sentryPublicDsn;

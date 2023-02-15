@@ -22,6 +22,7 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
+import { IS_SENTRY_SET_UP } from '../util/constants';
 import { promiseToTE } from '../util/fp';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
