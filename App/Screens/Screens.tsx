@@ -44,19 +44,24 @@ const ErrorStack = createStackNavigator();
 /**
  * Shared navigator screen options across different screens.
  */
-const navigationOptions = {
-	headerMode: 'none' as const,
+const screenOpt = {
+	options: { headerShown: false },
 };
 
 function renderScreen(api?: Api, error?: Error): React.ReactElement {
 	if (error) {
 		return (
-			<ErrorStack.Navigator
-				initialRouteName="Error"
-				{...navigationOptions}
-			>
-				<ErrorStack.Screen component={ErrorScreen} name="Error" />
-				<ErrorStack.Screen component={Search} name="Search" />
+			<ErrorStack.Navigator initialRouteName="Error">
+				<ErrorStack.Screen
+					component={ErrorScreen}
+					name="Error"
+					{...screenOpt}
+				/>
+				<ErrorStack.Screen
+					component={Search}
+					name="Search"
+					{...screenOpt}
+				/>
 			</ErrorStack.Navigator>
 		);
 	}
@@ -66,11 +71,15 @@ function renderScreen(api?: Api, error?: Error): React.ReactElement {
 	}
 
 	return (
-		<RootStack.Navigator initialRouteName="Home" {...navigationOptions}>
-			<RootStack.Screen component={About} name="About" />
-			<RootStack.Screen component={Details} name="Details" />
-			<RootStack.Screen component={Home} name="Home" />
-			<RootStack.Screen component={Search} name="Search" />
+		<RootStack.Navigator initialRouteName="Home">
+			<RootStack.Screen component={About} name="About" {...screenOpt} />
+			<RootStack.Screen
+				component={Details}
+				name="Details"
+				{...screenOpt}
+			/>
+			<RootStack.Screen component={Home} name="Home" {...screenOpt} />
+			<RootStack.Screen component={Search} name="Search" {...screenOpt} />
 		</RootStack.Navigator>
 	);
 }

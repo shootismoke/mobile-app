@@ -21,6 +21,7 @@ yarn-error.log*
 
 # secrets
 google-services.json
+pc-api*.json
 
 # ide files
 .idea/

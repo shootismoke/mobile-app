@@ -16,15 +16,9 @@
 
 import { raceApiPromise, Api, noop } from '@shootismoke/ui';
 import Constants from 'expo-constants';
-import { pipe } from 'fp-ts/lib/pipeable';
-import * as T from 'fp-ts/lib/Task';
-import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
-import { IS_SENTRY_SET_UP } from '../util/constants';
-import { promiseToTE } from '../util/fp';
-import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
 
@@ -80,44 +74,32 @@ export function ApiContextProvider({
 		}
 
 		track('API_DAILY_REQUEST');
-		pipe(
-			promiseToTE(
-				() =>
-					// raceApiPromise will fetch the API data from different
-					// sources, and return the first result. We also add a
-					// timeout on these requests.
-					withTimeout(
-						raceApiPromise(currentLocation, {
-							aqicn: {
-								token: Constants.expoConfig?.extra
-									?.aqicnToken as string,
-							},
-							openaq: {
-								// Limiting to only fetch pm25. Sometimes, when
-								// we search for all pollutants, the pm25 ones
-								// don't get returned within the result limits.
-								parameter: ['pm25'],
-							},
-						}),
-						API_TIMEOUT
-					),
-				'ApiContext'
-			),
-			TE.fold(
-				(error) => {
-					setError(error);
-					track('API_DAILY_ERROR');
 
-					return T.of(undefined);
+		// raceApiPromise will fetch the API data from different
+		// sources, and return the first result. We also add a
+		// timeout on these requests.
+		withTimeout(
+			raceApiPromise(currentLocation, {
+				aqicn: {
+					token: Constants.expoConfig?.extra?.aqicnToken as string,
 				},
-				(newApi) => {
-					setApi(newApi);
-					track('API_DAILY_RESPONSE');
-
-					return T.of(undefined);
-				}
-			)
-		)().catch(sentryError('ApiContextProvider'));
+				openaq: {
+					// Limiting to only fetch pm25. Sometimes, when
+					// we search for all pollutants, the pm25 ones
+					// don't get returned within the result limits.
+					parameter: ['pm25'],
+				},
+			}),
+			API_TIMEOUT
+		)
+			.then((newApi) => {
+				setApi(newApi);
+				track('API_DAILY_RESPONSE');
+			})
+			.catch((error) => {
+				setError(error as Error);
+				track('API_DAILY_ERROR');
+			});
 	}, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (

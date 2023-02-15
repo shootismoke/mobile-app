@@ -16,13 +16,11 @@
 
 import Switch from '@dooboo-ui/native-switch-toggle';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
-import { Frequency, MongoUser, retry, sideEffect } from '@shootismoke/ui';
+import { Frequency, MongoUser } from '@shootismoke/ui';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
 import * as Permissions from 'expo-permissions';
-import { pipe } from 'fp-ts/lib/pipeable';
-import * as T from 'fp-ts/lib/Task';
-import * as TE from 'fp-ts/lib/TaskEither';
+import retry from 'async-retry';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,7 +30,6 @@ import { ActionPicker } from '../../../../components';
 import { t } from '../../../../localization';
 import { ApiContext } from '../../../../stores';
 import { AmplitudeEvent, track } from '../../../../util/amplitude';
-import { promiseToTE } from '../../../../util/fp';
 import {
 	createUser,
 	deleteUser,
@@ -171,115 +168,85 @@ export function SelectNotifications(
 	 *
 	 * @param buttonIndex - The button index in the ActionSheet
 	 */
-	function handleChangeNotif(frequency: Frequency | 'never'): void {
-		setOptimisticNotif(frequency);
+	async function handleChangeNotif(
+		frequency: Frequency | 'never'
+	): Promise<void> {
+		try {
+			setOptimisticNotif(frequency);
 
-		track(
-			`HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
-		);
-
-		if (!api) {
-			throw new Error(
-				'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
+			track(
+				`HOME_SCREEN_NOTIFICATIONS_${frequency.toUpperCase()}` as AmplitudeEvent
 			);
-		}
 
-		pipe(
-			promiseToTE(
-				() => Permissions.askAsync(Permissions.NOTIFICATIONS),
-				'SelectNotifications'
-			),
-			TE.chain(({ status }) => {
-				if (status === 'granted') {
-					return TE.right(undefined);
-				} else {
-					track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
+			if (!api) {
+				throw new Error(
+					'Home/SelectNotifications/SelectNotifications.tsx only gets displayed when `api` is defined.'
+				);
+			}
 
-					return TE.left(
-						new Error(
-							'Permission to access notifications was denied'
-						)
-					);
+			const { status } = await Permissions.askAsync(
+				Permissions.NOTIFICATIONS
+			);
+
+			if (status !== 'granted') {
+				track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
+				throw new Error(
+					'Permission to access notifications was denied'
+				);
+			}
+
+			// Retry 3 times to get the Expo push token, sometimes we get an Error
+			// "Couldn't get GCM token for device" on 1st try" or
+			// "Fetching the token failed: SERVICE_NOT_AVAILABLE"
+			// It seems the correct solution is an exponential backoff:
+			// https://github.com/firebase/firebase-android-sdk/issues/158
+			const expoPushToken = await retry(
+				() => Notifications.getExpoPushTokenAsync(),
+				{
+					retries: 3,
 				}
-			}),
-			TE.chain(() =>
-				// Retry 3 times to get the Expo push token, sometimes we get an Error
-				// "Couldn't get GCM token for device" on 1st try" or
-				// "Fetching the token failed: SERVICE_NOT_AVAILABLE"
-				// It seems the correct solution is an exponential backoff:
-				// https://github.com/firebase/firebase-android-sdk/issues/158
-				retry(
-					() =>
-						promiseToTE(
-							() => Notifications.getExpoPushTokenAsync(),
-							'SelectNotifications'
-						),
-					{
-						exponentialBackoff: 200, // retry first after 200ms
-						retries: 4,
-					}
-				)
-			),
-			TE.map((expoPushToken) => ({
+			);
+
+			const notifications = {
 				expoPushToken: expoPushToken.data,
 				frequency,
 				timezone: Localization.timezone,
 				lastStationId: api.pm25.location,
-			})),
-			TE.chain((notifications) =>
-				promiseToTE(() => {
-					if (!currentUser) {
-						if (notifications.frequency === 'never') {
-							return Promise.resolve(undefined);
-						} else {
-							return createUser({
-								expoReport: {
-									expoPushToken: notifications.expoPushToken,
-									frequency: notifications.frequency,
-								},
-								lastStationId: notifications.lastStationId,
-								timezone: Localization.timezone,
-							});
-						}
-					} else {
-						if (notifications.frequency === 'never') {
-							return deleteUser(currentUser._id).then(
-								() => undefined // Set currentUser to undefined after deletion.
-							);
-						} else {
-							return updateUser(currentUser._id, {
-								expoReport: {
-									expoPushToken: notifications.expoPushToken,
-									frequency: notifications.frequency,
-								},
-							});
-						}
-					}
-				}, 'SelectNotifications')
-			),
-			TE.chain(
-				sideEffect((user) => {
-					setCurrentUser(user);
+			};
 
-					return TE.right(undefined);
-				})
-			),
-			TE.fold(
-				(error) => {
-					sentryError('SelectNotifications')(error);
-					setOptimisticNotif(undefined);
-
-					track('HOME_SCREEN_NOTIFICATIONS_ERROR');
-
-					return T.of(undefined);
-				},
-				() => {
-					setOptimisticNotif(undefined);
-
-					return T.of(undefined);
+			let newUser: MongoUser | undefined;
+			if (!currentUser) {
+				if (notifications.frequency !== 'never') {
+					newUser = await createUser({
+						expoReport: {
+							expoPushToken: notifications.expoPushToken,
+							frequency: notifications.frequency,
+						},
+						lastStationId: notifications.lastStationId,
+						timezone: Localization.timezone,
+					});
 				}
-			)
-		)().catch(sentryError('SelectNotifications'));
+			} else {
+				if (notifications.frequency === 'never') {
+					newUser = await deleteUser(currentUser._id);
+				} else {
+					newUser = await updateUser(currentUser._id, {
+						expoReport: {
+							expoPushToken: notifications.expoPushToken,
+							frequency: notifications.frequency,
+						},
+					});
+				}
+			}
+
+			setCurrentUser(newUser);
+			setOptimisticNotif(undefined);
+		} catch (err) {
+			sentryError('SelectNotifications')(err as Error);
+			setOptimisticNotif(undefined);
+
+			track('HOME_SCREEN_NOTIFICATIONS_ERROR');
+		}
 	}
 
 	// Is the switch on or off?
@@ -307,7 +274,9 @@ export function SelectNotifications(
 					return;
 				}
 
-				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped never
+				handleChangeNotif(notificationsValues[buttonIndex]).catch(
+					sentryError('SelectNotifications')
+				); // +1 because we skipped never
 			}}
 		>
 			{(open): React.ReactElement => (

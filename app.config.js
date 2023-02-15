@@ -4,6 +4,11 @@ config();
 
 module.exports = {
 	android: {
+		config: {
+			googleMaps: {
+				apiKey: process.env.ANDROID_GOOGLE_MAPS_KEY,
+			},
+		},
 		icon: 'assets/logos/android/playstore-icon.png',
 		package: 'com.shitismoke.app',
 		permissions: ['ACCESS_FINE_LOCATION'],
@@ -43,6 +48,9 @@ module.exports = {
 	ios: {
 		buildNumber: '1.9.0',
 		bundleIdentifier: 'com.shitismoke.app',
+		config: {
+			googleMapsApiKey: process.env.IOS_GOOGLE_MAPS_KEY,
+		},
 		icon: 'assets/logos/ios/iTunesArtwork@3x.png',
 		infoPlist: {
 			NSLocationWhenInUseUsageDescription:
