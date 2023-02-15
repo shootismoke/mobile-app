@@ -37,14 +37,14 @@ import { sentryError } from './util/sentry';
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
 	Sentry.Native.init({
-		dsn: Constants.manifest.extra.sentryPublicDsn as string,
+		dsn: Constants.manifest?.extra?.sentryPublicDsn as string,
 		debug: true,
 		enableNative: false, // Or else the app crashes.
 		release: RELEASE_CHANNEL,
 	});
 
-	if (Constants.manifest.revisionId) {
-		Sentry.Native.setExtra('sisRevisionId', Constants.manifest.revisionId);
+	if (Constants.manifest?.revisionId) {
+		Sentry.Native.setExtra('sisRevisionId', Constants.manifest?.revisionId);
 	}
 }
 
@@ -54,12 +54,15 @@ export function App(): React.ReactElement {
 	useEffect(() => {
 		Promise.all([
 			Font.loadAsync({
-				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				Montserrat400: require('../assets/fonts/Montserrat_Regular_400.ttf') as Font.FontResource,
-				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				Montserrat500: require('../assets/fonts/Montserrat_Medium_500.ttf') as Font.FontResource,
-				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				Montserrat800: require('../assets/fonts/Montserrat_ExtraBold_800.ttf') as Font.FontResource,
+				Montserrat400:
+					// eslint-disable-next-line @typescript-eslint/no-var-requires
+					require('../assets/fonts/Montserrat_Regular_400.ttf') as Font.FontResource,
+				Montserrat500:
+					// eslint-disable-next-line @typescript-eslint/no-var-requires
+					require('../assets/fonts/Montserrat_Medium_500.ttf') as Font.FontResource,
+				Montserrat800:
+					// eslint-disable-next-line @typescript-eslint/no-var-requires
+					require('../assets/fonts/Montserrat_ExtraBold_800.ttf') as Font.FontResource,
 			}),
 			// Add Amplitude if available
 			setupAmplitude(),

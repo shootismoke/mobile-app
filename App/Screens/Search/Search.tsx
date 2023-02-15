@@ -15,12 +15,10 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import { pipe } from 'fp-ts/lib/pipeable';
-import * as T from 'fp-ts/lib/Task';
-import * as TE from 'fp-ts/lib/TaskEither';
+import Constants from 'expo-constants';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { FrequencyContext, AlgoliaHit, fetchAlgolia } from '@shootismoke/ui';
+import { FrequencyContext } from '@shootismoke/ui';
 
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
@@ -29,9 +27,10 @@ import { track, trackScreen } from '../../util/amplitude';
 import { sentryError } from '../../util/sentry';
 import * as theme from '../../util/theme';
 import { RootStackParams } from '../routeParams';
-import { AlgoliaItem } from './AlgoliaItem';
 import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
+import { geoapify, GeoapifyRes } from './geoapify';
+import { GeoapifyItem } from './GeoapifyItem';
 
 // Timeout to detect when user stops typing
 let typingTimeout: NodeJS.Timeout | null = null;
@@ -71,18 +70,18 @@ export function Search(props: SearchProps): React.ReactElement {
 	const { setFrequency } = useContext(FrequencyContext);
 	const gps = useContext(GpsLocationContext);
 
-	const [algoliaError, setAlgoliaError] = useState<Error | undefined>(
+	const [GeoapifyError, setGeoapifyError] = useState<Error | undefined>(
 		undefined
 	);
 	const [loading, setLoading] = useState(false);
 	const [search, setSearch] = useState('');
-	const [hits, setHits] = useState<AlgoliaHit[]>([]);
+	const [hits, setHits] = useState<GeoapifyRes[]>([]);
 
 	trackScreen('SEARCH');
 
 	function handleChangeSearch(s: string): void {
 		setSearch(s);
-		setAlgoliaError(undefined);
+		setGeoapifyError(undefined);
 		setHits([]);
 
 		if (!s) {
@@ -96,26 +95,19 @@ export function Search(props: SearchProps): React.ReactElement {
 		}
 		typingTimeout = setTimeout(() => {
 			track('SEARCH_SCREEN_SEARCH', { search: s });
-
-			pipe(
-				fetchAlgolia(s, gps),
-				TE.fold(
-					(err) => {
-						setLoading(false);
-						setAlgoliaError(err);
-
-						return T.of(undefined);
-					},
-					(hits) => {
-						setLoading(false);
-						setAlgoliaError(undefined);
-						setHits(hits);
-						setFrequency('daily');
-
-						return T.of(undefined);
-					}
-				)
-			)().catch(sentryError('Search'));
+			console.log('HERE');
+			geoapify(
+				s,
+				Constants.manifest?.extra?.geoapifyApiKey as string,
+				gps
+			)
+				.then((hits) => {
+					setGeoapifyError(undefined);
+					setLoading(false);
+					setFrequency('daily');
+					setHits(hits);
+				})
+				.catch(sentryError('Search'));
 		}, 500);
 	}
 
@@ -123,13 +115,13 @@ export function Search(props: SearchProps): React.ReactElement {
 		setCurrentLocation(item);
 	}
 
-	function renderItem({ item }: { item: AlgoliaHit }): React.ReactElement {
-		return <AlgoliaItem item={item} onClick={handleItemClick} />;
+	function renderItem({ item }: { item: GeoapifyRes }): React.ReactElement {
+		return <GeoapifyItem item={item} onClick={handleItemClick} />;
 	}
 
 	function renderEmptyList(
-		algoliaError: Error | undefined,
-		hits: AlgoliaHit[],
+		GeoapifyError: Error | undefined,
+		hits: GeoapifyRes[],
 		loading: boolean,
 		search: string,
 		isGps: boolean
@@ -141,7 +133,7 @@ export function Search(props: SearchProps): React.ReactElement {
 		if (loading) {
 			return <Text style={styles.noResults}>Waiting for results...</Text>;
 		}
-		if (algoliaError) {
+		if (GeoapifyError) {
 			return (
 				<Text style={styles.noResults}>
 					Error fetching locations. Please try again later.
@@ -162,9 +154,9 @@ export function Search(props: SearchProps): React.ReactElement {
 				data={hits}
 				ItemSeparatorComponent={renderSeparator}
 				keyboardShouldPersistTaps="always"
-				keyExtractor={({ objectID }): string => objectID}
+				keyExtractor={({ lat, lon }): string => `${lat}:${lon}`}
 				ListEmptyComponent={renderEmptyList(
-					algoliaError,
+					GeoapifyError,
 					hits,
 					loading,
 					search,

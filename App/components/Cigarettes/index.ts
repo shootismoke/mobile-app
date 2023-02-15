@@ -14,4 +14,4 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-declare module 'detox-expo-helpers';
+export * from './Cigarettes';

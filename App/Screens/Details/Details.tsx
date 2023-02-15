@@ -20,7 +20,7 @@ import homeIcon from '@shootismoke/ui/assets/images/home.png';
 import stationIcon from '@shootismoke/ui/assets/images/station.png';
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, ImageURISource, StyleSheet, View } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { MapMarker, PROVIDER_GOOGLE } from 'react-native-maps';
 import truncate from 'truncate';
 import { distanceToStation, getCorrectLatLng } from '@shootismoke/ui';
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 });
 
 // Holds the ref to the MapView.Marker representing the AQI station
-let stationMarker: Marker | undefined;
+let stationMarker: MapMarker | undefined;
 
 export function Details(props: DetailsProps): React.ReactElement {
 	const { navigation } = props;
@@ -74,7 +74,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 			stationMarker.showCallout();
 	};
 
-	const handleStationRef = (ref: Marker): void => {
+	const handleStationRef = (ref: MapMarker): void => {
 		stationMarker = ref;
 	};
 
@@ -140,7 +140,7 @@ export function Details(props: DetailsProps): React.ReactElement {
 						provider={PROVIDER_GOOGLE}
 						style={styles.map}
 					>
-						<Marker
+						<MapMarker
 							coordinate={station}
 							ref={handleStationRef}
 							title={t('details_air_quality_station_marker')}
@@ -148,14 +148,14 @@ export function Details(props: DetailsProps): React.ReactElement {
 						>
 							{/* FIXME https://github.com/react-native-maps/react-native-maps/issues/3664 */}
 							<Image source={stationIcon as ImageURISource} />
-						</Marker>
-						<Marker
+						</MapMarker>
+						<MapMarker
 							coordinate={currentLocation}
 							title={t('details_your_position_marker')}
 						>
 							{/* FIXME https://github.com/react-native-maps/react-native-maps/issues/3664 */}
 							<Image source={homeIcon as ImageURISource} />
-						</Marker>
+						</MapMarker>
 					</MapView>
 				)}
 			</View>

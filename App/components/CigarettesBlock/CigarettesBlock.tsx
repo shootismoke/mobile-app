@@ -24,7 +24,7 @@ import {
 	ViewStyle,
 } from 'react-native';
 import type { Frequency } from '@shootismoke/ui';
-import { Cigarettes, CigarettesProps } from '@shootismoke/ui/lib/components';
+import { Cigarettes, CigarettesProps } from '../Cigarettes';
 
 import * as theme from '../../util/theme';
 import loadingAnimation from './animation.json';

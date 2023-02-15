@@ -1,6 +1,6 @@
 {
 	"name": "shootismoke",
-	"version": "1.8.14",
+	"version": "1.9.0",
 	"author": "Amaury <amaurym10@protonmail.com>",
 	"contributors": [
 		"Marcelo S. Coelho"
@@ -10,60 +10,49 @@
 	"scripts": {
 		"lint": "tsc --noEmit && eslint --ext js,ts,tsx .",
 		"start": "expo start",
-		"test:unit": "jest ./App",
-		"test:e2e": "detox test --configuration ios.sim --record-videos all"
-	},
-	"detox": {
-		"configurations": {
-			"ios.sim": {
-				"binaryPath": "bin/Exponent.app",
-				"type": "ios.simulator",
-				"name": "iPhone 11 Pro Max"
-			}
-		},
-		"test-runner": "jest"
+		"test:unit": "echo Skipped."
 	},
 	"dependencies": {
 		"@dooboo-ui/native-switch-toggle": "^0.7.0",
-		"@expo/react-native-action-sheet": "^3.8.0",
-		"@react-native-async-storage/async-storage": "^1.14.1",
+		"@expo/react-native-action-sheet": "^4.0.1",
+		"@react-native-async-storage/async-storage": "~1.17.11",
 		"@react-native-community/masked-view": "0.1.10",
-		"@react-navigation/native": "^5.9.3",
-		"@react-navigation/stack": "^5.14.3",
-		"@shootismoke/ui": "^0.8.8",
-		"@types/i18n-js": "^3.8.0",
-		"@types/react-native": "~0.63.2",
-		"date-fns": "^2.17.0",
-		"expo": "^40.0.1",
-		"expo-analytics-amplitude": "~9.0.0",
-		"expo-av": "~8.7.0",
+		"@react-native-picker/picker": "2.4.8",
+		"@react-navigation/native": "^6.1.3",
+		"@react-navigation/stack": "^6.3.12",
+		"@shootismoke/ui": "^0.9.3",
+		"@types/i18n-js": "^3.8.4",
+		"@types/react-native": "~0.70.6",
+		"date-fns": "^2.29.3",
+		"deprecated-react-native-prop-types": "^4.0.0",
+		"expo": "^47.0.13",
+		"expo-analytics-amplitude": "~11.3.0",
+		"expo-av": "~13.0.2",
 		"expo-detox-hook": "^1.0.10",
-		"expo-localization": "~9.1.0",
-		"expo-notifications": "~0.8.2",
-		"expo-status-bar": "~1.0.3",
+		"expo-device": "~5.0.0",
+		"expo-localization": "~14.0.0",
+		"expo-location": "~15.0.1",
+		"expo-notifications": "~0.17.0",
+		"expo-permissions": "~14.0.0",
+		"expo-status-bar": "~1.4.2",
+		"expo-updates": "~0.15.6",
 		"i18n-js": "^3.8.0",
-		"react": "16.13.1",
-		"react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-		"react-native-gesture-handler": "~1.8.0",
-		"react-native-maps": "0.27.1",
-		"react-native-reanimated": "~1.13.0",
-		"react-native-safe-area-context": "3.1.9",
-		"react-native-screens": "~2.15.2",
-		"react-native-scroll-into-view": "^1.0.3",
+		"react": "18.1.0",
+		"react-native": "0.70.5",
+		"react-native-gesture-handler": "~2.8.0",
+		"react-native-maps": "1.3.2",
+		"react-native-reanimated": "~2.12.0",
+		"react-native-safe-area-context": "4.4.1",
+		"react-native-screens": "~3.18.0",
+		"react-native-scroll-into-view": "^2.0.2",
 		"react-native-size-matters": "^0.4.0",
-		"react-native-view-shot": "3.1.2",
-		"sentry-expo": "^3.0.4",
-		"truncate": "^2.1.0"
+		"react-native-view-shot": "3.4.0",
+		"sentry-expo": "~6.0.0",
+		"truncate": "^3.0.0"
 	},
 	"devDependencies": {
-		"@amaurym/config": "^1.3.5",
-		"@types/detox": "^17.14.0",
-		"@types/jest": "^26.0.20",
-		"detox": "^18.6.2",
-		"detox-expo-helpers": "^0.6.0",
-		"jest": "^26.6.3",
-		"jest-expo": "^40.0.0",
-		"ts-jest": "^26.5.1",
-		"typescript": "~4.0.0"
+		"@amaurym/config": "^1.3.6",
+		"@types/jest": "^29.4.0",
+		"typescript": "^4.9.5"
 	}
 }

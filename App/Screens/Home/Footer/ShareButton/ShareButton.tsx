@@ -42,35 +42,31 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 	const refViewShot = createRef<View>();
 
 	async function handleShare(): Promise<void> {
-		try {
-			if (!api) {
-				throw new Error(
-					'Home/Footer/ShareButton.tsx only renders when `api` is defined.'
-				);
-			} else if (!currentLocation) {
-				throw new Error(
-					'Home/Footer/ShareButton.tsx only renders when `currentLocation` is defined.'
-				);
-			}
-
-			const imageUrl = await captureRef(refViewShot, {
-				format: 'png',
-				quality: 1,
-			});
-			const message = t('home_share_message', {
-				city: currentLocation.city
-					? `in ${currentLocation.city}`
-					: t('home_share_message_here'),
-				cigarettes: Math.ceil(api.shootismoke.dailyCigarettes),
-			});
-			const title = t('home_share_title');
-
-			// FIXME imageUrl doesn't work on Android
-			// https://github.com/shootismoke/mobile-app/issues/250
-			await Share.share({ message, title, url: imageUrl });
-		} catch (error) {
-			sentryError('ShareButton')(error);
+		if (!api) {
+			throw new Error(
+				'Home/Footer/ShareButton.tsx only renders when `api` is defined.'
+			);
+		} else if (!currentLocation) {
+			throw new Error(
+				'Home/Footer/ShareButton.tsx only renders when `currentLocation` is defined.'
+			);
 		}
+
+		const imageUrl = await captureRef(refViewShot, {
+			format: 'png',
+			quality: 1,
+		});
+		const message = t('home_share_message', {
+			city: currentLocation.city
+				? `in ${currentLocation.city}`
+				: t('home_share_message_here'),
+			cigarettes: Math.ceil(api.shootismoke.dailyCigarettes),
+		});
+		const title = t('home_share_title');
+
+		// FIXME imageUrl doesn't work on Android
+		// https://github.com/shootismoke/mobile-app/issues/250
+		await Share.share({ message, title, url: imageUrl });
 	}
 
 	return (
@@ -78,7 +74,12 @@ export function ShareButton(props: ShareButtonProps): React.ReactElement {
 			<View collapsable={false} ref={refViewShot} style={styles.viewShot}>
 				<ShareImage />
 			</View>
-			<CircleButton icon="ios-share-social" onPress={handleShare} />
+			<CircleButton
+				icon="ios-share-social"
+				onPress={() => {
+					handleShare().catch(sentryError);
+				}}
+			/>
 		</View>
 	);
 }

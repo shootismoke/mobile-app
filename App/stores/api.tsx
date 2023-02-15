@@ -88,8 +88,8 @@ export function ApiContextProvider({
 					withTimeout(
 						raceApiPromise(currentLocation, {
 							aqicn: {
-								token: Constants.manifest.extra
-									.aqicnToken as string,
+								token: Constants.manifest?.extra
+									?.aqicnToken as string,
 							},
 							openaq: {
 								// Limiting to only fetch pm25. Sometimes, when

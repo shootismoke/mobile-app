@@ -19,17 +19,17 @@ import {
 	useActionSheet,
 } from '@expo/react-native-action-sheet';
 import React from 'react';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { AmplitudeEvent, track } from '../../util/amplitude';
 
-interface ActionPickerProps extends TouchableOpacityProps {
+interface ActionPickerProps {
 	actionSheetOptions: ActionSheetOptions;
 	/**
 	 * Which Amplitude event to track when opening the action picker.
 	 */
 	amplitudeOpenEvent?: AmplitudeEvent;
-	callback: (i: number) => void;
+	callback: (i: number | undefined) => void;
 	children: (open: () => void) => React.ReactElement;
 }
 

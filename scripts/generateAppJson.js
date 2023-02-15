@@ -28,6 +28,7 @@ const overrides = {
 			amplitudeApiKey: process.env.SIS_AMPLITUDE_API_KEY || null,
 			backendUrl: process.env.SIS_BACKEND_URL,
 			backendSecret: process.env.SIS_BACKEND_SECRET,
+			geoapifyApiKey: process.env.SIS_GEOAPIFY_API_KEY,
 			sentryPublicDsn: process.env.SIS_SENTRY_PUBLIC_DNS || null,
 		},
 		hooks: {

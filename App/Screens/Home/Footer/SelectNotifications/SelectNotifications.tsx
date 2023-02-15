@@ -59,21 +59,6 @@ function capitalize(s: string): string {
 	return s[0].toUpperCase() + s.slice(1);
 }
 
-/**
- * Convert hex to rgba.
- * @see https://stackoverflow.com/questions/21646738/convert-hex-to-rgba#answer-51564734
- */
-function hex2rgba(hex: string, alpha = 1): string {
-	const matches = hex.match(/\w\w/g);
-	if (!matches) {
-		throw new Error(`Invalid hex: ${hex}`);
-	}
-
-	const [r, g, b] = matches.map((x) => parseInt(x, 16));
-
-	return `rgba(${r},${g},${b},${alpha})`;
-}
-
 type SelectNotificationsProps = ViewProps;
 
 const styles = StyleSheet.create({
@@ -142,14 +127,13 @@ export function SelectNotifications(
 				}
 			})
 			.then(() => {
-				return Permissions.getAsync(
-					Permissions.NOTIFICATIONS
-				).then(({ status }) =>
-					status === 'granted'
-						? Notifications.getExpoPushTokenAsync().then(
-								({ data }) => getUser(data)
-						  )
-						: undefined
+				return Permissions.getAsync(Permissions.NOTIFICATIONS).then(
+					({ status }) =>
+						status === 'granted'
+							? Notifications.getExpoPushTokenAsync().then(
+									({ data }) => getUser(data)
+							  )
+							: undefined
 				);
 			})
 			.then((user) => user && setCurrentUser(user))
@@ -312,6 +296,10 @@ export function SelectNotifications(
 			}}
 			amplitudeOpenEvent="HOME_SCREEN_NOTIFICATIONS_OPEN_PICKER"
 			callback={(buttonIndex): void => {
+				if (!buttonIndex) {
+					return;
+				}
+
 				if (buttonIndex === 4) {
 					// 4 is cancel
 
@@ -319,7 +307,7 @@ export function SelectNotifications(
 					return;
 				}
 
-				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped neve
+				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped never
 			}}
 		>
 			{(open): React.ReactElement => (

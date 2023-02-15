@@ -14,6 +14,8 @@ env:
     # Google. Use same keys as production.
     SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
     SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
+    # Geoapify. Use same keys as production.
+    SIS_GEOAPIFY_API_KEY: ${{ secrets.SIS_PRODUCTION_GEOAPIFY_API_KEY }}
 
 jobs:
     expo-staging:

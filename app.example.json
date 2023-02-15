@@ -22,6 +22,7 @@
 			"amplitudeApiKey": null,
 			"backendUrl": "https://staging.shootismoke.vercel.app",
 			"backendSecret": "staging-ssshhh!",
+			"geoapifyApiKey": "YOUR_GEOAPIFY_API_KEY",
 			"sentryPublicDsn": null
 		},
 		"githubUrl": "https://github.com/shootismoke/mobile-app",
@@ -39,7 +40,7 @@
 		},
 		"icon": "assets/logos/ios/iTunesArtwork@3x.png",
 		"ios": {
-			"buildNumber": "1.8.0",
+			"buildNumber": "1.9.0",
 			"bundleIdentifier": "com.shitismoke.app",
 			"config": {
 				"googleMapsApiKey": "YOUR_OPTIONAL_KEY"
@@ -60,6 +61,6 @@
 			"backgroundColor": "#EBE7DD",
 			"image": "assets/logos/splash.png"
 		},
-		"version": "1.8.0"
+		"version": "1.9.0"
 	}
 }

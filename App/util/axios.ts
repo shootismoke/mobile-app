@@ -20,8 +20,8 @@ import Constants from 'expo-constants';
 
 const axiosConfig = {
 	headers: {
-		'x-shootismoke-secret': Constants.manifest.extra
-			.backendSecret as string,
+		'x-shootismoke-secret': Constants.manifest?.extra
+			?.backendSecret as string,
 	},
 };
 
@@ -30,13 +30,13 @@ export function createUser(user: IUser): Promise<MongoUser> {
 
 	return axios
 		.post<MongoUser>(
-			`${Constants.manifest.extra.backendUrl as string}/api/users`,
+			`${Constants.manifest?.extra?.backendUrl as string}/api/users`,
 			user,
 			axiosConfig
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
@@ -51,13 +51,13 @@ export function getUser(expoPushToken: string): Promise<MongoUser> {
 	return axios
 		.get<MongoUser>(
 			`${
-				Constants.manifest.extra.backendUrl as string
+				Constants.manifest?.extra?.backendUrl as string
 			}/api/users/expoPushToken/${expoPushToken}`,
 			axiosConfig
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
@@ -72,14 +72,14 @@ export function updateUser(
 	return axios
 		.patch<MongoUser>(
 			`${
-				Constants.manifest.extra.backendUrl as string
+				Constants.manifest?.extra?.backendUrl as string
 			}/api/users/${userId}`,
 			user,
 			axiosConfig
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
@@ -89,13 +89,13 @@ export function deleteUser(userId: string): Promise<MongoUser> {
 	return axios
 		.delete<MongoUser>(
 			`${
-				Constants.manifest.extra.backendUrl as string
+				Constants.manifest?.extra?.backendUrl as string
 			}/api/users/${userId}`,
 			axiosConfig
 		)
 		.then(({ data }) => data)
 		.catch((err) => {
-			throw axiosErrorToError(err);
+			throw axiosErrorToError(err as AxiosError);
 		});
 }
 
