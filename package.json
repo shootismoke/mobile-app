@@ -1,8 +1,9 @@
 {
-	"name": "shootismoke",
+	"name": "@shootismoke/mobile-app",
 	"version": "1.9.0",
-	"author": "Amaury <amaurym10@protonmail.com>",
+	"author": "Sh**t! I Smoke <hi@shootismoke.app>",
 	"contributors": [
+		"Amaury",
 		"Marcelo S. Coelho"
 	],
 	"main": "node_modules/expo/AppEntry.js",

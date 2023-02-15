@@ -17,18 +17,6 @@
 			}
 		},
 		"githubUrl": "https://github.com/shootismoke/mobile-app",
-		"hooks": {
-			"postPublish": [
-				{
-					"file": "sentry-expo/upload-sourcemaps",
-					"config": {
-						"organization": null,
-						"project": null,
-						"authToken": null
-					}
-				}
-			]
-		},
 		"icon": "assets/logos/ios/iTunesArtwork@3x.png",
 		"ios": {
 			"buildNumber": "1.9.0",
