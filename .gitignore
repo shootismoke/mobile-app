@@ -23,9 +23,6 @@ yarn-error.log*
 .DS_Store
 
 # secrets
-app.json
-app.staging.json
-app.production.json
 google-services.json
 
 # ide files

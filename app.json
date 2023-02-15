@@ -1,16 +1,10 @@
 {
 	"expo": {
 		"android": {
-			"config": {
-				"googleMaps": {
-					"apiKey": "YOUR_OPTIONAL_KEY"
-				}
-			},
 			"icon": "assets/logos/android/playstore-icon.png",
 			"package": "com.shitismoke.app",
 			"permissions": ["ACCESS_FINE_LOCATION"],
-			"useNextNotificationsApi": true,
-			"versionCode": 17
+			"versionCode": 18
 		},
 		"assetBundlePatterns": [
 			"assets/**/*",
@@ -18,33 +12,15 @@
 		],
 		"backgroundColor": "#FAFAFC",
 		"extra": {
-			"aqicnToken": "6bb4237574756ba29f05cea553bd22576596c11e",
-			"amplitudeApiKey": null,
-			"backendUrl": "https://staging.shootismoke.vercel.app",
-			"backendSecret": "staging-ssshhh!",
-			"geoapifyApiKey": "YOUR_GEOAPIFY_API_KEY",
-			"sentryPublicDsn": null
+			"eas": {
+				"projectId": "19ce6a2a-47d4-4737-be57-72a003afa635"
+			}
 		},
 		"githubUrl": "https://github.com/shootismoke/mobile-app",
-		"hooks": {
-			"postPublish": [
-				{
-					"file": "sentry-expo/upload-sourcemaps",
-					"config": {
-						"organization": null,
-						"project": null,
-						"authToken": null
-					}
-				}
-			]
-		},
 		"icon": "assets/logos/ios/iTunesArtwork@3x.png",
 		"ios": {
 			"buildNumber": "1.9.0",
 			"bundleIdentifier": "com.shitismoke.app",
-			"config": {
-				"googleMapsApiKey": "YOUR_OPTIONAL_KEY"
-			},
 			"icon": "assets/logos/ios/iTunesArtwork@3x.png",
 			"infoPlist": {
 				"NSLocationWhenInUseUsageDescription": "This app uses your location to find the air quality level near you."
@@ -61,6 +37,12 @@
 			"backgroundColor": "#EBE7DD",
 			"image": "assets/logos/splash.png"
 		},
-		"version": "1.9.0"
+		"version": "1.9.0",
+		"runtimeVersion": {
+			"policy": "appVersion"
+		},
+		"updates": {
+			"url": "https://u.expo.dev/19ce6a2a-47d4-4737-be57-72a003afa635"
+		}
 	}
 }

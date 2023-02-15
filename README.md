@@ -6,16 +6,10 @@
 
 <p align="center">
   <a href="https://github.com/shootismoke/mobile-app/actions">
-    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/CI/badge.svg" />
-  </a>
-  <a href="https://david-dm.org/shootismoke/mobile-app">
-    <img alt="david-dm" src="https://img.shields.io/david/shootismoke/mobile-app.svg" />
+    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/master/badge.svg" />
   </a>
   <a href="https://codeclimate.com/github/shootismoke/mobile-app/maintainability">
     <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
-  </a>
-  <a href="https://spectrum.chat/shootismoke">
-    <img alt="spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
   </a>
 </p>
 
@@ -23,10 +17,10 @@
 
 <p align="center">
   <a href="https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8">
-    <img alt="app-store" src="https://shootismoke.github.io/assets/images/app-store.png" />
+    <img alt="app-store" src="https://github.com/shootismoke/webapp/blob/master/assets/images/app-store.png?raw=true"  width="200" />
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.shitismoke.app">
-    <img alt="google-play" src="https://shootismoke.github.io/assets/images/play-store.png" />
+    <img alt="google-play" src="https://github.com/shootismoke/webapp/blob/master/assets/images/play-store.png?raw=true" width="200" />
   </a>
 </p>
 
@@ -63,9 +57,6 @@ git clone https://github.com/shootismoke/mobile-app && cd shoot-i-smoke
 # Install dependencies
 yarn install
 
-# Copy the file that contains secrets
-cp app.example.json app.json
-
 # Run the app with Expo
 yarn start
 ```
@@ -78,22 +69,21 @@ The [Expo](https://expo.io) packager will show, and you can either:
 
 #### Use your own API tokens
 
-All required API tokens are already pre-filled in `app.example.json`. If you want to use your own API tokens, then in `app.json`, replace all the placeholders with the ones you generated for yourself. For those that are optional, you can just put `null` (without quotes).
+All required API tokens are already pre-filled in `eas.json`. If you want to use your own API tokens, then in `eas.json`'s `env` field, add your own values. For those that are optional, you can just put `null` (without quotes).
 
-| Service                  | Url                                                            | Comments                                                                    |
-| ------------------------ | -------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                                  |
-| World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `app.example.json` for development. |
-| Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                                    |
-| Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                                    |
-| Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                                   |
-| Amplitude Analytics      | https://amplitude.com                                          | Optional. Note: we **never** track PII.                                     |
+| Name              |                          | Service                                                        | Url                                                                 | Comments |
+| ----------------- | ------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------- | -------- |
+| GEOAPIFY_API_KEY  | Geoapify geocoding       | https://geoapify.com                                           | Required. Get your own and replace the `<TODO>` placeholder.        |
+| BACKEND_SECRET    | Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                          |
+| AQICN_TOKEN       | World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `eas.json` for development. |
+| SENTRY_PUBLIC_DSN | Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                           |
+| AMPLITUDE_API_KEY | Amplitude Analytics      | https://amplitude.com                                          | Optional. Note: we **never** track PII.                             |
+|                   | Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                            |
+|                   | Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                            |
 
 ## :raising_hand: Contribute
 
 If you find a bug, or if you have an idea for this app, please [file an issue here](https://github.com/shootismoke/mobile-app/issues). We really appreciate feedback and inputs!
-
-🇬🇧🇫🇷🇪🇸🇨🇳 You may also contribute with translations with our online tool [POEditor](https://poeditor.com/join/project/iEsj0CSPGX). If you need context for some terms, here are [some screenshots](https://nx1394.your-storageshare.de/s/grS6CZJGapRSH6i).
 
 For code contribution, the codebase heavily relies on functional programming principles via the [`fp-ts`](https://github.com/gcanti/fp-ts) library. The codebase itself is quite simple, so even if you're beginner to functional programming, it shouldn't be hard to follow along. You can start with these [easy tasks](https://github.com/shootismoke/mobile-app/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 

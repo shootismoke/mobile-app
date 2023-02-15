@@ -37,7 +37,7 @@ import { sentryError } from './util/sentry';
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
 	Sentry.Native.init({
-		dsn: Constants.manifest?.extra?.sentryPublicDsn as string,
+		dsn: process.env.SENTRY_PUBLIC_DSN as string,
 		debug: true,
 		enableNative: false, // Or else the app crashes.
 		release: RELEASE_CHANNEL,
