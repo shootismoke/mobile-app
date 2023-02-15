@@ -23,7 +23,7 @@ env:
     SIS_ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_ANDROID_GOOGLE_MAPS_KEY }}
     SIS_IOS_GOOGLE_MAPS_KEY: ${{ secrets.SIS_PRODUCTION_IOS_GOOGLE_MAPS_KEY }}
     # Geoapify
-    SIS_GEOAPIFY_API_KEY: ${{ secrets.SIS_PRODUCTION_GEOAPIFY_API_KEY }}
+    SIS_GEOAPIFY_API_KEY: ${{ secrets.GEOAPIFY_API_KEY }}
 
 jobs:
     # Build native binaries on production release channel
