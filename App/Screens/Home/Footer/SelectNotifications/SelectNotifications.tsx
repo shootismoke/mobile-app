@@ -274,7 +274,9 @@ export function SelectNotifications(
 					return;
 				}
 
-				handleChangeNotif(notificationsValues[buttonIndex]); // +1 because we skipped never
+				handleChangeNotif(notificationsValues[buttonIndex]).catch(
+					sentryError('SelectNotifications')
+				); // +1 because we skipped never
 			}}
 		>
 			{(open): React.ReactElement => (

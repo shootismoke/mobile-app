@@ -97,7 +97,7 @@ export function ApiContextProvider({
 				track('API_DAILY_RESPONSE');
 			})
 			.catch((error) => {
-				setError(error);
+				setError(error as Error);
 				track('API_DAILY_ERROR');
 			});
 	}, [latitude, longitude]); // eslint-disable-line react-hooks/exhaustive-deps
