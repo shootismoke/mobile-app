@@ -47,13 +47,11 @@ jobs:
             - uses: actions/checkout@v1
             - uses: actions/setup-node@v1
               with:
-                  node-version: 12.x
+                  node-version: 18.x
             - uses: expo/expo-github-action@v5
               with:
-                  expo-version: 4.x
                   expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
                   expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-                  expo-cache: true
             - run: yarn install
             - name: Set RELEASE_CHANNEL env variable # Will be "production-v*.*"
               if: startsWith(github.ref, 'refs/heads/production-v')
