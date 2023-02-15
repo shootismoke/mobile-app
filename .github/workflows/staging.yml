@@ -27,4 +27,4 @@ jobs:
             - name: Install dependencies
               run: yarn install
             - name: Build on EAS
-              run: eas update
+              run: eas update --non-interactive
