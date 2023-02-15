@@ -27,4 +27,4 @@ jobs:
             - name: Install dependencies
               run: npm ci
             - name: Build on EAS
-              run: eas build --platform all --non-interactive
+              run: eas update
