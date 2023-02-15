@@ -26,6 +26,7 @@
 		"@types/react-native": "~0.70.6",
 		"date-fns": "^2.29.3",
 		"deprecated-react-native-prop-types": "^4.0.0",
+		"dotenv": "^16.0.3",
 		"expo": "^47.0.13",
 		"expo-analytics-amplitude": "~11.3.0",
 		"expo-av": "~13.0.2",

@@ -57,6 +57,9 @@ git clone https://github.com/shootismoke/mobile-app && cd shoot-i-smoke
 # Install dependencies
 yarn install
 
+# Copy secrets
+cp .env.example .env
+
 # Run the app with Expo
 yarn start
 ```
@@ -73,7 +76,7 @@ All required API tokens are already pre-filled in `eas.json`. If you want to use
 
 | Name              |                          | Service                                                        | Url                                                                 | Comments |
 | ----------------- | ------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------- | -------- |
-| GEOAPIFY_API_KEY  | Geoapify geocoding       | https://geoapify.com                                           | Required. Get your own and replace the `<TODO>` placeholder.        |
+| GEOAPIFY_API_KEY  | Geoapify geocoding       | https://geoapify.com                                           | Required. Get your own and populate it in `.env`                    |
 | BACKEND_SECRET    | Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                          |
 | AQICN_TOKEN       | World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `eas.json` for development. |
 | SENTRY_PUBLIC_DSN | Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                           |

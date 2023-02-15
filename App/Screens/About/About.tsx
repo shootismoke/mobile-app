@@ -320,10 +320,8 @@ export function About(props: AboutProps): React.ReactElement {
 					</Text>
 					.{'\n'}
 					{'\n'}
-					{Constants.manifest?.name} v
-					{Constants.manifest?.revisionId ||
-						Constants.manifest?.version}
-					. See{' '}
+					{Constants.expoConfig?.name} v
+					{Constants.expoConfig?.version}. See{' '}
 					<Text onPress={openTerms} style={theme.link}>
 						Terms of Service
 					</Text>{' '}

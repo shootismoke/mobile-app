@@ -15,12 +15,14 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { raceApiPromise, Api, noop } from '@shootismoke/ui';
+import Constants from 'expo-constants';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
+import { IS_SENTRY_SET_UP } from '../util/constants';
 import { promiseToTE } from '../util/fp';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
@@ -87,7 +89,8 @@ export function ApiContextProvider({
 					withTimeout(
 						raceApiPromise(currentLocation, {
 							aqicn: {
-								token: process.env.AQICN_TOKEN as string,
+								token: Constants.expoConfig?.extra
+									?.aqicnToken as string,
 							},
 							openaq: {
 								// Limiting to only fetch pm25. Sometimes, when

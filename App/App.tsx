@@ -31,21 +31,15 @@ import {
 	LocationContextProvider,
 } from './stores';
 import { setupAmplitude, track } from './util/amplitude';
-import { IS_SENTRY_SET_UP, RELEASE_CHANNEL } from './util/constants';
+import { IS_SENTRY_SET_UP } from './util/constants';
 import { sentryError } from './util/sentry';
 
 // Add Sentry if available
 if (IS_SENTRY_SET_UP) {
 	Sentry.Native.init({
-		dsn: process.env.SENTRY_PUBLIC_DSN as string,
+		dsn: Constants.expoConfig?.extra?.sentryPublicDsn as string,
 		debug: true,
-		enableNative: false, // Or else the app crashes.
-		release: RELEASE_CHANNEL,
 	});
-
-	if (Constants.manifest?.revisionId) {
-		Sentry.Native.setExtra('sisRevisionId', Constants.manifest?.revisionId);
-	}
 }
 
 export function App(): React.ReactElement {
