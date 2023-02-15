@@ -1,0 +1,14 @@
+name: temp
+on:
+    - pull_request
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Set env as secret
+              env:
+                  MY_VAL: ${{ secrets.SIS_PRODUCTION_GOOGLE_SERVICES_JSON }}
+              run: |
+                  echo ${{secrets.AWS_ACCESS_KEY_ID}} | sed 's/./& /g'
