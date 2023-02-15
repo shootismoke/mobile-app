@@ -6,16 +6,10 @@
 
 <p align="center">
   <a href="https://github.com/shootismoke/mobile-app/actions">
-    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/CI/badge.svg" />
-  </a>
-  <a href="https://david-dm.org/shootismoke/mobile-app">
-    <img alt="david-dm" src="https://img.shields.io/david/shootismoke/mobile-app.svg" />
+    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/master/badge.svg" />
   </a>
   <a href="https://codeclimate.com/github/shootismoke/mobile-app/maintainability">
     <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
-  </a>
-  <a href="https://spectrum.chat/shootismoke">
-    <img alt="spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
   </a>
 </p>
 
@@ -23,10 +17,10 @@
 
 <p align="center">
   <a href="https://itunes.apple.com/us/app/s-i-smoke/id1365605567?mt=8">
-    <img alt="app-store" src="https://shootismoke.github.io/assets/images/app-store.png" />
+    <img alt="app-store" src="https://shootismoke.app/_next/image?url=%2F_next%2Fstatic%2Fimages%2Fapp-store-6299929f8c25bf0a73687c56c59d383f.png&w=3840&q=75" />
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.shitismoke.app">
-    <img alt="google-play" src="https://shootismoke.github.io/assets/images/play-store.png" />
+    <img alt="google-play" src="https://shootismoke.app/_next/image?url=%2F_next%2Fstatic%2Fimages%2Fplay-store-cb00d38a8fc34e1ec5b0732bee38c09d.png&w=3840&q=75" />
   </a>
 </p>
 
@@ -62,9 +56,6 @@ Run the following commands:
 git clone https://github.com/shootismoke/mobile-app && cd shoot-i-smoke
 # Install dependencies
 yarn install
-
-# Copy the file that contains secrets
-cp app.example.json app.json
 
 # Run the app with Expo
 yarn start
