@@ -113,7 +113,6 @@ export function LocationContextProvider({
 				setCurrentLocation(currentLocation);
 			})
 			.catch((err: Error) => {
-				console.log('AAA', err, typeof err);
 				sentryError('LocationContextProvider')(err);
 				setError(err);
 			});
