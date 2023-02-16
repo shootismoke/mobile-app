@@ -16,11 +16,6 @@
 
 import type { LatLng } from '@shootismoke/dataproviders';
 import * as ExpoLocation from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import { pipe } from 'fp-ts/lib/pipeable';
-import * as TE from 'fp-ts/lib/TaskEither';
-
-import { promiseToTE } from '../../util/fp';
 
 export interface Location extends LatLng {
 	city?: string;
@@ -28,65 +23,70 @@ export interface Location extends LatLng {
 	name?: string;
 }
 
-export function fetchReverseGeocode(
-	currentLocation: LatLng
-): TE.TaskEither<Error, Location> {
-	return pipe(
-		promiseToTE(
-			() => ExpoLocation.reverseGeocodeAsync(currentLocation),
-			'fetchReverseGeocode'
-		),
-		TE.chain((reverse) =>
-			reverse.length
-				? TE.right(reverse[0])
-				: TE.left(new Error('Reverse geocoding returned no results'))
-		),
-		TE.map((reverse) => ({
-			...currentLocation,
-			city: reverse.city || undefined, // Convert null to undefined.
-			country: reverse.country || undefined, // Convert null to undefined.
-			name:
-				[reverse.street, reverse.city, reverse.country]
-					.filter((x) => x)
-					.join(', ') ||
-				// This case happens when e.g. we're in the middle of the ocean
-				[reverse.name, reverse.country].filter((x) => x).join(', '),
-		}))
-	);
+/**
+ * withTimeout wraps another promise, and rejects if the inner promise
+ * time outs after `timeout`.
+ *
+ * @param p - Promise to add timeout to.
+ */
+export function withTimeout<T>(
+	p: Promise<T>,
+	timeout: number,
+	desc?: string
+): Promise<T> {
+	return Promise.race([
+		new Promise<T>((_resolve, reject) => {
+			setTimeout(
+				() => reject(new Error(`Request ${desc || ''}timed out.`)),
+				timeout
+			);
+		}),
+		p,
+	]);
 }
 
-export function fetchGpsPosition(): TE.TaskEither<
-	Error,
-	ExpoLocation.LocationObject
-> {
-	return pipe(
-		promiseToTE(
-			() => Permissions.askAsync(Permissions.LOCATION),
-			'fetchGpsPosition'
-		),
-		TE.chain(({ status }) =>
-			status === 'granted'
-				? TE.right(undefined)
-				: TE.left(new Error('Permission to access location was denied'))
-		),
-		TE.chain(() =>
-			promiseToTE(
-				() => ExpoLocation.getCurrentPositionAsync(),
-				// Uncomment to get other locations
-				// Promise.resolve({
-				//   coords: {
-				//     latitude: Math.random() * 90,
-				//     longitude: Math.random() * 90
-				//   }
-				// });
-				// Promise.resolve({
-				//   coords: {
-				//     latitude: 48.4,
-				//     longitude: 2.34
-				//   }
-				// });
-				'fetchGpsPosition'
-			)
-		)
-	);
+export async function fetchReverseGeocode(
+	currentLocation: LatLng
+): Promise<Location> {
+	const reverseHits = await ExpoLocation.reverseGeocodeAsync(currentLocation);
+
+	if (reverseHits.length) {
+		throw new Error('Reverse geocoding returned no results');
+	}
+	const reverse = reverseHits[0];
+
+	return {
+		...currentLocation,
+		city: reverse.city || undefined, // Convert null to undefined.
+		country: reverse.country || undefined, // Convert null to undefined.
+		name:
+			[reverse.street, reverse.city, reverse.country]
+				.filter((x) => x)
+				.join(', ') ||
+			// This case happens when e.g. we're in the middle of the ocean
+			[reverse.name, reverse.country].filter((x) => x).join(', '),
+	};
+}
+
+export async function fetchGpsPosition(): Promise<ExpoLocation.LocationObject> {
+	const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
+	if (status !== 'granted') {
+		throw new Error('Permission to access location was denied');
+	}
+
+	return ExpoLocation.getCurrentPositionAsync();
+
+	// Uncomment to get other locations
+	// return {
+	// 	coords: {
+	// 		latitude: Math.random() * 90,
+	// 		longitude: Math.random() * 90,
+	// 	},
+	// };
+	// return {
+	// 	coords: {
+	// 		latitude: 48.4,
+	// 		longitude: 2.34,
+	// 	},
+	// };
 }
