@@ -15,14 +15,9 @@
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
 import { LatLng } from '@shootismoke/dataproviders';
-import { sideEffect } from '@shootismoke/ui';
-import { pipe } from 'fp-ts/lib/pipeable';
-import * as T from 'fp-ts/lib/Task';
-import * as TE from 'fp-ts/lib/TaskEither';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { promiseToTE } from '../util/fp';
 import { noop } from '@shootismoke/ui';
 import { sentryError } from '../util/sentry';
 import { ErrorContext } from './error';
@@ -30,6 +25,7 @@ import {
 	fetchGpsPosition,
 	fetchReverseGeocode,
 	Location,
+	withTimeout,
 } from './util/fetchGpsPosition';
 
 const LAST_KNOWN_LOCATION_KEY = 'LAST_KNOWN_LOCATION';
@@ -54,6 +50,51 @@ export const CurrentLocationContext = createContext<LocationWithSetter>({
 	setCurrentLocation: noop,
 });
 
+// fetch will try to fetch the GPS position, and if it fails, it will try to
+// fetch the last known location from AsyncStorage.
+async function fetch(): Promise<[Location | undefined, Location | undefined]> {
+	try {
+		const { coords } = await fetchGpsPosition();
+		// Set lat/lng for now, set the reverse location later
+		// @see https://github.com/shootismoke/mobile-app/issues/323
+		console.log(
+			`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
+				coords
+			)}`
+		);
+
+		const reverseGeocode = await fetchReverseGeocode(coords);
+		return [reverseGeocode, reverseGeocode];
+	} catch (err) {
+		try {
+			const locationString = await AsyncStorage.getItem(
+				'LAST_KNOWN_LOCATION'
+			);
+
+			// Skip parsing if AsyncStorage is empty.
+			if (!locationString) {
+				return [undefined, undefined];
+			}
+
+			const parsedLocation = JSON.parse(locationString) as Location;
+
+			// Make sure parsedLocation is well-formed.
+			if (!parsedLocation.latitude || !parsedLocation.longitude) {
+				throw new Error(
+					'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
+				);
+			}
+
+			return [undefined, parsedLocation];
+		} catch (innerError) {
+			sentryError('LocationContextProvider-AsyncStorage')(
+				innerError as Error
+			);
+			throw err;
+		}
+	}
+}
+
 export function LocationContextProvider({
 	children,
 }: {
@@ -66,85 +107,15 @@ export function LocationContextProvider({
 
 	// Fetch GPS location
 	useEffect(() => {
-		pipe(
-			fetchGpsPosition(),
-			TE.map(({ coords }) => coords),
-			TE.chain(
-				sideEffect((gps) => {
-					// Set lat/lng for now, set the reverse location later
-					// @see https://github.com/shootismoke/mobile-app/issues/323
-					console.log(
-						`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
-							gps
-						)}`
-					);
-					setGpsLocation(gps);
-					setCurrentLocation(gps);
-
-					return TE.right(undefined);
-				})
-			),
-			TE.chain((gps) =>
-				TE.rightTask(
-					pipe(
-						fetchReverseGeocode(gps),
-						TE.fold(() => T.of(gps as Location), T.of)
-					)
-				)
-			),
-			TE.orElse((err) =>
-				pipe(
-					promiseToTE(
-						() => AsyncStorage.getItem('LAST_KNOWN_LOCATION'),
-						'LocationContext'
-					),
-					TE.chain((locationString) => {
-						// Skip parsing if AsyncStorage is empty.
-						if (!locationString) {
-							return TE.left(
-								new Error(
-									'AsyncStorage does not contain LAST_KNOWN_LOCATION'
-								)
-							);
-						}
-
-						const parsedLocation = JSON.parse(
-							locationString
-						) as Location;
-
-						// Make sure parsedLocation is well-formed.
-						return parsedLocation.latitude &&
-							parsedLocation.longitude
-							? TE.right(parsedLocation)
-							: TE.left(
-									new Error(
-										'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
-									)
-							  );
-					}),
-					// Show the initial error from fetchGpsPosition.
-					TE.mapLeft(() => err)
-				)
-			),
-			TE.fold(
-				(err) => {
-					setError(err);
-
-					return T.of(undefined);
-				},
-				(location) => {
-					console.log(
-						`<LocationContext> - Got reverse location ${JSON.stringify(
-							location
-						)}`
-					);
-					setGpsLocation(location);
-					setCurrentLocation(location);
-
-					return T.of(undefined);
-				}
-			)
-		)().catch(sentryError('LocationContextProvider'));
+		withTimeout(fetch(), 10000, 'for GPS location ')
+			.then(([gpsLocation, currentLocation]) => {
+				setGpsLocation(gpsLocation);
+				setCurrentLocation(currentLocation);
+			})
+			.catch((err: Error) => {
+				sentryError('LocationContextProvider')(err);
+				setError(err);
+			});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {

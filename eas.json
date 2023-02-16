@@ -32,10 +32,7 @@
 			"android": {
 				"buildType": "apk"
 			},
-			"channel": "production",
-			"env": {
-				"BACKEND_URL": "https://shootismoke.app"
-			}
+			"extends": "production"
 		},
 		"production": {
 			"channel": "production",

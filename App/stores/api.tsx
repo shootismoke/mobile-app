@@ -21,6 +21,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { track } from '../util/amplitude';
 import { ErrorContext } from './error';
 import { CurrentLocationContext } from './location';
+import { withTimeout } from './util';
 
 interface Context {
 	api?: Api;
@@ -35,24 +36,6 @@ interface ApiContextProviderProps {
 
 // Timeout, in ms, after which we abandon the api request.
 const API_TIMEOUT = 10000;
-
-/**
- * withTimeout wraps another promise, and rejects if the inner promise
- * time outs after `timeout`.
- *
- * @param p - Promise to add timeout to.
- */
-export function withTimeout<T>(p: Promise<T>, timeout: number): Promise<T> {
-	return Promise.race([
-		new Promise<T>((_resolve, reject) => {
-			setTimeout(
-				() => reject('Request to fetch API data timed out.'),
-				timeout
-			);
-		}),
-		p,
-	]);
-}
 
 export function ApiContextProvider({
 	children,
@@ -90,7 +73,8 @@ export function ApiContextProvider({
 					parameter: ['pm25'],
 				},
 			}),
-			API_TIMEOUT
+			API_TIMEOUT,
+			'for aqicn/openaq API '
 		)
 			.then((newApi) => {
 				setApi(newApi);

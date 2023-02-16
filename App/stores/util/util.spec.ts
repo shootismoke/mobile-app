@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { withTimeout } from './api';
+import { withTimeout } from './fetchGpsPosition';
 
 describe('withTimeout', () => {
 	it('should correct time out', async () => {
