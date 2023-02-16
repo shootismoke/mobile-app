@@ -46,7 +46,7 @@ module.exports = {
 	},
 	icon: 'assets/logos/ios/iTunesArtwork@3x.png',
 	ios: {
-		buildNumber: '1.9.0',
+		buildNumber: '1.9.1',
 		bundleIdentifier: 'com.shitismoke.app',
 		config: {
 			usesNonExemptEncryption: false,
@@ -70,7 +70,7 @@ module.exports = {
 		backgroundColor: '#EBE7DD',
 		image: 'assets/logos/splash.png',
 	},
-	version: '1.9.0',
+	version: '1.9.1',
 	runtimeVersion: {
 		policy: 'sdkVersion',
 	},
