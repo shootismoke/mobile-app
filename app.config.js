@@ -49,6 +49,7 @@ module.exports = {
 		buildNumber: '1.9.0',
 		bundleIdentifier: 'com.shitismoke.app',
 		config: {
+			usesNonExemptEncryption: false,
 			googleMapsApiKey: process.env.IOS_GOOGLE_MAPS_KEY,
 		},
 		icon: 'assets/logos/ios/iTunesArtwork@3x.png',
