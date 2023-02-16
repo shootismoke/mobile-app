@@ -28,6 +28,15 @@
 				"BACKEND_SECRET": "staging-ssshhh!"
 			}
 		},
+		"apk": {
+			"android": {
+				"buildType": "apk"
+			},
+			"channel": "production",
+			"env": {
+				"BACKEND_URL": "https://shootismoke.app"
+			}
+		},
 		"production": {
 			"channel": "production",
 			"ios": {
