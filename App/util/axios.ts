@@ -26,7 +26,7 @@ const axiosConfig = {
 };
 
 export function createUser(user: IUser): Promise<MongoUser> {
-	console.log(`<Axios> - POST /api/users, body=${JSON.stringify(user)}`);
+	console.log(`[Axios]: POST /api/users, body=${JSON.stringify(user)}`);
 
 	return axios
 		.post<MongoUser>(
@@ -46,7 +46,7 @@ export function createUser(user: IUser): Promise<MongoUser> {
  * @param expoPushToken - The Expo push token.
  */
 export function getUser(expoPushToken: string): Promise<MongoUser> {
-	console.log(`<Axios> - GET /api/users/expoPushToken/${expoPushToken}`);
+	console.log(`[Axios]: GET /api/users/expoPushToken/${expoPushToken}`);
 
 	return axios
 		.get<MongoUser>(
@@ -66,7 +66,7 @@ export function updateUser(
 	user: Partial<IUser>
 ): Promise<MongoUser> {
 	console.log(
-		`<Axios> - PATCH /api/users/${userId}, body=${JSON.stringify(user)}`
+		`[Axios]: PATCH /api/users/${userId}, body=${JSON.stringify(user)}`
 	);
 
 	return axios
@@ -84,7 +84,7 @@ export function updateUser(
 }
 
 export function deleteUser(userId: string): Promise<MongoUser> {
-	console.log(`<Axios> - DELETE /api/users/${userId}`);
+	console.log(`[Axios]: DELETE /api/users/${userId}`);
 
 	return axios
 		.delete<MongoUser>(

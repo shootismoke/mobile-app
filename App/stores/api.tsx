@@ -58,6 +58,8 @@ export function ApiContextProvider({
 
 		track('API_DAILY_REQUEST');
 
+		console.log('[ApiContext] Fetching API data for', currentLocation.name);
+
 		// raceApiPromise will fetch the API data from different
 		// sources, and return the first result. We also add a
 		// timeout on these requests.

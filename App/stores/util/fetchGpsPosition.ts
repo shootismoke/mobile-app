@@ -36,10 +36,9 @@ export function withTimeout<T>(
 ): Promise<T> {
 	return Promise.race([
 		new Promise<T>((_resolve, reject) => {
-			setTimeout(
-				() => reject(new Error(`Request ${desc || ''}timed out.`)),
-				timeout
-			);
+			setTimeout(() => {
+				return reject(new Error(`Request ${desc || ''}timed out.`));
+			}, timeout);
 		}),
 		p,
 	]);
@@ -74,7 +73,9 @@ export async function fetchGpsPosition(): Promise<ExpoLocation.LocationObject> {
 		throw new Error('Permission to access location was denied');
 	}
 
-	return ExpoLocation.getCurrentPositionAsync();
+	const gps = await ExpoLocation.getCurrentPositionAsync();
+
+	console.log(`[fetchGpsPosition]: Got ${JSON.stringify(gps.coords)}`);
 
 	// Uncomment to get other locations
 	// return {
@@ -89,4 +90,5 @@ export async function fetchGpsPosition(): Promise<ExpoLocation.LocationObject> {
 	// 		longitude: 2.34,
 	// 	},
 	// };
+	return gps;
 }

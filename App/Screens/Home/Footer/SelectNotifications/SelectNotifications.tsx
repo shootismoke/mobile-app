@@ -109,13 +109,13 @@ export function SelectNotifications(
 						)
 					) {
 						throw new Error(
-							`<SelectNotifications> - Got unknown frequency "${lastChosenFrequency}" from AsyncStorage.`
+							`[SelectNotifications]: Got unknown frequency "${lastChosenFrequency}" from AsyncStorage.`
 						);
 					}
 
 					const f = lastChosenFrequency as Frequency;
 					console.log(
-						`<SelectNotifications> - Got frequency "${f}" from AsyncStorage.`
+						`[SelectNotifications]: Got frequency "${f}" from AsyncStorage.`
 					);
 
 					// We're optimistic that the backend frequency is the same
