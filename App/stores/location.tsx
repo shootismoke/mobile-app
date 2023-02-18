@@ -99,8 +99,8 @@ export function LocationContextProvider({
 					10000,
 					'for fetchReverseGeocode '
 				).catch((err) => {
-					sentryError('fetchReverseGeocode')(err);
-					return fetchFromAsyncStorage(err);
+					sentryError('fetchReverseGeocode')(err as Error);
+					return fetchFromAsyncStorage(err as Error);
 				});
 			})
 			.then((currentLocation) => {
