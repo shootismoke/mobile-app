@@ -12,7 +12,7 @@ module.exports = {
 		icon: 'assets/logos/android/playstore-icon.png',
 		package: 'com.shitismoke.app',
 		permissions: ['ACCESS_FINE_LOCATION'],
-		versionCode: 19,
+		versionCode: 20,
 	},
 	assetBundlePatterns: [
 		'assets/**/*',
@@ -46,7 +46,7 @@ module.exports = {
 	},
 	icon: 'assets/logos/ios/iTunesArtwork@3x.png',
 	ios: {
-		buildNumber: '1.9.2',
+		buildNumber: '1.9.3',
 		bundleIdentifier: 'com.shitismoke.app',
 		config: {
 			usesNonExemptEncryption: false,
@@ -70,7 +70,7 @@ module.exports = {
 		backgroundColor: '#EBE7DD',
 		image: 'assets/logos/splash.png',
 	},
-	version: '1.9.2',
+	version: '1.9.3',
 	runtimeVersion: {
 		policy: 'sdkVersion',
 	},
