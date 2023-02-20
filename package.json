@@ -35,7 +35,6 @@
 		"expo-localization": "~14.0.0",
 		"expo-location": "~15.0.1",
 		"expo-notifications": "~0.17.0",
-		"expo-permissions": "~14.0.0",
 		"expo-status-bar": "~1.4.2",
 		"expo-updates": "~0.15.6",
 		"i18n-js": "^3.8.0",
