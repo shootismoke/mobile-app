@@ -51,14 +51,13 @@ jobs:
             - name: Publish update
               run: eas update --auto
               env:
-                  AQICN_TOKEN: { { secrets.AQICN_TOKEN } }
-                  BACKEND_URL: { { secrets.BACKEND_URL } }
-                  BACKEND_SECRET: { { secrets.BACKEND_SECRET } }
-                  GEOAPIFY_API_KEY: { { secrets.GEOAPIFY_API_KEY } }
-                  SENTRY_PUBLIC_DSN: { { secrets.SENTRY_PUBLIC_DSN } }
-                  SENTRY_ORG: { { secrets.SENTRY_ORG } }
-                  SENTRY_PROJECT: { { secrets.SENTRY_PROJECT } }
-                  SENTRY_AUTH_TOKEN: { { secrets.SENTRY_AUTH_TOKEN } }
-                  ANDROID_GOOGLE_MAPS_KEY:
-                      { { secrets.ANDROID_GOOGLE_MAPS_KEY } }
-                  IOS_GOOGLE_MAPS_KEY: { { secrets.IOS_GOOGLE_MAPS_KEY } }
+                  AQICN_TOKEN: ${{ secrets.AQICN_TOKEN }}
+                  BACKEND_URL: ${{ secrets.BACKEND_URL }}
+                  BACKEND_SECRET: ${{ secrets.BACKEND_SECRET }}
+                  GEOAPIFY_API_KEY: ${{ secrets.GEOAPIFY_API_KEY }}
+                  SENTRY_PUBLIC_DSN: ${{ secrets.SENTRY_PUBLIC_DSN }}
+                  SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+                  SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+                  ANDROID_GOOGLE_MAPS_KEY: ${{ secrets.ANDROID_GOOGLE_MAPS_KEY }}
+                  IOS_GOOGLE_MAPS_KEY: ${{ secrets.IOS_GOOGLE_MAPS_KEY }}
