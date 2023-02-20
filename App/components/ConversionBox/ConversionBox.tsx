@@ -100,13 +100,14 @@ const styles = StyleSheet.create({
 	},
 	statisticsRight: {
 		alignItems: 'center', // For mobile
+		marginTop: 10,
 		textAlign: 'center', // For web
 		width: 90,
 	},
 	value: {
 		...theme.text,
 		color: theme.colors.gray600,
-		fontSize: LINE_HEIGHT,
+		fontSize: 40,
 		fontWeight: '800' as const,
 		lineHeight: LINE_HEIGHT,
 	},
