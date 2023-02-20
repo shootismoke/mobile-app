@@ -9,6 +9,7 @@ on:
 jobs:
     update:
         name: EAS Update
+        environment: production # TODO Switch to use branch name as environment. Currently EAS Update on master branch doesn't populate env variables.
         runs-on: ubuntu-latest
         steps:
             - name: Check for EXPO_TOKEN
@@ -36,7 +37,7 @@ jobs:
 
             - name: Find yarn cache
               id: yarn-cache-path
-              run: echo "::set-output name=dir::$(yarn cache dir)"
+              run: echo "::set-output name: dir::$(yarn cache dir)"
 
             - name: Restore cache
               uses: actions/cache@v2
@@ -50,3 +51,14 @@ jobs:
 
             - name: Publish update
               run: eas update --auto
+              env:
+                AQICN_TOKEN: {{ secrets.AQICN_TOKEN }}
+                BACKEND_URL: {{ secrets.BACKEND_URL }}
+                BACKEND_SECRET: {{ secrets.BACKEND_SECRET }}
+                GEOAPIFY_API_KEY: {{ secrets.GEOAPIFY_API_KEY }}
+                SENTRY_PUBLIC_DSN: {{ secrets.SENTRY_PUBLIC_DSN }}
+                SENTRY_ORG: {{ secrets.SENTRY_ORG }}
+                SENTRY_PROJECT: {{ secrets.SENTRY_PROJECT }}
+                SENTRY_AUTH_TOKEN: {{ secrets.SENTRY_AUTH_TOKEN }}
+                ANDROID_GOOGLE_MAPS_KEY: {{ secrets.ANDROID_GOOGLE_MAPS_KEY }}
+                IOS_GOOGLE_MAPS_KEY: {{ secrets.IOS_GOOGLE_MAPS_KEY }}
