@@ -86,7 +86,7 @@ export function ApiContextProvider({
 				// work. In this case, we fill in the gps reverse geocoding
 				// info with the API one.
 				if (isGps && gps && !gps?.name) {
-					setGpsLocation({
+					const newLocation = {
 						...gps,
 						name: [
 							newApi.results[0].city,
@@ -94,7 +94,9 @@ export function ApiContextProvider({
 						].join(', '),
 						city: newApi.results[0].city,
 						country: newApi.results[0].country,
-					});
+					};
+					setGpsLocation(newLocation);
+					setCurrentLocation(newLocation);
 				}
 
 				track('API_DAILY_RESPONSE');
