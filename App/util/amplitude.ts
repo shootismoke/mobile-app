@@ -23,6 +23,8 @@ import { sentryError } from './sentry';
 export type AmplitudeEvent =
 	| 'API_DAILY_REQUEST'
 	| 'API_DAILY_RESPONSE'
+	| 'API_DAILY_RESPONSE_AQICN'
+	| 'API_DAILY_RESPONSE_OPENAQ'
 	| 'API_DAILY_ERROR'
 	| 'APP_REFOCUS'
 	| 'APP_EXIT'

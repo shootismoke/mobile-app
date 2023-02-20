@@ -98,6 +98,13 @@ export function ApiContextProvider({
 				}
 
 				track('API_DAILY_RESPONSE');
+				track(
+					`API_DAILY_RESPONSE_${
+						newApi.results[0].location
+							.split('|')[0]
+							.toUpperCase() as 'AQICN' | 'OPENAQ'
+					}`
+				);
 			})
 			.catch((error) => {
 				setError(error as Error);
