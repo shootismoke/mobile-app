@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
+import type { GeoapifyRes } from '@shootismoke/ui';
 import React from 'react';
-import type { GeoapifyRes } from '../geoapify';
 
 import { ListItem } from '../../../components';
 import { Location } from '../../../stores/util/fetchGpsPosition';

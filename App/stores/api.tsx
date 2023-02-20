@@ -20,7 +20,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { track } from '../util/amplitude';
 import { ErrorContext } from './error';
-import { CurrentLocationContext } from './location';
+import { CurrentLocationContext, GpsLocationContext } from './location';
 import { withTimeout } from './util';
 
 interface Context {
@@ -40,10 +40,11 @@ const API_TIMEOUT = 10000;
 export function ApiContextProvider({
 	children,
 }: ApiContextProviderProps): React.ReactElement {
-	const { currentLocation, setCurrentLocation } = useContext(
+	const { currentLocation, setCurrentLocation, isGps } = useContext(
 		CurrentLocationContext
 	);
 	const { setError } = useContext(ErrorContext);
+	const { gps, setGpsLocation } = useContext(GpsLocationContext);
 	const [api, setApi] = useState<Api | undefined>(undefined);
 
 	const { latitude, longitude } = currentLocation || {};
@@ -57,6 +58,8 @@ export function ApiContextProvider({
 		}
 
 		track('API_DAILY_REQUEST');
+
+		console.log('[ApiContext] Fetching API data for', currentLocation.name);
 
 		// raceApiPromise will fetch the API data from different
 		// sources, and return the first result. We also add a
@@ -78,7 +81,32 @@ export function ApiContextProvider({
 		)
 			.then((newApi) => {
 				setApi(newApi);
+
+				// Sometimes, the reverse geocoding on the location doesn't
+				// work. In this case, we fill in the gps reverse geocoding
+				// info with the API one.
+				if (isGps && gps && !gps?.name) {
+					const newLocation = {
+						...gps,
+						name: [
+							newApi.results[0].city,
+							newApi.results[0].country,
+						].join(', '),
+						city: newApi.results[0].city,
+						country: newApi.results[0].country,
+					};
+					setGpsLocation(newLocation);
+					setCurrentLocation(newLocation);
+				}
+
 				track('API_DAILY_RESPONSE');
+				track(
+					`API_DAILY_RESPONSE_${
+						newApi.results[0].location
+							.split('|')[0]
+							.toUpperCase() as 'AQICN' | 'OPENAQ'
+					}`
+				);
 			})
 			.catch((error) => {
 				setError(error as Error);

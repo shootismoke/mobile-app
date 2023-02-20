@@ -20,11 +20,9 @@ import { ListItem } from '../../../components';
 import { t } from '../../../localization';
 import { CurrentLocationContext, GpsLocationContext } from '../../../stores';
 
-const LOADING_TEXT = 'Fetching...';
-
 export function GpsItem(): React.ReactElement | null {
 	const { setCurrentLocation } = useContext(CurrentLocationContext);
-	const gps = useContext(GpsLocationContext);
+	const { gps } = useContext(GpsLocationContext);
 
 	if (!gps) {
 		return null;
@@ -39,7 +37,7 @@ export function GpsItem(): React.ReactElement | null {
 			description={t('search_current_location')}
 			icon="gps"
 			onPress={handleClick}
-			title={gps.name || LOADING_TEXT}
+			title={gps.name || 'Your City'}
 		/>
 	);
 }

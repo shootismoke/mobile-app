@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sh**t! I Smoke.  If not, see <http://www.gnu.org/licenses/>.
 
-import { LatLng } from '@shootismoke/dataproviders';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -30,68 +29,50 @@ import {
 
 const LAST_KNOWN_LOCATION_KEY = 'LAST_KNOWN_LOCATION';
 
-const DEFAULT_LAT_LNG: LatLng = {
-	latitude: 0,
-	longitude: 0,
-};
-
 interface LocationWithSetter {
 	currentLocation?: Location;
 	isGps: boolean;
 	setCurrentLocation: (location?: Location) => void;
 }
 
-export const GpsLocationContext = createContext<Location | undefined>(
-	DEFAULT_LAT_LNG
-);
+export const GpsLocationContext = createContext<{
+	gps?: Location;
+	setGpsLocation: (location?: Location) => void;
+}>({ setGpsLocation: noop });
 export const CurrentLocationContext = createContext<LocationWithSetter>({
-	...DEFAULT_LAT_LNG,
 	isGps: false,
 	setCurrentLocation: noop,
 });
 
-// fetch will try to fetch the GPS position, and if it fails, it will try to
-// fetch the last known location from AsyncStorage.
-async function fetch(): Promise<[Location | undefined, Location | undefined]> {
+// fetchFromAsyncStorage will try to fetch the last known location from
+// AsyncStorage, or throw an error if there is no last known location.
+async function fetchFromAsyncStorage(err: Error): Promise<Location> {
 	try {
-		const { coords } = await fetchGpsPosition();
-		// Set lat/lng for now, set the reverse location later
-		// @see https://github.com/shootismoke/mobile-app/issues/323
-		console.log(
-			`<LocationContext> - fetchGpsPosition - Got GPS ${JSON.stringify(
-				coords
-			)}`
+		const locationString = await AsyncStorage.getItem(
+			LAST_KNOWN_LOCATION_KEY
 		);
 
-		const reverseGeocode = await fetchReverseGeocode(coords);
-		return [reverseGeocode, reverseGeocode];
-	} catch (err) {
-		try {
-			const locationString = await AsyncStorage.getItem(
-				'LAST_KNOWN_LOCATION'
-			);
-
-			// Skip parsing if AsyncStorage is empty.
-			if (!locationString) {
-				return [undefined, undefined];
-			}
-
-			const parsedLocation = JSON.parse(locationString) as Location;
-
-			// Make sure parsedLocation is well-formed.
-			if (!parsedLocation.latitude || !parsedLocation.longitude) {
-				throw new Error(
-					'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
-				);
-			}
-
-			return [undefined, parsedLocation];
-		} catch (innerError) {
-			sentryError('LocationContextProvider-AsyncStorage')(
-				innerError as Error
-			);
-			throw err;
+		// Skip parsing if AsyncStorage is empty.
+		if (!locationString) {
+			throw new Error('AsyncStorage has no LAST_KNOWN_LOCATION');
 		}
+
+		const parsedLocation = JSON.parse(locationString) as Location;
+
+		// Make sure parsedLocation is well-formed.
+		if (!parsedLocation.latitude || !parsedLocation.longitude) {
+			throw new Error(
+				'AsyncStorage has ill-formatted LAST_KNOWN_LOCATION'
+			);
+		}
+
+		console.log(
+			'[LocationContext]: Using last known location',
+			parsedLocation.name
+		);
+		return parsedLocation;
+	} catch (_e) {
+		throw err;
 	}
 }
 
@@ -107,11 +88,26 @@ export function LocationContextProvider({
 
 	// Fetch GPS location
 	useEffect(() => {
-		withTimeout(fetch(), 10000, 'for GPS location ')
-			.then(([gpsLocation, currentLocation]) => {
-				setGpsLocation(gpsLocation);
-				setCurrentLocation(currentLocation);
+		withTimeout(fetchGpsPosition(), 10000, 'for GPS position ')
+			.then(({ coords }) => {
+				setGpsLocation(coords);
+				// Set current location now, so that we can use it asap to
+				// fetch the API data.
+				// https://github.com/shootismoke/mobile-app/issues/323
+				setCurrentLocation(coords);
+
+				// Note: We don't want to wait for the reverse geocode to
+				// finish, so we don't await/return it.
+				withTimeout(
+					fetchReverseGeocode(coords).then((gpsLocation) => {
+						setGpsLocation(gpsLocation);
+						setCurrentLocation(coords);
+					}),
+					5000,
+					'for fetchReverseGeocode '
+				).catch(sentryError('fetchReverseGeocode'));
 			})
+			.catch(fetchFromAsyncStorage)
 			.catch((err: Error) => {
 				sentryError('LocationContextProvider')(err);
 				setError(err);
@@ -119,17 +115,24 @@ export function LocationContextProvider({
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		(currentLocation
-			? AsyncStorage.setItem(
-					LAST_KNOWN_LOCATION_KEY,
-					JSON.stringify(currentLocation)
-			  )
-			: AsyncStorage.removeItem(LAST_KNOWN_LOCATION_KEY)
-		).catch(sentryError('LocationContextProvider'));
+		currentLocation &&
+			AsyncStorage.setItem(
+				LAST_KNOWN_LOCATION_KEY,
+				JSON.stringify(currentLocation)
+			)
+				.then(() => {
+					console.log(
+						'[LocationContext]: Last known location updated to',
+						JSON.stringify(currentLocation)
+					);
+				})
+				.catch(sentryError('LocationContextProvider'));
 	}, [currentLocation]);
 
 	return (
-		<GpsLocationContext.Provider value={gpsLocation}>
+		<GpsLocationContext.Provider
+			value={{ gps: gpsLocation, setGpsLocation }}
+		>
 			<CurrentLocationContext.Provider
 				value={{
 					currentLocation,

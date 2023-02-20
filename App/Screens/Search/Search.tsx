@@ -18,7 +18,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { FrequencyContext } from '@shootismoke/ui';
+import { FrequencyContext, geoapify, GeoapifyRes } from '@shootismoke/ui';
 
 import { BackButton, ListSeparator } from '../../components';
 import { CurrentLocationContext, GpsLocationContext } from '../../stores';
@@ -29,7 +29,6 @@ import * as theme from '../../util/theme';
 import { RootStackParams } from '../routeParams';
 import { GpsItem } from './GpsItem';
 import { SearchHeader } from './SearchHeader';
-import { geoapify, GeoapifyRes } from './geoapify';
 import { GeoapifyItem } from './GeoapifyItem';
 
 // Timeout to detect when user stops typing
@@ -68,7 +67,7 @@ export function Search(props: SearchProps): React.ReactElement {
 
 	const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
 	const { setFrequency } = useContext(FrequencyContext);
-	const gps = useContext(GpsLocationContext);
+	const { gps } = useContext(GpsLocationContext);
 
 	const [GeoapifyError, setGeoapifyError] = useState<Error | undefined>(
 		undefined

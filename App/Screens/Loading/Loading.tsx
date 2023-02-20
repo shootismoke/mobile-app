@@ -79,7 +79,7 @@ function clearLongWaiting(): void {
 
 export function Loading(): React.ReactElement {
 	const { api } = useContext(ApiContext);
-	const gps = useContext(GpsLocationContext);
+	const { gps } = useContext(GpsLocationContext);
 
 	const [longWaiting, setLongWaiting] = useState(false); // If api is taking a long time
 

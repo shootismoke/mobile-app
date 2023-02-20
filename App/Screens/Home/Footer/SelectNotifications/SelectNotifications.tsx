@@ -19,7 +19,6 @@ import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { Frequency, MongoUser } from '@shootismoke/ui';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
-import * as Permissions from 'expo-permissions';
 import retry from 'async-retry';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ViewProps } from 'react-native';
@@ -89,6 +88,18 @@ const styles = StyleSheet.create({
 	},
 });
 
+async function askForPermissions(): Promise<string> {
+	const { status: existing } = await Notifications.getPermissionsAsync();
+
+	let finalStatus = existing;
+	if (existing !== 'granted') {
+		const { status } = await Notifications.requestPermissionsAsync();
+		finalStatus = status;
+	}
+
+	return finalStatus;
+}
+
 export function SelectNotifications(
 	props: SelectNotificationsProps
 ): React.ReactElement {
@@ -109,13 +120,13 @@ export function SelectNotifications(
 						)
 					) {
 						throw new Error(
-							`<SelectNotifications> - Got unknown frequency "${lastChosenFrequency}" from AsyncStorage.`
+							`[SelectNotifications]: Got unknown frequency "${lastChosenFrequency}" from AsyncStorage.`
 						);
 					}
 
 					const f = lastChosenFrequency as Frequency;
 					console.log(
-						`<SelectNotifications> - Got frequency "${f}" from AsyncStorage.`
+						`[SelectNotifications]: Got frequency "${f}" from AsyncStorage.`
 					);
 
 					// We're optimistic that the backend frequency is the same
@@ -123,15 +134,12 @@ export function SelectNotifications(
 					setOptimisticNotif(f);
 				}
 			})
-			.then(() => {
-				return Permissions.getAsync(Permissions.NOTIFICATIONS).then(
-					({ status }) =>
-						status === 'granted'
-							? Notifications.getExpoPushTokenAsync().then(
-									({ data }) => getUser(data)
-							  )
-							: undefined
-				);
+			.then(async () => {
+				if ((await askForPermissions()) !== 'granted') {
+					return;
+				}
+				const { data } = await Notifications.getExpoPushTokenAsync();
+				return getUser(data);
 			})
 			.then((user) => user && setCurrentUser(user))
 			.catch(sentryError('SelectNotifications'));
@@ -184,9 +192,7 @@ export function SelectNotifications(
 				);
 			}
 
-			const { status } = await Permissions.askAsync(
-				Permissions.NOTIFICATIONS
-			);
+			const status = await askForPermissions();
 
 			if (status !== 'granted') {
 				track('HOME_SCREEN_NOTIFICATIONS_PERMISSIONS_DENIED');
