@@ -67,7 +67,7 @@ export function Search(props: SearchProps): React.ReactElement {
 
 	const { isGps, setCurrentLocation } = useContext(CurrentLocationContext);
 	const { setFrequency } = useContext(FrequencyContext);
-	const gps = useContext(GpsLocationContext);
+	const { gps } = useContext(GpsLocationContext);
 
 	const [GeoapifyError, setGeoapifyError] = useState<Error | undefined>(
 		undefined

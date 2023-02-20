@@ -35,9 +35,10 @@ interface LocationWithSetter {
 	setCurrentLocation: (location?: Location) => void;
 }
 
-export const GpsLocationContext = createContext<Location | undefined>(
-	undefined
-);
+export const GpsLocationContext = createContext<{
+	gps?: Location;
+	setGpsLocation: (location?: Location) => void;
+}>({ setGpsLocation: noop });
 export const CurrentLocationContext = createContext<LocationWithSetter>({
 	isGps: false,
 	setCurrentLocation: noop,
@@ -87,25 +88,26 @@ export function LocationContextProvider({
 
 	// Fetch GPS location
 	useEffect(() => {
-		fetchGpsPosition()
+		withTimeout(fetchGpsPosition(), 10000, 'for GPS position ')
 			.then(({ coords }) => {
 				setGpsLocation(coords);
+				// Set current location now, so that we can use it asap to
+				// fetch the API data.
+				// https://github.com/shootismoke/mobile-app/issues/323
+				setCurrentLocation(coords);
 
-				return withTimeout(
+				// Note: We don't want to wait for the reverse geocode to
+				// finish, so we don't await/return it.
+				withTimeout(
 					fetchReverseGeocode(coords).then((gpsLocation) => {
 						setGpsLocation(gpsLocation);
-						return gpsLocation;
+						setCurrentLocation(coords);
 					}),
-					10000,
+					5000,
 					'for fetchReverseGeocode '
-				).catch((err) => {
-					sentryError('fetchReverseGeocode')(err as Error);
-					return fetchFromAsyncStorage(err as Error);
-				});
+				).catch(sentryError('fetchReverseGeocode'));
 			})
-			.then((currentLocation) => {
-				setCurrentLocation(currentLocation);
-			})
+			.catch(fetchFromAsyncStorage)
 			.catch((err: Error) => {
 				sentryError('LocationContextProvider')(err);
 				setError(err);
@@ -128,7 +130,9 @@ export function LocationContextProvider({
 	}, [currentLocation]);
 
 	return (
-		<GpsLocationContext.Provider value={gpsLocation}>
+		<GpsLocationContext.Provider
+			value={{ gps: gpsLocation, setGpsLocation }}
+		>
 			<CurrentLocationContext.Provider
 				value={{
 					currentLocation,
