@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/shootismoke/mobile-app/actions">
-    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/master/badge.svg" />
+    <img alt="Github Actions" src="https://github.com/shootismoke/mobile-app/workflows/pr/badge.svg" />
   </a>
   <a href="https://codeclimate.com/github/shootismoke/mobile-app/maintainability">
     <img alt="codeclimate" src="https://api.codeclimate.com/v1/badges/9fc8ebb000978f14b6d0/maintainability" />
