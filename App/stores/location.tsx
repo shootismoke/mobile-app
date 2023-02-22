@@ -107,7 +107,9 @@ export function LocationContextProvider({
 					'for fetchReverseGeocode '
 				).catch(sentryError('fetchReverseGeocode'));
 			})
-			.catch(fetchFromAsyncStorage)
+			.catch((err) =>
+				fetchFromAsyncStorage(err as Error).then(setCurrentLocation)
+			)
 			.catch((err: Error) => {
 				sentryError('LocationContextProvider')(err);
 				setError(err);
