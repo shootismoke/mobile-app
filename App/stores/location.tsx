@@ -88,7 +88,11 @@ export function LocationContextProvider({
 
 	// Fetch GPS location
 	useEffect(() => {
-		withTimeout(fetchGpsPosition(), 10000, 'for GPS position ')
+		withTimeout(
+			new Promise<never>((r) => setTimeout(() => r('' as never), 20000)),
+			10000,
+			'for GPS position '
+		)
 			.then(({ coords }) => {
 				setGpsLocation(coords);
 				// Set current location now, so that we can use it asap to
@@ -107,7 +111,7 @@ export function LocationContextProvider({
 					'for fetchReverseGeocode '
 				).catch(sentryError('fetchReverseGeocode'));
 			})
-			.catch(fetchFromAsyncStorage)
+			.catch((err) => fetchFromAsyncStorage(err).then(setCurrentLocation))
 			.catch((err: Error) => {
 				sentryError('LocationContextProvider')(err);
 				setError(err);
