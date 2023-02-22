@@ -1,5 +1,7 @@
 import { config } from 'dotenv';
 
+import pkgJson from './package.json';
+
 config();
 
 module.exports = {
@@ -46,7 +48,7 @@ module.exports = {
 	},
 	icon: 'assets/logos/ios/iTunesArtwork@3x.png',
 	ios: {
-		buildNumber: '1.9.3',
+		buildNumber: pkgJson.version,
 		bundleIdentifier: 'com.shitismoke.app',
 		config: {
 			usesNonExemptEncryption: false,
@@ -70,7 +72,7 @@ module.exports = {
 		backgroundColor: '#EBE7DD',
 		image: 'assets/logos/splash.png',
 	},
-	version: '1.9.3',
+	version: pkgJson.version,
 	runtimeVersion: {
 		policy: 'sdkVersion',
 	},
