@@ -60,7 +60,7 @@ module.exports = {
 				'This app uses your location to find the air quality level near you.',
 		},
 	},
-	name: 'Sh**t! I Smoke',
+	name: 'Shoot! I Smoke',
 	notification: {
 		icon: './node_modules/@shootismoke/ui/assets/images/poop.png',
 	},

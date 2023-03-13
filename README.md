@@ -1,6 +1,6 @@
 <p align="center" style="background-color: #F8A65D;">
     <img alt="oss image" src="./assets/logos/transparent/transparent@3x.png" width="100px">
-    <h1 align="center">Sh**t! I Smoke</h1>
+    <h1 align="center">Shoot! I Smoke</h1>
 </p>
 <h4 align="center">Know how many cigarettes you smoke based on the pollution of your location</h4>
 
@@ -108,4 +108,4 @@ A **huge** thanks to the following contributors for their amazing work:
 
 ---
 
-<a href="https://www.producthunt.com/posts/sh-t-i-smoke?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sh-t-i-smoke" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=126582&theme=light" alt="Sh**t! I Smoke - See your city's air pollution measured in daily cigarettes. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
+<a href="https://www.producthunt.com/posts/sh-t-i-smoke?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sh-t-i-smoke" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=126582&theme=light" alt="Shoot! I Smoke - See your city's air pollution measured in daily cigarettes. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
