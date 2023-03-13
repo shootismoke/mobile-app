@@ -1,4 +1,4 @@
-# Contributing to Sh\*\*t! I Smoke
+# Contributing to Shoot! I Smoke
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 

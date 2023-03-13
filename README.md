@@ -44,7 +44,7 @@ This app is bootstrapped with [Expo](https://expo.io), you can download the Expo
 
 | Release Channel                                                                           | Version | Description                                                                 | Url                                                                           |
 | ----------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Production](https://exp.host/@amaurymartiny/shootismoke?release-channel=production-v1.8) | v1.8.10 | Same version as Sh\*\*t! I Smoke on the App Store and Play Store.           | `https://exp.host/@shootismoke/mobile-app?release-channel=production-v1.8.10` |
+| [Production](https://exp.host/@amaurymartiny/shootismoke?release-channel=production-v1.8) | v1.8.10 | Same version as Shoot! I Smoke on the App Store and Play Store.             | `https://exp.host/@shootismoke/mobile-app?release-channel=production-v1.8.10` |
 | [Staging](https://exp.host/@amaurymartiny/shootismoke)                                    | v1.8.10 | Latest version currently in development: newest features, may contain bugs. | `https://exp.host/@shootismoke/mobile-app`                                    |
 
 ## :hammer: Build it yourself
@@ -74,15 +74,15 @@ The [Expo](https://expo.io) packager will show, and you can either:
 
 All required API tokens are already pre-filled in `eas.json`. If you want to use your own API tokens, then in `eas.json`'s `env` field, add your own values. For those that are optional, you can just put `null` (without quotes).
 
-| Name              |                          | Service                                                        | Url                                                                 | Comments |
-| ----------------- | ------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------- | -------- |
-| GEOAPIFY_API_KEY  | Geoapify geocoding       | https://geoapify.com                                           | Required. Get your own and populate it in `.env`                    |
-| BACKEND_SECRET    | Sh\*\*t! I Smoke Backend | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                          |
-| AQICN_TOKEN       | World Air Quality Index  | http://aqicn.org/api/                                          | Required. You can use the public one in `eas.json` for development. |
-| SENTRY_PUBLIC_DSN | Sentry Bug Tracking      | https://sentry.io                                              | Optional.                                                           |
-| AMPLITUDE_API_KEY | Amplitude Analytics      | https://amplitude.com                                          | Optional. Note: we **never** track PII.                             |
-|                   | Google Maps for iOS      | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                            |
-|                   | Google Maps for Android  | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                            |
+| Name              |                         | Service                                                        | Url                                                                 | Comments |
+| ----------------- | ----------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------- | -------- |
+| GEOAPIFY_API_KEY  | Geoapify geocoding      | https://geoapify.com                                           | Required. Get your own and populate it in `.env`                    |
+| BACKEND_SECRET    | Shoot! I Smoke Backend  | https://github.com/shootismoke/backend                         | Required. Pre-filled with a staging token.                          |
+| AQICN_TOKEN       | World Air Quality Index | http://aqicn.org/api/                                          | Required. You can use the public one in `eas.json` for development. |
+| SENTRY_PUBLIC_DSN | Sentry Bug Tracking     | https://sentry.io                                              | Optional.                                                           |
+| AMPLITUDE_API_KEY | Amplitude Analytics     | https://amplitude.com                                          | Optional. Note: we **never** track PII.                             |
+|                   | Google Maps for iOS     | https://developers.google.com/maps/documentation/ios-sdk/start | Optional in development.                                            |
+|                   | Google Maps for Android | https://developers.google.com/maps/documentation/android-api/  | Optional in development.                                            |
 
 ## :raising_hand: Contribute
 
@@ -93,6 +93,22 @@ More information on contributing [here](./CONTRIBUTING.md).
 ## :microscope: Tests
 
 The codebase unfortunately isn't much covered by tests. Check out the `*.spec.ts` files in the project for tests. If you're interested to help out, have a look at [issue #19](https://github.com/shootismoke/mobile-app/issues/19).
+
+## Releases
+
+The app released on the App Store and Play Store is always the one on the `production` branch. We use [EAS Update](https://docs.expo.dev/build/updates/) to remotely update the app when necessary. In general, this means that the semver patch version is bumped.
+
+For major updates that don't work via EAS Update (such as an Expo SDK version bump), a new app binary is created using the commands below. In general, this means that the semver minor version is bumped.
+
+```bash
+# IOS
+eas build -p ios
+eas submit -p ios
+
+# Android
+eas build -p android
+eas submit -p android
+```
 
 ## :newspaper: License
 
